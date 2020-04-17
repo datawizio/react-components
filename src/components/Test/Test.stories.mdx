@@ -1,0 +1,33 @@
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+import { Test } from "./Test";
+
+<Meta title="Components|Test" component={Test} />
+
+# Test Component
+
+My test component, which show headet text and body
+
+## Props
+
+<Props of={Test} />
+
+## Basic usage
+
+<Preview>  
+  <Story name="Basic">
+  
+      <Test header="Header" body="My super body" />
+    
+  </Story>
+</Preview>
+
+## Another usage
+
+<Preview>  
+  <Story name="Another">
+  
+      <Test header="Another headr" body="My another super body" />
+    
+  </Story>
+</Preview>
+

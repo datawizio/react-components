@@ -1,0 +1,33 @@
+<Meta title="Intro|Использование библиотеки"  />
+
+# Использование библиотеки
+
+
+Библиотека находится в репозитории https://github.com/datawizio/react-components.
+
+Библиотека выгружена в GitHub Package и её можно подключать с помощью npm.
+
+## Подлючение библиотеку
+
+Чтобы подлючить необходимо выполнить шаги: [Installing a package](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#installing-a-package)
+
+В нашем случае:
+
+* `OWNER` - datawizio
+* `Package name` - @datawizio/react-components
+
+
+## Публикация библиотеку
+
+Чтобы опубликовать необходимо выполнить шаги:  [Publishing a package](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#publishing-a-package)
+
+В нашем случае:
+
+* `OWNER` - datawizio
+* `Package name` - @datawizio/react-components
+
+## Пример .npmrc файла
+```code highlight-line="2"
+//npm.pkg.github.com/:_authToken={TOKEN}
+registry=https://npm.pkg.github.com/datawizio
+```
