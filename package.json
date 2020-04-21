@@ -11,6 +11,7 @@
     "build": "rollup -c",
     "test": "jest --watch",
     "test:once": "jest",
+    "debug-storybook": "start-storybook --debug-webpack",
     "storybook": "start-storybook -p 6006 -s stories/static",
     "build-storybook": "build-storybook -s stories/static",
     "deploy-storybook": "storybook-to-ghpages"
@@ -40,7 +41,8 @@
   "homepage": "https://github.com/datawizio/react-components#readme",
   "peerDependencies": {
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "antd": "^4.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
@@ -58,6 +60,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.24",
     "@types/react": "^16.9.12",
+    "antd": "^4.1.4",
     "babel-loader": "^8.0.6",
     "babel-preset-react-app": "^9.1.2",
     "enzyme": "^3.11.0",
@@ -65,6 +68,8 @@
     "enzyme-to-json": "^3.4.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
     "prettier": "2.0.4",
     "react-is": "^16.13.1",
     "react-scripts": "^3.4.1",

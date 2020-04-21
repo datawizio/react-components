@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   stories: [
     "../stories/intro/*.stories.(ts|tsx|js|jsx|mdx)",
@@ -8,10 +10,13 @@ module.exports = {
     "@storybook/addon-actions",
     "@storybook/addon-links",
     {
-      name: '@storybook/preset-create-react-app',
+      name: "@storybook/preset-create-react-app",
       options: {
         tsDocgenLoaderOptions: {},
-      },
+        "craOverrides": {
+          "fileLoaderExcludes": ["less"]
+        }
+      }
     },
     {
       name: "@storybook/addon-docs",
@@ -19,5 +24,29 @@ module.exports = {
         configureJSX: true
       }
     }
-  ]
+  ],
+  webpackFinal: async (config, { configType }) => {
+    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
+    // You can change the configuration based on that.
+    // 'PRODUCTION' is used when building the static version of storybook.
+
+    // Make whatever fine-grained changes you need
+    config.module.rules.push({
+      test: /\.less$/,
+      use: [
+        "style-loader",
+        "css-loader",
+        {
+          loader: "less-loader",
+          options: {
+            javascriptEnabled: true
+          }
+        }
+      ],
+      include: path.resolve(__dirname, "../")
+    });
+
+    // Return the altered config
+    return config;
+  }
 };
