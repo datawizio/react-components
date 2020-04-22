@@ -1,9 +1,9 @@
-import { create } from '@storybook/theming/create';
+import { create } from "@storybook/theming/create";
 
 export default create({
-  base: 'light',
+  base: "light",
   colorSecondary: "rgb(142, 116, 198)",
   barSelectedColor: "rgb(142, 116, 198)",
-  brandTitle: 'Datawiz.io',
+  brandTitle: "Datawiz.io",
   brandImage: "images/logo.png"
 });

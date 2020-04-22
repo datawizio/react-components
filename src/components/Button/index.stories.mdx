@@ -1,22 +1,155 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
 import { Button } from "./index";
 
-<Meta title="Components|Button" component={Button} />
+<Meta title="Components/Button" component={Button} />
 
 # Button
 
-Компонент `Button`
+Компонент `Button`. Базовый компонент:
+[**antd/button**](https://ant.design/components/button/).
 
-## Basic usage
+## Overview
 
 <Preview>
-  <Story name="Basic">
-    <div>
-      <Button type="primary">Test</Button>
-    </div>
+  <div className="flex-container padding-between">
+    <Button type="primary">Primary</Button>
+    <Button type="primary" ghost>
+      Ghost
+    </Button>
+    <Button type="default">Default</Button>
+    <Button type="dashed">Dashed</Button>
+    <Button type="link">Link</Button>
+  </div>
+</Preview>
+
+### Dangers
+
+<Preview>
+  <div className="flex-container padding-between">
+    <Button type="primary" danger>
+      Primary
+    </Button>
+    <Button type="primary" ghost danger>
+      Ghost
+    </Button>
+    <Button type="default" danger>
+      Default
+    </Button>
+    <Button type="dashed" danger>
+      Dashed
+    </Button>
+    <Button type="link" danger>
+      Link
+    </Button>
+  </div>
+</Preview>
+
+## Рrimary
+
+<Preview>
+  <Story name="Primary">
+    <Button type="primary">Primary</Button>
   </Story>
 </Preview>
 
+### Disabled
+
+<Preview>
+  <Button type="primary" disabled>
+    Primary
+  </Button>
+</Preview>
+
+### Loading
+
+<Preview>
+  <Button type="primary" loading>
+    Primary
+  </Button>
+</Preview>
+
+### Block
+
+<Preview>
+  <Button type="primary" block>
+    Primary
+  </Button>
+</Preview>
+
+## Default button
+
+<Preview>
+  <Story name="Default">
+    <Button type="default">Default</Button>
+  </Story>
+</Preview>
+
+### Disabled
+
+<Preview>
+  <Button type="default" disabled>
+    Default
+  </Button>
+</Preview>
+
+### Loading
+
+<Preview>
+  <Button type="default" loading>
+    Default
+  </Button>
+</Preview>
+
+## Dashed button
+
+<Preview>
+  <Story name="Dashed">
+    <Button type="dashed">Dashed</Button>
+  </Story>
+</Preview>
+
+### Disabled
+
+<Preview>
+  <Button type="dashed" disabled>
+    Dashed
+  </Button>
+</Preview>
+
+### Loading
+
+<Preview>
+  <Button type="dashed" loading>
+    Dashed
+  </Button>
+</Preview>
+
+## Link button
+
+<Preview>
+  <Story name="Link">
+    <Button type="link">Link</Button>
+  </Story>
+</Preview>
+
+### Disabled
+
+<Preview>
+  <Button type="link" disabled>
+    Link
+  </Button>
+</Preview>
+
+### Loading
+
+<Preview>
+  <Button type="link" loading>
+    Link
+  </Button>
+</Preview>
+
 ## Props
+
+- [**antd/button**](https://ant.design/components/button/#API)
 
 <Props of={Button} />
