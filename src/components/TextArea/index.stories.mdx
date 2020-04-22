@@ -1,0 +1,52 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import TextArea from "./index";
+
+<Meta title="Components/Input/TextArea" component={TextArea} />
+
+# TextArea
+
+Компонент предназначен для вывода много строкового поля.
+
+Базовый компонент:
+[**antd/input.textarea**](https://ant.design/components/input/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <TextArea placeholder="Basic usage" rows={2} />
+  </Story>
+</Preview>
+
+## Autosize
+
+<Preview>
+  <Story name="Autosize">
+    <TextArea placeholder="Autosize height based on content lines" autoSize />
+  </Story>
+</Preview>
+
+## Autosize with minimum and maximum
+
+<Preview>
+  <Story name="Autosize with minimum and maximum">
+    <TextArea
+      placeholder="Autosize with minimum and maximum"
+      autoSize={{ minRows: 3, maxRows: 5 }}
+    />
+  </Story>
+</Preview>
+
+## With clear icon
+
+<Preview>
+  <Story name="With clear icon">
+    <TextArea placeholder="With clear icon" allowClear />
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/input.textarea**](https://ant.design/components/input/#Input.TextArea)
+
+<Props of={TextArea} />

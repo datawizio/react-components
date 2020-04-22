@@ -1,0 +1,63 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import CheckboxGroup from "./index";
+import Checkbox from "../Checkbox/index";
+
+<Meta title="Components/Checkbox/CheckboxGroup" component={CheckboxGroup} />
+
+# CheckboxGroup
+
+Компонент `CheckboxGroup` предназначен для вывода группы чекбоксов.
+
+Базовый компонент:
+[**antd/checkbox.group**](https://ant.design/components/checkbox/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <CheckboxGroup
+      options={[
+        { label: "Apple", value: "Apple" },
+        { label: "Pear", value: "Pear" },
+        { label: "Orange", value: "Orange" }
+      ]}
+      defaultValue={["Apple"]}
+    />
+  </Story>
+</Preview>
+
+## Disabled
+
+<Preview>
+  <Story name="Disabled">
+    <CheckboxGroup
+      options={[
+        { label: "Apple", value: "Apple" },
+        { label: "Pear", value: "Pear" },
+        { label: "Orange", value: "Orange" }
+      ]}
+      disabled
+      defaultValue={["Apple"]}
+    />
+  </Story>
+</Preview>
+
+## Custom layout
+
+<Preview>
+  <Story name="Custom layout">
+    <CheckboxGroup defaultValue={["Pear"]}>
+      <Checkbox value="Apple">Apple</Checkbox>
+      <br />
+      <Checkbox value="Pear">Pear</Checkbox>
+      <br />
+      <Checkbox value="Orange">Orange</Checkbox>
+    </CheckboxGroup>
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/checkbox.group**](https://ant.design/components/checkbox/#Checkbox-Group)
+
+<Props of={CheckboxGroup} />

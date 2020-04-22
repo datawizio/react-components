@@ -1,0 +1,145 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { UserOutlined } from "@ant-design/icons";
+import Select, { Option, OptGroup } from "./index";
+
+<Meta title="Components/Select/Select" component={Select} />
+
+# Select
+
+Компонент `Select`.
+
+Базовый компонент: [**antd/select**](https://ant.design/components/select/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <Select placeholder="Basic selectbox">
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## Small
+
+<Preview>
+  <Story name="Small">
+    <Select placeholder="Basic selectbox" size="small">
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## Large
+
+<Preview>
+  <Story name="Large">
+    <Select placeholder="Basic selectbox" size="large">
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## Disabled
+
+<Preview>
+  <Story name="Disabled">
+    <Select placeholder="Basic selectbox" disabled>
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## Loading
+
+<Preview>
+  <Story name="Loading">
+    <Select placeholder="Basic selectbox" loading>
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## With clear icon
+
+<Preview>
+  <Story name="With clear icon">
+    <Select placeholder="With clear icon" allowClear>
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## With search field
+
+<Preview>
+  <Story name="With search field">
+    <Select
+      placeholder="With search field"
+      filterOption={(input, option) =>
+        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      }
+      showSearch
+      optionFilterProp="children"
+    >
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="disabled" disabled>
+        Disabled
+      </Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## Option Group
+
+<Preview>
+  <Story name="Option Group">
+    <Select placeholder="Option Group">
+      <OptGroup label="Manager">
+        <Option value="jack">Jack</Option>
+        <Option value="lucy">Lucy</Option>
+      </OptGroup>
+      <OptGroup label="Engineer">
+        <Option value="Yiminghe">yiminghe</Option>
+      </OptGroup>
+    </Select>
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/select**](https://ant.design/components/select/#API)
+
+<Props components={{ Select, Option, OptGroup }} />

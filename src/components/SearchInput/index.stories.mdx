@@ -1,0 +1,115 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import SearchInput from "./index";
+
+<Meta title="Components/Input/SearchInput" component={SearchInput} />
+
+# SearchInput
+
+Компонент предназначен для вывода поля для поиска.
+
+Базовый компонент:
+[**antd/input.search**](https://ant.design/components/input/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <SearchInput
+      placeholder="Basic usage"
+      onSearch={value => console.log(value)}
+    />
+  </Story>
+</Preview>
+
+## Small
+
+<Preview>
+  <Story name="Small">
+    <SearchInput
+      placeholder="Small size"
+      size="small"
+      onSearch={value => console.log(value)}
+    />
+  </Story>
+</Preview>
+
+## Large
+
+<Preview>
+  <Story name="Large">
+    <SearchInput
+      placeholder="Large size"
+      size="large"
+      onSearch={value => console.log(value)}
+    />
+  </Story>
+</Preview>
+
+## Loading
+
+<Preview>
+  <Story name="Loading">
+    <SearchInput
+      placeholder="Basic usage"
+      onSearch={value => console.log(value)}
+      loading
+    />
+  </Story>
+</Preview>
+
+## With button
+
+<Preview>
+  <Story name="With button">
+    <SearchInput
+      placeholder="With button usage"
+      onSearch={value => console.log(value)}
+      enterButton
+    />
+  </Story>
+</Preview>
+
+## With button - small
+
+<Preview>
+  <Story name="With button - small">
+    <SearchInput
+      placeholder="With button - small"
+      size="small"
+      enterButton
+      onSearch={value => console.log(value)}
+    />
+  </Story>
+</Preview>
+
+## With button - large
+
+<Preview>
+  <Story name="With button - large">
+    <SearchInput
+      placeholder="With button - large"
+      size="large"
+      enterButton
+      onSearch={value => console.log(value)}
+    />
+  </Story>
+</Preview>
+
+## With button - loading
+
+<Preview>
+  <Story name="With button, loading">
+    <SearchInput
+      placeholder="With button - loading"
+      onSearch={value => console.log(value)}
+      loading
+      enterButton
+    />
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/input.search**](https://ant.design/components/input/#Input.Search)
+
+<Props of={SearchInput} />

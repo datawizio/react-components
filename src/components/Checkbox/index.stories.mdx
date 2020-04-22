@@ -1,0 +1,48 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Checkbox from "./index";
+
+<Meta title="Components/Checkbox/Checkbox" component={Checkbox} />
+
+# Checkbox
+
+Компонент `Checkbox`.
+
+Базовый компонент: [**antd/checkbox**](https://ant.design/components/checkbox/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <Checkbox>Basic usage</Checkbox>
+  </Story>
+</Preview>
+
+## Checked
+
+<Preview>
+  <Story name="Checked">
+    <Checkbox checked={true}>Checkbox</Checkbox>
+  </Story>
+</Preview>
+
+## Disabled
+
+<Preview>
+  <Story name="Disabled">
+    <Checkbox disabled={true}>Checkbox</Checkbox>
+  </Story>
+</Preview>
+
+## Indeterminate
+
+<Preview>
+  <Story name="Indeterminate">
+    <Checkbox indeterminate={true}>Checkbox</Checkbox>
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/checkbox**](https://ant.design/components/checkbox/#API)
+
+<Props of={Checkbox} />

@@ -5,7 +5,7 @@ import { ButtonProps as AntButtonProps } from "antd/lib/button";
 
 import "./index.less";
 
-interface ButtonProps extends AntButtonProps {}
+export interface ButtonProps extends AntButtonProps {}
 
 const Button: React.FC<ButtonProps> = props => {
   return <AntButton {...props} />;
