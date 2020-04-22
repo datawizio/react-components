@@ -1,5 +1,6 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
-import { Button } from "./index";
+import Button from "./index";
+import { SearchOutlined } from "@ant-design/icons";
 
 <Meta title="Components/Button" component={Button} />
 
@@ -19,6 +20,28 @@ import { Button } from "./index";
     <Button type="default">Default</Button>
     <Button type="dashed">Dashed</Button>
     <Button type="link">Link</Button>
+  </div>
+</Preview>
+
+## Small
+
+<Preview>
+  <div className="flex-container padding-between">
+    <Button type="primary" size="small">
+      Primary
+    </Button>
+    <Button type="primary" ghost size="small">
+      Ghost
+    </Button>
+    <Button type="default" size="small">
+      Default
+    </Button>
+    <Button type="dashed" size="small">
+      Dashed
+    </Button>
+    <Button type="link" size="small">
+      Link
+    </Button>
   </div>
 </Preview>
 
@@ -50,6 +73,14 @@ import { Button } from "./index";
   <Story name="Primary">
     <Button type="primary">Primary</Button>
   </Story>
+</Preview>
+
+### Small
+
+<Preview>
+  <Button type="primary" size="small">
+    Primary
+  </Button>
 </Preview>
 
 ### Disabled
@@ -146,6 +177,30 @@ import { Button } from "./index";
   <Button type="link" loading>
     Link
   </Button>
+</Preview>
+
+## With Icon
+
+<Preview>
+  <Story name="With Icon">
+    <div className="flex-container padding-between">
+      <Button type="primary" icon={<SearchOutlined />}>
+        Primary
+      </Button>
+      <Button type="primary" icon={<SearchOutlined />} shape="circle" />
+    </div>
+  </Story>
+</Preview>
+
+### Default
+
+<Preview>
+  <div className="flex-container padding-between">
+    <Button type="default" icon={<SearchOutlined />}>
+      Default
+    </Button>
+    <Button type="default" icon={<SearchOutlined />} shape="circle" />
+  </div>
 </Preview>
 
 ## Props

@@ -10,4 +10,5 @@ interface ButtonProps extends AntButtonProps {}
 const Button: React.FC<ButtonProps> = props => {
   return <AntButton {...props} />;
 };
+
 export default Button;

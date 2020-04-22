@@ -45,6 +45,7 @@
     "antd": "^4.1.4"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.0.6",
     "@babel/core": "^7.7.4",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-docs": "^5.3.18",
