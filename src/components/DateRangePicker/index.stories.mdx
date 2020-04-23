@@ -1,0 +1,78 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import DateRangePicker, { _DateRangePickerWithProps } from "./";
+
+<Meta
+  title="Components/DatePicker/DateRangePicker"
+  component={DateRangePicker}
+/>
+
+# DateRangePicker
+
+Компонент `DateRangePicker`.
+
+Базовый компонент:
+[**antd/DatePicker**](https://ant.design/components/date-picker/#header)
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <DateRangePicker
+      format="DD-MM-YYYY"
+      dateFrom="21-04-2020"
+      dateTo="30-04-2020"
+    />
+  </Story>
+</Preview>
+
+## Limited
+
+<Preview>
+  <Story name="Limited">
+    <DateRangePicker
+      format="DD-MM-YYYY"
+      dateFrom="21-04-2020"
+      dateTo="30-04-2020"
+      minDate="20-04-2020"
+      maxDate="11-05-2020"
+    />
+  </Story>
+</Preview>
+
+## Opened
+
+<Preview>
+  <Story name="Opened">
+    <div style={{ height: 350 }}>
+      <DateRangePicker open={true} />
+    </div>
+  </Story>
+</Preview>
+
+## Sized
+
+<Preview>
+  <Story name="Sized">
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <DateRangePicker size="large" />
+      <DateRangePicker size="middle" />
+      <DateRangePicker size="small" />
+    </div>
+  </Story>
+</Preview>
+
+## Disabled
+
+<Preview>
+  <Story name="Disabled">
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <DateRangePicker disabled />
+      <DateRangePicker disabled={[false, true]} />
+      <DateRangePicker disabled={[true, false]} />
+    </div>
+  </Story>
+</Preview>
+
+- [**antd/DateRangePicker.baseProps**](https://ant.design/components/date-picker/#RangePicker)
+
+<Props of={_DateRangePickerWithProps} />
