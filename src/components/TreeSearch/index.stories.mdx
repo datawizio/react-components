@@ -1,0 +1,63 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import TreeSearch from "./index";
+import Input from "../Input";
+import { generateTreeList } from "../../utils/data/tree";
+let treeData = generateTreeList();
+
+<Meta title="Components/Tree/TreeSearch" component={TreeSearch} />
+
+# TreeSearch
+
+Компонент `TreeSearch` cлужит для вывода дерева `Tree` c поиском `Search`. Можно
+выводить строку поиска или нет.
+
+Внутри вшит алогритм фильтрации дерева.
+
+## Basic
+
+<Preview withToolbar>
+  <Story name="Basic">
+    <TreeSearch searchValue="1-" treeData={treeData} height={300} />
+  </Story>
+</Preview>
+
+## With search input
+
+<Preview withToolbar>
+  <Story name="With search input">
+    <TreeSearch showSearchInput treeData={treeData} height={300} />
+  </Story>
+</Preview>
+
+## With search condition
+
+<Preview withToolbar>
+  <Story name="With search condition">
+    <TreeSearch
+      showSearchInput
+      treeData={treeData}
+      height={300}
+      searchCondition={(node, value) => node.title.endsWith(value)}
+    />
+  </Story>
+</Preview>
+
+## With custom input
+
+<Preview withToolbar>
+  <Story name="With custom input">
+    <TreeSearch
+      showSearchInput
+      treeData={treeData}
+      height={300}
+      checkable
+      renderInput={handleSearchInputChange => (
+        <Input onChange={handleSearchInputChange} prefix="Search:" />
+      )}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={TreeSearch} />
