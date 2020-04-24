@@ -1,0 +1,173 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Tree from "./index";
+
+<Meta title="Components/Tree/Tree" component={Tree} />
+
+# Tree
+
+Компонент `Tree` cлужит для вывода дерева. Можно выводить просто в виде списка,
+можно в виде списка с выбором.
+
+Базовый компонент: [**antd/tree**](https://ant.design/components/tree/).
+
+## Структура данных
+
+```
+[
+  {
+    title: "parent 1",
+    key: "0-0",
+    children: [
+      {
+        title: "parent 1-0",
+        key: "0-0-0",
+        children: [
+          {
+            title: "leaf",
+            key: "0-0-0-0"
+          },
+          {
+            title: "leaf",
+            key: "0-0-0-1"
+          }
+        ]
+      }
+    ]
+  }
+]
+```
+
+## Basic
+
+<Preview isExpanded>
+  <Story name="Basic">
+    {() => {
+      const treeData = [
+        {
+          title: "parent 1",
+          key: "0-0",
+          children: [
+            {
+              title: "parent 1-0",
+              key: "0-0-0",
+              disabled: true,
+              children: [
+                {
+                  title: "leaf",
+                  key: "0-0-0-0",
+                  disableCheckbox: true
+                },
+                {
+                  title: "leaf",
+                  key: "0-0-0-1"
+                }
+              ]
+            },
+            {
+              title: "parent 1-1",
+              key: "0-0-1",
+              children: [
+                {
+                  title: <span style={{ color: "#1890ff" }}>sss</span>,
+                  key: "0-0-1-0"
+                }
+              ]
+            }
+          ]
+        }
+      ];
+      return <Tree treeData={treeData} />;
+    }}
+  </Story>
+</Preview>
+
+## Checkable
+
+<Preview>
+  <Story name="Checkbox">
+    <Tree
+      checkable
+      treeData={[
+        {
+          title: "parent 1",
+          key: "0-0",
+          children: [
+            {
+              title: "parent 1-0",
+              key: "0-0-0",
+              children: [
+                {
+                  title: "leaf",
+                  key: "0-0-0-0"
+                },
+                {
+                  title: "leaf",
+                  key: "0-0-0-1"
+                }
+              ]
+            },
+            {
+              title: "parent 1-1",
+              key: "0-0-1",
+              children: [
+                {
+                  title: <span style={{ color: "#1890ff" }}>sss</span>,
+                  key: "0-0-1-0"
+                }
+              ]
+            }
+          ]
+        }
+      ]}
+    />
+  </Story>
+</Preview>
+
+## Checkable with check all
+
+<Preview>
+  <Story name="Checkbox with check all">
+    <Tree
+      checkable
+      showCheckAll
+      treeData={[
+        {
+          title: "parent 1",
+          key: "0-0",
+          children: [
+            {
+              title: "parent 1-0",
+              key: "0-0-0",
+              children: [
+                {
+                  title: "leaf",
+                  key: "0-0-0-0"
+                },
+                {
+                  title: "leaf",
+                  key: "0-0-0-1"
+                }
+              ]
+            },
+            {
+              title: "parent 1-1",
+              key: "0-0-1",
+              children: [
+                {
+                  title: <span style={{ color: "#1890ff" }}>sss</span>,
+                  key: "0-0-1-0"
+                }
+              ]
+            }
+          ]
+        }
+      ]}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/tree**](https://ant.design/components/tree/#API)
+
+<Props of={Tree} />
