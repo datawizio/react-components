@@ -1,6 +1,7 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
 import { UserOutlined } from "@ant-design/icons";
 import Select, { Option, OptGroup } from "./index";
+let allData = [];
 
 <Meta title="Components/Select/Select" component={Select} />
 
@@ -135,6 +136,61 @@ import Select, { Option, OptGroup } from "./index";
         <Option value="Yiminghe">yiminghe</Option>
       </OptGroup>
     </Select>
+  </Story>
+</Preview>
+
+## Multi Select
+
+<Preview>
+  <Story name="Multi Select">
+    <Select placeholder="Multi Select" mode="multiple">
+      <Option value="jack">Jack</Option>
+      <Option value="lucy">Lucy</Option>
+      <Option value="Yiminghe">yiminghe</Option>
+    </Select>
+  </Story>
+</Preview>
+
+## Async data
+
+<Preview>
+  <Story name="Async data">
+    <Select
+      placeholder="Multi Select"
+      mode="multiple"
+      asyncData
+      loadData={async () => {
+        const response = await fetch("https://randomuser.me/api/?results=100");
+        const json = await response.json();
+        const data = json.results.map(user => ({
+          text: `${user.name.first} ${user.name.last}`,
+          value: user.login.uuid
+        }));
+        return data;
+      }}
+    />
+  </Story>
+</Preview>
+
+## Async data with pagination
+
+<Preview>
+  <Story name="Async data with pagination">
+    <Select
+      placeholder="Multi Select"
+      mode="multiple"
+      asyncData
+      withPagination
+      loadData={async () => {
+        const response = await fetch("https://randomuser.me/api/?results=100");
+        const json = await response.json();
+        const data = json.results.map(user => ({
+          text: `${user.name.first} ${user.name.last}`,
+          value: user.login.uuid
+        }));
+        return data;
+      }}
+    />
   </Story>
 </Preview>
 

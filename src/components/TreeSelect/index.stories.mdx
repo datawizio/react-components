@@ -1,0 +1,131 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import TreeSelect, { TreeOption } from "./index";
+import { generateTreeList } from "../../utils/data/tree";
+let treeData = generateTreeList("0", 2);
+
+<Meta title="Components/Select/TreeSelect" component={TreeSelect} />
+
+# TreeSelect
+
+Компонент `TreeSelect`.
+
+Базовый компонент:
+[**antd/tree-select**](https://ant.design/components/tree-select/).
+
+## Basic
+
+Самый простой случай, в таком случае лучше использовать обычный `Select` с
+опцией `mode="multiple"`
+
+<Preview>
+  <Story name="Basic">
+    <TreeSelect placeholder="Basic tree select">
+      <TreeOption value="option 1" title="option 1" />
+      <TreeOption value="option 2" title="option 2" />
+      <TreeOption value="option 3" title="option 3" />
+      <TreeOption value="option 4" title="option 4" />
+      <TreeOption value="option 5" title="option 5" />
+      <TreeOption value="option 6" title="option 6" />
+      <TreeOption value="option 7" title="option 7" />
+    </TreeSelect>
+  </Story>
+</Preview>
+
+## Basic tree view
+
+<Preview>
+  <Story name="Basic tree view">
+    <TreeSelect placeholder="Basic tree view">
+      <TreeOption value="option 1" title="option 1">
+        <TreeOption value="option 2" title="option 2" />
+        <TreeOption value="option 3" title="option 3" />
+      </TreeOption>
+      <TreeOption value="option 4" title="option 4">
+        <TreeOption value="option 5" title="option 5" />
+        <TreeOption value="option 6" title="option 6" />
+        <TreeOption value="option 7" title="option 7" />
+      </TreeOption>
+    </TreeSelect>
+  </Story>
+</Preview>
+
+## Basic tree view with search
+
+<Preview>
+  <Story name="Basic tree view with search">
+    <TreeSelect placeholder="Basic tree view" showSearch>
+      <TreeOption value="option 1" title="option 1">
+        <TreeOption value="option 2" title="option 2" />
+        <TreeOption value="option 3" title="option 3" />
+      </TreeOption>
+      <TreeOption value="option 4" title="option 4">
+        <TreeOption value="option 5" title="option 5" />
+        <TreeOption value="option 6" title="option 6" />
+        <TreeOption value="option 7" title="option 7" />
+      </TreeOption>
+    </TreeSelect>
+  </Story>
+</Preview>
+
+## Multi select
+
+<Preview>
+  <Story name="Multi select">
+    <TreeSelect
+      placeholder="Basic tree view"
+      showSearch
+      multiple
+      allowClear
+      treeCheckable={true}
+    >
+      <TreeOption value="option 1" title="option 1">
+        <TreeOption value="option 2" title="option 2" />
+        <TreeOption value="option 3" title="option 3" />
+      </TreeOption>
+      <TreeOption value="option 4" title="option 4">
+        <TreeOption value="option 5" title="option 5" />
+        <TreeOption value="option 6" title="option 6" />
+        <TreeOption value="option 7" title="option 7" />
+      </TreeOption>
+    </TreeSelect>
+  </Story>
+</Preview>
+
+## Multi select tree data
+
+Передавать данные можно через параметр `treeData`.
+
+<Preview>
+  <Story name="Multi select tree data">
+    <TreeSelect
+      placeholder="Basic tree view"
+      showSearch
+      multiple
+      allowClear
+      treeCheckable={true}
+      treeData={treeData}
+    />
+  </Story>
+</Preview>
+
+## Multi select tree data, show check all
+
+<Preview>
+  <Story name="Multi select tree data, show check all">
+    <TreeSelect
+      placeholder="Select"
+      showSearch
+      multiple
+      allowClear
+      treeCheckable={true}
+      showCheckAll={true}
+      treeData={treeData}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/tree-select**](https://ant.design/components/tree-select/#API)
+
+<Props of={TreeSelect} />
