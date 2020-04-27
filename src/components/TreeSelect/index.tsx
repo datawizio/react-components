@@ -1,0 +1,60 @@
+import React from "react";
+
+import { TreeSelect as AntTreeSelect } from "antd";
+import {
+  TreeSelectProps as AntTreeSelectProps,
+  SelectValue
+} from "antd/lib/tree-select";
+import { DataNode } from "rc-tree-select/es/interface";
+
+import "./index.less";
+
+export interface TreeSelectProps<VT> extends AntTreeSelectProps<VT> {
+  /**
+   * Показать/не показывать чекбокс `Check all`
+   */
+  showCheckAll?: boolean;
+
+  /**
+   * Текст для чекбокса `Check all`
+   */
+  checkAllTitle?: string;
+
+  /**
+   * Ключ для чекбокса `Check all`
+   */
+  checkAllKey?: string;
+}
+
+const TreeSelect: React.FC<TreeSelectProps<SelectValue>> = props => {
+  const { showCheckAll, checkAllTitle, checkAllKey } = props;
+
+  let treeExpandedKeys = props.treeExpandedKeys;
+  let treeData: DataNode[] = props.treeData;
+
+  if (showCheckAll) {
+    treeData = [
+      {
+        key: checkAllKey,
+        title: checkAllTitle,
+        children: props.treeData,
+        className: "tree-check-all"
+      }
+    ];
+    treeExpandedKeys.push(checkAllKey);
+  }
+
+  return <AntTreeSelect {...props} treeData={treeData} />;
+};
+
+TreeSelect.defaultProps = {
+  maxTagCount: 10,
+  treeExpandedKeys: [],
+  showCheckAll: false,
+  checkAllTitle: "Check all",
+  checkAllKey: "-1"
+};
+
+export default TreeSelect;
+
+export const TreeOption = AntTreeSelect.TreeNode;
