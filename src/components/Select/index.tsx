@@ -52,6 +52,10 @@ const Select: React.FC<SelectProps<SelectValue>> = props => {
   const [options, setOptions] = useState([]);
   const [page, setPage] = useState(0);
 
+  if (true) {
+    const [a, setA] = useState(false);
+  }
+
   const loadPage = useCallback(
     async (searchValue, page = 0) => {
       if (!loadData) return;
