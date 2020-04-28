@@ -11,6 +11,7 @@ const merge2 = require("merge2");
 const through2 = require("through2");
 // const webpack = require('webpack');
 const babel = require("gulp-babel");
+const eslint = require("gulp-eslint");
 const argv = require("minimist")(process.argv.slice(2));
 // const chalk = require('chalk');
 // const path = require('path');
@@ -41,6 +42,22 @@ const tsDefaultReporter = ts.reporter.defaultReporter();
 // const cwd = process.cwd();
 const libDir = getProjectPath("lib");
 const esDir = getProjectPath("es");
+
+function checkEslint(done) {
+  const esComand = gulp
+    .src(["src/**/*.tsx"])
+    // eslint() attaches the lint output to the "eslint" property
+    // of the file object so it can be used by other modules.
+    .pipe(eslint())
+    // eslint.format() outputs the lint results to the console.
+    // Alternatively use eslint.formatEach() (see Docs).
+    .pipe(eslint.format())
+    // To have the process exit with an error code (1) on
+    // lint error, return the stream and pipe to failAfterError last.
+    .pipe(eslint.failAfterError());
+
+  esComand.on("finish", done);
+}
 
 function babelify(js, modules) {
   const babelConfig = getBabelCommonConfig(modules);
@@ -147,6 +164,11 @@ function compile(modules) {
   const tsd = tsResult.dts.pipe(gulp.dest(modules === false ? esDir : libDir));
   return merge2([less, tsFilesStream, tsd, assets]);
 }
+
+gulp.task("eslint", done => {
+  console.log("Check with eslint");
+  checkEslint(done);
+});
 
 gulp.task("compile-with-es", done => {
   console.log("[Parallel] Compile to es...");
