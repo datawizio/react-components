@@ -41,10 +41,10 @@ jobs:
         id: version
         run: echo ${GITHUB_REF##*/}
 
+      - run: npm install
+
       - name: Check eslint
         run: gulp eslint
-
-      - run: npm install
 
       - name: Update version package.json
         run: npm version ${GITHUB_REF##*/}
