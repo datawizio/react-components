@@ -37,17 +37,13 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Get version
-        id: version
-        run: echo ${GITHUB_REF##*/}
-
       - run: npm install
 
       - name: Check eslint
         run: gulp eslint
 
       - name: Update version package.json
-        run: npm version ${GITHUB_REF##*/}
+        run: npm version patch
 
       - name: Generate Auto Changelog
         uses: ahmadawais/action-auto-changelog@master
