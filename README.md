@@ -1,6 +1,6 @@
 # React Component Library
 
-![Eslint](https://github.com/datawizio/react-components/workflows/Eslint/badge.svg?branch=master) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+![Eslint](https://github.com/datawizio/react-components/workflows/Eslint/badge.svg?branch=master&event=push) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 
 
