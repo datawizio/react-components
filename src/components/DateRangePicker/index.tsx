@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useMemo } from "react";
 import moment, { Moment } from "moment";
+import { useMemo, useCallback } from "react";
 
 import DatePicker from "antd/lib/date-picker";
 import { DateType, IDateRangePicker, DateRangePickerProps } from "./types.d";
@@ -10,21 +10,22 @@ import "./index.less";
 const { RangePicker } = DatePicker;
 
 const DateRangePicker: IDateRangePicker = props => {
+
+  const formatDate = useCallback((date: DateType) => {
+    return moment(date, props.format);
+  }, [props.format]);
+
   const [dateFrom, dateTo] = useMemo<[Moment, Moment]>(() => {
     return [formatDate(props.dateFrom), formatDate(props.dateTo)];
-  }, [props.dateFrom, props.dateTo, props.format]);
+  }, [props.dateFrom, props.dateTo, formatDate]);
 
   const [maxDate, minDate] = useMemo<[Moment, Moment]>(() => {
     return [formatDate(props.maxDate), formatDate(props.minDate)];
-  }, [props.maxDate, props.minDate, props.format]);
+  }, [props.maxDate, props.minDate, formatDate]);
 
-  function formatDate(date: DateType) {
-    return moment(date, props.format);
-  }
-
-  function isDisabledDate(date): boolean {
-    return (maxDate && date > maxDate) || (minDate && date < minDate);
-  }
+  const isDisabledDate = useCallback((date) => {
+      return (maxDate && date > maxDate) || (minDate && date < minDate);
+  }, [maxDate, minDate])
 
   function onChange([dateFrom, dateTo]): void {
     if (!(dateFrom && dateTo)) props.onClear && props.onClear();
@@ -33,7 +34,6 @@ const DateRangePicker: IDateRangePicker = props => {
 
   return (
     <RangePicker
-      onOpenChange={console.log}
       value={[dateFrom, dateTo]}
       disabledDate={isDisabledDate}
       {...props}

@@ -1,0 +1,310 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { useMemo, useState, useEffect, useCallback, useRef } from "react";
+import server from "../../utils/data/server";
+import faker from "faker";
+
+import {
+  withKnobs,
+  text,
+  boolean,
+  number,
+  select
+} from "@storybook/addon-knobs";
+
+import Avatar from "antd/lib/avatar";
+import Divider from "antd/lib/divider";
+import List, { _ListWithProps } from "./";
+import InfiniteScroll from "../InfiniteScroll";
+
+import "antd/lib/avatar/style/index";
+import "antd/lib/divider/style/index";
+
+<Meta title="Components/Lists/List" component={List} decorators={[withKnobs]} />
+
+# List
+
+Компонент `List`.
+
+Базовый компонент: [**antd/list**](https://ant.design/components/list)
+
+## Sandbox
+
+<Preview>
+  <Story name="Sandbox">
+    {() => {
+      const dataCount = number("data count", 10);
+      const sizeType = select("size", ["small", "large", "default"], "default");
+      //
+      const loading = boolean("loading", false);
+      const isBordered = boolean("bordered", true);
+      const hasHeader = boolean("Show Header", false);
+      const hasFooter = boolean("Show Footer", false);
+      const withPagination = boolean("pagination", false);
+      const hasExtraImage = boolean("Show extra image", true);
+      //
+      const headerText = hasHeader && text("header", "Header");
+      const footerText = hasFooter && text("herder", "Footer");
+      //
+      const paginationProps = withPagination && {
+        total: dataCount,
+        pageSize: number("pageSize", 5),
+        showSizeChanger: boolean("showSizeChanger", false)
+      };
+      //
+      const data = useMemo(() => {
+        return new Array(dataCount).fill(null).map(() => {
+          return {
+            avatar: faker.image.avatar(),
+            fullName: faker.name.findName(),
+            address: faker.address.streetAddress(),
+            image: "https://picsum.photos/200" + "?" + faker.random.number()
+          };
+        });
+      }, [dataCount]);
+      //
+      return (
+        <List
+          size={sizeType}
+          loading={loading}
+          dataSource={data}
+          header={headerText}
+          footer={footerText}
+          bordered={isBordered}
+          pagination={paginationProps}
+          renderItem={item => {
+            return (
+              <List.Item
+                extra={
+                  hasExtraImage && (
+                    <img height="100" width="150" src={item.image} />
+                  )
+                }
+              >
+                <List.Item.Meta
+                  avatar={<Avatar src={item.avatar} />}
+                  title={item.fullName}
+                  description={item.address}
+                />
+              </List.Item>
+            );
+          }}
+        />
+      );
+    }}
+  </Story>
+</Preview>
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    {() => {
+      const data = useMemo(() => {
+        return new Array(10).fill(null).map(() => faker.name.findName());
+      }, []);
+      //
+      return (
+        <List
+          dataSource={data}
+          renderItem={item => {
+            return <List.Item>{item}</List.Item>;
+          }}
+        />
+      );
+    }}
+  </Story>
+</Preview>
+
+## Pagination
+
+<Preview>
+  <Story name="Pagination">
+    {() => {
+      const data = useMemo(() => {
+        return new Array(100).fill(null).map(() => faker.name.findName());
+      }, []);
+      //
+      return (
+        <div>
+          <Divider orientation="left">Basic pagination</Divider>
+          <List
+            pagination={{ defaultPageSize: 10 }}
+            dataSource={data}
+            renderItem={item => {
+              return <List.Item>{item}</List.Item>;
+            }}
+          />
+          <Divider orientation="left">Hidden size changer</Divider>
+          <List
+            pagination={{ showSizeChanger: false, pageSize: 10 }}
+            dataSource={data}
+            renderItem={item => {
+              return <List.Item>{item}</List.Item>;
+            }}
+          />
+        </div>
+      );
+    }}
+  </Story>
+</Preview>
+
+## User List
+
+<Preview>
+  <Story name="User List">
+    {() => {
+      const data = useMemo(() => {
+        return new Array(10).fill(null).map(() => {
+          return {
+            avatar: faker.image.avatar(),
+            fullName: faker.name.findName(),
+            address: faker.address.streetAddress()
+          };
+        });
+      }, []);
+      //
+      return (
+        <List
+          dataSource={data}
+          renderItem={item => {
+            return (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.avatar} />}
+                  title={item.fullName}
+                  description={item.address}
+                />
+              </List.Item>
+            );
+          }}
+        />
+      );
+    }}
+  </Story>
+</Preview>
+
+## Extra Images List
+
+<Preview>
+  <Story name="Extra Images List">
+    {() => {
+      const data = useMemo(() => {
+        return new Array(10).fill(null).map(() => {
+          return {
+            content: faker.name.findName(),
+            image: "https://picsum.photos/200" + "?" + faker.random.number()
+          };
+        });
+      }, []);
+      //
+      return (
+        <List
+          dataSource={data}
+          renderItem={item => {
+            return (
+              <List.Item
+                extra={<img height="100" width="150" src={item.image} />}
+              >
+                {item.content}
+              </List.Item>
+            );
+          }}
+        />
+      );
+    }}
+  </Story>
+</Preview>
+
+## Infinite scroll
+
+<Preview>
+  <Story name="Infinite scroll">
+    {() => {
+      const someData = useMemo(() => {
+        return new Array(300).fill(null).map(() => {
+          return {
+            avatar: faker.image.avatar(),
+            fullName: faker.name.findName(),
+            address: faker.address.streetAddress()
+          };
+        });
+      }, []);
+      //
+      const pageSize = 50;
+      const [dataSource, setDataSource] = useState(someData.slice(0, pageSize));
+      //
+      return (
+        <InfiniteScroll
+          showLoader
+          height={500}
+          ref={scrollRef}
+          maxPage={someData.length / pageSize}
+          onBottom={page => setDataSource(someData.slice(0, pageSize * page))}
+        >
+          <List
+            dataSource={dataSource}
+            loading={!dataSource.length}
+            renderItem={item => {
+              return (
+                <List.Item>
+                  <List.Item.Meta
+                    title={item.fullName}
+                    description={item.address}
+                    avatar={<Avatar src={item.avatar} />}
+                  />
+                </List.Item>
+              );
+            }}
+          />
+        </InfiniteScroll>
+      );
+    }}
+  </Story>
+</Preview>
+
+## Async scroll
+
+<Preview>
+  <Story name="Async scroll">
+    {props => {
+      const [dataSource, setDataSource] = useState([]);
+      //
+      const loadData = useCallback(
+        async page => {
+          const pageSize = 100;
+          const response = await server.fetchUsers(pageSize, page);
+          setDataSource(dataSource.concat(response));
+        },
+        [dataSource]
+      );
+      //
+      useEffect(() => {
+        loadData();
+      }, []);
+      //
+      return (
+        <InfiniteScroll height={500} onBottom={loadData} showLoader>
+          <List
+            dataSource={dataSource}
+            loading={!dataSource.length}
+            renderItem={item => {
+              return (
+                <List.Item>
+                  <List.Item.Meta
+                    title={item.fullName}
+                    description={item.address}
+                    avatar={<Avatar src={item.avatar} />}
+                  />
+                </List.Item>
+              );
+            }}
+          />
+        </InfiniteScroll>
+      );
+    }}
+  </Story>
+</Preview>
+
+- [**antd/List.baseProps**](https://ant.design/components/list/#List)
+
+<Props of={_ListWithProps} />

@@ -99,6 +99,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-strip-code": "^0.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "faker": "^4.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "less": "^3.11.1",
