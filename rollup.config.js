@@ -1,9 +1,13 @@
+import path from "path";
+
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import resolve from "rollup-plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import typescript from "rollup-plugin-typescript2";
-import sass from "rollup-plugin-sass";
-import commonjs from "rollup-plugin-commonjs";
-import copy from "rollup-plugin-copy";
+import postcss from "rollup-plugin-postcss";
+import rollupPostcssLessLoader from "rollup-plugin-postcss-webpack-alias-less-loader";
+import visualizer from "rollup-plugin-visualizer";
+import cleanup from "rollup-plugin-cleanup";
 
 import packageJson from "./package.json";
 
@@ -13,49 +17,37 @@ export default {
     {
       file: packageJson.main,
       format: "cjs",
-      sourcemap: true
+      sourcemap: true,
+      exports: "named"
     },
     {
       file: packageJson.module,
       format: "esm",
-      sourcemap: true
+      sourcemap: true,
+      exports: "named"
     }
   ],
   plugins: [
+    visualizer(),
     peerDepsExternal(),
-    resolve({
-      browser: true
-    }),
-    typescript({ objectHashIgnoreUnknownHack: true }),
-    commonjs({
-      include: ["node_modules/**"],
-      exclude: ["**/*.stories.js"],
-      namedExports: {
-        "node_modules/react/react.js": [
-          "Children",
-          "Component",
-          "PropTypes",
-          "createElement"
-        ],
-        "node_modules/react-dom/index.js": ["render"]
-      }
-    }),
-    sass({
-      insert: true
-    }),
-    copy({
-      targets: [
-        {
-          src: "src/variables.scss",
-          dest: "lib",
-          rename: "variables.scss"
-        },
-        {
-          src: "src/typography.scss",
-          dest: "lib",
-          rename: "typography.scss"
-        }
+    resolve(),
+    commonjs(),
+    typescript(),
+    postcss({
+      extract: true,
+      sourceMap: true,
+      use: [["less", { javascriptEnabled: true }]],
+      loaders: [
+        rollupPostcssLessLoader({
+          nodeModulePath: path.resolve(__dirname, "./node_modules"),
+          aliases: {},
+          options: {
+            javascriptEnabled: true
+          }
+        })
       ]
-    })
+    }),
+
+    cleanup({ extensions: ["js", "jsx", "ts", "tsx"] })
   ]
 };
