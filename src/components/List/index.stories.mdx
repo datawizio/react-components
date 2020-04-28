@@ -237,7 +237,6 @@ import "antd/lib/divider/style/index";
         <InfiniteScroll
           showLoader
           height={500}
-          ref={scrollRef}
           maxPage={someData.length / pageSize}
           onBottom={page => setDataSource(someData.slice(0, pageSize * page))}
         >
