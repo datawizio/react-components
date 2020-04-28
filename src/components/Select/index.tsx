@@ -40,11 +40,11 @@ function dataToOptions(data: [any]) {
 
 const Select: React.FC<SelectProps<SelectValue>> = props => {
   const {
-    asyncData,
     loadingContent,
     notFoundContent,
     loadData,
     withPagination,
+    asyncData,
     ...restProps
   } = props;
 
