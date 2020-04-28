@@ -4,3 +4,4 @@ build/
 lib/
 .npmrc
 package-lock.json
+es/
