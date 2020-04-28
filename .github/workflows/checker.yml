@@ -29,6 +29,6 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Install all depends
         run: npm install
-  eslint:
-    - name: Check eslint
-      run: gulp eslint
+
+      - name: Check eslint
+        run: gulp eslint
