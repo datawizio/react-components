@@ -1,0 +1,69 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Patch
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  # pull_request:
+  #   branches: [master]
+  push:
+    branches: [master]
+    paths-ignore:
+      - "package.json"
+      - "README.md"
+      - "changelog.md"
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+
+      - name: Setup git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Get version
+        id: version
+        run: echo ${GITHUB_REF##*/}
+
+      - name: Check eslint
+        run: gulp eslint
+
+      - run: npm install
+
+      - name: Update version package.json
+        run: npm version ${GITHUB_REF##*/}
+
+      - name: Generate Auto Changelog
+        uses: ahmadawais/action-auto-changelog@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Deploy Storybook
+        run: npm run deploy-storybook -- --ci
+        env:
+          GH_TOKEN: datawizio:${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
