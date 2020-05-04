@@ -23,6 +23,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
@@ -48,7 +50,7 @@ jobs:
       - name: Generate Auto Changelog
         uses: ahmadawais/action-auto-changelog@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ADMIN_TOKEN }}
 
       - run: npm publish
         env:
@@ -57,9 +59,9 @@ jobs:
       - name: Deploy Storybook
         run: npm run deploy-storybook -- --ci
         env:
-          GH_TOKEN: datawizio:${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: datawizio:${{ secrets.ADMIN_TOKEN }}
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ADMIN_TOKEN }}
