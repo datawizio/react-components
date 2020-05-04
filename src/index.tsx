@@ -1,7 +1,5 @@
 export { default as Tree } from "./components/Tree";
 
-export { default as Menu } from "./components/Menu";
-
 export { default as List } from "./components/List";
 
 export { default as Input } from "./components/Input";
@@ -23,3 +21,5 @@ export { default as CheckboxGroup } from "./components/CheckboxGroup";
 export { default as InfiniteScroll } from "./components/InfiniteScroll";
 
 export { default as DateRangePicker } from "./components/DateRangePicker";
+
+export { default as Menu, Item as MenuItem, SubMenu } from "./components/Menu";
