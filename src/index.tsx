@@ -1,5 +1,7 @@
 export { default as Tree } from "./components/Tree";
 
+export { default as Menu } from "./components/Menu";
+
 export { default as List } from "./components/List";
 
 export { default as Input } from "./components/Input";
