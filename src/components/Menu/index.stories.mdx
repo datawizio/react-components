@@ -1,0 +1,49 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Menu, { Item } from "./index";
+import {
+  PieChartOutlined,
+  DesktopOutlined,
+  ContainerOutlined
+} from "@ant-design/icons";
+
+<Meta title="Components/Menu/Menu" component={Menu} />
+
+# Menu
+
+Компонент `Menu`. Базовый компонент:
+[**antd/menu**](https://ant.design/components/menu/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <div style={{ width: 256 }}>
+      <Menu defaultSelectedKeys={["1"]} mode="inline">
+        <Item key="1" icon={<PieChartOutlined />}>
+          Активність користувачів
+        </Item>
+        <Item key="2" icon={<DesktopOutlined />}>
+          Користувачі
+        </Item>
+        <Item key="3" icon={<ContainerOutlined />}>
+          Ролі
+        </Item>
+        <Item key="4" icon={<ContainerOutlined />}>
+          Історія активності
+        </Item>
+        <Item key="5" icon={<ContainerOutlined />}>
+          Налаштування
+        </Item>
+        <Item key="6" icon={<ContainerOutlined />}>
+          Доступні додатки
+        </Item>
+      </Menu>
+    </div>
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/menu**](https://ant.design/components/menu/#API)
+
+<Props components={{ Menu, Item }} />
