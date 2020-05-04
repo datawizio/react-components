@@ -45,6 +45,9 @@ jobs:
       - name: Check eslint
         run: gulp eslint
 
+      - name: Build package
+        run: npm run build
+
       - name: Update version package.json
         run: npm version patch
 
@@ -52,6 +55,8 @@ jobs:
         uses: ahmadawais/action-auto-changelog@master
         with:
           github_token: ${{ secrets.ADMIN_TOKEN }}
+
+    
 
       - run: npm publish
         env:
