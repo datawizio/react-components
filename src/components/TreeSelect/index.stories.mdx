@@ -1,5 +1,5 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
-import TreeSelect, { TreeOption } from "./index";
+import TreeSelect from "./index";
 import { TreeSelectWithProps } from "./story/helper";
 import { generateTreeList } from "../../utils/data/tree";
 let treeData = generateTreeList("0", 2);
@@ -21,13 +21,13 @@ let treeData = generateTreeList("0", 2);
 <Preview>
   <Story name="Basic">
     <TreeSelect placeholder="Basic tree select">
-      <TreeOption value="option 1" title="option 1" />
-      <TreeOption value="option 2" title="option 2" />
-      <TreeOption value="option 3" title="option 3" />
-      <TreeOption value="option 4" title="option 4" />
-      <TreeOption value="option 5" title="option 5" />
-      <TreeOption value="option 6" title="option 6" />
-      <TreeOption value="option 7" title="option 7" />
+      <TreeSelect.TreeNode value="option 1" title="option 1" />
+      <TreeSelect.TreeNode value="option 2" title="option 2" />
+      <TreeSelect.TreeNode value="option 3" title="option 3" />
+      <TreeSelect.TreeNode value="option 4" title="option 4" />
+      <TreeSelect.TreeNode value="option 5" title="option 5" />
+      <TreeSelect.TreeNode value="option 6" title="option 6" />
+      <TreeSelect.TreeNode value="option 7" title="option 7" />
     </TreeSelect>
   </Story>
 </Preview>
@@ -37,15 +37,15 @@ let treeData = generateTreeList("0", 2);
 <Preview>
   <Story name="Basic tree view">
     <TreeSelect placeholder="Basic tree view">
-      <TreeOption value="option 1" title="option 1">
-        <TreeOption value="option 2" title="option 2" />
-        <TreeOption value="option 3" title="option 3" />
-      </TreeOption>
-      <TreeOption value="option 4" title="option 4">
-        <TreeOption value="option 5" title="option 5" />
-        <TreeOption value="option 6" title="option 6" />
-        <TreeOption value="option 7" title="option 7" />
-      </TreeOption>
+      <TreeSelect.TreeNode value="option 1" title="option 1">
+        <TreeSelect.TreeNode value="option 2" title="option 2" />
+        <TreeSelect.TreeNode value="option 3" title="option 3" />
+      </TreeSelect.TreeNode>
+      <TreeSelect.TreeNode value="option 4" title="option 4">
+        <TreeSelect.TreeNode value="option 5" title="option 5" />
+        <TreeSelect.TreeNode value="option 6" title="option 6" />
+        <TreeSelect.TreeNode value="option 7" title="option 7" />
+      </TreeSelect.TreeNode>
     </TreeSelect>
   </Story>
 </Preview>
@@ -55,15 +55,15 @@ let treeData = generateTreeList("0", 2);
 <Preview>
   <Story name="Basic tree view with search">
     <TreeSelect placeholder="Basic tree view" showSearch>
-      <TreeOption value="option 1" title="option 1">
-        <TreeOption value="option 2" title="option 2" />
-        <TreeOption value="option 3" title="option 3" />
-      </TreeOption>
-      <TreeOption value="option 4" title="option 4">
-        <TreeOption value="option 5" title="option 5" />
-        <TreeOption value="option 6" title="option 6" />
-        <TreeOption value="option 7" title="option 7" />
-      </TreeOption>
+      <TreeSelect.TreeNode value="option 1" title="option 1">
+        <TreeSelect.TreeNode value="option 2" title="option 2" />
+        <TreeSelect.TreeNode value="option 3" title="option 3" />
+      </TreeSelect.TreeNode>
+      <TreeSelect.TreeNode value="option 4" title="option 4">
+        <TreeSelect.TreeNode value="option 5" title="option 5" />
+        <TreeSelect.TreeNode value="option 6" title="option 6" />
+        <TreeSelect.TreeNode value="option 7" title="option 7" />
+      </TreeSelect.TreeNode>
     </TreeSelect>
   </Story>
 </Preview>
@@ -79,15 +79,15 @@ let treeData = generateTreeList("0", 2);
       allowClear
       treeCheckable={true}
     >
-      <TreeOption value="option 1" title="option 1">
-        <TreeOption value="option 2" title="option 2" />
-        <TreeOption value="option 3" title="option 3" />
-      </TreeOption>
-      <TreeOption value="option 4" title="option 4">
-        <TreeOption value="option 5" title="option 5" />
-        <TreeOption value="option 6" title="option 6" />
-        <TreeOption value="option 7" title="option 7" />
-      </TreeOption>
+      <TreeSelect.TreeNode value="option 1" title="option 1">
+        <TreeSelect.TreeNode value="option 2" title="option 2" />
+        <TreeSelect.TreeNode value="option 3" title="option 3" />
+      </TreeSelect.TreeNode>
+      <TreeSelect.TreeNode value="option 4" title="option 4">
+        <TreeSelect.TreeNode value="option 5" title="option 5" />
+        <TreeSelect.TreeNode value="option 6" title="option 6" />
+        <TreeSelect.TreeNode value="option 7" title="option 7" />
+      </TreeSelect.TreeNode>
     </TreeSelect>
   </Story>
 </Preview>

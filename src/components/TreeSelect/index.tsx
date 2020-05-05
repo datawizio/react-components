@@ -36,7 +36,7 @@ export interface FCTreeSelect extends FCTreeSelectProps {
 const TreeSelect: FCTreeSelect = props => {
   const { showCheckAll, checkAllTitle, checkAllKey } = props;
 
-  let treeExpandedKeys = props.treeExpandedKeys;
+  let treeExpandedKeys = props.treeDefaultExpandedKeys;
   let treeData: DataNode[] = props.treeData;
 
   if (showCheckAll) {
@@ -51,12 +51,18 @@ const TreeSelect: FCTreeSelect = props => {
     treeExpandedKeys.push(checkAllKey);
   }
 
-  return <AntTreeSelect {...props} treeData={treeData} />;
+  return (
+    <AntTreeSelect
+      {...props}
+      treeData={treeData}
+      treeDefaultExpandedKeys={treeExpandedKeys}
+    />
+  );
 };
 
 TreeSelect.defaultProps = {
   maxTagCount: 10,
-  treeExpandedKeys: [],
+  treeDefaultExpandedKeys: [],
   showCheckAll: false,
   checkAllTitle: "Check all",
   checkAllKey: "-1"
