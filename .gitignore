@@ -5,3 +5,4 @@ lib/
 .npmrc
 package-lock.json
 es/
+storybook-static/

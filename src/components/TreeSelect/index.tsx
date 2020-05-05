@@ -26,10 +26,17 @@ export interface TreeSelectProps<VT> extends AntTreeSelectProps<VT> {
   checkAllKey?: string;
 }
 
-const TreeSelect: React.FC<TreeSelectProps<SelectValue>> = props => {
+export interface FCTreeSelectProps
+  extends React.FC<TreeSelectProps<SelectValue>> {}
+
+export interface FCTreeSelect extends FCTreeSelectProps {
+  TreeNode: typeof AntTreeSelect.TreeNode;
+}
+
+const TreeSelect: FCTreeSelect = props => {
   const { showCheckAll, checkAllTitle, checkAllKey } = props;
 
-  let treeExpandedKeys = props.treeExpandedKeys;
+  let treeExpandedKeys = props.treeDefaultExpandedKeys;
   let treeData: DataNode[] = props.treeData;
 
   if (showCheckAll) {
@@ -44,17 +51,23 @@ const TreeSelect: React.FC<TreeSelectProps<SelectValue>> = props => {
     treeExpandedKeys.push(checkAllKey);
   }
 
-  return <AntTreeSelect {...props} treeData={treeData} />;
+  return (
+    <AntTreeSelect
+      {...props}
+      treeData={treeData}
+      treeDefaultExpandedKeys={treeExpandedKeys}
+    />
+  );
 };
 
 TreeSelect.defaultProps = {
   maxTagCount: 10,
-  treeExpandedKeys: [],
+  treeDefaultExpandedKeys: [],
   showCheckAll: false,
   checkAllTitle: "Check all",
   checkAllKey: "-1"
 };
 
-export default TreeSelect;
+TreeSelect.TreeNode = AntTreeSelect.TreeNode;
 
-export const TreeOption = AntTreeSelect.TreeNode;
+export default TreeSelect;

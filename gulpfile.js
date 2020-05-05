@@ -136,7 +136,8 @@ function compile(modules) {
     "src/**/*.tsx",
     "src/**/*.ts",
     "typings/**/*.d.ts",
-    "!components/**/__tests__/**"
+    "!components/**/__tests__/**",
+    "!src/**/story/**"
   ];
   // allow jsx file in components/xxx/
   if (tsConfig.allowJs) {

@@ -1,44 +1,20 @@
 import React, { useState, useCallback, useMemo } from "react";
 
 import { Select as AntSelect } from "antd";
-import { SelectProps as AntSelectProps, SelectValue } from "antd/lib/select";
+
+import { FCSelect } from "./types";
 
 import "./index.less";
 
-export const Option = AntSelect.Option;
-export const OptGroup = AntSelect.OptGroup;
-
-export interface SelectProps<VT> extends AntSelectProps<VT> {
-  /**
-   * Функция которая будет вызываться для подгрузки данных с параметрами `searchValue`, `page`
-   */
-  loadData?: (string, number) => [any];
-
-  /**
-   * Данные будут загружаться ассинхронно. Будет вызываться функция `loadData`
-   */
-  asyncData?: boolean;
-
-  /**
-   * Текст Loading...
-   */
-  loadingContent?: string;
-
-  /**
-   * Подгрузка ассинхронных данных с пагинацией
-   */
-  withPagination?: boolean;
-}
-
 function dataToOptions(data: [any]) {
   return data.map(item => (
-    <Option key={item.value} value={item.value}>
+    <Select.Option key={item.value} value={item.value}>
       {item.text}
-    </Option>
+    </Select.Option>
   ));
 }
 
-const Select: React.FC<SelectProps<SelectValue>> = props => {
+const Select: FCSelect = props => {
   const {
     asyncData,
     loadingContent,
@@ -125,5 +101,8 @@ Select.defaultProps = {
   notFoundContent: "No data",
   withPagination: false
 };
+
+Select.Option = AntSelect.Option;
+Select.OptGroup = AntSelect.OptGroup;
 
 export default Select;

@@ -1,6 +1,7 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
 import { UserOutlined } from "@ant-design/icons";
-import Select, { Option, OptGroup } from "./index";
+import Select from "./index";
+import { SelectWithProps } from "./story/helper";
 let allData = [];
 
 <Meta title="Components/Select/Select" component={Select} />
@@ -16,12 +17,12 @@ let allData = [];
 <Preview>
   <Story name="Basic">
     <Select placeholder="Basic selectbox">
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -31,12 +32,12 @@ let allData = [];
 <Preview>
   <Story name="Small">
     <Select placeholder="Basic selectbox" size="small">
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -46,12 +47,12 @@ let allData = [];
 <Preview>
   <Story name="Large">
     <Select placeholder="Basic selectbox" size="large">
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -61,12 +62,12 @@ let allData = [];
 <Preview>
   <Story name="Disabled">
     <Select placeholder="Basic selectbox" disabled>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -76,12 +77,12 @@ let allData = [];
 <Preview>
   <Story name="Loading">
     <Select placeholder="Basic selectbox" loading>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -91,12 +92,12 @@ let allData = [];
 <Preview>
   <Story name="With clear icon">
     <Select placeholder="With clear icon" allowClear>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -113,12 +114,12 @@ let allData = [];
       showSearch
       optionFilterProp="children"
     >
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="disabled" disabled>
         Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      </Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -128,13 +129,13 @@ let allData = [];
 <Preview>
   <Story name="Option Group">
     <Select placeholder="Option Group">
-      <OptGroup label="Manager">
-        <Option value="jack">Jack</Option>
-        <Option value="lucy">Lucy</Option>
-      </OptGroup>
-      <OptGroup label="Engineer">
-        <Option value="Yiminghe">yiminghe</Option>
-      </OptGroup>
+      <Select.OptGroup label="Manager">
+        <Select.Option value="jack">Jack</Select.Option>
+        <Select.Option value="lucy">Lucy</Select.Option>
+      </Select.OptGroup>
+      <Select.OptGroup label="Engineer">
+        <Select.Option value="Yiminghe">yiminghe</Select.Option>
+      </Select.OptGroup>
     </Select>
   </Story>
 </Preview>
@@ -144,9 +145,9 @@ let allData = [];
 <Preview>
   <Story name="Multi Select">
     <Select placeholder="Multi Select" mode="multiple">
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="Yiminghe">yiminghe</Option>
+      <Select.Option value="jack">Jack</Select.Option>
+      <Select.Option value="lucy">Lucy</Select.Option>
+      <Select.Option value="Yiminghe">yiminghe</Select.Option>
     </Select>
   </Story>
 </Preview>
@@ -198,4 +199,10 @@ let allData = [];
 
 - [**antd/select**](https://ant.design/components/select/#API)
 
-<Props components={{ Select, Option, OptGroup }} />
+<Props
+  components={{
+    Select: SelectWithProps,
+    Option: Select.Option,
+    OptGroup: Select.OptGroup
+  }}
+/>

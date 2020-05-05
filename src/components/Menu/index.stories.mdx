@@ -1,5 +1,15 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
-import Menu, { Item } from "./index";
+import Menu from "./index";
+import { MenuWithProps } from "./story/helper";
+
+import {
+  withKnobs,
+  text,
+  boolean,
+  number,
+  select
+} from "@storybook/addon-knobs";
+
 import {
   PieChartOutlined,
   DesktopOutlined,
@@ -13,30 +23,65 @@ import {
 Компонент `Menu`. Базовый компонент:
 [**antd/menu**](https://ant.design/components/menu/).
 
+## Sandbox
+
+<Preview>
+  <Story name="Sandbox">
+    {() => {
+      const theme = select("theme", ["dark", "light"], "dark");
+      //
+      return (
+        <div style={{ width: 256 }}>
+          <Menu defaultSelectedKeys={["1"]} mode="inline" theme={theme}>
+            <Menu.Item key="1" icon={<PieChartOutlined />}>
+              Активність користувачів
+            </Menu.Item>
+            <Menu.Item key="2" icon={<DesktopOutlined />}>
+              Користувачі
+            </Menu.Item>
+            <Menu.Item key="3" icon={<ContainerOutlined />}>
+              Ролі
+            </Menu.Item>
+            <Menu.Item key="4" icon={<ContainerOutlined />}>
+              Історія активності
+            </Menu.Item>
+            <Menu.Item key="5" icon={<ContainerOutlined />}>
+              Налаштування
+            </Menu.Item>
+            <Menu.Item key="6" icon={<ContainerOutlined />}>
+              Доступні додатки
+            </Menu.Item>
+          </Menu>
+        </div>
+      );
+    }}
+  </Story>
+</Preview>
+
 ## Basic
 
 <Preview>
   <Story name="Basic">
     <div style={{ width: 256 }}>
       <Menu defaultSelectedKeys={["1"]} mode="inline">
-        <Item key="1" icon={<PieChartOutlined />}>
+        <Menu.Item key="1" icon={<PieChartOutlined />}>
           Активність користувачів
-        </Item>
-        <Item key="2" icon={<DesktopOutlined />}>
+        </Menu.Item>
+        <Menu.Item key="2" icon={<DesktopOutlined />}>
           Користувачі
-        </Item>
-        <Item key="3" icon={<ContainerOutlined />}>
+        </Menu.Item>
+        <Menu.Item key="3" icon={<ContainerOutlined />}>
           Ролі
-        </Item>
-        <Item key="4" icon={<ContainerOutlined />}>
+        </Menu.Item>
+        <Menu.Item key="4" icon={<ContainerOutlined />}>
           Історія активності
-        </Item>
-        <Item key="5" icon={<ContainerOutlined />}>
+        </Menu.Item>
+        <Menu.Item key="5" icon={<ContainerOutlined />}>
           Налаштування
-        </Item>
-        <Item key="6" icon={<ContainerOutlined />}>
+        </Menu.Item>
+        <Menu.Item key="6" icon={<ContainerOutlined />}>
           Доступні додатки
-        </Item>
+        </Menu.Item>
       </Menu>
     </div>
   </Story>
@@ -46,4 +91,4 @@ import {
 
 - [**antd/menu**](https://ant.design/components/menu/#API)
 
-<Props components={{ Menu, Item }} />
+<Props of={MenuWithProps} />
