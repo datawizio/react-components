@@ -1,5 +1,6 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
 import TreeSelect, { TreeOption } from "./index";
+import { TreeSelectWithProps } from "./story/helper";
 import { generateTreeList } from "../../utils/data/tree";
 let treeData = generateTreeList("0", 2);
 
@@ -128,4 +129,4 @@ let treeData = generateTreeList("0", 2);
 
 - [**antd/tree-select**](https://ant.design/components/tree-select/#API)
 
-<Props of={TreeSelect} />
+<Props of={TreeSelectWithProps} />

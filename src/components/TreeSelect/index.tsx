@@ -26,7 +26,14 @@ export interface TreeSelectProps<VT> extends AntTreeSelectProps<VT> {
   checkAllKey?: string;
 }
 
-const TreeSelect: React.FC<TreeSelectProps<SelectValue>> = props => {
+export interface FCTreeSelectProps
+  extends React.FC<TreeSelectProps<SelectValue>> {}
+
+export interface FCTreeSelect extends FCTreeSelectProps {
+  TreeNode: typeof AntTreeSelect.TreeNode;
+}
+
+const TreeSelect: FCTreeSelect = props => {
   const { showCheckAll, checkAllTitle, checkAllKey } = props;
 
   let treeExpandedKeys = props.treeExpandedKeys;
@@ -55,6 +62,6 @@ TreeSelect.defaultProps = {
   checkAllKey: "-1"
 };
 
-export default TreeSelect;
+TreeSelect.TreeNode = AntTreeSelect.TreeNode;
 
-export const TreeOption = AntTreeSelect.TreeNode;
+export default TreeSelect;
