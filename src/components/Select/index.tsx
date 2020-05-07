@@ -66,9 +66,9 @@ const Select: FCSelect = props => {
     [loading, page, loadPage]
   );
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     loadPage(0);
-  };
+  }, [loadPage]);
 
   const searchProps = useMemo(
     () =>
@@ -79,7 +79,7 @@ const Select: FCSelect = props => {
             onPopupScroll: handlePopupScroll
           }
         : {},
-    [handleSearch, handlePopupScroll]
+    [handleSearch, handlePopupScroll, withPagination, asyncData]
   );
 
   return (
