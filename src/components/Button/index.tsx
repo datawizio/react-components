@@ -12,8 +12,13 @@ export interface ButtonProps extends AntButtonProps {
   border?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ border, ...props }) => {
-  return <AntButton {...props} className={clsx({ "no-border": !border })} />;
+const Button: React.FC<ButtonProps> = ({ border, className, ...props }) => {
+  return (
+    <AntButton
+      {...props}
+      className={clsx(className, { "no-border": !border })}
+    />
+  );
 };
 
 Button.defaultProps = {
