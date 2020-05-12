@@ -35,7 +35,7 @@ jobs:
         id: version
         run: echo ${GITHUB_REF##*/}
 
-      - run: npm install
+      - run: npm ci
 
       - name: Update version package.json
         run: npm version ${GITHUB_REF##*/}
@@ -51,9 +51,8 @@ jobs:
         uses: ahmadawais/action-auto-changelog@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Deploy Storybook
         run: npm run deploy-storybook -- --ci
         env:
           GH_TOKEN: datawizio:${{ secrets.GITHUB_TOKEN }}
-
