@@ -3,12 +3,21 @@ import React from "react";
 import { Button as AntButton } from "antd";
 import { ButtonProps as AntButtonProps } from "antd/lib/button";
 
+import clsx from "clsx";
+
 import "./index.less";
 
-export interface ButtonProps extends AntButtonProps {}
+export interface ButtonProps extends AntButtonProps {
+  /** Отображать кнопку с границей или без */
+  border: boolean;
+}
 
-const Button: React.FC<ButtonProps> = props => {
-  return <AntButton {...props} />;
+const Button: React.FC<ButtonProps> = ({ border, ...props }) => {
+  return <AntButton {...props} className={clsx({ "no-border": !border })} />;
+};
+
+Button.defaultProps = {
+  border: true
 };
 
 export default Button;
