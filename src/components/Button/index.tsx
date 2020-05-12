@@ -9,7 +9,7 @@ import "./index.less";
 
 export interface ButtonProps extends AntButtonProps {
   /** Отображать кнопку с границей или без */
-  border: boolean;
+  border?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({ border, ...props }) => {
