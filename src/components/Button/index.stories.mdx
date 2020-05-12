@@ -18,6 +18,9 @@ import { SearchOutlined } from "@ant-design/icons";
       Ghost
     </Button>
     <Button type="default">Default</Button>
+    <Button type="default" border={false}>
+      No border
+    </Button>
     <Button type="dashed">Dashed</Button>
     <Button type="link">Link</Button>
   </div>
@@ -35,6 +38,9 @@ import { SearchOutlined } from "@ant-design/icons";
     </Button>
     <Button type="default" size="small">
       Default
+    </Button>
+    <Button type="default" border={false} size="small">
+      No border
     </Button>
     <Button type="dashed" size="small">
       Dashed
@@ -57,6 +63,9 @@ import { SearchOutlined } from "@ant-design/icons";
     </Button>
     <Button type="default" danger>
       Default
+    </Button>
+    <Button type="default" danger border={false}>
+      No border
     </Button>
     <Button type="dashed" danger>
       Dashed
@@ -119,6 +128,14 @@ import { SearchOutlined } from "@ant-design/icons";
 
 <Preview>
   <Button type="default" disabled>
+    Default
+  </Button>
+</Preview>
+
+### No border
+
+<Preview>
+  <Button type="default" border={false}>
     Default
   </Button>
 </Preview>
