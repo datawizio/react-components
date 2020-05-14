@@ -31,13 +31,15 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
-    "React",
-    "Component",
-    "Library",
-    "Gulp",
-    "Typescript",
+    "antd",
     "Less",
+    "React",
+    "Gulp",
+    "Library",
     "Storybook",
+    "Component",
+    "Typescript",
+    "highcharts",
     "Datawiz.io"
   ],
   "author": "Ivan Osypov",
@@ -50,7 +52,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "antd": "^4.2.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "highcharts": "^8.1.0"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.0.6",
@@ -110,6 +113,7 @@
     "gulp-eslint": "^6.0.0",
     "gulp-strip-code": "^0.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "highcharts": "^8.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "less": "^3.11.1",
