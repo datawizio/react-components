@@ -1,10 +1,22 @@
 @import "~antd/es/tree-select/style/index";
 @import "../../styles/variables";
+@import "~antd/es/drawer/style/index";
 
 .ant-select-tree-treenode {
   &.tree-check-all {
     .ant-select-tree-switcher {
       visibility: hidden;
     }
+  }
+}
+
+.ant-select-dropdown.drawer-dropdown {
+  display: none;
+}
+
+.drawer-select-tree {
+  .ant-select-tree {
+    padding-top: 20px;
+    margin-left: -24px;
   }
 }
