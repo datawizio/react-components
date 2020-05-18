@@ -43,20 +43,20 @@ const tsDefaultReporter = ts.reporter.defaultReporter();
 const libDir = getProjectPath("lib");
 const esDir = getProjectPath("es");
 
-function checkEslint(done) {
-  const esComand = gulp
-    .src(["src/**/*.tsx"])
-    // eslint() attaches the lint output to the "eslint" property
-    // of the file object so it can be used by other modules.
-    .pipe(eslint())
-    // eslint.format() outputs the lint results to the console.
-    // Alternatively use eslint.formatEach() (see Docs).
-    .pipe(eslint.format())
-    // To have the process exit with an error code (1) on
-    // lint error, return the stream and pipe to failAfterError last.
-    .pipe(eslint.failAfterError());
-
-  esComand.on("finish", done);
+function checkEslint() {
+  return (
+    gulp
+      .src(["src/**/*.tsx"])
+      // eslint() attaches the lint output to the "eslint" property
+      // of the file object so it can be used by other modules.
+      .pipe(eslint())
+      // eslint.format() outputs the lint results to the console.
+      // Alternatively use eslint.formatEach() (see Docs).
+      .pipe(eslint.format())
+      // To have the process exit with an error code (1) on
+      // lint error, return the stream and pipe to failAfterError last.
+      .pipe(eslint.failAfterError())
+  );
 }
 
 function babelify(js, modules) {
@@ -166,9 +166,9 @@ function compile(modules) {
   return merge2([less, tsFilesStream, tsd, assets]);
 }
 
-gulp.task("eslint", done => {
+gulp.task("eslint", () => {
   console.log("Check with eslint");
-  checkEslint(done);
+  return checkEslint();
 });
 
 gulp.task("compile-with-es", done => {
