@@ -3,7 +3,7 @@ export const generateTreeList = (path = "0", level = 3) => {
   for (let i = 0; i < 10; i += 1) {
     const key = `${path}-${i}`;
     const treeNode = {
-      title: key,
+      title: `title ${key}`,
       key,
       children: []
     };

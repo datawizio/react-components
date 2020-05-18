@@ -1,0 +1,35 @@
+import { useState } from "react";
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Button from "../Button";
+import DrawerTreeSelect from "./index";
+import { generateTreeList } from "../../utils/data/tree";
+let treeData = generateTreeList("0", 2);
+
+<Meta title="Components/Select/DrawerTreeSelect" component={DrawerTreeSelect} />
+
+# DrawerTreeSelect
+
+Компонент `DrawerTreeSelect`. Работает как обычный `TreeSelect` только для
+выбора открывается `Drawer`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      multiple
+      allowClear
+      treeCheckable={true}
+      showCheckAll={true}
+      treeData={treeData}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/drawer**](https://ant.design/components/drawer/#API)
+
+<Props of={DrawerTreeSelect} />
