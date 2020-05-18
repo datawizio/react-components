@@ -1,0 +1,46 @@
+import { useState } from "react";
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Button from "../Button";
+import Drawer from "./index";
+
+<Meta title="Components/Drawer" component={Drawer} />
+
+# Drawer
+
+Компонент `Drawer`.
+
+Базовый компонент: [**antd/drawer**](https://ant.design/components/drawer/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    {() => {
+      const [visible, setVisible] = useState(false);
+      return (
+        <React.Fragment>
+          <Button
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            Open Drawer
+          </Button>
+          <Drawer
+            title="My title"
+            visible={visible}
+            onClose={() => {
+              setVisible(false);
+            }}
+          />
+        </React.Fragment>
+      );
+    }}
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/drawer**](https://ant.design/components/drawer/#API)
+
+<Props of={Drawer} />

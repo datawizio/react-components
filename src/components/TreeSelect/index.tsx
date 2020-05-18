@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 
-import { TreeSelect as AntTreeSelect, Drawer } from "antd";
-import Input from "../Input";
+import { TreeSelect as AntTreeSelect } from "antd";
 
 import {
   TreeSelectProps as AntTreeSelectProps,
@@ -26,8 +25,6 @@ export interface TreeSelectProps<VT> extends AntTreeSelectProps<VT> {
    * Ключ для чекбокса `Check all`
    */
   checkAllKey?: string;
-
-  showDrawer?: boolean;
 }
 
 export interface FCTreeSelectProps
@@ -38,45 +35,7 @@ export interface FCTreeSelect extends FCTreeSelectProps {
 }
 
 const TreeSelect: FCTreeSelect = props => {
-  const {
-    showCheckAll,
-    checkAllTitle,
-    checkAllKey,
-    showDrawer,
-    ...restProps
-  } = props;
-
-  const [drawerVisible, setDrawerVisible] = useState(false);
-
-  const handlerDrawerClose = useCallback(() => {
-    const activeElement = document.activeElement as HTMLElement;
-    activeElement.blur();
-    setDrawerVisible(false);
-  }, [setDrawerVisible]);
-
-  let drawerProps = {};
-  if (showDrawer) {
-    drawerProps = {
-      dropdownClassName: "drawer-dropdown",
-      listHeight: window.innerHeight,
-      onFocus: e => {
-        setDrawerVisible(true);
-      },
-      dropdownRender: menu => {
-        return (
-          <Drawer
-            className="drawer-select-tree"
-            title="123"
-            onClose={handlerDrawerClose}
-            visible={drawerVisible}
-          >
-            <Input />
-            {menu}
-          </Drawer>
-        );
-      }
-    };
-  }
+  const { showCheckAll, checkAllTitle, checkAllKey, ...restProps } = props;
 
   let treeExpandedKeys = props.treeDefaultExpandedKeys;
   let treeData: DataNode[] = props.treeData;
@@ -98,7 +57,9 @@ const TreeSelect: FCTreeSelect = props => {
       {...restProps}
       treeData={treeData}
       treeDefaultExpandedKeys={treeExpandedKeys}
-      {...drawerProps}
+      onSearch={(...args) => {
+        console.log(args);
+      }}
     />
   );
 };

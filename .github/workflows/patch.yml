@@ -11,6 +11,7 @@ on:
     branches: [master]
     paths-ignore:
       - "package.json"
+      - "package-lock.json"
       - "README.md"
       - "changelog.md"
 
@@ -50,11 +51,6 @@ jobs:
 
       - name: Update version package.json
         run: npm version patch
-
-      - name: Generate Auto Changelog
-        uses: ahmadawais/action-auto-changelog@master
-        with:
-          github_token: ${{ secrets.ADMIN_TOKEN }}
 
       - run: npm publish
         env:
