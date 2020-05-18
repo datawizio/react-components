@@ -65,7 +65,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     //@ts-ignore
     checkedKeys
   );
-  const checkedKeysSet = new Set<string>(internalCheckedKeys);
+  const checkedKeysSet = new Set<string | number>(internalCheckedKeys);
 
   const [searchFieldValue, setSearchFieldValue] = useState("");
 
