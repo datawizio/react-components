@@ -1,23 +1,15 @@
-import faker from "faker";
+import { genUsersData } from "./dataGenerators";
+
+function serverReturn(returnValue, timeout): Promise<any> {
+  return new Promise(resolve =>
+    setTimeout(() => resolve(returnValue), timeout)
+  );
+}
 
 function fetchUsers(
   count = 100
 ): Promise<Array<{ avatar: string; fullName: string; address: string }>> {
-  return new Promise(resolve =>
-    setTimeout(
-      () =>
-        resolve(
-          new Array(count).fill(null).map(() => {
-            return {
-              avatar: faker.image.avatar(),
-              fullName: faker.name.findName(),
-              address: faker.address.streetAddress()
-            };
-          })
-        ),
-      1000
-    )
-  );
+  return serverReturn(genUsersData(count), 1000);
 }
 
 export default { fetchUsers };
