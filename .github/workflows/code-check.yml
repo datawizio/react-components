@@ -32,3 +32,6 @@ jobs:
 
       - name: Check eslint
         run: gulp eslint
+
+      - name: Check build
+        run: gulp compile

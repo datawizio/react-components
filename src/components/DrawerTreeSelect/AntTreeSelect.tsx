@@ -1,4 +1,5 @@
 /* eslint-disable */
+// @ts-nocheck
 
 import * as React from "react";
 import RcTreeSelect from "./RcTreeSelect";
@@ -112,6 +113,7 @@ class TreeSelect<T> extends React.Component<TreeSelectProps<T>, {}> {
     }
 
     // ==================== Render =====================
+    // @ts-ignore
     const selectProps = omit(this.props, [
       "prefixCls",
       "suffixIcon",
