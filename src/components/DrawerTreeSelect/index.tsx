@@ -206,13 +206,13 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
     <AntTreeSelect
       {...restProps}
       value={intervalValue}
-      className={"drawer-tree-select"}
+      className="drawer-tree-select"
       treeData={internalTreeData}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
       searchValue={searchValue ? searchValue : drawerVisible ? "1" : ""}
       //@ts-ignore
       dropdownRender={dropdownRender}
-      dropdownClassName={"drawer-dropdown"}
+      dropdownClassName="drawer-tree-select-dropdown-fake"
       showSearch={true}
       listHeight={window.innerHeight - 205}
       onBeforeBlur={handlerSelectBeforeBlur}
