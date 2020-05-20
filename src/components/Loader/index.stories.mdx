@@ -1,0 +1,24 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { UserOutlined } from "@ant-design/icons";
+import Loader from "./index";
+import Input from "../Input";
+
+<Meta title="Components/Loader" component={Loader} />
+
+# Loader
+
+Компонент `Loader`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <Loader loading={true}>
+      <Input placeholder="Basic usage" />
+    </Loader>
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={Loader} />
