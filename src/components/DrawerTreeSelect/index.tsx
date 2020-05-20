@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useEffect
+} from "react";
 
 import AntTreeSelect, {
   TreeSelectProps as AntTreeSelectProps
@@ -92,7 +98,8 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
 
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [intervalValue, setIntervalValue] = useState<SelectValue>(value);
+  const [internalValue, setInternalValue] = useState<SelectValue>(value);
+
   const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
     Key[]
   >([]);
@@ -130,6 +137,11 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
     }
   };
 
+  useEffect(() => {
+    setInternalValue(value);
+    return () => {};
+  }, [value]);
+
   //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
     setTimeout(() => {
@@ -144,13 +156,13 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
 
   const handlerDrawerCancel = useCallback(() => {
     closeDrawer();
-    setIntervalValue(value);
+    setInternalValue(value);
   }, [closeDrawer, value]);
 
   const handlerDrawerSubmit = useCallback(() => {
     closeDrawer();
-    onChange && onChange(intervalValue);
-  }, [onChange, closeDrawer, intervalValue]);
+    onChange && onChange(internalValue);
+  }, [onChange, closeDrawer, internalValue]);
 
   const handlerDrawerFocus = e => {
     setInputRef(e.target);
@@ -168,9 +180,15 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
     drawerVisible
   ]);
 
-  const handleTreeSelectChange = useCallback(value => {
-    setIntervalValue(value);
-  }, []);
+  const handleTreeSelectChange = useCallback(
+    value => {
+      setInternalValue(value);
+      if (!drawerVisible) {
+        onChange && onChange(value);
+      }
+    },
+    [drawerVisible, onChange]
+  );
 
   const handlerTreeExpand = useCallback(expandedKeys => {
     setInternalTreeExpandedKeys(expandedKeys);
@@ -205,7 +223,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   return (
     <AntTreeSelect
       {...restProps}
-      value={intervalValue}
+      value={internalValue}
       className="drawer-tree-select"
       treeData={internalTreeData}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
