@@ -10,6 +10,8 @@ export { default as Button } from "./components/Button";
 
 export { default as Drawer } from "./components/Drawer";
 
+export { default as Loader } from "./components/Loader";
+
 export { default as Select } from "./components/Select";
 
 export { default as TextArea } from "./components/TextArea";
