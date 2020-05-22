@@ -1,2 +1,19 @@
 @import "~antd/es/list/style/index";
 @import "../../styles/variables";
+
+.list-item-field {
+  padding-left: @padding-xs;
+  padding-right: @padding-xss;
+  cursor: pointer;
+  &:hover {
+    background-color: @table-row-hover-bg;
+  }
+  .ant-list-item-meta-title {
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+}
+
+.ant-list-item.list-item-header {
+  font-size: 20px;
+}

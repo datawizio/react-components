@@ -1,5 +1,6 @@
 import * as React from "react";
 import AntdList from "antd/lib/list";
+import Item from "./Item";
 
 import { FCList, ListProps } from "./types.d";
 
@@ -13,7 +14,7 @@ List.defaultProps = {
   bordered: true
 };
 
-List.Item = AntdList.Item;
+List.Item = Item;
 
 export default List;
 export const _ListWithProps: React.FC<ListProps> = {} as any;
