@@ -1,0 +1,33 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import List from "./index";
+
+<Meta title="Components/Lists/List.Item.Field" component={List.Item.Field} />
+
+# ListItemField
+
+Компонент `List.Item.Field`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <List.Item.Field
+      title="List item title"
+      description="List item desctiption"
+    />
+  </Story>
+</Preview>
+
+## With value
+
+<Preview>
+  <Story name="With value">
+    <List.Item.Field
+      title="List item title"
+      description="List item desctiption"
+      value="Value"
+    />
+  </Story>
+</Preview>
+
+<Props of={List.Item.Field} />
