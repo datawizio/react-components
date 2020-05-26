@@ -18,6 +18,7 @@ import Button from "../Button";
 
 import "./index.less";
 import clsx from "clsx";
+import { AntTreeNode } from "antd/lib/tree";
 
 export interface DrawerTreeSelectProps<VT>
   extends Omit<AntTreeSelectProps<VT>, "onChange"> {
@@ -69,7 +70,7 @@ export interface DrawerTreeSelectProps<VT>
   /**
    * Event when user click Submit
    */
-  onChange?: (values: SelectValue) => void;
+  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
 
 const triggerInputChangeValue = (input: HTMLInputElement, value: string) => {
@@ -107,6 +108,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [internalValue, setInternalValue] = useState<SelectValue>(value);
+  const [selected, setSelected] = useState<AntTreeNode>();
 
   const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
     Key[]
@@ -148,6 +150,18 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
     return () => {};
   }, [value]);
 
+  const triggerOnChange = useCallback(
+    value => {
+      if (!onChange) return;
+      if (!multiple && value) {
+        onChange(value, selected);
+        return;
+      }
+      onChange(value);
+    },
+    [multiple, selected, onChange]
+  );
+
   //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
     setTimeout(() => {
@@ -167,8 +181,8 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
 
   const handlerDrawerSubmit = useCallback(() => {
     closeDrawer();
-    onChange && onChange(internalValue);
-  }, [onChange, closeDrawer, internalValue]);
+    triggerOnChange(internalValue);
+  }, [triggerOnChange, closeDrawer, internalValue]);
 
   const handlerDrawerFocus = e => {
     setInputRef(e.target);
@@ -186,18 +200,25 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
     drawerVisible
   ]);
 
+  const handleTreeSelect = useCallback(
+    (_, node) => {
+      setSelected(node);
+    },
+    [setSelected]
+  );
+
   const handleTreeSelectChange = useCallback(
     (value, labels, el) => {
       if (multiple) {
         setInternalValue(value);
       } else {
-        setInternalValue(el.checked ? [el.triggerValue] : []);
+        setInternalValue(el.checked ? el.triggerValue : null);
       }
       if (!drawerVisible) {
-        onChange && onChange(value);
+        triggerOnChange(value);
       }
     },
-    [drawerVisible, onChange, multiple]
+    [drawerVisible, triggerOnChange, multiple]
   );
 
   const handlerTreeExpand = useCallback(expandedKeys => {
@@ -252,6 +273,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
       onChange={handleTreeSelectChange}
       onFocus={handlerDrawerFocus}
       onTreeExpand={handlerTreeExpand}
+      onSelect={handleTreeSelect}
     />
   );
 };

@@ -1,0 +1,30 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { UserOutlined } from "@ant-design/icons";
+import PhoneInput from "./index";
+import { PhoneInputProps } from "./story/helper";
+
+<Meta title="Components/Input/PhoneInput" component={PhoneInput} />
+
+# PhoneInput
+
+Компонент `PhoneInput`.
+
+Базовый компонент:
+[**react-phone-number-input**](https://www.npmjs.com/package/react-phone-number-input).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <PhoneInput placeholder="Basic usage" />
+  </Story>
+</Preview>
+
+## Props
+
+<Props
+  components={{
+    PhoneInput: PhoneInputProps,
+    isValidPhoneNumber: PhoneInput
+  }}
+/>

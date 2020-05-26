@@ -1,0 +1,40 @@
+@import "~react-phone-number-input/style.css";
+@import "~antd/es/style/mixins/compatibility.less";
+@import "../../styles/variables";
+
+.PhoneInput {
+  border: 1px solid #d9d9d9;
+  min-height: @input-height-base;
+  line-height: @line-height-base;
+  border-radius: @border-radius-base;
+  transition: all 0.3s;
+  .PhoneInputCountry {
+    background-color: #fafafa;
+    width: 40px;
+    padding: 0 5px;
+    margin: 0;
+  }
+  .PhoneInputInput {
+    border: none;
+    color: @input-color;
+    font-size: @font-size-base;
+    padding-left: 11px;
+    &:focus {
+      border: none;
+      outline: none;
+    }
+    .placeholder ();
+  }
+
+  &:hover {
+    border-color: @input-hover-border-color;
+  }
+  &.PhoneInput--focus,
+  &:focus {
+    border-color: ~`colorPalette("@{outline-color}", 5) `;
+    border-right-width: @border-width-base !important;
+    outline: 0;
+    box-shadow: @input-outline-offset @outline-blur-size @outline-width
+      fade(@outline-color, @outline-fade);
+  }
+}
