@@ -7,14 +7,41 @@
 .drawer-tree-select-dropdown-fake.ant-select-dropdown.ant-tree-select-dropdown {
   visibility: hidden;
 }
+.drawer-tree-select .ant-select-selection-search-input {
+  font-size: 1px;
+}
 
 .drawer-tree-select-dropdown {
   .ant-drawer-body {
     .ant-select-tree {
+      .tree-check-all {
+        display: none;
+      }
+
       padding-top: @padding-md;
       margin-left: -@margin-lg + 1;
       .tree-check-all .ant-select-tree-switcher {
         visibility: hidden;
+      }
+    }
+  }
+
+  &.drawer-tree-select-show-all {
+    .ant-drawer-body {
+      .ant-select-tree {
+        .tree-check-all {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  &.drawer-tree-select-dropdown-flat-list {
+    .ant-drawer-body {
+      .ant-select-tree {
+        .ant-select-tree-indent {
+          display: none;
+        }
       }
     }
   }

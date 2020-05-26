@@ -28,6 +28,28 @@ let treeData = generateTreeList("0", 2);
   </Story>
 </Preview>
 
+## Flat List
+
+<Preview>
+  <Story name="Flat list">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      allowClear
+      treeCheckable={true}
+      isFlatList={true}
+      treeNodeLabelProp="title"
+      treeData={[
+        { key: 1, title: "123", children: [] },
+        { key: 2, title: "1234", children: [] },
+        { key: 3, title: "123456", children: [] },
+        { key: 4, title: "1234567", children: [] },
+        { key: 5, title: "12345678", children: [] }
+      ]}
+    />
+  </Story>
+</Preview>
+
 ## Props
 
 - [**antd/drawer**](https://ant.design/components/drawer/#API)

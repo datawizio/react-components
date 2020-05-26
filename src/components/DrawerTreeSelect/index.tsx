@@ -17,6 +17,7 @@ import Drawer from "../Drawer";
 import Button from "../Button";
 
 import "./index.less";
+import clsx from "clsx";
 
 export interface DrawerTreeSelectProps<VT>
   extends Omit<AntTreeSelectProps<VT>, "onChange"> {
@@ -61,6 +62,11 @@ export interface DrawerTreeSelectProps<VT>
   submitText?: string;
 
   /**
+   * tree data is flat list or not
+   */
+  isFlatList?: boolean;
+
+  /**
    * Event when user click Submit
    */
   onChange?: (values: SelectValue) => void;
@@ -92,7 +98,9 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
     cancelText,
     submitText,
     value,
+    isFlatList,
     onChange,
+    multiple,
     ...restProps
   } = props;
 
@@ -108,19 +116,16 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
-    if (!showCheckAll) return treeDefaultExpandedKeys;
 
     return treeDefaultExpandedKeys.concat([checkAllKey]);
   }, [
     treeDefaultExpandedKeys,
-    showCheckAll,
     checkAllKey,
     searchValue,
     internalTreeExpandedKeys
   ]);
 
   const internalTreeData: DataNode[] = useMemo(() => {
-    if (!showCheckAll) return treeData;
     return [
       {
         key: checkAllKey,
@@ -129,7 +134,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
         className: "tree-check-all"
       }
     ];
-  }, [treeData, checkAllKey, checkAllTitle, showCheckAll]);
+  }, [treeData, checkAllKey, checkAllTitle]);
 
   const setInputRef = (el: HTMLInputElement) => {
     if (el.classList.contains("ant-select-selection-search-input")) {
@@ -181,13 +186,17 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   ]);
 
   const handleTreeSelectChange = useCallback(
-    value => {
-      setInternalValue(value);
+    (value, labels, el) => {
+      if (multiple) {
+        setInternalValue(value);
+      } else {
+        setInternalValue(el.checked ? [el.triggerValue] : []);
+      }
       if (!drawerVisible) {
         onChange && onChange(value);
       }
     },
-    [drawerVisible, onChange]
+    [drawerVisible, onChange, multiple]
   );
 
   const handlerTreeExpand = useCallback(expandedKeys => {
@@ -197,7 +206,11 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   // -------- RENDERS ---------
   const dropdownRender = menu => (
     <Drawer
-      className="drawer-tree-select-dropdown"
+      className={clsx({
+        "drawer-tree-select-dropdown": true,
+        "drawer-tree-select-dropdown-show-all": showCheckAll,
+        "drawer-tree-select-dropdown-flat-list": isFlatList
+      })}
       title={drawerTitle ? drawerTitle : restProps.placeholder}
       onClose={handlerDrawerCancel}
       visible={drawerVisible}
@@ -231,6 +244,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
+      multiple={multiple}
       showSearch={true}
       listHeight={window.innerHeight - 205}
       onBeforeBlur={handlerSelectBeforeBlur}
@@ -245,6 +259,7 @@ DrawerTreeSelect.defaultProps = {
   maxTagCount: 10,
   treeDefaultExpandedKeys: [],
   showCheckAll: false,
+  isFlatList: false,
   checkAllTitle: "Check all",
   checkAllKey: "-1",
   drawerTitle: "",
