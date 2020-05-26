@@ -130,6 +130,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
       {
         key: checkAllKey,
         title: checkAllTitle,
+        value: checkAllKey,
         children: treeData,
         className: "tree-check-all"
       }
@@ -240,7 +241,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
       className="drawer-tree-select"
       treeData={internalTreeData}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
-      searchValue={searchValue ? searchValue : drawerVisible ? "1" : ""}
+      searchValue={searchValue ? searchValue : ""}
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
