@@ -20,7 +20,11 @@ export { default as TextArea } from "./components/TextArea";
 
 export { default as Checkbox } from "./components/Checkbox";
 
+export { default as DatePicker } from "./components/DatePicker";
+
 export { default as PageHeader } from "./components/PageHeader";
+
+export { default as PhoneInput } from "./components/PhoneInput";
 
 export { default as TreeSearch } from "./components/TreeSearch";
 
