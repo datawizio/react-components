@@ -153,9 +153,9 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   const triggerOnChange = useCallback(
     value => {
       if (!onChange) return;
-      if (!multiple && value) {
-        onChange(value, selected);
-        return;
+      if (!multiple) {
+        if (value[0]) return onChange(value[0], selected);
+        return onChange("");
       }
       onChange(value);
     },
@@ -212,7 +212,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
       if (multiple) {
         setInternalValue(value);
       } else {
-        setInternalValue(el.checked ? el.triggerValue : null);
+        setInternalValue(el.checked ? [el.triggerValue] : []);
       }
       if (!drawerVisible) {
         triggerOnChange(value);
