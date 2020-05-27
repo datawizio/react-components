@@ -32,6 +32,8 @@ export { default as TreeSelect } from "./components/TreeSelect";
 
 export { default as SearchInput } from "./components/SearchInput";
 
+export { default as DrawerSelect } from "./components/DrawerSelect";
+
 export { default as CheckboxGroup } from "./components/CheckboxGroup";
 
 export { default as InfiniteScroll } from "./components/InfiniteScroll";

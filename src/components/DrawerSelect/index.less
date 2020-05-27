@@ -1,0 +1,84 @@
+@import "~antd/es/select/style/index";
+@import "~antd/es/tree-select/style/index";
+@import "~antd/es/skeleton/style/index";
+@import "~antd/es/style/themes/default.less";
+@import "../../styles/variables";
+
+.drawer-select .ant-select-selection-search-input {
+  font-size: 1px;
+}
+
+.drawer-select-dropdown-fake.ant-select-dropdown.ant-select-dropdown {
+  visibility: hidden;
+}
+
+.drawer-select-dropdown {
+  .ant-input-search {
+    margin-bottom: 10px;
+  }
+  .ant-select-item {
+    padding-left: 0;
+    align-items: center;
+    transition: all 0.3s;
+
+    &::before {
+      content: " ";
+      margin-right: 10px;
+      width: @checkbox-size;
+      height: @checkbox-size;
+      border: @checkbox-border-width @border-style-base @border-color-base;
+      border-radius: @border-radius-base;
+    }
+
+    &:hover {
+      &::before {
+        border-color: @checkbox-color;
+      }
+    }
+
+    &.ant-select-item-option-selected {
+      &::before {
+        background-color: @checkbox-color;
+        border-color: @checkbox-color;
+      }
+      &::after {
+        @check-width: (@checkbox-size / 14) * 5px;
+        @check-height: (@checkbox-size / 14) * 8px;
+
+        position: absolute;
+        display: table;
+        border: 2px solid @checkbox-check-color;
+        border-top: 0;
+        border-left: 0;
+        transform: rotate(45deg) scale(1) translate(-50%, -50%);
+        opacity: 1;
+        transition: all 0.2s @ease-out-back 0.1s;
+        content: " ";
+
+        top: 15px;
+        left: 4px;
+
+        width: @check-width;
+        height: @check-height;
+      }
+    }
+
+    &.ant-select-item-option-active,
+    &.ant-select-item-option-selected {
+      background-color: transparent;
+      font-weight: 400;
+    }
+
+    .ant-select-item-option-state {
+      display: none;
+    }
+  }
+
+  .drawer-select-loader-container {
+    height: 16px;
+    overflow: hidden;
+    .ant-skeleton-title {
+      margin: 0;
+    }
+  }
+}

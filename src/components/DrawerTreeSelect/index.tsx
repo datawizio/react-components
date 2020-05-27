@@ -19,6 +19,7 @@ import Button from "../Button";
 import "./index.less";
 import clsx from "clsx";
 import { AntTreeNode } from "antd/lib/tree";
+import { triggerInputChangeValue } from "../../utils/trigger";
 
 export interface DrawerTreeSelectProps<VT>
   extends Omit<AntTreeSelectProps<VT>, "onChange"> {
@@ -72,16 +73,6 @@ export interface DrawerTreeSelectProps<VT>
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
-
-const triggerInputChangeValue = (input: HTMLInputElement, value: string) => {
-  var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
-    window.HTMLInputElement.prototype,
-    "value"
-  ).set;
-  nativeInputValueSetter.call(input, value);
-
-  input.dispatchEvent(new Event("input", { "bubbles": true }));
-};
 
 const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
   SelectValue
