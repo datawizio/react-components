@@ -313,7 +313,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           {loading && (
             <Skeleton
               title={{ width: 300 }}
-              paragraph={{ rows: 0 }}
+              paragraph={{ rows: 1 }}
               loading={true}
               active
             />

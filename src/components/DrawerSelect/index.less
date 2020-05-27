@@ -13,6 +13,9 @@
 }
 
 .drawer-select-dropdown {
+  .ant-drawer-body {
+    overflow: visible;
+  }
   .ant-input-search {
     margin-bottom: 10px;
   }
@@ -76,9 +79,15 @@
 
   .drawer-select-loader-container {
     height: 16px;
-    overflow: hidden;
+    overflow: visible;
     .ant-skeleton-title {
       margin: 0;
+    }
+    .ant-skeleton-content .ant-skeleton-title + .ant-skeleton-paragraph {
+      margin-top: 5px;
+      li {
+        width: 300px !important;
+      }
     }
   }
 }
