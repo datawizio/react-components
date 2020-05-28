@@ -74,27 +74,27 @@ export interface DrawerTreeSelectProps<VT>
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
 
-const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<
-  SelectValue
->> = props => {
-  const {
-    showCheckAll,
-    checkAllTitle,
-    checkAllKey,
-    drawerTitle,
-    drawerSearchPlaceholder,
-    drawerWidth,
-    treeDefaultExpandedKeys,
-    treeExpandedKeys,
-    treeData,
-    cancelText,
-    submitText,
-    value,
-    isFlatList,
-    onChange,
-    multiple,
-    ...restProps
-  } = props;
+const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
+  showCheckAll,
+  checkAllTitle,
+  checkAllKey,
+  drawerTitle,
+  drawerSearchPlaceholder,
+  drawerWidth,
+  treeDefaultExpandedKeys,
+  treeExpandedKeys,
+  treeData,
+  cancelText,
+  submitText,
+  value,
+  isFlatList,
+  onChange,
+  multiple,
+  ...restProps
+}) => {
+  if (!multiple && !value) {
+    value = [];
+  }
 
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
@@ -278,7 +278,7 @@ DrawerTreeSelect.defaultProps = {
   checkAllKey: "-1",
   drawerTitle: "",
   drawerSearchPlaceholder: "Search",
-  drawerWidth: 300,
+  drawerWidth: 400,
   cancelText: "Cancel",
   submitText: "Submit"
 };
