@@ -56,11 +56,11 @@ export interface DrawerSelectProps<VT>
    */
   loadData?: (string, number) => { data: [any]; totalPages: number };
 
-  loadingText: string;
+  loadingText?: string;
 
-  multiple: boolean;
+  multiple?: boolean;
 
-  noDataText: string;
+  noDataText?: string;
 
   /**
    * Submit text in drawer

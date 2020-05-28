@@ -40,13 +40,13 @@ import DrawerSelect from "./index";
       withPagination
       loadData={async (search, page) => {
         console.log(search, page);
-        const response = await fetch("https://randomuser.me/api/?results=100");
+        const response = await fetch("https://randomuser.me/api/?results=1000");
         const json = await response.json();
         const data = json.results.map(user => ({
           title: `${user.name.first} ${user.name.last}`,
           key: user.login.uuid
         }));
-        const totalPages = 2;
+        const totalPages = 10;
         return { data, totalPages };
       }}
     />
