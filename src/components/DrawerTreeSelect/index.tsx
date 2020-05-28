@@ -68,11 +68,11 @@ export interface DrawerTreeSelectProps<VT>
    */
   isFlatList?: boolean;
 
-  formatRender: ((props: any) => React.ReactElement) | null;
+  formatRender?: ((props: any) => React.ReactElement) | null;
 
-  loadData: (filters: any) => Promise<any>;
-  asyncData: boolean;
-  remoteSearch: boolean;
+  loadData?: (filters: any) => Promise<any>;
+  asyncData?: boolean;
+  remoteSearch?: boolean;
 
   /**
    * Event when user click Submit
