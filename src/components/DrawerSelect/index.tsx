@@ -269,10 +269,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   );
 
   // ------- EFFECTS ----------
-  useEffect(() => {
-    setInternalValue(value);
-    return () => {};
-  }, [value]);
+  // useEffect(() => {
+  //   setInternalValue(value);
+  //   return () => {};
+  // }, [value]);
 
   useEffect(() => {
     !asyncData && loadData && loadPage("");
