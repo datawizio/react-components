@@ -92,9 +92,12 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   multiple,
   ...restProps
 }) => {
-  if (!multiple && !value) {
-    value = [];
-  }
+  value = useMemo(() => {
+    if (!multiple && !value) {
+      return [];
+    }
+    return value;
+  }, [value]);
 
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
