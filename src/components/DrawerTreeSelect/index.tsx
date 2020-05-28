@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-  useEffect
-} from "react";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 
 import AntTreeSelect, {
   TreeSelectProps as AntTreeSelectProps
@@ -92,13 +86,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   multiple,
   ...restProps
 }) => {
-  value = useMemo(() => {
-    if (!multiple && !value) {
-      return [];
-    }
-    return value;
-  }, [value]);
-
+  if (!multiple && !value) value = [];
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const [internalValue, setInternalValue] = useState<SelectValue>(value);
@@ -138,11 +126,6 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       inputRef.current = el;
     }
   };
-
-  useEffect(() => {
-    setInternalValue(value);
-    return () => {};
-  }, [value]);
 
   const triggerOnChange = useCallback(
     value => {
