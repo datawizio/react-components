@@ -102,7 +102,6 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   remoteSearch,
   ...restProps
 }) => {
-  if (!multiple && !value) value = [];
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [, setSearchValue] = useState<string>("");
   const [internalValue, setInternalValue] = useState<SelectValue>(value);
@@ -245,8 +244,16 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   // ---- EFFECTS ------
 
   useEffect(() => {
+    if (!multiple && !value) value = [];
+    setInternalValue(value);
+  }, [value]);
+
+  useEffect(() => {
+    setStateTreeData(treeData);
+  }, [treeData]);
+
+  useEffect(() => {
     !asyncData && loadData && internalLoadData();
-    return () => {};
     //eslint-disable-next-line
   }, [asyncData, loadData]);
 
