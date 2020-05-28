@@ -1,0 +1,32 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import DatePicker from "./index";
+
+<Meta title="Components/DatePicker/DatePicker" component={DatePicker} />
+
+# DatePicker
+
+Компонент `DatePicker`.
+
+Базовый компонент:
+[**antd/DatePicker**](https://ant.design/components/date-picker/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    {() => {
+      const handleChange = value => {
+        {
+          /* console.log(value.format("YYYY-MM-DD")); */
+        }
+      };
+      return <DatePicker format="YYYY-MM-DD" onChange={handleChange} />;
+    }}
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/DatePicker**](https://ant.design/components/date-picker/#API)
+
+<Props of={DatePicker} />
