@@ -54,7 +54,7 @@ export interface DrawerSelectProps<VT>
   /**
    * Функция которая будет вызываться для подгрузки данных с параметрами `searchValue`, `page`
    */
-  loadData?: (string, number) => { data: [any]; totalPages: number };
+  loadData?: (string, number) => { data: [{ any }]; totalPages: number };
 
   loadingText?: string;
 
