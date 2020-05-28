@@ -1,4 +1,10 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useEffect
+} from "react";
 
 import AntTreeSelect, {
   TreeSelectProps as AntTreeSelectProps
@@ -62,6 +68,12 @@ export interface DrawerTreeSelectProps<VT>
    */
   isFlatList?: boolean;
 
+  formatRender: ((props: any) => React.ReactElement) | null;
+
+  loadData: (filters: any) => Promise<any>;
+  asyncData: boolean;
+  remoteSearch: boolean;
+
   /**
    * Event when user click Submit
    */
@@ -69,12 +81,14 @@ export interface DrawerTreeSelectProps<VT>
 }
 
 const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
+  asyncData,
   showCheckAll,
   checkAllTitle,
   checkAllKey,
   drawerTitle,
   drawerSearchPlaceholder,
   drawerWidth,
+  formatRender,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
   treeData,
@@ -83,14 +97,20 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   value,
   isFlatList,
   onChange,
+  loadData,
   multiple,
+  remoteSearch,
   ...restProps
 }) => {
   if (!multiple && !value) value = [];
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [, setSearchValue] = useState<string>("");
   const [internalValue, setInternalValue] = useState<SelectValue>(value);
   const [selected, setSelected] = useState<AntTreeNode>();
+  const [stateTreeData, setStateTreeData] = useState(treeData);
+
+  const formatSelected = useRef<string[]>();
+  const searchValue = useRef<string>();
 
   const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
     Key[]
@@ -98,7 +118,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   const inputRef = useRef<HTMLInputElement>();
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
-    if (searchValue) return undefined;
+    if (searchValue.current) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
 
     return treeDefaultExpandedKeys.concat([checkAllKey]);
@@ -110,16 +130,20 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   ]);
 
   const internalTreeData: DataNode[] = useMemo(() => {
-    return [
-      {
-        key: checkAllKey,
-        title: checkAllTitle,
-        value: checkAllKey,
-        children: treeData,
-        className: "tree-check-all"
-      }
-    ];
-  }, [treeData, checkAllKey, checkAllTitle]);
+    return showCheckAll
+      ? [
+          {
+            key: checkAllKey,
+            title: checkAllTitle,
+            value: checkAllKey,
+            children: stateTreeData,
+            className: "tree-check-all"
+          }
+        ]
+      : stateTreeData;
+  }, [stateTreeData, checkAllKey, checkAllTitle, showCheckAll]);
+
+  // ----- METHODS -------
 
   const setInputRef = (el: HTMLInputElement) => {
     if (el.classList.contains("ant-select-selection-search-input")) {
@@ -139,6 +163,15 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     [multiple, selected, onChange]
   );
 
+  const internalLoadData = useCallback(async () => {
+    const filters = {
+      search: searchValue.current,
+      format: formatSelected.current
+    };
+    const data = await loadData(filters);
+    setStateTreeData(data);
+  }, [loadData]);
+
   //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
     setTimeout(() => {
@@ -146,8 +179,10 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       activeElement.blur();
     }, 100);
 
+    searchValue.current = "";
     setDrawerVisible(false);
-    setSearchValue("");
+
+    // setSearchValue("");
     setInternalTreeExpandedKeys([]);
   }, []);
 
@@ -164,14 +199,19 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   const handlerDrawerFocus = e => {
     setInputRef(e.target);
     setDrawerVisible(true);
-    triggerInputChangeValue(inputRef.current, searchValue);
+    triggerInputChangeValue(inputRef.current, searchValue.current);
   };
 
-  const handlerSearchInputChange = e => {
-    const inputValue = e.target.value;
-    setSearchValue(inputValue);
-    triggerInputChangeValue(inputRef.current, inputValue);
-  };
+  const handlerSearchInputChange = useCallback(
+    e => {
+      const inputValue = e.target.value;
+
+      searchValue.current = inputValue;
+      setSearchValue(inputValue);
+      triggerInputChangeValue(inputRef.current, inputValue);
+    },
+    [inputRef]
+  );
 
   const handlerSelectBeforeBlur = useCallback(() => !drawerVisible, [
     drawerVisible
@@ -202,35 +242,69 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     setInternalTreeExpandedKeys(expandedKeys);
   }, []);
 
+  // ---- EFFECTS ------
+
+  useEffect(() => {
+    !asyncData && loadData && internalLoadData();
+    return () => {};
+    //eslint-disable-next-line
+  }, [asyncData, loadData]);
+
   // -------- RENDERS ---------
-  const dropdownRender = menu => (
-    <Drawer
-      className={clsx({
-        "drawer-tree-select-dropdown": true,
-        "drawer-tree-select-dropdown-show-all": showCheckAll,
-        "drawer-tree-select-dropdown-flat-list": isFlatList
-      })}
-      title={drawerTitle ? drawerTitle : restProps.placeholder}
-      onClose={handlerDrawerCancel}
-      visible={drawerVisible}
-      width={drawerWidth}
-      actions={
-        <>
-          <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
-          <Button onClick={handlerDrawerSubmit} type="primary">
-            {submitText}
-          </Button>
-        </>
+
+  const format = useMemo(() => {
+    if (!formatRender) return null;
+
+    return formatRender({
+      onChange: (selected: string[]) => {
+        formatSelected.current = selected;
+        internalLoadData();
       }
-    >
-      <SearchInput
-        placeholder={drawerSearchPlaceholder}
-        value={searchValue}
-        onChange={handlerSearchInputChange}
-      />
-      {menu}
-    </Drawer>
+    });
+  }, [formatRender, internalLoadData]);
+
+  const dropdownRender = useCallback(
+    menu => (
+      <Drawer
+        className={clsx({
+          "drawer-tree-select-dropdown": true,
+          "drawer-tree-select-dropdown-show-all": showCheckAll,
+          "drawer-tree-select-dropdown-flat-list": isFlatList
+        })}
+        title={drawerTitle ? drawerTitle : restProps.placeholder}
+        onClose={handlerDrawerCancel}
+        visible={drawerVisible}
+        width={drawerWidth}
+        actions={
+          <>
+            <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
+            <Button onClick={handlerDrawerSubmit} type="primary">
+              {submitText}
+            </Button>
+          </>
+        }
+      >
+        {format}
+        <SearchInput
+          placeholder={drawerSearchPlaceholder}
+          value={searchValue.current}
+          onChange={handlerSearchInputChange}
+        />
+        {menu}
+      </Drawer>
+    ),
+    //eslint-disable-next-line
+    [
+      drawerVisible,
+      searchValue,
+      handlerDrawerCancel,
+      handlerDrawerSubmit,
+      handlerSearchInputChange
+    ]
   );
+
+  const listHeight =
+    window.innerHeight - 205 - (formatRender === null ? 0 : 44);
 
   return (
     <AntTreeSelect
@@ -239,13 +313,13 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       className="drawer-tree-select"
       treeData={internalTreeData}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
-      searchValue={searchValue ? searchValue : ""}
+      searchValue={searchValue.current ? searchValue.current : ""}
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
       multiple={multiple}
       showSearch={true}
-      listHeight={window.innerHeight - 205}
+      listHeight={listHeight}
       onBeforeBlur={handlerSelectBeforeBlur}
       onChange={handleTreeSelectChange}
       onFocus={handlerDrawerFocus}
@@ -266,7 +340,9 @@ DrawerTreeSelect.defaultProps = {
   drawerSearchPlaceholder: "Search",
   drawerWidth: 400,
   cancelText: "Cancel",
-  submitText: "Submit"
+  submitText: "Submit",
+  formatRender: null,
+  remoteSearch: false
 };
 
 export default DrawerTreeSelect;
