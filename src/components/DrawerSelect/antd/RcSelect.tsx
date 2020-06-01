@@ -43,7 +43,9 @@ import {
   flattenOptions,
   fillOptionsWithMissingValue
 } from "rc-select/es/utils/valueUtil";
-import generateSelector, { SelectProps } from "../DrawerTreeSelect/RcSelect";
+import generateSelector, {
+  SelectProps
+} from "../../DrawerTreeSelect/antd/RcSelect";
 import { RefSelectProps } from "rc-select/es/generate";
 import { DefaultValueType } from "rc-select/es/interface/generator";
 import warningProps from "rc-select/es/utils/warningPropsUtil";

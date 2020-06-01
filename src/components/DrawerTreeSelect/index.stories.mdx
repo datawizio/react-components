@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
-import Select from "../Select";
 import DrawerTreeSelect from "./index";
 import { generateTreeList } from "../../utils/data/tree";
+import { Helper } from "./story/helper";
 let treeData = generateTreeList("0", 2);
 
 <Meta title="Components/Select/DrawerTreeSelect" component={DrawerTreeSelect} />
@@ -66,21 +66,19 @@ let treeData = generateTreeList("0", 2);
       treeNodeFilterProp="title"
       value=""
       formatRender={({ onChange }) => {
-        return (
-          <Select
-            mode="multiple"
-            options={[
-              { value: "123", label: "123" },
-              { value: "1233", label: "1233" }
-            ]}
-            onChange={selected => {
-              onChange(selected);
-            }}
-          />
-        );
+        return <Helper onChange={onChange} />;
       }}
       loadData={filters => {
-        console.log(filters);
+        console.log(filters.formats);
+        if (filters.formats) {
+          return [
+            { key: 1, title: "345", additional: "123", children: [] },
+            { key: 2, title: "3456", additional: "123", children: [] },
+            { key: 3, title: "34567", additional: "123", children: [] },
+            { key: 4, title: "345678", additional: "123", children: [] },
+            { key: 5, title: "3456789", additional: "123", children: [] }
+          ];
+        }
         return [
           { key: 1, title: "23", additional: "123", children: [] },
           { key: 2, title: "1234", additional: "123", children: [] },
@@ -88,6 +86,53 @@ let treeData = generateTreeList("0", 2);
           { key: 4, title: "1234567", additional: "123", children: [] },
           { key: 5, title: "12345678", additional: "123", children: [] }
         ];
+      }}
+      onChange={(value, selected) => {
+        console.log(value, selected);
+      }}
+    />
+  </Story>
+</Preview>
+
+## With levels
+
+<Preview>
+  <Story name="With levels">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      showLevels
+      allowClear
+      treeCheckable={true}
+      treeNodeFilterProp="title"
+      value=""
+      loadData={filters => {
+        if (filters.level) {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve({
+                data: [
+                  { key: 1, title: "345", additional: "123", children: [] },
+                  { key: 2, title: "3456", additional: "123", children: [] },
+                  { key: 3, title: "34567", additional: "123", children: [] },
+                  { key: 4, title: "345678", additional: "123", children: [] },
+                  { key: 5, title: "3456789", additional: "123", children: [] }
+                ],
+                levels: 4
+              });
+            }, 2000);
+          });
+        }
+        return {
+          data: [
+            { key: 1, title: "23", additional: "123", children: [] },
+            { key: 2, title: "1234", additional: "123", children: [] },
+            { key: 3, title: "123456", additional: "123", children: [] },
+            { key: 4, title: "1234567", additional: "123", children: [] },
+            { key: 5, title: "12345678", additional: "123", children: [] }
+          ],
+          levels: 4
+        };
       }}
       onChange={(value, selected) => {
         console.log(value, selected);
