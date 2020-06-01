@@ -13,8 +13,20 @@
 
 .drawer-tree-select-dropdown {
   .ant-drawer-body {
+    overflow: visible;
     div + .ant-input-search {
       margin-top: @margin-sm;
+    }
+    .ant-select-empty {
+      margin-top: @margin-sm;
+    }
+    .drawer-tree-select-levels {
+      width: 100%;
+      display: flex;
+      label {
+        flex: 1;
+        text-align: center;
+      }
     }
     .ant-select-tree {
       .tree-check-all {
@@ -25,6 +37,20 @@
       margin-left: -@margin-lg + 1;
       .tree-check-all .ant-select-tree-switcher {
         visibility: hidden;
+      }
+    }
+
+    .drawer-select-loader-container {
+      height: 16px;
+      overflow: visible;
+      .ant-skeleton-title {
+        margin: 0;
+      }
+      .ant-skeleton-content .ant-skeleton-title + .ant-skeleton-paragraph {
+        margin-top: 5px;
+        li {
+          width: 300px !important;
+        }
       }
     }
   }

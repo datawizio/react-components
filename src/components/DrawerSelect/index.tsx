@@ -6,18 +6,21 @@ import React, {
   useEffect
 } from "react";
 
-import AntSelect, { SelectProps as AntSelectProps } from "./AntSelect";
+import clsx from "clsx";
+
+import AntSelect, { SelectProps as AntSelectProps } from "./antd/AntSelect";
 import { SelectValue } from "antd/lib/tree-select";
 
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
+import { Skeleton } from "antd";
+
+import { AntTreeNode } from "antd/lib/tree";
+
+import { triggerInputChangeValue } from "../../utils/trigger";
 
 import "./index.less";
-import clsx from "clsx";
-import { AntTreeNode } from "antd/lib/tree";
-import { triggerInputChangeValue } from "../../utils/trigger";
-import { Skeleton } from "antd";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
