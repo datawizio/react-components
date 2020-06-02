@@ -47,6 +47,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   isFlatList,
   onChange,
   loadData,
+  loadChildren,
   multiple,
   remoteSearch,
   loading,
@@ -215,6 +216,12 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     internalLoadData();
   };
 
+  const handleTreeLoadData = async node => {
+    const data = await loadChildren(node.id);
+    setStateTreeData(internalTreeData.concat(data));
+    triggerInputChangeValue(inputRef.current, searchValue.current);
+  };
+
   // ---- EFFECTS ------
 
   useEffect(() => {
@@ -324,6 +331,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       listHeight={listHeight}
       loading={internalLoading}
       notFoundContent={internalLoading ? loadingText : noDataText}
+      loadData={loadChildren ? handleTreeLoadData : null}
       onBeforeBlur={handlerSelectBeforeBlur}
       onChange={handleTreeSelectChange}
       onFocus={handlerDrawerFocus}
