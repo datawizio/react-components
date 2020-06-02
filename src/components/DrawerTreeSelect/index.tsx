@@ -307,7 +307,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     204 -
     (formatRender === null ? 0 : 44) -
     (showLevels ? 44 : 0);
-  console.log(listHeight, formatRender, showLevels);
+
   return (
     <AntTreeSelect
       {...restProps}
