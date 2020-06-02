@@ -1,6 +1,6 @@
 @import "~antd/es/select/style/index";
+@import "~antd/es/radio/style/index";
 @import "~antd/es/tree-select/style/index";
-@import "~antd/es/style/themes/default.less";
 @import "../../styles/variables";
 
 .drawer-tree-select.ant-select-focused .ant-select-selection-search-input,
@@ -14,7 +14,9 @@
 .drawer-tree-select-dropdown {
   .ant-drawer-body {
     overflow: visible;
-    div + .ant-input-search {
+    padding-bottom: @padding-lg - 16px;
+    div + .ant-input-search,
+    div + .drawer-tree-select-levels {
       margin-top: @margin-sm;
     }
     .ant-select-empty {

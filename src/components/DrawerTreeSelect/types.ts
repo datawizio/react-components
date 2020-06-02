@@ -57,6 +57,8 @@ export interface DrawerTreeSelectProps<VT>
 
   level?: number;
 
+  levelText?: string;
+
   /**
    * Cancel text in drawer
    */
