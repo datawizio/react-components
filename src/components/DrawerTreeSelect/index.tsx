@@ -42,6 +42,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   submitText,
   loadingText,
   noDataText,
+  levelText,
   value,
   isFlatList,
   onChange,
@@ -268,6 +269,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
             onChange={handleLevelChange}
             value={levelSelected.current}
             levels={internalLevels}
+            levelText={levelText}
           />
         ) : null}
         <SearchInput
@@ -301,8 +303,11 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   );
 
   const listHeight =
-    window.innerHeight - 205 - (formatRender === null ? 0 : 44);
-
+    window.innerHeight -
+    204 -
+    (formatRender === null ? 0 : 44) -
+    (showLevels ? 44 : 0);
+  console.log(listHeight, formatRender, showLevels);
   return (
     <AntTreeSelect
       {...restProps}
@@ -343,6 +348,7 @@ DrawerTreeSelect.defaultProps = {
   submitText: "Submit",
   loadingText: "Loading",
   noDataText: "No data",
+  levelText: "Level %s",
   formatRender: null,
   remoteSearch: false
 };

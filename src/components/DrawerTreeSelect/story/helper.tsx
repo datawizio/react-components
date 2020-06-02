@@ -11,7 +11,6 @@ export const Helper = ({ onChange }) => {
   ]);
 
   React.useEffect(() => {
-    console.log(12);
     setOptions([
       { value: "123", label: "1" },
       {

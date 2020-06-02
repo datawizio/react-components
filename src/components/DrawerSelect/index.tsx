@@ -341,7 +341,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       showSearch={true}
       onSearch={handleSearch}
       optionFilterProp="title"
-      listHeight={window.innerHeight - 215}
+      listHeight={window.innerHeight - 198}
       notFoundContent={loading ? loadingText : noDataText}
       onBeforeBlur={handleSelectBeforeBlur}
       onFocus={handleDrawerFocus}
