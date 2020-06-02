@@ -83,6 +83,8 @@ export interface DrawerTreeSelectProps<VT>
   formatRender?: ((props: FormatRenderProps) => React.ReactElement) | null;
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
+
+  loadChildren?: (nodeId: string) => Promise<any>;
   /**
    * Event when user click Submit
    */

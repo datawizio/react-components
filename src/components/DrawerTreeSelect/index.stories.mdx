@@ -221,6 +221,62 @@ let treeData = generateTreeList("0", 2);
   </Story>
 </Preview>
 
+## With levels
+
+<Preview>
+  <Story name="Async expand">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      showLevels
+      allowClear
+      treeDataSimpleMode
+      treeCheckable={true}
+      treeNodeFilterProp="title"
+      value=""
+      formatRender={({ onChange }) => {
+        return <Helper onChange={onChange} />;
+      }}
+      loadChildren={id => {
+        return [
+          { id: id + "1", pId: id, value: id + "1", title: "Expand to load" },
+          { id: id + "2", pId: id, value: id + "2", title: "Expand to load" },
+          {
+            id: id + "3",
+            pId: id,
+            value: id + "3",
+            title: "Tree Node",
+            isLeaf: true
+          }
+        ];
+      }}
+      loadData={filters => {
+        if (filters.level) {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve([
+                { id: 1, pId: 0, value: "1", title: "Expand to load" },
+                { id: 2, pId: 0, value: "2", title: "Expand to load" },
+                { id: 3, pId: 0, value: "3", title: "Tree Node", isLeaf: true }
+              ]);
+            }, 2000);
+          });
+        }
+        return {
+          data: [
+            { id: 1, pId: 0, value: "1", title: "Expand to load" },
+            { id: 2, pId: 0, value: "2", title: "Expand to load" },
+            { id: 3, pId: 0, value: "3", title: "Tree Node", isLeaf: true }
+          ]
+        };
+      }}
+      onChange={(value, selected) => {
+        console.log(value, selected);
+      }}
+    />
+  </Story>
+</Preview>
+
 ## Props
 
 - [**antd/drawer**](https://ant.design/components/drawer/#API)
