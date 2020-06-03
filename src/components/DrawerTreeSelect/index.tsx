@@ -255,7 +255,6 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
 
   const dropdownRender = useCallback(
     menu => {
-      console.log(menu);
       return (
         <Drawer
           className={clsx({
