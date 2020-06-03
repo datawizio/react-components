@@ -167,52 +167,81 @@ let treeData = generateTreeList("0", 2);
             setTimeout(() => {
               resolve({
                 data: [
-                  { key: 1, title: "345", additional: "123", children: [] },
-                  { key: 2, title: "3456", additional: "123", children: [] },
-                  { key: 3, title: "34567", additional: "123", children: [] },
-                  { key: 4, title: "345678", additional: "123", children: [] },
-                  { key: 5, title: "3456789", additional: "123", children: [] }
+                  {
+                    key: 1,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 2,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 3,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 4,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 5,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  }
                 ],
                 levels: 5
               });
             }, 2000);
           });
         }
-        return {
-          data: [
-            { key: 1, title: "23", additional: "123", children: [] },
-            { key: 2, title: "1234", additional: "123", children: [] },
-            { key: 3, title: "123456", additional: "123", children: [] },
-            { key: 4, title: "1234567", additional: "123", children: [] },
-            { key: 5, title: "12345678", additional: "123", children: [] },
-            { key: 6, title: "23", additional: "123", children: [] },
-            { key: 7, title: "1234", additional: "123", children: [] },
-            { key: 8, title: "123456", additional: "123", children: [] },
-            { key: 9, title: "1234567", additional: "123", children: [] },
-            { key: 10, title: "12345678", additional: "123", children: [] },
-            { key: 15, title: "23", additional: "123", children: [] },
-            { key: 11, title: "1234", additional: "123", children: [] },
-            { key: 12, title: "123456", additional: "123", children: [] },
-            { key: 13, title: "1234567", additional: "123", children: [] },
-            { key: 14, title: "12345678", additional: "123", children: [] },
-            { key: 16, title: "23", additional: "123", children: [] },
-            { key: 17, title: "1234", additional: "123", children: [] },
-            { key: 18, title: "123456", additional: "123", children: [] },
-            { key: 19, title: "1234567", additional: "123", children: [] },
-            { key: 20, title: "12345678", additional: "123", children: [] },
-            { key: 21, title: "23", additional: "123", children: [] },
-            { key: 22, title: "1234", additional: "123", children: [] },
-            { key: 23, title: "123456", additional: "123", children: [] },
-            { key: 24, title: "1234567", additional: "123", children: [] },
-            { key: 25, title: "12345678", additional: "123", children: [] },
-            { key: 26, title: "23", additional: "123", children: [] },
-            { key: 27, title: "1234", additional: "123", children: [] },
-            { key: 28, title: "123456", additional: "123", children: [] },
-            { key: 29, title: "1234567", additional: "123", children: [] },
-            { key: 30, title: "12345678", additional: "123", children: [] }
-          ],
-          levels: 7
-        };
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve({
+              data: [
+                { key: 1, title: "23", additional: "123", children: [] },
+                { key: 2, title: "1234", additional: "123", children: [] },
+                { key: 3, title: "123456", additional: "123", children: [] },
+                { key: 4, title: "1234567", additional: "123", children: [] },
+                { key: 5, title: "12345678", additional: "123", children: [] },
+                { key: 6, title: "23", additional: "123", children: [] },
+                { key: 7, title: "1234", additional: "123", children: [] },
+                { key: 8, title: "123456", additional: "123", children: [] },
+                { key: 9, title: "1234567", additional: "123", children: [] },
+                { key: 10, title: "12345678", additional: "123", children: [] },
+                { key: 15, title: "23", additional: "123", children: [] },
+                { key: 11, title: "1234", additional: "123", children: [] },
+                { key: 12, title: "123456", additional: "123", children: [] },
+                { key: 13, title: "1234567", additional: "123", children: [] },
+                { key: 14, title: "12345678", additional: "123", children: [] },
+                { key: 16, title: "23", additional: "123", children: [] },
+                { key: 17, title: "1234", additional: "123", children: [] },
+                { key: 18, title: "123456", additional: "123", children: [] },
+                { key: 19, title: "1234567", additional: "123", children: [] },
+                { key: 20, title: "12345678", additional: "123", children: [] },
+                { key: 21, title: "23", additional: "123", children: [] },
+                { key: 22, title: "1234", additional: "123", children: [] },
+                { key: 23, title: "123456", additional: "123", children: [] },
+                { key: 24, title: "1234567", additional: "123", children: [] },
+                { key: 25, title: "12345678", additional: "123", children: [] },
+                { key: 26, title: "23", additional: "123", children: [] },
+                { key: 27, title: "1234", additional: "123", children: [] },
+                { key: 28, title: "123456", additional: "123", children: [] },
+                { key: 29, title: "1234567", additional: "123", children: [] },
+                { key: 30, title: "12345678", additional: "123", children: [] }
+              ],
+              levels: 7
+            });
+          }, 2000);
+        });
       }}
       onChange={(value, selected) => {
         console.log(value, selected);

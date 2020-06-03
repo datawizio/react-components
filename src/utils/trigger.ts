@@ -1,6 +1,6 @@
 export const triggerInputChangeValue = (
   input: HTMLInputElement,
-  value: string
+  value?: string
 ) => {
   if (!input) return;
   var nativeInputValueSetter = Object.getOwnPropertyDescriptor(
