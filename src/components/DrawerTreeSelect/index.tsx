@@ -237,6 +237,10 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   }, [treeData]);
 
   useEffect(() => {
+    setInternalLoading(loading);
+  }, [loading]);
+
+  useEffect(() => {
     !asyncData && loadData && internalLoadData();
     //eslint-disable-next-line
   }, [asyncData, loadData]);
