@@ -264,13 +264,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     e => {
       const { target } = e;
       //debounce?
-      if (loading) return;
+      if (internalLoading) return;
       if (page === totalPages - 1) return;
       if (target.scrollTop + target.offsetHeight >= target.scrollHeight - 100) {
         loadPage(searchValue, page + 1);
       }
     },
-    [loading, page, loadPage, searchValue, totalPages]
+    [internalLoading, page, loadPage, searchValue, totalPages]
   );
 
   // ------- EFFECTS ----------
@@ -318,11 +318,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           placeholder={drawerSearchPlaceholder}
           value={searchValue}
           onChange={handleSearchInputChange}
-          loading={loading}
+          loading={internalLoading}
         />
         {menu}
         <div className="drawer-select-loader-container">
-          {loading && (
+          {internalLoading && (
             <Skeleton
               title={{ width: 300 }}
               paragraph={{ rows: 1 }}
