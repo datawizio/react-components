@@ -254,19 +254,27 @@ let treeData = generateTreeList("0", 2);
         if (filters.level) {
           return new Promise(resolve => {
             setTimeout(() => {
-              resolve([
-                { id: 1, pId: 0, value: "1", title: "Expand to load" },
-                { id: 2, pId: 0, value: "2", title: "Expand to load" },
-                { id: 3, pId: 0, value: "3", title: "Tree Node", isLeaf: true }
-              ]);
+              resolve({
+                data: [
+                  { id: 1, pId: null, value: "1", title: "Expand to load" },
+                  { id: 2, pId: null, value: "2", title: "Expand to load" },
+                  {
+                    id: 3,
+                    pId: null,
+                    value: "3",
+                    title: "Tree Node",
+                    isLeaf: true
+                  }
+                ]
+              });
             }, 2000);
           });
         }
         return {
           data: [
-            { id: 1, pId: 0, value: "1", title: "Expand to load" },
-            { id: 2, pId: 0, value: "2", title: "Expand to load" },
-            { id: 3, pId: 0, value: "3", title: "Tree Node", isLeaf: true }
+            { id: 1, pId: null, value: "1", title: "Expand to load" },
+            { id: 2, pId: null, value: "2", title: "Expand to load" },
+            { id: 3, pId: null, value: "3", title: "Tree Node", isLeaf: true }
           ]
         };
       }}
