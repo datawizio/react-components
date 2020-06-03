@@ -334,7 +334,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       </Drawer>
     );
   };
-  console.log(internalValue);
+
   return (
     <AntSelect
       {...restProps}
