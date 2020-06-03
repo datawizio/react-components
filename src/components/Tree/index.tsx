@@ -24,9 +24,17 @@ export interface TreeProps extends AntTreeProps {
 }
 
 const Tree: React.FC<TreeProps> = props => {
-  const { showCheckAll, checkAllTitle, checkAllKey } = props;
+  const {
+    showCheckAll,
+    checkAllTitle,
+    checkAllKey,
+    defaultExpandedKeys,
+    expandedKeys,
+    ...restProps
+  } = props;
 
-  let defaultExpandedKeys = props.defaultExpandedKeys;
+  let cDefaultExpandedKeys = defaultExpandedKeys;
+  let cExpandedKeys = expandedKeys;
   let treeData: TreeNodeNormal[] = props.treeData;
 
   if (showCheckAll) {
@@ -38,15 +46,21 @@ const Tree: React.FC<TreeProps> = props => {
         className: "tree-check-all"
       }
     ];
-    defaultExpandedKeys.push(checkAllKey);
+    if (cDefaultExpandedKeys.indexOf(checkAllKey)) {
+      cDefaultExpandedKeys.push(checkAllKey);
+    }
+    if (cExpandedKeys.indexOf(checkAllKey)) {
+      cExpandedKeys.push(checkAllKey);
+    }
   }
 
   return (
     <>
       <AntTree
-        {...props}
+        {...restProps}
         treeData={treeData}
-        defaultExpandedKeys={defaultExpandedKeys}
+        defaultExpandedKeys={cDefaultExpandedKeys}
+        expandedKeys={cExpandedKeys}
       />
     </>
   );
@@ -56,7 +70,8 @@ Tree.defaultProps = {
   showCheckAll: false,
   checkAllTitle: "Check All",
   checkAllKey: "-1",
-  defaultExpandedKeys: []
+  defaultExpandedKeys: [],
+  expandedKeys: []
 };
 
 export default Tree;

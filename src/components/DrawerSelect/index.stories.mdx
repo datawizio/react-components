@@ -1,0 +1,58 @@
+import { useState } from "react";
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Button from "../Button";
+import DrawerSelect from "./index";
+
+<Meta title="Components/Select/DrawerSelect" component={DrawerSelect} />
+
+# DrawerSelect
+
+Компонент `DrawerSelect`. Работает как обычный `Select` только для выбора
+открывается `Drawer`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <DrawerSelect
+      placeholder="Select"
+      showSearch
+      allowClear
+      options={[
+        { title: "1", key: "1", label: "label 1" },
+        { title: "12", key: "2", label: "label 2" },
+        { title: "123", key: "3", label: "label 3" },
+        { title: "1234", key: "4", label: "label 4" }
+      ]}
+    />
+  </Story>
+</Preview>
+
+## With pagination
+
+<Preview>
+  <Story name="With pagination">
+    <DrawerSelect
+      placeholder="Select"
+      showSearch
+      multiple
+      allowClear
+      withPagination
+      loadData={async (search, page) => {
+        console.log(search, page);
+        const response = await fetch("https://randomuser.me/api/?results=1000");
+        const json = await response.json();
+        const data = json.results.map(user => ({
+          title: `${user.name.first} ${user.name.last}`,
+          key: user.login.uuid
+        }));
+        const totalPages = 10;
+        return { data, totalPages };
+      }}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={DrawerSelect} />

@@ -1,0 +1,60 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Radio from "./index";
+import { List } from "antd";
+
+<Meta title="Components/Radio" component={Radio} />
+
+# Radio
+
+Компонент `Radio`.
+
+Базовый компонент: [**antd/radio**](https://ant.design/components/radio/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <Radio>Radio</Radio>
+  </Story>
+</Preview>
+
+## Radio advanced
+
+<Preview>
+  <Story name="Radio advanced">
+    <Radio.Group vertical>
+      <Radio value="A">
+        <List.Item.Meta title="Option 1" description="Option 1 description" />
+      </Radio>
+      <Radio value="B">Option B</Radio>
+    </Radio.Group>
+  </Story>
+</Preview>
+
+## Radio.Group
+
+<Preview>
+  <Story name="Radio.Group">
+    <Radio.Group>
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+    </Radio.Group>
+  </Story>
+</Preview>
+
+## Radio.Group vertical
+
+<Preview>
+  <Story name="Radio.Group vertical">
+    <Radio.Group vertical>
+      <Radio value="A">Option A</Radio>
+      <Radio value="B">Option B</Radio>
+    </Radio.Group>
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/radio**](https://ant.design/components/radio/#API)
+
+<Props of={Radio} />

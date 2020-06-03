@@ -1,0 +1,32 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import PageHeader from "./index";
+import Button from "../Button";
+
+<Meta title="Components/PageHeader" component={PageHeader} />
+
+# PageHeader
+
+Компонент предназначен для вывода хидера страницы.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <PageHeader title="Title" />
+  </Story>
+</Preview>
+
+## Header with controls
+
+<Preview>
+  <Story name="Header with controls">
+    <PageHeader title="Title">
+      <Button>Action 1</Button>
+      <Button type="primary">Action 2</Button>
+    </PageHeader>
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={PageHeader} />

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { TreeSelect as AntTreeSelect } from "antd";
+
 import {
   TreeSelectProps as AntTreeSelectProps,
   SelectValue
@@ -34,7 +35,7 @@ export interface FCTreeSelect extends FCTreeSelectProps {
 }
 
 const TreeSelect: FCTreeSelect = props => {
-  const { showCheckAll, checkAllTitle, checkAllKey } = props;
+  const { showCheckAll, checkAllTitle, checkAllKey, ...restProps } = props;
 
   let treeExpandedKeys = props.treeDefaultExpandedKeys;
   let treeData: DataNode[] = props.treeData;
@@ -53,9 +54,12 @@ const TreeSelect: FCTreeSelect = props => {
 
   return (
     <AntTreeSelect
-      {...props}
+      {...restProps}
       treeData={treeData}
       treeDefaultExpandedKeys={treeExpandedKeys}
+      onSearch={(...args) => {
+        console.log(args);
+      }}
     />
   );
 };

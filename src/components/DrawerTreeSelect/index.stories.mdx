@@ -1,0 +1,103 @@
+import { useState } from "react";
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import Select from "../Select";
+import DrawerTreeSelect from "./index";
+import { generateTreeList } from "../../utils/data/tree";
+let treeData = generateTreeList("0", 2);
+
+<Meta title="Components/Select/DrawerTreeSelect" component={DrawerTreeSelect} />
+
+# DrawerTreeSelect
+
+Компонент `DrawerTreeSelect`. Работает как обычный `TreeSelect` только для
+выбора открывается `Drawer`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      multiple
+      allowClear
+      treeCheckable={true}
+      showCheckAll={true}
+      treeData={treeData}
+    />
+  </Story>
+</Preview>
+
+## Flat List
+
+<Preview>
+  <Story name="Flat list">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      allowClear
+      treeCheckable={true}
+      isFlatList={true}
+      treeNodeFilterProp="title"
+      value=""
+      treeData={[
+        { key: 1, title: "23", additional: "123", children: [] },
+        { key: 2, title: "1234", additional: "123", children: [] },
+        { key: 3, title: "123456", additional: "123", children: [] },
+        { key: 4, title: "1234567", additional: "123", children: [] },
+        { key: 5, title: "12345678", additional: "123", children: [] }
+      ]}
+      onChange={(value, selected) => {
+        console.log(value, selected);
+      }}
+    />
+  </Story>
+</Preview>
+
+## With format
+
+<Preview>
+  <Story name="With format">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      allowClear
+      treeCheckable={true}
+      treeNodeFilterProp="title"
+      value=""
+      formatRender={({ onChange }) => {
+        return (
+          <Select
+            mode="multiple"
+            options={[
+              { value: "123", label: "123" },
+              { value: "1233", label: "1233" }
+            ]}
+            onChange={selected => {
+              onChange(selected);
+            }}
+          />
+        );
+      }}
+      loadData={filters => {
+        console.log(filters);
+        return [
+          { key: 1, title: "23", additional: "123", children: [] },
+          { key: 2, title: "1234", additional: "123", children: [] },
+          { key: 3, title: "123456", additional: "123", children: [] },
+          { key: 4, title: "1234567", additional: "123", children: [] },
+          { key: 5, title: "12345678", additional: "123", children: [] }
+        ];
+      }}
+      onChange={(value, selected) => {
+        console.log(value, selected);
+      }}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+- [**antd/drawer**](https://ant.design/components/drawer/#API)
+
+<Props of={DrawerTreeSelect} />
