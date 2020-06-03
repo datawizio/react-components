@@ -95,7 +95,6 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
         ]
       : stateTreeData;
   }, [stateTreeData, checkAllKey, checkAllTitle, showCheckAll]);
-
   // ----- METHODS -------
 
   const setInputRef = (el: HTMLInputElement) => {
@@ -128,7 +127,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     }
     setStateTreeData([]);
     setInternalLoading(true);
-    triggerInputChangeValue(inputRef.current, searchValue.current);
+    triggerInputChangeValue(inputRef.current);
 
     const { data, levels } = await loadData(filters);
     setStateTreeData(data);
@@ -255,59 +254,64 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   }, [formatRender, internalLoadData]);
 
   const dropdownRender = useCallback(
-    menu => (
-      <Drawer
-        className={clsx({
-          "drawer-tree-select-dropdown": true,
-          "drawer-tree-select-dropdown-show-all": showCheckAll,
-          "drawer-tree-select-dropdown-flat-list": isFlatList
-        })}
-        title={drawerTitle ? drawerTitle : restProps.placeholder}
-        onClose={handlerDrawerCancel}
-        visible={drawerVisible}
-        width={drawerWidth}
-        actions={
-          <>
-            <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
-            <Button onClick={handlerDrawerSubmit} type="primary">
-              {submitText}
-            </Button>
-          </>
-        }
-      >
-        {format}
-        {showLevels ? (
-          <Levels
-            onChange={handleLevelChange}
-            value={levelSelected.current}
-            levels={internalLevels}
-            levelText={levelText}
-          />
-        ) : null}
-        <SearchInput
-          placeholder={drawerSearchPlaceholder}
-          value={searchValue.current}
-          onChange={handlerSearchInputChange}
-          loading={internalLoading}
-        />
-        {menu}
-        <div className="drawer-select-loader-container">
-          {internalLoading && (
-            <Skeleton
-              title={{ width: 300 }}
-              paragraph={{ rows: 1 }}
-              loading={true}
-              active
+    menu => {
+      console.log(menu);
+      return (
+        <Drawer
+          className={clsx({
+            "drawer-tree-select-dropdown": true,
+            "drawer-tree-select-dropdown-show-all": showCheckAll,
+            "drawer-tree-select-dropdown-flat-list": isFlatList
+          })}
+          title={drawerTitle ? drawerTitle : restProps.placeholder}
+          onClose={handlerDrawerCancel}
+          visible={drawerVisible}
+          width={drawerWidth}
+          actions={
+            <>
+              <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
+              <Button onClick={handlerDrawerSubmit} type="primary">
+                {submitText}
+              </Button>
+            </>
+          }
+        >
+          {format}
+          {showLevels ? (
+            <Levels
+              onChange={handleLevelChange}
+              value={levelSelected.current}
+              levels={internalLevels}
+              levelText={levelText}
             />
-          )}
-        </div>
-      </Drawer>
-    ),
+          ) : null}
+          <SearchInput
+            placeholder={drawerSearchPlaceholder}
+            value={searchValue.current}
+            onChange={handlerSearchInputChange}
+            loading={internalLoading}
+          />
+          {menu}
+          <div className="drawer-select-loader-container">
+            {internalLoading && (
+              <Skeleton
+                title={{ width: 300 }}
+                paragraph={{ rows: 1 }}
+                loading={true}
+                active
+              />
+            )}
+          </div>
+        </Drawer>
+      );
+    },
     //eslint-disable-next-line
     [
       drawerVisible,
       searchValue,
       internalLoading,
+      internalLevels,
+      levelSelected.current,
       handlerDrawerCancel,
       handlerDrawerSubmit,
       handlerSearchInputChange
