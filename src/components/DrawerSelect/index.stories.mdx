@@ -39,9 +39,7 @@ import DrawerSelect from "./index";
       allowClear
       withPagination
       loadData={async (search, page) => {
-        console.log(search, page);
         if (search === "123") return { data: [], totalPages: 0 };
-        console.log(222);
         const response = await fetch("https://randomuser.me/api/?results=1000");
         const json = await response.json();
         const data = json.results.map(user => ({

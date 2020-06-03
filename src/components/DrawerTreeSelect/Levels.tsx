@@ -25,8 +25,8 @@ export const Levels: React.FC<LevelsProps> = ({
         })),
     [levels, levelText]
   );
-  const handleChange = e => {
-    onChange(e.target.value);
+  const handleChange = value => {
+    onChange(value);
   };
 
   return (
