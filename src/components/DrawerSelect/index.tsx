@@ -149,6 +149,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (!onChange) return;
       if (!multiple) {
         onChange(value, value ? selected : undefined);
+        return;
       }
       onChange(value);
     },
