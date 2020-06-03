@@ -1,0 +1,23 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { genColumns } from "../../utils/data/dataGenerators";
+
+import TableControlPanel from "./";
+
+<Meta
+  title="Components/Table/TableControlPanel"
+  component={TableControlPanel}
+/>
+
+# TableControlPanel
+
+Компонент `TableControlPanel`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <TableControlPanel columns={genColumns(100, true)} />
+  </Story>
+</Preview>
+
+<Props of={TableControlPanel} />

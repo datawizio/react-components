@@ -244,6 +244,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   // ---- EFFECTS ------
 
   useEffect(() => {
+    // eslint-disable-next-line
     if (!multiple && !value) value = [];
     setInternalValue(value);
   }, [value]);

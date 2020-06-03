@@ -1,146 +1,146 @@
 import * as React from "react";
 import { Table as AntdTable } from "antd";
-import { useMemo, useCallback, useState } from "react";
-import { globalSorter, bindSorterContext } from "./utils";
+import { reducer, initializer } from "./reducer";
 
-import Column from "./Column";
-import TableWrapper from "./TableWrapper";
+import useColumns from "./hooks/useColumns";
+import useStateHandlers from "./hooks/useStateHandlers";
+import { useMemo, useCallback, useReducer } from "react";
 
-import { TableProps, IColumn } from "./types";
-import { SorterResult } from "antd/lib/table/interface";
+import { TableProps } from "./types";
+import Column from "./components/Column";
+import TableWrapper from "./components/TableWrapper";
+import TableControlPanel from "../TableControlPanel";
+
+import {
+  basicSortHandler,
+  basicFilterHandler,
+  basicSearchHandler
+} from "./utils/handlers";
 
 import "./index.less";
+import usePropsToState from "./hooks/usePropsToState";
+import clsx from "clsx";
 
 const Table: React.FC<TableProps> = props => {
   const {
     style,
     width,
     height,
-    sortable,
-    defaultSorter,
-    columnsConfig,
-    multipleSorting,
-    resizableColumns,
+    components,
+    rowChildrenProvider,
     ...restProps
   } = props;
 
-  const [sortSequence, setSortSequence] = useState<Array<string>>([]);
+  const [state, dispatch] = useReducer(reducer, props as any, initializer);
 
-  const handleSort = useCallback(
-    (sorter: Array<SorterResult<any>> | SorterResult<any>) => {
-      const sorters = [].concat(sorter);
+  const visibleColumns = useColumns(state, props);
 
-      const sortedKeys = sorters
-        .filter(item => item.order)
-        .map(item => item.columnKey)
-        .sort((a, b) => {
-          if (sortSequence.indexOf(a) === -1) return 1;
-          return sortSequence.indexOf(a) - sortSequence.indexOf(b);
-        });
+  const onHandlersResponded = useCallback(nextState => {
+    dispatch({ type: "handlerResponded", payload: nextState });
+  }, []);
 
-      setSortSequence(sortedKeys);
-    },
-    [sortSequence]
-  );
+  usePropsToState(dispatch, props);
+
+  useStateHandlers(onHandlersResponded, state, props);
+
+  const onSelectColumn = useCallback(nextVisibleColumns => {
+    dispatch({ type: "visibleColumnsKeys", payload: nextVisibleColumns });
+  }, []);
+
+  const handleSearch = useCallback(nextSearchValue => {
+    dispatch({ type: "search", payload: nextSearchValue });
+  }, []);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
-      handleSort(sorter);
+      dispatch({ type: "filter", payload: filters });
+      dispatch({ type: "sort", payload: [].concat(sorter) });
+      dispatch({ type: "paginate", payload: pagination as any });
     },
-    [handleSort]
+    []
   );
 
-  const bindSorter = useCallback(
-    column => {
-      if (!sortable) return sortable;
+  const handleExpandRow = useCallback<TableProps["onExpand"]>(
+    async (isExpanded, row) => {
+      if (rowChildrenProvider && row.children && !row.children.length) {
+        const children = await rowChildrenProvider(row);
 
-      let sorter = bindSorterContext(
-        column.hasOwnProperty("sorter") ? column.sorter : defaultSorter,
-        { ...column }
-      );
+        dispatch({
+          type: "setRowChildren",
+          payload: [row, children.length ? children : undefined]
+        });
+      }
 
-      if (multipleSorting && typeof sorter === "function")
-        sorter = {
-          compare: sorter,
-          multiple: sortSequence.indexOf(String(column.key)) + 1
-        };
-
-      return sorter;
-    },
-    [sortable, defaultSorter, multipleSorting, sortSequence]
-  );
-
-  const columns = useMemo(() => {
-    function initColumns(columns: Array<IColumn>, level = 1) {
-      return columns.map(column => {
-        const nextColumn: IColumn = {
-          ...column,
-          ...(columnsConfig[column.key] || {})
-        };
-
-        if (!nextColumn.hasOwnProperty("resizable"))
-          nextColumn.resizable = resizableColumns;
-
-        if (nextColumn.children) {
-          nextColumn.children = initColumns(nextColumn.children, level + 1);
-        } else {
-          nextColumn.sorter = bindSorter(nextColumn);
-        }
-
-        nextColumn.onHeaderCell = () =>
-          ({
-            level,
-            size: restProps.size,
-            model: { ...nextColumn }
-          } as any);
-
-        return nextColumn;
+      dispatch({
+        type: isExpanded ? "expandRow" : "collapseRow",
+        payload: row
       });
-    }
-
-    return initColumns(props.columns);
-  }, [
-    props.columns,
-    columnsConfig,
-    bindSorter,
-    resizableColumns,
-    restProps.size
-  ]);
+    },
+    [rowChildrenProvider]
+  );
 
   const customComponents = useMemo<TableProps["components"]>(
     () => ({
-      table: props => <TableWrapper {...props} style={{ height, width }} />,
-      header: { cell: Column }
+      ...components,
+      header: {
+        cell: props =>
+          Boolean(props.model) ? <Column {...props} /> : <th {...props} />
+      },
+      table: props => <TableWrapper {...props} style={{ height, width }} />
     }),
-    [height, width]
+    [height, width, components]
+  );
+
+  const isEmpty = useMemo(() => {
+    return !visibleColumns.length || !state.dataSource;
+  }, [visibleColumns.length, state.dataSource]);
+
+  const className = useMemo(
+    () => clsx("dw-table", { "dw-table--empty": isEmpty }, props.className),
+    [props.className, isEmpty]
   );
 
   return (
-    <AntdTable
-      {...(restProps as any)}
-      className="dw-table"
-      columns={columns}
-      onChange={handleChangeTable}
-      components={customComponents}
-    />
+    <>
+      <TableControlPanel
+        onSearch={handleSearch}
+        columns={props.columns || []}
+        onSelectColumns={onSelectColumn}
+        visibleColumnsKeys={visibleColumns.map(column => column.key)}
+      />
+      <AntdTable
+        {...(restProps as any)}
+        {...state}
+        className={className}
+        columns={visibleColumns}
+        onExpand={handleExpandRow}
+        onChange={handleChangeTable}
+        components={customComponents}
+      />
+    </>
   );
 };
 
 Table.defaultProps = {
   bordered: true,
   sortable: true,
-  resizableColumns: true,
+  isResizableColumns: true,
 
-  multipleSorting: false,
   showSorterTooltip: false,
 
+  className: "",
+  size: "small",
   width: "auto",
   height: "auto",
-  size: "small",
   tableLayout: "auto",
 
+  dTypesConfig: {},
   columnsConfig: {},
-  defaultSorter: globalSorter
+  cellRenderProps: {},
+
+  sortHandler: basicSortHandler,
+  filterHandler: basicFilterHandler,
+  searchHandler: basicSearchHandler
 };
 
 export default Table;

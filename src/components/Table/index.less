@@ -55,11 +55,45 @@
     width: max-content !important;
   }
 
+  &--empty {
+    table {
+      width: 100% !important;
+    }
+  }
+
   td {
     position: relative;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  .ant-table {
+    .set-position-header(10, 55);
+
+    &-small {
+      .set-position-header(10, 39);
+    }
+
+    &-middle {
+      .set-position-header(10, 47);
+    }
+  }
+}
+
+.set-columns-positions(@n, @size, @i: 2) when (@i =< @n) {
+  tr:nth-child(@{i}) {
+    .dw-table__column {
+      top: unit(@size * (@i - 1), px);
+    }
+  }
+
+  .set-columns-positions(@n, @size, (@i + 1));
+}
+
+.set-position-header(@n, @size) {
+  thead {
+    .set-columns-positions(@n, @size);
   }
 }

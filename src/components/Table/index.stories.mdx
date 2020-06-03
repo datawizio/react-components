@@ -8,11 +8,12 @@ import {
   number,
   select
 } from "@storybook/addon-knobs";
-
+import { useState, useMemo } from "react";
 import Table from "./";
+import TableControlPanel from "../TableControlPanel";
 
 <Meta
-  title="Components/Tables/Table"
+  title="Components/Table/Table"
   component={Table}
   decorators={[withKnobs]}
 />
@@ -28,58 +29,45 @@ import Table from "./";
 <Preview>
   <Story name="Sandbox">
     {() => {
-      const columnsCount = number("columns count", 5);
       const dataCount = number("data count", 100);
+      const columnsCount = number("columns count", 10);
       //
       const sortable = boolean("sortable", true);
       const multipleSorting = boolean("multipleSorting", false);
       //
-      const columns = genColumns(columnsCount);
-      const dataSource = genDataSource(dataCount, columns);
+      const columns = useMemo(() => genColumns(columnsCount, true), [
+        columnsCount
+      ]);
       //
-      columns[1] = {
-        title: "asdasdasdasd",
-        children: [
-          {
-            title: "Tesasdasdasdasdasdasdasdasdasdasdasdasdasdasdt",
-            children: [columns.pop(), columns.pop()]
-          }
-        ]
-      };
+      let dataSource = useMemo(
+        () => genDataSource(dataCount, columns, ["string"], true),
+        [columns.length, dataCount]
+      );
+      //
       columns[0].fixed = "left";
+      //
       columns[0].filters = [
-        {
-          text: "Joe",
-          value: "Joe"
-        },
-        {
-          text: "Jim",
-          value: "Jim"
-        },
-        {
-          text: "Submenu",
-          value: "Submenu",
-          children: [
-            {
-              text: "Green",
-              value: "Green"
-            },
-            {
-              text: "Black",
-              value: "Black"
-            }
-          ]
-        }
-      ];
+        ...new Set(
+          dataSource
+            .filter(i => i.children)
+            .map(item => item.children[0][columns[0].dataIndex])
+        )
+      ].map(item => ({
+        text: item,
+        value: item
+      }));
       //
       return (
-        <Table
-          height="450px"
-          columns={columns}
-          sortable={sortable}
-          dataSource={dataSource}
-          multipleSorting={multipleSorting}
-        />
+        <div>
+          <Table
+            height="450px"
+            columns={columns}
+            sortable={sortable}
+            dataSource={dataSource}
+            multipleSorting={multipleSorting}
+            cellRenderProps={{ onClick: console.log }}
+          />
+        </div>
       );
     }}
   </Story>
@@ -148,6 +136,23 @@ import Table from "./";
       ];
       //
       return <Table columns={columns} dataSource={dataSource} />;
+    }}
+  </Story>
+</Preview>
+
+## Async
+
+<Preview>
+  <Story name="Async">
+    {() => {
+      const columns = useMemo(() => genColumns(10, true), []);
+      //
+      let dataSource = useMemo(
+        () => genDataSource(100, columns, ["link"], true),
+        [columns.length]
+      );
+      //
+      return <Table />;
     }}
   </Story>
 </Preview>
