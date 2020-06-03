@@ -262,6 +262,7 @@ let treeData = generateTreeList("0", 2);
       treeDataSimpleMode
       treeCheckable={true}
       treeNodeFilterProp="title"
+      remoteSearch={true}
       value=""
       formatRender={({ onChange }) => {
         return <Helper onChange={onChange} />;
@@ -298,6 +299,97 @@ let treeData = generateTreeList("0", 2);
               });
             }, 2000);
           });
+        }
+        if (filters.search) {
+          return {
+            data: [
+              {
+                "isLeaf": false,
+                "id": 1,
+                "level": 1,
+                "title": "MegaTest",
+                "pId": null
+              },
+              {
+                "isLeaf": false,
+                "id": 6779,
+                "level": 2,
+                "title": "01 - Бакалея",
+                "pId": 1
+              },
+              {
+                "isLeaf": false,
+                "id": 2372,
+                "level": 3,
+                "title": "Яйца",
+                "pId": 6779
+              },
+              {
+                "isLeaf": true,
+                "id": 5594,
+                "level": 4,
+                "title": "Яйцо куриное",
+                "pId": 2372
+              },
+              {
+                "isLeaf": true,
+                "id": 5563,
+                "level": 4,
+                "title": "Яйцо перепелиное",
+                "pId": 2372
+              },
+              {
+                "isLeaf": true,
+                "id": 5986,
+                "level": 4,
+                "title": "Мыло (хозяйственное)",
+                "pId": 1250
+              },
+              {
+                "isLeaf": true,
+                "id": 5872,
+                "level": 5,
+                "title": "Перчатки (хозяйственные)",
+                "pId": 5853
+              },
+              {
+                "isLeaf": true,
+                "id": 5850,
+                "level": 5,
+                "title": "Хозяйственные емкости",
+                "pId": 5853
+              },
+              {
+                "isLeaf": false,
+                "id": 5853,
+                "level": 4,
+                "title": "Хозяйственные товары для дома",
+                "pId": 5841
+              },
+              {
+                "isLeaf": false,
+                "id": 5841,
+                "level": 3,
+                "title": "Хозяйственные товары",
+                "pId": 6787
+              },
+              {
+                "isLeaf": true,
+                "id": 1250,
+                "level": 3,
+                "title": "Средства для стирки",
+                "pId": 6787
+              },
+              {
+                "isLeaf": true,
+                "id": 6787,
+                "level": 2,
+                "title": "12 - Бытовая химия",
+                "pId": 1
+              }
+            ],
+            expanded: [1, 6779, 2372]
+          };
         }
         return {
           data: [

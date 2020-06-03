@@ -71,13 +71,14 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   const inputRef = useRef<HTMLInputElement>();
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
-    if (searchValue.current) return undefined;
+    if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
 
     return treeDefaultExpandedKeys.concat([checkAllKey]);
   }, [
     treeDefaultExpandedKeys,
     checkAllKey,
+    remoteSearch,
     searchValue,
     internalTreeExpandedKeys
   ]);
@@ -129,16 +130,23 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     setInternalLoading(true);
     triggerInputChangeValue(inputRef.current);
 
-    const { data, levels } = await loadData(filters);
+    const { data, levels, expanded } = await loadData(filters);
+
     setStateTreeData(data);
     setInternalLoading(false);
 
     if (showLevels) {
       setInternalLevels(levels);
     }
+    if (expanded) {
+      setInternalTreeExpandedKeys(expanded);
+    }
 
-    triggerInputChangeValue(inputRef.current, searchValue.current);
-  }, [loadData, showLevels, formatRender]);
+    triggerInputChangeValue(
+      inputRef.current,
+      remoteSearch ? undefined : searchValue.current
+    );
+  }, [loadData, showLevels, formatRender, remoteSearch]);
 
   //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
@@ -176,6 +184,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
 
       searchValue.current = inputValue;
       setSearchValue(inputValue);
+
       if (remoteSearch) {
         internalLoadData();
         return;
@@ -334,7 +343,9 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       className="drawer-tree-select"
       treeData={internalTreeData}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
-      searchValue={searchValue.current ? searchValue.current : ""}
+      searchValue={
+        searchValue.current && !remoteSearch ? searchValue.current : ""
+      }
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
