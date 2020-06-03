@@ -209,7 +209,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
     setInternalValue(!multiple && !value ? [] : value);
-  }, [closeDrawer, value]);
+  }, [closeDrawer, value, multiple]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
