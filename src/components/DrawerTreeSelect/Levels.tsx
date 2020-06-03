@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 
-// import { Radio } from "antd";
 import Select from "../Select";
 
 interface LevelsProps {
@@ -37,21 +36,6 @@ export const Levels: React.FC<LevelsProps> = ({
       onChange={handleChange}
       className="drawer-tree-select-levels"
     />
-
-    // <div>
-    //   Level:
-    //   <Radio.Group
-    //     defaultValue={value}
-    //     onChange={handleChange}
-    //     className="drawer-tree-select-levels"
-    //   >
-    //     {arr.map((v, i) => (
-    //       <Radio.Button key={i} value={i + 1}>
-    //         {i + 1}
-    //       </Radio.Button>
-    //     ))}
-    //   </Radio.Group>
-    // </div>
   );
 };
 
