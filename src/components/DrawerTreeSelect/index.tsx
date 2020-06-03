@@ -183,6 +183,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       }
       triggerInputChangeValue(inputRef.current, inputValue);
     },
+    //eslint-disable-next-line
     [inputRef]
   );
 
