@@ -157,7 +157,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const loadPage = useCallback(
     async (search, page = 0) => {
       if (!loadData) return;
-      if (page >= totalPages) {
+      if (page !== 0 && page >= totalPages) {
         return;
       }
       if (!page) setOptions([]);
