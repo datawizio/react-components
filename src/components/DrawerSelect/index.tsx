@@ -239,7 +239,6 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleSearch = useCallback(
     searchValue => {
-      console.log(123);
       loadPage(searchValue);
     },
     [loadPage]
