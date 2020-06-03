@@ -113,6 +113,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     loadingText,
     noDataText,
     loadData,
+    loading,
     valueProp,
     mode,
     multiple,
@@ -120,7 +121,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     ...restProps
   } = props;
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [internalLoading, setLoading] = useState<boolean>(loading);
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
@@ -133,7 +134,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     return options ? convertOptions(options, valueProp, labelProp) : [];
   }, [options, valueProp, labelProp]);
 
-  const [optionsState, setOptions] = useState(internalOptions);
+  const [optionsState, setOptions] = useState([]);
 
   const inputRef = useRef<HTMLInputElement>();
 
@@ -206,7 +207,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
-    setInternalValue(value);
+    setInternalValue(!multiple && !value ? [] : value);
   }, [closeDrawer, value]);
 
   const handleDrawerSubmit = useCallback(() => {
@@ -272,10 +273,17 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   );
 
   // ------- EFFECTS ----------
-  // useEffect(() => {
-  //   setInternalValue(value);
-  //   return () => {};
-  // }, [value]);
+  useEffect(() => {
+    setInternalValue(!multiple && !value ? [] : value);
+  }, [value, multiple]);
+
+  useEffect(() => {
+    setLoading(loading);
+  }, [loading]);
+
+  useEffect(() => {
+    setOptions(internalOptions);
+  }, [internalOptions]);
 
   useEffect(() => {
     !asyncData && loadData && loadPage("");
@@ -334,7 +342,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       className="drawer-select"
       mode="multiple"
       open={drawerVisible}
-      loading={loading}
+      loading={internalLoading}
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-select-dropdown-fake"
@@ -342,7 +350,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       onSearch={handleSearch}
       optionFilterProp="title"
       listHeight={window.innerHeight - 198}
-      notFoundContent={loading ? loadingText : noDataText}
+      notFoundContent={internalLoading ? loadingText : noDataText}
       onBeforeBlur={handleSelectBeforeBlur}
       onFocus={handleDrawerFocus}
       onSelect={handleSelect}
