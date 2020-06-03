@@ -126,7 +126,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [internalValue, setInternalValue] = useState<SelectValue>(value);
+  const [internalValue, setInternalValue] = useState<SelectValue>();
   const [selected, setSelected] = useState<AntTreeNode>();
   const menuRef = useRef();
 
@@ -275,6 +275,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   // ------- EFFECTS ----------
   useEffect(() => {
+    console.log(!multiple && !value ? [] : value);
     setInternalValue(!multiple && !value ? [] : value);
   }, [value, multiple]);
 
@@ -334,7 +335,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       </Drawer>
     );
   };
-
+  console.log(internalValue);
   return (
     <AntSelect
       {...restProps}
