@@ -177,8 +177,13 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
 
       searchValue.current = inputValue;
       setSearchValue(inputValue);
+      if (remoteSearch) {
+        internalLoadData();
+        return;
+      }
       triggerInputChangeValue(inputRef.current, inputValue);
     },
+    //eslint-disable-next-line
     [inputRef]
   );
 

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 
-import { Radio } from "antd";
+// import { Radio } from "antd";
+import Select from "../Select";
 
 interface LevelsProps {
   value?: number;
@@ -15,28 +16,47 @@ export const Levels: React.FC<LevelsProps> = ({
   levelText,
   onChange
 }) => {
-  const arr = useMemo(() => Array(levels).fill(""), [levels]);
+  const options = useMemo(
+    () =>
+      Array(levels)
+        .fill("")
+        .map((v, index) => ({
+          value: index + 1,
+          label: levelText.replace("%s", (index + 1).toString())
+        })),
+    [levels, levelText]
+  );
   const handleChange = e => {
     onChange(e.target.value);
   };
 
   return (
-    <Radio.Group
+    <Select
       defaultValue={value}
+      options={options}
       onChange={handleChange}
       className="drawer-tree-select-levels"
-    >
-      {arr.map((v, i) => (
-        <Radio.Button key={i} value={i + 1}>
-          {levelText.replace("%s", (i + 1).toString())}
-        </Radio.Button>
-      ))}
-    </Radio.Group>
+    />
+
+    // <div>
+    //   Level:
+    //   <Radio.Group
+    //     defaultValue={value}
+    //     onChange={handleChange}
+    //     className="drawer-tree-select-levels"
+    //   >
+    //     {arr.map((v, i) => (
+    //       <Radio.Button key={i} value={i + 1}>
+    //         {i + 1}
+    //       </Radio.Button>
+    //     ))}
+    //   </Radio.Group>
+    // </div>
   );
 };
 
 Levels.defaultProps = {
-  value: 1,
+  value: 2,
   levels: 3,
   levelText: "Level %s"
 };
