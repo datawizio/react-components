@@ -275,7 +275,6 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   // ------- EFFECTS ----------
   useEffect(() => {
-    console.log(!multiple && !value ? [] : value);
     setInternalValue(!multiple && !value ? [] : value);
   }, [value, multiple]);
 
