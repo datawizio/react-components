@@ -39,7 +39,7 @@ const PhoneInput: FCPhoneInput = ({
   const [formatedValue, setFormatedValue] = useState<string>();
   const [selectedCountry, setSelectedCountry] = useState<string>("UA");
 
-  const inputRef = useRef();
+  const inputRef = useRef<Input>();
 
   const addInternationalOption = null;
   const international = true;
