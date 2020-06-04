@@ -618,12 +618,15 @@ export function formatNumber(
   international
 ) {
   const phoneNumber = parsePhoneNumber(val, metadata);
-  const value = generateInitialParsedInput(val, phoneNumber, {
+  let value = generateInitialParsedInput(val, phoneNumber, {
     international,
     defaultCountry,
     metadata,
-    displayInitialValueAsLocalNumber: true
+    displayInitialValueAsLocalNumber: false
   });
+
+  value = value.replace(/ /g, "");
+
   const formated = formatIncompletePhoneNumber(val, country, metadata);
   return {
     country: phoneNumber ? phoneNumber.country : country,

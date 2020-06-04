@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import metadata from "libphonenumber-js/metadata.full.json";
+import metadata from "libphonenumber-js/metadata.min.json";
 
 import countries from "./helpers/countries";
 
@@ -10,7 +10,7 @@ import {
   isValidPhoneNumber
 } from "./helpers/phoneInputHelper";
 
-import { Input } from "antd";
+import Input from "../Input";
 import Select from "../Select";
 
 import "./index.less";
@@ -42,7 +42,7 @@ const PhoneInput: FCPhoneInput = ({
   const [formatedValue, setFormatedValue] = useState<string>();
   const [selectedCountry, setSelectedCountry] = useState<string>("UA");
 
-  const inputRef = useRef<Input>();
+  const inputRef = useRef<any>();
 
   const addInternationalOption = null;
   const international = true;
@@ -129,6 +129,7 @@ const PhoneInput: FCPhoneInput = ({
       </Select>
 
       <Input
+        //@ts-ignore
         ref={inputRef}
         className="phone-input-input"
         type="tel"

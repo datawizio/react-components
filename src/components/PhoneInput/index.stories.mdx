@@ -16,7 +16,13 @@ import { PhoneInputProps } from "./story/helper";
 
 <Preview>
   <Story name="Basic">
-    <PhoneInput placeholder="Basic usage" value="" />
+    <PhoneInput
+      placeholder="Basic usage"
+      value=""
+      onChange={value => {
+        console.log(value);
+      }}
+    />
   </Story>
 </Preview>
 
