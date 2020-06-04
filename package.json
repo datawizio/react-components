@@ -98,6 +98,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-import-data-uri": "^1.0.1",
     "babel-plugin-transform-remove-imports": "^1.3.2",
+    "clsx": "^1.1.0",
     "dayjs": "^1.8.27",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -121,13 +122,13 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "less-plugin-npm-import": "^2.1.0",
+    "libphonenumber-js": "^1.7.52",
     "moment": "^2.24.0",
     "postcss": "^7.0.27",
     "prettier": "2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
-    "react-phone-number-input": "^3.0.23",
     "react-scripts": "^3.4.1",
     "rollup": "^1.27.4",
     "rollup-plugin-babel": "^4.4.0",
@@ -141,8 +142,7 @@
     "rucksack-css": "^1.0.2",
     "sass-loader": "^8.0.0",
     "ts-jest": "^24.2.0",
-    "typescript": "^3.8.3",
-    "clsx": "^1.1.0"
+    "typescript": "^3.8.3"
   },
   "browserslist": {
     "production": [
