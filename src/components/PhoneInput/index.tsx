@@ -16,6 +16,9 @@ import Select from "../Select";
 import "./index.less";
 
 export interface PhoneInputProps {
+  /**
+   * placeholder
+   */
   placeholder?: string;
   defaultCountry?: string;
   value?: string;
