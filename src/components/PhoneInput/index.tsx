@@ -87,6 +87,7 @@ const PhoneInput: FCPhoneInput = ({
   };
 
   useEffect(() => {
+    if (internalValue === value) return;
     let { value: val, formated, country } = formatNumber(
       value,
       selectedCountry,
