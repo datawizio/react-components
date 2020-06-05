@@ -139,8 +139,6 @@ const PhoneInput: FCPhoneInput = ({
       />
     </Input.Group>
   );
-
-  // return <ReactPhoneInput {...restProps} value={value} onChange={onChange} />;
 };
 
 PhoneInput.defaultProps = {
