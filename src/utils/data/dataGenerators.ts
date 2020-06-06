@@ -23,7 +23,7 @@ export function genColumns(
       .slice(0, childCount)
       .map((word, idx) => ({
         key: idx.toString() + "-" + faker.random.number() + "-" + level,
-        dataIndex: word,
+        dataIndex: word + level + idx + "-" + faker.random.number(),
         title: capitalize(word)
       }));
 
@@ -50,8 +50,10 @@ export function genDataSource(
   level: number = 0
 ) {
   const flat = (columns, acc = []) => {
-    if (columns.children) flat(columns.children, acc);
-    columns.forEach(i => acc.push(i));
+    columns.forEach(column => {
+      if (column.children) flat(column.children, acc);
+      else acc.push(column);
+    });
     return acc;
   };
 

@@ -14,7 +14,8 @@ import TableControlPanel from "../TableControlPanel";
 import {
   basicSortHandler,
   basicFilterHandler,
-  basicSearchHandler
+  basicSearchHandler,
+  exportTableToXLSX
 } from "./utils/handlers";
 
 import "./index.less";
@@ -50,6 +51,10 @@ const Table: React.FC<TableProps> = props => {
   const handleSearch = useCallback(nextSearchValue => {
     dispatch({ type: "search", payload: nextSearchValue });
   }, []);
+
+  const handleExport = useCallback(() => {
+    exportTableToXLSX(visibleColumns, state.dataSource);
+  }, [visibleColumns, state.dataSource]);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -103,6 +108,7 @@ const Table: React.FC<TableProps> = props => {
   return (
     <>
       <TableControlPanel
+        onExport={handleExport}
         onSearch={handleSearch}
         columns={props.columns || []}
         onSelectColumns={onSelectColumn}
