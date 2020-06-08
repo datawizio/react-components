@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import Tree from "../../Tree";
-import Modal from "../../Modal";
-import Button from "../../Button";
+import Tree from "../Tree";
+import Modal from "../Modal";
+import Button from "../Button";
 import { SettingOutlined } from "@ant-design/icons";
 
-import { TableContext } from "../../Table/context";
+import { TableContext } from "../Table/context";
 import { useState, useCallback, useMemo, useContext } from "react";
-import { deepFilter } from "../../../utils/deepFilter";
+import { deepFilter } from "../../utils/deepFilter";
 
 import "./index.less";
 
