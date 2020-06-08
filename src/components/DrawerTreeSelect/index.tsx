@@ -16,14 +16,14 @@ import AntTreeSelect from "./antd/AntTreeSelect";
 
 import { triggerInputChangeValue } from "../../utils/trigger";
 
-import { DrawerTreeSelectProps, IDrawerTreeSelectFilters } from "./types";
+import { IDrawerTreeSelectFilters, FCDrawerTreeSelect } from "./types";
 import { SelectValue } from "antd/lib/tree-select";
 import { DataNode, Key } from "rc-tree-select/es/interface";
 import { AntTreeNode } from "antd/lib/tree";
 
 import "./index.less";
 
-const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
+const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   asyncData,
   showCheckAll,
   showLevels,
@@ -385,5 +385,9 @@ DrawerTreeSelect.defaultProps = {
   formatRender: null,
   remoteSearch: false
 };
+
+DrawerTreeSelect.SHOW_ALL = AntTreeSelect.SHOW_ALL;
+DrawerTreeSelect.SHOW_CHILD = AntTreeSelect.SHOW_CHILD;
+DrawerTreeSelect.SHOW_PARENT = AntTreeSelect.SHOW_PARENT;
 
 export default DrawerTreeSelect;

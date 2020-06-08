@@ -90,3 +90,10 @@ export interface DrawerTreeSelectProps<VT>
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
+
+export interface FCDrawerTreeSelect<VT>
+  extends React.FC<DrawerTreeSelectProps<VT>> {
+  SHOW_PARENT: string;
+  SHOW_ALL: string;
+  SHOW_CHILD: string;
+}
