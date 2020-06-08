@@ -93,7 +93,7 @@ export interface DrawerTreeSelectProps<VT>
 
 export interface FCDrawerTreeSelect<VT>
   extends React.FC<DrawerTreeSelectProps<VT>> {
-  SHOW_PARENT: string;
-  SHOW_ALL: string;
-  SHOW_CHILD: string;
+  SHOW_PARENT: "SHOW_PARENT";
+  SHOW_ALL: "SHOW_ALL";
+  SHOW_CHILD: "SHOW_CHILD";
 }
