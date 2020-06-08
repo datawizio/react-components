@@ -40,6 +40,8 @@ export { default as CheckboxGroup } from "./components/CheckboxGroup";
 
 export { default as InfiniteScroll } from "./components/InfiniteScroll";
 
+export { default as LiteSearchInput } from "./components/LiteSearchInput";
+
 export { default as DateRangePicker } from "./components/DateRangePicker";
 
 export { default as DrawerTreeSelect } from "./components/DrawerTreeSelect";
