@@ -96,6 +96,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
         ]
       : stateTreeData;
   }, [stateTreeData, checkAllKey, checkAllTitle, showCheckAll]);
+
   // ----- METHODS -------
 
   const setInputRef = (el: HTMLInputElement) => {
@@ -342,6 +343,7 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       value={internalValue}
       className="drawer-tree-select"
       treeData={internalTreeData}
+      open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
       searchValue={
         searchValue.current && !remoteSearch ? searchValue.current : ""
