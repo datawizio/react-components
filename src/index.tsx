@@ -34,6 +34,8 @@ export { default as TreeSelect } from "./components/TreeSelect";
 
 export { default as SearchInput } from "./components/SearchInput";
 
+export { default as TableSearch } from "./components/TableSearch";
+
 export { default as DrawerSelect } from "./components/DrawerSelect";
 
 export { default as CheckboxGroup } from "./components/CheckboxGroup";
@@ -45,3 +47,7 @@ export { default as LiteSearchInput } from "./components/LiteSearchInput";
 export { default as DateRangePicker } from "./components/DateRangePicker";
 
 export { default as DrawerTreeSelect } from "./components/DrawerTreeSelect";
+
+export { default as TableXlsxExporter } from "./components/TableXlsxExporter";
+
+export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";
