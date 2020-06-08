@@ -73,8 +73,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
+    if (showCheckAll) treeDefaultExpandedKeys.concat([checkAllKey]);
 
-    return treeDefaultExpandedKeys.concat([checkAllKey]);
+    return undefined;
   }, [
     treeDefaultExpandedKeys,
     checkAllKey,
