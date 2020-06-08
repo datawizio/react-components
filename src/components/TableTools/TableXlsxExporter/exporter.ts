@@ -1,6 +1,6 @@
 import { saveAs } from "file-saver";
+import { TableState } from "../../Table/types";
 import ExcelJS from "exceljs/dist/exceljs.min.js";
-import { TableState } from "../../../Table/types";
 
 export async function exportTableToXLSX(
   columns: TableState["columns"],

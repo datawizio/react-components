@@ -15,7 +15,7 @@ function fetchUsers(
 
 function fetchTableData(dataCount, columns): Promise<Partial<TableProps>> {
   const dataSource = genDataSource(dataCount, columns);
-  return serverReturn({ columns, dataSource }, 100);
+  return serverReturn({ columns, dataSource }, 1000);
 }
 
 export default { fetchUsers, fetchTableData };

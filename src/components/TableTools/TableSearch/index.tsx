@@ -1,8 +1,8 @@
 import * as React from "react";
-import LiteSearchInput from "../../../LiteSearchInput";
+import LiteSearchInput from "../../LiteSearchInput";
 
 import { useContext } from "react";
-import { TableContext } from "../../../Table/context";
+import { TableContext } from "../../Table/context";
 
 import "./index.less";
 

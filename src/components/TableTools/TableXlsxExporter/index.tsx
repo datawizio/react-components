@@ -2,9 +2,9 @@ import * as React from "react";
 import { exportTableToXLSX } from "./exporter";
 
 import { useContext } from "react";
-import { TableContext } from "../../../Table/context";
+import { TableContext } from "../../Table/context";
 
-import Button, { ButtonProps } from "../../../Button";
+import Button, { ButtonProps } from "../../Button";
 import { DownloadOutlined } from "@ant-design/icons";
 
 import "./index.less";
