@@ -133,6 +133,9 @@ Table.defaultProps = {
   columnsConfig: {},
   cellRenderProps: {},
 
+  columns: [],
+  dataSource: [],
+
   sortHandler: basicSortHandler,
   filterHandler: basicFilterHandler,
   searchHandler: basicSearchHandler

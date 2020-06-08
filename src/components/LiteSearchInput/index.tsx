@@ -25,7 +25,15 @@ export interface LiteSearchInputProps
 }
 
 const LiteSearchInput: React.FC<LiteSearchInputProps> = props => {
-  const { style, onClear, onChange, onSearch, debounceDelay } = props;
+  const {
+    style,
+    onClear,
+    onSearch,
+    onChange,
+    debounceDelay,
+    ...restProps
+  } = props;
+
   const [value, setValue] = useState(() => props.value || "");
 
   const [onSearchDebounced] = useDebouncedCallback((value: string) => {
@@ -56,7 +64,7 @@ const LiteSearchInput: React.FC<LiteSearchInputProps> = props => {
     <span className="lite-search" style={style}>
       <SearchOutlined className="lite-search__search-icon" />
       <input
-        {...props}
+        {...restProps}
         value={value}
         onChange={handleChange}
         className="lite-search__input"

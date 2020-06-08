@@ -11,6 +11,7 @@ export function initializer(props: TableProps): TableState {
   } = props;
 
   return {
+    columns,
     dataSource,
     searchValue,
     visibleColumnsKeys,
@@ -18,7 +19,6 @@ export function initializer(props: TableProps): TableState {
     sortParams: {},
     filterParams: {},
     expandedRowKeys: [],
-    columns: columns || [],
     baseDataSource: dataSource || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
   };

@@ -4,11 +4,9 @@ import server from "../../utils/data/server";
 
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
-import {
-  TableSearch,
-  TableXlsxExporter,
-  TableSelectColumnsModal
-} from "../TableTools";
+import TableSearch from "../TableTools/TableSearch";
+import TableXlsxExporter from "../TableTools/TableXlsxExporter";
+import TableSelectColumnsModal from "../TableTools/TableSelectColumnsModal";
 
 import Table from "./";
 import { TableWithProps } from "./story/helper";

@@ -1,15 +1,15 @@
 import * as React from "react";
 
-import Tree from "../../../Tree";
-import Modal from "../../../Modal";
-import Button from "../../../Button";
+import Tree from "../../Tree";
+import Modal from "../../Modal";
+import Button from "../../Button";
 import { SettingOutlined } from "@ant-design/icons";
 
-import { TableContext } from "../../../Table/context";
+import { TableContext } from "../../Table/context";
 import { useState, useCallback, useMemo, useContext } from "react";
+import { deepFilter } from "../../../utils/deepFilter";
 
 import "./index.less";
-import { deepFilter } from "../../../../utils/deepFilter";
 
 export interface TableSelectColumnsModalProps {
   locale?: {
@@ -68,7 +68,11 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   return (
     <div className="select-columns table-toolbar--right">
-      <Button border={false} onClick={() => setIsOpened(true)}>
+      <Button
+        disabled={Boolean(!tableState.columns.length)}
+        border={false}
+        onClick={() => setIsOpened(true)}
+      >
         <SettingOutlined className="select-columns__icon" />
         {locale.openButton}
       </Button>
