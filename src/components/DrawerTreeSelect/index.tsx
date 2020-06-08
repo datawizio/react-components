@@ -5,84 +5,30 @@ import React, {
   useMemo,
   useEffect
 } from "react";
+import clsx from "clsx";
 
-import AntTreeSelect, {
-  TreeSelectProps as AntTreeSelectProps
-} from "./AntTreeSelect";
-import { SelectValue } from "antd/lib/tree-select";
-import { DataNode, Key } from "rc-tree-select/es/interface";
-
+import { Skeleton } from "antd";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
+import { Levels } from "./Levels";
+import AntTreeSelect from "./antd/AntTreeSelect";
 
-import "./index.less";
-import clsx from "clsx";
-import { AntTreeNode } from "antd/lib/tree";
 import { triggerInputChangeValue } from "../../utils/trigger";
 
-export interface DrawerTreeSelectProps<VT>
-  extends Omit<AntTreeSelectProps<VT>, "onChange"> {
-  /**
-   * Показать/не показывать чекбокс `Check all`
-   */
-  showCheckAll?: boolean;
+import { DrawerTreeSelectProps, IDrawerTreeSelectFilters } from "./types";
+import { SelectValue } from "antd/lib/tree-select";
+import { DataNode, Key } from "rc-tree-select/es/interface";
+import { AntTreeNode } from "antd/lib/tree";
 
-  /**
-   * Текст для чекбокса `Check all`
-   */
-  checkAllTitle?: string;
-
-  /**
-   * Ключ для чекбокса `Check all`
-   */
-  checkAllKey?: string;
-
-  /**
-   * Title Drawerа
-   */
-  drawerTitle?: string;
-
-  /**
-   * Place holder for search field in drawer
-   */
-  drawerSearchPlaceholder?: string;
-
-  /**
-   * Drawer width in px
-   */
-  drawerWidth?: number;
-
-  /**
-   * Cancel text in drawer
-   */
-  cancelText?: string;
-
-  /**
-   * Submit text in drawer
-   */
-  submitText?: string;
-
-  /**
-   * tree data is flat list or not
-   */
-  isFlatList?: boolean;
-
-  formatRender?: ((props: any) => React.ReactElement) | null;
-
-  loadData?: (filters: any) => Promise<any>;
-  asyncData?: boolean;
-  remoteSearch?: boolean;
-
-  /**
-   * Event when user click Submit
-   */
-  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
-}
+import "./index.less";
 
 const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   asyncData,
   showCheckAll,
+  showLevels,
+  levels,
+  level,
   checkAllTitle,
   checkAllKey,
   drawerTitle,
@@ -94,12 +40,17 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   treeData,
   cancelText,
   submitText,
+  loadingText,
+  noDataText,
+  levelText,
   value,
   isFlatList,
   onChange,
   loadData,
+  loadChildren,
   multiple,
   remoteSearch,
+  loading,
   ...restProps
 }) => {
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
@@ -107,9 +58,12 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   const [internalValue, setInternalValue] = useState<SelectValue>(value);
   const [selected, setSelected] = useState<AntTreeNode>();
   const [stateTreeData, setStateTreeData] = useState(treeData);
+  const [internalLoading, setInternalLoading] = useState<boolean>(loading);
+  const [internalLevels, setInternalLevels] = useState<number>(levels);
 
   const formatSelected = useRef<string[]>();
   const searchValue = useRef<string>();
+  const levelSelected = useRef<number>(level);
 
   const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
     Key[]
@@ -117,13 +71,14 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   const inputRef = useRef<HTMLInputElement>();
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
-    if (searchValue.current) return undefined;
+    if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
 
     return treeDefaultExpandedKeys.concat([checkAllKey]);
   }, [
     treeDefaultExpandedKeys,
     checkAllKey,
+    remoteSearch,
     searchValue,
     internalTreeExpandedKeys
   ]);
@@ -141,7 +96,6 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
         ]
       : stateTreeData;
   }, [stateTreeData, checkAllKey, checkAllTitle, showCheckAll]);
-
   // ----- METHODS -------
 
   const setInputRef = (el: HTMLInputElement) => {
@@ -163,13 +117,36 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   );
 
   const internalLoadData = useCallback(async () => {
-    const filters = {
-      search: searchValue.current,
-      format: formatSelected.current
-    };
-    const data = await loadData(filters);
+    const filters: IDrawerTreeSelectFilters = { search: searchValue.current };
+
+    if (showLevels) {
+      filters.level = levelSelected.current;
+    }
+
+    if (formatRender) {
+      filters.formats = formatSelected.current;
+    }
+    setStateTreeData([]);
+    setInternalLoading(true);
+    triggerInputChangeValue(inputRef.current);
+
+    const { data, levels, expanded } = await loadData(filters);
+
     setStateTreeData(data);
-  }, [loadData]);
+    setInternalLoading(false);
+
+    if (showLevels) {
+      setInternalLevels(levels);
+    }
+    if (expanded) {
+      setInternalTreeExpandedKeys(expanded);
+    }
+
+    triggerInputChangeValue(
+      inputRef.current,
+      remoteSearch ? undefined : searchValue.current
+    );
+  }, [loadData, showLevels, formatRender, remoteSearch]);
 
   //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
@@ -187,8 +164,8 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
 
   const handlerDrawerCancel = useCallback(() => {
     closeDrawer();
-    setInternalValue(value);
-  }, [closeDrawer, value]);
+    setInternalValue(!multiple && !value ? [] : value);
+  }, [closeDrawer, value, multiple]);
 
   const handlerDrawerSubmit = useCallback(() => {
     closeDrawer();
@@ -207,8 +184,14 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
 
       searchValue.current = inputValue;
       setSearchValue(inputValue);
+
+      if (remoteSearch) {
+        internalLoadData();
+        return;
+      }
       triggerInputChangeValue(inputRef.current, inputValue);
     },
+    //eslint-disable-next-line
     [inputRef]
   );
 
@@ -241,17 +224,30 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
     setInternalTreeExpandedKeys(expandedKeys);
   }, []);
 
+  const handleLevelChange = (level: number) => {
+    levelSelected.current = level;
+    internalLoadData();
+  };
+
+  const handleTreeLoadData = async node => {
+    const data = await loadChildren(node.id);
+    setStateTreeData(internalTreeData.concat(data));
+    triggerInputChangeValue(inputRef.current, searchValue.current);
+  };
+
   // ---- EFFECTS ------
 
   useEffect(() => {
-    // eslint-disable-next-line
-    if (!multiple && !value) value = [];
-    setInternalValue(value);
-  }, [value]);
+    setInternalValue(!multiple && !value ? [] : value);
+  }, [value, multiple]);
 
   useEffect(() => {
     setStateTreeData(treeData);
   }, [treeData]);
+
+  useEffect(() => {
+    setInternalLoading(loading);
+  }, [loading]);
 
   useEffect(() => {
     !asyncData && loadData && internalLoadData();
@@ -262,7 +258,6 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
 
   const format = useMemo(() => {
     if (!formatRender) return null;
-
     return formatRender({
       onChange: (selected: string[]) => {
         formatSelected.current = selected;
@@ -272,39 +267,63 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   }, [formatRender, internalLoadData]);
 
   const dropdownRender = useCallback(
-    menu => (
-      <Drawer
-        className={clsx({
-          "drawer-tree-select-dropdown": true,
-          "drawer-tree-select-dropdown-show-all": showCheckAll,
-          "drawer-tree-select-dropdown-flat-list": isFlatList
-        })}
-        title={drawerTitle ? drawerTitle : restProps.placeholder}
-        onClose={handlerDrawerCancel}
-        visible={drawerVisible}
-        width={drawerWidth}
-        actions={
-          <>
-            <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
-            <Button onClick={handlerDrawerSubmit} type="primary">
-              {submitText}
-            </Button>
-          </>
-        }
-      >
-        {format}
-        <SearchInput
-          placeholder={drawerSearchPlaceholder}
-          value={searchValue.current}
-          onChange={handlerSearchInputChange}
-        />
-        {menu}
-      </Drawer>
-    ),
+    menu => {
+      return (
+        <Drawer
+          className={clsx({
+            "drawer-tree-select-dropdown": true,
+            "drawer-tree-select-dropdown-show-all": showCheckAll,
+            "drawer-tree-select-dropdown-flat-list": isFlatList
+          })}
+          title={drawerTitle ? drawerTitle : restProps.placeholder}
+          onClose={handlerDrawerCancel}
+          visible={drawerVisible}
+          width={drawerWidth}
+          actions={
+            <>
+              <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
+              <Button onClick={handlerDrawerSubmit} type="primary">
+                {submitText}
+              </Button>
+            </>
+          }
+        >
+          {format}
+          {showLevels ? (
+            <Levels
+              onChange={handleLevelChange}
+              value={levelSelected.current}
+              levels={internalLevels}
+              levelText={levelText}
+            />
+          ) : null}
+          <SearchInput
+            placeholder={drawerSearchPlaceholder}
+            value={searchValue.current}
+            onChange={handlerSearchInputChange}
+            loading={internalLoading}
+          />
+          {menu}
+          <div className="drawer-select-loader-container">
+            {internalLoading && (
+              <Skeleton
+                title={{ width: 300 }}
+                paragraph={{ rows: 1 }}
+                loading={true}
+                active
+              />
+            )}
+          </div>
+        </Drawer>
+      );
+    },
     //eslint-disable-next-line
     [
       drawerVisible,
       searchValue,
+      internalLoading,
+      internalLevels,
+      levelSelected.current,
       handlerDrawerCancel,
       handlerDrawerSubmit,
       handlerSearchInputChange
@@ -312,7 +331,10 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
   );
 
   const listHeight =
-    window.innerHeight - 205 - (formatRender === null ? 0 : 44);
+    window.innerHeight -
+    204 -
+    (formatRender === null ? 0 : 44) -
+    (showLevels ? 44 : 0);
 
   return (
     <AntTreeSelect
@@ -321,13 +343,18 @@ const DrawerTreeSelect: React.FC<DrawerTreeSelectProps<SelectValue>> = ({
       className="drawer-tree-select"
       treeData={internalTreeData}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
-      searchValue={searchValue.current ? searchValue.current : ""}
+      searchValue={
+        searchValue.current && !remoteSearch ? searchValue.current : ""
+      }
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
       multiple={multiple}
       showSearch={true}
       listHeight={listHeight}
+      loading={internalLoading}
+      notFoundContent={internalLoading ? loadingText : noDataText}
+      loadData={loadChildren ? handleTreeLoadData : null}
       onBeforeBlur={handlerSelectBeforeBlur}
       onChange={handleTreeSelectChange}
       onFocus={handlerDrawerFocus}
@@ -341,6 +368,7 @@ DrawerTreeSelect.defaultProps = {
   maxTagCount: 10,
   treeDefaultExpandedKeys: [],
   showCheckAll: false,
+  showLevels: false,
   isFlatList: false,
   checkAllTitle: "Check all",
   checkAllKey: "-1",
@@ -349,6 +377,9 @@ DrawerTreeSelect.defaultProps = {
   drawerWidth: 400,
   cancelText: "Cancel",
   submitText: "Submit",
+  loadingText: "Loading",
+  noDataText: "No data",
+  levelText: "Level %s",
   formatRender: null,
   remoteSearch: false
 };

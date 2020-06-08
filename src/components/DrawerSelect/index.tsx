@@ -6,18 +6,21 @@ import React, {
   useEffect
 } from "react";
 
-import AntSelect, { SelectProps as AntSelectProps } from "./AntSelect";
+import clsx from "clsx";
+
+import AntSelect, { SelectProps as AntSelectProps } from "./antd/AntSelect";
 import { SelectValue } from "antd/lib/tree-select";
 
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
+import { Skeleton } from "antd";
+
+import { AntTreeNode } from "antd/lib/tree";
+
+import { triggerInputChangeValue } from "../../utils/trigger";
 
 import "./index.less";
-import clsx from "clsx";
-import { AntTreeNode } from "antd/lib/tree";
-import { triggerInputChangeValue } from "../../utils/trigger";
-import { Skeleton } from "antd";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
@@ -110,6 +113,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     loadingText,
     noDataText,
     loadData,
+    loading,
     valueProp,
     mode,
     multiple,
@@ -117,12 +121,12 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     ...restProps
   } = props;
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [internalLoading, setLoading] = useState<boolean>(loading);
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [internalValue, setInternalValue] = useState<SelectValue>(value);
+  const [internalValue, setInternalValue] = useState<SelectValue>();
   const [selected, setSelected] = useState<AntTreeNode>();
   const menuRef = useRef();
 
@@ -130,7 +134,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     return options ? convertOptions(options, valueProp, labelProp) : [];
   }, [options, valueProp, labelProp]);
 
-  const [optionsState, setOptions] = useState(internalOptions);
+  const [optionsState, setOptions] = useState([]);
 
   const inputRef = useRef<HTMLInputElement>();
 
@@ -145,6 +149,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (!onChange) return;
       if (!multiple) {
         onChange(value, value ? selected : undefined);
+        return;
       }
       onChange(value);
     },
@@ -154,7 +159,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const loadPage = useCallback(
     async (search, page = 0) => {
       if (!loadData) return;
-      if (page >= totalPages) {
+      if (page !== 0 && page >= totalPages) {
         return;
       }
       if (!page) setOptions([]);
@@ -203,8 +208,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
-    setInternalValue(value);
-  }, [closeDrawer, value]);
+    setInternalValue(!multiple && !value ? [] : value);
+  }, [closeDrawer, value, multiple]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
@@ -259,20 +264,27 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     e => {
       const { target } = e;
       //debounce?
-      if (loading) return;
+      if (internalLoading) return;
       if (page === totalPages - 1) return;
       if (target.scrollTop + target.offsetHeight >= target.scrollHeight - 100) {
         loadPage(searchValue, page + 1);
       }
     },
-    [loading, page, loadPage, searchValue, totalPages]
+    [internalLoading, page, loadPage, searchValue, totalPages]
   );
 
   // ------- EFFECTS ----------
-  // useEffect(() => {
-  //   setInternalValue(value);
-  //   return () => {};
-  // }, [value]);
+  useEffect(() => {
+    setInternalValue(!multiple && !value ? [] : value);
+  }, [value, multiple]);
+
+  useEffect(() => {
+    setLoading(loading);
+  }, [loading]);
+
+  useEffect(() => {
+    setOptions(internalOptions);
+  }, [internalOptions]);
 
   useEffect(() => {
     !asyncData && loadData && loadPage("");
@@ -306,11 +318,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           placeholder={drawerSearchPlaceholder}
           value={searchValue}
           onChange={handleSearchInputChange}
-          loading={loading}
+          loading={internalLoading}
         />
         {menu}
         <div className="drawer-select-loader-container">
-          {loading && (
+          {internalLoading && (
             <Skeleton
               title={{ width: 300 }}
               paragraph={{ rows: 1 }}
@@ -331,15 +343,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       className="drawer-select"
       mode="multiple"
       open={drawerVisible}
-      loading={loading}
+      loading={internalLoading}
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-select-dropdown-fake"
       showSearch={true}
       onSearch={handleSearch}
       optionFilterProp="title"
-      listHeight={window.innerHeight - 215}
-      notFoundContent={loading ? loadingText : noDataText}
+      listHeight={window.innerHeight - 198}
+      notFoundContent={internalLoading ? loadingText : noDataText}
       onBeforeBlur={handleSelectBeforeBlur}
       onFocus={handleDrawerFocus}
       onSelect={handleSelect}

@@ -37,7 +37,9 @@ let treeData = generateTreeList();
       showSearchInput
       treeData={treeData}
       height={300}
-      searchCondition={(node, value) => node.title.endsWith(value)}
+      searchCondition={(value, node) =>
+        node.title && node.title.endsWith(value)
+      }
     />
   </Story>
 </Preview>

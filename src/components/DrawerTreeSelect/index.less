@@ -1,6 +1,6 @@
 @import "~antd/es/select/style/index";
+@import "~antd/es/radio/style/index";
 @import "~antd/es/tree-select/style/index";
-@import "~antd/es/style/themes/default.less";
 @import "../../styles/variables";
 
 .drawer-tree-select.ant-select-focused .ant-select-selection-search-input,
@@ -13,8 +13,23 @@
 
 .drawer-tree-select-dropdown {
   .ant-drawer-body {
-    div + .ant-input-search {
+    overflow: hidden;
+    padding-bottom: @padding-lg - 16px;
+    div + .ant-input-search,
+    div + .drawer-tree-select-levels {
       margin-top: @margin-sm;
+    }
+    .ant-select-empty {
+      margin-top: @margin-sm;
+    }
+    .drawer-tree-select-levels {
+      width: 100%;
+      display: flex;
+      label {
+        flex: 1;
+        text-align: center;
+        padding: 0;
+      }
     }
     .ant-select-tree {
       .tree-check-all {
@@ -25,6 +40,20 @@
       margin-left: -@margin-lg + 1;
       .tree-check-all .ant-select-tree-switcher {
         visibility: hidden;
+      }
+    }
+
+    .drawer-select-loader-container {
+      height: 16px;
+      overflow: visible;
+      .ant-skeleton-title {
+        margin: 0;
+      }
+      .ant-skeleton-content .ant-skeleton-title + .ant-skeleton-paragraph {
+        margin-top: 5px;
+        li {
+          width: 300px !important;
+        }
       }
     }
   }

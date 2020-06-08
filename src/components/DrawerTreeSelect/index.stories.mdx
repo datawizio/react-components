@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
-import Select from "../Select";
 import DrawerTreeSelect from "./index";
 import { generateTreeList } from "../../utils/data/tree";
+import { Helper } from "./story/helper";
 let treeData = generateTreeList("0", 2);
 
 <Meta title="Components/Select/DrawerTreeSelect" component={DrawerTreeSelect} />
@@ -45,7 +45,32 @@ let treeData = generateTreeList("0", 2);
         { key: 2, title: "1234", additional: "123", children: [] },
         { key: 3, title: "123456", additional: "123", children: [] },
         { key: 4, title: "1234567", additional: "123", children: [] },
-        { key: 5, title: "12345678", additional: "123", children: [] }
+        { key: 5, title: "12345678", additional: "123", children: [] },
+        { key: 6, title: "23", additional: "123", children: [] },
+        { key: 7, title: "1234", additional: "123", children: [] },
+        { key: 8, title: "123456", additional: "123", children: [] },
+        { key: 9, title: "1234567", additional: "123", children: [] },
+        { key: 10, title: "12345678", additional: "123", children: [] },
+        { key: 15, title: "23", additional: "123", children: [] },
+        { key: 11, title: "1234", additional: "123", children: [] },
+        { key: 12, title: "123456", additional: "123", children: [] },
+        { key: 13, title: "1234567", additional: "123", children: [] },
+        { key: 14, title: "12345678", additional: "123", children: [] },
+        { key: 16, title: "23", additional: "123", children: [] },
+        { key: 17, title: "1234", additional: "123", children: [] },
+        { key: 18, title: "123456", additional: "123", children: [] },
+        { key: 19, title: "1234567", additional: "123", children: [] },
+        { key: 20, title: "12345678", additional: "123", children: [] },
+        { key: 21, title: "23", additional: "123", children: [] },
+        { key: 22, title: "1234", additional: "123", children: [] },
+        { key: 23, title: "123456", additional: "123", children: [] },
+        { key: 24, title: "1234567", additional: "123", children: [] },
+        { key: 25, title: "12345678", additional: "123", children: [] },
+        { key: 26, title: "23", additional: "123", children: [] },
+        { key: 27, title: "1234", additional: "123", children: [] },
+        { key: 28, title: "123456", additional: "123", children: [] },
+        { key: 29, title: "1234567", additional: "123", children: [] },
+        { key: 30, title: "12345678", additional: "123", children: [] }
       ]}
       onChange={(value, selected) => {
         console.log(value, selected);
@@ -66,28 +91,313 @@ let treeData = generateTreeList("0", 2);
       treeNodeFilterProp="title"
       value=""
       formatRender={({ onChange }) => {
-        return (
-          <Select
-            mode="multiple"
-            options={[
-              { value: "123", label: "123" },
-              { value: "1233", label: "1233" }
-            ]}
-            onChange={selected => {
-              onChange(selected);
-            }}
-          />
-        );
+        return <Helper onChange={onChange} />;
       }}
       loadData={filters => {
-        console.log(filters);
+        console.log(filters.formats);
+        if (filters.formats) {
+          return [
+            { key: 1, title: "345", additional: "123", children: [] },
+            { key: 2, title: "3456", additional: "123", children: [] },
+            { key: 3, title: "34567", additional: "123", children: [] },
+            { key: 4, title: "345678", additional: "123", children: [] },
+            { key: 5, title: "3456789", additional: "123", children: [] }
+          ];
+        }
+        return {
+          data: [
+            { key: 1, title: "23", additional: "123", children: [] },
+            { key: 2, title: "1234", additional: "123", children: [] },
+            { key: 3, title: "123456", additional: "123", children: [] },
+            { key: 4, title: "1234567", additional: "123", children: [] },
+            { key: 5, title: "12345678", additional: "123", children: [] },
+            { key: 6, title: "23", additional: "123", children: [] },
+            { key: 7, title: "1234", additional: "123", children: [] },
+            { key: 8, title: "123456", additional: "123", children: [] },
+            { key: 9, title: "1234567", additional: "123", children: [] },
+            { key: 10, title: "12345678", additional: "123", children: [] },
+            { key: 15, title: "23", additional: "123", children: [] },
+            { key: 11, title: "1234", additional: "123", children: [] },
+            { key: 12, title: "123456", additional: "123", children: [] },
+            { key: 13, title: "1234567", additional: "123", children: [] },
+            { key: 14, title: "12345678", additional: "123", children: [] },
+            { key: 16, title: "23", additional: "123", children: [] },
+            { key: 17, title: "1234", additional: "123", children: [] },
+            { key: 18, title: "123456", additional: "123", children: [] },
+            { key: 19, title: "1234567", additional: "123", children: [] },
+            { key: 20, title: "12345678", additional: "123", children: [] },
+            { key: 21, title: "23", additional: "123", children: [] },
+            { key: 22, title: "1234", additional: "123", children: [] },
+            { key: 23, title: "123456", additional: "123", children: [] },
+            { key: 24, title: "1234567", additional: "123", children: [] },
+            { key: 25, title: "12345678", additional: "123", children: [] },
+            { key: 26, title: "23", additional: "123", children: [] },
+            { key: 27, title: "1234", additional: "123", children: [] },
+            { key: 28, title: "123456", additional: "123", children: [] },
+            { key: 29, title: "1234567", additional: "123", children: [] },
+            { key: 30, title: "12345678", additional: "123", children: [] }
+          ]
+        };
+      }}
+      onChange={(value, selected) => {
+        console.log(value, selected);
+      }}
+    />
+  </Story>
+</Preview>
+
+## With levels
+
+<Preview>
+  <Story name="With levels">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      showLevels
+      allowClear
+      treeCheckable={true}
+      treeNodeFilterProp="title"
+      value=""
+      formatRender={({ onChange }) => {
+        return <Helper onChange={onChange} />;
+      }}
+      loadData={filters => {
+        if (filters.level) {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve({
+                data: [
+                  {
+                    key: 1,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 2,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 3,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 4,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  },
+                  {
+                    key: 5,
+                    title: Math.random(),
+                    additional: "123",
+                    children: []
+                  }
+                ],
+                levels: 5
+              });
+            }, 2000);
+          });
+        }
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve({
+              data: [
+                { key: 1, title: "23", additional: "123", children: [] },
+                { key: 2, title: "1234", additional: "123", children: [] },
+                { key: 3, title: "123456", additional: "123", children: [] },
+                { key: 4, title: "1234567", additional: "123", children: [] },
+                { key: 5, title: "12345678", additional: "123", children: [] },
+                { key: 6, title: "23", additional: "123", children: [] },
+                { key: 7, title: "1234", additional: "123", children: [] },
+                { key: 8, title: "123456", additional: "123", children: [] },
+                { key: 9, title: "1234567", additional: "123", children: [] },
+                { key: 10, title: "12345678", additional: "123", children: [] },
+                { key: 15, title: "23", additional: "123", children: [] },
+                { key: 11, title: "1234", additional: "123", children: [] },
+                { key: 12, title: "123456", additional: "123", children: [] },
+                { key: 13, title: "1234567", additional: "123", children: [] },
+                { key: 14, title: "12345678", additional: "123", children: [] },
+                { key: 16, title: "23", additional: "123", children: [] },
+                { key: 17, title: "1234", additional: "123", children: [] },
+                { key: 18, title: "123456", additional: "123", children: [] },
+                { key: 19, title: "1234567", additional: "123", children: [] },
+                { key: 20, title: "12345678", additional: "123", children: [] },
+                { key: 21, title: "23", additional: "123", children: [] },
+                { key: 22, title: "1234", additional: "123", children: [] },
+                { key: 23, title: "123456", additional: "123", children: [] },
+                { key: 24, title: "1234567", additional: "123", children: [] },
+                { key: 25, title: "12345678", additional: "123", children: [] },
+                { key: 26, title: "23", additional: "123", children: [] },
+                { key: 27, title: "1234", additional: "123", children: [] },
+                { key: 28, title: "123456", additional: "123", children: [] },
+                { key: 29, title: "1234567", additional: "123", children: [] },
+                { key: 30, title: "12345678", additional: "123", children: [] }
+              ],
+              levels: 7
+            });
+          }, 2000);
+        });
+      }}
+      onChange={(value, selected) => {
+        console.log(value, selected);
+      }}
+    />
+  </Story>
+</Preview>
+
+## With levels
+
+<Preview>
+  <Story name="Async expand">
+    <DrawerTreeSelect
+      placeholder="Select tree"
+      showSearch
+      showLevels
+      allowClear
+      treeDataSimpleMode
+      treeCheckable={true}
+      treeNodeFilterProp="title"
+      remoteSearch={true}
+      value=""
+      formatRender={({ onChange }) => {
+        return <Helper onChange={onChange} />;
+      }}
+      loadChildren={id => {
         return [
-          { key: 1, title: "23", additional: "123", children: [] },
-          { key: 2, title: "1234", additional: "123", children: [] },
-          { key: 3, title: "123456", additional: "123", children: [] },
-          { key: 4, title: "1234567", additional: "123", children: [] },
-          { key: 5, title: "12345678", additional: "123", children: [] }
+          { id: id + "1", pId: id, value: id + "1", title: "Expand to load" },
+          { id: id + "2", pId: id, value: id + "2", title: "Expand to load" },
+          {
+            id: id + "3",
+            pId: id,
+            value: id + "3",
+            title: "Tree Node",
+            isLeaf: true
+          }
         ];
+      }}
+      loadData={filters => {
+        if (filters.level) {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve({
+                data: [
+                  { id: 1, pId: null, value: "1", title: "Expand to load" },
+                  { id: 2, pId: null, value: "2", title: "Expand to load" },
+                  {
+                    id: 3,
+                    pId: null,
+                    value: "3",
+                    title: "Tree Node",
+                    isLeaf: true
+                  }
+                ]
+              });
+            }, 2000);
+          });
+        }
+        if (filters.search) {
+          return {
+            data: [
+              {
+                "isLeaf": false,
+                "id": 1,
+                "level": 1,
+                "title": "MegaTest",
+                "pId": null
+              },
+              {
+                "isLeaf": false,
+                "id": 6779,
+                "level": 2,
+                "title": "01 - Бакалея",
+                "pId": 1
+              },
+              {
+                "isLeaf": false,
+                "id": 2372,
+                "level": 3,
+                "title": "Яйца",
+                "pId": 6779
+              },
+              {
+                "isLeaf": true,
+                "id": 5594,
+                "level": 4,
+                "title": "Яйцо куриное",
+                "pId": 2372
+              },
+              {
+                "isLeaf": true,
+                "id": 5563,
+                "level": 4,
+                "title": "Яйцо перепелиное",
+                "pId": 2372
+              },
+              {
+                "isLeaf": true,
+                "id": 5986,
+                "level": 4,
+                "title": "Мыло (хозяйственное)",
+                "pId": 1250
+              },
+              {
+                "isLeaf": true,
+                "id": 5872,
+                "level": 5,
+                "title": "Перчатки (хозяйственные)",
+                "pId": 5853
+              },
+              {
+                "isLeaf": true,
+                "id": 5850,
+                "level": 5,
+                "title": "Хозяйственные емкости",
+                "pId": 5853
+              },
+              {
+                "isLeaf": false,
+                "id": 5853,
+                "level": 4,
+                "title": "Хозяйственные товары для дома",
+                "pId": 5841
+              },
+              {
+                "isLeaf": false,
+                "id": 5841,
+                "level": 3,
+                "title": "Хозяйственные товары",
+                "pId": 6787
+              },
+              {
+                "isLeaf": true,
+                "id": 1250,
+                "level": 3,
+                "title": "Средства для стирки",
+                "pId": 6787
+              },
+              {
+                "isLeaf": true,
+                "id": 6787,
+                "level": 2,
+                "title": "12 - Бытовая химия",
+                "pId": 1
+              }
+            ],
+            expanded: [1, 6779, 2372]
+          };
+        }
+        return {
+          data: [
+            { id: 1, pId: null, value: "1", title: "Expand to load" },
+            { id: 2, pId: null, value: "2", title: "Expand to load" },
+            { id: 3, pId: null, value: "3", title: "Tree Node", isLeaf: true }
+          ]
+        };
       }}
       onChange={(value, selected) => {
         console.log(value, selected);

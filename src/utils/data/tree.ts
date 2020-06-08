@@ -5,6 +5,7 @@ export const generateTreeList = (path = "0", level = 3) => {
     const treeNode = {
       title: `title ${key}`,
       key,
+      value: key,
       children: []
     };
 
