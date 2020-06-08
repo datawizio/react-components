@@ -29,7 +29,6 @@ export interface FCPhoneInput extends React.FC<PhoneInputProps> {
   /**
    * PhoneNumber validation
    */
-
   isValidPhoneNumber: (value?: string) => boolean;
 }
 
