@@ -4,6 +4,8 @@ export { default as Menu } from "./components/Menu";
 
 export { default as Tree } from "./components/Tree";
 
+export { default as Table } from "./components/Table";
+
 export { default as Input } from "./components/Input";
 
 export { default as Radio } from "./components/Radio";

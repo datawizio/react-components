@@ -1,0 +1,346 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { genColumns, genDataSource } from "../../utils/data/dataGenerators";
+import server from "../../utils/data/server";
+
+import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
+
+import {
+  TableSearch,
+  TableXlsxExporter,
+  TableSelectColumnsModal
+} from "../TableTools";
+
+import Table from "./";
+import { TableWithProps } from "./story/helper";
+
+import { useState, useMemo, useCallback } from "react";
+
+<Meta
+  title="Components/Table/Table"
+  component={Table}
+  decorators={[withKnobs]}
+/>
+
+# Table
+
+Компонент `Table`.
+
+Базовый компонент: [**antd/table**](https://ant.design/components/table/).
+
+## Sandbox
+
+<Preview>
+  <Story name="Sandbox">
+    {() => {
+      const columnsCount = number("columns count", 10);
+      const dataCount = number("data count", 100);
+      const treeColumns = boolean("treeColumns", true);
+      const treeData = boolean("treeData", true);
+      const toolBar = boolean("toolbar", true);
+      const sortable = boolean("sortable", true);
+      //
+      const columns = useMemo(() => {
+        return genColumns(columnsCount, treeColumns);
+      }, [columnsCount, treeColumns]);
+      //
+      let dataSource = useMemo(
+        () => genDataSource(dataCount, columns, ["string"], treeData),
+        [columnsCount, dataCount, treeData]
+      );
+      //
+      if (columns[0]) {
+        columns[0].fixed = "left";
+        //
+        columns[0].filters = [
+          ...new Set(dataSource.map(item => item[columns[0].dataIndex]))
+        ].map(item => ({
+          text: item,
+          value: item
+        }));
+      }
+      //
+      return (
+        <div>
+          <Table
+            height="450px"
+            columns={columns}
+            sortable={sortable}
+            dataSource={dataSource}
+          >
+            {toolBar && (
+              <Table.ToolBar>
+                <TableSearch />
+                <TableXlsxExporter />
+                <TableSelectColumnsModal />
+              </Table.ToolBar>
+            )}
+          </Table>
+        </div>
+      );
+    }}
+  </Story>
+</Preview>
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    {() => {
+      const dataSource = [
+        {
+          key: "1",
+          name: "Mike",
+          age: 32,
+          address: "10 Downing Street"
+        },
+        {
+          key: "2",
+          name: "John",
+          age: 42,
+          address: "10 Downing Street"
+        },
+        {
+          key: "3",
+          name: "Leo",
+          age: 31,
+          address: "10 Downing Street"
+        },
+        {
+          key: "4",
+          name: "Tahir",
+          age: 18,
+          address: "Novoselitsa"
+        },
+        {
+          key: "4",
+          name: "Nikita",
+          age: 19,
+          address: "In Nastia"
+        },
+        {
+          key: "5",
+          name: "Pasha",
+          age: 20,
+          address: "Planohero"
+        }
+      ];
+      //
+      const columns = [
+        {
+          title: "Name",
+          dataIndex: "name",
+          key: "name"
+        },
+        {
+          title: "Age",
+          dataIndex: "age",
+          key: "age"
+        },
+        {
+          title: "Address",
+          dataIndex: "address",
+          key: "address"
+        }
+      ];
+      //
+      return <Table columns={columns} dataSource={dataSource} />;
+    }}
+  </Story>
+</Preview>
+
+## Async
+
+<Preview>
+  <Story name="Async">
+    {() => {
+      const columns = useMemo(() => genColumns(10, true), []);
+      //
+      const globalHandler = useCallback(async ({ pagination }) => {
+        const paginationConfig = pagination
+          ? pagination
+          : { total: 200, pageSize: 10 };
+        //
+        const response = await server.fetchTableData(
+          paginationConfig.pageSize,
+          columns
+        );
+        //
+        return {
+          pagination: paginationConfig,
+          ...response
+        };
+      }, []);
+      //
+      return <Table globalHandler={globalHandler} />;
+    }}
+  </Story>
+</Preview>
+
+## With ToolBar
+
+<Preview>
+  <Story name="With ToolBar">
+    {() => {
+      const dataSource = [
+        {
+          key: "1",
+          name: "Mike",
+          age: 32,
+          address: "10 Downing Street"
+        },
+        {
+          key: "2",
+          name: "John",
+          age: 42,
+          address: "10 Downing Street"
+        },
+        {
+          key: "3",
+          name: "Leo",
+          age: 31,
+          address: "10 Downing Street"
+        },
+        {
+          key: "4",
+          name: "Tahir",
+          age: 18,
+          address: "Novoselitsa"
+        },
+        {
+          key: "4",
+          name: "Nikita",
+          age: 19,
+          address: "In Nastia"
+        },
+        {
+          key: "5",
+          name: "Pasha",
+          age: 20,
+          address: "Planohero"
+        }
+      ];
+      //
+      const columns = [
+        {
+          title: "Name",
+          dataIndex: "name",
+          key: "name"
+        },
+        {
+          title: "Age",
+          dataIndex: "age",
+          key: "age"
+        },
+        {
+          title: "Address",
+          dataIndex: "address",
+          key: "address"
+        }
+      ];
+      //
+      return (
+        <Table columns={columns} dataSource={dataSource}>
+          <Table.ToolBar>
+            <TableSearch />
+            <TableSelectColumnsModal />
+          </Table.ToolBar>
+        </Table>
+      );
+    }}
+  </Story>
+</Preview>
+
+## Tree table
+
+<Preview>
+  <Story name="Tree table">
+    {() => {
+      const dataSource = [
+        {
+          key: 1,
+          name: "John Brown sr.",
+          age: 60,
+          address: "New York No. 1 Lake Park",
+          children: [
+            {
+              key: 11,
+              name: "John Brown",
+              age: 42,
+              address: "New York No. 2 Lake Park"
+            },
+            {
+              key: 12,
+              name: "John Brown jr.",
+              age: 30,
+              address: "New York No. 3 Lake Park",
+              children: [
+                {
+                  key: 121,
+                  name: "Jimmy Brown",
+                  age: 16,
+                  address: "New York No. 3 Lake Park"
+                }
+              ]
+            },
+            {
+              key: 13,
+              name: "Jim Green sr.",
+              age: 72,
+              address: "London No. 1 Lake Park",
+              children: [
+                {
+                  key: 131,
+                  name: "Jim Green",
+                  age: 42,
+                  address: "London No. 2 Lake Park",
+                  children: [
+                    {
+                      key: 1311,
+                      name: "Jim Green jr.",
+                      age: 25,
+                      address: "London No. 3 Lake Park"
+                    },
+                    {
+                      key: 1312,
+                      name: "Jimmy Green sr.",
+                      age: 18,
+                      address: "London No. 4 Lake Park"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          key: 2,
+          name: "Joe Black",
+          age: 32,
+          address: "Sidney No. 1 Lake Park"
+        }
+      ];
+      //
+      const columns = [
+        {
+          title: "Name",
+          dataIndex: "name",
+          key: "name"
+        },
+        {
+          title: "Age",
+          dataIndex: "age",
+          key: "age"
+        },
+        {
+          title: "Address",
+          dataIndex: "address",
+          key: "address"
+        }
+      ];
+      //
+      return <Table columns={columns} dataSource={dataSource} />;
+    }}
+  </Story>
+</Preview>
+
+<Props of={TableWithProps} />

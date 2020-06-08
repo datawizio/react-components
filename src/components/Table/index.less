@@ -1,0 +1,115 @@
+@import "~antd/es/table/style/index";
+@import "../../styles/variables";
+
+.dw-table {
+  &__wrapper {
+    overflow: auto;
+  }
+
+  .dw-table__column {
+    width: 200px;
+    transition: none !important;
+
+    top: 0;
+    z-index: 5;
+    position: sticky !important;
+
+    &--resizable {
+      overflow: hidden;
+      resize: horizontal;
+    }
+
+    &--fixed {
+      z-index: 10;
+
+      &--left {
+        left: 0;
+      }
+
+      &--right {
+        right: 0;
+      }
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &-sort-sequence {
+      color: @primary-color;
+    }
+
+    .ant-table-filter-trigger-container {
+      background: transparent !important;
+      right: 10px;
+    }
+
+    .ant-table-filter-column-title {
+      padding: 8px !important;
+    }
+  }
+
+  table {
+    width: max-content !important;
+  }
+
+  &--empty {
+    table {
+      width: 100% !important;
+    }
+  }
+
+  td {
+    position: relative;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .ant-table {
+    .set-position-header(10, 55);
+
+    &-small {
+      .set-position-header(10, 39);
+    }
+
+    &-middle {
+      .set-position-header(10, 47);
+    }
+  }
+}
+
+.table-toolbar {
+  padding: 0 5px;
+  display: flow-root;
+  position: relative;
+
+  &--left {
+    float: left;
+    margin-right: 3px;
+  }
+
+  &--right {
+    float: right;
+    margin-right: 3px;
+  }
+}
+
+.set-columns-positions(@n, @size, @i: 2) when (@i =< @n) {
+  tr:nth-child(@{i}) {
+    .dw-table__column {
+      top: unit(@size * (@i - 1), px);
+    }
+  }
+
+  .set-columns-positions(@n, @size, (@i + 1));
+}
+
+.set-position-header(@n, @size) {
+  thead {
+    .set-columns-positions(@n, @size);
+  }
+}

@@ -1,0 +1,41 @@
+import { useState } from "react";
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import LiteSearchInput from "./index";
+
+<Meta title="Components/Input/LiteSearchIInput" component={LiteSearchInput} />
+
+# LiteSearchInput
+
+Компонент предназначен для ввода текста для поиска.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <LiteSearchInput />
+  </Story>
+</Preview>
+
+## With debounce
+
+<Preview>
+  <Story name="With debounce">
+    {() => {
+      const [value, setValue] = useState("");
+      //
+      return (
+        <div>
+          <LiteSearchInput
+            debounceDelay={1000}
+            onSearch={value => setValue(value)}
+          />
+          <span>Search text: {value}</span>
+        </div>
+      );
+    }}
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={LiteSearchInput} />

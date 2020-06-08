@@ -133,7 +133,6 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     filterOption: internalSearchCondition
   });
 
-  console.log(mergedExpandedKeys);
   return (
     <div className="tree-search-container">
       <div className="tree-search-input">

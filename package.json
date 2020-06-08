@@ -53,7 +53,9 @@
     "react-dom": "^16.13.1",
     "antd": "^4.2.0",
     "moment": "^2.24.0",
-    "highcharts": "^8.1.0"
+    "highcharts": "^8.1.0",
+    "exceljs": "^4.0.1",
+    "file-saver": "^2.0.2"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.0.6",
@@ -142,7 +144,14 @@
     "rucksack-css": "^1.0.2",
     "sass-loader": "^8.0.0",
     "ts-jest": "^24.2.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "use-debounce": "^3.4.2",
+    "utility-types": "^3.10.0",
+    "exceljs": "^4.0.1",
+    "file-saver": "^2.0.2"
+  },
+  "dependencies": {
+    "clsx": "^1.1.0"
   },
   "browserslist": {
     "production": [
