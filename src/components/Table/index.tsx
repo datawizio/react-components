@@ -6,55 +6,45 @@ import useColumns from "./hooks/useColumns";
 import useStateHandlers from "./hooks/useStateHandlers";
 import { useMemo, useCallback, useReducer } from "react";
 
-import { TableProps } from "./types";
+import { TableProps, FCTable } from "./types";
 import Column from "./components/Column";
 import TableWrapper from "./components/TableWrapper";
-import TableControlPanel from "../TableControlPanel";
 
 import {
   basicSortHandler,
   basicFilterHandler,
-  basicSearchHandler,
-  exportTableToXLSX
+  basicSearchHandler
 } from "./utils/handlers";
 
 import "./index.less";
 import usePropsToState from "./hooks/usePropsToState";
 import clsx from "clsx";
+import { TableContext } from "./context";
+import ToolBar from "./components/ToolBar";
 
-const Table: React.FC<TableProps> = props => {
+const Table: FCTable = props => {
   const {
     style,
     width,
     height,
+    children,
     components,
+    globalHandler,
     rowChildrenProvider,
     ...restProps
   } = props;
 
-  const [state, dispatch] = useReducer(reducer, props as any, initializer);
+  const [state, dispatch] = useReducer(reducer, props, initializer);
 
-  const visibleColumns = useColumns(state, props);
+  const columnsToRender = useColumns(state, props);
 
-  const onHandlersResponded = useCallback(nextState => {
-    dispatch({ type: "handlerResponded", payload: nextState });
+  const updateState = useCallback(nextState => {
+    dispatch({ type: "update", payload: nextState });
   }, []);
 
   usePropsToState(dispatch, props);
 
-  useStateHandlers(onHandlersResponded, state, props);
-
-  const onSelectColumn = useCallback(nextVisibleColumns => {
-    dispatch({ type: "visibleColumnsKeys", payload: nextVisibleColumns });
-  }, []);
-
-  const handleSearch = useCallback(nextSearchValue => {
-    dispatch({ type: "search", payload: nextSearchValue });
-  }, []);
-
-  const handleExport = useCallback(() => {
-    exportTableToXLSX(visibleColumns, state.dataSource);
-  }, [visibleColumns, state.dataSource]);
+  useStateHandlers(updateState, state, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -97,33 +87,32 @@ const Table: React.FC<TableProps> = props => {
   );
 
   const isEmpty = useMemo(() => {
-    return !visibleColumns.length || !state.dataSource;
-  }, [visibleColumns.length, state.dataSource]);
+    return !state.columns.length || !state.dataSource;
+  }, [state.columns.length, state.dataSource]);
 
   const className = useMemo(
     () => clsx("dw-table", { "dw-table--empty": isEmpty }, props.className),
     [props.className, isEmpty]
   );
 
+  const stateToRender = {
+    ...state,
+    columns: columnsToRender
+  };
+
   return (
-    <>
-      <TableControlPanel
-        onExport={handleExport}
-        onSearch={handleSearch}
-        columns={props.columns || []}
-        onSelectColumns={onSelectColumn}
-        visibleColumnsKeys={visibleColumns.map(column => column.key)}
-      />
+    <TableContext.Provider value={[stateToRender, updateState, props]}>
+      {children}
       <AntdTable
         {...(restProps as any)}
-        {...state}
+        {...stateToRender}
         className={className}
-        columns={visibleColumns}
         onExpand={handleExpandRow}
         onChange={handleChangeTable}
         components={customComponents}
+        loading={Boolean(isEmpty && globalHandler)}
       />
-    </>
+    </TableContext.Provider>
   );
 };
 
@@ -148,5 +137,7 @@ Table.defaultProps = {
   filterHandler: basicFilterHandler,
   searchHandler: basicSearchHandler
 };
+
+Table.ToolBar = ToolBar;
 
 export default Table;

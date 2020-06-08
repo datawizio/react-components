@@ -12,10 +12,7 @@ export function genUsersData(
   });
 }
 
-export function genColumns(
-  count,
-  isTree
-): Array<{ key: string; title: string; dataIndex: string }> {
+export function genColumns(count, isTree) {
   const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
 
   return (function genColsRec(childCount = count, level = 1) {
@@ -45,8 +42,8 @@ export function genColumns(
 export function genDataSource(
   count,
   columns,
-  types: Array<string>,
-  isTree: boolean,
+  types: Array<string> = [],
+  isTree: boolean = false,
   level: number = 0
 ) {
   const flat = (columns, acc = []) => {

@@ -1,10 +1,12 @@
-import React from "react";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import BodyCell from "../components/BodyCell";
+import { defineCellType } from "../utils/utils";
 import { IColumn, TableProps, TableState } from "../types";
-import { defineCellType, deepFilter } from "../utils/utils";
 
-function useColumns(state: TableState, props: TableProps) {
+function useColumns(
+  state: TableState,
+  props: TableProps
+): TableState["columns"] {
   const {
     sortable,
     columnsConfig,
@@ -12,28 +14,23 @@ function useColumns(state: TableState, props: TableProps) {
     isResizableColumns
   } = props;
 
-  const { columns, dTypesConfig } = state;
-
-  const { visibleColumnsKeys } = state;
-
-  const visibleColumns = useMemo(() => {
-    const nextVisibleColumns =
-      visibleColumnsKeys &&
-      visibleColumnsKeys.length &&
-      deepFilter(columns, column => visibleColumnsKeys.includes(column.key));
-
-    return nextVisibleColumns && nextVisibleColumns.length
-      ? nextVisibleColumns
-      : columns;
-  }, [columns, visibleColumnsKeys]);
+  const { columns, visibleColumnsKeys, dTypesConfig } = state;
 
   return useMemo(() => {
     return (function initColumns(columns: Array<IColumn>) {
-      return columns.map(column => {
+      return columns.reduce((acc, column) => {
         const nextColumn: IColumn = {
           ...column,
           ...(columnsConfig[column.key] || {})
         };
+
+        if (
+          !nextColumn.fixed &&
+          visibleColumnsKeys &&
+          !visibleColumnsKeys.includes(nextColumn.key)
+        ) {
+          return acc;
+        }
 
         if (nextColumn.children) {
           nextColumn.children = initColumns(nextColumn.children);
@@ -62,16 +59,17 @@ function useColumns(state: TableState, props: TableProps) {
 
         nextColumn.onHeaderCell = () => ({ model: { ...nextColumn } } as any);
 
-        return nextColumn;
-      });
-    })(visibleColumns || []);
+        return acc.concat(nextColumn);
+      }, []);
+    })(columns);
   }, [
+    columns,
     sortable,
     dTypesConfig,
     columnsConfig,
-    visibleColumns,
     cellRenderProps,
-    isResizableColumns
+    isResizableColumns,
+    visibleColumnsKeys
   ]);
 }
 

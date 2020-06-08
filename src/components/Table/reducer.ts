@@ -11,7 +11,6 @@ export function initializer(props: TableProps): TableState {
   } = props;
 
   return {
-    columns,
     dataSource,
     searchValue,
     visibleColumnsKeys,
@@ -19,7 +18,8 @@ export function initializer(props: TableProps): TableState {
     sortParams: {},
     filterParams: {},
     expandedRowKeys: [],
-    baseDataSource: dataSource,
+    columns: columns || [],
+    baseDataSource: dataSource || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
   };
 }
@@ -48,12 +48,6 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         pagination: action.payload
-      };
-
-    case "search":
-      return {
-        ...state,
-        searchValue: action.payload
       };
 
     case "sort":
@@ -121,7 +115,7 @@ export function reducer(state: TableState, action: Action): TableState {
         )
       };
 
-    case "handlerResponded":
+    case "update":
       return {
         ...state,
         ...action.payload

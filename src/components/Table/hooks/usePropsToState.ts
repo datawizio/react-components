@@ -9,16 +9,16 @@ function usePropsToState(dispatch: Dispatch<Action>, props: TableProps) {
   }, [searchValue, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: "updateColumns", payload: columns });
+    dispatch({ type: "updateColumns", payload: columns || [] });
   }, [columns, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: "updateDataSource", payload: dataSource });
+    dispatch({ type: "updateDataSource", payload: dataSource || [] });
   }, [dataSource, dispatch]);
 
   useEffect(() => {
     dispatch({ type: "visibleColumnsKeys", payload: visibleColumnsKeys });
-  }, [visibleColumnsKeys, dispatch]);
+  }, [visibleColumnsKeys, columns, dispatch]);
 }
 
 usePropsToState.displayName = "usePropsToState";

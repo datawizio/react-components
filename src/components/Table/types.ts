@@ -2,9 +2,12 @@ import { Overwrite } from "utility-types";
 import { ColumnProps } from "antd/lib/table";
 import { Key, SortOrder, SorterResult } from "antd/lib/table/interface";
 import { TableProps as AntdTableProps } from "antd/lib/table";
-import { PaginationConfig } from "antd/lib/pagination/Pagination";
 
 export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
+
+export type FCTable = {
+  ToolBar: React.FC;
+} & import("react").FC<TableProps>;
 
 /**
  * Table types
@@ -50,12 +53,10 @@ export interface TableState extends Partial<TableProps> {
 }
 
 export type Action =
-  | { type: "search"; payload: string }
   | { type: "expandRow"; payload: IRow }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
   | { type: "update"; payload: Partial<TableState> }
-  | { type: "handlerResponded"; payload: HandlerResponse }
   | { type: "paginate"; payload: TableState["pagination"] }
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }

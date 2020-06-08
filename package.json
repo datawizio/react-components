@@ -144,10 +144,13 @@
     "sass-loader": "^8.0.0",
     "ts-jest": "^24.2.0",
     "typescript": "^3.8.3",
+    "use-debounce": "^3.4.2",
     "utility-types": "^3.10.0"
   },
   "dependencies": {
-    "clsx": "^1.1.0"
+    "clsx": "^1.1.0",
+    "exceljs": "^4.0.1",
+    "file-saver": "^2.0.2"
   },
   "browserslist": {
     "production": [
