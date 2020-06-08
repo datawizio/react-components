@@ -96,7 +96,7 @@ export type IRow = {
 export type BodyCellType = string | number | boolean | CellObjectType;
 
 export type CellObjectType = {
-  type: string;
+  dType: string;
   [key: string]: any;
 };
 
