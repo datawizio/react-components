@@ -5,7 +5,7 @@ function usePropsToState(dispatch: Dispatch<Action>, props: TableProps) {
   const { visibleColumnsKeys, dataSource, searchValue, columns } = props;
 
   useEffect(() => {
-    dispatch({ type: "search", payload: searchValue });
+    dispatch({ type: "update", payload: { searchValue } });
   }, [searchValue, dispatch]);
 
   useEffect(() => {
