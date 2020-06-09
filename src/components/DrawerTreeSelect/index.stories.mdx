@@ -263,7 +263,10 @@ let treeData = generateTreeList("0", 2);
       treeCheckable={true}
       treeNodeFilterProp="title"
       remoteSearch={true}
-      value=""
+      multiple={true}
+      value={[]}
+      levels={1}
+      showSelectAll={true}
       formatRender={({ onChange }) => {
         return <Helper onChange={onChange} />;
       }}
@@ -393,9 +396,19 @@ let treeData = generateTreeList("0", 2);
         }
         return {
           data: [
-            { id: 1, pId: null, value: "1", title: "Expand to load" },
-            { id: 2, pId: null, value: "2", title: "Expand to load" },
-            { id: 3, pId: null, value: "3", title: "Tree Node", isLeaf: true }
+            { id: 1, pId: null, level: 1, title: "Expand to load" },
+            { id: 2, pId: null, level: 1, title: "Expand to load" },
+            {
+              id: 3,
+              pId: null,
+              level: 1,
+              title: "Tree Node",
+              isLeaf: true
+            }
+          ],
+          levels: [
+            { value: 1, label: 1 },
+            { value: 2, label: 2 }
           ]
         };
       }}
