@@ -164,12 +164,13 @@ import { useState, useMemo, useCallback } from "react";
         );
         //
         return {
+          loading: false,
           pagination: paginationConfig,
           ...response
         };
       }, []);
       //
-      return <Table globalHandler={globalHandler} />;
+      return <Table loading globalHandler={globalHandler} />;
     }}
   </Story>
 </Preview>

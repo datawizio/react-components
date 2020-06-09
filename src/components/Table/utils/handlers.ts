@@ -79,7 +79,7 @@ const basicSortHandler: SorterHandlerType = (
       const b = bRow[dataIndex];
       const { sorter } = dTypesConfig[defineCellType(a)];
 
-      const compareResult = sorter(a, b);
+      const compareResult = sorter ? sorter(a, b) : 0;
 
       if (compareResult !== 0)
         return order === "ascend" ? compareResult : -compareResult;

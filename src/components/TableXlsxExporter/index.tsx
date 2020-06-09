@@ -15,14 +15,16 @@ export interface TableXlsxExporterProps extends ButtonProps {
 
 const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
   const { filename, ...restProps } = props;
-  const [{ columns, dataSource }] = useContext(TableContext);
+  const [{ columns, dataSource, dTypesConfig }] = useContext(TableContext);
 
   return (
     <div className="table-xlsx-exporter table-toolbar--right">
       <Button
         {...restProps}
         border={false}
-        onClick={() => exportTableToXLSX(columns, dataSource, filename)}
+        onClick={() =>
+          exportTableToXLSX(columns, dataSource, dTypesConfig, filename)
+        }
       >
         <DownloadOutlined className={"table-xlsx-exporter__icon"} />
       </Button>
