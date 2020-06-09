@@ -16,12 +16,29 @@ import AntTreeSelect from "./antd/AntTreeSelect";
 
 import { triggerInputChangeValue } from "../../utils/trigger";
 
-import { IDrawerTreeSelectFilters, FCDrawerTreeSelect } from "./types";
+import {
+  IDrawerTreeSelectFilters,
+  FCDrawerTreeSelect,
+  LevelsType
+} from "./types";
 import { SelectValue } from "antd/lib/tree-select";
 import { DataNode, Key } from "rc-tree-select/es/interface";
 import { AntTreeNode } from "antd/lib/tree";
 
 import "./index.less";
+
+function getMainLevelItems(items: any[], level: number = 1) {
+  const res = [];
+  for (let item of items) {
+    if (item.level === level) {
+      res.push(item.id);
+    } else {
+      break;
+    }
+  }
+
+  return res;
+}
 
 const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   asyncData,
@@ -46,11 +63,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   value,
   isFlatList,
   onChange,
+  onLevelChange,
   loadData,
   loadChildren,
   multiple,
   remoteSearch,
   loading,
+  showSelectAll,
+  selectAllText,
   ...restProps
 }) => {
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
@@ -59,7 +79,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const [selected, setSelected] = useState<AntTreeNode>();
   const [stateTreeData, setStateTreeData] = useState(treeData);
   const [internalLoading, setInternalLoading] = useState<boolean>(loading);
-  const [internalLevels, setInternalLevels] = useState<number>(levels);
+  const [internalLevels, setInternalLevels] = useState<LevelsType>(levels);
 
   const formatSelected = useRef<string[]>();
   const searchValue = useRef<string>();
@@ -80,6 +100,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     treeDefaultExpandedKeys,
     checkAllKey,
     remoteSearch,
+    showCheckAll,
     searchValue,
     internalTreeExpandedKeys
   ]);
@@ -97,6 +118,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         ]
       : stateTreeData;
   }, [stateTreeData, checkAllKey, checkAllTitle, showCheckAll]);
+
+  const isLevelShowed =
+    showLevels && internalLevels && internalLevels.length > 1;
 
   // ----- METHODS -------
 
@@ -137,7 +161,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     setStateTreeData(data);
     setInternalLoading(false);
 
-    if (showLevels) {
+    if (showLevels && levels) {
       setInternalLevels(levels);
     }
     if (expanded) {
@@ -209,11 +233,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   );
 
   const handleTreeSelectChange = useCallback(
-    (value, labels, el) => {
+    (value, labels, extra) => {
       if (multiple) {
         setInternalValue(value);
       } else {
-        setInternalValue(el.checked ? [el.triggerValue] : []);
+        setInternalValue(extra.checked ? [extra.triggerValue] : []);
       }
       if (!drawerVisible) {
         triggerOnChange(value);
@@ -228,6 +252,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const handleLevelChange = (level: number) => {
     levelSelected.current = level;
+    onLevelChange && onLevelChange(level);
     internalLoadData();
   };
 
@@ -235,6 +260,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     const data = await loadChildren(node.id);
     setStateTreeData(internalTreeData.concat(data));
     triggerInputChangeValue(inputRef.current, searchValue.current);
+  };
+
+  const handleSelectAllClick = () => {
+    const items = getMainLevelItems(internalTreeData, levelSelected.current);
+    setInternalValue(items);
   };
 
   // ---- EFFECTS ------
@@ -291,12 +321,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           }
         >
           {format}
-          {showLevels ? (
+          {isLevelShowed ? (
             <Levels
               onChange={handleLevelChange}
               value={levelSelected.current}
               levels={internalLevels}
-              levelText={levelText}
             />
           ) : null}
           <SearchInput
@@ -305,6 +334,13 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             onChange={handlerSearchInputChange}
             loading={internalLoading}
           />
+          <div className="drawer-tree-select-dropdown-toolbar">
+            {showSelectAll ? (
+              <Button border={false} type="link" onClick={handleSelectAllClick}>
+                {selectAllText}
+              </Button>
+            ) : null}
+          </div>
           {menu}
           <div className="drawer-select-loader-container">
             {internalLoading && (
@@ -336,7 +372,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     window.innerHeight -
     204 -
     (formatRender === null ? 0 : 44) -
-    (showLevels ? 44 : 0);
+    (isLevelShowed ? 44 : 0) -
+    (showSelectAll ? 32 : 0);
 
   return (
     <AntTreeSelect
@@ -384,7 +421,10 @@ DrawerTreeSelect.defaultProps = {
   noDataText: "No data",
   levelText: "Level %s",
   formatRender: null,
-  remoteSearch: false
+  remoteSearch: false,
+  showSelectAll: false,
+  selectAllText: "Select all",
+  levels: []
 };
 
 DrawerTreeSelect.SHOW_ALL = AntTreeSelect.SHOW_ALL;

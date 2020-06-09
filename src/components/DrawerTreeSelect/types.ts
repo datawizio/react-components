@@ -10,6 +10,8 @@ export interface IDrawerTreeSelectFilters {
   level?: number;
 }
 
+export type LevelsType = { value: string; label: string }[];
+
 export interface FormatRenderProps {
   onChange?: (selected: string[]) => void;
 }
@@ -53,7 +55,7 @@ export interface DrawerTreeSelectProps<VT>
    */
   showLevels?: boolean;
 
-  levels?: number;
+  levels?: LevelsType;
 
   level?: number;
 
@@ -80,6 +82,10 @@ export interface DrawerTreeSelectProps<VT>
 
   remoteSearch?: boolean;
 
+  showSelectAll?: boolean;
+
+  selectAllText?: string;
+
   formatRender?: ((props: FormatRenderProps) => React.ReactElement) | null;
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
@@ -89,6 +95,8 @@ export interface DrawerTreeSelectProps<VT>
    * Event when user click Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+
+  onLevelChange?: (level: number) => void;
 }
 
 export interface FCDrawerTreeSelect<VT>
