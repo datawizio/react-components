@@ -89,18 +89,21 @@ const Table: FCTable = props => {
 
   const isEmpty = useMemo(() => {
     return !props.columns.length || !props.dataSource.length;
-  }, [state.columns.length, state.dataSource]);
+  }, [props.columns.length, props.dataSource.length]);
 
   const className = useMemo(
     () => clsx("dw-table", { "dw-table--empty": isEmpty }, props.className),
     [props.className, isEmpty]
   );
 
-  const paginationConfig = {
-    ...(props.pagination || {}),
-    ...(state.pagination || {}),
-    showSizeChanger
-  };
+  const paginationConfig = useMemo(
+    () => ({
+      ...(props.pagination || {}),
+      ...(state.pagination || {}),
+      showSizeChanger
+    }),
+    [props.pagination, state.pagination, showSizeChanger]
+  );
 
   const stateToRender = {
     ...state,
