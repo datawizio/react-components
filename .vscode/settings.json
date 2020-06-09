@@ -1,12 +1,7 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "cSpell.words": [
-    "Antd",
-    "Coeff",
-    "clsx",
-    "highcharts"
-  ],
+  "editor.formatOnPaste": false,
+  "cSpell.words": ["Antd", "Coeff", "clsx", "highcharts"],
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

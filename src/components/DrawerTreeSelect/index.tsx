@@ -26,18 +26,32 @@ import { DataNode, Key } from "rc-tree-select/es/interface";
 import { AntTreeNode } from "antd/lib/tree";
 
 import "./index.less";
+import Checkbox from "../Checkbox";
 
-function getMainLevelItems(items: any[], level: number = 1) {
-  const res = [];
+function getMainLevelItems(items: any[], level: number | null = 1) {
+  const set = new Set<string>();
+
   for (let item of items) {
-    if (item.level === level) {
-      res.push(item.id);
+    if ((level === null && item.pId === null) || item.level === level) {
+      set.add(item.id);
     } else {
       break;
     }
   }
 
-  return res;
+  return set;
+}
+
+function isAllItemsChecked(items: string[], set: Set<string>) {
+  if (items.length !== set.size) return false;
+
+  for (const value of items) {
+    if (!set.has(value)) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
@@ -55,6 +69,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   treeDefaultExpandedKeys,
   treeExpandedKeys,
   treeData,
+  treeDataCount,
   cancelText,
   submitText,
   loadingText,
@@ -66,11 +81,13 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   onLevelChange,
   loadData,
   loadChildren,
+  showCheckedStrategy,
   multiple,
   remoteSearch,
   loading,
   showSelectAll,
   selectAllText,
+  emptyIsAll,
   ...restProps
 }) => {
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
@@ -80,10 +97,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const [stateTreeData, setStateTreeData] = useState(treeData);
   const [internalLoading, setInternalLoading] = useState<boolean>(loading);
   const [internalLevels, setInternalLevels] = useState<LevelsType>(levels);
+  const [selectAllState, setSelectAllState] = useState<string>("");
+  const [internalTreeDataCount, setIntenalTreeDataCount] = useState<number>(0);
+
+  const mainLevelItems = useRef<Set<string>>();
 
   const formatSelected = useRef<string[]>();
   const searchValue = useRef<string>();
-  const levelSelected = useRef<number>(level);
+  const levelSelected = useRef<number | null>(showLevels ? level : null);
 
   const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
     Key[]
@@ -137,9 +158,13 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         if (value[0]) return onChange(value[0], selected);
         return onChange("");
       }
+      if (selectAllState === "checked" && emptyIsAll) {
+        setInternalValue([]);
+        return onChange([]);
+      }
       onChange(value);
     },
-    [multiple, selected, onChange]
+    [multiple, selected, onChange, selectAllState, emptyIsAll]
   );
 
   const internalLoadData = useCallback(async () => {
@@ -156,14 +181,20 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     setInternalLoading(true);
     triggerInputChangeValue(inputRef.current);
 
-    const { data, levels, expanded } = await loadData(filters);
+    const { data, levels, expanded, count } = await loadData(filters);
 
+    mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
     setStateTreeData(data);
     setInternalLoading(false);
+
+    if (count) {
+      setIntenalTreeDataCount(count);
+    }
 
     if (showLevels && levels) {
       setInternalLevels(levels);
     }
+
     if (expanded) {
       setInternalTreeExpandedKeys(expanded);
     }
@@ -173,6 +204,33 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       remoteSearch ? undefined : searchValue.current
     );
   }, [loadData, showLevels, formatRender, remoteSearch]);
+
+  const checkSelectAllStatus = values => {
+    let checked = true;
+    if (showCheckedStrategy === "SHOW_PARENT") {
+      checked = isAllItemsChecked(values, mainLevelItems.current);
+    } else {
+      checked = values.count === internalTreeDataCount;
+    }
+    if (!checked && values.length) {
+      setSelectAllState("indeterminate");
+      return;
+    }
+
+    if (checked) {
+      setSelectAllState("checked");
+      return;
+    }
+
+    setSelectAllState("");
+  };
+
+  const selectAll = () => {
+    setSelectAllState("checked");
+    if (mainLevelItems.current) {
+      setInternalValue(Array.from(mainLevelItems.current));
+    }
+  };
 
   //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
@@ -201,6 +259,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handlerDrawerFocus = e => {
     setInputRef(e.target);
     setDrawerVisible(true);
+    //@ts-ignore
+    if (multiple && (!internalValue || !internalValue.length) && emptyIsAll) {
+      selectAll();
+    }
     triggerInputChangeValue(inputRef.current, searchValue.current);
   };
 
@@ -236,6 +298,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     (value, labels, extra) => {
       if (multiple) {
         setInternalValue(value);
+        if (value) {
+          checkSelectAllStatus(value);
+        }
       } else {
         setInternalValue(extra.checked ? [extra.triggerValue] : []);
       }
@@ -243,6 +308,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         triggerOnChange(value);
       }
     },
+    //eslint-disable-next-line
     [drawerVisible, triggerOnChange, multiple]
   );
 
@@ -262,9 +328,15 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     triggerInputChangeValue(inputRef.current, searchValue.current);
   };
 
-  const handleSelectAllClick = () => {
-    const items = getMainLevelItems(internalTreeData, levelSelected.current);
-    setInternalValue(items);
+  const handleCheckboxChange = e => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      selectAll();
+    } else {
+      setSelectAllState("");
+      setInternalValue([]);
+    }
   };
 
   // ---- EFFECTS ------
@@ -274,8 +346,16 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [value, multiple]);
 
   useEffect(() => {
+    if (treeData) {
+      mainLevelItems.current = getMainLevelItems(
+        treeData,
+        levelSelected.current
+      );
+    }
+
     setStateTreeData(treeData);
-  }, [treeData]);
+    setIntenalTreeDataCount(treeDataCount);
+  }, [treeData, treeDataCount]);
 
   useEffect(() => {
     setInternalLoading(loading);
@@ -336,10 +416,17 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           />
           <div className="drawer-tree-select-dropdown-toolbar">
             {showSelectAll ? (
-              <Button border={false} type="link" onClick={handleSelectAllClick}>
+              <Checkbox
+                onChange={handleCheckboxChange}
+                checked={selectAllState === "checked"}
+                indeterminate={selectAllState === "indeterminate"}
+              >
                 {selectAllText}
-              </Button>
-            ) : null}
+              </Checkbox>
+            ) : // <Button border={false} type="link" onClick={handleSelectAllClick}>
+            //   {selectAllText}
+            // </Button>
+            null}
           </div>
           {menu}
           <div className="drawer-select-loader-container">
@@ -373,7 +460,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     204 -
     (formatRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
-    (showSelectAll ? 32 : 0);
+    (showSelectAll ? 34 : 0);
 
   return (
     <AntTreeSelect
@@ -406,6 +493,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
 DrawerTreeSelect.defaultProps = {
   maxTagCount: 10,
+  treeDataCount: 0,
   treeDefaultExpandedKeys: [],
   showCheckAll: false,
   showLevels: false,
