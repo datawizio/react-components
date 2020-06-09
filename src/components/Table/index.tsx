@@ -30,6 +30,7 @@ const Table: FCTable = props => {
     children,
     components,
     globalHandler,
+    showSizeChanger,
     rowChildrenProvider,
     ...restProps
   } = props;
@@ -87,13 +88,19 @@ const Table: FCTable = props => {
   );
 
   const isEmpty = useMemo(() => {
-    return !state.columns.length || !state.dataSource;
+    return !props.columns.length || !props.dataSource.length;
   }, [state.columns.length, state.dataSource]);
 
   const className = useMemo(
     () => clsx("dw-table", { "dw-table--empty": isEmpty }, props.className),
     [props.className, isEmpty]
   );
+
+  const paginationConfig = {
+    ...(props.pagination || {}),
+    ...(state.pagination || {}),
+    showSizeChanger
+  };
 
   const stateToRender = {
     ...state,
@@ -109,8 +116,8 @@ const Table: FCTable = props => {
         className={className}
         onExpand={handleExpandRow}
         onChange={handleChangeTable}
+        pagination={paginationConfig}
         components={customComponents}
-        loading={Boolean(isEmpty && globalHandler)}
       />
     </TableContext.Provider>
   );
@@ -136,6 +143,7 @@ Table.defaultProps = {
   columns: [],
   dataSource: [],
 
+  showSizeChanger: true,
   sortHandler: basicSortHandler,
   filterHandler: basicFilterHandler,
   searchHandler: basicSearchHandler

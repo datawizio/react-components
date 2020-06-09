@@ -24,6 +24,7 @@ export interface TableProps<RT = any>
   searchValue?: string;
 
   sortable?: boolean;
+  showSizeChanger?: boolean;
   multipleSorting?: boolean;
   isResizableColumns?: boolean;
 
@@ -104,15 +105,16 @@ export type CellObjectType = {
  * Data types config
  */
 export type DTypeConfig<T = any> = {
-  sorter: (a: T, b: T) => number;
+  sorter?: (a: T, b: T) => number;
+  toString: (cellVal: T) => string;
   search?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
 
   render?: (
-    value: T,
+    cellVal: T,
     index: number,
     renderProps: TableProps["cellRenderProps"]
-  ) => void;
+  ) => import("react").ReactNode;
 };
 
 /**
