@@ -10,10 +10,12 @@ import "./index.less";
 const { RangePicker } = DatePicker;
 
 const DateRangePicker: IDateRangePicker = props => {
-
-  const formatDate = useCallback((date: DateType) => {
-    return moment(date, props.format);
-  }, [props.format]);
+  const formatDate = useCallback(
+    (date: DateType) => {
+      return moment(date, props.format);
+    },
+    [props.format]
+  );
 
   const [dateFrom, dateTo] = useMemo<[Moment, Moment]>(() => {
     return [formatDate(props.dateFrom), formatDate(props.dateTo)];
@@ -23,9 +25,12 @@ const DateRangePicker: IDateRangePicker = props => {
     return [formatDate(props.maxDate), formatDate(props.minDate)];
   }, [props.maxDate, props.minDate, formatDate]);
 
-  const isDisabledDate = useCallback((date) => {
+  const isDisabledDate = useCallback(
+    date => {
       return (maxDate && date > maxDate) || (minDate && date < minDate);
-  }, [maxDate, minDate])
+    },
+    [maxDate, minDate]
+  );
 
   function onChange([dateFrom, dateTo]): void {
     if (!(dateFrom && dateTo)) props.onClear && props.onClear();
@@ -52,4 +57,5 @@ DateRangePicker.defaultProps = {
 DateRangePicker.presets = require("./presets").BasicPresets;
 
 export default DateRangePicker;
+
 export const _DateRangePickerWithProps: React.FC<DateRangePickerProps> = {} as any;
