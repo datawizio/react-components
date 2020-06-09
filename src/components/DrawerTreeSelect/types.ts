@@ -86,6 +86,10 @@ export interface DrawerTreeSelectProps<VT>
 
   selectAllText?: string;
 
+  treeDataCount?: number;
+
+  emptyIsAll?: boolean;
+
   formatRender?: ((props: FormatRenderProps) => React.ReactElement) | null;
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;

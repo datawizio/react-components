@@ -265,6 +265,7 @@ let treeData = generateTreeList("0", 2);
       remoteSearch={true}
       multiple={true}
       value={[]}
+      emptyIsAll={true}
       levels={1}
       showSelectAll={true}
       formatRender={({ onChange }) => {
@@ -396,10 +397,10 @@ let treeData = generateTreeList("0", 2);
         }
         return {
           data: [
-            { id: 1, pId: null, level: 1, title: "Expand to load" },
-            { id: 2, pId: null, level: 1, title: "Expand to load" },
+            { id: "1", pId: null, level: 1, title: "Expand to load" },
+            { id: "2", pId: null, level: 1, title: "Expand to load" },
             {
-              id: 3,
+              id: "3",
               pId: null,
               level: 1,
               title: "Tree Node",
