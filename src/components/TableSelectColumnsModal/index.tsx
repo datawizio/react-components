@@ -26,6 +26,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   const [isOpened, setIsOpened] = useState(false);
   const [expandedKeys, setExpandedKeys] = useState([]);
+
   const [checkedKeys, setCheckedKeys] = useState(() => {
     return (
       tableState.visibleColumnsKeys ||
@@ -35,11 +36,16 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   const treeData = useMemo(() => {
     if (!isOpened) return [];
+
+    const fixedColumnsKeys = tableState.columns
+      .filter(column => column.fixed)
+      .map(column => column.key);
+
     return (function rec(columns) {
       return columns.map(column => ({
         key: column.key,
         title: column.title,
-        disabled: Boolean(column.fixed),
+        disabled: fixedColumnsKeys.includes(column.key),
         children: column.children && rec(column.children)
       }));
     })(tableProps.columns);
@@ -68,20 +74,16 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   return (
     <div className="select-columns table-toolbar--right">
-      <Button
-        disabled={Boolean(!tableState.columns.length)}
-        border={false}
-        onClick={() => setIsOpened(true)}
-      >
+      <Button border={false} onClick={() => setIsOpened(true)}>
         <SettingOutlined className="select-columns__icon" />
         {locale.openButton}
       </Button>
 
       <Modal
         visible={isOpened}
-        onCancel={() => setIsOpened(false)}
         title={locale.headerModal}
         className="select-columns__modal"
+        onCancel={() => setIsOpened(false)}
         footer={
           <Button
             type="primary"
