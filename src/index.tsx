@@ -50,4 +50,6 @@ export { default as DrawerTreeSelect } from "./components/DrawerTreeSelect";
 
 export { default as TableXlsxExporter } from "./components/TableXlsxExporter";
 
+export { default as TableTransposeButton } from "./components/TableTransposeButton";
+
 export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";

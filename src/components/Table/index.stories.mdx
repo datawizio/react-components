@@ -6,6 +6,7 @@ import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
 import TableSearch from "../TableSearch";
 import TableXlsxExporter from "../TableXlsxExporter";
+import TableTransposeButton from "../TableTransposeButton";
 import TableSelectColumnsModal from "../TableSelectColumnsModal";
 
 import Table from "./";
@@ -242,6 +243,7 @@ import { useState, useMemo, useCallback } from "react";
           <Table.ToolBar>
             <TableSearch />
             <TableSelectColumnsModal />
+            <TableTransposeButton onTranspose={console.log} />
           </Table.ToolBar>
         </Table>
       );

@@ -10,6 +10,27 @@
     overflow: auto;
   }
 
+  &__toolbar {
+    padding: 0 5px;
+    display: flow-root;
+    position: relative;
+
+    &--loading {
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    .table-toolbar--left {
+      float: left;
+      margin-right: 3px;
+    }
+
+    .table-toolbar--right {
+      float: right;
+      margin-right: 3px;
+    }
+  }
+
   .dw-table__column {
     width: 200px;
     transition: none !important;
@@ -55,15 +76,15 @@
     }
   }
 
-  table {
-    width: max-content !important;
-  }
-
   &--empty {
     table {
       width: 100% !important;
       height: 100% !important;
     }
+  }
+
+  table {
+    width: max-content !important;
   }
 
   td {
@@ -84,22 +105,6 @@
     &-middle {
       .set-position-header(10, 47);
     }
-  }
-}
-
-.table-toolbar {
-  padding: 0 5px;
-  display: flow-root;
-  position: relative;
-
-  &--left {
-    float: left;
-    margin-right: 3px;
-  }
-
-  &--right {
-    float: right;
-    margin-right: 3px;
   }
 }
 

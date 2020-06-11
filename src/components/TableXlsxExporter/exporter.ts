@@ -128,7 +128,7 @@ export async function exportTableToXLSX(
       const row = ws.addRow({
         ...rowToDraw,
         key,
-        [firstColumn]: margin + rowData[firstColumn]
+        [firstColumn]: margin + rowToDraw[firstColumn]
       });
 
       row.hidden = level !== 0;

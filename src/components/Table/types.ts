@@ -13,8 +13,8 @@ export type FCTable = {
  * Table types
  */
 type _OverwrittenTableProps<RT> = {
-  columns: Array<IColumn<RT>>;
-  dataSource: DataSourceType;
+  columns?: Array<IColumn<RT>>;
+  dataSource?: DataSourceType;
 };
 
 export interface TableProps<RT = any>
@@ -23,6 +23,7 @@ export interface TableProps<RT = any>
   height?: string | number;
   searchValue?: string;
 
+  async?: boolean;
   sortable?: boolean;
   showSizeChanger?: boolean;
   multipleSorting?: boolean;
@@ -44,6 +45,8 @@ export interface TableProps<RT = any>
   globalHandler?: GlobalHandlerType;
   searchHandler?: SearchHandlerType;
   filterHandler?: FilterHandlerType;
+
+  dataProvider?: DataProvider;
   rowChildrenProvider?: RowChildrenProviderType;
 }
 
@@ -153,6 +156,11 @@ export type SortParams = {
 /**
  * Providers types
  */
+
+export type DataProvider = (
+  state: TableState,
+  props: TableProps
+) => Partial<TableState>;
 
 export type RowChildrenProviderType = (
   expandedRow: IRow

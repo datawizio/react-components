@@ -1,13 +1,16 @@
+import clsx from "clsx";
 import * as React from "react";
 import { Table as AntdTable } from "antd";
 import { reducer, initializer } from "./reducer";
 
 import useColumns from "./hooks/useColumns";
+import usePropsToState from "./hooks/usePropsToState";
 import useStateHandlers from "./hooks/useStateHandlers";
-import { useMemo, useCallback, useReducer } from "react";
+import { useMemo, useCallback, useReducer, useEffect } from "react";
 
-import { TableProps, FCTable } from "./types";
+import { TableContext } from "./context";
 import Column from "./components/Column";
+import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
 
 import {
@@ -16,11 +19,9 @@ import {
   basicSearchHandler
 } from "./utils/handlers";
 
+import { TableProps, FCTable } from "./types";
+
 import "./index.less";
-import usePropsToState from "./hooks/usePropsToState";
-import clsx from "clsx";
-import { TableContext } from "./context";
-import ToolBar from "./components/ToolBar";
 
 const Table: FCTable = props => {
   const {
@@ -87,13 +88,23 @@ const Table: FCTable = props => {
     [height, width, components]
   );
 
-  const isEmpty = useMemo(() => {
-    return !props.columns.length || !props.dataSource.length;
-  }, [props.columns.length, props.dataSource.length]);
-
   const className = useMemo(
-    () => clsx("dw-table", { "dw-table--empty": isEmpty }, props.className),
-    [props.className, isEmpty]
+    () =>
+      clsx(
+        "dw-table",
+        {
+          "dw-table--empty": !props.columns.length || !props.dataSource.length,
+          "dw-table--loading": props.loading || state.loading
+        },
+        props.className
+      ),
+    [
+      state.loading,
+      props.loading,
+      props.className,
+      props.columns.length,
+      props.dataSource.length
+    ]
   );
 
   const paginationConfig = useMemo(
