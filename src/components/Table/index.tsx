@@ -4,9 +4,9 @@ import { Table as AntdTable } from "antd";
 import { reducer, initializer } from "./reducer";
 
 import useColumns from "./hooks/useColumns";
+import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
-import useStateHandlers from "./hooks/useStateHandlers";
-import { useMemo, useCallback, useReducer, useEffect } from "react";
+import { useMemo, useCallback, useReducer } from "react";
 
 import { TableContext } from "./context";
 import Column from "./components/Column";
@@ -36,9 +36,17 @@ const Table: FCTable = props => {
     ...restProps
   } = props;
 
-  const [state, dispatch] = useReducer(reducer, props, initializer);
+  const [_state, dispatch] = useReducer(reducer, props, initializer);
 
-  const columnsToRender = useColumns(state, props);
+  const columnsState = useColumns(_state, props);
+
+  const dataSourceState = useDataSource(_state, props);
+
+  const state = {
+    ..._state,
+    ...dataSourceState,
+    ...columnsState
+  };
 
   const updateState = useCallback(nextState => {
     dispatch({ type: "update", payload: nextState });
@@ -46,7 +54,7 @@ const Table: FCTable = props => {
 
   usePropsToState(dispatch, props);
 
-  useStateHandlers(updateState, state, props);
+  // useStateHandlers(updateState, state, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -93,8 +101,8 @@ const Table: FCTable = props => {
       clsx(
         "dw-table",
         {
-          "dw-table--empty": !props.columns.length || !props.dataSource.length,
-          "dw-table--loading": props.loading || state.loading
+          "dw-table--loading": props.loading || state.loading,
+          "dw-table--empty": !state.columns.length || !state.dataSource.length
         },
         props.className
       ),
@@ -102,8 +110,8 @@ const Table: FCTable = props => {
       state.loading,
       props.loading,
       props.className,
-      props.columns.length,
-      props.dataSource.length
+      state.columns.length,
+      state.dataSource.length
     ]
   );
 
@@ -116,17 +124,12 @@ const Table: FCTable = props => {
     [props.pagination, state.pagination, showSizeChanger]
   );
 
-  const stateToRender = {
-    ...state,
-    columns: columnsToRender
-  };
-
   return (
-    <TableContext.Provider value={[stateToRender, updateState, props]}>
+    <TableContext.Provider value={[state, updateState, props]}>
       {children}
       <AntdTable
         {...(restProps as any)}
-        {...stateToRender}
+        {...state}
         className={className}
         onExpand={handleExpandRow}
         onChange={handleChangeTable}

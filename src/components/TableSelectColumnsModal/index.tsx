@@ -30,7 +30,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   const [checkedKeys, setCheckedKeys] = useState(() => {
     return (
       tableState.visibleColumnsKeys ||
-      tableProps.columns.map(column => column.key)
+      tableState.columns.map(column => column.key)
     );
   });
 
@@ -49,7 +49,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
         children: column.children && rec(column.children)
       }));
     })(tableProps.columns);
-  }, [isOpened, tableProps.columns]);
+  }, [isOpened, tableProps.columns, tableState.columns]);
 
   const handleApply = useCallback(() => {
     setTableState({ visibleColumnsKeys: checkedKeys });

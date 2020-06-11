@@ -1,6 +1,19 @@
 import { TableState, Action, SortParams, TableProps } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
 
+function genColumnsMap(columns) {
+  const columnsMap = {};
+
+  (function rec(columns) {
+    columns.forEach(column => {
+      columnsMap[column.dataIndex] = column;
+      column.children && column.children.length && rec(column.children);
+    });
+  })(columns);
+
+  return columnsMap;
+}
+
 export function initializer(props: TableProps): TableState {
   const {
     columns,
@@ -19,7 +32,7 @@ export function initializer(props: TableProps): TableState {
     sortParams: {},
     filterParams: {},
     expandedRowKeys: [],
-    baseDataSource: dataSource || [],
+    columnsMap: genColumnsMap(columns),
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
   };
 }
@@ -29,13 +42,17 @@ export function reducer(state: TableState, action: Action): TableState {
     case "updateDataSource":
       return {
         ...state,
-        baseDataSource: action.payload
+        expandedRowKeys: [],
+        dataSource: action.payload
       };
 
     case "updateColumns":
       return {
         ...state,
-        columns: action.payload
+        sortParams: {},
+        filterParams: {},
+        columns: action.payload,
+        columnsMap: genColumnsMap(action.payload)
       };
 
     case "visibleColumnsKeys":
@@ -86,8 +103,8 @@ export function reducer(state: TableState, action: Action): TableState {
 
     case "setRowChildren":
       const [expandedRow, children] = action.payload;
-      const nextDataSource = state.baseDataSource.concat();
-      const expandedRowIdx = state.baseDataSource.findIndex(
+      const nextDataSource = state.dataSource.concat();
+      const expandedRowIdx = state.dataSource.findIndex(
         row => row.key === expandedRow.key
       );
 
@@ -98,7 +115,7 @@ export function reducer(state: TableState, action: Action): TableState {
 
       return {
         ...state,
-        baseDataSource: nextDataSource
+        dataSource: nextDataSource
       };
 
     case "expandRow":

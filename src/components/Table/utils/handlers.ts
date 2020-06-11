@@ -8,6 +8,7 @@ import { defineCellType } from "./utils";
 import { deepFilter } from "../../../utils/deepFilter";
 
 const basicSearchHandler: SearchHandlerType = (
+  columnsMap,
   dataSource,
   searchValue,
   dTypesConfig
@@ -17,8 +18,9 @@ const basicSearchHandler: SearchHandlerType = (
   const foundRows = deepFilter(
     dataSource,
     row => {
-      return Object.values(row).some(cellVal => {
-        const typeConfig = dTypesConfig[defineCellType(cellVal)];
+      return Object.entries(row).some(([dataIndex, cellVal]) => {
+        const typeConfig =
+          dTypesConfig[defineCellType(cellVal, columnsMap[dataIndex])];
 
         return (
           typeConfig &&
@@ -30,7 +32,7 @@ const basicSearchHandler: SearchHandlerType = (
     parent => expandedRowKeys.push(parent.key)
   );
 
-  const response = { dataSource: foundRows, expandedRowKeys };
+  const response: any = { dataSource: foundRows };
 
   if (expandedRowKeys.length) {
     response.expandedRowKeys = expandedRowKeys;
@@ -40,15 +42,17 @@ const basicSearchHandler: SearchHandlerType = (
 };
 
 const basicFilterHandler: FilterHandlerType = (
+  columnsMap,
   dataSource,
   filterParams,
   dTypesConfig
 ) => {
   const filterData = dataSource => {
     return deepFilter(dataSource, row =>
-      Object.entries(filterParams).some(([columnKey, filterParameter]) => {
-        const cellVal = row[columnKey];
-        const typeConfig = dTypesConfig[defineCellType(cellVal)];
+      Object.entries(filterParams).some(([dataIndex, filterParameter]) => {
+        const cellVal = row[dataIndex];
+        const typeConfig =
+          dTypesConfig[defineCellType(cellVal, columnsMap[dataIndex])];
 
         return filterParameter.some(
           filterBy => typeConfig.filter && typeConfig.filter(cellVal, filterBy)
@@ -65,6 +69,7 @@ const basicFilterHandler: FilterHandlerType = (
 };
 
 const basicSortHandler: SorterHandlerType = (
+  columnsMap,
   dataSource,
   sortParams,
   dTypesConfig
@@ -77,7 +82,7 @@ const basicSortHandler: SorterHandlerType = (
     let sortedDataSource = dataSource.sort((aRow, bRow) => {
       const a = aRow[dataIndex];
       const b = bRow[dataIndex];
-      const { sorter } = dTypesConfig[defineCellType(a)];
+      const { sorter } = dTypesConfig[defineCellType(a, columnsMap[dataIndex])];
 
       const compareResult = sorter ? sorter(a, b) : 0;
 

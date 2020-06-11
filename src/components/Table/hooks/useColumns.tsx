@@ -3,10 +3,7 @@ import BodyCell from "../components/BodyCell";
 import { defineCellType } from "../utils/utils";
 import { IColumn, TableProps, TableState } from "../types";
 
-function useColumns(
-  state: TableState,
-  props: TableProps
-): TableState["columns"] {
+function useColumns(state: TableState, props: TableProps): Partial<TableState> {
   const {
     sortable,
     columnsConfig,
@@ -17,7 +14,7 @@ function useColumns(
   const { columns, visibleColumnsKeys, dTypesConfig } = state;
 
   return useMemo(() => {
-    return (function initColumns(columns: Array<IColumn>) {
+    function initColumns(columns: Array<IColumn>) {
       return columns.reduce((acc, column) => {
         const nextColumn: IColumn = {
           ...column,
@@ -47,7 +44,7 @@ function useColumns(
                 value={value}
                 index={index}
                 renderProps={cellRenderProps}
-                typeConfig={dTypesConfig[defineCellType(value)]}
+                typeConfig={dTypesConfig[defineCellType(value, nextColumn)]}
               />
             );
           };
@@ -61,7 +58,11 @@ function useColumns(
 
         return acc.concat(nextColumn);
       }, []);
-    })(columns);
+    }
+
+    return {
+      columns: initColumns(columns)
+    };
   }, [
     columns,
     sortable,
