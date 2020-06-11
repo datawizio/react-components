@@ -53,7 +53,7 @@ export interface TableProps<RT = any>
 export interface TableState extends Partial<TableProps> {
   sortParams: SortParams;
   filterParams: FilterParams;
-  baseDataSource: TableProps["dataSource"];
+  columnsMap: { [key: string]: IColumn };
 }
 
 export type Action =
@@ -83,6 +83,7 @@ type _OverwrittenColumnProps<RT> = {
 export interface IColumn<RT = any>
   extends Overwrite<ColumnProps<RT>, _OverwrittenColumnProps<RT>>,
     Object {
+  dtype?: string;
   dataIndex: string;
   resizable?: boolean;
 }
@@ -100,7 +101,7 @@ export type IRow = {
 export type BodyCellType = string | number | boolean | CellObjectType;
 
 export type CellObjectType = {
-  dType: string;
+  dtype: string;
   [key: string]: any;
 };
 
@@ -130,21 +131,24 @@ export type GlobalHandlerType = (
 ) => HandlerResponse | Promise<HandlerResponse>;
 
 export type SearchHandlerType = (
-  dataSource: TableProps["dataSource"],
-  searchValue: TableProps["searchValue"],
-  dTypesConfig: TableProps["dTypesConfig"]
+  columnsMap: TableState["columnsMap"],
+  dataSource: TableState["dataSource"],
+  searchValue: TableState["searchValue"],
+  dTypesConfig: TableState["dTypesConfig"]
 ) => HandlerResponse;
 
 export type SorterHandlerType = (
-  dataSource: TableProps["dataSource"],
+  columnsMap: TableState["columnsMap"],
+  dataSource: TableState["dataSource"],
   sortParams: SortParams,
-  dTypesConfig: TableProps["dTypesConfig"]
+  dTypesConfig: TableState["dTypesConfig"]
 ) => HandlerResponse;
 
 export type FilterHandlerType = (
-  dataSource: TableProps["dataSource"],
+  columnsMap: TableState["columnsMap"],
+  dataSource: TableState["dataSource"],
   searchValue: FilterParams,
-  dTypesConfig: TableProps["dTypesConfig"]
+  dTypesConfig: TableState["dTypesConfig"]
 ) => HandlerResponse;
 
 export type FilterParams = Record<string, Key[] | null>;

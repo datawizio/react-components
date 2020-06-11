@@ -1,7 +1,9 @@
-import { BodyCellType } from "../types";
+import { BodyCellType, IColumn } from "../types";
 
-const defineCellType = (cell: BodyCellType): string => {
-  return typeof cell === "object" ? cell.dtype : typeof cell;
-};
+function defineCellType(cell: BodyCellType, column: IColumn): string {
+  const dType =
+    column && column.dtype === "object" ? column.dtype : (cell as any).dtype;
+  return dType || typeof cell;
+}
 
 export { defineCellType };

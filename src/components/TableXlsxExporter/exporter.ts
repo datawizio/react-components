@@ -62,6 +62,7 @@ function fillBackgroundCell(cell, color) {
 export async function exportTableToXLSX(
   columns: TableState["columns"],
   dataSource: TableState["dataSource"],
+  columnsMap: TableState["columnsMap"],
   dTypesConfig: TableState["dTypesConfig"],
   filename: string,
   sheetName?: string
@@ -118,7 +119,8 @@ export async function exportTableToXLSX(
       // to string by dType
       const rowToDraw = Object.entries(restRowData).reduce(
         (acc, [columnKey, cellValue]) => {
-          const dType = dTypesConfig[defineCellType(cellValue)];
+          const dType =
+            dTypesConfig[defineCellType(cellValue, columnsMap[columnKey])];
           acc[columnKey] = dType.toString(cellValue);
           return acc;
         },
