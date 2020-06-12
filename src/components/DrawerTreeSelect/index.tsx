@@ -113,10 +113,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const formatSelected = useRef<string[]>([]);
   const searchValue = useRef<string>();
-  const levelSelected = useRef<string | null>(showLevels ? level : null);
+  const levelSelected = useRef<string | number | null>(
+    showLevels ? level : null
+  );
 
   const prevTreeData = useRef<DataNode[]>();
-  const prevLevel = useRef<string>();
+  const prevLevel = useRef<string | number>();
   const prevFormatSelected = useRef<string[]>();
   const prevEmptyIsAllRef = useRef<boolean>();
 
