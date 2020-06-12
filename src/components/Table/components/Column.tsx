@@ -13,7 +13,7 @@ export interface ColumnProps
 }
 
 const Column: React.FC<ColumnProps> = props => {
-  const { model, onClick, children, multipleSorting, ...restProps } = props;
+  const { model, onClick, multipleSorting, ...restProps } = props;
 
   const [lastWidth, setLastWidth] = useState<number>(0);
 
@@ -41,7 +41,7 @@ const Column: React.FC<ColumnProps> = props => {
       },
       restProps.className
     );
-  }, [model.resizable, model.fixed, restProps.className]);
+  }, [model.fixed, model.resizable, restProps.className]);
 
   return (
     <th
@@ -50,9 +50,7 @@ const Column: React.FC<ColumnProps> = props => {
       title={String(model.title)}
       onClick={onClickHandler}
       onMouseDown={onMouseDownHandler}
-    >
-      <div className="dw-table__column-content">{children}</div>
-    </th>
+    />
   );
 };
 

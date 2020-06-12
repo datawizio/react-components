@@ -5,7 +5,7 @@ function useDataSource(
   state: TableState,
   props: TableProps
 ): Partial<TableState> {
-  const { sortHandler, filterHandler, searchHandler } = props;
+  const { sortHandler, filterHandler, searchHandler, async } = props;
 
   const {
     columnsMap,
@@ -19,7 +19,9 @@ function useDataSource(
   /* eslint-disable */
 
   return useMemo(() => {
-    let nextState = { dataSource };
+    let nextState: Partial<TableState> = { dataSource };
+
+    if (async) return nextState;
 
     const setNextState = newState => {
       if (newState)

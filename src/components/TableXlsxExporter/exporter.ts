@@ -121,7 +121,7 @@ export async function exportTableToXLSX(
         (acc, [columnKey, cellValue]) => {
           const dType =
             dTypesConfig[defineCellType(cellValue, columnsMap[columnKey])];
-          acc[columnKey] = dType.toString(cellValue);
+          acc[columnKey] = dType ? dType.toString(cellValue) : "unknown";
           return acc;
         },
         {}

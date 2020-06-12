@@ -32,15 +32,15 @@
   }
 
   .dw-table__column {
-    width: 200px;
+    width: 300px;
     transition: none !important;
 
     top: 0;
     z-index: 5;
+    overflow: hidden;
     position: sticky !important;
 
     &--resizable {
-      overflow: hidden;
       resize: horizontal;
     }
 
@@ -77,6 +77,7 @@
   }
 
   table {
+    table-layout: fixed;
     width: max-content !important;
   }
 
