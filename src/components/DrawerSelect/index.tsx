@@ -291,7 +291,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       selectedOptions.current.push(node);
       setSelected(node);
     },
-    [setSelected]
+    [setSelected, searchValue]
   );
 
   const handleDeselect = useCallback((_, node) => {
@@ -437,6 +437,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       loading={internalLoading}
       //@ts-ignore
       dropdownRender={dropdownRender}
+      searchValue={searchValue}
       tagRender={tagRender}
       dropdownClassName="drawer-select-dropdown-fake"
       showSearch={true}
