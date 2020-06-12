@@ -14,7 +14,7 @@ import { SelectValue } from "antd/lib/tree-select";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
-import { Skeleton } from "antd";
+import { Skeleton, Tag } from "antd";
 
 import { AntTreeNode } from "antd/lib/tree";
 
@@ -24,6 +24,7 @@ import "./index.less";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
+  additionalFilters?: any;
   /**
    * Данные будут загружаться ассинхронно. Будет вызываться функция `loadData`
    */
@@ -57,7 +58,10 @@ export interface DrawerSelectProps<VT>
   /**
    * Функция которая будет вызываться для подгрузки данных с параметрами `searchValue`, `page`
    */
-  loadData?: (string, number) => Promise<{ data: any; totalPages: number }>;
+  loadData?: (
+    filters: any,
+    page: number
+  ) => Promise<{ data: any; totalPages: number }>;
 
   loadingText?: string;
 
@@ -86,16 +90,45 @@ export interface DrawerSelectProps<VT>
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
 
-function convertOptions(options, valueProp: string, labelProp: string) {
-  return options.map(opt => ({
-    ...opt,
-    value: opt[valueProp],
-    label: opt[labelProp]
-  }));
+function convertOptions(
+  source,
+  valueProp: string,
+  labelProp: string,
+  selectedOptions: any[] = [],
+  value: string[] = []
+) {
+  const selected = selectedOptions;
+  const options = [];
+  const set = new Set(value);
+
+  const selectedIds = selected.map(item => item[valueProp]);
+  const selectedSet = new Set(selectedIds);
+
+  source.forEach(opt => {
+    const obj = {
+      ...opt,
+      value: opt[valueProp],
+      label: opt[labelProp]
+    };
+    if (selectedSet.has(opt[valueProp])) return;
+
+    if (set.has(opt[valueProp])) {
+      selected.push(obj);
+      return;
+    }
+
+    options.push(obj);
+  });
+
+  return {
+    options,
+    selected
+  };
 }
 
 const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const {
+    additionalFilters,
     asyncData,
     showCheckAll,
     checkAllTitle,
@@ -128,13 +161,14 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [internalValue, setInternalValue] = useState<SelectValue>();
   const [selected, setSelected] = useState<AntTreeNode>();
+  const [optionsState, setOptions] = useState([]);
+
+  const selectedOptions = useRef<any[]>([]);
   const menuRef = useRef();
 
   const internalOptions = useMemo(() => {
-    return options ? convertOptions(options, valueProp, labelProp) : [];
+    return options ? convertOptions(options, valueProp, labelProp).options : [];
   }, [options, valueProp, labelProp]);
-
-  const [optionsState, setOptions] = useState([]);
 
   const inputRef = useRef<HTMLInputElement>();
 
@@ -157,21 +191,39 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   );
 
   const loadPage = useCallback(
-    async (search, page = 0) => {
+    async (search, page = 0, first = false) => {
       if (!loadData) return;
       if (page !== 0 && page >= totalPages) {
         return;
       }
-      if (!page) setOptions([]);
+      if (!page) setOptions(selectedOptions.current);
 
       setLoading(true);
 
-      const { data, totalPages: pages } = await loadData(search, page);
-      const options = convertOptions(data, valueProp, labelProp);
+      const filters = { ...additionalFilters, search };
+
+      if (first) {
+        filters.selected = value;
+      }
+
+      const { data, totalPages: pages } = await loadData(filters, page);
+
+      const options = convertOptions(
+        data,
+        valueProp,
+        labelProp,
+        selectedOptions.current,
+        first ? value : []
+      );
+
+      if (first) {
+        selectedOptions.current = options.selected;
+      }
+
       if (page === 0) {
-        setOptions(options);
+        setOptions(selectedOptions.current.concat(options.options));
       } else {
-        setOptions(optionsState.concat(options));
+        setOptions(optionsState.concat(options.options));
       }
 
       setPage(page);
@@ -179,6 +231,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       setLoading(false);
     },
+
+    //eslint-disable-next-line
     [
       loadData,
       setPage,
@@ -234,10 +288,18 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleSelect = useCallback(
     (_, node) => {
+      selectedOptions.current.push(node);
       setSelected(node);
     },
     [setSelected]
   );
+
+  const handleDeselect = useCallback((_, node) => {
+    const index = selectedOptions.current.findIndex(
+      option => option.key === node.key
+    );
+    selectedOptions.current.splice(index, 1);
+  }, []);
 
   const handleSearch = useCallback(
     searchValue => {
@@ -287,65 +349,95 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   }, [internalOptions]);
 
   useEffect(() => {
-    !asyncData && loadData && loadPage("");
+    !asyncData && loadData && loadPage("", 0, true);
     return () => {};
     //eslint-disable-next-line
-  }, [asyncData, loadData]);
+  }, [asyncData, additionalFilters]);
 
   // -------- RENDERS ---------
-  const dropdownRender = menu => {
-    menuRef.current = menu;
-    return (
-      <Drawer
-        className={clsx({
-          "drawer-select-dropdown": true,
-          "drawer-select-dropdown-show-all": showCheckAll
-        })}
-        title={drawerTitle ? drawerTitle : restProps.placeholder}
-        onClose={handleDrawerCancel}
-        visible={drawerVisible}
-        width={drawerWidth}
-        actions={
-          <>
-            <Button onClick={handleDrawerCancel}>{cancelText}</Button>
-            <Button onClick={handleDrawerSubmit} type="primary">
-              {submitText}
-            </Button>
-          </>
-        }
-      >
-        <SearchInput
-          placeholder={drawerSearchPlaceholder}
-          value={searchValue}
-          onChange={handleSearchInputChange}
-          loading={internalLoading}
-        />
-        {menu}
-        <div className="drawer-select-loader-container">
-          {internalLoading && (
-            <Skeleton
-              title={{ width: 300 }}
-              paragraph={{ rows: 1 }}
-              loading={true}
-              active
-            />
-          )}
-        </div>
-      </Drawer>
-    );
-  };
+
+  const tagRender = useCallback(
+    props => {
+      if (!optionsState || optionsState.length === 0) {
+        return (
+          <span className="ant-select-selection-placeholder">
+            {loadingText}
+          </span>
+        );
+      }
+      return (
+        <span className="ant-select-selection-item">
+          <Tag
+            closable={props.closable}
+            onClose={props.onClose}
+            className="ant-select-selection-item-content"
+          >
+            {props.label}
+          </Tag>
+        </span>
+      );
+    },
+    [optionsState, loadingText]
+  );
+
+  const dropdownRender = useCallback(
+    menu => {
+      menuRef.current = menu;
+      return (
+        <Drawer
+          className={clsx({
+            "drawer-select-dropdown": true,
+            "drawer-select-dropdown-show-all": showCheckAll
+          })}
+          title={drawerTitle ? drawerTitle : restProps.placeholder}
+          onClose={handleDrawerCancel}
+          visible={drawerVisible}
+          width={drawerWidth}
+          actions={
+            <>
+              <Button onClick={handleDrawerCancel}>{cancelText}</Button>
+              <Button onClick={handleDrawerSubmit} type="primary">
+                {submitText}
+              </Button>
+            </>
+          }
+        >
+          <SearchInput
+            placeholder={drawerSearchPlaceholder}
+            value={searchValue}
+            onChange={handleSearchInputChange}
+            loading={internalLoading}
+          />
+          {menu}
+          <div className="drawer-select-loader-container">
+            {internalLoading && (
+              <Skeleton
+                title={{ width: 300 }}
+                paragraph={{ rows: 1 }}
+                loading={true}
+                active
+              />
+            )}
+          </div>
+        </Drawer>
+      );
+    },
+    //eslint-disable-next-line
+    [searchValue, internalLoading, drawerVisible, internalValue]
+  );
 
   return (
     <AntSelect
       {...restProps}
       value={internalValue}
-      filterOption={asyncData || loadData ? false : true}
+      filterOption={true}
       className="drawer-select"
       mode="multiple"
       open={drawerVisible}
       loading={internalLoading}
       //@ts-ignore
       dropdownRender={dropdownRender}
+      tagRender={tagRender}
       dropdownClassName="drawer-select-dropdown-fake"
       showSearch={true}
       onSearch={handleSearch}
@@ -355,6 +447,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       onBeforeBlur={handleSelectBeforeBlur}
       onFocus={handleDrawerFocus}
       onSelect={handleSelect}
+      onDeselect={handleDeselect}
       onPopupScroll={handlePopupScroll}
       onChange={handleChange}
       options={optionsState}

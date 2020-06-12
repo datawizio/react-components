@@ -3,9 +3,9 @@ import React from "react";
 import Select from "../Select";
 
 interface LevelsProps {
-  value?: number;
-  levels?: { value: string; label: string }[];
-  onChange?: (value: number) => void;
+  value?: string | number;
+  levels?: { value: string | number; label: string }[];
+  onChange?: (value: string | number) => void;
 }
 
 export const Levels: React.FC<LevelsProps> = ({ value, levels, onChange }) => {
@@ -16,6 +16,7 @@ export const Levels: React.FC<LevelsProps> = ({ value, levels, onChange }) => {
   return (
     <Select
       defaultValue={value}
+      value={value}
       options={levels}
       onChange={handleChange}
       className="drawer-tree-select-levels"
