@@ -7,7 +7,7 @@ import { AntTreeNode } from "antd/lib/tree";
 export interface IDrawerTreeSelectFilters {
   search?: string;
   formats?: string[];
-  level?: string;
+  level?: string | number;
   value?: SelectValue;
 }
 
@@ -44,7 +44,7 @@ export interface DrawerTreeSelectProps<VT>
 
   levels?: LevelsType;
 
-  level?: string;
+  level?: string | number;
 
   levelText?: string;
 
