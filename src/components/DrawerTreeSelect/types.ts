@@ -7,7 +7,8 @@ import { AntTreeNode } from "antd/lib/tree";
 export interface IDrawerTreeSelectFilters {
   search?: string;
   formats?: string[];
-  level?: number;
+  level?: string | number;
+  value?: SelectValue;
 }
 
 export type LevelsType = { value: string; label: string }[];
@@ -18,17 +19,8 @@ export interface FormatRenderProps {
 
 export interface DrawerTreeSelectProps<VT>
   extends Omit<AntTreeSelectProps<VT>, "onChange" | "loadData"> {
+  additionalFilters?: any;
   asyncData?: boolean;
-
-  /**
-   * Ключ для чекбокса `Check all`
-   */
-  checkAllKey?: string;
-
-  /**
-   * Текст для чекбокса `Check all`
-   */
-  checkAllTitle?: string;
 
   /**
    * Place holder for search field in drawer
@@ -46,18 +38,13 @@ export interface DrawerTreeSelectProps<VT>
   drawerWidth?: number;
 
   /**
-   * Показать/не показывать чекбокс `Check all`
-   */
-  showCheckAll?: boolean;
-
-  /**
    * Показать выбор левелов
    */
   showLevels?: boolean;
 
   levels?: LevelsType;
 
-  level?: number;
+  level?: string | number;
 
   levelText?: string;
 
@@ -94,13 +81,13 @@ export interface DrawerTreeSelectProps<VT>
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
 
-  loadChildren?: (nodeId: string) => Promise<any>;
+  loadChildren?: (nodeId: string, filters?: any) => Promise<any>;
   /**
    * Event when user click Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 
-  onLevelChange?: (level: number) => void;
+  onLevelChange?: (level: string) => void;
 }
 
 export interface FCDrawerTreeSelect<VT>

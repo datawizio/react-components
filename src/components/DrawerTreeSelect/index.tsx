@@ -7,12 +7,13 @@ import React, {
 } from "react";
 import clsx from "clsx";
 
-import { Skeleton } from "antd";
+import { Skeleton, Tag } from "antd";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
 import { Levels } from "./Levels";
 import AntTreeSelect from "./antd/AntTreeSelect";
+import Checkbox from "../Checkbox";
 
 import { triggerInputChangeValue } from "../../utils/trigger";
 
@@ -26,9 +27,8 @@ import { DataNode, Key } from "rc-tree-select/es/interface";
 import { AntTreeNode } from "antd/lib/tree";
 
 import "./index.less";
-import Checkbox from "../Checkbox";
 
-function getMainLevelItems(items: any[], level: number | null = 1) {
+function getMainLevelItems(items: any[], level: string | number | null = 1) {
   const set = new Set<string>();
 
   for (let item of items) {
@@ -53,15 +53,23 @@ function isAllItemsChecked(items: string[], set: Set<string>) {
 
   return true;
 }
+function calcEmptyIsAll(
+  emptyIsAll: boolean,
+  filters: IDrawerTreeSelectFilters
+) {
+  if (!emptyIsAll) return false;
+  if (filters.search) return false;
+  if (filters.level.toString() !== "1") return false;
+  if (filters.formats && filters.formats.length !== 0) return false;
+  return true;
+}
 
 const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
+  additionalFilters,
   asyncData,
-  showCheckAll,
   showLevels,
   levels,
   level,
-  checkAllTitle,
-  checkAllKey,
   drawerTitle,
   drawerSearchPlaceholder,
   drawerWidth,
@@ -88,6 +96,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   showSelectAll,
   selectAllText,
   emptyIsAll,
+  placeholder,
   ...restProps
 }) => {
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
@@ -102,9 +111,20 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const mainLevelItems = useRef<Set<string>>();
 
-  const formatSelected = useRef<string[]>();
+  const formatSelected = useRef<string[]>([]);
   const searchValue = useRef<string>();
-  const levelSelected = useRef<number | null>(showLevels ? level : null);
+  const levelSelected = useRef<string | number | null>(
+    showLevels ? level : null
+  );
+
+  const prevTreeData = useRef<DataNode[]>();
+  const prevLevel = useRef<string | number>();
+  const prevFormatSelected = useRef<string[]>();
+  const prevEmptyIsAllRef = useRef<boolean>();
+
+  const drawerVisibleRef = useRef<boolean>(false);
+
+  const emptyIsAllRef = useRef<boolean>(emptyIsAll);
 
   const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
     Key[]
@@ -114,31 +134,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
-    if (showCheckAll) treeDefaultExpandedKeys.concat([checkAllKey]);
 
-    return undefined;
+    return treeDefaultExpandedKeys;
   }, [
     treeDefaultExpandedKeys,
-    checkAllKey,
     remoteSearch,
-    showCheckAll,
     searchValue,
     internalTreeExpandedKeys
   ]);
-
-  const internalTreeData: DataNode[] = useMemo(() => {
-    return showCheckAll
-      ? [
-          {
-            key: checkAllKey,
-            title: checkAllTitle,
-            value: checkAllKey,
-            children: stateTreeData,
-            className: "tree-check-all"
-          }
-        ]
-      : stateTreeData;
-  }, [stateTreeData, checkAllKey, checkAllTitle, showCheckAll]);
 
   const isLevelShowed =
     showLevels && internalLevels && internalLevels.length > 1;
@@ -158,17 +161,21 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         if (value[0]) return onChange(value[0], selected);
         return onChange("");
       }
-      if (selectAllState === "checked" && emptyIsAll) {
+      if (isSelectedAll()) {
         setInternalValue([]);
         return onChange([]);
       }
       onChange(value);
     },
+    //eslint-disable-next-line
     [multiple, selected, onChange, selectAllState, emptyIsAll]
   );
 
-  const internalLoadData = useCallback(async () => {
-    const filters: IDrawerTreeSelectFilters = { search: searchValue.current };
+  const getAllFilters = (first: boolean, newValue?: string[]) => {
+    const filters: IDrawerTreeSelectFilters = {
+      search: searchValue.current,
+      ...additionalFilters
+    };
 
     if (showLevels) {
       filters.level = levelSelected.current;
@@ -177,40 +184,85 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     if (formatRender) {
       filters.formats = formatSelected.current;
     }
-    setStateTreeData([]);
-    setInternalLoading(true);
-    triggerInputChangeValue(inputRef.current);
 
-    const { data, levels, expanded, count } = await loadData(filters);
-
-    mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
-    setStateTreeData(data);
-    setInternalLoading(false);
-
-    if (count) {
-      setIntenalTreeDataCount(count);
+    if (first) {
+      filters.value = value;
+    } else {
+      filters.value = newValue ? newValue : internalValue;
     }
 
-    if (showLevels && levels) {
-      setInternalLevels(levels);
-    }
+    return filters;
+  };
 
-    if (expanded) {
-      setInternalTreeExpandedKeys(expanded);
-    }
+  const internalLoadData = useCallback(
+    async (first: boolean = false, value?: string[]) => {
+      const filters = getAllFilters(first, value);
 
-    triggerInputChangeValue(
-      inputRef.current,
-      remoteSearch ? undefined : searchValue.current
-    );
-  }, [loadData, showLevels, formatRender, remoteSearch]);
+      emptyIsAllRef.current = calcEmptyIsAll(emptyIsAll, filters);
+      setStateTreeData([]);
+      setInternalLoading(true);
 
-  const checkSelectAllStatus = values => {
+      triggerInputChangeValue(inputRef.current);
+      if (value) {
+        setInternalValue(value);
+      }
+
+      const { data, levels, expanded, count } = await loadData(filters);
+
+      mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
+
+      setStateTreeData(data);
+      if (first) {
+        prevTreeData.current = data;
+      }
+      setInternalLoading(false);
+
+      if (count) {
+        setIntenalTreeDataCount(count);
+      }
+
+      if (showLevels && levels) {
+        setInternalLevels(levels);
+      }
+
+      if (expanded) {
+        setInternalTreeExpandedKeys(expanded);
+      }
+
+      if (drawerVisibleRef.current) {
+        checkSelectAllStatus(
+          value ? value : internalValue,
+          !emptyIsAllRef.current
+        );
+      }
+
+      triggerInputChangeValue(
+        inputRef.current,
+        remoteSearch ? undefined : searchValue.current
+      );
+    },
+    //eslint-disable-next-line
+    [loadData, showLevels, formatRender, remoteSearch, internalValue, value]
+  );
+
+  const checkSelectAllStatus = (values, ignoreEmpty: boolean = false) => {
     let checked = true;
+    if (!multiple) return;
+
+    if (
+      !ignoreEmpty &&
+      (!values || !values.length) &&
+      emptyIsAll &&
+      !searchValue.current
+    ) {
+      selectAll();
+      return;
+    }
+
     if (showCheckedStrategy === "SHOW_PARENT") {
       checked = isAllItemsChecked(values, mainLevelItems.current);
     } else {
-      checked = values.count === internalTreeDataCount;
+      checked = values.length === internalTreeDataCount;
     }
     if (!checked && values.length) {
       setSelectAllState("indeterminate");
@@ -232,23 +284,69 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     }
   };
 
-  //  -------- HANDLERS --------
   const closeDrawer = useCallback(() => {
     setTimeout(() => {
       const activeElement = document.activeElement as HTMLElement;
       activeElement.blur();
     }, 100);
 
-    searchValue.current = "";
+    resetStates();
     setDrawerVisible(false);
+    drawerVisibleRef.current = false;
 
     // setSearchValue("");
     setInternalTreeExpandedKeys([]);
+    //eslint-disable-next-line
   }, []);
 
+  const saveStates = () => {
+    prevLevel.current = levelSelected.current;
+    prevTreeData.current = stateTreeData;
+    prevFormatSelected.current = formatSelected.current;
+    prevEmptyIsAllRef.current = emptyIsAllRef.current;
+  };
+
+  const resetStates = () => {
+    searchValue.current = "";
+    prevLevel.current = "1";
+    prevTreeData.current = [];
+    prevFormatSelected.current = [];
+    prevEmptyIsAllRef.current = emptyIsAll;
+  };
+
+  const rollbackStates = () => {
+    levelSelected.current = prevLevel.current;
+    formatSelected.current = prevFormatSelected.current;
+
+    emptyIsAllRef.current = prevEmptyIsAllRef.current;
+    mainLevelItems.current = getMainLevelItems(
+      prevTreeData.current,
+      levelSelected.current
+    );
+    setStateTreeData(prevTreeData.current);
+    // setInternalValue(value)
+  };
+
+  const openDrawer = () => {
+    setDrawerVisible(true);
+    drawerVisibleRef.current = true;
+    saveStates();
+    //@ts-ignore
+    checkSelectAllStatus(internalValue);
+    triggerInputChangeValue(inputRef.current, searchValue.current);
+  };
+
+  const isSelectedAll = useCallback(() => {
+    return selectAllState === "checked" && emptyIsAllRef.current;
+  }, [selectAllState]);
+
+  //  -------- HANDLERS --------
+
   const handlerDrawerCancel = useCallback(() => {
-    closeDrawer();
+    rollbackStates();
     setInternalValue(!multiple && !value ? [] : value);
+    closeDrawer();
+    setSelectAllState("");
   }, [closeDrawer, value, multiple]);
 
   const handlerDrawerSubmit = useCallback(() => {
@@ -258,12 +356,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const handlerDrawerFocus = e => {
     setInputRef(e.target);
-    setDrawerVisible(true);
-    //@ts-ignore
-    if (multiple && (!internalValue || !internalValue.length) && emptyIsAll) {
-      selectAll();
-    }
-    triggerInputChangeValue(inputRef.current, searchValue.current);
+    openDrawer();
   };
 
   const handlerSearchInputChange = useCallback(
@@ -280,7 +373,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       triggerInputChangeValue(inputRef.current, inputValue);
     },
     //eslint-disable-next-line
-    [inputRef]
+    [inputRef, internalLoadData]
   );
 
   const handlerSelectBeforeBlur = useCallback(() => !drawerVisible, [
@@ -299,7 +392,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       if (multiple) {
         setInternalValue(value);
         if (value) {
-          checkSelectAllStatus(value);
+          checkSelectAllStatus(value, true);
         }
       } else {
         setInternalValue(extra.checked ? [extra.triggerValue] : []);
@@ -316,19 +409,21 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     setInternalTreeExpandedKeys(expandedKeys);
   }, []);
 
-  const handleLevelChange = (level: number) => {
+  const handleLevelChange = (level: string) => {
     levelSelected.current = level;
     onLevelChange && onLevelChange(level);
-    internalLoadData();
+    internalLoadData(false, []);
   };
 
   const handleTreeLoadData = async node => {
-    const data = await loadChildren(node.id);
-    setStateTreeData(internalTreeData.concat(data));
+    const index = stateTreeData.findIndex(item => item.pId === node.id);
+    if (index !== -1) return;
+    const data = await loadChildren(node.id, additionalFilters);
+    setStateTreeData(stateTreeData.concat(data));
     triggerInputChangeValue(inputRef.current, searchValue.current);
   };
 
-  const handleCheckboxChange = e => {
+  const handleSelectAllChange = e => {
     const checked = e.target.checked;
 
     if (checked) {
@@ -362,11 +457,42 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [loading]);
 
   useEffect(() => {
-    !asyncData && loadData && internalLoadData();
+    !asyncData && loadData && internalLoadData(true);
     //eslint-disable-next-line
-  }, [asyncData]);
+  }, [asyncData, additionalFilters]);
 
   // -------- RENDERS ---------
+
+  const tagRender = useCallback(
+    props => {
+      if (isSelectedAll()) {
+        return (
+          <span className="ant-select-selection-placeholder">
+            {placeholder}
+          </span>
+        );
+      }
+      if (!stateTreeData || stateTreeData.length === 0) {
+        return (
+          <span className="ant-select-selection-placeholder">
+            {loadingText}
+          </span>
+        );
+      }
+      return (
+        <span className="ant-select-selection-item">
+          <Tag
+            closable={props.closable}
+            onClose={props.onClose}
+            className="ant-select-selection-item-content"
+          >
+            {props.label}
+          </Tag>
+        </span>
+      );
+    },
+    [placeholder, loadingText, isSelectedAll, stateTreeData]
+  );
 
   const format = useMemo(() => {
     if (!formatRender) return null;
@@ -384,10 +510,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         <Drawer
           className={clsx({
             "drawer-tree-select-dropdown": true,
-            "drawer-tree-select-dropdown-show-all": showCheckAll,
             "drawer-tree-select-dropdown-flat-list": isFlatList
           })}
-          title={drawerTitle ? drawerTitle : restProps.placeholder}
+          title={drawerTitle ? drawerTitle : placeholder}
           onClose={handlerDrawerCancel}
           visible={drawerVisible}
           width={drawerWidth}
@@ -417,16 +542,13 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           <div className="drawer-tree-select-dropdown-toolbar">
             {showSelectAll ? (
               <Checkbox
-                onChange={handleCheckboxChange}
+                onChange={handleSelectAllChange}
                 checked={selectAllState === "checked"}
                 indeterminate={selectAllState === "indeterminate"}
               >
                 {selectAllText}
               </Checkbox>
-            ) : // <Button border={false} type="link" onClick={handleSelectAllClick}>
-            //   {selectAllText}
-            // </Button>
-            null}
+            ) : null}
           </div>
           {menu}
           <div className="drawer-select-loader-container">
@@ -448,7 +570,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       searchValue,
       internalLoading,
       internalLevels,
-      levelSelected.current,
       handlerDrawerCancel,
       handlerDrawerSubmit,
       handlerSearchInputChange
@@ -467,26 +588,29 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       {...restProps}
       value={internalValue}
       className="drawer-tree-select"
-      treeData={internalTreeData}
+      treeData={stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
-      searchValue={
-        searchValue.current && !remoteSearch ? searchValue.current : ""
-      }
+      searchValue={searchValue.current ? searchValue.current : ""}
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
       multiple={multiple}
       showSearch={true}
       listHeight={listHeight}
+      placeholder={placeholder}
       loading={internalLoading}
       notFoundContent={internalLoading ? loadingText : noDataText}
+      showCheckedStrategy={
+        searchValue.current ? "SHOW_CHILD" : showCheckedStrategy
+      }
       loadData={loadChildren ? handleTreeLoadData : null}
       onBeforeBlur={handlerSelectBeforeBlur}
       onChange={handleTreeSelectChange}
       onFocus={handlerDrawerFocus}
       onTreeExpand={handlerTreeExpand}
       onSelect={handleTreeSelect}
+      tagRender={tagRender}
     />
   );
 };
@@ -495,11 +619,8 @@ DrawerTreeSelect.defaultProps = {
   maxTagCount: 10,
   treeDataCount: 0,
   treeDefaultExpandedKeys: [],
-  showCheckAll: false,
   showLevels: false,
   isFlatList: false,
-  checkAllTitle: "Check all",
-  checkAllKey: "-1",
   drawerTitle: "",
   drawerSearchPlaceholder: "Search",
   drawerWidth: 400,
@@ -512,6 +633,7 @@ DrawerTreeSelect.defaultProps = {
   remoteSearch: false,
   showSelectAll: false,
   selectAllText: "Select all",
+  emptyIsAll: false,
   levels: []
 };
 
