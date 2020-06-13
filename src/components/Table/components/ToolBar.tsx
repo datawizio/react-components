@@ -6,14 +6,14 @@ import { useContext, useMemo } from "react";
 import "../index.less";
 
 const ToolBar: React.FC = props => {
-  const [tableState, , tableProps] = useContext(TableContext);
+  const [tableState] = useContext(TableContext);
 
   const className = useMemo(
     () =>
       clsx("dw-table__toolbar", {
-        "dw-table__toolbar--loading": tableProps.loading || tableState.loading
+        "dw-table__toolbar--loading": tableState.loading
       }),
-    [tableProps.loading, tableState.loading]
+    [tableState.loading]
   );
 
   return <div className={className}>{props.children}</div>;

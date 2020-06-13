@@ -154,24 +154,24 @@ import { useState, useMemo, useCallback } from "react";
     {() => {
       const columns = useMemo(() => genColumns(10, true), []);
       //
-      const globalHandler = useCallback(async ({ pagination }) => {
-        const paginationConfig = pagination
-          ? pagination
-          : { total: 200, pageSize: 10 };
+      const tableProvider = useCallback(async state => {
+        const response = await server.fetchTableData(100, columns);
         //
-        const response = await server.fetchTableData(
-          paginationConfig.pageSize,
-          columns
-        );
-        //
+        console.log(response);
         return {
           loading: false,
-          pagination: paginationConfig,
           ...response
         };
       }, []);
       //
-      return <Table loading globalHandler={globalHandler} />;
+      return (
+        <Table
+          async
+          loading
+          dataProvider={tableProvider}
+          dataProviderDeps={state => [JSON.stringify(state.sortParams)]}
+        />
+      );
     }}
   </Story>
 </Preview>

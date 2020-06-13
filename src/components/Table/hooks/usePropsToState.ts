@@ -2,7 +2,17 @@ import { Dispatch, useEffect } from "react";
 import { TableProps, Action } from "../types";
 
 function usePropsToState(dispatch: Dispatch<Action>, props: TableProps) {
-  const { visibleColumnsKeys, dataSource, searchValue, columns } = props;
+  const {
+    columns,
+    loading,
+    dataSource,
+    searchValue,
+    visibleColumnsKeys
+  } = props;
+
+  useEffect(() => {
+    dispatch({ type: "loading", payload: !!loading });
+  }, [loading, dispatch]);
 
   useEffect(() => {
     dispatch({ type: "update", payload: { searchValue } });

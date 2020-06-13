@@ -22,7 +22,9 @@ export interface TableSelectColumnsModalProps {
 
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {
   const { locale } = props;
-  const [tableState, setTableState, tableProps] = useContext(TableContext);
+  const [tableState, setTableState, , baseTableState] = useContext(
+    TableContext
+  );
 
   const [isOpened, setIsOpened] = useState(false);
   const [expandedKeys, setExpandedKeys] = useState([]);
@@ -30,7 +32,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   const [checkedKeys, setCheckedKeys] = useState(() => {
     return (
       tableState.visibleColumnsKeys ||
-      tableState.columns.map(column => column.key)
+      baseTableState.columns.map(column => column.key)
     );
   });
 
@@ -48,8 +50,8 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
         disabled: fixedColumnsKeys.includes(column.key),
         children: column.children && rec(column.children)
       }));
-    })(tableProps.columns);
-  }, [isOpened, tableProps.columns, tableState.columns]);
+    })(baseTableState.columns);
+  }, [isOpened, baseTableState.columns, tableState.columns]);
 
   const handleApply = useCallback(() => {
     setTableState({ visibleColumnsKeys: checkedKeys });

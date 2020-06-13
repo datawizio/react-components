@@ -47,6 +47,7 @@ export interface TableProps<RT = any>
   filterHandler?: FilterHandlerType;
 
   dataProvider?: DataProvider;
+  dataProviderDeps?: (state) => Array<any>;
   rowChildrenProvider?: RowChildrenProviderType;
 }
 
@@ -58,6 +59,7 @@ export interface TableState extends Partial<TableProps> {
 
 export type Action =
   | { type: "expandRow"; payload: IRow }
+  | { type: "loading"; payload: boolean }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
   | { type: "update"; payload: Partial<TableState> }
@@ -162,9 +164,8 @@ export type SortParams = {
  */
 
 export type DataProvider = (
-  state: TableState,
-  props: TableProps
-) => Partial<TableState>;
+  state: TableState
+) => Partial<TableState> | Promise<Partial<TableState>>;
 
 export type RowChildrenProviderType = (
   expandedRow: IRow

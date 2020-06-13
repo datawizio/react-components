@@ -17,17 +17,26 @@ function genColumnsMap(columns) {
 export function initializer(props: TableProps): TableState {
   const {
     columns,
+    loading,
     dataSource,
+    pagination,
     searchValue,
     dTypesConfig,
+    showSizeChanger,
     visibleColumnsKeys
   } = props;
 
   return {
     columns,
+    loading,
     dataSource,
     searchValue,
     visibleColumnsKeys,
+
+    pagination: {
+      ...(pagination || {}),
+      showSizeChanger
+    },
 
     sortParams: {},
     filterParams: {},
@@ -130,6 +139,12 @@ export function reducer(state: TableState, action: Action): TableState {
         expandedRowKeys: state.expandedRowKeys.filter(
           key => key !== action.payload.key
         )
+      };
+
+    case "loading":
+      return {
+        ...state,
+        loading: action.payload
       };
 
     case "update":

@@ -6,9 +6,10 @@ import { reducer, initializer } from "./reducer";
 import useColumns from "./hooks/useColumns";
 import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
-import { useMemo, useCallback, useReducer } from "react";
+import { useMemo, useCallback, useReducer, useEffect } from "react";
 
 import { TableContext } from "./context";
+
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
@@ -30,31 +31,41 @@ const Table: FCTable = props => {
     height,
     children,
     components,
-    globalHandler,
+    dataProvider,
     showSizeChanger,
+    dataProviderDeps,
     rowChildrenProvider,
     ...restProps
   } = props;
 
-  const [_state, dispatch] = useReducer(reducer, props, initializer);
+  const [baseState, dispatch] = useReducer(reducer, props, initializer);
 
-  const columnsState = useColumns(_state, props);
+  const columnsState = useColumns(baseState, props);
 
-  const dataSourceState = useDataSource(_state, props);
+  const dataSourceState = useDataSource(baseState, props);
 
   const state = {
-    ..._state,
+    ...baseState,
     ...dataSourceState,
     ...columnsState
   };
 
+  usePropsToState(dispatch, props);
+
+  useEffect(() => {
+    if (!dataProvider) return;
+    (async () => {
+      dispatch({ type: "loading", payload: true });
+      const providerResponse = await dataProvider(state);
+      dispatch({ type: "update", payload: providerResponse });
+      dispatch({ type: "loading", payload: false });
+    })();
+    // eslint-disable-next-line
+  }, [dataProvider].concat(dataProviderDeps && dataProviderDeps(state)));
+
   const updateState = useCallback(nextState => {
     dispatch({ type: "update", payload: nextState });
   }, []);
-
-  usePropsToState(dispatch, props);
-
-  // useStateHandlers(updateState, state, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -101,31 +112,21 @@ const Table: FCTable = props => {
       clsx(
         "dw-table",
         {
-          "dw-table--loading": props.loading || state.loading,
+          "dw-table--loading": state.loading,
           "dw-table--empty": !state.columns.length || !state.dataSource.length
         },
         props.className
       ),
     [
       state.loading,
-      props.loading,
       props.className,
       state.columns.length,
       state.dataSource.length
     ]
   );
 
-  const paginationConfig = useMemo(
-    () => ({
-      ...(props.pagination || {}),
-      ...(state.pagination || {}),
-      showSizeChanger
-    }),
-    [props.pagination, state.pagination, showSizeChanger]
-  );
-
   return (
-    <TableContext.Provider value={[state, updateState, props]}>
+    <TableContext.Provider value={[state, updateState, props, baseState]}>
       {children}
       <AntdTable
         {...(restProps as any)}
@@ -133,7 +134,6 @@ const Table: FCTable = props => {
         className={className}
         onExpand={handleExpandRow}
         onChange={handleChangeTable}
-        pagination={paginationConfig}
         components={customComponents}
       />
     </TableContext.Provider>
@@ -151,7 +151,7 @@ Table.defaultProps = {
   size: "small",
   width: "auto",
   height: "auto",
-  tableLayout: "auto",
+  tableLayout: "fixed",
 
   dTypesConfig: {},
   columnsConfig: {},

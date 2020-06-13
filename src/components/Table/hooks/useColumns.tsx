@@ -14,50 +14,52 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
   const { columns, visibleColumnsKeys, dTypesConfig } = state;
 
   return useMemo(() => {
-    function initColumns(columns: Array<IColumn>) {
-      return columns.reduce((acc, column) => {
-        const nextColumn: IColumn = {
-          ...column,
-          ...(columnsConfig[column.key] || {})
-        };
-
-        if (
-          !nextColumn.fixed &&
-          visibleColumnsKeys &&
-          !visibleColumnsKeys.includes(nextColumn.key)
-        ) {
-          return acc;
-        }
-
-        if (nextColumn.children) {
-          nextColumn.children = initColumns(nextColumn.children);
-        } else {
-          nextColumn.sorter = nextColumn.hasOwnProperty("sorter")
-            ? nextColumn.sorter
-            : sortable;
-        }
-
-        if (!nextColumn.hasOwnProperty("render")) {
-          nextColumn.render = (value, record, index) => {
-            return (
-              <BodyCell
-                value={value}
-                index={index}
-                renderProps={cellRenderProps}
-                typeConfig={dTypesConfig[defineCellType(value, nextColumn)]}
-              />
-            );
+    function initColumns(columns: Array<IColumn>, level = 1) {
+      return columns
+        .reduce((acc, column) => {
+          const nextColumn: IColumn = {
+            ...column,
+            ...(columnsConfig[column.key] || {})
           };
-        }
 
-        if (!nextColumn.hasOwnProperty("resizable")) {
-          nextColumn.resizable = isResizableColumns;
-        }
+          if (
+            !nextColumn.fixed &&
+            visibleColumnsKeys &&
+            !visibleColumnsKeys.includes(nextColumn.key)
+          ) {
+            return acc;
+          }
 
-        nextColumn.onHeaderCell = () => ({ model: { ...nextColumn } } as any);
+          if (nextColumn.children) {
+            nextColumn.children = initColumns(nextColumn.children, level + 1);
+          } else {
+            nextColumn.sorter = nextColumn.hasOwnProperty("sorter")
+              ? nextColumn.sorter
+              : sortable;
+          }
 
-        return acc.concat(nextColumn);
-      }, []);
+          if (!nextColumn.hasOwnProperty("render")) {
+            nextColumn.render = (value, record, index) => {
+              return (
+                <BodyCell
+                  value={value}
+                  index={index}
+                  renderProps={cellRenderProps}
+                  typeConfig={dTypesConfig[defineCellType(value, nextColumn)]}
+                />
+              );
+            };
+          }
+
+          if (!nextColumn.hasOwnProperty("resizable") && level === 1) {
+            nextColumn.resizable = isResizableColumns;
+          }
+
+          nextColumn.onHeaderCell = () => ({ model: { ...nextColumn } } as any);
+
+          return acc.concat(nextColumn);
+        }, [])
+        .sort((a, b) => +Boolean(b.fixed) - +Boolean(a.fixed));
     }
 
     return {
