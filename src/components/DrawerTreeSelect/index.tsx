@@ -618,7 +618,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 DrawerTreeSelect.defaultProps = {
   maxTagCount: 10,
   treeDataCount: 0,
-  treeDefaultExpandedKeys: [],
   showLevels: false,
   isFlatList: false,
   drawerTitle: "",
