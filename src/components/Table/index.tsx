@@ -56,8 +56,7 @@ const Table: FCTable = props => {
     if (!dataProvider) return;
     (async () => {
       dispatch({ type: "loading", payload: true });
-      const providerResponse = await dataProvider(state);
-      dispatch({ type: "update", payload: providerResponse });
+      dispatch({ type: "update", payload: await dataProvider(state) });
       dispatch({ type: "loading", payload: false });
     })();
     // eslint-disable-next-line
@@ -159,6 +158,7 @@ Table.defaultProps = {
 
   columns: [],
   dataSource: [],
+  pageSizeOptions: ["20", "35", "50", "100"],
 
   showSizeChanger: true,
   sortHandler: basicSortHandler,

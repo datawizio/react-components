@@ -29,9 +29,11 @@ export interface TableProps<RT = any>
   multipleSorting?: boolean;
   isResizableColumns?: boolean;
 
+  pageSizeOptions?: Array<string>;
+
   visibleColumnsKeys?: Array<IColumn["key"]>;
 
-  cellRenderProps?: React.HTMLAttributes<any>;
+  cellRenderProps?: { [key: string]: any };
 
   dTypesConfig?: {
     [dType: string]: DTypeConfig;
@@ -118,6 +120,8 @@ export type DTypeConfig<T = any> = {
 
   render?: (
     cellVal: T,
+    row: IRow,
+    column: IColumn,
     index: number,
     renderProps: TableProps["cellRenderProps"]
   ) => import("react").ReactNode;
