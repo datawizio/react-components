@@ -23,6 +23,7 @@ export function initializer(props: TableProps): TableState {
     searchValue,
     dTypesConfig,
     showSizeChanger,
+    pageSizeOptions,
     visibleColumnsKeys
   } = props;
 
@@ -34,8 +35,10 @@ export function initializer(props: TableProps): TableState {
     visibleColumnsKeys,
 
     pagination: {
-      ...(pagination || {}),
-      showSizeChanger
+      showSizeChanger,
+      pageSizeOptions,
+      pageSize: +pageSizeOptions[0],
+      ...(pagination || {})
     },
 
     sortParams: {},
@@ -148,10 +151,21 @@ export function reducer(state: TableState, action: Action): TableState {
       };
 
     case "update":
-      return {
-        ...state,
-        ...action.payload
-      };
+      let nextState = { ...state, ...action.payload };
+
+      if (action.payload.columns)
+        nextState = reducer(nextState, {
+          type: "updateColumns",
+          payload: nextState.columns
+        });
+
+      if (action.payload.dataSource)
+        nextState = reducer(nextState, {
+          type: "updateDataSource",
+          payload: nextState.dataSource
+        });
+
+      return nextState;
 
     default:
       return state;

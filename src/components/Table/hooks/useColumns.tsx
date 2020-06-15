@@ -42,8 +42,10 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
             nextColumn.render = (value, record, index) => {
               return (
                 <BodyCell
+                  row={record}
                   value={value}
                   index={index}
+                  column={nextColumn}
                   renderProps={cellRenderProps}
                   typeConfig={dTypesConfig[defineCellType(value, nextColumn)]}
                 />

@@ -6,7 +6,7 @@ import Button from "../Button";
 import { SettingOutlined } from "@ant-design/icons";
 
 import { TableContext } from "../Table/context";
-import { useState, useCallback, useMemo, useContext } from "react";
+import { useState, useCallback, useMemo, useContext, useEffect } from "react";
 import { deepFilter } from "../../utils/deepFilter";
 
 import "./index.less";
@@ -27,14 +27,15 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   );
 
   const [isOpened, setIsOpened] = useState(false);
+  const [checkedKeys, setCheckedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
 
-  const [checkedKeys, setCheckedKeys] = useState(() => {
-    return (
+  useEffect(() => {
+    setCheckedKeys(
       tableState.visibleColumnsKeys ||
-      baseTableState.columns.map(column => column.key)
+        baseTableState.columns.map(column => column.key)
     );
-  });
+  }, [tableState.visibleColumnsKeys, baseTableState.columns]);
 
   const treeData = useMemo(() => {
     if (!isOpened) return [];
