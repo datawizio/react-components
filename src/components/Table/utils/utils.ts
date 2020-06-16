@@ -6,4 +6,23 @@ function defineCellType(cell: BodyCellType, column: IColumn): string {
   return dType || typeof cell;
 }
 
-export { defineCellType };
+function swapColumns(columns, keyFrom, keyTo) {
+  columns.some((column, idxFrom) => {
+    if (keyFrom === column.key) {
+      const idxTo = columns.findIndex(column => column.key === keyTo);
+
+      if (idxTo !== -1)
+        [columns[idxFrom], columns[idxTo]] = [columns[idxTo], columns[idxFrom]];
+
+      return true;
+    }
+
+    return (
+      column.children &&
+      column.children.length &&
+      swapColumns(column.children, keyFrom, keyTo)
+    );
+  });
+}
+
+export { defineCellType, swapColumns };

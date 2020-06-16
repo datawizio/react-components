@@ -6,8 +6,10 @@ import Button from "../Button";
 import { SettingOutlined } from "@ant-design/icons";
 
 import { TableContext } from "../Table/context";
-import { useState, useCallback, useMemo, useContext, useEffect } from "react";
+import ConfigContext from "../ConfigProvider/context";
+
 import { deepFilter } from "../../utils/deepFilter";
+import { useState, useCallback, useMemo, useContext, useEffect } from "react";
 
 import "./index.less";
 
@@ -22,9 +24,8 @@ export interface TableSelectColumnsModalProps {
 
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {
   const { locale } = props;
-  const [tableState, setTableState, , baseTableState] = useContext(
-    TableContext
-  );
+  const { translate } = useContext(ConfigContext);
+  const [tableState, dispatch, , baseTableState] = useContext(TableContext);
 
   const [isOpened, setIsOpened] = useState(false);
   const [checkedKeys, setCheckedKeys] = useState([]);
@@ -55,9 +56,9 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   }, [isOpened, baseTableState.columns, tableState.columns]);
 
   const handleApply = useCallback(() => {
-    setTableState({ visibleColumnsKeys: checkedKeys });
+    dispatch({ type: "update", payload: { visibleColumnsKeys: checkedKeys } });
     setIsOpened(false);
-  }, [checkedKeys, setTableState]);
+  }, [checkedKeys, dispatch]);
 
   const onCheck = useCallback(
     checkedKeys => {
@@ -79,12 +80,12 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
     <div className="select-columns table-toolbar--right">
       <Button border={false} onClick={() => setIsOpened(true)}>
         <SettingOutlined className="select-columns__icon" />
-        {locale.openButton}
+        {translate(locale.openButton)}
       </Button>
 
       <Modal
         visible={isOpened}
-        title={locale.headerModal}
+        title={translate(locale.headerModal)}
         className="select-columns__modal"
         onCancel={() => setIsOpened(false)}
         footer={
@@ -93,7 +94,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
             disabled={!checkedKeys.length}
             onClick={handleApply}
           >
-            {locale.apply}
+            {translate(locale.apply)}
           </Button>
         }
       >
@@ -104,8 +105,8 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
           treeData={treeData}
           onExpand={setExpandedKeys}
           expandedKeys={expandedKeys}
-          checkAllKey={locale.checkAll}
           checkedKeys={checkedKeys}
+          checkAllKey={translate(locale.checkAll)}
         />
       </Modal>
     </div>
@@ -114,10 +115,10 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
 TableSelectColumnsModal.defaultProps = {
   locale: {
-    apply: "Apply",
-    checkAll: "Check All",
-    openButton: "Columns",
-    headerModal: "Select columns"
+    apply: "APPLY",
+    checkAll: "ALL",
+    openButton: "COLUMNS",
+    headerModal: "SELECT_COLUMNS"
   }
 };
 

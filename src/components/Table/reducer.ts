@@ -1,5 +1,6 @@
 import { TableState, Action, SortParams, TableProps } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
+import { swapColumns } from "./utils/utils";
 
 function genColumnsMap(columns) {
   const columnsMap = {};
@@ -128,6 +129,17 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         dataSource: nextDataSource
+      };
+
+    case "swapColumns":
+      const [keyFrom, keyTo] = action.payload;
+      const nextColumns = state.columns.concat();
+
+      swapColumns(nextColumns, keyFrom, keyTo);
+
+      return {
+        ...state,
+        columns: nextColumns
       };
 
     case "expandRow":

@@ -1,8 +1,8 @@
 import React, { Dispatch } from "react";
-import { TableProps, TableState } from "./types";
+import { TableProps, TableState, Action } from "./types";
 
 export const TableContext = React.createContext<
-  [TableState, Dispatch<Partial<TableState>>, TableProps, TableState]
+  [TableState, Dispatch<Action>, TableProps, TableState]
 >(null);
 
 TableContext.displayName = "TableContext";

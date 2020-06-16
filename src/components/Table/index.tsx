@@ -14,6 +14,9 @@ import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
 
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 import {
   basicSortHandler,
   basicFilterHandler,
@@ -61,10 +64,6 @@ const Table: FCTable = props => {
     })();
     // eslint-disable-next-line
   }, [dataProvider].concat(dataProviderDeps && dataProviderDeps(state)));
-
-  const updateState = useCallback(nextState => {
-    dispatch({ type: "update", payload: nextState });
-  }, []);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -125,17 +124,19 @@ const Table: FCTable = props => {
   );
 
   return (
-    <TableContext.Provider value={[state, updateState, props, baseState]}>
-      {children}
-      <AntdTable
-        {...(restProps as any)}
-        {...state}
-        className={className}
-        onExpand={handleExpandRow}
-        onChange={handleChangeTable}
-        components={customComponents}
-      />
-    </TableContext.Provider>
+    <DndProvider backend={HTML5Backend}>
+      <TableContext.Provider value={[state, dispatch, props, baseState]}>
+        {children}
+        <AntdTable
+          {...(restProps as any)}
+          {...state}
+          className={className}
+          onExpand={handleExpandRow}
+          onChange={handleChangeTable}
+          components={customComponents}
+        />
+      </TableContext.Provider>
+    </DndProvider>
   );
 };
 
