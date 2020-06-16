@@ -40,6 +40,8 @@ export { default as DrawerSelect } from "./components/DrawerSelect";
 
 export { default as CheckboxGroup } from "./components/CheckboxGroup";
 
+export { default as ConfigProvider } from "./components/ConfigProvider";
+
 export { default as InfiniteScroll } from "./components/InfiniteScroll";
 
 export { default as LiteSearchInput } from "./components/LiteSearchInput";

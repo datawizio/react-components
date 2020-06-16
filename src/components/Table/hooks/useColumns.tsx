@@ -57,7 +57,8 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
             nextColumn.resizable = isResizableColumns;
           }
 
-          nextColumn.onHeaderCell = () => ({ model: { ...nextColumn } } as any);
+          nextColumn.onHeaderCell = () =>
+            ({ model: { ...nextColumn }, level } as any);
 
           return acc.concat(nextColumn);
         }, [])

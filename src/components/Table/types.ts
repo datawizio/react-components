@@ -70,6 +70,7 @@ export type Action =
   | { type: "updateColumns"; payload: TableProps["columns"] }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
+  | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
   | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };
 
 /**
