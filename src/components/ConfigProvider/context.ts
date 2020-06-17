@@ -1,11 +1,16 @@
 import { createContext } from "react";
 
-export interface ConfigContextValue {
-  translate: (transKey: string) => string;
+export interface ConfigProviderProps {
+  translate?: (
+    transKey: string,
+    interpolationMap?: { [key: string]: any }
+  ) => string;
 }
 
-const ConfigContext = createContext<ConfigContextValue>({
+export const defaultContextValue = {
   translate: transKey => transKey
-});
+};
+
+const ConfigContext = createContext<ConfigProviderProps>(defaultContextValue);
 
 export default ConfigContext;

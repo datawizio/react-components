@@ -1,10 +1,11 @@
 import * as React from "react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 
 import Button from "../Button";
 import { RetweetOutlined } from "@ant-design/icons";
 
 import "./index.less";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface TableTransposeButtonProps {
   buttonText?: string;
@@ -13,6 +14,7 @@ export interface TableTransposeButtonProps {
 
 const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
   const { onTranspose, buttonText } = props;
+  const { translate } = useContext(ConfigContext);
   const [isTransposed, setTransposed] = useState(false);
 
   const handleTranspose = useCallback(() => {
@@ -24,14 +26,14 @@ const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
     <div className="table-transpose-button table-toolbar--right">
       <Button border={false} onClick={handleTranspose}>
         <RetweetOutlined className="table-transpose-button__icon" />
-        {buttonText}
+        {translate(buttonText)}
       </Button>
     </div>
   );
 };
 
 TableTransposeButton.defaultProps = {
-  buttonText: "Transpose"
+  buttonText: "TRANSPOSE"
 };
 
 export default TableTransposeButton;

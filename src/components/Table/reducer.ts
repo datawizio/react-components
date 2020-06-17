@@ -1,6 +1,6 @@
 import { TableState, Action, SortParams, TableProps } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
-import { swapColumns } from "./utils/utils";
+import { swapColumns, filterByColumns } from "./utils/utils";
 
 function genColumnsMap(columns) {
   const columnsMap = {};
@@ -60,12 +60,27 @@ export function reducer(state: TableState, action: Action): TableState {
       };
 
     case "updateColumns":
+      const nextColumnsMap = genColumnsMap(action.payload);
+      const nextSortParams = filterByColumns(nextColumnsMap, state.sortParams);
+      const nextFilterParams = filterByColumns(
+        nextColumnsMap,
+        state.filterParams
+      );
+
+      const nextVisibleColumnsKeys =
+        state.visibleColumnsKeys &&
+        state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
+
       return {
         ...state,
-        sortParams: {},
-        filterParams: {},
+
         columns: action.payload,
-        columnsMap: genColumnsMap(action.payload)
+        columnsMap: nextColumnsMap,
+
+        sortParams: nextSortParams,
+        filterParams: nextFilterParams,
+
+        visibleColumnsKeys: nextVisibleColumnsKeys
       };
 
     case "visibleColumnsKeys":
