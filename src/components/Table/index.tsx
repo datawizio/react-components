@@ -101,7 +101,7 @@ const Table: FCTable = props => {
     (total, [current, to]) => {
       return translate(locale.total, { current, to, total });
     },
-    [translate]
+    [translate, locale.total]
   );
 
   const customComponents = useMemo<TableProps["components"]>(
