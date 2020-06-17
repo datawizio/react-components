@@ -22,6 +22,8 @@ export { default as TextArea } from "./components/TextArea";
 
 export { default as Checkbox } from "./components/Checkbox";
 
+export { default as AppLoader } from "./components/AppLoader";
+
 export { default as DatePicker } from "./components/DatePicker";
 
 export { default as PageHeader } from "./components/PageHeader";
@@ -39,6 +41,8 @@ export { default as TableSearch } from "./components/TableSearch";
 export { default as DrawerSelect } from "./components/DrawerSelect";
 
 export { default as CheckboxGroup } from "./components/CheckboxGroup";
+
+export { default as ErrorBoundary } from "./components/ErrorBoundary";
 
 export { default as ConfigProvider } from "./components/ConfigProvider";
 
