@@ -13,7 +13,7 @@ export interface DrawerFormProps {
   onSubmit: () => void;
 }
 
-export const DrawerForm: React.FC<DrawerFormProps> = ({
+const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   title,
   cancelText,
@@ -47,3 +47,5 @@ export const DrawerForm: React.FC<DrawerFormProps> = ({
     </Drawer>
   );
 };
+
+export default DrawerForm;
