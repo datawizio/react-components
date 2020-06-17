@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
-import { useTranslation } from "react-i18next";
+import ConfigContext from "../../../ConfigProvider/context";
 
 export interface PreviewProps {
   value: string;
@@ -10,15 +10,15 @@ export interface PreviewProps {
 }
 
 export const Preview: React.FC<PreviewProps> = ({ value, onDelete }) => {
-  const { t } = useTranslation();
+  const { translate } = useContext(ConfigContext);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     Modal.confirm({
-      title: t("DELETE_CONFIRM_PHOTO"),
+      title: translate("DELETE_CONFIRM_PHOTO"),
       icon: <ExclamationCircleOutlined />,
-      okText: t("YES"),
-      cancelText: t("CANCEL"),
+      okText: translate("YES"),
+      cancelText: translate("CANCEL"),
       onOk() {
         onDelete();
       },
