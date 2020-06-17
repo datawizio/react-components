@@ -1,0 +1,28 @@
+.field-image-upload-container.ant-upload.ant-upload-drag {
+  width: 150px;
+  height: 150px;
+  .ant-upload-btn {
+    padding: 0;
+  }
+  .ant-upload-list.ant-upload-list-picture-card {
+    .ant-upload-list-picture-card-container {
+      float: none;
+      margin: 0;
+      .ant-upload-list-item {
+        margin: 0;
+        width: 148px;
+        height: 148px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        overflow: hidden;
+        .ant-upload-list-item-info {
+          &::before {
+            top: 0;
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+}
