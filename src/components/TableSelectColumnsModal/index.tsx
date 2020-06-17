@@ -103,10 +103,10 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
           showCheckAll
           onCheck={onCheck}
           treeData={treeData}
+          checkedKeys={checkedKeys}
           onExpand={setExpandedKeys}
           expandedKeys={expandedKeys}
-          checkedKeys={checkedKeys}
-          checkAllKey={translate(locale.checkAll)}
+          checkAllTitle={translate(locale.checkAll)}
         />
       </Modal>
     </div>

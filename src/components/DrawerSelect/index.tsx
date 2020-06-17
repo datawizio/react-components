@@ -291,7 +291,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       selectedOptions.current.push(node);
       setSelected(node);
     },
-    [setSelected, searchValue]
+    [setSelected]
   );
 
   const handleDeselect = useCallback((_, node) => {

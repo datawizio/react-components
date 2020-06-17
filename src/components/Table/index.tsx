@@ -6,9 +6,10 @@ import { reducer, initializer } from "./reducer";
 import useColumns from "./hooks/useColumns";
 import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
-import { useMemo, useCallback, useReducer, useEffect } from "react";
+import { useMemo, useCallback, useReducer, useEffect, useContext } from "react";
 
 import { TableContext } from "./context";
+import ConfigContext from "../ConfigProvider/context";
 
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
@@ -32,6 +33,7 @@ const Table: FCTable = props => {
     style,
     width,
     height,
+    locale,
     children,
     components,
     dataProvider,
@@ -40,6 +42,8 @@ const Table: FCTable = props => {
     rowChildrenProvider,
     ...restProps
   } = props;
+
+  const { translate } = useContext(ConfigContext);
 
   const [baseState, dispatch] = useReducer(reducer, props, initializer);
 
@@ -93,6 +97,13 @@ const Table: FCTable = props => {
     [rowChildrenProvider]
   );
 
+  const totalRenderer = useCallback(
+    (total, [current, to]) => {
+      return translate(locale.total, { current, to, total });
+    },
+    [translate]
+  );
+
   const customComponents = useMemo<TableProps["components"]>(
     () => ({
       ...components,
@@ -111,16 +122,11 @@ const Table: FCTable = props => {
         "dw-table",
         {
           "dw-table--loading": state.loading,
-          "dw-table--empty": !state.columns.length || !state.dataSource.length
+          "dw-table--empty": !state.dataSource.length
         },
         props.className
       ),
-    [
-      state.loading,
-      props.className,
-      state.columns.length,
-      state.dataSource.length
-    ]
+    [state.loading, props.className, state.dataSource.length]
   );
 
   return (
@@ -128,12 +134,17 @@ const Table: FCTable = props => {
       <TableContext.Provider value={[state, dispatch, props, baseState]}>
         {children}
         <AntdTable
-          {...(restProps as any)}
+          {...restProps}
           {...state}
           className={className}
           onExpand={handleExpandRow}
           onChange={handleChangeTable}
           components={customComponents}
+          pagination={{
+            ...state.pagination,
+            ...props.pagination,
+            showTotal: totalRenderer
+          }}
         />
       </TableContext.Provider>
     </DndProvider>
@@ -152,6 +163,10 @@ Table.defaultProps = {
   width: "auto",
   height: "auto",
   tableLayout: "fixed",
+
+  locale: {
+    total: "TABLE_TOTAL"
+  },
 
   dTypesConfig: {},
   columnsConfig: {},

@@ -1,7 +1,12 @@
 import { Overwrite } from "utility-types";
 import { ColumnProps } from "antd/lib/table";
-import { Key, SortOrder, SorterResult } from "antd/lib/table/interface";
 import { TableProps as AntdTableProps } from "antd/lib/table";
+import {
+  Key,
+  SortOrder,
+  SorterResult,
+  TableLocale
+} from "antd/lib/table/interface";
 
 export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 
@@ -15,12 +20,16 @@ export type FCTable = {
 type _OverwrittenTableProps<RT> = {
   columns?: Array<IColumn<RT>>;
   dataSource?: DataSourceType;
+  locale?: {
+    total: string;
+  } & TableLocale;
 };
 
 export interface TableProps<RT = any>
   extends Overwrite<AntdTableProps<RT>, _OverwrittenTableProps<RT>> {
   width?: string | number;
   height?: string | number;
+
   searchValue?: string;
 
   async?: boolean;

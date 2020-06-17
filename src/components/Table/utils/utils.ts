@@ -1,4 +1,4 @@
-import { BodyCellType, IColumn } from "../types";
+import { BodyCellType, IColumn, TableState } from "../types";
 
 function defineCellType(cell: BodyCellType, column: IColumn): string {
   const dType =
@@ -6,7 +6,21 @@ function defineCellType(cell: BodyCellType, column: IColumn): string {
   return dType || typeof cell;
 }
 
-function swapColumns(columns, keyFrom, keyTo) {
+function filterByColumns(
+  columnsMap: TableState["columnsMap"],
+  obj: { [columnKey: string]: any }
+) {
+  return Object.keys(obj).reduce((acc, columnKey) => {
+    if (columnsMap[columnKey]) acc[columnKey] = obj[columnKey];
+    return acc;
+  }, {});
+}
+
+function swapColumns(
+  columns: Array<IColumn>,
+  keyFrom: IColumn["key"],
+  keyTo: IColumn["key"]
+) {
   columns.some((column, idxFrom) => {
     if (keyFrom === column.key) {
       const idxTo = columns.findIndex(column => column.key === keyTo);
@@ -25,4 +39,4 @@ function swapColumns(columns, keyFrom, keyTo) {
   });
 }
 
-export { defineCellType, swapColumns };
+export { defineCellType, swapColumns, filterByColumns };

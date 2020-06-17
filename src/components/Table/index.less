@@ -85,19 +85,25 @@
     width: max-content !important;
   }
 
-  &--empty {
-    table {
-      width: 100% !important;
-      height: 100% !important;
-    }
-  }
-
   td {
     position: relative;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  &--empty {
+    table {
+      width: 100% !important;
+      height: 100% !important;
+
+      td {
+        left: 50%;
+        border: none !important;
+        position: absolute !important;
+      }
+    }
   }
 
   .ant-table {
