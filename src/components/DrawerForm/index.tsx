@@ -6,9 +6,9 @@ import Button from "../Button";
 export interface DrawerFormProps {
   title: string;
   visible: boolean;
-  cancelText: string;
-  submitText: string;
-  actions: React.ReactElement;
+  cancelText?: string;
+  submitText?: string;
+  actions?: React.ReactElement;
   onClose: () => void;
   onSubmit: () => void;
 }
