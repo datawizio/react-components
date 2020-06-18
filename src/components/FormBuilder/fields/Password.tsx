@@ -5,7 +5,7 @@ import Input from "../../Input";
 
 import { FieldTextProps } from "../types";
 
-export const FieldText: React.FC<FieldTextProps> = React.memo(
+export const FieldPassword: React.FC<FieldTextProps> = React.memo(
   ({ label, rules, name, placeholder, onChange }) => {
     const handleFieldChange = useCallback(
       () => ({
