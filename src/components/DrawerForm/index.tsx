@@ -1,13 +1,12 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 
 import Drawer from "../Drawer";
 import Button from "../Button";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerFormProps {
   title: string;
   visible: boolean;
-  cancelText?: string;
-  submitText?: string;
   actions?: React.ReactElement;
   onClose: () => void;
   onSubmit: () => void;
@@ -16,25 +15,25 @@ export interface DrawerFormProps {
 const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   title,
-  cancelText,
-  submitText,
   visible,
   children,
   onClose,
   onSubmit
 }) => {
+  const { translate } = useContext(ConfigContext);
+
   const internalActions = useMemo(() => {
     return actions ? (
       actions
     ) : (
       <>
-        <Button onClick={onClose}>{cancelText}</Button>
+        <Button onClick={onClose}>{translate("CLOSE")}</Button>
         <Button onClick={onSubmit} type="primary">
-          {submitText}
+          {translate("SUBMIT")}
         </Button>
       </>
     );
-  }, [actions, cancelText, submitText]);
+  }, [actions]);
   return (
     <Drawer
       title={title}
