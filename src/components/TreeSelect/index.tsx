@@ -57,9 +57,6 @@ const TreeSelect: FCTreeSelect = props => {
       {...restProps}
       treeData={treeData}
       treeDefaultExpandedKeys={treeExpandedKeys}
-      onSearch={(...args) => {
-        console.log(args);
-      }}
     />
   );
 };

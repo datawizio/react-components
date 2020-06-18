@@ -20,7 +20,6 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
 }) => {
   const { translate } = useContext(ConfigContext);
   const handleFieldChange = (value: any, selected: any) => {
-    console.log(value);
     onChange({
       name,
       value,
