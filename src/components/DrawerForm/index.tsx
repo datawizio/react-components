@@ -33,7 +33,8 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
         </Button>
       </>
     );
-  }, [actions]);
+    //eslint-disable-next-line
+  }, [actions, translate]);
   return (
     <Drawer
       title={title}

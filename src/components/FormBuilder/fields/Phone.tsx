@@ -32,7 +32,7 @@ export const FieldPhone: React.FC<FieldPhoneProps> = ({
       translate("PHONE_NUMBER_VALIDATION_MESSAGE")
     );
     return rules ? rules.concat([validation]) : [validation];
-  }, [rules]);
+  }, [rules, translate]);
 
   const handleChange = (value: string) => {
     onChange({ name, value });
