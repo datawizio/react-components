@@ -30,11 +30,13 @@ export { default as PageHeader } from "./components/PageHeader";
 
 export { default as PhoneInput } from "./components/PhoneInput";
 
+export { default as DrawerForm } from "./components/DrawerForm";
+
 export { default as TreeSearch } from "./components/TreeSearch";
 
 export { default as TreeSelect } from "./components/TreeSelect";
 
-export { default as DrawerForm } from "./components/DrawerForm";
+export { default as UserAvatar } from "./components/UserAvatar";
 
 export { default as SearchInput } from "./components/SearchInput";
 
