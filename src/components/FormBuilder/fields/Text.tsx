@@ -8,9 +8,7 @@ import { FieldTextProps } from "../types";
 export const FieldText: React.FC<FieldTextProps> = React.memo(
   ({ label, rules, name, placeholder, onChange }) => {
     const handleFieldChange = useCallback(
-      () => ({
-        target: { name, value }
-      }: React.ChangeEvent<HTMLInputElement>) => {
+      ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
         onChange({
           name,
           value

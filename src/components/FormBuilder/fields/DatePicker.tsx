@@ -2,7 +2,7 @@ import React from "react";
 import { Dayjs } from "dayjs";
 
 import { Form } from "antd";
-import { DatePicker } from "antd";
+import DatePicker from "../../DatePicker";
 
 import { FieldDatePickerProps } from "../types";
 

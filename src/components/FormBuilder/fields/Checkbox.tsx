@@ -4,19 +4,18 @@ import { Form } from "antd";
 import Checkbox from "../../Checkbox";
 
 import { FieldCheckboxProps } from "../types";
+import { CheckboxChangeEvent } from "antd/es/checkbox/Checkbox";
 
 export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
   ({ label, rules, name, placeholder, onChange }) => {
     const handleFieldChange = useCallback(
-      () => ({
-        target: { name, checked }
-      }: React.ChangeEvent<HTMLInputElement>) => {
+      ({ target: { checked } }: CheckboxChangeEvent) => {
         onChange({
           name,
           value: checked
         });
       },
-      [onChange]
+      [onChange, name]
     );
 
     return (
