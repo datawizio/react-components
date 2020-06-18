@@ -35,6 +35,7 @@ export const Image: React.FC<ImageProps> = ({
       if (reader.result) onChange({ name, value: reader.result });
     };
     return "";
+    // return Promise.reject();
   };
 
   const handleDelete = () => {
@@ -62,6 +63,7 @@ export const Image: React.FC<ImageProps> = ({
         listType="picture-card"
         showUploadList={false}
         className="field-image-upload-container"
+        customRequest={() => {}}
       >
         {uploadButton}
       </Upload.Dragger>
