@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Avatar } from "antd";
 
 export interface UserAvatarProps {
-  src?: string;
+  src?: string | null;
   name?: string;
 }
 
@@ -17,7 +17,7 @@ const UserAvatar: React.FC<UserAvatarProps> = ({ src, name }) => {
   );
 
   return (
-    <Avatar src={src} size={64}>
+    <Avatar src={src ? src : undefined} size={64}>
       {abbr}
     </Avatar>
   );
