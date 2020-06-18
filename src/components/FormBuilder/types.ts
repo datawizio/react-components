@@ -9,11 +9,11 @@ export interface IFormFieldChanged<Type> {
 
 export interface FormFieldProps<Type> {
   name: string;
-  placeholder: string;
-  label: string;
+  placeholder?: string;
+  label?: string;
   rules?: Rule[];
   initialValue?: any;
-  onChange: (change: IFormFieldChanged<Type>) => void;
+  onChange?: (change: IFormFieldChanged<Type>) => void;
 }
 
 export interface FieldIntervalProps extends FormFieldProps<IntervalType> {}
@@ -40,6 +40,8 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
 }
 
 export interface FieldTextProps extends FormFieldProps<string> {}
+
+export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
 
 export interface FieldPhoneProps extends FormFieldProps<string> {}
 
