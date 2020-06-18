@@ -3,24 +3,29 @@ import React, { useCallback } from "react";
 import { Form } from "antd";
 import Checkbox from "../../Checkbox";
 
-import { FieldTextProps } from "../types";
+import { FieldCheckboxProps } from "../types";
 
-export const FieldCheckbox: React.FC<FieldTextProps> = React.memo(
+export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
   ({ label, rules, name, placeholder, onChange }) => {
     const handleFieldChange = useCallback(
       () => ({
-        target: { name, value }
+        target: { name, checked }
       }: React.ChangeEvent<HTMLInputElement>) => {
         onChange({
           name,
-          value
+          value: checked
         });
       },
       [onChange]
     );
 
     return (
-      <Form.Item name={name} label={label} rules={rules}>
+      <Form.Item
+        name={name}
+        label={label}
+        rules={rules}
+        valuePropName="checked"
+      >
         <Checkbox name={name} onChange={handleFieldChange}>
           {placeholder}
         </Checkbox>
