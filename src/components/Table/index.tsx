@@ -76,12 +76,11 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "loading", payload: false });
     }
     // eslint-disable-next-line
-  }, [dataProvider]);
+  }, [dataProvider].concat(dataProviderDeps && dataProviderDeps(state)));
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line
-  }, [fetchData].concat(dataProviderDeps && dataProviderDeps(state)));
+  }, [fetchData]);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
