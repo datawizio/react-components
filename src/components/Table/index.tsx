@@ -6,11 +6,20 @@ import { reducer, initializer } from "./reducer";
 import useColumns from "./hooks/useColumns";
 import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
-import { useMemo, useCallback, useReducer, useEffect, useContext } from "react";
+
+import {
+  useMemo,
+  useEffect,
+  useReducer,
+  useContext,
+  useCallback,
+  useImperativeHandle
+} from "react";
 
 import { TableContext } from "./context";
 import ConfigContext from "../ConfigProvider/context";
 
+import Loader from "../Loader";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
@@ -24,11 +33,11 @@ import {
   basicSearchHandler
 } from "./utils/handlers";
 
-import { TableProps, FCTable } from "./types";
+import { TableProps, FCTable, TableRef } from "./types";
 
 import "./index.less";
 
-const Table: FCTable = props => {
+const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
     style,
     width,
@@ -54,20 +63,25 @@ const Table: FCTable = props => {
   const state = {
     ...baseState,
     ...dataSourceState,
-    ...columnsState
+    ...columnsState,
+    loading: false
   };
 
   usePropsToState(dispatch, props);
 
-  useEffect(() => {
-    if (!dataProvider) return;
-    (async () => {
+  const fetchData = useCallback(async () => {
+    if (dataProvider) {
       dispatch({ type: "loading", payload: true });
       dispatch({ type: "update", payload: await dataProvider(state) });
       dispatch({ type: "loading", payload: false });
-    })();
+    }
     // eslint-disable-next-line
-  }, [dataProvider].concat(dataProviderDeps && dataProviderDeps(state)));
+  }, [dataProvider]);
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line
+  }, [fetchData].concat(dataProviderDeps && dataProviderDeps(state)));
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -107,11 +121,11 @@ const Table: FCTable = props => {
   const customComponents = useMemo<TableProps["components"]>(
     () => ({
       ...components,
+      table: props => <TableWrapper {...props} style={{ height, width }} />,
       header: {
         cell: props =>
           Boolean(props.model) ? <Column {...props} /> : <th {...props} />
-      },
-      table: props => <TableWrapper {...props} style={{ height, width }} />
+      }
     }),
     [height, width, components]
   );
@@ -121,35 +135,43 @@ const Table: FCTable = props => {
       clsx(
         "dw-table",
         {
-          "dw-table--loading": state.loading,
+          "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length
         },
         props.className
       ),
-    [state.loading, props.className, state.dataSource.length]
+    [baseState.loading, props.className, state.dataSource.length]
   );
+
+  useImperativeHandle(ref, () => ({
+    reload() {
+      fetchData();
+    }
+  }));
 
   return (
     <DndProvider backend={HTML5Backend}>
       <TableContext.Provider value={[state, dispatch, props, baseState]}>
-        {children}
-        <AntdTable
-          {...restProps}
-          {...state}
-          className={className}
-          onExpand={handleExpandRow}
-          onChange={handleChangeTable}
-          components={customComponents}
-          pagination={{
-            ...state.pagination,
-            ...props.pagination,
-            showTotal: totalRenderer
-          }}
-        />
+        <Loader loading={Boolean(baseState.loading)}>
+          {children}
+          <AntdTable
+            {...restProps}
+            {...state}
+            className={className}
+            onExpand={handleExpandRow}
+            onChange={handleChangeTable}
+            components={customComponents}
+            pagination={{
+              ...state.pagination,
+              ...props.pagination,
+              showTotal: totalRenderer
+            }}
+          />
+        </Loader>
       </TableContext.Provider>
     </DndProvider>
   );
-};
+}) as FCTable;
 
 Table.defaultProps = {
   bordered: true,

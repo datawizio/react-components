@@ -1,22 +1,15 @@
 import React, { useMemo } from "react";
-import BodyCell from "../components/BodyCell";
-import { defineCellType } from "../utils/utils";
+import CellData from "../components/CellData";
 import { IColumn, TableProps, TableState } from "../types";
 
 function useColumns(state: TableState, props: TableProps): Partial<TableState> {
-  const {
-    sortable,
-    columnsConfig,
-    cellRenderProps,
-    isResizableColumns
-  } = props;
-
-  const { columns, visibleColumnsKeys, dTypesConfig } = state;
+  const { columns, visibleColumnsKeys } = state;
+  const { sortable, columnsConfig, isResizableColumns } = props;
 
   return useMemo(() => {
     function initColumns(columns: Array<IColumn>, level = 1) {
       return columns
-        .reduce((acc, column) => {
+        .reduce((acc, column, idx) => {
           const nextColumn: IColumn = {
             ...column,
             ...(columnsConfig[column.key] || {})
@@ -41,13 +34,14 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
           if (!nextColumn.hasOwnProperty("render")) {
             nextColumn.render = (value, record, index) => {
               return (
-                <BodyCell
+                <CellData
                   row={record}
                   value={value}
-                  index={index}
+                  xIndex={index}
+                  columnLevel={level}
                   column={nextColumn}
-                  renderProps={cellRenderProps}
-                  typeConfig={dTypesConfig[defineCellType(value, nextColumn)]}
+                  // TODO
+                  yIndex={nextColumn.fixed === "left" ? 0 : idx + 1}
                 />
               );
             };
@@ -71,9 +65,7 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
   }, [
     columns,
     sortable,
-    dTypesConfig,
     columnsConfig,
-    cellRenderProps,
     isResizableColumns,
     visibleColumnsKeys
   ]);
