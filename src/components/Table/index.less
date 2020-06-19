@@ -3,6 +3,7 @@
 @import "~antd/es/pagination/style/index";
 
 @import "../Select/index";
+@import "../Loader/index";
 @import "../../styles/variables";
 
 .dw-table {
@@ -14,11 +15,6 @@
     padding: 0 5px;
     display: flow-root;
     position: relative;
-
-    &--loading {
-      pointer-events: none;
-      opacity: 0.4;
-    }
 
     .table-toolbar--left {
       float: left;
@@ -86,6 +82,15 @@
   }
 
   td {
+    .row-prefix {
+      float: left;
+      margin-right: 8px;
+    }
+
+    .ant-table-row-expand-icon {
+      float: none;
+    }
+
     position: relative;
 
     overflow: hidden;
@@ -93,10 +98,22 @@
     text-overflow: ellipsis;
   }
 
+  &--loading {
+    table {
+      .ant-empty {
+        display: none;
+      }
+    }
+  }
+
   &--empty {
     table {
       width: 100% !important;
       height: 100% !important;
+
+      thead {
+        display: none;
+      }
 
       td {
         left: 50%;

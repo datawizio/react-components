@@ -12,7 +12,7 @@ export type SetStateType<T> = React.Dispatch<React.SetStateAction<T>>;
 
 export type FCTable = {
   ToolBar: React.FC;
-} & import("react").FC<TableProps>;
+} & React.ForwardRefExoticComponent<TableProps & React.RefAttributes<TableRef>>;
 
 /**
  * Table types
@@ -39,7 +39,6 @@ export interface TableProps<RT = any>
   isResizableColumns?: boolean;
 
   pageSizeOptions?: Array<string>;
-
   visibleColumnsKeys?: Array<IColumn["key"]>;
 
   cellRenderProps?: { [key: string]: any };
@@ -51,6 +50,8 @@ export interface TableProps<RT = any>
   columnsConfig?: {
     [columnKey: string]: Partial<IColumn>;
   };
+
+  rowPrefix?: RowPrefix;
 
   sortHandler?: SorterHandlerType;
   globalHandler?: GlobalHandlerType;
@@ -66,6 +67,10 @@ export interface TableState extends Partial<TableProps> {
   sortParams: SortParams;
   filterParams: FilterParams;
   columnsMap: { [key: string]: IColumn };
+}
+
+export interface TableRef {
+  reload: () => void;
 }
 
 export type Action =
@@ -109,6 +114,13 @@ export type IRow = {
   [key: string]: BodyCellType;
 } & { key: string; children: DataSourceType | undefined };
 
+export type RowPrefix<T = any> = (
+  cellVal: T,
+  row: IRow,
+  column: IColumn,
+  index: number
+) => React.ReactNode;
+
 /**
  * Cell types
  */
@@ -134,7 +146,7 @@ export type DTypeConfig<T = any> = {
     column: IColumn,
     index: number,
     renderProps: TableProps["cellRenderProps"]
-  ) => import("react").ReactNode;
+  ) => React.ReactNode;
 };
 
 /**
