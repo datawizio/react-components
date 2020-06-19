@@ -44,7 +44,7 @@ export interface FieldTextProps extends FormFieldProps<string> {}
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
 
 export type RadioOptionType = {
-  value: string | boolean | number;
+  value: any;
   label: string;
 };
 
