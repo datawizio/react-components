@@ -6,7 +6,7 @@ import Radio from "../../Radio";
 import { FieldRadioProps } from "../types";
 import { RadioChangeEvent } from "antd/lib/radio";
 
-export const FieldText: React.FC<FieldRadioProps> = React.memo(
+export const FieldRadio: React.FC<FieldRadioProps> = React.memo(
   ({ label, rules, name, options, onChange }) => {
     const handleFieldChange = useCallback(
       ({ target: { value } }: RadioChangeEvent) => {
