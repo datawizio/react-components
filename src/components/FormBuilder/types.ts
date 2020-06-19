@@ -43,6 +43,15 @@ export interface FieldTextProps extends FormFieldProps<string> {}
 
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
 
+export type RadioOptionType = {
+  key: string;
+  value: string;
+};
+
+export interface FieldRadioProps extends FormFieldProps<string> {
+  options: RadioOptionType[];
+}
+
 export interface FieldPhoneProps extends FormFieldProps<string> {}
 
 export interface FieldDrawerSelectProps
