@@ -24,15 +24,21 @@ export { default as Checkbox } from "./components/Checkbox";
 
 export { default as HighChart } from "./components/HighChart";
 
+export { default as AppLoader } from "./components/AppLoader";
+
 export { default as DatePicker } from "./components/DatePicker";
 
 export { default as PageHeader } from "./components/PageHeader";
 
 export { default as PhoneInput } from "./components/PhoneInput";
 
+export { default as DrawerForm } from "./components/DrawerForm";
+
 export { default as TreeSearch } from "./components/TreeSearch";
 
 export { default as TreeSelect } from "./components/TreeSelect";
+
+export { default as UserAvatar } from "./components/UserAvatar";
 
 export { default as SearchInput } from "./components/SearchInput";
 
@@ -41,6 +47,8 @@ export { default as TableSearch } from "./components/TableSearch";
 export { default as DrawerSelect } from "./components/DrawerSelect";
 
 export { default as CheckboxGroup } from "./components/CheckboxGroup";
+
+export { default as ErrorBoundary } from "./components/ErrorBoundary";
 
 export { default as ConfigProvider } from "./components/ConfigProvider";
 

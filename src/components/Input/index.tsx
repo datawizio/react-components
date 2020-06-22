@@ -9,6 +9,7 @@ export interface InputProps extends AntInputProps {}
 
 export interface FCInput extends React.FC<InputProps> {
   Group: React.StatelessComponent<GroupProps>;
+  Password: typeof AntInput.Password;
 }
 
 //@ts-ignore
@@ -17,5 +18,6 @@ const Input: FCInput = React.forwardRef((props, ref: LegacyRef<AntInput>) => {
 });
 
 Input.Group = AntInput.Group;
+Input.Password = AntInput.Password;
 
 export default Input;
