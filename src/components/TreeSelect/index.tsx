@@ -14,6 +14,7 @@ export interface TreeSelectProps<VT> extends AntTreeSelectProps<VT> {
   /**
    * Показать/не показывать чекбокс `Check all`
    */
+
   showCheckAll?: boolean;
 
   /**
