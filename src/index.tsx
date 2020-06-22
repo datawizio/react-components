@@ -22,6 +22,8 @@ export { default as TextArea } from "./components/TextArea";
 
 export { default as Checkbox } from "./components/Checkbox";
 
+export { default as HighChart } from "./components/HighChart";
+
 export { default as AppLoader } from "./components/AppLoader";
 
 export { default as DatePicker } from "./components/DatePicker";
