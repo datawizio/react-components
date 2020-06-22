@@ -41,7 +41,7 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
 
   return (
     <>
-      <span className="row-prefix">{rowPrefixRender}</span>
+      {rowPrefixRender && <span className="row-prefix">{rowPrefixRender}</span>}
       {cellDataRender}
     </>
   );
