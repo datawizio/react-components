@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import metadata from "libphonenumber-js/metadata.min.json";
-
 import countries from "./helpers/countries";
 
 import {
@@ -52,7 +50,6 @@ const PhoneInput: FCPhoneInput = ({
       "",
       country,
       country,
-      metadata,
       international
     );
     if (!formated && val) formated = val;
@@ -72,14 +69,12 @@ const PhoneInput: FCPhoneInput = ({
       defaultCountry,
       null,
       addInternationalOption,
-      true,
-      metadata
+      true
     );
     const { value, formated } = formatNumber(
       input,
       country,
       defaultCountry,
-      metadata,
       international
     );
 
@@ -95,7 +90,6 @@ const PhoneInput: FCPhoneInput = ({
       value,
       selectedCountry,
       defaultCountry,
-      metadata,
       international
     );
     if (!formated && val) formated = val;
@@ -145,7 +139,6 @@ PhoneInput.defaultProps = {
   defaultCountry: "UA"
 };
 
-PhoneInput.isValidPhoneNumber = (value: string) =>
-  isValidPhoneNumber(value, metadata);
+PhoneInput.isValidPhoneNumber = (value: string) => isValidPhoneNumber(value);
 
 export default PhoneInput;
