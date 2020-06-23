@@ -12,10 +12,11 @@ const ListItemField: React.FC<ListItemFieldProps> = ({
 }) => {
   return (
     <List.Item onClick={onClick} className="list-item-field">
-      <List.Item.Meta title={title} description={description} />
-      <div>
-        {value} <RightOutlined />
+      <div className="list-item-field-container">
+        <List.Item.Meta title={title} description={description} />
+        <div className="value-container">{value}</div>
       </div>
+      <RightOutlined />
     </List.Item>
   );
 };

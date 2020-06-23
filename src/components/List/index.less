@@ -7,19 +7,37 @@
     padding-right: @padding-xss;
     cursor: pointer;
     border-bottom-color: #ccc;
+    flex-direction: row;
+    align-items: center;
     &:hover {
       background-color: @table-row-hover-bg;
     }
-    .ant-list-item-meta-title {
-      margin-bottom: 0;
-    }
-    .ant-list-item-meta-description {
-      line-height: 1.3;
+    .list-item-field-container {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      align-items: center;
+      padding-right: @padding-xss;
+      .ant-list-item-meta-title {
+        margin-bottom: 0;
+      }
+      .ant-list-item-meta-description {
+        line-height: 1.3;
+      }
+
+      @media (max-width: @screen-xs-max) {
+        flex-direction: column;
+        align-items: flex-start;
+        .value-container {
+          padding-top: @padding-xs;
+        }
+      }
     }
   }
 
   &.list-item-header {
     font-size: 20px;
     border-bottom-color: #ccc;
+    line-height: 1.3;
   }
 }
