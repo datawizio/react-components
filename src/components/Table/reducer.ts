@@ -69,6 +69,7 @@ export function reducer(state: TableState, action: Action): TableState {
 
       const nextVisibleColumnsKeys =
         state.visibleColumnsKeys &&
+        state.visibleColumnsKeys.length &&
         state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
 
       return {
