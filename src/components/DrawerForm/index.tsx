@@ -1,34 +1,72 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useContext, useEffect } from "react";
 
+import { Form } from "antd";
 import Drawer from "../Drawer";
 import Button from "../Button";
+import Loader from "../Loader";
+
 import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerFormProps {
   title: string;
   visible: boolean;
   actions?: React.ReactElement;
-  onClose: () => void;
-  onSubmit: () => void;
+  formStore?: any;
+  form?: any;
+  loading?: boolean;
+  onClose?: () => void;
+  onSubmit?: () => void;
 }
+
+const noop = () => {};
 
 const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   title,
   visible,
   children,
+  form,
+  formStore,
+  loading,
   onClose,
   onSubmit
 }) => {
   const { translate } = useContext(ConfigContext);
+
+  const unwatchForm = useMemo(
+    () =>
+      formStore && formStore.watch
+        ? formStore.watch(state => {
+            form.setFieldsValue(state);
+          })
+        : noop,
+    [form]
+  );
+
+  useEffect(() => {
+    return () => {
+      unwatchForm();
+    };
+  }, [unwatchForm]);
+
+  const handleFormClose = () => {
+    onClose && onClose();
+  };
+
+  const handleFormSubmit = async () => {
+    try {
+      form && (await form.validateFields());
+      onSubmit && onSubmit();
+    } catch (e) {}
+  };
 
   const internalActions = useMemo(() => {
     return actions ? (
       actions
     ) : (
       <>
-        <Button onClick={onClose}>{translate("CLOSE")}</Button>
-        <Button onClick={onSubmit} type="primary">
+        <Button onClick={handleFormClose}>{translate("CLOSE")}</Button>
+        <Button onClick={handleFormSubmit} type="primary">
           {translate("SUBMIT")}
         </Button>
       </>
@@ -39,11 +77,13 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
     <Drawer
       title={title}
       width={500}
-      onClose={onClose}
+      onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
     >
-      {children}
+      <Form layout="vertical" colon={false} form={form}>
+        <Loader loading={loading}>{children}</Loader>
+      </Form>
     </Drawer>
   );
 };
