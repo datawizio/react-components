@@ -81,7 +81,12 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       visible={visible}
       actions={internalActions}
     >
-      <Form layout="vertical" colon={false} form={form}>
+      <Form
+        layout="vertical"
+        colon={false}
+        form={form}
+        onFinish={handleFormSubmit}
+      >
         <Loader loading={loading}>{children}</Loader>
       </Form>
     </Drawer>
