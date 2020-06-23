@@ -1,0 +1,33 @@
+@import "../Button/index.less";
+
+@padding: 15px;
+@iconMargin: 13px;
+@sideMargin: @iconMargin * 2 + @padding;
+
+.side-button {
+  position: fixed !important;
+
+  &:hover {
+    transform: translateX(0);
+  }
+}
+
+.side-button--right {
+  right: 0;
+  padding: 0 @padding 0 0 !important;
+  transform: translateX(calc(100% - @sideMargin));
+
+  .side-button__icon {
+    margin: 0 @iconMargin;
+  }
+}
+
+.side-button--left {
+  left: 0;
+  padding: 0 0 0 @padding !important;
+  transform: translateX(calc(-1 * (100% - @sideMargin)));
+
+  .side-button__icon {
+    margin: 0 @iconMargin;
+  }
+}

@@ -26,6 +26,8 @@ export { default as HighChart } from "./components/HighChart";
 
 export { default as AppLoader } from "./components/AppLoader";
 
+export { default as SideButton } from "./components/SideButton";
+
 export { default as DatePicker } from "./components/DatePicker";
 
 export { default as PageHeader } from "./components/PageHeader";
