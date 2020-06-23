@@ -76,7 +76,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   return (
     <Drawer
       title={title}
-      width={500}
+      width={window.innerWidth < 500 ? window.innerWidth : 500}
       onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
