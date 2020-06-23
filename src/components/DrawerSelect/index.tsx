@@ -392,7 +392,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           title={drawerTitle ? drawerTitle : restProps.placeholder}
           onClose={handleDrawerCancel}
           visible={drawerVisible}
-          width={drawerWidth}
+          width={
+            window.innerWidth < drawerWidth ? window.innerWidth : drawerWidth
+          }
           actions={
             <>
               <Button onClick={handleDrawerCancel}>{cancelText}</Button>

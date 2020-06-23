@@ -515,7 +515,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           title={drawerTitle ? drawerTitle : placeholder}
           onClose={handlerDrawerCancel}
           visible={drawerVisible}
-          width={drawerWidth}
+          width={
+            window.innerWidth < drawerWidth ? window.innerWidth : drawerWidth
+          }
           actions={
             <>
               <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
