@@ -65,7 +65,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       actions
     ) : (
       <>
-        <Button onClick={handleFormClose}>{translate("CLOSE")}</Button>
+        <Button onClick={handleFormClose}>{translate("CANCEL")}</Button>
         <Button onClick={handleFormSubmit} type="primary">
           {translate("SUBMIT")}
         </Button>
