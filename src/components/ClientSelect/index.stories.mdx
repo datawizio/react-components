@@ -1,0 +1,26 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import ClientSelect from "./index";
+
+<Meta title="Components/Select/ClientSelect" component={ClientSelect} />
+
+# ClientSelect
+
+Компонент
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <ClientSelect
+      clients={[
+        { name: "Ololo", id: 1 },
+        { name: "Ololo2", id: 2 }
+      ]}
+      client={1}
+    />
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={ClientSelect} />
