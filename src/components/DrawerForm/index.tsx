@@ -86,6 +86,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
         colon={false}
         form={form}
         onFinish={handleFormSubmit}
+        className="entity-form"
       >
         <Loader loading={loading}>{children}</Loader>
       </Form>
