@@ -40,10 +40,10 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
   }, [rowPrefix, value, xIndex, column, row, columnLevel, yIndex]);
 
   return (
-    <>
+    <div className="dw-table__cell">
       {rowPrefixRender && <span className="row-prefix">{rowPrefixRender}</span>}
       {cellDataRender}
-    </>
+    </div>
   );
 });
 
