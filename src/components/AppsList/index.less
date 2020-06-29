@@ -1,8 +1,18 @@
 @import "~antd/es/card/style/index";
+@import "~antd/es/grid/style/index";
 @import "../Select/index.less";
 @import "../Button/index.less";
 @import "../../styles/variables";
 
+.row-apps {
+  margin: -8px -8px 8px;
+  & > .ant-col {
+    padding: 8px;
+  }
+  .no-apps {
+    padding: 8px;
+  }
+}
 .card-app {
   height: 100%;
   display: flex;
