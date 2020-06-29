@@ -18,7 +18,7 @@ export { default as Loader } from "./components/Loader";
 
 export { default as Select } from "./components/Select";
 
-export { default as CardApp } from "./components/CardApp";
+export { default as AppsList } from "./components/AppsList";
 
 export { default as TextArea } from "./components/TextArea";
 
