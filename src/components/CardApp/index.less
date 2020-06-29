@@ -1,0 +1,39 @@
+@import "~antd/es/card/style/index";
+@import "../Select/index.less";
+@import "../Button/index.less";
+@import "../../styles/variables";
+
+.card-app {
+  height: 100%;
+  display: flex;
+  .ant-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  &-logo {
+    text-align: center;
+    height: 50px;
+    img {
+      height: 50px;
+    }
+    @media (max-width: @screen-xs-max) {
+      height: auto;
+      img {
+        height: auto;
+        max-width: 150px;
+      }
+    }
+  }
+  &-description {
+    flex: 1;
+    text-align: center;
+    padding: @padding-md 0;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+  }
+  &-clients {
+    padding-bottom: @padding-md;
+  }
+}
