@@ -16,11 +16,15 @@ export interface CardAppProps {
   description: string;
   allowed?: boolean;
   clients?: { id: number; name: string }[];
-  onButtonClick?: (clientId: number, { url: string, allowed: boolean }) => void;
+  onButtonClick?: (
+    clientId: number,
+    { appId: number, url: string, allowed: boolean }
+  ) => void;
   buttonText?: string;
 }
 
 export const App: React.FC<CardAppProps> = ({
+  app_id,
   title,
   logo,
   description,
@@ -44,7 +48,7 @@ export const App: React.FC<CardAppProps> = ({
   };
 
   const handleButtonClick = () => {
-    onButtonClick(getClient(client), { url, allowed });
+    onButtonClick(getClient(client), { appId: app_id, url, allowed });
   };
 
   return (

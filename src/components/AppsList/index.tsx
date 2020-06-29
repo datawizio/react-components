@@ -19,15 +19,15 @@ export interface IApp {
 export interface AppsListProps {
   apps: IApp[];
   loading?: boolean;
-  onSelect?: (clientId: number, url: string) => void;
+  onSelect?: (clientId: number, url: string, appId: number) => void;
 }
 
 const AppsList = ({ apps, loading, onSelect }) => {
   const { translate } = useContext(ConfigContext);
 
   const handleButtonClick = React.useCallback(
-    (clientId: number, url: string) => {
-      onSelect(clientId, url);
+    (clientId: number, url: string, appId: number) => {
+      onSelect(clientId, url, appId);
     },
     [onSelect]
   );
