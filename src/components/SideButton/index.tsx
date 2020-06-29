@@ -16,8 +16,6 @@ export interface SideButtonProps extends ButtonProps {
 const SideButton: React.FC<SideButtonProps> = props => {
   const { icon, text, side, renderTo, ...restProps } = props;
 
-  console.log(renderTo);
-
   return createPortal(
     <Button {...restProps} className={"side-button side-button--" + side}>
       {side === "right" && (
