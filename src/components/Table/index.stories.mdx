@@ -8,6 +8,7 @@ import TableSearch from "../TableSearch";
 import TableXlsxExporter from "../TableXlsxExporter";
 import TableTransposeButton from "../TableTransposeButton";
 import TableSelectColumnsModal from "../TableSelectColumnsModal";
+import { exportTableToXLSX } from "../TableXlsxExporter/exporters";
 
 import Table from "./";
 import { TableWithProps } from "./story/helper";
@@ -69,7 +70,7 @@ import { useState, useMemo, useCallback } from "react";
             {toolBar && (
               <Table.ToolBar>
                 <TableSearch />
-                <TableXlsxExporter />
+                <TableXlsxExporter exportHandler={exportTableToXLSX} />
                 <TableSelectColumnsModal />
               </Table.ToolBar>
             )}

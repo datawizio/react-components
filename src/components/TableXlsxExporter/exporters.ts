@@ -1,4 +1,3 @@
-import { saveAs } from "file-saver";
 import { TableState } from "../Table/types";
 import ExcelJS from "exceljs/dist/exceljs.min.js";
 import { defineCellType } from "../Table/utils/utils";
@@ -60,13 +59,12 @@ function fillBackgroundCell(cell, color) {
 }
 
 export async function exportTableToXLSX(
-  columns: TableState["columns"],
-  dataSource: TableState["dataSource"],
-  columnsMap: TableState["columnsMap"],
-  dTypesConfig: TableState["dTypesConfig"],
+  tableState: TableState,
   filename: string,
   sheetName?: string
-) {
+): Promise<BlobPart> {
+  const { columns, columnsMap, dataSource, dTypesConfig } = tableState;
+
   const wb = new ExcelJS.Workbook(); // make a workbook
   const ws = wb.addWorksheet(sheetName || filename); // make a worksheet
   const columnsMaxLevel = getDeepMaxLevel(columns);
@@ -144,5 +142,5 @@ export async function exportTableToXLSX(
     });
   })(dataSource);
 
-  saveAs(new Blob([await wb.xlsx.writeBuffer()]), filename + ".xlsx");
+  return await wb.xlsx.writeBuffer();
 }
