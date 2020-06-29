@@ -6,6 +6,8 @@ import Button from "../Button";
 
 import ConfigContext from "../ConfigProvider/context";
 
+import "./index.less";
+
 export interface CardAppProps {
   title: string;
   logo: string;
