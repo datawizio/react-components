@@ -15,7 +15,7 @@ export const FieldRadio: React.FC<FieldRadioProps> = React.memo(
           value
         });
       },
-      [onChange]
+      [name, onChange]
     );
 
     return (

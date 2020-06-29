@@ -40,6 +40,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
             form.setFieldsValue(state);
           })
         : noop,
+    //eslint-disable-next-line
     [form]
   );
 
