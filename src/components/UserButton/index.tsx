@@ -11,14 +11,20 @@ export interface UserButtonProps {
   photo: string;
   fullName: string;
   menu: React.ReactElement;
+  showFullName?: boolean;
 }
 
-const UserButton: React.FC<UserButtonProps> = ({ photo, fullName, menu }) => {
+const UserButton: React.FC<UserButtonProps> = ({
+  photo,
+  fullName,
+  menu,
+  showFullName
+}) => {
   return (
     <Dropdown overlay={menu}>
       <Button border={false} className="user-name">
         <UserAvatar src={photo} name={fullName} />
-        {fullName}
+        {showFullName ? fullName : null}
         <DownOutlined />
       </Button>
     </Dropdown>
