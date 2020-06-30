@@ -1,7 +1,8 @@
-import { Moment } from "moment";
+import { Dayjs } from "dayjs";
+import DatePicker from "../DatePicker";
 
-export type DateType = string | Moment;
-export type DateRange = [Moment, Moment];
+export type DateType = string | Dayjs;
+export type DateRange = [Dayjs, Dayjs];
 
 export type DateRangePickerProps = {
   dateFrom?: DateType;
@@ -9,12 +10,16 @@ export type DateRangePickerProps = {
 
   maxDate?: DateType;
   minDate?: DateType;
+  format?: string;
+
+  inputReadOnly?: boolean;
+  onChange?: (a: any, b: any) => void;
 
   /**
    * Клик по крестику
    */
   onClear?: () => void;
-} & import("antd/lib/date-picker").RangePickerProps;
+} & typeof DatePicker.RangePicker;
 
 export type IDateRangePicker = {
   presets: BasicPresetsType;

@@ -52,7 +52,6 @@
     "antd": "^4.2.0",
     "exceljs": "^4.0.1",
     "highcharts": "^8.1.0",
-    "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -126,7 +125,6 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "less-plugin-npm-import": "^2.1.0",
-    "moment": "^2.24.0",
     "postcss": "^7.0.27",
     "prettier": "2.0.4",
     "react": "^16.13.1",

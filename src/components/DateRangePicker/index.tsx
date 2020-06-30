@@ -1,8 +1,8 @@
 import * as React from "react";
-import moment, { Moment } from "moment";
 import { useMemo, useCallback } from "react";
 
-import DatePicker from "antd/lib/date-picker";
+import dayjs, { Dayjs } from "dayjs";
+import DatePicker from "../DatePicker";
 import { DateType, IDateRangePicker, DateRangePickerProps } from "./types.d";
 
 import "./index.less";
@@ -12,16 +12,16 @@ const { RangePicker } = DatePicker;
 const DateRangePicker: IDateRangePicker = props => {
   const formatDate = useCallback(
     (date: DateType) => {
-      return moment(date, props.format);
+      return dayjs(date, props.format) as Dayjs;
     },
     [props.format]
   );
 
-  const [dateFrom, dateTo] = useMemo<[Moment, Moment]>(() => {
+  const [dateFrom, dateTo] = useMemo<[Dayjs, Dayjs]>(() => {
     return [formatDate(props.dateFrom), formatDate(props.dateTo)];
   }, [props.dateFrom, props.dateTo, formatDate]);
 
-  const [maxDate, minDate] = useMemo<[Moment, Moment]>(() => {
+  const [maxDate, minDate] = useMemo<[Dayjs, Dayjs]>(() => {
     return [formatDate(props.maxDate), formatDate(props.minDate)];
   }, [props.maxDate, props.minDate, formatDate]);
 
