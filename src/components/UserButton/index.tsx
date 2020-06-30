@@ -24,7 +24,9 @@ const UserButton: React.FC<UserButtonProps> = ({
     <Dropdown overlay={menu}>
       <Button border={false} className="user-name">
         <UserAvatar src={photo} name={fullName} />
-        {showFullName ? fullName : null}
+        {showFullName ? (
+          <span className="user-button-fullname">{fullName}</span>
+        ) : null}
         <DownOutlined />
       </Button>
     </Dropdown>
