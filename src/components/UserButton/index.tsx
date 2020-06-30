@@ -21,7 +21,7 @@ const UserButton: React.FC<UserButtonProps> = ({
   showFullName
 }) => {
   return (
-    <Dropdown overlay={menu}>
+    <Dropdown overlay={menu} className="user-dropdown">
       <Button border={false} className="user-name">
         <UserAvatar src={photo} name={fullName} />
         {showFullName ? (
