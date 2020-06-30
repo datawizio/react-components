@@ -12,6 +12,7 @@ export type FCMenuProps = React.FC<MenuProps>;
 export interface FCMenu extends FCMenuProps {
   Item: typeof AntMenu.Item;
   SubMenu: typeof AntMenu.SubMenu;
+  ItemGroup: typeof AntMenu.ItemGroup;
 }
 
 const Menu: FCMenu = props => {
@@ -24,5 +25,6 @@ Menu.defaultProps = {
 
 Menu.Item = AntMenu.Item;
 Menu.SubMenu = AntMenu.SubMenu;
+Menu.ItemGroup = AntMenu.ItemGroup;
 
 export default Menu;
