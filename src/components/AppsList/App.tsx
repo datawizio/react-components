@@ -83,7 +83,7 @@ export const App: React.FC<CardAppProps> = ({
         )}
         <div className="card-app-actions">
           <Button type={"primary"} block onClick={handleButtonClick}>
-            {translate(allowed ? "GO_OVER" : "MORE_INFORMATION")}
+            {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
           </Button>
         </div>
       </Card>
