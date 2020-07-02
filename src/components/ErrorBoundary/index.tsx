@@ -1,6 +1,7 @@
 import React from "react";
 
 import Button from "../Button";
+import ConfigContext from "../ConfigProvider/context";
 
 type ErrorBoundaryState = {
   hasError: boolean;
@@ -37,8 +38,10 @@ export default class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <>
-          <h1>Something gone bad</h1>
-          <Button onClick={this.handlerButtonClick}>Report feedback</Button>
+          <h1>{this.context.translate("SOMETHING_GONE_BAD")}</h1>
+          <Button onClick={this.handlerButtonClick}>
+            {this.context.translate("REPORT_FEEDBACK")}
+          </Button>
         </>
       );
     }
@@ -46,3 +49,5 @@ export default class ErrorBoundary extends React.Component<
     return this.props.children;
   }
 }
+
+ErrorBoundary.contextType = ConfigContext;
