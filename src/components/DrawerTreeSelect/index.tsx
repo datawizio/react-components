@@ -17,16 +17,12 @@ import Checkbox from "../Checkbox";
 
 import { triggerInputChangeValue } from "../../utils/trigger";
 
-import {
-  IDrawerTreeSelectFilters,
-  FCDrawerTreeSelect,
-  LevelsType
-} from "./types";
+import { IDrawerTreeSelectFilters, FCDrawerTreeSelect } from "./types";
 import { SelectValue } from "antd/lib/tree-select";
-import { DataNode, Key } from "rc-tree-select/es/interface";
-import { AntTreeNode } from "antd/lib/tree";
+import { DataNode } from "rc-tree-select/es/interface";
 
 import "./index.less";
+import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 
 function getMainLevelItems(items: any[], level: string | number | null = 1) {
   const set = new Set<string>();
@@ -99,16 +95,32 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   placeholder,
   ...restProps
 }) => {
-  const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
-  const [, setSearchValue] = useState<string>("");
-  const [internalValue, setInternalValue] = useState<SelectValue>(value);
-  const [selected, setSelected] = useState<AntTreeNode>();
-  const [stateTreeData, setStateTreeData] = useState(treeData);
-  const [internalLoading, setInternalLoading] = useState<boolean>(loading);
-  const [internalLevels, setInternalLevels] = useState<LevelsType>(levels);
-  const [selectAllState, setSelectAllState] = useState<string>("");
-  const [internalTreeDataCount, setIntenalTreeDataCount] = useState<number>(0);
+  const [
+    {
+      drawerVisible,
+      internalValue,
+      selected,
+      stateTreeData,
+      internalLoading,
+      internalLevels,
+      selectAllState,
+      internalTreeDataCount,
+      internalTreeExpandedKeys
+    },
+    dispatch
+  ] = useDrawerTreeSelect({
+    drawerVisible: false,
+    internalValue: value,
+    selected: undefined,
+    stateTreeData: treeData,
+    internalLoading: loading,
+    internalLevels: levels,
+    selectAllState: "",
+    internalTreeDataCount: 0,
+    internalTreeExpandedKeys: []
+  });
 
+  const [, setSearchValue] = useState<string>("");
   const mainLevelItems = useRef<Set<string>>();
 
   const formatSelected = useRef<string[]>([]);
@@ -126,10 +138,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const emptyIsAllRef = useRef<boolean>(emptyIsAll);
 
-  const [internalTreeExpandedKeys, setInternalTreeExpandedKeys] = useState<
-    Key[]
-  >([]);
   const inputRef = useRef<HTMLInputElement>();
+
+  const showAllRef = useRef<boolean>(false);
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
@@ -161,8 +172,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         if (value[0]) return onChange(value[0], selected);
         return onChange("");
       }
-      if (isSelectedAll()) {
-        setInternalValue([]);
+      if (isSelectedAll) {
+        dispatch({ type: "resetIntervalValue" });
         return onChange([]);
       }
       onChange(value);
@@ -199,42 +210,51 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       const filters = getAllFilters(first, value);
 
       emptyIsAllRef.current = calcEmptyIsAll(emptyIsAll, filters);
-      setStateTreeData([]);
-      setInternalLoading(true);
 
       triggerInputChangeValue(inputRef.current);
-      if (value) {
-        setInternalValue(value);
-      }
+      dispatch({
+        type: "remoteLoadDataStart",
+        payload: value
+      });
 
       const { data, levels, expanded, count } = await loadData(filters);
 
       mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
 
-      setStateTreeData(data);
+      const newState: any = {
+        stateTreeData: data
+      };
+
       if (first) {
         prevTreeData.current = data;
       }
-      setInternalLoading(false);
 
       if (count) {
-        setIntenalTreeDataCount(count);
+        newState.intenalTreeDataCount = count;
       }
 
       if (showLevels && levels) {
-        setInternalLevels(levels);
+        newState.internalLevels = levels;
       }
 
       if (expanded) {
-        setInternalTreeExpandedKeys(expanded);
+        newState.internalTreeExpandedKeys = expanded;
       }
 
       if (drawerVisibleRef.current) {
-        checkSelectAllStatus(
+        const s = checkSelectAllStatus(
           value ? value : internalValue,
           !emptyIsAllRef.current
         );
+
+        newState.selectAllState = s.selectAllState;
+        newState.internalValue = s.internalValue;
       }
+
+      dispatch({
+        type: "remoteLoadDataStop",
+        payload: newState
+      });
 
       triggerInputChangeValue(
         inputRef.current,
@@ -255,8 +275,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       emptyIsAll &&
       !searchValue.current
     ) {
-      selectAll();
-      return;
+      return selectAll();
     }
 
     if (showCheckedStrategy === "SHOW_PARENT") {
@@ -265,48 +284,40 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       checked = values.length === internalTreeDataCount;
     }
     if (!checked && values.length) {
-      setSelectAllState("indeterminate");
-      return;
+      return {
+        selectAllState: "indeterminate"
+      };
     }
 
     if (checked) {
-      setSelectAllState("checked");
-      return;
+      return {
+        selectAllState: "checked"
+      };
     }
 
-    setSelectAllState("");
+    return {
+      selectAllState: ""
+    };
   };
 
   const selectAll = () => {
-    setSelectAllState("checked");
+    const state: any = {
+      selectAllState: "checked"
+    };
     if (mainLevelItems.current) {
-      setInternalValue(Array.from(mainLevelItems.current));
+      state.internalValue = Array.from(mainLevelItems.current);
     }
+    return state;
   };
 
-  const closeDrawer = useCallback(() => {
-    setTimeout(() => {
-      const activeElement = document.activeElement as HTMLElement;
-      activeElement.blur();
-    }, 100);
-
-    resetStates();
-    setDrawerVisible(false);
-    drawerVisibleRef.current = false;
-
-    // setSearchValue("");
-    setInternalTreeExpandedKeys([]);
-    //eslint-disable-next-line
-  }, []);
-
-  const saveStates = () => {
+  const savePrevRefs = () => {
     prevLevel.current = levelSelected.current;
     prevTreeData.current = stateTreeData;
     prevFormatSelected.current = formatSelected.current;
     prevEmptyIsAllRef.current = emptyIsAllRef.current;
   };
 
-  const resetStates = () => {
+  const resetPrevRefs = () => {
     searchValue.current = "";
     prevLevel.current = "1";
     prevTreeData.current = [];
@@ -314,7 +325,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     prevEmptyIsAllRef.current = emptyIsAll;
   };
 
-  const rollbackStates = () => {
+  const rollbackRefs = () => {
     levelSelected.current = prevLevel.current;
     formatSelected.current = prevFormatSelected.current;
 
@@ -323,54 +334,83 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       prevTreeData.current,
       levelSelected.current
     );
-    setStateTreeData(prevTreeData.current);
-    // setInternalValue(value)
   };
 
   const openDrawer = () => {
-    setDrawerVisible(true);
     drawerVisibleRef.current = true;
-    saveStates();
-    //@ts-ignore
-    checkSelectAllStatus(internalValue);
+    savePrevRefs();
+
+    dispatch({
+      type: "openDrawer",
+      payload: checkSelectAllStatus(internalValue)
+    });
     triggerInputChangeValue(inputRef.current, searchValue.current);
   };
 
-  const isSelectedAll = useCallback(() => {
+  const closeDrawer = useCallback(() => {
+    setTimeout(() => {
+      const activeElement = document.activeElement as HTMLElement;
+      activeElement.blur();
+    }, 100);
+
+    resetPrevRefs();
+
+    drawerVisibleRef.current = false;
+
+    //eslint-disable-next-line
+  }, []);
+
+  const isSelectedAll = useMemo(() => {
     return selectAllState === "checked" && emptyIsAllRef.current;
   }, [selectAllState]);
 
   //  -------- HANDLERS --------
 
   const handlerDrawerCancel = useCallback(() => {
-    rollbackStates();
-    setInternalValue(!multiple && !value ? [] : value);
+    const prevValue = !multiple && !value ? [] : value;
+    //@ts-ignore
+    if (prevValue.length === 0) showAllRef.current = true;
+
+    dispatch({
+      type: "drawerCancel",
+      payload: {
+        stateTreeData: prevTreeData.current,
+        internalValue: prevValue
+      }
+    });
+    rollbackRefs();
     closeDrawer();
-    setSelectAllState("");
-  }, [closeDrawer, value, multiple]);
+
+    setTimeout(() => {
+      showAllRef.current = false;
+    }, 200);
+  }, [closeDrawer, value, multiple, dispatch]);
 
   const handlerDrawerSubmit = useCallback(() => {
     closeDrawer();
+    dispatch({
+      type: "drawerSubmit"
+    });
     triggerOnChange(internalValue);
-  }, [triggerOnChange, closeDrawer, internalValue]);
+  }, [triggerOnChange, closeDrawer, internalValue, dispatch]);
 
   const handlerDrawerFocus = e => {
+    if (internalLoading) return;
     setInputRef(e.target);
     openDrawer();
   };
 
   const handlerSearchInputChange = useCallback(
     e => {
-      const inputValue = e.target.value;
-
-      searchValue.current = inputValue;
-      setSearchValue(inputValue);
+      searchValue.current = e.target.value;
 
       if (remoteSearch) {
         internalLoadData();
         return;
       }
-      triggerInputChangeValue(inputRef.current, inputValue);
+      setSearchValue(searchValue.current);
+
+      triggerInputChangeValue(inputRef.current, searchValue.current);
     },
     //eslint-disable-next-line
     [inputRef, internalLoadData]
@@ -382,21 +422,32 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const handleTreeSelect = useCallback(
     (_, node) => {
-      setSelected(node);
+      dispatch({
+        type: "setSelected",
+        payload: node
+      });
     },
-    [setSelected]
+    [dispatch]
   );
 
   const handleTreeSelectChange = useCallback(
     (value, labels, extra) => {
+      let state: any = {};
       if (multiple) {
-        setInternalValue(value);
+        state.internalValue = value;
         if (value) {
-          checkSelectAllStatus(value, true);
+          const check = checkSelectAllStatus(value, true);
+          state = { ...state, ...check };
         }
       } else {
-        setInternalValue(extra.checked ? [extra.triggerValue] : []);
+        state.internalValue = extra.checked ? [extra.triggerValue] : [];
       }
+
+      dispatch({
+        type: "setState",
+        payload: state
+      });
+
       if (!drawerVisible) {
         triggerOnChange(value);
       }
@@ -405,9 +456,15 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     [drawerVisible, triggerOnChange, multiple]
   );
 
-  const handlerTreeExpand = useCallback(expandedKeys => {
-    setInternalTreeExpandedKeys(expandedKeys);
-  }, []);
+  const handlerTreeExpand = useCallback(
+    expandedKeys => {
+      dispatch({
+        type: "internalTreeExpandedKeys",
+        payload: expandedKeys
+      });
+    },
+    [dispatch]
+  );
 
   const handleLevelChange = (level: string) => {
     levelSelected.current = level;
@@ -419,26 +476,41 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     const index = stateTreeData.findIndex(item => item.pId === node.id);
     if (index !== -1) return;
     const data = await loadChildren(node.id, additionalFilters);
-    setStateTreeData(stateTreeData.concat(data));
+
+    dispatch({
+      type: "stateTreeData",
+      payload: stateTreeData.concat(data)
+    });
+
     triggerInputChangeValue(inputRef.current, searchValue.current);
   };
 
   const handleSelectAllChange = e => {
     const checked = e.target.checked;
-
+    let state: any = {};
     if (checked) {
-      selectAll();
+      state = selectAll();
     } else {
-      setSelectAllState("");
-      setInternalValue([]);
+      state = {
+        selectAllState: "",
+        internalValue: []
+      };
     }
+
+    dispatch({
+      type: "setState",
+      payload: state
+    });
   };
 
   // ---- EFFECTS ------
 
   useEffect(() => {
-    setInternalValue(!multiple && !value ? [] : value);
-  }, [value, multiple]);
+    dispatch({
+      type: "internalValue",
+      payload: !multiple && !value ? [] : value
+    });
+  }, [value, multiple, dispatch]);
 
   useEffect(() => {
     if (treeData) {
@@ -446,15 +518,26 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         treeData,
         levelSelected.current
       );
+      prevTreeData.current = stateTreeData;
     }
 
-    setStateTreeData(treeData);
-    setIntenalTreeDataCount(treeDataCount);
-  }, [treeData, treeDataCount]);
+    dispatch({
+      type: "setState",
+      payload: {
+        stateTreeData: treeData,
+        internalTreeDataCount: treeDataCount
+      }
+    });
+  }, [treeData, treeDataCount, dispatch, stateTreeData]);
 
   useEffect(() => {
-    setInternalLoading(loading);
-  }, [loading]);
+    dispatch({
+      type: "setState",
+      payload: {
+        internalLoading: loading
+      }
+    });
+  }, [loading, dispatch]);
 
   useEffect(() => {
     !asyncData && loadData && internalLoadData(true);
@@ -463,36 +546,30 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   // -------- RENDERS ---------
 
-  const tagRender = useCallback(
-    props => {
-      if (isSelectedAll()) {
-        return (
-          <span className="ant-select-selection-placeholder">
-            {placeholder}
-          </span>
-        );
-      }
-      if (!stateTreeData || stateTreeData.length === 0) {
-        return (
-          <span className="ant-select-selection-placeholder">
-            {loadingText}
-          </span>
-        );
-      }
+  const tagRender = props => {
+    if (internalLoading) {
       return (
-        <span className="ant-select-selection-item">
-          <Tag
-            closable={props.closable}
-            onClose={props.onClose}
-            className="ant-select-selection-item-content"
-          >
-            {props.label}
-          </Tag>
-        </span>
+        <span className="ant-select-selection-placeholder">{loadingText}</span>
       );
-    },
-    [placeholder, loadingText, isSelectedAll, stateTreeData]
-  );
+    }
+    if (isSelectedAll || showAllRef.current) {
+      return (
+        <span className="ant-select-selection-placeholder">{placeholder}</span>
+      );
+    }
+
+    return (
+      <span className="ant-select-selection-item">
+        <Tag
+          closable={props.closable}
+          onClose={props.onClose}
+          className="ant-select-selection-item-content"
+        >
+          {props.label}
+        </Tag>
+      </span>
+    );
+  };
 
   const format = useMemo(() => {
     if (!formatRender) return null;
