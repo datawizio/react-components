@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-  useEffect
-} from "react";
+import React, { useRef, useCallback, useMemo, useEffect } from "react";
 
 import clsx from "clsx";
 
@@ -21,6 +15,7 @@ import { AntTreeNode } from "antd/lib/tree";
 import { triggerInputChangeValue } from "../../utils/trigger";
 
 import "./index.less";
+import { useDrawerSelect } from "./useDrawerSelect";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
@@ -154,14 +149,28 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     ...restProps
   } = props;
 
-  const [internalLoading, setLoading] = useState<boolean>(loading);
-  const [page, setPage] = useState<number>(0);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [internalValue, setInternalValue] = useState<SelectValue>();
-  const [selected, setSelected] = useState<AntTreeNode>();
-  const [optionsState, setOptions] = useState([]);
+  const [
+    {
+      internalLoading,
+      page,
+      totalPages,
+      drawerVisible,
+      searchValue,
+      internalValue,
+      selected,
+      optionsState
+    },
+    dispatch
+  ] = useDrawerSelect({
+    internalLoading: loading,
+    page: 0,
+    totalPages: 1,
+    drawerVisible: false,
+    searchValue: "",
+    internalValue: undefined,
+    selected: undefined,
+    optionsState: []
+  });
 
   const selectedOptions = useRef<any[]>([]);
   const menuRef = useRef();
@@ -196,9 +205,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (page !== 0 && page >= totalPages) {
         return;
       }
-      if (!page) setOptions(selectedOptions.current);
+      let state: any = {};
+      if (!page) state.optionsState = selectedOptions.current;
 
-      setLoading(true);
+      dispatch({
+        type: "remoteLoadDataStart",
+        payload: state
+      });
 
       const filters = { ...additionalFilters, search };
 
@@ -220,29 +233,24 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         selectedOptions.current = options.selected;
       }
 
+      state = {
+        page: page,
+        totalPages: pages
+      };
+
       if (page === 0) {
-        setOptions(selectedOptions.current.concat(options.options));
+        state.optionsState = selectedOptions.current.concat(options.options);
       } else {
-        setOptions(optionsState.concat(options.options));
+        state.optionsState = optionsState.concat(options.options);
       }
-
-      setPage(page);
-      setTotalPages(pages);
-
-      setLoading(false);
+      dispatch({
+        type: "remoteLoadDataStop",
+        payload: state
+      });
     },
 
     //eslint-disable-next-line
-    [
-      loadData,
-      setPage,
-      setLoading,
-      setOptions,
-      optionsState,
-      valueProp,
-      labelProp,
-      totalPages
-    ]
+    [loadData, dispatch, optionsState, valueProp, labelProp, totalPages]
   );
 
   //  -------- HANDLERS --------
@@ -255,30 +263,40 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         menuRef.current.ref.current.scrollTo(0);
       } catch (e) {}
     }, 100);
-
-    setDrawerVisible(false);
-    setSearchValue("");
   }, []);
 
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
-    setInternalValue(!multiple && !value ? [] : value);
-  }, [closeDrawer, value, multiple]);
+    dispatch({
+      type: "drawerCancel",
+      payload: {
+        internalValue: !multiple && !value ? [] : value
+      }
+    });
+  }, [dispatch, closeDrawer, value, multiple]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
+    dispatch({
+      type: "drawerSubmit"
+    });
     triggerOnChange(internalValue);
-  }, [triggerOnChange, closeDrawer, internalValue]);
+  }, [dispatch, triggerOnChange, closeDrawer, internalValue]);
 
   const handleDrawerFocus = e => {
     setInputRef(e.target);
-    setDrawerVisible(true);
+    dispatch({
+      type: "openDrawer"
+    });
     triggerInputChangeValue(inputRef.current, searchValue);
   };
 
   const handleSearchInputChange = e => {
     const inputValue = e.target.value;
-    setSearchValue(inputValue);
+    dispatch({
+      type: "setSearchValue",
+      payload: inputValue
+    });
     triggerInputChangeValue(inputRef.current, inputValue);
   };
 
@@ -289,9 +307,12 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const handleSelect = useCallback(
     (_, node) => {
       selectedOptions.current.push(node);
-      setSelected(node);
+      dispatch({
+        type: "setSelected",
+        payload: node
+      });
     },
-    [setSelected]
+    [dispatch]
   );
 
   const handleDeselect = useCallback((_, node) => {
@@ -310,16 +331,23 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleChange = useCallback(
     (value, el) => {
+      let newValue: any;
       if (multiple) {
-        setInternalValue(value);
+        newValue = value;
       } else {
-        setInternalValue(value[1] ? [value[1]] : [value[0]]);
+        newValue = value[1] ? [value[1]] : [value[0]];
       }
+
+      dispatch({
+        type: "setInternalValue",
+        payload: newValue
+      });
+
       if (!drawerVisible) {
         triggerOnChange(value);
       }
     },
-    [drawerVisible, triggerOnChange, multiple]
+    [dispatch, drawerVisible, triggerOnChange, multiple]
   );
 
   const handlePopupScroll = useCallback(
@@ -337,16 +365,25 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   // ------- EFFECTS ----------
   useEffect(() => {
-    setInternalValue(!multiple && !value ? [] : value);
-  }, [value, multiple]);
+    dispatch({
+      type: "setInternalValue",
+      payload: !multiple && !value ? [] : value
+    });
+  }, [dispatch, value, multiple]);
 
   useEffect(() => {
-    setLoading(loading);
-  }, [loading]);
+    dispatch({
+      type: "setState",
+      payload: { internalLoading: loading }
+    });
+  }, [dispatch, loading]);
 
   useEffect(() => {
-    setOptions(internalOptions);
-  }, [internalOptions]);
+    dispatch({
+      type: "setState",
+      payload: { optionsState: internalOptions }
+    });
+  }, [dispatch, internalOptions]);
 
   useEffect(() => {
     !asyncData && loadData && loadPage("", 0, true);
