@@ -97,12 +97,3 @@ export const useDrawerTreeSelect = (initialState: IUseDrawerTreeSelect) => {
 
   return [state as IUseDrawerTreeSelect, dispatch as any];
 };
-
-// const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
-// const [internalValue, setInternalValue] = useState<SelectValue>(value);
-// const [selected, setSelected] = useState<AntTreeNode>();
-// const [stateTreeData, setStateTreeData] = useState(treeData);
-// const [internalLoading, setInternalLoading] = useState<boolean>(loading);
-// const [internalLevels, setInternalLevels] = useState<LevelsType>(levels);
-// const [selectAllState, setSelectAllState] = useState<string>("");
-// const [internalTreeDataCount, setIntenalTreeDataCount] = useState<number>(0);
