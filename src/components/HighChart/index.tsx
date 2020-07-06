@@ -1,8 +1,7 @@
 import * as React from "react";
+import Loader from "../Loader";
 import * as Highcharts from "highcharts";
 import resizeDetector from "../../utils/resizeDetector";
-
-import { Spin } from "antd";
 
 import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 
@@ -26,6 +25,11 @@ export interface HighChartProps {
    * Тип рендера - "chart" | "stockChart" | "mapChart" | "ganttChart"
    */
   constructorType?: string | "chart" | "stockChart" | "mapChart" | "ganttChart";
+
+  /**
+   * Показывать ли Loader
+   */
+  loading: boolean;
 }
 
 export interface HighChartRef {
@@ -34,7 +38,13 @@ export interface HighChartRef {
 }
 
 const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
-  const { resizeTimeout, responsible, config, constructorType } = props;
+  const {
+    config,
+    loading,
+    responsible,
+    resizeTimeout,
+    constructorType
+  } = props;
 
   const chartRef = useRef<Highcharts.Chart>();
   const containerRef = useRef<HTMLDivElement>();
@@ -73,9 +83,9 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   }));
 
   return (
-    <Spin spinning={!config}>
+    <Loader loading={loading}>
       <div ref={containerRef} />
-    </Spin>
+    </Loader>
   );
 });
 
