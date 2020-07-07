@@ -147,6 +147,7 @@
   },
   "dependencies": {
     "clsx": "^1.1.0",
+    "country-flag-icons": "^1.2.1",
     "file-saver": "^2.0.2",
     "libphonenumber-js": "^1.7.52",
     "react-dnd": "^11.1.3",
