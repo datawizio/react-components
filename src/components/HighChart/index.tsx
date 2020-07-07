@@ -1,14 +1,14 @@
 import * as React from "react";
-import Skeleton from "react-loading-skeleton";
+import Skeleton from "../Skeleton";
 import * as Highcharts from "highcharts";
 import resizeDetector from "../../utils/resizeDetector";
 
 import {
-  useEffect,
   useRef,
+  useMemo,
   forwardRef,
-  useImperativeHandle,
-  useMemo
+  useEffect,
+  useImperativeHandle
 } from "react";
 
 export interface HighChartProps {
