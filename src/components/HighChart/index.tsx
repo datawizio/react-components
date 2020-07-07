@@ -56,7 +56,8 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   const containerRef = useRef<HTMLDivElement>();
 
   const height = useMemo(() => {
-    return (config && config.chart && config.chart.height) || 300;
+    const heightByConfig = config && config.chart && config.chart.height;
+    return heightByConfig || 300;
   }, [config]);
 
   useEffect(() => {
