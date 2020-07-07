@@ -1,9 +1,15 @@
 import * as React from "react";
-import Loader from "../Loader";
+import Skeleton from "react-loading-skeleton";
 import * as Highcharts from "highcharts";
 import resizeDetector from "../../utils/resizeDetector";
 
-import { useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useMemo
+} from "react";
 
 export interface HighChartProps {
   /**
@@ -49,6 +55,10 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   const chartRef = useRef<Highcharts.Chart>();
   const containerRef = useRef<HTMLDivElement>();
 
+  const height = useMemo(() => {
+    return (config && config.chart && config.chart.height) || 300;
+  }, [config]);
+
   useEffect(() => {
     if (responsible && containerRef.current)
       return resizeDetector(
@@ -83,9 +93,10 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   }));
 
   return (
-    <Loader loading={loading}>
-      <div ref={containerRef} />
-    </Loader>
+    <>
+      {loading && <Skeleton height={height} width={"100%"} />}
+      {!loading && <div ref={containerRef} />}
+    </>
   );
 });
 
