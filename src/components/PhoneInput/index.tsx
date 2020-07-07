@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useContext } from "react";
 
-import countries from "./helpers/countries";
+import Flags from "country-flag-icons/react/3x2";
+
+import countries, { ICountry } from "./helpers/countries";
 
 import {
   parseInput,
@@ -12,6 +14,7 @@ import Input from "../Input";
 import Select from "../Select";
 
 import "./index.less";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface PhoneInputProps {
   /**
@@ -40,10 +43,20 @@ const PhoneInput: FCPhoneInput = ({
   const [formatedValue, setFormatedValue] = useState<string>();
   const [selectedCountry, setSelectedCountry] = useState<string>("UA");
 
+  const { translate } = useContext(ConfigContext);
+
   const inputRef = useRef<any>();
 
   const addInternationalOption = null;
   const international = true;
+
+  const sortedCountries: ICountry[] = useMemo(() => {
+    let translated = countries.map(country => ({
+      ...country,
+      label: translate(country.value)
+    }));
+    return translated.sort((a, b) => (a.value < b.value ? -1 : 1));
+  }, [translate]);
 
   const handleCountryChange = country => {
     let { value: val, formated } = formatNumber(
@@ -103,6 +116,7 @@ const PhoneInput: FCPhoneInput = ({
     <Input.Group compact className="phone-input">
       <Select
         className="phone-input-select"
+        dropdownClassName="phone-input-select-dropdown"
         value={selectedCountry}
         dropdownMatchSelectWidth={false}
         optionLabelProp="label"
@@ -110,16 +124,19 @@ const PhoneInput: FCPhoneInput = ({
         onChange={handleCountryChange}
         showSearch={true}
       >
-        {countries.map(country => (
-          <Select.Option
-            key={country.value}
-            value={country.value}
-            label={country.emoji}
-            title={country.label}
-          >
-            {country.emoji} {country.label}
-          </Select.Option>
-        ))}
+        {sortedCountries.map(country => {
+          const Flag = Flags[country.value];
+          return (
+            <Select.Option
+              key={country.value}
+              value={country.value}
+              label={<Flag />}
+              title={country.label}
+            >
+              <Flag /> {country.label}
+            </Select.Option>
+          );
+        })}
       </Select>
 
       <Input
