@@ -13,8 +13,9 @@ import {
 import Input from "../Input";
 import Select from "../Select";
 
-import "./index.less";
 import ConfigContext from "../ConfigProvider/context";
+
+import "./index.less";
 
 export interface PhoneInputProps {
   /**
@@ -49,14 +50,6 @@ const PhoneInput: FCPhoneInput = ({
 
   const addInternationalOption = null;
   const international = true;
-
-  const sortedCountries: ICountry[] = useMemo(() => {
-    let translated = countries.map(country => ({
-      ...country,
-      label: translate(country.value)
-    }));
-    return translated.sort((a, b) => (a.value < b.value ? -1 : 1));
-  }, [translate]);
 
   const handleCountryChange = country => {
     let { value: val, formated } = formatNumber(
@@ -124,16 +117,16 @@ const PhoneInput: FCPhoneInput = ({
         onChange={handleCountryChange}
         showSearch={true}
       >
-        {sortedCountries.map(country => {
+        {countries.map(country => {
           const Flag = Flags[country.value];
           return (
             <Select.Option
               key={country.value}
               value={country.value}
               label={<Flag />}
-              title={country.label}
+              title={country.value}
             >
-              <Flag /> {country.label}
+              <Flag /> {country.value}
             </Select.Option>
           );
         })}
