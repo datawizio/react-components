@@ -528,7 +528,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         internalTreeDataCount: treeDataCount
       }
     });
-  }, [treeData, treeDataCount, dispatch, stateTreeData]);
+    //eslint-disable-next-line
+  }, [treeData, treeDataCount, dispatch]);
 
   useEffect(() => {
     dispatch({
