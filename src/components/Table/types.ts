@@ -76,6 +76,7 @@ export interface TableRef {
 
 export type Action =
   | { type: "expandRow"; payload: IRow }
+  | { type: "search"; payload: string }
   | { type: "loading"; payload: boolean }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }

@@ -96,6 +96,16 @@ export function reducer(state: TableState, action: Action): TableState {
         pagination: action.payload
       };
 
+    case "search":
+      return {
+        ...state,
+        searchValue: action.payload,
+        pagination: state.pagination && {
+          ...state.pagination,
+          current: 1
+        }
+      };
+
     case "sort":
       const sorters = action.payload;
       const sortParams = sorters

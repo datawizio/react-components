@@ -20,9 +20,7 @@ const TableSearch: React.FC<TableSearchProps> = ({ placeholder }) => {
         debounceDelay={1000}
         placeholder={placeholder}
         style={{ width: "230px" }}
-        onSearch={value =>
-          dispatch({ type: "update", payload: { searchValue: value } })
-        }
+        onSearch={value => dispatch({ type: "search", payload: value })}
       />
     </div>
   );
