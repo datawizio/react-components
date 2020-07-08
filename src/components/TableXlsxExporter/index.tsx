@@ -17,7 +17,7 @@ export interface TableXlsxExporterProps extends ButtonProps {
   exportHandler?: (
     tableState: TableState,
     filename: string
-  ) => Promise<BlobPart>;
+  ) => Promise<BlobPart> | Promise<void>;
 }
 
 const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
@@ -32,7 +32,7 @@ const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
       message.loading({ content: translate("LOADING"), key: messageKey });
       const fileData = await exportHandler(tableState, filename);
 
-      saveAs(new Blob([fileData]), filename);
+      fileData && saveAs(new Blob([fileData]), filename);
       message.success({ content: translate("SUCCESS"), key: messageKey });
     }
   }, [tableState, translate, exportHandler, filename]);
@@ -47,7 +47,7 @@ const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
 };
 
 TableXlsxExporter.defaultProps = {
-  filename: "exported table"
+  filename: "exported_table.xlsx"
 };
 
 export default TableXlsxExporter;
