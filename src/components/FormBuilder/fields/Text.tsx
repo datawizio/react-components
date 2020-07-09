@@ -6,7 +6,7 @@ import Input from "../../Input";
 import { FieldTextProps } from "../types";
 
 export const FieldText: React.FC<FieldTextProps> = React.memo(
-  ({ onChange, rules, label, ...props }) => {
+  ({ onChange, rules, name, label, ...props }) => {
     const handleFieldChange = useCallback(
       ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
         onChange({
