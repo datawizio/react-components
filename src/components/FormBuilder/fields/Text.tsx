@@ -6,7 +6,7 @@ import Input from "../../Input";
 import { FieldTextProps } from "../types";
 
 export const FieldText: React.FC<FieldTextProps> = React.memo(
-  ({ label, rules, name, placeholder, onChange }) => {
+  ({ onChange, rules, label, ...props }) => {
     const handleFieldChange = useCallback(
       ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
         onChange({
@@ -19,11 +19,7 @@ export const FieldText: React.FC<FieldTextProps> = React.memo(
 
     return (
       <Form.Item name={name} label={label} rules={rules}>
-        <Input
-          name={name}
-          placeholder={placeholder}
-          onChange={handleFieldChange}
-        />
+        <Input {...props} name={name} onChange={handleFieldChange} />
       </Form.Item>
     );
   }
