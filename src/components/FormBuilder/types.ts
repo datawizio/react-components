@@ -16,7 +16,9 @@ export interface FormFieldProps<Type> {
   onChange?: (change: IFormFieldChanged<Type>) => void;
 }
 
-export interface FieldIntervalProps extends FormFieldProps<IntervalType> {}
+export interface FieldIntervalProps extends FormFieldProps<IntervalType> {
+  format?: string;
+}
 
 export type IntervalType = {
   from: Dayjs | null;
@@ -25,6 +27,7 @@ export type IntervalType = {
 
 export interface IntervalProps {
   value?: IntervalType;
+  format?: string;
   onChange: (value: IntervalType) => void;
 }
 
