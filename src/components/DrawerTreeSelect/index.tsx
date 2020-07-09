@@ -3,7 +3,8 @@ import React, {
   useRef,
   useCallback,
   useMemo,
-  useEffect
+  useEffect,
+  useContext
 } from "react";
 import clsx from "clsx";
 
@@ -23,6 +24,7 @@ import { DataNode } from "rc-tree-select/es/interface";
 
 import "./index.less";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
+import ConfigContext from "../ConfigProvider/context";
 
 function getMainLevelItems(items: any[], level: string | number | null = 1) {
   const set = new Set<string>();
@@ -141,6 +143,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const inputRef = useRef<HTMLInputElement>();
 
   const showAllRef = useRef<boolean>(false);
+
+  const { translate } = useContext(ConfigContext);
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
@@ -279,7 +283,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     }
 
     if (showCheckedStrategy === "SHOW_PARENT") {
-      checked = isAllItemsChecked(values, mainLevelItems.current);
+      checked = isAllItemsChecked(values ? values : [], mainLevelItems.current);
     } else {
       checked = values.length === internalTreeDataCount;
     }
@@ -586,6 +590,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     menu => {
       return (
         <Drawer
+          destroyOnClose
           className={clsx({
             "drawer-tree-select-dropdown": true,
             "drawer-tree-select-dropdown-flat-list": isFlatList
@@ -620,7 +625,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             loading={internalLoading}
           />
           <div className="drawer-tree-select-dropdown-toolbar">
-            {showSelectAll ? (
+            {showSelectAll && (
               <Checkbox
                 onChange={handleSelectAllChange}
                 checked={selectAllState === "checked"}
@@ -628,7 +633,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               >
                 {selectAllText}
               </Checkbox>
-            ) : null}
+            )}
           </div>
           {menu}
           <div className="drawer-select-loader-container">
@@ -641,6 +646,20 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               />
             )}
           </div>
+          {multiple && (
+            <div className="drawer-tree-select-selected">
+              <div className="drawer-tree-select-selected-title">
+                {translate("SELECTED")}
+              </div>
+              <div className="drawer-tree-select-selected-count">
+                {selectAllState === "checked"
+                  ? selectAllText
+                  : internalValue
+                  ? internalValue.length
+                  : 0}
+              </div>
+            </div>
+          )}
         </Drawer>
       );
     },
@@ -649,6 +668,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       drawerVisible,
       searchValue,
       internalLoading,
+      internalValue,
       internalLevels,
       handlerDrawerCancel,
       handlerDrawerSubmit,

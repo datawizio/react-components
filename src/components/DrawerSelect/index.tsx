@@ -1,4 +1,10 @@
-import React, { useRef, useCallback, useMemo, useEffect } from "react";
+import React, {
+  useRef,
+  useCallback,
+  useMemo,
+  useEffect,
+  useContext
+} from "react";
 
 import clsx from "clsx";
 
@@ -16,6 +22,7 @@ import { triggerInputChangeValue } from "../../utils/trigger";
 
 import "./index.less";
 import { useDrawerSelect } from "./useDrawerSelect";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
@@ -174,6 +181,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const selectedOptions = useRef<any[]>([]);
   const menuRef = useRef();
+
+  const { translate } = useContext(ConfigContext);
 
   const internalOptions = useMemo(() => {
     return options ? convertOptions(options, valueProp, labelProp).options : [];
@@ -458,6 +467,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
               />
             )}
           </div>
+          {multiple && (
+            <div className="drawer-select-selected">
+              <div className="drawer-select-selected-title">
+                {translate("SELECTED")}
+              </div>
+              <div className="drawer-select-selected-count">
+                {internalValue ? internalValue.length : 0}
+              </div>
+            </div>
+          )}
         </Drawer>
       );
     },
@@ -482,7 +501,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       showSearch={true}
       onSearch={handleSearch}
       optionFilterProp="title"
-      listHeight={window.innerHeight - 198}
+      listHeight={window.innerHeight - 198 - (multiple ? 27 : 0)}
       notFoundContent={internalLoading ? loadingText : noDataText}
       onBeforeBlur={handleSelectBeforeBlur}
       onFocus={handleDrawerFocus}
