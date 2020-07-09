@@ -92,6 +92,29 @@ let treeData = generateTreeList("0", 2);
   </Story>
 </Preview>
 
+## Flat multi select
+
+<Preview>
+  <Story name="Flat multi select">
+    <TreeSelect
+      flat
+      multiple
+      allowClear
+      showSearch
+      showCheckAll
+      treeCheckable={true}
+      placeholder="Basic tree view"
+      treeData={[
+        { key: 1, title: "option 1" },
+        { key: 2, title: "option 2" },
+        { key: 3, title: "option 3" },
+        { key: 4, title: "option 4" },
+        { key: 5, title: "option 5" }
+      ]}
+    />
+  </Story>
+</Preview>
+
 ## Multi select tree data
 
 Передавать данные можно через параметр `treeData`.

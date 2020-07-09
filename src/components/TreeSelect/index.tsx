@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 
 import { TreeSelect as AntTreeSelect } from "antd";
 
@@ -26,6 +27,11 @@ export interface TreeSelectProps<VT> extends AntTreeSelectProps<VT> {
    * Ключ для чекбокса `Check all`
    */
   checkAllKey?: string;
+
+  /**
+   * Уберает отступы
+   */
+  flat?: boolean;
 }
 
 export interface FCTreeSelectProps
@@ -36,7 +42,14 @@ export interface FCTreeSelect extends FCTreeSelectProps {
 }
 
 const TreeSelect: FCTreeSelect = props => {
-  const { showCheckAll, checkAllTitle, checkAllKey, ...restProps } = props;
+  const {
+    flat,
+    className,
+    showCheckAll,
+    checkAllTitle,
+    checkAllKey,
+    ...restProps
+  } = props;
 
   let treeExpandedKeys = props.treeDefaultExpandedKeys;
   let treeData: DataNode[] = props.treeData;
@@ -57,7 +70,11 @@ const TreeSelect: FCTreeSelect = props => {
     <AntTreeSelect
       {...restProps}
       treeData={treeData}
+      className={clsx(className, "dw-tree-select")}
       treeDefaultExpandedKeys={treeExpandedKeys}
+      dropdownClassName={clsx("dw-tree-select__dropdown", {
+        "dw-tree-select__dropdown--flat": flat
+      })}
     />
   );
 };
