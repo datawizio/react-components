@@ -355,7 +355,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     setTimeout(() => {
       const activeElement = document.activeElement as HTMLElement;
       activeElement.blur();
-    }, 100);
+    }, 200);
 
     resetPrevRefs();
 
