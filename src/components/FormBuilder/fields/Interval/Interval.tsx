@@ -4,7 +4,11 @@ import { IntervalProps } from "../../types";
 import { Dayjs } from "dayjs";
 import ConfigContext from "../../../ConfigProvider/context";
 
-export const Interval: React.FC<IntervalProps> = ({ value, onChange }) => {
+export const Interval: React.FC<IntervalProps> = ({
+  value,
+  format,
+  onChange
+}) => {
   const { translate } = useContext(ConfigContext);
 
   const handleFromChange = (from: Dayjs) => {
@@ -20,11 +24,13 @@ export const Interval: React.FC<IntervalProps> = ({ value, onChange }) => {
         label={translate("FROM")}
         value={value ? value.from : null}
         onChange={handleFromChange}
+        format={format}
       />
       <IntervalItem
         label={translate("TO")}
         value={value ? value.to : null}
         onChange={handleToChange}
+        format={format}
       />
     </>
   );

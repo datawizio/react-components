@@ -24,6 +24,7 @@ export const FieldInterval: React.FC<FieldIntervalProps> = ({
   name,
   label,
   rules,
+  format,
   onChange
 }) => {
   const handleChange = (value: IntervalType) => {
@@ -39,7 +40,7 @@ export const FieldInterval: React.FC<FieldIntervalProps> = ({
       rules={internalRules}
       className="field-interval"
     >
-      <Interval onChange={handleChange} />
+      <Interval onChange={handleChange} format={format} />
     </Form.Item>
   );
 };
