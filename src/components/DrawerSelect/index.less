@@ -38,6 +38,8 @@
   .ant-drawer-body {
     overflow: hidden;
     padding-bottom: @padding-lg - 16px;
+    display: flex;
+    flex-direction: column;
   }
   .ant-input-search {
     margin-bottom: 10px;
@@ -100,7 +102,18 @@
     }
   }
 
+  .drawer-select-selected {
+    padding-top: 5px;
+    display: flex;
+    background: white;
+    color: #020202;
+    .drawer-select-selected-title {
+      flex: 1;
+    }
+  }
+
   .drawer-select-loader-container {
+    flex: 1;
     height: 16px;
     overflow: visible;
     .ant-skeleton-title {

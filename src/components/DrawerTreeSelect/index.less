@@ -37,6 +37,8 @@
   .ant-drawer-body {
     overflow: hidden;
     padding-bottom: @padding-lg - 16px;
+    display: flex;
+    flex-direction: column;
     div + .ant-input-search,
     div + .drawer-tree-select-levels {
       margin-top: @margin-sm;
@@ -60,6 +62,16 @@
         padding-left: @padding-sm;
       }
     }
+
+    .drawer-tree-select-selected {
+      padding-top: 5px;
+      display: flex;
+      color: #020202;
+      background: white;
+      .drawer-tree-select-selected-title {
+        flex: 1;
+      }
+    }
     .ant-select-tree {
       .tree-check-all {
         display: none;
@@ -74,6 +86,7 @@
 
     .drawer-select-loader-container {
       height: 16px;
+      flex: 1;
       overflow: visible;
       .ant-skeleton-title {
         margin: 0;
