@@ -9,6 +9,7 @@ export interface IDrawerTreeSelectFilters {
   formats?: string[];
   level?: string | number;
   value?: SelectValue;
+  first?: boolean;
 }
 
 export type LevelsType = { value: string; label: string }[];

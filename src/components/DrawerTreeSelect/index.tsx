@@ -206,6 +206,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       filters.value = newValue ? newValue : internalValue;
     }
 
+    filters.first = true;
+
     return filters;
   };
 
