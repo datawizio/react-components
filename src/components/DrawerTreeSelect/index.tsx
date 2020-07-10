@@ -374,28 +374,35 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     const prevValue = !multiple && !value ? [] : value;
     //@ts-ignore
     if (prevValue.length === 0) showAllRef.current = true;
-
     dispatch({
-      type: "drawerCancel",
+      type: "setState",
       payload: {
-        stateTreeData: prevTreeData.current,
-        internalValue: prevValue
+        stateTreeData: []
       }
     });
-    rollbackRefs();
-    closeDrawer();
-
     setTimeout(() => {
-      showAllRef.current = false;
-    }, 200);
+      dispatch({
+        type: "drawerCancel",
+        payload: {
+          stateTreeData: prevTreeData.current,
+          internalValue: prevValue
+        }
+      });
+      rollbackRefs();
+      closeDrawer();
+
+      setTimeout(() => {
+        showAllRef.current = false;
+      }, 200);
+    }, 100);
   }, [closeDrawer, value, multiple, dispatch]);
 
   const handlerDrawerSubmit = useCallback(() => {
+    closeDrawer();
     dispatch({
       type: "drawerSubmit"
     });
     triggerOnChange(internalValue);
-    closeDrawer();
   }, [triggerOnChange, closeDrawer, internalValue, dispatch]);
 
   const handlerDrawerFocus = e => {
@@ -590,7 +597,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     menu => {
       return (
         <Drawer
-          destroyOnClose
+          // destroyOnClose
           className={clsx({
             "drawer-tree-select-dropdown": true,
             "drawer-tree-select-dropdown-flat-list": isFlatList
