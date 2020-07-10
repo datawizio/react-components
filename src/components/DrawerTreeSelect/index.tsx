@@ -391,11 +391,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [closeDrawer, value, multiple, dispatch]);
 
   const handlerDrawerSubmit = useCallback(() => {
-    closeDrawer();
     dispatch({
       type: "drawerSubmit"
     });
     triggerOnChange(internalValue);
+    closeDrawer();
   }, [triggerOnChange, closeDrawer, internalValue, dispatch]);
 
   const handlerDrawerFocus = e => {
