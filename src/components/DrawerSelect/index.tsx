@@ -226,6 +226,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       if (first) {
         filters.selected = value;
+        filters.first = true;
       }
 
       const { data, totalPages: pages } = await loadData(filters, page);
@@ -234,7 +235,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         data,
         valueProp,
         labelProp,
-        selectedOptions.current,
+        first ? [] : selectedOptions.current,
         first ? value : []
       );
 
