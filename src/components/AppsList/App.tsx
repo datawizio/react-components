@@ -59,7 +59,11 @@ export const App: React.FC<CardAppProps> = ({
     <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
       <Card className="card-app">
         <div className="card-app-logo">
-          {logo && <img src={logo} alt={name} />}
+          {logo ? (
+            <img src={logo} alt={name} />
+          ) : (
+            <div className="card-app-name">{name}</div>
+          )}
         </div>
         <div className="card-app-description">{translate(description)}</div>
         {clients && clients.length > 1 && (
