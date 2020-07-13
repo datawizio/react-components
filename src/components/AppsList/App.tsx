@@ -10,9 +10,10 @@ import "./index.less";
 
 export interface CardAppProps {
   app_id: number;
-  title: string;
+  name: string;
   logo: string;
-  url: string;
+  host: string;
+  path: string;
   description: string;
   allowed?: boolean;
   clients?: { id: number; name: string }[];
@@ -25,13 +26,13 @@ export interface CardAppProps {
 
 export const App: React.FC<CardAppProps> = ({
   app_id,
-  title,
+  name,
   logo,
   description,
   clients,
-  url,
+  host,
+  path,
   allowed,
-  buttonText,
   onButtonClick
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -48,6 +49,7 @@ export const App: React.FC<CardAppProps> = ({
   };
 
   const handleButtonClick = () => {
+    const url = `${host}${path ? path : ""}`;
     onButtonClick(getClient(client), { appId: app_id, url, allowed });
   };
 
@@ -55,13 +57,7 @@ export const App: React.FC<CardAppProps> = ({
     <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
       <Card className="card-app">
         <div className="card-app-logo">
-          {logo && (
-            <img
-              src={`/static/images/apps/${logo}.png`}
-              srcSet={`/static/images/apps/${logo}.png 1x, /static/images/apps/${logo}@2x.png 2x`}
-              alt={title}
-            />
-          )}
+          {logo && <img src={logo} alt={name} />}
         </div>
         <div className="card-app-description">{translate(description)}</div>
         {clients && clients.length > 1 && (
