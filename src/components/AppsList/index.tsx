@@ -9,9 +9,11 @@ import { AppsLoader } from "./AppsLoader";
 import "./index.less";
 
 export interface IApp {
-  title: string;
+  app_id: string;
+  name: string;
   logo: string;
-  url: string;
+  host: string;
+  path: string;
   description: string;
   clients?: { id: number; name: string }[];
 }
