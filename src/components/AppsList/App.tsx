@@ -22,6 +22,7 @@ export interface CardAppProps {
     { appId: number, url: string, allowed: boolean }
   ) => void;
   buttonText?: string;
+  showButton?: boolean;
 }
 
 export const App: React.FC<CardAppProps> = ({
@@ -33,6 +34,7 @@ export const App: React.FC<CardAppProps> = ({
   host,
   path,
   allowed,
+  showButton = true,
   onButtonClick
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -77,11 +79,13 @@ export const App: React.FC<CardAppProps> = ({
             </Select>
           </div>
         )}
-        <div className="card-app-actions">
-          <Button type={"primary"} block onClick={handleButtonClick}>
-            {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
-          </Button>
-        </div>
+        {showButton && (
+          <div className="card-app-actions">
+            <Button type={"primary"} block onClick={handleButtonClick}>
+              {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
+            </Button>
+          </div>
+        )}
       </Card>
     </Col>
   );
