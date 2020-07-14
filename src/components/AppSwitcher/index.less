@@ -1,0 +1,49 @@
+@import "../../styles/variables";
+
+.app-switcher-icon {
+  color: rgba(0, 0, 0, 0.65);
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.app-switcher-link {
+  display: flex;
+}
+
+.app-switcher-container {
+  width: 310px;
+  border: 1px solid rgb(9, 1, 28);
+  background-color: rgb(9, 1, 28);
+  border-radius: 5px;
+  padding: 5px;
+  .ant-col {
+    display: flex;
+    text-align: center;
+    color: white;
+    height: 100px;
+    flex-direction: column;
+    padding: 5px;
+    cursor: pointer;
+    .logo {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      & > * {
+        text-align: center;
+        flex: 1;
+        img {
+          width: 50px;
+        }
+      }
+    }
+    .title {
+      height: 30px;
+    }
+
+    &:hover {
+      background: @primary-color;
+      border-radius: 5px;
+    }
+  }
+}
