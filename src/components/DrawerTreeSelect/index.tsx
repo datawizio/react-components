@@ -100,6 +100,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const [
     {
       drawerVisible,
+      fakeVisible,
       internalValue,
       selected,
       stateTreeData,
@@ -111,6 +112,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     },
     dispatch
   ] = useDrawerTreeSelect({
+    fakeVisible: false,
     drawerVisible: false,
     internalValue: value,
     selected: undefined,
@@ -272,6 +274,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   );
 
   const checkSelectAllStatus = (values, ignoreEmpty: boolean = false) => {
+    if (!values) values = [];
     let checked = true;
     if (!multiple) return;
 
@@ -379,7 +382,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     dispatch({
       type: "setState",
       payload: {
-        stateTreeData: []
+        stateTreeData: [],
+        fakeVisible: false
       }
     });
     setTimeout(() => {
@@ -392,7 +396,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       });
       rollbackRefs();
       closeDrawer();
-
       setTimeout(() => {
         showAllRef.current = false;
       }, 200);
@@ -634,7 +637,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             loading={internalLoading}
           />
           <div className="drawer-tree-select-dropdown-toolbar">
-            {showSelectAll && (
+            {showSelectAll && !searchValue.current && (
               <Checkbox
                 onChange={handleSelectAllChange}
                 checked={selectAllState === "checked"}
@@ -644,7 +647,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               </Checkbox>
             )}
           </div>
-          {menu}
+          {fakeVisible ? menu : ""}
           <div className="drawer-select-loader-container">
             {internalLoading && (
               <Skeleton
@@ -675,6 +678,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     //eslint-disable-next-line
     [
       drawerVisible,
+      fakeVisible,
       searchValue,
       internalLoading,
       internalValue,
