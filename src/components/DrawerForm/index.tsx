@@ -14,6 +14,7 @@ export interface DrawerFormProps {
   formStore?: any;
   form?: any;
   loading?: boolean;
+  hideRequiredMark?: boolean;
   onClose?: () => void;
   onSubmit?: () => void;
 }
@@ -24,6 +25,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   title,
   visible,
+  hideRequiredMark,
   children,
   form,
   formStore,
@@ -88,6 +90,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
         form={form}
         onFinish={handleFormSubmit}
         className="entity-form"
+        hideRequiredMark={hideRequiredMark}
       >
         <Loader loading={loading}>{children}</Loader>
       </Form>
