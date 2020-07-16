@@ -39,7 +39,7 @@ export const Image: React.FC<ImageProps> = ({
   };
 
   const handleDelete = () => {
-    onChange({ name, value: "" });
+    onChange({ name, value: null });
   };
 
   const uploadButton = value ? (
