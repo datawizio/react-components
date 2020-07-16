@@ -25,7 +25,7 @@ export interface TableSelectColumnsModalProps {
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {
   const { locale } = props;
   const { translate } = useContext(ConfigContext);
-  const [tableState, dispatch, , baseTableState] = useContext(TableContext);
+  const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
   const [isOpened, setIsOpened] = useState(false);
   const [checkedKeys, setCheckedKeys] = useState([]);

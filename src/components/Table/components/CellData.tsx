@@ -16,9 +16,10 @@ export interface CellDataProps<T = any> {
 
 const CellData: React.FC<CellDataProps> = React.memo(props => {
   const { value, row, column, xIndex, yIndex, columnLevel } = props;
-  const [{ dTypesConfig }, , { cellRenderProps, rowPrefix }] = useContext(
-    TableContext
-  );
+  const {
+    tableState: { dTypesConfig },
+    tableProps: { cellRenderProps, rowPrefix }
+  } = useContext(TableContext);
 
   const typeConfig = useMemo(() => {
     return dTypesConfig[defineCellType(value, column)];
@@ -40,7 +41,7 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
   }, [rowPrefix, value, xIndex, column, row, columnLevel, yIndex]);
 
   return (
-    <div className="dw-table__cell">
+    <div className="dw-table__cell-data">
       {rowPrefixRender && <span className="row-prefix">{rowPrefixRender}</span>}
       {cellDataRender}
     </div>

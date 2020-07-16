@@ -11,7 +11,10 @@ export interface TableSearchProps {
 }
 
 const TableSearch: React.FC<TableSearchProps> = ({ placeholder }) => {
-  const [{ searchValue }, dispatch] = useContext(TableContext);
+  const {
+    dispatch,
+    tableState: { searchValue }
+  } = useContext(TableContext);
 
   return (
     <div className="table-search table-toolbar--left">

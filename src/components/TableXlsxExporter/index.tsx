@@ -21,9 +21,10 @@ export interface TableXlsxExporterProps extends ButtonProps {
 }
 
 const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
-  const { translate } = useContext(ConfigContext);
   const { exportHandler, filename, ...restProps } = props;
-  const [tableState] = useContext(TableContext);
+
+  const { translate } = useContext(ConfigContext);
+  const { tableState } = useContext(TableContext);
 
   const handleExport = useCallback(async () => {
     if (exportHandler) {

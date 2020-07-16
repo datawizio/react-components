@@ -1,7 +1,7 @@
-export function deepFilter<T = any>(
-  node: Array<T>,
-  callback: (item: T) => boolean,
-  onFoundParent?: (parent: T) => void,
+export function deepFilter(
+  node,
+  callback,
+  onFoundParent = null,
   deepProp = "children"
 ) {
   return [...node].reduce((acc, item) => {

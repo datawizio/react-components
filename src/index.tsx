@@ -70,6 +70,8 @@ export { default as ErrorBoundary } from "./components/ErrorBoundary";
 
 export { default as ConfigProvider } from "./components/ConfigProvider";
 
+export { default as TableTemplates } from "./components/TableTemplates";
+
 export { default as InfiniteScroll } from "./components/InfiniteScroll";
 
 export { default as LiteSearchInput } from "./components/LiteSearchInput";

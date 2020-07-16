@@ -52,14 +52,14 @@ export function initializer(props: TableProps): TableState {
 
 export function reducer(state: TableState, action: Action): TableState {
   switch (action.type) {
-    case "updateDataSource":
+    case "updateDataSource": {
       return {
         ...state,
         expandedRowKeys: [],
         dataSource: action.payload
       };
-
-    case "updateColumns":
+    }
+    case "updateColumns": {
       const nextColumnsMap = genColumnsMap(action.payload);
       const nextSortParams = filterByColumns(nextColumnsMap, state.sortParams);
       const nextFilterParams = filterByColumns(
@@ -83,20 +83,20 @@ export function reducer(state: TableState, action: Action): TableState {
 
         visibleColumnsKeys: nextVisibleColumnsKeys
       };
-
-    case "visibleColumnsKeys":
+    }
+    case "visibleColumnsKeys": {
       return {
         ...state,
         visibleColumnsKeys: action.payload
       };
-
-    case "paginate":
+    }
+    case "paginate": {
       return {
         ...state,
         pagination: action.payload
       };
-
-    case "search":
+    }
+    case "search": {
       return {
         ...state,
         searchValue: action.payload,
@@ -105,8 +105,8 @@ export function reducer(state: TableState, action: Action): TableState {
           current: 1
         }
       };
-
-    case "sort":
+    }
+    case "sort": {
       const sorters = action.payload;
       const sortParams = sorters
         .filter(({ column }) => column)
@@ -122,8 +122,8 @@ export function reducer(state: TableState, action: Action): TableState {
         ...state,
         sortParams
       };
-
-    case "filter":
+    }
+    case "filter": {
       const filterParams = Object.entries(action.payload).reduce(
         (acc, [key, value]) => {
           if (value) {
@@ -139,8 +139,8 @@ export function reducer(state: TableState, action: Action): TableState {
         ...state,
         filterParams
       };
-
-    case "setRowChildren":
+    }
+    case "setRowChildren": {
       const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
       const expandedRowIdx = state.dataSource.findIndex(
@@ -156,8 +156,8 @@ export function reducer(state: TableState, action: Action): TableState {
         ...state,
         dataSource: nextDataSource
       };
-
-    case "swapColumns":
+    }
+    case "swapColumns": {
       const [keyFrom, keyTo] = action.payload;
       const nextColumns = state.columns.concat();
 
@@ -167,28 +167,51 @@ export function reducer(state: TableState, action: Action): TableState {
         ...state,
         columns: nextColumns
       };
-
-    case "expandRow":
+    }
+    case "expandRow": {
       return {
         ...state,
         expandedRowKeys: state.expandedRowKeys.concat(action.payload.key)
       };
-
-    case "collapseRow":
+    }
+    case "collapseRow": {
       return {
         ...state,
         expandedRowKeys: state.expandedRowKeys.filter(
           key => key !== action.payload.key
         )
       };
-
-    case "loading":
+    }
+    case "loading": {
       return {
         ...state,
         loading: action.payload
       };
+    }
+    case "recoveryState": {
+      const { columnsPositions, pagination, ...restPayload } = action.payload;
+      let nextState = { ...state, ...restPayload };
 
-    case "update":
+      if (nextState.pagination && pagination && pagination.pageSize) {
+        nextState.pagination.pageSize = pagination.pageSize;
+      }
+
+      if (columnsPositions) {
+        nextState.columns = (function rec(columns) {
+          return columns.map(
+            column =>
+              ({
+                ...column,
+                ...state.columnsMap[column.dataIndex],
+                children: column.children && rec(column.children as any)
+              } as any)
+          );
+        })(columnsPositions);
+      }
+
+      return nextState;
+    }
+    case "update": {
       let nextState = { ...state, ...action.payload };
 
       if (action.payload.columns)
@@ -204,6 +227,7 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
       return nextState;
+    }
 
     default:
       return state;

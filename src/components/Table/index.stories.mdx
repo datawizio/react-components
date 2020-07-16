@@ -6,6 +6,7 @@ import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
 import TableSearch from "../TableSearch";
 import TableXlsxExporter from "../TableXlsxExporter";
+import TableTemplates from "../TableTemplates";
 import TableTransposeButton from "../TableTransposeButton";
 import TableSelectColumnsModal from "../TableSelectColumnsModal";
 import { exportTableToXLSX } from "../TableXlsxExporter/exporters";
@@ -71,6 +72,13 @@ import { useState, useMemo, useCallback } from "react";
               <Table.ToolBar>
                 <TableSearch />
                 <TableXlsxExporter exportHandler={exportTableToXLSX} />
+                <TableTemplates
+                  templates={[
+                    { title: "test1", favorite: true },
+                    { title: "test2", favorite: false },
+                    { title: "test3", favorite: false }
+                  ]}
+                />
                 <TableSelectColumnsModal />
               </Table.ToolBar>
             )}

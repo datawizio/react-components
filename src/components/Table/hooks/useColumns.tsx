@@ -3,10 +3,10 @@ import CellData from "../components/CellData";
 import { IColumn, TableProps, TableState } from "../types";
 
 function useColumns(state: TableState, props: TableProps): Partial<TableState> {
-  const { columns, visibleColumnsKeys } = state;
+  const { columns, visibleColumnsKeys, sortParams, filterParams } = state;
   const { sortable, columnsConfig, isResizableColumns } = props;
 
-  return useMemo(() => {
+  const initializedColumns = useMemo(() => {
     function initColumns(columns: Array<IColumn>, level = 1) {
       return columns
         .reduce((acc, column, idx) => {
@@ -59,9 +59,7 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
         .sort((a, b) => +Boolean(b.fixed) - +Boolean(a.fixed));
     }
 
-    return {
-      columns: initColumns(columns)
-    };
+    return initColumns(columns);
   }, [
     columns,
     sortable,
@@ -69,6 +67,22 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
     isResizableColumns,
     visibleColumnsKeys
   ]);
+
+  const nextColumns = useMemo(() => {
+    return (function rec(columns) {
+      return columns.map((column: IColumn) => ({
+        ...column,
+        sortOrder: sortParams[column.dataIndex],
+        filteredValue: column.filters && filterParams[column.dataIndex],
+        children:
+          column.children && column.children.length && rec(column.children)
+      }));
+    })(initializedColumns);
+  }, [sortParams, filterParams, initializedColumns]);
+
+  return {
+    columns: nextColumns
+  };
 }
 
 useColumns.displayName = "useColumns";

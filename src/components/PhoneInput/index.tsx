@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
 import Flags from "country-flag-icons/react/3x2";
+import ConfigContext from "../ConfigProvider/context";
 
 import countries from "./helpers/countries";
 
@@ -12,8 +13,6 @@ import {
 
 import Input from "../Input";
 import Select from "../Select";
-
-import ConfigContext from "../ConfigProvider/context";
 
 import "./index.less";
 
@@ -40,11 +39,10 @@ const PhoneInput: FCPhoneInput = ({
   value,
   onChange
 }) => {
+  const { translate } = useContext(ConfigContext);
   const [internalValue, setInternalValue] = useState<string>();
   const [formatedValue, setFormatedValue] = useState<string>();
   const [selectedCountry, setSelectedCountry] = useState<string>("UA");
-
-  const { translate } = useContext(ConfigContext);
 
   const inputRef = useRef<any>();
 

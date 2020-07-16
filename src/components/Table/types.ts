@@ -1,3 +1,4 @@
+import { TableTemplateState, TableTemplate } from "./../TableTemplates/types";
 import { Overwrite } from "utility-types";
 import { ColumnProps } from "antd/lib/table";
 import { TableProps as AntdTableProps } from "antd/lib/table";
@@ -40,6 +41,7 @@ export interface TableProps<RT = any>
   isResizableColumns?: boolean;
 
   pageSizeOptions?: Array<string>;
+  templates?: Array<TableTemplate>;
   visibleColumnsKeys?: Array<IColumn["key"]>;
 
   cellRenderProps?: { [key: string]: any };
@@ -61,6 +63,7 @@ export interface TableProps<RT = any>
 
   dataProvider?: DataProvider;
   dataProviderDeps?: (state) => Array<any>;
+  templatesProvider?: () => Promise<Array<TableTemplate>>;
   rowChildrenProvider?: RowChildrenProviderType;
 }
 
@@ -81,6 +84,7 @@ export type Action =
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
   | { type: "update"; payload: Partial<TableState> }
+  | { type: "recoveryState"; payload: TableTemplateState }
   | { type: "paginate"; payload: TableState["pagination"] }
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }

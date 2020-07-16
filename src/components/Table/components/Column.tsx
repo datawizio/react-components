@@ -20,7 +20,7 @@ const Column: React.FC<ColumnProps> = props => {
 
   const [lastWidth, setLastWidth] = useState<number>(0);
 
-  const [, dispatch] = useContext(TableContext);
+  const { dispatch } = useContext(TableContext);
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level }
@@ -60,7 +60,7 @@ const Column: React.FC<ColumnProps> = props => {
   const onClickHandler = useCallback(
     event => {
       const currentWidth = event.target.offsetWidth;
-      lastWidth === currentWidth && onClick(event);
+      lastWidth === currentWidth && onClick && onClick(event);
     },
     [lastWidth, onClick]
   );

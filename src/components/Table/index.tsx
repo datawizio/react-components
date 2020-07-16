@@ -7,19 +7,13 @@ import useColumns from "./hooks/useColumns";
 import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
 
-import {
-  useMemo,
-  useEffect,
-  useReducer,
-  useContext,
-  useCallback,
-  useImperativeHandle
-} from "react";
+import { useMemo, useReducer, useContext, useCallback } from "react";
 
 import { TableContext } from "./context";
 import ConfigContext from "../ConfigProvider/context";
 
 import Loader from "../Loader";
+import Cell from "./components/Cell";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
@@ -36,6 +30,7 @@ import {
 import { TableProps, FCTable, TableRef } from "./types";
 
 import "./index.less";
+import useAsyncProviders from "./hooks/useAsyncProviders";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
@@ -48,6 +43,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     dataProvider,
     showSizeChanger,
     dataProviderDeps,
+    templatesProvider,
     rowChildrenProvider,
     ...restProps
   } = props;
@@ -69,18 +65,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   usePropsToState(dispatch, props);
 
-  const fetchData = useCallback(async () => {
-    if (dataProvider) {
-      dispatch({ type: "loading", payload: true });
-      dispatch({ type: "update", payload: await dataProvider(state) });
-      dispatch({ type: "loading", payload: false });
-    }
-    // eslint-disable-next-line
-  }, [dataProvider].concat(dataProviderDeps && dataProviderDeps(state)));
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  useAsyncProviders(state, dispatch, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -124,6 +109,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       header: {
         cell: props =>
           Boolean(props.model) ? <Column {...props} /> : <th {...props} />
+      },
+      body: {
+        cell: props => <Cell {...props} />
       }
     }),
     [height, width, components]
@@ -142,15 +130,16 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     [baseState.loading, props.className, state.dataSource.length]
   );
 
-  useImperativeHandle(ref, () => ({
-    reload() {
-      fetchData();
-    }
-  }));
-
   return (
     <DndProvider backend={HTML5Backend}>
-      <TableContext.Provider value={[state, dispatch, props, baseState]}>
+      <TableContext.Provider
+        value={{
+          tableProps: props,
+          tableState: state,
+          dispatch: dispatch,
+          baseTableState: baseState
+        }}
+      >
         <Loader loading={Boolean(baseState.loading)}>
           {children}
           <AntdTable

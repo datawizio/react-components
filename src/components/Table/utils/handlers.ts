@@ -4,6 +4,7 @@ import {
   SorterHandlerType
 } from "../types";
 
+import { IRow } from "./../types";
 import { defineCellType } from "./utils";
 import { deepFilter } from "../../../utils/deepFilter";
 
@@ -17,7 +18,7 @@ const basicSearchHandler: SearchHandlerType = (
 
   const foundRows = deepFilter(
     dataSource,
-    row => {
+    (row: IRow) => {
       return Object.entries(row).some(([dataIndex, cellVal]) => {
         const typeConfig =
           dTypesConfig[defineCellType(cellVal, columnsMap[dataIndex])];
@@ -48,7 +49,7 @@ const basicFilterHandler: FilterHandlerType = (
   dTypesConfig
 ) => {
   const filterData = dataSource => {
-    return deepFilter(dataSource, row =>
+    return deepFilter(dataSource, (row: IRow) =>
       Object.entries(filterParams).some(([dataIndex, filterParameter]) => {
         const cellVal = row[dataIndex];
         const typeConfig =
