@@ -18,7 +18,6 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
   loading,
   ...restProps
 }) => {
-  const { translate } = useContext(ConfigContext);
   const handleFieldChange = (value: any, selected: any) => {
     onChange({
       name,
@@ -39,11 +38,6 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
         multiple={multiple ? multiple : false}
         options={options}
         drawerTitle={placeholder}
-        drawerSearchPlaceholder={translate("SEARCH")}
-        submitText={translate("SUBMIT")}
-        cancelText={translate("CANCEL")}
-        loadingText={translate("LOADING")}
-        noDataText={translate("NO_DATA")}
         loadData={loadData}
         loading={loading}
         placeholder={placeholder}

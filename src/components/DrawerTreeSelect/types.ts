@@ -24,11 +24,6 @@ export interface DrawerTreeSelectProps<VT>
   asyncData?: boolean;
 
   /**
-   * Place holder for search field in drawer
-   */
-  drawerSearchPlaceholder?: string;
-
-  /**
    * Title Drawerа
    */
   drawerTitle?: string;
@@ -46,22 +41,6 @@ export interface DrawerTreeSelectProps<VT>
   levels?: LevelsType;
 
   level?: string | number;
-
-  levelText?: string;
-
-  /**
-   * Cancel text in drawer
-   */
-  cancelText?: string;
-
-  /**
-   * Submit text in drawer
-   */
-  submitText?: string;
-
-  loadingText?: string;
-
-  noDataText?: string;
 
   /**
    * tree data is flat list or not

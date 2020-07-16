@@ -69,18 +69,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   levels,
   level,
   drawerTitle,
-  drawerSearchPlaceholder,
   drawerWidth,
   formatRender,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
   treeData,
   treeDataCount,
-  cancelText,
-  submitText,
-  loadingText,
-  noDataText,
-  levelText,
   value,
   isFlatList,
   onChange,
@@ -92,11 +86,19 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   remoteSearch,
   loading,
   showSelectAll,
-  selectAllText,
   emptyIsAll,
   placeholder,
   ...restProps
 }) => {
+  const { translate } = useContext(ConfigContext);
+
+  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), []);
+  const noDataText = useMemo(() => translate("NO_DATA"), []);
+  const loadingText = useMemo(() => translate("LOADING"), []);
+  const submitText = useMemo(() => translate("SUBMIT"), []);
+  const cancelText = useMemo(() => translate("CANCEL"), []);
+  const selectAllText = useMemo(() => translate("ALL"), []);
+
   const [
     {
       drawerVisible,
@@ -145,8 +147,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const inputRef = useRef<HTMLInputElement>();
 
   const showAllRef = useRef<boolean>(false);
-
-  const { translate } = useContext(ConfigContext);
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
@@ -208,7 +208,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       filters.value = newValue ? newValue : internalValue;
     }
 
-    filters.first = true;
+    filters.first = first;
 
     return filters;
   };
@@ -226,7 +226,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       });
 
       const { data, levels, expanded, count } = await loadData(filters);
-
       mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
 
       const newState: any = {
@@ -245,10 +244,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         newState.internalLevels = levels;
       }
 
-      if (expanded) {
-        newState.internalTreeExpandedKeys = expanded;
-      }
-
       if (drawerVisibleRef.current) {
         const s = checkSelectAllStatus(
           value ? value : internalValue,
@@ -263,6 +258,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         type: "remoteLoadDataStop",
         payload: newState
       });
+      if (expanded) {
+        dispatch({
+          type: "setState",
+          payload: {
+            internalTreeExpandedKeys: expanded
+          }
+        });
+      }
 
       triggerInputChangeValue(
         inputRef.current,
@@ -387,6 +390,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       }
     });
     setTimeout(() => {
+      rollbackRefs();
+
       dispatch({
         type: "drawerCancel",
         payload: {
@@ -394,7 +399,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           internalValue: prevValue
         }
       });
-      rollbackRefs();
       closeDrawer();
       setTimeout(() => {
         showAllRef.current = false;
@@ -734,17 +738,10 @@ DrawerTreeSelect.defaultProps = {
   showLevels: false,
   isFlatList: false,
   drawerTitle: "",
-  drawerSearchPlaceholder: "Search",
   drawerWidth: 400,
-  cancelText: "Cancel",
-  submitText: "Submit",
-  loadingText: "Loading",
-  noDataText: "No data",
-  levelText: "Level %s",
   formatRender: null,
   remoteSearch: false,
   showSelectAll: false,
-  selectAllText: "Select all",
   emptyIsAll: false,
   levels: []
 };

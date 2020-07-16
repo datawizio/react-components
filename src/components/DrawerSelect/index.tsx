@@ -33,19 +33,9 @@ export interface DrawerSelectProps<VT>
   asyncData?: boolean;
 
   /**
-   * Cancel text in drawer
-   */
-  cancelText?: string;
-
-  /**
    * Title Drawerа
    */
   drawerTitle?: string;
-
-  /**
-   * Place holder for search field in drawer
-   */
-  drawerSearchPlaceholder?: string;
 
   /**
    * Drawer width in px
@@ -65,16 +55,7 @@ export interface DrawerSelectProps<VT>
     page: number
   ) => Promise<{ data: any; totalPages: number }>;
 
-  loadingText?: string;
-
   multiple?: boolean;
-
-  noDataText?: string;
-
-  /**
-   * Submit text in drawer
-   */
-  submitText?: string;
 
   /**
    * Value prop
@@ -136,17 +117,12 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     checkAllTitle,
     checkAllKey,
     drawerTitle,
-    drawerSearchPlaceholder,
     drawerWidth,
-    cancelText,
-    submitText,
     value,
     isFlatList,
     onChange,
     options,
     labelProp,
-    loadingText,
-    noDataText,
     loadData,
     loading,
     valueProp,
@@ -155,6 +131,14 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     withPagination,
     ...restProps
   } = props;
+
+  const { translate } = useContext(ConfigContext);
+
+  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), []);
+  const noDataText = useMemo(() => translate("NO_DATA"), []);
+  const loadingText = useMemo(() => translate("LOADING"), []);
+  const submitText = useMemo(() => translate("SUBMIT"), []);
+  const cancelText = useMemo(() => translate("CANCEL"), []);
 
   const [
     {
@@ -181,8 +165,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const selectedOptions = useRef<any[]>([]);
   const menuRef = useRef();
-
-  const { translate } = useContext(ConfigContext);
+  const firstLoadedOptions = useRef<any[]>([]);
 
   const internalOptions = useMemo(() => {
     return options ? convertOptions(options, valueProp, labelProp).options : [];
@@ -241,6 +224,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       if (first) {
         selectedOptions.current = options.selected;
+        firstLoadedOptions.current = options.options;
       }
 
       state = {
@@ -277,21 +261,33 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
+    const payload: any = { internalValue: !multiple && !value ? [] : value };
+    if (searchValue) {
+      payload.optionsState = selectedOptions.current.concat(
+        firstLoadedOptions.current
+      );
+    }
     dispatch({
       type: "drawerCancel",
-      payload: {
-        internalValue: !multiple && !value ? [] : value
-      }
+      payload
     });
-  }, [dispatch, closeDrawer, value, multiple]);
+  }, [dispatch, closeDrawer, value, multiple, searchValue]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
+    const payload: any = {};
+    if (searchValue) {
+      payload.optionsState = selectedOptions.current.concat(
+        firstLoadedOptions.current
+      );
+    }
+
     dispatch({
-      type: "drawerSubmit"
+      type: "drawerSubmit",
+      payload
     });
     triggerOnChange(internalValue);
-  }, [dispatch, triggerOnChange, closeDrawer, internalValue]);
+  }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
 
   const handleDrawerFocus = e => {
     setInputRef(e.target);
@@ -518,12 +514,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 DrawerSelect.defaultProps = {
   maxTagCount: 10,
   drawerTitle: "",
-  drawerSearchPlaceholder: "Search",
   drawerWidth: 400,
-  cancelText: "Cancel",
-  submitText: "Submit",
-  loadingText: "Loading",
-  noDataText: "No data",
   labelProp: "title",
   valueProp: "key",
   asyncData: false,

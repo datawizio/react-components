@@ -40,7 +40,8 @@ function reducer(state: IUseDrawerSelect, action: any) {
       return {
         ...state,
         searchValue: "",
-        drawerVisible: false
+        drawerVisible: false,
+        ...action.payload
       };
     }
     case "setSelected": {

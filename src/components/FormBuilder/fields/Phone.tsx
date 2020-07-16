@@ -10,7 +10,7 @@ import ConfigContext from "../../ConfigProvider/context";
 const phoneValidation = (message: string) => ({
   message,
   validator(rule: Rule, value: string) {
-    if (PhoneInput.isValidPhoneNumber(value)) {
+    if (!value || PhoneInput.isValidPhoneNumber(value)) {
       return Promise.resolve();
     }
     //@ts-ignore

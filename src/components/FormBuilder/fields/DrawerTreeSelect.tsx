@@ -5,7 +5,6 @@ import { Form } from "antd";
 import DrawerTreeSelect from "../../DrawerTreeSelect";
 
 import { FieldDrawerTreeSelectProps } from "../types";
-import ConfigContext from "../../ConfigProvider/context";
 
 export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
   drawerTitle,
@@ -18,8 +17,6 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
   onChange,
   ...restProps
 }) => {
-  const { translate } = useContext(ConfigContext);
-
   const handleFieldChange = (value: any, selected: any) => {
     if (!multiple && value.length === 0) value = "";
     onChange({
@@ -38,12 +35,6 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
       <DrawerTreeSelect
         placeholder={placeholder}
         drawerTitle={drawerTitle ? drawerTitle : placeholder}
-        drawerSearchPlaceholder={translate("SEARCH")}
-        submitText={translate("SUBMIT")}
-        loadingText={translate("LOADING")}
-        noDataText={translate("NO_DATA")}
-        cancelText={translate("CANCEL")}
-        selectAllText={translate("ALL")}
         level={1}
         treeNodeFilterProp="title"
         treeCheckable={true}
