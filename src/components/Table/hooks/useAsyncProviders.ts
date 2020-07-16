@@ -36,7 +36,14 @@ function useAsyncProviders(
         : await fetchData();
       dispatch({ type: "loading", payload: false });
     })();
-  }, [fetchData, templatesProvider, recoveryState, dispatch]);
+    // eslint-disable-next-line
+  }, [
+    dispatch,
+    fetchData,
+    templatesProvider,
+    recoveryState,
+    state.stateIsRecovered
+  ]);
 
   useEffect(() => {
     firstUpdate.current = false;

@@ -190,7 +190,7 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "recoveryState": {
       const { columnsPositions, pagination, ...restPayload } = action.payload;
-      let nextState = { ...state, ...restPayload };
+      let nextState = { ...state, ...restPayload, stateIsRecovered: true };
 
       if (nextState.pagination && pagination && pagination.pageSize) {
         nextState.pagination.pageSize = pagination.pageSize;
