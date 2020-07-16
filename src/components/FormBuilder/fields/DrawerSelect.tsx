@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { Form } from "antd";
 import { FieldDrawerSelectProps } from "../types";
-import ConfigContext from "../../ConfigProvider/context";
 import DrawerSelect from "../../DrawerSelect";
 
 export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({

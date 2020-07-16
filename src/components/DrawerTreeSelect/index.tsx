@@ -92,12 +92,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 }) => {
   const { translate } = useContext(ConfigContext);
 
-  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), []);
-  const noDataText = useMemo(() => translate("NO_DATA"), []);
-  const loadingText = useMemo(() => translate("LOADING"), []);
-  const submitText = useMemo(() => translate("SUBMIT"), []);
-  const cancelText = useMemo(() => translate("CANCEL"), []);
-  const selectAllText = useMemo(() => translate("ALL"), []);
+  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
+    translate
+  ]);
+  const noDataText = useMemo(() => translate("NO_DATA"), [translate]);
+  const loadingText = useMemo(() => translate("LOADING"), [translate]);
+  const submitText = useMemo(() => translate("SUBMIT"), [translate]);
+  const cancelText = useMemo(() => translate("CANCEL"), [translate]);
+  const selectAllText = useMemo(() => translate("ALL"), [translate]);
 
   const [
     {

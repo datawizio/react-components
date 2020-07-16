@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useMemo, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 import Flags from "country-flag-icons/react/3x2";
 
-import countries, { ICountry } from "./helpers/countries";
+import countries from "./helpers/countries";
 
 import {
   parseInput,
@@ -116,6 +116,7 @@ const PhoneInput: FCPhoneInput = ({
         optionFilterProp="title"
         onChange={handleCountryChange}
         showSearch={true}
+        notFoundContent={translate("NO_DATA")}
       >
         {countries.map(country => {
           const Flag = Flags[country.value];
