@@ -2,10 +2,8 @@ import * as React from "react";
 import { TableTemplate } from "./types";
 import { useState, useCallback, useContext, useEffect } from "react";
 
-import Button from "../Button";
 import Select from "../Select";
 import { TableState } from "../Table/types";
-import { SaveOutlined } from "@ant-design/icons";
 
 import Dropdown from "./components/Dropdown";
 import Template from "./components/Template";
@@ -50,7 +48,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   const [templates, setTemplates] = useState([]);
   const [value, setValue] = useState<string>(null);
-  const [selectVisible, setSelectVisible] = useState(false);
 
   const setTemplateToState = useCallback(
     template => {
@@ -62,7 +59,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   const handleSelect = useCallback(
     value => {
       const template = templates.find(template => template.title === value);
-      if (template.state) setTemplateToState(template);
+      setTemplateToState(template);
       setValue(value);
     },
     [templates, setTemplateToState]
@@ -116,7 +113,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       const favorite = templates.find(template => template.favorite);
 
       if (favorite && favorite.state) {
-        setSelectVisible(true);
         setValue(favorite.title);
         setTemplateToState(favorite);
       }
@@ -136,34 +132,25 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   return (
     <div className="table-templates table-toolbar--right">
-      {!selectVisible && (
-        <Button border={false} onClick={() => setSelectVisible(true)}>
-          <SaveOutlined className="table-templates__icon" />
-          {translate("TEMPLATES")}
-        </Button>
-      )}
-
-      {selectVisible && (
-        <Select
-          listHeight={150}
-          onChange={handleSelect}
-          value={(<>{value || translate("SELECT_TEMPLATE")}</>) as any}
-          className="table-templates__selector"
-          dropdownRender={originNode => (
-            <Dropdown onCreate={handleCreate}>{originNode}</Dropdown>
-          )}
-        >
-          {templates.map((template, idx) => (
-            <Select.Option idx={idx} value={template.title}>
-              <Template
-                onDelete={handleDelete}
-                onSelectFavorite={handleSelectFavorite}
-                {...template}
-              />
-            </Select.Option>
-          ))}
-        </Select>
-      )}
+      <Select
+        listHeight={150}
+        onChange={handleSelect}
+        className="table-templates__selector"
+        value={(<>{value || translate("TEMPLATES")}</>) as any}
+        dropdownRender={originNode => (
+          <Dropdown onCreate={handleCreate}>{originNode}</Dropdown>
+        )}
+      >
+        {templates.map((template, idx) => (
+          <Select.Option idx={idx} value={template.title}>
+            <Template
+              onDelete={handleDelete}
+              onSelectFavorite={handleSelectFavorite}
+              {...template}
+            />
+          </Select.Option>
+        ))}
+      </Select>
     </div>
   );
 };

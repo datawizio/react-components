@@ -70,6 +70,7 @@ export interface TableProps<RT = any>
 export interface TableState extends Partial<TableProps> {
   sortParams: SortParams;
   filterParams: FilterParams;
+  stateIsRecovered?: boolean;
   columnsMap: { [key: string]: IColumn };
 }
 
