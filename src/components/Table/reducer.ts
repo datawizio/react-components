@@ -72,10 +72,35 @@ export function reducer(state: TableState, action: Action): TableState {
         state.visibleColumnsKeys.length &&
         state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
 
+      const nextColumns = (function rec(newColumns, oldColumns) {
+        const sameDataIndex = newColumn => oldColumn =>
+          newColumn.dataIndex === oldColumn.dataIndex;
+
+        newColumns.sort(
+          (a, b) =>
+            oldColumns.findIndex(sameDataIndex(a)) -
+            oldColumns.findIndex(sameDataIndex(b))
+        );
+
+        newColumns.forEach(column => {
+          if (column.children && column.children.length) {
+            const oldColumn = oldColumns.find(
+              oldColumn => oldColumn.dataIndex === column.dataIndex
+            );
+
+            oldColumn.children &&
+              oldColumn.children.length &&
+              rec(column.children, oldColumn.children);
+          }
+        });
+
+        return newColumns;
+      })(action.payload, state.columns);
+
       return {
         ...state,
 
-        columns: action.payload,
+        columns: nextColumns,
         columnsMap: nextColumnsMap,
 
         sortParams: nextSortParams,
@@ -215,10 +240,13 @@ export function reducer(state: TableState, action: Action): TableState {
       let nextState = { ...state, ...action.payload };
 
       if (action.payload.columns)
-        nextState = reducer(nextState, {
-          type: "updateColumns",
-          payload: nextState.columns
-        });
+        nextState = reducer(
+          { ...nextState, columns: state.columns },
+          {
+            type: "updateColumns",
+            payload: nextState.columns
+          }
+        );
 
       if (action.payload.dataSource)
         nextState = reducer(nextState, {
