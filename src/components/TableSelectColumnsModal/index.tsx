@@ -33,8 +33,9 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   useEffect(() => {
     setCheckedKeys(
-      tableState.visibleColumnsKeys ||
-        baseTableState.columns.map(column => column.key)
+      tableState.visibleColumnsKeys && tableState.visibleColumnsKeys.length
+        ? tableState.visibleColumnsKeys
+        : baseTableState.columns.map(column => column.key)
     );
   }, [tableState.visibleColumnsKeys, baseTableState.columns]);
 

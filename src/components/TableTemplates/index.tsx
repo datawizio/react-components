@@ -13,14 +13,17 @@ import { TableContext } from "../Table/context";
 
 import "./index.less";
 
-function pickState(state: TableState): TableTemplate["state"] {
+function pickState(
+  state: TableState,
+  baseState: TableState
+): TableTemplate["state"] {
   const columnsPositions = (function rec(columns) {
     return columns.map(column => ({
       dataIndex: column.dataIndex,
       children:
         column.children && column.children.length && rec(column.children)
     }));
-  })(state.columns);
+  })(baseState.columns);
 
   return {
     columnsPositions,
@@ -44,7 +47,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   const { onCreate, onDelete, onSelectFavorite } = props;
 
   const { translate } = useContext(ConfigContext);
-  const { tableState, dispatch } = useContext(TableContext);
+  const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
   const [templates, setTemplates] = useState([]);
   const [value, setValue] = useState<string>(null);
@@ -94,7 +97,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       let template = {
         title,
         favorite: false,
-        state: pickState(tableState)
+        state: pickState(tableState, baseTableState)
       };
 
       if (onCreate) {
