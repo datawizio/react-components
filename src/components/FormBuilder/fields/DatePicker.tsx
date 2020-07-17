@@ -7,7 +7,7 @@ import DatePicker from "../../DatePicker";
 import { FieldDatePickerProps } from "../types";
 
 export const FieldDatePicker: React.FC<FieldDatePickerProps> = React.memo(
-  ({ format, label, rules, name, placeholder, onChange }) => {
+  ({ format, label, rules, name, placeholder, fullWidth, onChange }) => {
     const handleChange = (value: Dayjs) => {
       onChange({ name, value });
     };
@@ -19,6 +19,7 @@ export const FieldDatePicker: React.FC<FieldDatePickerProps> = React.memo(
           //@ts-ignore
           onChange={handleChange}
           format={format}
+          className={fullWidth ? "ant-picker-w100" : ""}
         />
       </Form.Item>
     );

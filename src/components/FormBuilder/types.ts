@@ -40,6 +40,7 @@ export interface IntervalItemProps {
 
 export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
   format?: string;
+  fullWidth?: boolean;
 }
 
 export interface FieldTextProps extends FormFieldProps<string> {}
