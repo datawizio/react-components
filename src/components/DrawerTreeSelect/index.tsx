@@ -57,7 +57,7 @@ function calcEmptyIsAll(
 ) {
   if (!emptyIsAll) return false;
   if (filters.search) return false;
-  if (filters.level.toString() !== "1") return false;
+  if (filters.level && filters.level.toString() !== "1") return false;
   if (filters.formats && filters.formats.length !== 0) return false;
   return true;
 }
@@ -239,7 +239,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       }
 
       if (count) {
-        newState.intenalTreeDataCount = count;
+        newState.internalTreeDataCount = count;
       }
 
       if (showLevels && levels) {

@@ -13,14 +13,17 @@
 
 .app-switcher-container {
   width: 310px;
-  border: 1px solid rgb(9, 1, 28);
-  background-color: rgb(9, 1, 28);
+  border: 1px solid #e9e9e9;
+  background-color: white;
+  margin-top: 15px;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
   padding: 5px;
   .ant-col {
     display: flex;
     text-align: center;
-    color: white;
+    color: rgba(0, 0, 0, 0.65);
     height: 100px;
     flex-direction: column;
     padding: 5px;
@@ -39,10 +42,12 @@
     }
     .title {
       height: 30px;
+      font-size: 16px;
+      padding-top: 5px;
     }
 
     &:hover {
-      background: @primary-color;
+      background: rgb(142, 116, 198);
       border-radius: 5px;
     }
   }
