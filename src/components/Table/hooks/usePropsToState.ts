@@ -11,23 +11,26 @@ function usePropsToState(dispatch: Dispatch<Action>, props: TableProps) {
   } = props;
 
   useEffect(() => {
-    dispatch({ type: "loading", payload: !!loading });
+    if (searchValue !== undefined)
+      dispatch({ type: "loading", payload: !!loading });
   }, [loading, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: "update", payload: { searchValue } });
+    if (searchValue !== undefined)
+      dispatch({ type: "update", payload: { searchValue } });
   }, [searchValue, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: "updateColumns", payload: columns || [] });
+    if (columns) dispatch({ type: "updateColumns", payload: columns || [] });
   }, [columns, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: "updateDataSource", payload: dataSource || [] });
+    if (dataSource) dispatch({ type: "updateDataSource", payload: dataSource });
   }, [dataSource, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: "visibleColumnsKeys", payload: visibleColumnsKeys });
+    if (visibleColumnsKeys)
+      dispatch({ type: "visibleColumnsKeys", payload: visibleColumnsKeys });
   }, [visibleColumnsKeys, columns, dispatch]);
 }
 

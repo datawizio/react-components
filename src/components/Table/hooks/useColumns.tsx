@@ -18,6 +18,7 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
           if (
             !nextColumn.fixed &&
             visibleColumnsKeys &&
+            visibleColumnsKeys.length &&
             !visibleColumnsKeys.includes(nextColumn.key)
           ) {
             return acc;
