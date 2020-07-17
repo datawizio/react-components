@@ -76,8 +76,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   const handleSelect = useCallback(
     value => {
       const template = templates.find(template => template.title === value);
+      setValue(template.title);
       setTemplateToState(template);
-      setValue(value);
     },
     [templates, setTemplateToState]
   );
@@ -124,7 +124,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         const createResponse = await onCreate(template);
         if (createResponse) template = createResponse;
       }
-
       setValue(title);
       setTemplates(templates => templates.concat(template));
     },
@@ -160,7 +159,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   }, [value]);
 
   return (
-    <div className={className} onClick={handleClear}>
+    <div className={className}>
       <Select
         listHeight={150}
         onChange={handleSelect}
