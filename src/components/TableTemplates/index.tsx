@@ -39,6 +39,8 @@ function pickState(
 function SelectValue({ value }) {
   const { translate } = useContext(ConfigContext);
 
+  console.log(value);
+
   return (
     <div className="table-templates__value">
       <SaveOutlined className="table-templates__icon" />
@@ -76,8 +78,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   const handleSelect = useCallback(
     value => {
       const template = templates.find(template => template.title === value);
+      setValue(template.title);
       setTemplateToState(template);
-      setValue(value);
     },
     [templates, setTemplateToState]
   );
@@ -124,7 +126,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         const createResponse = await onCreate(template);
         if (createResponse) template = createResponse;
       }
-
+      console.log("create");
       setValue(title);
       setTemplates(templates => templates.concat(template));
     },
@@ -136,6 +138,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       const favorite = templates.find(template => template.favorite);
 
       if (favorite && favorite.state) {
+        console.log("i");
         setValue(favorite.title);
         setTemplateToState(favorite);
       }
@@ -160,7 +163,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   }, [value]);
 
   return (
-    <div className={className} onClick={handleClear}>
+    <div className={className}>
       <Select
         listHeight={150}
         onChange={handleSelect}
