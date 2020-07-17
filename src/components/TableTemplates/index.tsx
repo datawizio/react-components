@@ -39,8 +39,6 @@ function pickState(
 function SelectValue({ value }) {
   const { translate } = useContext(ConfigContext);
 
-  console.log(value);
-
   return (
     <div className="table-templates__value">
       <SaveOutlined className="table-templates__icon" />
@@ -126,7 +124,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         const createResponse = await onCreate(template);
         if (createResponse) template = createResponse;
       }
-      console.log("create");
       setValue(title);
       setTemplates(templates => templates.concat(template));
     },
@@ -138,7 +135,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       const favorite = templates.find(template => template.favorite);
 
       if (favorite && favorite.state) {
-        console.log("i");
         setValue(favorite.title);
         setTemplateToState(favorite);
       }
