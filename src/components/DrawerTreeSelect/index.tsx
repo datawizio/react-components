@@ -239,7 +239,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       }
 
       if (count) {
-        newState.intenalTreeDataCount = count;
+        newState.internalTreeDataCount = count;
       }
 
       if (showLevels && levels) {
