@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { notification } from "antd";
-import ConfigContext from "../ConfigProvider/context";
 
 export interface ApiErrorProps {
-  errors: { [key: string]: any[] };
+  errors: string;
 }
 
 export interface FCApiError extends React.FC<ApiErrorProps> {
@@ -12,12 +11,7 @@ export interface FCApiError extends React.FC<ApiErrorProps> {
 }
 
 const ApiError: FCApiError = ({ errors }) => {
-  const { translate } = useContext(ConfigContext);
-
-  const msg = Object.keys(errors)
-    .map(key => errors[key].map(v => translate(v)).join("<br />"))
-    .join("<br />");
-  return <span dangerouslySetInnerHTML={{ __html: msg }} />;
+  return <span dangerouslySetInnerHTML={{ __html: errors }} />;
 };
 
 ApiError.showError = (errors: any) => {
