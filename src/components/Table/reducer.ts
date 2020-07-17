@@ -33,7 +33,6 @@ export function initializer(props: TableProps): TableState {
     loading,
     dataSource,
     searchValue,
-    visibleColumnsKeys,
 
     pagination: {
       showSizeChanger,
@@ -46,6 +45,7 @@ export function initializer(props: TableProps): TableState {
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
+    visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
   };
 }
@@ -81,7 +81,7 @@ export function reducer(state: TableState, action: Action): TableState {
         sortParams: nextSortParams,
         filterParams: nextFilterParams,
 
-        visibleColumnsKeys: nextVisibleColumnsKeys
+        visibleColumnsKeys: nextVisibleColumnsKeys || []
       };
     }
     case "visibleColumnsKeys": {
@@ -190,7 +190,7 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "recoveryState": {
       const { columnsPositions, pagination, ...restPayload } = action.payload;
-      let nextState = { ...state, ...restPayload };
+      let nextState = { ...state, ...restPayload, stateIsRecovered: true };
 
       if (nextState.pagination && pagination && pagination.pageSize) {
         nextState.pagination.pageSize = pagination.pageSize;

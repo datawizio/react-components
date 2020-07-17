@@ -30,7 +30,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onCreate, children }) => {
         <Input
           size="small"
           value={inputValue}
-          placeholder={translate("CREATE_TEMPLATE")}
+          placeholder={translate("INPUT_TITLE")}
           onChange={e => setInputValue(e.target.value)}
         />
         <SaveOutlined
