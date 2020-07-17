@@ -11,7 +11,7 @@ function usePropsToState(dispatch: Dispatch<Action>, props: TableProps) {
   } = props;
 
   useEffect(() => {
-    if (searchValue !== undefined)
+    if (loading !== undefined)
       dispatch({ type: "loading", payload: !!loading });
   }, [loading, dispatch]);
 

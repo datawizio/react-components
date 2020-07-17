@@ -7,7 +7,13 @@ import useColumns from "./hooks/useColumns";
 import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
 
-import { useMemo, useReducer, useContext, useCallback } from "react";
+import {
+  useMemo,
+  useReducer,
+  useContext,
+  useCallback,
+  useImperativeHandle
+} from "react";
 
 import { TableContext } from "./context";
 import ConfigContext from "../ConfigProvider/context";
@@ -63,9 +69,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     loading: false
   };
 
-  usePropsToState(dispatch, props);
+  const fetchData = useAsyncProviders(state, dispatch, props);
 
-  useAsyncProviders(state, dispatch, props);
+  usePropsToState(dispatch, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
     (pagination, filters, sorter) => {
@@ -129,6 +135,14 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       ),
     [baseState.loading, props.className, state.dataSource.length]
   );
+
+  useImperativeHandle(ref, () => ({
+    async reload() {
+      dispatch({ type: "loading", payload: true });
+      await fetchData();
+      dispatch({ type: "loading", payload: false });
+    }
+  }));
 
   return (
     <DndProvider backend={HTML5Backend}>

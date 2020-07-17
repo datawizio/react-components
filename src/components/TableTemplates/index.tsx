@@ -1,12 +1,14 @@
+import clsx from "clsx";
 import * as React from "react";
 import { TableTemplate } from "./types";
-import { useState, useCallback, useContext, useEffect } from "react";
+import { useState, useCallback, useContext, useEffect, useMemo } from "react";
 
 import Select from "../Select";
 import { TableState } from "../Table/types";
 
 import Dropdown from "./components/Dropdown";
 import Template from "./components/Template";
+import { SaveOutlined } from "@ant-design/icons";
 import ConfigContext from "../ConfigProvider/context";
 
 import { TableContext } from "../Table/context";
@@ -34,6 +36,19 @@ function pickState(
   };
 }
 
+function SelectValue({ value }) {
+  const { translate } = useContext(ConfigContext);
+
+  return (
+    <div className="table-templates__value">
+      <SaveOutlined className="table-templates__icon" />
+      <span className="table-templates__value-title">
+        {value || translate("TEMPLATES")}
+      </span>
+    </div>
+  );
+}
+
 type MaybePromise<T> = T | Promise<T>;
 
 export interface TableTemplatesProps {
@@ -46,7 +61,6 @@ export interface TableTemplatesProps {
 const TableTemplates: React.FC<TableTemplatesProps> = props => {
   const { onCreate, onDelete, onSelectFavorite } = props;
 
-  const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
   const [templates, setTemplates] = useState([]);
@@ -92,6 +106,12 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     [onDelete, value]
   );
 
+  const handleClear = useCallback(e => {
+    e.stopPropagation();
+    e.preventDefault();
+    setValue(null);
+  }, []);
+
   const handleCreate = useCallback(
     async title => {
       let template = {
@@ -108,7 +128,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       setValue(title);
       setTemplates(templates => templates.concat(template));
     },
-    [tableState, onCreate]
+    [tableState, baseTableState, onCreate]
   );
 
   useEffect(() => {
@@ -133,19 +153,25 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     // eslint-disable-next-line
   }, [props.templates, tableState.templates]);
 
+  const className = useMemo(() => {
+    return clsx("table-templates", "table-toolbar--right", {
+      "table-templates--selected": Boolean(value)
+    });
+  }, [value]);
+
   return (
-    <div className="table-templates table-toolbar--right">
+    <div className={className} onClick={handleClear}>
       <Select
         listHeight={150}
         onChange={handleSelect}
         className="table-templates__selector"
-        value={(<>{value || translate("TEMPLATES")}</>) as any}
+        value={(<SelectValue value={value} />) as any}
         dropdownRender={originNode => (
           <Dropdown onCreate={handleCreate}>{originNode}</Dropdown>
         )}
       >
         {templates.map((template, idx) => (
-          <Select.Option idx={idx} value={template.title}>
+          <Select.Option key={idx} value={template.title}>
             <Template
               onDelete={handleDelete}
               onSelectFavorite={handleSelectFavorite}
@@ -154,6 +180,11 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           </Select.Option>
         ))}
       </Select>
+      {value && (
+        <span className="table-templates__value-unselect" onClick={handleClear}>
+          &times;
+        </span>
+      )}
     </div>
   );
 };

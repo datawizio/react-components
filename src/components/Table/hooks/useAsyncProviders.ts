@@ -48,6 +48,8 @@ function useAsyncProviders(
   useEffect(() => {
     firstUpdate.current = false;
   }, []);
+
+  return fetchData;
 }
 
 useAsyncProviders.displayName = "useAsyncProviders";
