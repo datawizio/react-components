@@ -1,6 +1,7 @@
 @import "../../styles/variables";
 
 .table-templates {
+  position: relative;
   &__template {
     display: flex;
     align-items: center;
@@ -11,6 +12,23 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  &__value {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__value-title {
+    margin-left: 8px;
+  }
+
+  &__value-unselect {
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
   }
 
   &__icon {
@@ -47,8 +65,18 @@
     border-top: 1px solid #ccc;
   }
 
+  &--selected {
+    .ant-select-selector {
+      background-color: #dbcaf4 !important;
+    }
+  }
+
   .ant-select-selector {
+    border: none !important;
     width: 150px !important;
+  }
+  .ant-select-arrow {
+    display: none !important;
   }
 }
 
