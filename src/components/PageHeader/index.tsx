@@ -8,13 +8,19 @@ interface PageHeaderProps {
    * Page title
    */
   title: string;
+  className?: string;
 
   onBack?: () => void;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ title, onBack, children }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({
+  title,
+  className,
+  onBack,
+  children
+}) => {
   return (
-    <div className="page-header">
+    <div className={`page-header ${className}`}>
       {onBack && (
         <span className="page-header-back">
           <ArrowLeftOutlined onClick={onBack} />
