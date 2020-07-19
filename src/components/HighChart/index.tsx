@@ -61,13 +61,15 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   }, [config]);
 
   useEffect(() => {
-    if (responsible && containerRef.current)
+    if (!loading && responsible && containerRef.current)
       return resizeDetector(
         containerRef.current,
-        async () => await chartRef.current.setSize(),
+        async () => {
+          await chartRef.current.setSize();
+        },
         resizeTimeout
       );
-  }, [resizeTimeout, responsible, chartRef, containerRef]);
+  }, [resizeTimeout, responsible, chartRef, loading, containerRef.current]);
 
   useEffect(() => {
     if (containerRef.current)
