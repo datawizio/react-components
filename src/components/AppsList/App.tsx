@@ -51,7 +51,7 @@ export const App: React.FC<CardAppProps> = ({
   };
 
   const handleButtonClick = () => {
-    const url = `${host}${path ? path : ""}`;
+    const url = `${host ? host : ""}${path ? path : ""}`;
     onButtonClick(getClient(client), { appId: app_id, url, allowed });
   };
 
