@@ -1,6 +1,6 @@
 {
   "name": "@datawizio/react-components",
-  "version": "0.1.184",
+  "version": "0.2.0",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -146,6 +146,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@k3rn31p4nic/google-translate-api": "^1.1.1",
     "clsx": "^1.1.0",
     "country-flag-icons": "^1.2.1",
     "file-saver": "^2.0.2",
