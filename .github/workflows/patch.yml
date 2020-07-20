@@ -8,7 +8,7 @@ on:
   # pull_request:
   #   branches: [master]
   push:
-    branches: [master]
+    branches: [develop]
     paths-ignore:
       - "package.json"
       - "package-lock.json"
