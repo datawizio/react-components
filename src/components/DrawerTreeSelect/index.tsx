@@ -228,7 +228,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       });
 
       const { data, levels, expanded, count } = await loadData(filters);
-      if (levels.length === 1) {
+      if (levels && levels.length === 1) {
         levelSelected.current = levels[0].value;
       }
       mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
