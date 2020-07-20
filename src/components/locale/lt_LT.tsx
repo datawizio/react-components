@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Locale } from "antd/es/locale-provider";
 const type = "${label} negalioja ${type}";
 const DatePicker: any = {
