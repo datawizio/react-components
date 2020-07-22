@@ -140,7 +140,6 @@ export function filterOptions(
         const childList = dig(children || [], match);
 
         if (match || childList.length) {
-          console.log(dataNode);
           return {
             ...dataNode,
             visible: true,
