@@ -53,11 +53,7 @@ function fillConductCheck(
 
       if (checkedKeys.has(key) && !isCheckDisabled(node)) {
         children
-          .filter(
-            childEntity =>
-              !isCheckDisabled(childEntity.node) &&
-              isMatched(childEntity.node, searchValue)
-          )
+          .filter(childEntity => !isCheckDisabled(childEntity.node))
           .forEach(childEntity => {
             checkedKeys.add(childEntity.key);
           });
