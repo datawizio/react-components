@@ -341,7 +341,6 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       source: SelectSource
     ) => {
       setValue(mergedMultiple ? newRawValues : newRawValues[0]);
-      console.log(newRawValues);
       if (onChange) {
         let eventValues: RawValueType[] = newRawValues;
         if (treeConduction && showCheckedStrategy !== "SHOW_ALL") {
