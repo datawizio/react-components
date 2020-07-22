@@ -256,7 +256,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         );
 
         newState.selectAllState = s.selectAllState;
-        newState.internalValue = s.internalValue;
+        if (s.internalValue) {
+          newState.internalValue = s.internalValue;
+        }
       }
 
       dispatch({
