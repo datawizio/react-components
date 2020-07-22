@@ -5,7 +5,7 @@ import { RefSelectProps } from "rc-select/lib/generate";
 import generateSelector, { SelectProps } from "./RcSelect";
 import { getLabeledValue } from "rc-select/lib/utils/valueUtil";
 import { convertDataToEntities } from "rc-tree/lib/utils/treeUtil";
-import { conductCheck } from "rc-tree/lib/utils/conductUtil";
+import { conductCheck } from "../utils/conductUtil";
 import { IconType } from "rc-tree/lib/interface";
 import {
   FilterFunc,
@@ -34,7 +34,7 @@ import {
   removeValue,
   getRawValueLabeled,
   toArray
-} from "rc-tree-select/es/utils/valueUtil";
+} from "../utils/valueUtil";
 import warningProps from "rc-tree-select/es/utils/warningPropsUtil";
 import { SelectContext } from "rc-tree-select/es/Context";
 import useTreeData from "rc-tree-select/es/hooks/useTreeData";
@@ -190,6 +190,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       children,
       treeIcon,
       showTreeIcon,
+      searchValue,
       switcherIcon,
       treeLine,
       treeMotion,
@@ -305,7 +306,8 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
         const { checkedKeys, halfCheckedKeys } = conductCheck(
           keyList,
           true,
-          conductKeyEntities
+          conductKeyEntities,
+          searchValue
         );
         return [
           [
@@ -339,6 +341,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       source: SelectSource
     ) => {
       setValue(mergedMultiple ? newRawValues : newRawValues[0]);
+      console.log(newRawValues);
       if (onChange) {
         let eventValues: RawValueType[] = newRawValues;
         if (treeConduction && showCheckedStrategy !== "SHOW_ALL") {
@@ -439,7 +442,6 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       source: SelectSource
     ) => {
       const eventValue = mergedLabelInValue ? selectValue : selectValue;
-
       if (!mergedMultiple) {
         // Single mode always set value
         triggerChange(
@@ -460,7 +462,8 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
           const { checkedKeys } = conductCheck(
             keyList,
             true,
-            conductKeyEntities
+            conductKeyEntities,
+            searchValue
           );
           newRawValues = [
             ...missingRawValues,
@@ -498,7 +501,8 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
         const { checkedKeys } = conductCheck(
           keyList,
           { checked: false, halfCheckedKeys: rawHalfCheckedKeys },
-          conductKeyEntities
+          conductKeyEntities,
+          searchValue
         );
         newRawValues = [
           ...missingRawValues,

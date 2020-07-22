@@ -458,6 +458,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handleTreeSelectChange = useCallback(
     (value, labels, extra) => {
       let state: any = {};
+      console.log(value);
       if (multiple) {
         state.internalValue = value;
         if (value) {
