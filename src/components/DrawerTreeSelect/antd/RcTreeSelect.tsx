@@ -499,9 +499,23 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       option: DataNode,
       source: SelectSource
     ) => {
-      const eventValue = mergedLabelInValue ? selectValue : selectValue;
+      const eventValue = selectValue;
 
-      let newRawValues = removeValue(rawValues, selectValue);
+      let selectedValues: any[] = [];
+      if (searchValue && option.children) {
+        selectedValues = option.children
+          .filter(
+            (child: any) =>
+              //@ts-ignore
+              isMatched(child, searchValue) || isMatched(option, searchValue)
+          )
+          .map(item => item.key);
+      }
+
+      let newRawValues = removeValue(
+        rawValues, //@ts-ignore
+        selectedValues.length ? selectedValues : selectValue
+      );
 
       // Remove keys if tree conduction
       if (treeConduction) {
