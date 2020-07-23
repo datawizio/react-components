@@ -203,6 +203,10 @@ export function addValue(rawValues: RawValueType[], value: RawValueType) {
 }
 export function removeValue(rawValues: RawValueType[], value: RawValueType) {
   const values = new Set(rawValues);
-  values.delete(value);
+  if (Array.isArray(value)) {
+    value.forEach(item => values.delete(item));
+  } else {
+    values.delete(value);
+  }
   return Array.from(values);
 }
