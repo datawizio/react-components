@@ -5,7 +5,7 @@ import { RefSelectProps } from "rc-select/lib/generate";
 import generateSelector, { SelectProps } from "./RcSelect";
 import { getLabeledValue } from "rc-select/lib/utils/valueUtil";
 import { convertDataToEntities } from "rc-tree/lib/utils/treeUtil";
-import { conductCheck } from "../utils/conductUtil";
+import { conductCheck, isMatched } from "../utils/conductUtil";
 import { IconType } from "rc-tree/lib/interface";
 import {
   FilterFunc,
@@ -306,8 +306,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
         const { checkedKeys, halfCheckedKeys } = conductCheck(
           keyList,
           true,
-          conductKeyEntities,
-          searchValue
+          conductKeyEntities
         );
         return [
           [
@@ -449,7 +448,21 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
           source
         );
       } else {
-        let newRawValues = addValue(rawValues, selectValue);
+        let selectedValues: any[] = [];
+        if (searchValue && option.children) {
+          selectedValues = option.children
+            .filter(
+              (child: any) =>
+                //@ts-ignore
+                isMatched(child, searchValue) || isMatched(option, searchValue)
+            )
+            .map(item => item.key);
+        }
+        let newRawValues = addValue(
+          rawValues,
+          //@ts-ignore
+          selectedValues.length ? selectedValues : selectValue
+        );
 
         // Add keys if tree conduction
         if (treeConduction) {
@@ -461,8 +474,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
           const { checkedKeys } = conductCheck(
             keyList,
             true,
-            conductKeyEntities,
-            searchValue
+            conductKeyEntities
           );
           newRawValues = [
             ...missingRawValues,
@@ -500,8 +512,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
         const { checkedKeys } = conductCheck(
           keyList,
           { checked: false, halfCheckedKeys: rawHalfCheckedKeys },
-          conductKeyEntities,
-          searchValue
+          conductKeyEntities
         );
         newRawValues = [
           ...missingRawValues,

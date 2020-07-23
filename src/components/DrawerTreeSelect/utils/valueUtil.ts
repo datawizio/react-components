@@ -193,7 +193,12 @@ export function getRawValueLabeled(
 
 export function addValue(rawValues: RawValueType[], value: RawValueType) {
   const values = new Set(rawValues);
-  values.add(value);
+  if (Array.isArray(value)) {
+    value.forEach(item => values.add(item));
+  } else {
+    values.add(value);
+  }
+
   return Array.from(values);
 }
 export function removeValue(rawValues: RawValueType[], value: RawValueType) {
