@@ -39,8 +39,7 @@ export function isMatched(node: DataNode, searchValue: string) {
 function fillConductCheck(
   keys: Set<Key>,
   levelEntities: Map<number, Set<DataEntity>>,
-  maxLevel: number,
-  searchValue: string
+  maxLevel: number
 ): ConductReturnType {
   const checkedKeys = new Set<Key>(keys);
   const halfCheckedKeys = new Set<Key>();
@@ -72,8 +71,7 @@ function fillConductCheck(
       if (
         isCheckDisabled(node) ||
         !entity.parent ||
-        visitedKeys.has(entity.parent.key) ||
-        !isMatched(node, searchValue)
+        visitedKeys.has(entity.parent.key)
       ) {
         return;
       }
@@ -216,8 +214,7 @@ function cleanConductCheck(
 export function conductCheck(
   keyList: Key[],
   checked: true | { checked: false; halfCheckedKeys: Key[] },
-  keyEntities: Record<Key, DataEntity>,
-  searchValue: string
+  keyEntities: Record<Key, DataEntity>
 ): ConductReturnType {
   const warningMissKeys: Key[] = [];
 
@@ -261,7 +258,7 @@ export function conductCheck(
 
   let result: ConductReturnType;
   if (checked === true) {
-    result = fillConductCheck(keys, levelEntities, maxLevel, searchValue);
+    result = fillConductCheck(keys, levelEntities, maxLevel);
   } else {
     result = cleanConductCheck(
       keys,
