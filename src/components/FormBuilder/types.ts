@@ -56,6 +56,18 @@ export interface FieldRadioProps extends FormFieldProps<string> {
   options: RadioOptionType[];
 }
 
+export interface FieldSelectProps extends FormFieldProps<string> {
+  options: RadioOptionType[];
+}
+
+export type EnableSelectValueType = {
+  enabled: boolean;
+  value: any;
+};
+
+export interface FieldEnableSelectProps
+  extends FormFieldProps<EnableSelectValueType> {}
+
 export interface FieldPhoneProps extends FormFieldProps<string> {}
 
 export interface FieldDrawerSelectProps
