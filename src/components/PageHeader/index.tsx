@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import "./index.less";
@@ -7,7 +7,7 @@ interface PageHeaderProps {
   /**
    * Page title
    */
-  title: string;
+  title: string | ReactElement;
   className?: string;
 
   onBack?: () => void;
