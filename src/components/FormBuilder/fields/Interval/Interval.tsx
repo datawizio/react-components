@@ -7,7 +7,8 @@ import ConfigContext from "../../../ConfigProvider/context";
 export const Interval: React.FC<IntervalProps> = ({
   value,
   format,
-  onChange
+  onChange,
+  picker
 }) => {
   const { translate } = useContext(ConfigContext);
 
@@ -21,12 +22,14 @@ export const Interval: React.FC<IntervalProps> = ({
   return (
     <>
       <IntervalItem
+        picker={picker}
         label={translate("FROM")}
         value={value ? value.from : null}
         onChange={handleFromChange}
         format={format}
       />
       <IntervalItem
+        picker={picker}
         label={translate("TO")}
         value={value ? value.to : null}
         onChange={handleToChange}
