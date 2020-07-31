@@ -39,10 +39,10 @@ const DateRangePicker: IDateRangePicker = props => {
 
   return (
     <RangePicker
-      value={[dateFrom, dateTo]}
-      disabledDate={isDisabledDate}
       {...props}
       onChange={onChange}
+      value={[dateFrom, dateTo]}
+      disabledDate={isDisabledDate}
     />
   );
 };
