@@ -7,6 +7,7 @@ export const IntervalItem: React.FC<IntervalItemProps> = ({
   label,
   value,
   format,
+  picker,
   onChange
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -14,7 +15,7 @@ export const IntervalItem: React.FC<IntervalItemProps> = ({
     <>
       <div className="field-interval-label">{label}:</div>
       <DatePicker
-        picker="month"
+        picker={picker as any}
         placeholder={translate("UNLIMITED")}
         value={value}
         //@ts-ignore
@@ -23,4 +24,8 @@ export const IntervalItem: React.FC<IntervalItemProps> = ({
       />
     </>
   );
+};
+
+IntervalItem.defaultProps = {
+  picker: "month"
 };

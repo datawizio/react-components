@@ -17,6 +17,7 @@ export interface FormFieldProps<Type> {
 }
 
 export interface FieldIntervalProps extends FormFieldProps<IntervalType> {
+  picker?: string;
   format?: string;
 }
 
@@ -26,13 +27,15 @@ export type IntervalType = {
 };
 
 export interface IntervalProps {
-  value?: IntervalType;
+  picker?: string;
   format?: string;
+  value?: IntervalType;
   onChange: (value: IntervalType) => void;
 }
 
 export interface IntervalItemProps {
   label: string;
+  picker?: string;
   format?: string;
   value: Dayjs | null;
   onChange: (value: Dayjs) => void;
