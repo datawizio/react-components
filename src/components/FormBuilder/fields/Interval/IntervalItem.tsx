@@ -8,13 +8,19 @@ export const IntervalItem: React.FC<IntervalItemProps> = ({
   value,
   format,
   picker,
+  minDate,
+  maxDate,
   onChange
 }) => {
   const { translate } = useContext(ConfigContext);
+
   return (
     <>
       <div className="field-interval-label">{label}:</div>
       <DatePicker
+        disabledDate={date =>
+          (maxDate && date > maxDate) || (minDate && date < minDate)
+        }
         picker={picker as any}
         placeholder={translate("UNLIMITED")}
         value={value}
