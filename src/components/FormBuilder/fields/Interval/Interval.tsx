@@ -12,25 +12,20 @@ export const Interval: React.FC<IntervalProps> = ({
   maxDate,
   picker
 }) => {
-  const [dateTo, setDateTo] = useState<Dayjs>();
-  const [dateFrom, setDateFrom] = useState<Dayjs>();
-
   const { translate } = useContext(ConfigContext);
 
   const handleFromChange = (from: Dayjs) => {
-    setDateFrom(from);
     onChange({ from, to: value ? value.to : null });
   };
 
   const handleToChange = (to: Dayjs) => {
-    setDateTo(to);
     onChange({ to, from: value ? value.from : null });
   };
   return (
     <>
       <IntervalItem
         minDate={minDate}
-        maxDate={dateTo || maxDate}
+        maxDate={value.to || maxDate}
         picker={picker}
         label={translate("FROM")}
         value={value ? value.from : null}
@@ -42,7 +37,7 @@ export const Interval: React.FC<IntervalProps> = ({
         format={format}
         label={translate("TO")}
         onChange={handleToChange}
-        minDate={dateFrom || minDate}
+        minDate={value.from || minDate}
         value={value ? value.to : null}
       />
     </>
