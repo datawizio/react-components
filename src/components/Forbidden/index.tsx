@@ -24,7 +24,7 @@ const Forbidden = ({ backUrl }) => {
         status="403"
         subTitle={translate("SERVICE_FORBIDDEN")}
         extra={
-          <Button type="primary" onClick={handleButtonClick} href={backUrl}>
+          <Button type="primary" onClick={handleButtonClick}>
             {translate("BACK_TO_ACCOUNT")}
           </Button>
         }
