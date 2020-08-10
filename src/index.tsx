@@ -28,6 +28,8 @@ export { default as Checkbox } from "./components/Checkbox";
 
 export { default as Skeleton } from "./components/Skeleton";
 
+export { default as Transfer } from "./components/Transfer";
+
 export { default as AppFooter } from "./components/AppFooter";
 
 export { default as Forbidden } from "./components/Forbidden";
