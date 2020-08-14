@@ -19,16 +19,18 @@ export interface EditSelectProps {
   inputPlaceholder: string;
   options: IOption[];
   loading?: boolean;
+  value?: string;
   onChange?: (promotionTypeKey: string) => void;
-  onSave?: (promotionType: IOption) => Promise<void>;
-  onDelete?: (promotionType: IOption) => Promise<void>;
+  onSave?: (promotionType: IOption) => void;
+  onDelete?: (promotionType: IOption) => void;
 }
 
-const EditSelect = ({
+const EditSelect: React.FC<EditSelectProps> = ({
   placeholder,
   inputPlaceholder,
   options,
   loading,
+  value,
   onChange,
   onSave,
   onDelete
@@ -115,6 +117,7 @@ const EditSelect = ({
       dropdownRender={dropdownRender}
       loading={loading}
       onChange={onChange}
+      value={value ? value : undefined}
       // onBlur={resetEditingOption}
       // onSelect={handlerRoleTypeChange}
     >
