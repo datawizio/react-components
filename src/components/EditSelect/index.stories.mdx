@@ -1,0 +1,30 @@
+import { useState } from "react";
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import EditSelect from "./index";
+
+<Meta title="Components/Select/EditSelect" component={EditSelect} />
+
+# EditSelect
+
+Компонент `EditSelect`.
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <EditSelect
+      placeholder="Select tree"
+      options={[
+        { key: "1", title: "Title 1" },
+        { key: "2", title: "Title 2" },
+        { key: "3", title: "Title 3" }
+      ]}
+    />
+  </Story>
+</Preview>
+
+#
+
+## Props
+
+<Props of={EditSelect} />

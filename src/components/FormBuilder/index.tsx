@@ -10,6 +10,7 @@ export { FieldPassword } from "./fields/Password";
 export { FieldDatePicker } from "./fields/DatePicker";
 export { FieldDrawerSelect } from "./fields/DrawerSelect";
 export { FieldEnableSelect } from "./fields/EnableSelect";
+export { FieldDateRangePicker } from "./fields/DateRangePicker";
 export { FieldDrawerTreeSelect } from "./fields/DrawerTreeSelect";
 
 export type { IFormFieldChanged } from "./types";

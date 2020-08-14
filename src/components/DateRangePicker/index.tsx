@@ -9,9 +9,10 @@ import "./index.less";
 
 const { RangePicker } = DatePicker;
 
-const DateRangePicker: IDateRangePicker = props => {
+const DateRangePicker: IDateRangePicker = ({ fullWidth, ...props }) => {
   const formatDate = useCallback(
     (date: DateType) => {
+      if (!date) return null;
       return dayjs(date, props.format) as Dayjs;
     },
     [props.format]
@@ -40,6 +41,7 @@ const DateRangePicker: IDateRangePicker = props => {
   return (
     <RangePicker
       {...props}
+      className={fullWidth ? "ant-picker-full-width" : ""}
       onChange={onChange}
       value={[dateFrom, dateTo]}
       disabledDate={isDisabledDate}

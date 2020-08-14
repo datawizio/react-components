@@ -20,8 +20,6 @@ const ListItem = (props: ListItemProps) => {
     [`${prefixCls}-content-item-checked`]: checked
   });
 
-  let title: string | undefined;
-
   const listItem = (
     <li
       className={className}

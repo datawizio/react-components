@@ -44,6 +44,8 @@ export { default as DatePicker } from "./components/DatePicker";
 
 export { default as DrawerForm } from "./components/DrawerForm";
 
+export { default as EditSelect } from "./components/EditSelect";
+
 export { default as PageHeader } from "./components/PageHeader";
 
 export { default as PhoneInput } from "./components/PhoneInput";
