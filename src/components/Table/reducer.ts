@@ -1,4 +1,4 @@
-import { TableState, Action, SortParams, TableProps } from "./types";
+import { TableState, Action, SortParams, TableProps, IRow } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
 import { swapColumns, filterByColumns } from "./utils/utils";
 
@@ -166,16 +166,34 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "setRowChildren": {
-      const [expandedRow, children] = action.payload;
+      const [expandedRow, children, path] = action.payload;
       const nextDataSource = state.dataSource.concat();
-      const expandedRowIdx = state.dataSource.findIndex(
-        row => row.key === expandedRow.key
-      );
 
-      nextDataSource[expandedRowIdx] = {
-        ...expandedRow,
-        children
-      } as any;
+      if (path === null) {
+        const expandedRowIdx = state.dataSource.findIndex(
+          row => row.key === expandedRow.key
+        );
+
+        nextDataSource[expandedRowIdx] = {
+          ...expandedRow,
+          children
+        } as any;
+        return {
+          ...state,
+          dataSource: nextDataSource
+        };
+      }
+
+      const findExpandedRecord = (path: string[], children: IRow[]) => {
+        const next = path.shift();
+        const record = children.find(child => child.key === next.toString());
+        if (!record) return { children: [] };
+        if (path.length) return findExpandedRecord(path, record.children);
+
+        return record;
+      };
+      const expandedRecord = findExpandedRecord([...path], state.dataSource);
+      expandedRecord.children = children;
 
       return {
         ...state,

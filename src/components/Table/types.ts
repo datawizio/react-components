@@ -89,7 +89,7 @@ export type Action =
   | { type: "paginate"; payload: TableState["pagination"] }
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
-  | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
+  | { type: "setRowChildren"; payload: [IRow, IRow["children"], string[]] }
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
   | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
   | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };
@@ -202,4 +202,7 @@ export type DataProvider = (
 
 export type RowChildrenProviderType = (
   expandedRow: IRow
-) => IRow["children"] | Promise<IRow["children"]>;
+) =>
+  | IRow["children"]
+  | Promise<IRow["children"]>
+  | Promise<{ children: IRow["children"]; path: string }>;
