@@ -8,7 +8,6 @@ export function parseErrorText(errors: any, t: any) {
     .map(key => {
       return errors[key]
         .map((v: string) => {
-          console.log(v);
           return t(v);
         })
         .join("<br />");
