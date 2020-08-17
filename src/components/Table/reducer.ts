@@ -165,6 +165,22 @@ export function reducer(state: TableState, action: Action): TableState {
         filterParams
       };
     }
+    case "setNestedTable": {
+      const [expandedRow, result] = action.payload;
+      const nextDataSource = state.dataSource.concat();
+      const expandedRowIdx = state.dataSource.findIndex(
+        row => row.key === expandedRow.key
+      );
+      nextDataSource[expandedRowIdx] = {
+        ...expandedRow,
+        nested: result
+      } as any;
+      return {
+        ...state,
+        dataSource: nextDataSource
+      };
+      return;
+    }
     case "setRowChildren": {
       const [expandedRow, children, path] = action.payload;
       const nextDataSource = state.dataSource.concat();
