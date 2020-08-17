@@ -3,10 +3,10 @@ import { DTypeConfig } from "../types";
 const basicDTypesConfig = {
   "number": {
     sorter: (a, b) => a - b,
-    toString: value => value.toLocaleString(),
+    toString: value => value && value.toLocaleString(),
     filter: (value, filterBy) => value === filterBy,
     search: (value, searchBy) => value.toString().includes(searchBy),
-    render: value => value.toLocaleString()
+    render: value => value && value.toLocaleString()
   } as DTypeConfig<number>,
 
   "boolean": {

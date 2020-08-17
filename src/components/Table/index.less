@@ -114,6 +114,25 @@
     text-overflow: ellipsis;
   }
 
+  &--nestedable {
+    .ant-table-bordered .ant-table-cell.ant-table-row-expand-icon-cell {
+      border-right: 0;
+      width: 20px !important;
+      .dw-table__cell {
+        display: block;
+      }
+    }
+  }
+
+  &.nested-table {
+    .ant-table {
+      margin-left: 39px !important;
+    }
+    .ant-table-container {
+      border-top: 0;
+    }
+  }
+
   &--loading {
     table {
       .ant-empty {
