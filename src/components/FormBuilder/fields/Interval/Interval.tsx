@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { IntervalItem } from "./IntervalItem";
 import { IntervalProps } from "../../types";
 import { Dayjs } from "dayjs";
@@ -8,6 +8,8 @@ export const Interval: React.FC<IntervalProps> = ({
   value,
   format,
   onChange,
+  minDate,
+  maxDate,
   picker
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -22,6 +24,8 @@ export const Interval: React.FC<IntervalProps> = ({
   return (
     <>
       <IntervalItem
+        minDate={minDate}
+        maxDate={value.to || maxDate}
         picker={picker}
         label={translate("FROM")}
         value={value ? value.from : null}
@@ -30,10 +34,11 @@ export const Interval: React.FC<IntervalProps> = ({
       />
       <IntervalItem
         picker={picker}
-        label={translate("TO")}
-        value={value ? value.to : null}
-        onChange={handleToChange}
         format={format}
+        label={translate("TO")}
+        onChange={handleToChange}
+        minDate={value.from || minDate}
+        value={value ? value.to : null}
       />
     </>
   );

@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
 import { Form } from "antd";
 import { Interval } from "./Interval";
+import React, { useMemo, useContext } from "react";
+import ConfigContext from "../../../ConfigProvider/context";
 import { FieldIntervalProps, IntervalType } from "../../types";
 
 import "./styles.less";
@@ -16,7 +17,7 @@ const intervalValidation = t => ({
       return Promise.resolve();
     }
     //@ts-ignore
-    return Promise.reject(rule.message);
+    return Promise.reject(rule.message || t("INVALID_INTERVAL"));
   }
 });
 
@@ -26,14 +27,21 @@ export const FieldInterval: React.FC<FieldIntervalProps> = ({
   rules,
   format,
   picker,
+  minDate,
+  maxDate,
   onChange
 }) => {
+  const { translate } = useContext(ConfigContext);
+
   const handleChange = (value: IntervalType) => {
     onChange({ name, value });
   };
+
   const internalRules = useMemo(() => {
-    return rules ? rules.concat([intervalValidation]) : [intervalValidation];
+    const validatorRule = intervalValidation(translate);
+    return rules ? rules.concat([validatorRule]) : [validatorRule];
   }, [rules]);
+
   return (
     <Form.Item
       name={name}
@@ -41,7 +49,13 @@ export const FieldInterval: React.FC<FieldIntervalProps> = ({
       rules={internalRules}
       className="field-interval"
     >
-      <Interval picker={picker} onChange={handleChange} format={format} />
+      <Interval
+        format={format}
+        picker={picker}
+        minDate={minDate}
+        maxDate={maxDate}
+        onChange={handleChange}
+      />
     </Form.Item>
   );
 };

@@ -256,7 +256,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         );
 
         newState.selectAllState = s.selectAllState;
-        newState.internalValue = s.internalValue;
+        if (s.internalValue) {
+          newState.internalValue = s.internalValue;
+        }
       }
 
       dispatch({
@@ -386,7 +388,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handlerDrawerCancel = useCallback(() => {
     const prevValue = !multiple && !value ? [] : value;
     //@ts-ignore
-    if (prevValue.length === 0) showAllRef.current = true;
+    if (prevValue && prevValue.length === 0) showAllRef.current = true;
     dispatch({
       type: "setState",
       payload: {

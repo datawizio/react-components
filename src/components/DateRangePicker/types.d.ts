@@ -12,6 +12,7 @@ export type DateRangePickerProps = {
   minDate?: DateType;
   format?: string;
 
+  fullWidth?: boolean;
   inputReadOnly?: boolean;
   onChange?: (a: any, b: any) => void;
 

@@ -19,6 +19,8 @@ export interface FormFieldProps<Type> {
 export interface FieldIntervalProps extends FormFieldProps<IntervalType> {
   picker?: string;
   format?: string;
+  minDate?: Dayjs;
+  maxDate?: Dayjs;
 }
 
 export type IntervalType = {
@@ -29,6 +31,8 @@ export type IntervalType = {
 export interface IntervalProps {
   picker?: string;
   format?: string;
+  minDate?: Dayjs;
+  maxDate?: Dayjs;
   value?: IntervalType;
   onChange: (value: IntervalType) => void;
 }
@@ -37,6 +41,8 @@ export interface IntervalItemProps {
   label: string;
   picker?: string;
   format?: string;
+  minDate?: Dayjs;
+  maxDate?: Dayjs;
   value: Dayjs | null;
   onChange: (value: Dayjs) => void;
 }
@@ -58,6 +64,18 @@ export type RadioOptionType = {
 export interface FieldRadioProps extends FormFieldProps<string> {
   options: RadioOptionType[];
 }
+
+export interface FieldSelectProps extends FormFieldProps<string> {
+  options: RadioOptionType[];
+}
+
+export type EnableSelectValueType = {
+  enabled: boolean;
+  value: any;
+};
+
+export interface FieldEnableSelectProps
+  extends FormFieldProps<EnableSelectValueType> {}
 
 export interface FieldPhoneProps extends FormFieldProps<string> {}
 

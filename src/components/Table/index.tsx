@@ -85,11 +85,21 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
       if (rowChildrenProvider && row.children && !row.children.length) {
-        const children = await rowChildrenProvider(row);
-
+        let children = [],
+          path = null;
+        const result = await rowChildrenProvider(row);
+        if (result?.hasOwnProperty("children")) {
+          //@ts-ignore
+          children = result.children;
+          //@ts-ignore
+          path = result.path;
+        } else {
+          //@ts-ignore
+          children = result;
+        }
         dispatch({
           type: "setRowChildren",
-          payload: [row, children.length ? children : undefined]
+          payload: [row, children.length ? children : undefined, path]
         });
       }
 
