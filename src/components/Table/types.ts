@@ -65,6 +65,9 @@ export interface TableProps<RT = any>
   dataProviderDeps?: (state) => Array<any>;
   templatesProvider?: () => Promise<Array<TableTemplate>>;
   rowChildrenProvider?: RowChildrenProviderType;
+  nestedTableProvider?: (
+    expandedTow: IRow
+  ) => Promise<Partial<TableState> | Promise<Partial<TableState>>>;
 }
 
 export interface TableState extends Partial<TableProps> {
@@ -90,6 +93,10 @@ export type Action =
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"], string[]] }
+  | {
+      type: "setNestedTable";
+      payload: [IRow, Partial<TableState> | Promise<Partial<TableState>>];
+    }
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
   | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
   | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };

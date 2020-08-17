@@ -51,6 +51,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     dataProviderDeps,
     templatesProvider,
     rowChildrenProvider,
+    nestedTableProvider,
     ...restProps
   } = props;
 
@@ -103,6 +104,15 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         });
       }
 
+      if (nestedTableProvider && !row.nested) {
+        const result = await nestedTableProvider(row);
+
+        dispatch({
+          type: "setNestedTable",
+          payload: [row, result]
+        });
+      }
+
       dispatch({
         type: isExpanded ? "expandRow" : "collapseRow",
         payload: row
@@ -139,7 +149,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         "dw-table",
         {
           "dw-table--loading": baseState.loading,
-          "dw-table--empty": !state.dataSource.length
+          "dw-table--empty": !state.dataSource.length,
+          "dw-table--nestedable": props.expandable?.expandedRowRender
         },
         props.className
       ),
@@ -173,11 +184,15 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             onExpand={handleExpandRow}
             onChange={handleChangeTable}
             components={customComponents}
-            pagination={{
-              ...state.pagination,
-              ...props.pagination,
-              showTotal: totalRenderer
-            }}
+            pagination={
+              props.pagination === false
+                ? false
+                : {
+                    ...state.pagination,
+                    ...props.pagination,
+                    showTotal: totalRenderer
+                  }
+            }
           />
         </Loader>
       </TableContext.Provider>
