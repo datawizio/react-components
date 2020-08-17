@@ -37,6 +37,12 @@ jobs:
 
       - run: npm ci
 
+      - name: Check eslint
+        run: gulp eslint
+
+      - name: Build package
+        run: npm run build
+
       - name: Update version package.json
         run: npm version ${GITHUB_REF##*/}
 
