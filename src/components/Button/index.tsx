@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({ border, className, ...props }) => {
   return (
     <AntButton
       {...props}
-      className={clsx(className, { "no-border": !border })}
+      className={clsx("dw-btn", className, { "no-border": !border })}
     />
   );
 };
