@@ -15,6 +15,15 @@ function genColumnsMap(columns) {
   return columnsMap;
 }
 
+function findExpandedRecord(path: string[], children: IRow[]) {
+  const next = path.pop();
+  const record = children.find(child => child.key === next);
+  if (!record) return { children: [] };
+  if (path.length) return findExpandedRecord(path, record.children);
+
+  return record;
+}
+
 export function initializer(props: TableProps): TableState {
   const {
     columns,
@@ -45,6 +54,7 @@ export function initializer(props: TableProps): TableState {
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
+    parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
   };
@@ -182,37 +192,30 @@ export function reducer(state: TableState, action: Action): TableState {
       return;
     }
     case "setRowChildren": {
-      const [expandedRow, children, path] = action.payload;
+      const { parentsMap } = state;
+      const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
 
-      if (path === null) {
-        const expandedRowIdx = state.dataSource.findIndex(
-          row => row.key === expandedRow.key
-        );
+      children.forEach(child => {
+        parentsMap[child.key] = expandedRow.key;
+      });
 
-        nextDataSource[expandedRowIdx] = {
-          ...expandedRow,
-          children
-        } as any;
-        return {
-          ...state,
-          dataSource: nextDataSource
-        };
-      }
+      const path = [];
 
-      const findExpandedRecord = (path: string[], children: IRow[]) => {
-        const next = path.shift();
-        const record = children.find(child => child.key === next.toString());
-        if (!record) return { children: [] };
-        if (path.length) return findExpandedRecord(path, record.children);
-
-        return record;
+      const buildPath = (key: string) => {
+        path.push(key);
+        if (!parentsMap[key]) return;
+        buildPath(parentsMap[key]);
       };
-      const expandedRecord = findExpandedRecord([...path], state.dataSource);
+
+      buildPath(expandedRow.key);
+
+      const expandedRecord = findExpandedRecord(path, state.dataSource);
       expandedRecord.children = children;
 
       return {
         ...state,
+        parentsMap,
         dataSource: nextDataSource
       };
     }
