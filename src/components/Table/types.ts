@@ -75,6 +75,7 @@ export interface TableState extends Partial<TableProps> {
   filterParams: FilterParams;
   stateIsRecovered?: boolean;
   columnsMap: { [key: string]: IColumn };
+  parentsMap: { [key: string]: string };
 }
 
 export interface TableRef {
@@ -92,7 +93,7 @@ export type Action =
   | { type: "paginate"; payload: TableState["pagination"] }
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
-  | { type: "setRowChildren"; payload: [IRow, IRow["children"], string[]] }
+  | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | {
       type: "setNestedTable";
       payload: [IRow, Partial<TableState> | Promise<Partial<TableState>>];
@@ -209,7 +210,4 @@ export type DataProvider = (
 
 export type RowChildrenProviderType = (
   expandedRow: IRow
-) =>
-  | IRow["children"]
-  | Promise<IRow["children"]>
-  | Promise<{ children: IRow["children"]; path: string }>;
+) => IRow["children"] | Promise<IRow["children"]>;
