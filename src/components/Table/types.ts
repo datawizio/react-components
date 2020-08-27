@@ -76,6 +76,7 @@ export interface TableState extends Partial<TableProps> {
   stateIsRecovered?: boolean;
   columnsMap: { [key: string]: IColumn };
   parentsMap: { [key: string]: string };
+  loadingRows: { [key: string]: boolean };
 }
 
 export interface TableRef {
@@ -94,6 +95,7 @@ export type Action =
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
+  | { type: "addLoadingRow"; payload: string }
   | {
       type: "setNestedTable";
       payload: [IRow, Partial<TableState> | Promise<Partial<TableState>>];

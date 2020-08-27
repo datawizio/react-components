@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Dayjs } from "dayjs";
 
 import { Form } from "antd";
@@ -22,10 +22,15 @@ interface FieldProps extends FormFieldProps<DateRangePickerParams> {
 }
 
 const Field: React.FC<FieldProps> = ({ format, value, onChange }) => {
+  const handleClear = useCallback(() => {
+    //@ts-ignore
+    onChange([null, null]);
+  }, []);
   return (
     //@ts-ignore
     <DateRangePicker
       onChange={onChange}
+      onClear={handleClear}
       format={format}
       dateFrom={value.from}
       dateTo={value.to}

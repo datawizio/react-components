@@ -23,6 +23,7 @@ import Cell from "./components/Cell";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -86,6 +87,10 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
       if (rowChildrenProvider && row.children && !row.children.length) {
+        dispatch({
+          type: "addLoadingRow",
+          payload: row.key
+        });
         const children = await rowChildrenProvider(row);
         dispatch({
           type: "setRowChildren",
@@ -94,6 +99,10 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       }
 
       if (nestedTableProvider && !row.nested) {
+        dispatch({
+          type: "addLoadingRow",
+          payload: row.key
+        });
         const result = await nestedTableProvider(row);
 
         dispatch({
@@ -115,6 +124,30 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       return translate(locale.total, { current, to, total });
     },
     [translate, locale.total]
+  );
+
+  const expandIconRender = useCallback(
+    ({ expanded, onExpand, record, prefixCls, expandable }) => {
+      const iconPrefix = `${prefixCls}-row-expand-icon`;
+      if (state.loadingRows[record.key]) return <LoadingOutlined />;
+
+      return (
+        <button
+          type="button"
+          onClick={e => {
+            onExpand(record, e!);
+            e.stopPropagation();
+          }}
+          className={clsx(iconPrefix, {
+            [`${iconPrefix}-spaced`]: !expandable,
+            [`${iconPrefix}-expanded`]: expandable && expanded,
+            [`${iconPrefix}-collapsed`]: expandable && !expanded
+          })}
+          aria-label={expanded ? locale.collapse : locale.expand}
+        />
+      );
+    },
+    [state.loadingRows]
   );
 
   const customComponents = useMemo<TableProps["components"]>(
@@ -169,6 +202,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           <AntdTable
             {...restProps}
             {...state}
+            expandIcon={expandIconRender}
             className={className}
             onExpand={handleExpandRow}
             onChange={handleChangeTable}

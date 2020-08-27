@@ -56,7 +56,8 @@ export function initializer(props: TableProps): TableState {
     columnsMap: genColumnsMap(columns),
     parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
-    dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
+    dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
+    loadingRows: {}
   };
 }
 
@@ -176,26 +177,34 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "setNestedTable": {
+      const { loadingRows } = state;
       const [expandedRow, result] = action.payload;
       const nextDataSource = state.dataSource.concat();
       const expandedRowIdx = state.dataSource.findIndex(
         row => row.key === expandedRow.key
       );
+      delete loadingRows[expandedRow.key];
       nextDataSource[expandedRowIdx] = {
         ...expandedRow,
         nested: result
       } as any;
       return {
         ...state,
-        dataSource: nextDataSource
+        dataSource: nextDataSource,
+        loadingRows
       };
-      return;
+    }
+    case "addLoadingRow": {
+      return {
+        ...state,
+        loadingRows: { ...state.loadingRows, [action.payload]: true }
+      };
     }
     case "setRowChildren": {
-      const { parentsMap } = state;
+      const { parentsMap, loadingRows } = state;
       const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
-
+      delete loadingRows[expandedRow.key];
       children.forEach(child => {
         parentsMap[child.key] = expandedRow.key;
       });
@@ -216,7 +225,8 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         parentsMap,
-        dataSource: nextDataSource
+        dataSource: nextDataSource,
+        loadingRows
       };
     }
     case "swapColumns": {
