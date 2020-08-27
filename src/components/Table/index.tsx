@@ -86,6 +86,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
+      let toogle = true;
       if (rowChildrenProvider && row.children && !row.children.length) {
         dispatch({
           type: "addLoadingRow",
@@ -104,17 +105,18 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           payload: row.key
         });
         const result = await nestedTableProvider(row);
-
+        if (!result) toogle = false;
         dispatch({
           type: "setNestedTable",
           payload: [row, result]
         });
       }
 
-      dispatch({
-        type: isExpanded ? "expandRow" : "collapseRow",
-        payload: row
-      });
+      toogle &&
+        dispatch({
+          type: isExpanded ? "expandRow" : "collapseRow",
+          payload: row
+        });
     },
     [rowChildrenProvider]
   );
@@ -184,6 +186,12 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "loading", payload: true });
       await fetchData();
       dispatch({ type: "loading", payload: false });
+    },
+    updateRow(rowKey: string, data: any) {
+      dispatch({ type: "updateRow", payload: [rowKey, data] });
+    },
+    addLoadingRow(rowKey: string) {
+      dispatch({ type: "addLoadingRow", payload: rowKey });
     }
   }));
 
