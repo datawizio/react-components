@@ -101,6 +101,7 @@ export type Action =
       payload: [IRow, Partial<TableState> | Promise<Partial<TableState>>];
     }
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
+  | { type: "updateRow"; payload: [IColumn["key"], IColumn] }
   | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
   | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };
 

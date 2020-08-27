@@ -179,19 +179,28 @@ export function reducer(state: TableState, action: Action): TableState {
     case "setNestedTable": {
       const { loadingRows } = state;
       const [expandedRow, result] = action.payload;
-      const nextDataSource = state.dataSource.concat();
-      const expandedRowIdx = state.dataSource.findIndex(
-        row => row.key === expandedRow.key
-      );
+
       delete loadingRows[expandedRow.key];
-      nextDataSource[expandedRowIdx] = {
-        ...expandedRow,
-        nested: result
-      } as any;
+
+      const newState: any = {
+        loadingRows
+      };
+
+      if (result) {
+        const nextDataSource = state.dataSource.concat();
+        const expandedRowIdx = state.dataSource.findIndex(
+          row => row.key === expandedRow.key
+        );
+
+        nextDataSource[expandedRowIdx] = {
+          ...expandedRow,
+          nested: result
+        } as any;
+        newState.dataSource = nextDataSource;
+      }
       return {
         ...state,
-        dataSource: nextDataSource,
-        loadingRows
+        ...newState
       };
     }
     case "addLoadingRow": {
@@ -282,6 +291,31 @@ export function reducer(state: TableState, action: Action): TableState {
       }
 
       return nextState;
+    }
+    case "updateRow": {
+      const [key, data] = action.payload;
+      const { loadingRows } = state;
+      delete loadingRows[key];
+      const newState: any = {
+        loadingRows
+      };
+
+      if (data) {
+        const nextDataSource = state.dataSource.concat();
+        const recordIndex = nextDataSource.findIndex(
+          child => child.key === key
+        );
+        nextDataSource[recordIndex] = Object.assign(
+          nextDataSource[recordIndex],
+          data
+        );
+        newState.dataSource = nextDataSource;
+      }
+
+      return {
+        ...state,
+        ...newState
+      };
     }
     case "update": {
       let nextState = { ...state, ...action.payload };
