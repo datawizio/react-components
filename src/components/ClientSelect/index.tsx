@@ -30,7 +30,11 @@ const ClientSelect: React.FC<ClientSelectProps> = ({ clients, client }) => {
           className="client-select"
         >
           {clients.map(client => (
-            <Select.Option key={client.id} value={client.id}>
+            <Select.Option
+              key={client.id}
+              value={client.id}
+              label={client.name}
+            >
               {client.name}
             </Select.Option>
           ))}
