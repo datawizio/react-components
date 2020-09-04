@@ -20,16 +20,22 @@ const UserButton: React.FC<UserButtonProps> = ({
   menu,
   showFullName
 }) => {
-  return (
+  const button = (
+    <Button border={false} className="user-name">
+      <UserAvatar src={photo} name={fullName} />
+      {showFullName ? (
+        <span className="user-button-fullname">{fullName}</span>
+      ) : null}
+      <DownOutlined />
+    </Button>
+  );
+
+  return menu ? (
     <Dropdown overlay={menu} className="user-dropdown" trigger={["click"]}>
-      <Button border={false} className="user-name">
-        <UserAvatar src={photo} name={fullName} />
-        {showFullName ? (
-          <span className="user-button-fullname">{fullName}</span>
-        ) : null}
-        <DownOutlined />
-      </Button>
+      {button}
     </Dropdown>
+  ) : (
+    button
   );
 };
 
