@@ -18,6 +18,8 @@ export { default as Loader } from "./components/Loader";
 
 export { default as Select } from "./components/Select";
 
+export { default as BackTop } from "./components/BackTop";
+
 export { default as ApiError } from "./components/ApiError";
 
 export { default as AppsList } from "./components/AppsList";
