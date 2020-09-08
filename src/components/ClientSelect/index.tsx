@@ -9,12 +9,17 @@ import "./index.less";
 export interface ClientSelectProps {
   clients: [{ id: number; name: string }];
   client: number;
+  onChange?: (url: string) => void;
 }
 
-const ClientSelect: React.FC<ClientSelectProps> = ({ clients, client }) => {
+const ClientSelect: React.FC<ClientSelectProps> = ({
+  clients,
+  client,
+  onChange
+}) => {
   const handleChange = (value: SelectValue) => {
     const arr = window.location.pathname.split("/").slice(3);
-    window.location.href = `/c/${value}/${arr.join("/")}`;
+    onChange && onChange(`/c/${value}/${arr.join("/")}`);
   };
 
   return (
