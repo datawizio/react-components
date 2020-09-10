@@ -24,6 +24,20 @@ function findExpandedRecord(path: string[], children: IRow[]) {
   return record;
 }
 
+function getRecordPath(rowKey: any, parentsMap: any) {
+  const path = [];
+
+  const buildPath = (key: string) => {
+    path.push(key);
+    if (!parentsMap[key]) return;
+    buildPath(parentsMap[key]);
+  };
+
+  buildPath(rowKey);
+
+  return path;
+}
+
 export function initializer(props: TableProps): TableState {
   const {
     columns,
@@ -218,15 +232,7 @@ export function reducer(state: TableState, action: Action): TableState {
         parentsMap[child.key] = expandedRow.key;
       });
 
-      const path = [];
-
-      const buildPath = (key: string) => {
-        path.push(key);
-        if (!parentsMap[key]) return;
-        buildPath(parentsMap[key]);
-      };
-
-      buildPath(expandedRow.key);
+      const path = getRecordPath(expandedRow.key, parentsMap);
 
       const expandedRecord = findExpandedRecord(path, state.dataSource);
       expandedRecord.children = children;
@@ -294,7 +300,7 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "updateRow": {
       const [key, data] = action.payload;
-      const { loadingRows } = state;
+      const { parentsMap, loadingRows, expandedRowKeys } = state;
       delete loadingRows[key];
       const newState: any = {
         loadingRows
@@ -302,13 +308,20 @@ export function reducer(state: TableState, action: Action): TableState {
 
       if (data) {
         const nextDataSource = state.dataSource.concat();
-        const recordIndex = nextDataSource.findIndex(
-          child => child.key === key
-        );
-        nextDataSource[recordIndex] = Object.assign(
-          nextDataSource[recordIndex],
-          data
-        );
+        const path = getRecordPath(key, parentsMap);
+
+        let expandedRecord = findExpandedRecord(path, state.dataSource);
+
+        //@ts-ignore
+        if (data.expanded === false) {
+          newState.expandedRowKeys = expandedRowKeys.filter(
+            rowKey => rowKey != key
+          );
+        }
+        if (!Array.isArray(expandedRecord.children)) {
+          delete data.children;
+        }
+        expandedRecord = Object.assign(expandedRecord, data);
         newState.dataSource = nextDataSource;
       }
 
