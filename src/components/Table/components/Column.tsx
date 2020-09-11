@@ -80,6 +80,18 @@ const Column: React.FC<ColumnProps> = props => {
     );
   }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
 
+  const styles: object = useMemo((): object => {
+    const defaultWidth = 200;
+
+    if (model.children && model.children.length) {
+      return {
+        width: model.children.length * defaultWidth + "px"
+      };
+    }
+
+    return {};
+  }, [model.children]);
+
   return (
     <th
       {...restProps}
@@ -88,6 +100,7 @@ const Column: React.FC<ColumnProps> = props => {
       onClick={onClickHandler}
       title={String(model.title)}
       onMouseDown={onMouseDownHandler}
+      style={styles}
     />
   );
 };
