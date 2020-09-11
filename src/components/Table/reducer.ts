@@ -113,6 +113,7 @@ export function reducer(state: TableState, action: Action): TableState {
               oldColumn => oldColumn.dataIndex === column.dataIndex
             );
 
+            oldColumn &&
             oldColumn.children &&
               oldColumn.children.length &&
               rec(column.children, oldColumn.children);
