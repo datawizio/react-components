@@ -63,16 +63,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   const onCheck = useCallback(
     checkedKeys => {
-      const parentKeys = [];
-      const nextCheckedKeys = checkedKeys || [];
-
-      deepFilter(
-        treeData,
-        column => checkedKeys.includes(column.key),
-        parent => parentKeys.push(parent.key)
-      );
-
-      setCheckedKeys(nextCheckedKeys.concat(parentKeys));
+      setCheckedKeys(checkedKeys || []);
     },
     [treeData]
   );
