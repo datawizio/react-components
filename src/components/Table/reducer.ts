@@ -229,7 +229,7 @@ export function reducer(state: TableState, action: Action): TableState {
       const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
       delete loadingRows[expandedRow.key];
-      children.forEach(child => {
+      children && children.forEach(child => {
         parentsMap[child.key] = expandedRow.key;
       });
 
