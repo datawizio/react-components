@@ -23,7 +23,11 @@ import Cell from "./components/Cell";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
-import { LoadingOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  RightOutlined,
+  DownOutlined
+} from "@ant-design/icons";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -132,7 +136,13 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     ({ expanded, onExpand, record, prefixCls, expandable }) => {
       const iconPrefix = `${prefixCls}-row-expand-icon`;
       if (state.loadingRows[record.key]) return <LoadingOutlined />;
-
+      let icon = null;
+      if (expandable) {
+        icon = <RightOutlined />;
+        if (expanded) {
+          icon = <DownOutlined />;
+        }
+      }
       return (
         <button
           type="button"
@@ -146,7 +156,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             [`${iconPrefix}-collapsed`]: expandable && !expanded
           })}
           aria-label={expanded ? locale.collapse : locale.expand}
-        />
+        >
+          {icon}
+        </button>
       );
     },
     [state.loadingRows]
