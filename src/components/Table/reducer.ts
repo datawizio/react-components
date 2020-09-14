@@ -147,6 +147,15 @@ export function reducer(state: TableState, action: Action): TableState {
         pagination: action.payload
       };
     }
+    case "resetPagination": {
+      return {
+        ...state,
+        pagination: state.pagination && {
+          ...state.pagination,
+          current: 1
+        }
+      };
+    }
     case "search": {
       return {
         ...state,

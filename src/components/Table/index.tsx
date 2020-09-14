@@ -204,6 +204,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     },
     addLoadingRow(rowKey: string) {
       dispatch({ type: "addLoadingRow", payload: rowKey });
+    },
+    resetPagination() {
+      dispatch({ type: "resetPagination" });
     }
   }));
 

@@ -87,6 +87,7 @@ export type Action =
   | { type: "expandRow"; payload: IRow }
   | { type: "search"; payload: string }
   | { type: "loading"; payload: boolean }
+  | { type: "resetPagination" }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
   | { type: "update"; payload: Partial<TableState> }
