@@ -100,7 +100,7 @@ const Column: React.FC<ColumnProps> = props => {
       onClick={onClickHandler}
       title={String(model.title)}
       onMouseDown={onMouseDownHandler}
-      style={styles}
+      style={{ ...styles, ...props.style }}
     />
   );
 };
