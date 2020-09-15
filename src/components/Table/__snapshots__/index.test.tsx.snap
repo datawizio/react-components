@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table component rendered Table corectly 1`] = `
+<DndProvider
+  backend={[Function]}
+>
+  <ContextProvider
+    value={
+      Object {
+        "baseTableState": Object {
+          "columns": Array [],
+          "columnsMap": Object {},
+          "dTypesConfig": Object {
+            "boolean": Object {
+              "filter": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+            "number": Object {
+              "filter": [Function],
+              "render": [Function],
+              "search": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+            "string": Object {
+              "filter": [Function],
+              "search": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+          },
+          "dataSource": Array [],
+          "expandedRowKeys": Array [],
+          "filterParams": Object {},
+          "loading": undefined,
+          "loadingRows": Object {},
+          "pagination": Object {
+            "pageSize": 20,
+            "pageSizeOptions": Array [
+              "20",
+              "35",
+              "50",
+              "100",
+            ],
+            "showSizeChanger": true,
+          },
+          "parentsMap": Object {},
+          "searchValue": undefined,
+          "sortParams": Object {},
+          "visibleColumnsKeys": Array [],
+        },
+        "dispatch": [Function],
+        "tableProps": Object {
+          "bordered": true,
+          "cellRenderProps": Object {},
+          "className": "",
+          "columns": Array [],
+          "columnsConfig": Object {},
+          "dTypesConfig": Object {},
+          "dataSource": Array [],
+          "filterHandler": [Function],
+          "height": "auto",
+          "isResizableColumns": true,
+          "locale": Object {
+            "total": "TABLE_TOTAL",
+          },
+          "pageSizeOptions": Array [
+            "20",
+            "35",
+            "50",
+            "100",
+          ],
+          "searchHandler": [Function],
+          "showSizeChanger": true,
+          "showSorterTooltip": false,
+          "size": "small",
+          "sortHandler": [Function],
+          "sortable": true,
+          "tableLayout": "fixed",
+          "width": "auto",
+        },
+        "tableState": Object {
+          "columns": Array [],
+          "columnsMap": Object {},
+          "dTypesConfig": Object {
+            "boolean": Object {
+              "filter": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+            "number": Object {
+              "filter": [Function],
+              "render": [Function],
+              "search": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+            "string": Object {
+              "filter": [Function],
+              "search": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+          },
+          "dataSource": Array [],
+          "expandedRowKeys": Array [],
+          "filterParams": Object {},
+          "loading": false,
+          "loadingRows": Object {},
+          "pagination": Object {
+            "pageSize": 20,
+            "pageSizeOptions": Array [
+              "20",
+              "35",
+              "50",
+              "100",
+            ],
+            "showSizeChanger": true,
+          },
+          "parentsMap": Object {},
+          "searchValue": undefined,
+          "sortParams": Object {},
+          "visibleColumnsKeys": Array [],
+        },
+      }
+    }
+  >
+    <Loader
+      loading={false}
+    >
+      <Table
+        bordered={true}
+        cellRenderProps={Object {}}
+        className="dw-table dw-table--empty"
+        columns={Array []}
+        columnsConfig={Object {}}
+        columnsMap={Object {}}
+        components={
+          Object {
+            "body": Object {
+              "cell": [Function],
+            },
+            "header": Object {
+              "cell": [Function],
+            },
+            "table": [Function],
+          }
+        }
+        dTypesConfig={
+          Object {
+            "boolean": Object {
+              "filter": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+            "number": Object {
+              "filter": [Function],
+              "render": [Function],
+              "search": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+            "string": Object {
+              "filter": [Function],
+              "search": [Function],
+              "sorter": [Function],
+              "toString": [Function],
+            },
+          }
+        }
+        dataSource={Array []}
+        expandIcon={[Function]}
+        expandedRowKeys={Array []}
+        filterHandler={[Function]}
+        filterParams={Object {}}
+        isResizableColumns={true}
+        loading={false}
+        loadingRows={Object {}}
+        onChange={[Function]}
+        onExpand={[Function]}
+        pageSizeOptions={
+          Array [
+            "20",
+            "35",
+            "50",
+            "100",
+          ]
+        }
+        pagination={
+          Object {
+            "pageSize": 20,
+            "pageSizeOptions": Array [
+              "20",
+              "35",
+              "50",
+              "100",
+            ],
+            "showSizeChanger": true,
+            "showTotal": [Function],
+          }
+        }
+        parentsMap={Object {}}
+        rowKey="key"
+        searchHandler={[Function]}
+        showSorterTooltip={false}
+        size="small"
+        sortHandler={[Function]}
+        sortParams={Object {}}
+        sortable={true}
+        tableLayout="fixed"
+        visibleColumnsKeys={Array []}
+      />
+    </Loader>
+  </ContextProvider>
+</DndProvider>
+`;

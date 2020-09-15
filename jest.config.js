@@ -1,5 +1,9 @@
 module.exports = {
   roots: ["./src"],
+  preset: "ts-jest",
+  clearMocks: true,
+  collectCoverage: false,
+  testEnvironment: "node",
   setupFiles: ["./setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js"],
   testPathIgnorePatterns: ["node_modules/"],
