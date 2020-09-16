@@ -107,7 +107,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
 TableSelectColumnsModal.defaultProps = {
   locale: {
-    apply: "APPLY",
+    apply: "SUBMIT",
     checkAll: "ALL",
     openButton: "COLUMNS",
     headerModal: "SELECT_COLUMNS"
