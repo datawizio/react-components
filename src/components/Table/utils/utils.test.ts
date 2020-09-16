@@ -1,5 +1,13 @@
 import { defineCellType, filterByColumns, swapColumns } from "./utils";
-import { cell, invalidColumn, validColumn } from "./__mocks__";
+import {
+  cell,
+  invalidColumn,
+  validColumn,
+  obj,
+  columnsMap,
+  columns,
+  expectedOutput_filterByColumns
+} from "../__mocks__";
 import { BodyCellType, IColumn, TableState } from "../types";
 
 describe("Utils", () => {
@@ -13,9 +21,47 @@ describe("Utils", () => {
     });
   });
 
-  // describe("filterByColumns", () => {
-  //   it("filterByColumns basic", () => {
-  //     expect(filterByColumns(cell, validColumn)).toBe(validColumn.dtype);
-  //   });
-  // });
+  describe("filterByColumns", () => {
+    it("filterByColumns with empty param objects", () => {
+      expect(filterByColumns({}, {})).toMatchObject({});
+    });
+    it("filterByColumns with first empty param", () => {
+      expect(filterByColumns({}, obj)).toMatchObject({});
+    });
+    it("filterByColumns with second empty param", () => {
+      expect(filterByColumns(columnsMap, {})).toMatchObject({});
+    });
+    it("filterByColumns with valid param", () => {
+      expect(filterByColumns(columnsMap, obj)).toMatchObject(
+        expectedOutput_filterByColumns
+      );
+    });
+    it("filterByColumns with valid param", () => {
+      expect(filterByColumns(columnsMap, obj)).toMatchObject(
+        expectedOutput_filterByColumns
+      );
+    });
+    it("filterByColumns with undefined param", () => {
+      try {
+        filterByColumns(undefined, {});
+      } catch (err) {
+        expect(err).toThrow(TypeError);
+      }
+    });
+  });
+  describe("swapColumns", () => {
+    it("swapColumns with undefined param", () => {
+      try {
+        swapColumns(columns, "keyFrom", "keyTo");
+      } catch (err) {
+        expect(err).toThrow(TypeError);
+      }
+    });
+    it("swapColumns with  param", () => {
+      const mockCallback = jest.fn(swapColumns);
+      mockCallback(columns, columns[2].key, columns[4].key);
+      expect(mockCallback).toHaveBeenCalledTimes(1);
+      mockCallback.mockRestore();
+    });
+  });
 });
