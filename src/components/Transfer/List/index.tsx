@@ -57,6 +57,7 @@ interface TransferListState {
   filters: { [key: string]: any };
   filterValue: string;
   page: number;
+  count: number;
   totalPages: number;
   dataSource: TransferItem[];
   loading: boolean;
@@ -87,6 +88,7 @@ export default class TransferList extends React.PureComponent<
       filterValue: "",
       page: 0,
       totalPages: 1,
+      count: 0,
       dataSource: [],
       loading: false
     };
@@ -173,10 +175,11 @@ export default class TransferList extends React.PureComponent<
       ...filters
     };
 
-    const { data, totalPages: pages } = await loadData(filtersReq);
+    const { data, totalPages: pages, count } = await loadData(filtersReq);
 
     this.setState({
       page,
+      count,
       totalPages: pages,
       dataSource: dataSource.concat(data),
       loading: false
@@ -309,7 +312,7 @@ export default class TransferList extends React.PureComponent<
   };
 
   render() {
-    const { filterValue, dataSource, loading } = this.state;
+    const { filterValue, dataSource, loading, count } = this.state;
     const {
       prefixCls,
       titleText,
@@ -321,6 +324,11 @@ export default class TransferList extends React.PureComponent<
       showSelectAll,
       actions
     } = this.props;
+
+    const totalCount =
+      this.exceptedKeys[0] && this.exceptedKeys[0] === "all"
+        ? 0
+        : count - this.exceptedKeys.length;
 
     // ====================== Get filtered, checked item list ======================
 
@@ -361,7 +369,7 @@ export default class TransferList extends React.PureComponent<
           <div className={`${prefixCls}-header`}>
             {checkAllCheckbox}
             <span className={`${prefixCls}-header-selected`}>
-              {selectedText}: {checkedKeys.length}
+              {selectedText}: {checkedKeys.length} / {totalCount}
             </span>
           </div>
 

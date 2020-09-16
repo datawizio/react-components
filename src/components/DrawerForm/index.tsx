@@ -15,6 +15,7 @@ export interface DrawerFormProps {
   form?: any;
   loading?: boolean;
   hideRequiredMark?: boolean;
+  style?: object;
   onClose?: () => void;
   onSubmit?: () => void;
 }
@@ -24,6 +25,7 @@ const noop = () => {};
 const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   title,
+  style,
   visible,
   hideRequiredMark,
   children,
@@ -79,6 +81,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   return (
     <Drawer
       title={title}
+      style={style}
       width={window.innerWidth < 500 ? window.innerWidth : 500}
       onClose={handleFormClose}
       visible={visible}

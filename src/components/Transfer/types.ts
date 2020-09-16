@@ -11,6 +11,7 @@ export type LoadDataParams = {
 export type LoadDataResponse = {
   data: TransferItem[];
   totalPages: number;
+  count: number;
 };
 
 export type TransferDirection = "left" | "right";
