@@ -139,30 +139,32 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       const iconPrefix = `${prefixCls}-row-expand-icon`;
       if (state.loadingRows[record.key]) return <LoadingOutlined />;
       let icon = null;
-      if (expandable || (showExpandIcon && showExpandIcon(record))) {
+      let internalExpandable =
+        expandable || (showExpandIcon && showExpandIcon(record));
+      if (internalExpandable) {
         icon = <RightOutlined />;
         if (expanded) {
           icon = <DownOutlined />;
         }
-
-        return (
-          <button
-            type="button"
-            onClick={e => {
-              onExpand(record, e!);
-              e.stopPropagation();
-            }}
-            className={clsx(iconPrefix, {
-              [`${iconPrefix}-spaced`]: !expandable,
-              [`${iconPrefix}-expanded`]: expandable && expanded,
-              [`${iconPrefix}-collapsed`]: expandable && !expanded
-            })}
-            aria-label={expanded ? locale.collapse : locale.expand}
-          >
-            {icon}
-          </button>
-        );
       }
+
+      return (
+        <button
+          type="button"
+          onClick={e => {
+            onExpand(record, e!);
+            e.stopPropagation();
+          }}
+          className={clsx(iconPrefix, {
+            [`${iconPrefix}-spaced`]: !internalExpandable,
+            [`${iconPrefix}-expanded`]: expandable && expanded,
+            [`${iconPrefix}-collapsed`]: expandable && !expanded
+          })}
+          aria-label={expanded ? locale.collapse : locale.expand}
+        >
+          {icon}
+        </button>
+      );
     },
     [state.loadingRows]
   );
