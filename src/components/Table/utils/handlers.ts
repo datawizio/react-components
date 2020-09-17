@@ -15,6 +15,7 @@ const basicSearchHandler: SearchHandlerType = (
   dTypesConfig
 ) => {
   const expandedRowKeys = [];
+  debugger;
 
   const foundRows = deepFilter(
     dataSource,
@@ -76,7 +77,7 @@ const basicSortHandler: SorterHandlerType = (
   dTypesConfig
 ) => {
   const [dataIndex, order] = Object.entries(sortParams)[0] || [];
-
+  debugger;
   if (!order) return { dataSource };
 
   const sortData = dataSource => {

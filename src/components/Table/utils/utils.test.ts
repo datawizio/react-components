@@ -5,7 +5,7 @@ import {
   validColumn,
   obj,
   columnsMap,
-  columns,
+  columnsMock,
   expectedOutput_filterByColumns
 } from "../__mocks__";
 import { BodyCellType, IColumn, TableState } from "../types";
@@ -52,14 +52,14 @@ describe("Utils", () => {
   describe("swapColumns", () => {
     it("swapColumns with undefined param", () => {
       try {
-        swapColumns(columns, "keyFrom", "keyTo");
+        swapColumns(columnsMock, "keyFrom", "keyTo");
       } catch (err) {
         expect(err).toThrow(TypeError);
       }
     });
     it("swapColumns with  param", () => {
       const mockCallback = jest.fn(swapColumns);
-      mockCallback(columns, columns[2].key, columns[4].key);
+      mockCallback(columnsMock, columnsMock[2].key, columnsMock[4].key);
       expect(mockCallback).toHaveBeenCalledTimes(1);
       mockCallback.mockRestore();
     });

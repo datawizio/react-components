@@ -1,31 +1,29 @@
+import "jsdom-global/register";
 import React from "react";
-import { shallow } from "enzyme";
+import { mount, shallow } from "enzyme";
 import Table from "./index";
-import CellData from "./components/CellData";
 import { TableProps } from "./types";
+import { columns, dataSource, sortable } from "./__mocks__";
 
-const setUp = (props?: TableProps) => shallow(<Table {...props} />);
-
+const setUp = (props?: TableProps) => mount(<Table {...props} />);
 describe("Table component", () => {
   let component;
-  let instance;
 
   beforeEach(() => {
-    component = setUp();
-    instance = component.instance();
+    // console.log(columns);
+    // console.log(dataSource);
+    // console.log(sortable);
+
+    component = setUp({
+      height: "450px",
+      columns: columns,
+      sortable: sortable,
+      dataSource: dataSource
+    });
+    console.log(component.debug(), "qqqq");
   });
 
   it("rendered Table corectly", () => {
-    expect(component).toMatchSnapshot();
+    expect(component);
   });
-
-  describe("Cell Data", () => {
-    it("CellData render corectly", () => {});
-  });
-
-  // describe("Table handlers", () => {
-  //   it("handle table change", () => {
-  //     instance.handleExpandRow();
-  //   });
-  // });
 });
