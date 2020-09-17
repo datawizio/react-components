@@ -50,7 +50,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     height,
     locale,
     isNested,
-    showExpandIconAlways,
+    showExpandIcon,
     children,
     components,
     dataProvider,
@@ -93,20 +93,19 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
       let toogle = true;
-      if (
-        ((isNested && isNested(row)) || (!isNested && nestedTableProvider)) &&
-        !row.nested
-      ) {
-        dispatch({
-          type: "addLoadingRow",
-          payload: row.key
-        });
-        const result = await nestedTableProvider(row);
-        if (!result) toogle = false;
-        dispatch({
-          type: "setNestedTable",
-          payload: [row, result]
-        });
+      if ((isNested && isNested(row)) || (!isNested && nestedTableProvider)) {
+        if (!row.nested) {
+          dispatch({
+            type: "addLoadingRow",
+            payload: row.key
+          });
+          const result = await nestedTableProvider(row);
+          if (!result) toogle = false;
+          dispatch({
+            type: "setNestedTable",
+            payload: [row, result]
+          });
+        }
       } else if (rowChildrenProvider && row.children && !row.children.length) {
         dispatch({
           type: "addLoadingRow",
@@ -125,7 +124,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           payload: row
         });
     },
-    [rowChildrenProvider]
+    [rowChildrenProvider, nestedTableProvider, isNested]
   );
 
   const totalRenderer = useCallback(
@@ -140,29 +139,30 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       const iconPrefix = `${prefixCls}-row-expand-icon`;
       if (state.loadingRows[record.key]) return <LoadingOutlined />;
       let icon = null;
-      if (expandable || showExpandIconAlways) {
+      if (expandable || showExpandIcon(record)) {
         icon = <RightOutlined />;
         if (expanded) {
           icon = <DownOutlined />;
         }
+
+        return (
+          <button
+            type="button"
+            onClick={e => {
+              onExpand(record, e!);
+              e.stopPropagation();
+            }}
+            className={clsx(iconPrefix, {
+              [`${iconPrefix}-spaced`]: !expandable,
+              [`${iconPrefix}-expanded`]: expandable && expanded,
+              [`${iconPrefix}-collapsed`]: expandable && !expanded
+            })}
+            aria-label={expanded ? locale.collapse : locale.expand}
+          >
+            {icon}
+          </button>
+        );
       }
-      return (
-        <button
-          type="button"
-          onClick={e => {
-            onExpand(record, e!);
-            e.stopPropagation();
-          }}
-          className={clsx(iconPrefix, {
-            [`${iconPrefix}-spaced`]: !expandable,
-            [`${iconPrefix}-expanded`]: expandable && expanded,
-            [`${iconPrefix}-collapsed`]: expandable && !expanded
-          })}
-          aria-label={expanded ? locale.collapse : locale.expand}
-        >
-          {icon}
-        </button>
-      );
     },
     [state.loadingRows]
   );
