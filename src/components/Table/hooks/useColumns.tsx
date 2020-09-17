@@ -24,7 +24,8 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
             return acc;
           }
 
-          if (nextColumn.children) {
+          if (nextColumn.children && nextColumn.children.length) {
+            nextColumn.sorter = false;
             nextColumn.children = initColumns(nextColumn.children, level + 1);
           } else {
             nextColumn.sorter = nextColumn.hasOwnProperty("sorter")
