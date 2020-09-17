@@ -49,6 +49,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     width,
     height,
     locale,
+    isNested,
+    showExpandIconAlways,
     children,
     components,
     dataProvider,
@@ -91,19 +93,10 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
       let toogle = true;
-      if (rowChildrenProvider && row.children && !row.children.length) {
-        dispatch({
-          type: "addLoadingRow",
-          payload: row.key
-        });
-        const children = await rowChildrenProvider(row);
-        dispatch({
-          type: "setRowChildren",
-          payload: [row, children.length ? children : undefined]
-        });
-      }
-
-      if (nestedTableProvider && !row.nested) {
+      if (
+        ((isNested && isNested(row)) || (!isNested && nestedTableProvider)) &&
+        !row.nested
+      ) {
         dispatch({
           type: "addLoadingRow",
           payload: row.key
@@ -113,6 +106,16 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         dispatch({
           type: "setNestedTable",
           payload: [row, result]
+        });
+      } else if (rowChildrenProvider && row.children && !row.children.length) {
+        dispatch({
+          type: "addLoadingRow",
+          payload: row.key
+        });
+        const children = await rowChildrenProvider(row);
+        dispatch({
+          type: "setRowChildren",
+          payload: [row, children.length ? children : undefined]
         });
       }
 
@@ -137,7 +140,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       const iconPrefix = `${prefixCls}-row-expand-icon`;
       if (state.loadingRows[record.key]) return <LoadingOutlined />;
       let icon = null;
-      if (expandable) {
+      if (expandable || showExpandIconAlways) {
         icon = <RightOutlined />;
         if (expanded) {
           icon = <DownOutlined />;
