@@ -114,7 +114,7 @@ export function reducer(state: TableState, action: Action): TableState {
             );
 
             oldColumn &&
-            oldColumn.children &&
+              oldColumn.children &&
               oldColumn.children.length &&
               rec(column.children, oldColumn.children);
           }
@@ -201,7 +201,7 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "setNestedTable": {
-      const { loadingRows } = state;
+      const { loadingRows, parentsMap } = state;
       const [expandedRow, result] = action.payload;
 
       delete loadingRows[expandedRow.key];
@@ -211,15 +211,11 @@ export function reducer(state: TableState, action: Action): TableState {
       };
 
       if (result) {
+        const path = getRecordPath(expandedRow.key, parentsMap);
         const nextDataSource = state.dataSource.concat();
-        const expandedRowIdx = state.dataSource.findIndex(
-          row => row.key === expandedRow.key
-        );
+        const expandedRecord = findExpandedRecord(path, state.dataSource);
+        expandedRecord.nested = result;
 
-        nextDataSource[expandedRowIdx] = {
-          ...expandedRow,
-          nested: result
-        } as any;
         newState.dataSource = nextDataSource;
       }
       return {
@@ -238,9 +234,10 @@ export function reducer(state: TableState, action: Action): TableState {
       const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
       delete loadingRows[expandedRow.key];
-      children && children.forEach(child => {
-        parentsMap[child.key] = expandedRow.key;
-      });
+      children &&
+        children.forEach(child => {
+          parentsMap[child.key] = expandedRow.key;
+        });
 
       const path = getRecordPath(expandedRow.key, parentsMap);
 
