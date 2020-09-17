@@ -40,7 +40,7 @@ export interface TableProps<RT = any>
   multipleSorting?: boolean;
   isResizableColumns?: boolean;
   isNested?: (row: any) => boolean;
-  showExpandIconAlways?: boolean;
+  showExpandIcon?: (row: any) => boolean;
 
   pageSizeOptions?: Array<string>;
   templates?: Array<TableTemplate>;
