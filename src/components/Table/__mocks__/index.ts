@@ -1,4 +1,4 @@
-import { BodyCellType, IColumn, TableState } from "../types";
+import { Action, BodyCellType, IColumn, TableState } from "../types";
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 import { genColumns, genDataSource } from "../../../utils/data/dataGenerators";
 
@@ -118,3 +118,89 @@ export const dTypeConfig = {
   number: {},
   string: {}
 };
+
+// Table reducer
+
+export const updateDataSourceAC = (payload): Action => ({
+  type: "updateDataSource",
+  payload: payload
+});
+
+export const updateColumnsAC = (payload): Action => ({
+  type: "updateColumns",
+  payload: payload || []
+});
+
+export const visibleColumnsKeysAC = (payload): Action => ({
+  type: "visibleColumnsKeys",
+  payload
+});
+
+export const paginateAC = (payload): Action => ({
+  type: "paginate",
+  payload
+});
+
+export const resetPaginationAC = (): Action => ({
+  type: "resetPagination"
+});
+
+export const searchAC = (payload): Action => ({
+  type: "search",
+  payload
+});
+
+export const sorthAC = (payload): Action => ({
+  type: "sort",
+  payload: [].concat(payload)
+});
+
+export const filterAC = (payload): Action => ({
+  type: "filter",
+  payload
+});
+
+export const addLoadingRowAC = (payload): Action => ({
+  type: "addLoadingRow",
+  payload
+});
+
+export const setRowChildrenAC = (payload): Action => ({
+  type: "setRowChildren",
+  payload
+});
+
+export const swapColumnsAC = (payload): Action => ({
+  type: "swapColumns",
+  payload
+});
+
+export const expandRowAC = (payload): Action => ({
+  type: "expandRow",
+  payload
+});
+
+export const collapseRowAC = (payload): Action => ({
+  type: "collapseRow",
+  payload
+});
+
+export const loadingAC = (payload): Action => ({
+  type: "loading",
+  payload
+});
+
+export const recoveryStateAC = (payload): Action => ({
+  type: "recoveryState",
+  payload
+});
+
+export const updateRowAC = (payload): Action => ({
+  type: "updateRow",
+  payload
+});
+
+export const updateAC = (payload): Action => ({
+  type: "update",
+  payload
+});

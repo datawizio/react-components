@@ -9,7 +9,12 @@ describe("TableWrapper component", () => {
   let instance;
 
   beforeEach(() => {
-    component = setUp({ style: { height: 1, width: 1 } });
+    component = setUp({
+      style: {
+        height: 1,
+        width: 1
+      }
+    });
     instance = component.instance();
   });
 
