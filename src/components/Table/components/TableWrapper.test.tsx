@@ -1,8 +1,9 @@
+import "jsdom-global/register";
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import TableWrapper from "./TableWrapper";
 
-const setUp = (props?) => shallow(<TableWrapper {...props} />);
+const setUp = (props?) => mount(<TableWrapper {...props} />);
 
 describe("TableWrapper component", () => {
   let component;

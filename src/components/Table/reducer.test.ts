@@ -23,15 +23,9 @@ import {
   updateColumnsAC,
   updateDataSourceAC,
   updateRowAC,
-  visibleColumnsKeysAC
+  visibleColumnsKeysAC,
+  getDTypeConfig
 } from "./__mocks__";
-
-const getDTypeConfig = () => ({
-  sorted: () => true,
-  toString: () => "toString",
-  search: () => true,
-  filter: () => true
-});
 
 const pageSizeOptions: Array<string> = ["opt1", "opt2", "opt3"];
 const visibleColumnsKeys: Array<string> = ["key1", "key2", "key3"];
@@ -123,6 +117,13 @@ describe("Table reducer", () => {
   });
 
   it("should add LoadingRow ", () => {
+    const payload = "rowID";
+    const store = reducer(initailStore, addLoadingRowAC(payload));
+
+    const expectedObj = { ...store.loadingRows, [payload]: true };
+    expect(store.loadingRows).toEqual(expectedObj);
+  });
+  it("should set row children ", () => {
     const payload = "rowID";
     const store = reducer(initailStore, addLoadingRowAC(payload));
 

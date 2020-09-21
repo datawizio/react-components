@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CellData component rendered CellData corectly 1`] = `
+<Memo()
+  column={
+    Object {
+      "dType": "render",
+      "dataIndex": "alias20-89663",
+      "key": "0-47391-2",
+      "onHeaderCell": [MockFunction],
+      "render": [MockFunction],
+      "sorter": true,
+      "title": "Alias",
+    }
+  }
+  columnLevel={1}
+  row={
+    Object {
+      "address": "city",
+      "age": 10,
+      "children": Object {
+        "address": "city",
+        "age": 10,
+        "key": 1,
+        "name": "name",
+      },
+      "key": 2,
+      "name": "name",
+    }
+  }
+  value="35"
+  xIndex={1}
+  yIndex={2}
+>
+  <div
+    className="dw-table__cell-data"
+  >
+    35
+  </div>
+</Memo()>
+`;

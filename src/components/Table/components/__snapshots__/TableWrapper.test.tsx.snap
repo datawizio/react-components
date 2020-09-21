@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TableWrapper component rendered TableWrapper corectly 1`] = `
-<div
-  className="dw-table__wrapper"
+<TableWrapper
   style={
     Object {
       "height": 1,
@@ -10,8 +9,18 @@ exports[`TableWrapper component rendered TableWrapper corectly 1`] = `
     }
   }
 >
-  <table
-    style={Object {}}
-  />
-</div>
+  <div
+    className="dw-table__wrapper"
+    style={
+      Object {
+        "height": 1,
+        "width": 1,
+      }
+    }
+  >
+    <table
+      style={Object {}}
+    />
+  </div>
+</TableWrapper>
 `;

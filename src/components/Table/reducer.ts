@@ -114,7 +114,7 @@ export function reducer(state: TableState, action: Action): TableState {
             );
 
             oldColumn &&
-            oldColumn.children &&
+              oldColumn.children &&
               oldColumn.children.length &&
               rec(column.children, oldColumn.children);
           }
@@ -238,15 +238,15 @@ export function reducer(state: TableState, action: Action): TableState {
       const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
       delete loadingRows[expandedRow.key];
-      children && children.forEach(child => {
-        parentsMap[child.key] = expandedRow.key;
-      });
+      children &&
+        children.forEach(child => {
+          parentsMap[child.key] = expandedRow.key;
+        });
 
       const path = getRecordPath(expandedRow.key, parentsMap);
 
       const expandedRecord = findExpandedRecord(path, state.dataSource);
       expandedRecord.children = children;
-
       return {
         ...state,
         parentsMap,
