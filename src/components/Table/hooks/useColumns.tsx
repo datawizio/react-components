@@ -15,16 +15,20 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
             ...(columnsConfig[column.key] || {})
           };
 
+          const isParent = nextColumn.children && nextColumn.children.length;
+          const hasCheckedChildren = isParent && nextColumn.children.find(child => visibleColumnsKeys.includes(child.key));
+
           if (
             !nextColumn.fixed &&
             visibleColumnsKeys &&
             visibleColumnsKeys.length &&
-            !visibleColumnsKeys.includes(nextColumn.key)
+            !visibleColumnsKeys.includes(nextColumn.key) &&
+            !hasCheckedChildren
           ) {
             return acc;
           }
 
-          if (nextColumn.children && nextColumn.children.length) {
+          if (isParent) {
             nextColumn.sorter = false;
             nextColumn.children = initColumns(nextColumn.children, level + 1);
           } else {
@@ -76,8 +80,7 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
         ...column,
         sortOrder: sortParams[column.dataIndex],
         filteredValue: column.filters && filterParams[column.dataIndex],
-        children:
-          column.children && column.children.length && rec(column.children)
+        children: column.children && column.children.length && rec(column.children)
       }));
     })(initializedColumns);
   }, [sortParams, filterParams, initializedColumns]);
