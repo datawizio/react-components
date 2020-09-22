@@ -502,6 +502,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handleLevelChange = (level: string) => {
     levelSelected.current = level;
     onLevelChange && onLevelChange(level);
+    dispatch({
+      type: "setState",
+      payload: { internalValue: [] }
+    });
     internalLoadData(false, []);
   };
 
