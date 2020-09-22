@@ -40,6 +40,8 @@ export const App: React.FC<CardAppProps> = ({
   const { translate } = useContext(ConfigContext);
   const [client, setClient] = useState<number>();
 
+  const showClientSelect = path ? path.match(":client_id") !== null : false;
+
   const handleChangeClient = (value: any) => {
     setClient(value);
   };
@@ -66,7 +68,7 @@ export const App: React.FC<CardAppProps> = ({
           )}
         </div>
         <div className="card-app-description">{translate(description)}</div>
-        {clients && clients.length > 1 && (
+        {showClientSelect && clients && clients.length > 1 && (
           <div className="card-app-clients">
             <Select
               placeholder={translate("SELECT_CLIENT")}
