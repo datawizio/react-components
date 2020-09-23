@@ -77,6 +77,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     loading: false
   };
 
+  if (dataSourceState.expandedRowKeys) delete dataSourceState.expandedRowKeys;
+
   const fetchData = useAsyncProviders(state, dispatch, props);
 
   usePropsToState(dispatch, props);
