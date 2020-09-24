@@ -24,7 +24,8 @@ import {
   updateDataSourceAC,
   updateRowAC,
   visibleColumnsKeysAC,
-  getDTypeConfig
+  getDTypeConfig,
+  getStaticColumn
 } from "./__mocks__";
 
 const pageSizeOptions: Array<string> = ["opt1", "opt2", "opt3"];
@@ -53,8 +54,10 @@ export const getSortedResult = (
   });
 };
 
+const staticColumns = getStaticColumn(3, 2);
+
 const initializerProps: TableProps = {
-  columns,
+  columns: staticColumns,
   loading: true,
   dataSource: genDataSource(3, columns),
   pagination: getPagination(["topCenter"]),
@@ -62,11 +65,15 @@ const initializerProps: TableProps = {
   dTypesConfig: getDTypeConfig(),
   showSizeChanger: true,
   pageSizeOptions,
-  visibleColumnsKeys: ["key1", "key1", "key2"]
+  visibleColumnsKeys: ["key1", "key2", "key3"]
 };
 
 describe("Table reducer", () => {
-  const initailStore = initializer(initializerProps);
+  let initailStore;
+  beforeEach(() => {
+    initailStore = initializer(initializerProps);
+  });
+
   it("should return updated DataSource", () => {
     const payload = dataSource;
     const store = reducer(initailStore, updateDataSourceAC(payload));
@@ -116,7 +123,7 @@ describe("Table reducer", () => {
     expect(store.sortParams[firtsObjKey]).toEqual(decentOrderType);
   });
 
-  it("should add LoadingRow ", () => {
+  it("should add loading row ", () => {
     const payload = "rowID";
     const store = reducer(initailStore, addLoadingRowAC(payload));
 
@@ -129,5 +136,101 @@ describe("Table reducer", () => {
 
     const expectedObj = { ...store.loadingRows, [payload]: true };
     expect(store.loadingRows).toEqual(expectedObj);
+  });
+  it("should swap collumns ", () => {
+    const keyFrom = staticColumns[0].key;
+    const keyTo = staticColumns[1].key;
+    const payload = [keyFrom, keyTo];
+
+    const store = reducer(initailStore, swapColumnsAC(payload));
+
+    expect(store.columns[0].key).toBe(keyTo);
+    expect(store.columns[1].key).toBe(keyFrom);
+  });
+
+  it("should expand row ", () => {
+    const payload = {
+      key: "key6"
+    };
+    const store = reducer(initailStore, expandRowAC(payload));
+
+    expect(store.expandedRowKeys).toContain(payload.key);
+  });
+  it("should expand row with array payload", () => {
+    const payload = {
+      key: ["key1"]
+    };
+    const store = reducer(initailStore, expandRowAC(payload));
+
+    expect(store.expandedRowKeys).toContain(payload.key[0]);
+  });
+  it("should collapse row ", () => {
+    const payload = {
+      key: ["key1", "key2", "key3", "key4", "key5"]
+    };
+    const collapsedRow = {
+      key: "key3"
+    };
+    const store = reducer(initailStore, expandRowAC(payload));
+    const nextStore = reducer(store, collapseRowAC(collapsedRow));
+
+    expect(nextStore.expandedRowKeys).not.toContain(collapsedRow.key);
+  });
+  it("should set loading", () => {
+    const payload = false;
+    const store = reducer(initailStore, loadingAC(payload));
+
+    expect(store.loading).toBe(payload);
+  });
+  it("should update state.columns", () => {
+    const columns = getStaticColumn(4, 1);
+    const payload = {
+      columns
+    };
+
+    const store = reducer(initailStore, updateAC(payload));
+
+    expect(store.columns).toEqual(columns);
+  });
+  it("should update state.dataSource", () => {
+    const columns = getStaticColumn(4, 1);
+    const payload = {
+      dataSource: genDataSource(2, columns)
+    };
+
+    const store = reducer(initailStore, updateAC(payload));
+
+    expect(store.dataSource).toEqual(payload.dataSource);
+  });
+  it("should return empty filters params", () => {
+    const payload = {
+      testProps: null,
+      props2: null
+    };
+
+    const store = reducer(initailStore, filterAC(payload));
+
+    expect(store.filterParams).toMatchObject({});
+  });
+  it("should set filters params", () => {
+    const payload = {
+      [staticColumns[0].key]: ["filter1", "filter2"]
+    };
+
+    const store = reducer(initailStore, filterAC(payload));
+
+    const expectation = {
+      [staticColumns[0].dataIndex]: ["filter1", "filter2"]
+    };
+
+    expect(store.filterParams).toEqual(expectation);
+  });
+
+  it("should return default store", () => {
+    const store = reducer(initailStore, loadingAC(false));
+    //@ts-ignore
+    const nextStore = reducer(store, { type: "invalidType" });
+
+    expect(store).toEqual(nextStore);
   });
 });

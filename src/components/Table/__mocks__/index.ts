@@ -149,19 +149,21 @@ export const dTypeConfig = {
 };
 
 //CellData
-export const getStaticColumn = (levelOfNesting: number = 1) => {
+export const getStaticColumn = (
+  count: number = 1,
+  levelOfNesting: number = 1
+) => {
   const hasChilds = levelOfNesting > 1;
-
-  return {
-    dataIndex: "alias20-89663",
+  return [...Array(count).fill("")].map((_, index) => ({
+    dataIndex: `alias20-89663_${index}`,
     dType: "render",
-    key: "0-47391-2",
-    onHeaderCell: jest.fn(),
-    render: jest.fn(),
+    key: `0-47391-${index}`,
+    onHeaderCell: () => {},
+    render: () => {},
     sorter: true,
     title: "Alias",
     ...(hasChilds && { children: getStaticColumn(levelOfNesting - 1) })
-  };
+  }));
 };
 
 export function getStaticRow(levelOfNesting: number = 1) {

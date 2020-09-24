@@ -3,15 +3,17 @@
 exports[`CellData component rendered CellData corectly 1`] = `
 <Memo()
   column={
-    Object {
-      "dType": "render",
-      "dataIndex": "alias20-89663",
-      "key": "0-47391-2",
-      "onHeaderCell": [MockFunction],
-      "render": [MockFunction],
-      "sorter": true,
-      "title": "Alias",
-    }
+    Array [
+      Object {
+        "dType": "render",
+        "dataIndex": "alias20-89663_0",
+        "key": "0-47391-0",
+        "onHeaderCell": [Function],
+        "render": [Function],
+        "sorter": true,
+        "title": "Alias",
+      },
+    ]
   }
   columnLevel={1}
   row={
