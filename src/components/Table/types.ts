@@ -217,3 +217,9 @@ export type DataProvider = (
 export type RowChildrenProviderType = (
   expandedRow: IRow
 ) => IRow["children"] | Promise<IRow["children"]>;
+
+export type PaginationResponse<R> = {
+  count: number;
+  results: R;
+};
+export type TableResponse = PaginationResponse<TableProps>;
