@@ -67,7 +67,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const [baseState, dispatch] = useReducer(reducer, props, initializer);
 
   const columnsState = useColumns(baseState, props);
-
+  // console.log(columnsState);
   const dataSourceState = useDataSource(baseState, props);
 
   const state = {
