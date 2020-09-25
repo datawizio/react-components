@@ -1,5 +1,5 @@
-import { Action, BodyCellType, IColumn, TableState } from "../types";
-import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
+import { Action, BodyCellType, IColumn, IRow, TableState } from "../types";
+import { boolean, number } from "@storybook/addon-knobs";
 import { genColumns, genDataSource } from "../../../utils/data/dataGenerators";
 
 const key = Math.random().toString(36).substring(7);
@@ -78,7 +78,6 @@ export const columnsMock: Array<IColumn> = [
 ];
 
 //Column
-
 export const model = {
   key: "key",
   resizable: false,
@@ -87,7 +86,6 @@ export const model = {
 };
 
 //Table
-
 const columnsCount = number("columns count", 3);
 const dataCount = number("data count", 3);
 const treeColumns = boolean("treeColumns", true);
@@ -129,19 +127,8 @@ export const getStaticDataSource = () => {
     }
   ];
 };
-// if (columns[0]) {
-//   columns[0].fixed = "left";
-//   columns[0].filters = [
-//     // @ts-ignore
-//     ...new Set(dataSource.map(item => item[columns[0].dataIndex]))
-//   ].map(item => ({
-//     text: item,
-//     value: item
-//   }));
-// }
 
 // Handlers
-
 export const dTypeConfig = {
   boolean: {},
   number: {},
@@ -202,6 +189,24 @@ export const getDTypeConfig = () => ({
 });
 
 // Table reducer
+export const columnsPositions = [
+  {
+    dataIndex: "1-1",
+    children: [
+      {
+        dataIndex: "1-2"
+      }
+    ]
+  }
+];
+
+export const pagination = {
+  showSizeChanger: true,
+  pageSizeOptions: ["25", "50", "75"],
+  pageSize: 25,
+  position: ["topCenter"]
+};
+
 export const updateDataSourceAC = (payload): Action => ({
   type: "updateDataSource",
   payload: payload
@@ -214,6 +219,13 @@ export const updateColumnsAC = (payload): Action => ({
 
 export const visibleColumnsKeysAC = (payload): Action => ({
   type: "visibleColumnsKeys",
+  payload
+});
+
+export const setNestedTableAC = (
+  payload: [IRow, Partial<TableState> | Promise<Partial<TableState>>]
+): Action => ({
+  type: "setNestedTable",
   payload
 });
 

@@ -3,7 +3,7 @@ import { SorterResult } from "antd/lib/table/interface";
 
 import { genColumns, genDataSource } from "../../utils/data/dataGenerators";
 import { initializer, reducer } from "./reducer";
-import { TableProps } from "./types";
+import { Action, TableProps } from "./types";
 import {
   addLoadingRowAC,
   collapseRowAC,
@@ -25,10 +25,14 @@ import {
   updateRowAC,
   visibleColumnsKeysAC,
   getDTypeConfig,
-  getStaticColumn
+  getStaticColumn,
+  setNestedTableAC,
+  getStaticDataSource,
+  columnsPositions,
+  pagination
 } from "./__mocks__";
 
-const pageSizeOptions: Array<string> = ["opt1", "opt2", "opt3"];
+const pageSizeOptions: Array<string> = ["5", "10", "15"];
 const visibleColumnsKeys: Array<string> = ["key1", "key2", "key3"];
 const getPagination = (props: Array<string>): false | TablePaginationConfig => {
   return {
@@ -59,7 +63,7 @@ const staticColumns = getStaticColumn(3, 2);
 const initializerProps: TableProps = {
   columns: staticColumns,
   loading: true,
-  dataSource: genDataSource(3, columns),
+  dataSource: genDataSource(3, staticColumns),
   pagination: getPagination(["topCenter"]),
   searchValue: "searchValue",
   dTypesConfig: getDTypeConfig(),
@@ -192,6 +196,40 @@ describe("Table reducer", () => {
 
     expect(store.columns).toEqual(columns);
   });
+  it("setNestedTable should remove loading row by key", () => {
+    const rowPayload = "key1";
+    const store = reducer(initailStore, addLoadingRowAC(rowPayload));
+
+    const payload = [
+      {
+        key: "key1"
+      },
+      null
+    ] as any;
+    const nextStore = reducer(store, setNestedTableAC(payload));
+
+    expect(nextStore.loadingRows).not.toHaveProperty(rowPayload, true);
+  });
+
+  it("setNestedTable should remove loading row by key", () => {
+    const mockDataSource = getStaticDataSource();
+    const expandedRow = mockDataSource[0].key;
+    const nestedDataSource = mockDataSource[1];
+    const nestedKey = "nested";
+
+    const payload = [
+      {
+        key: expandedRow
+      },
+      nestedDataSource
+    ] as any;
+
+    const store = reducer(initailStore, setNestedTableAC(payload));
+
+    expect(store.dataSource[0]).toHaveProperty(nestedKey);
+    expect(store.dataSource[0][nestedKey]).toEqual(nestedDataSource);
+  });
+
   it("should update state.dataSource", () => {
     const columns = getStaticColumn(4, 1);
     const payload = {
@@ -217,19 +255,127 @@ describe("Table reducer", () => {
       [staticColumns[0].key]: ["filter1", "filter2"]
     };
 
-    const store = reducer(initailStore, filterAC(payload));
-
     const expectation = {
       [staticColumns[0].dataIndex]: ["filter1", "filter2"]
     };
 
+    const store = reducer(initailStore, filterAC(payload));
+
     expect(store.filterParams).toEqual(expectation);
+  });
+  it("should return empty filter params", () => {
+    const payload = {
+      invalidKey: ["filter1", "filter2"]
+    };
+
+    const store = reducer(initailStore, filterAC(payload));
+
+    expect(store.filterParams).toEqual({});
+  });
+  it("should set row children", () => {
+    const children = getStaticDataSource();
+    const expandedRowKey = "3-0";
+
+    const store = reducer(initailStore, addLoadingRowAC(expandedRowKey));
+    const testChildKey = children[0].key;
+
+    const payload = [
+      {
+        key: expandedRowKey
+      },
+      children
+    ];
+
+    const nextStore = reducer(initailStore, setRowChildrenAC(payload));
+
+    expect(store.loadingRows).toHaveProperty(expandedRowKey, true);
+    expect(nextStore.loadingRows).not.toHaveProperty(expandedRowKey, true);
+    expect(nextStore.parentsMap[testChildKey]).toBe(expandedRowKey);
+  });
+
+  it("should update row", () => {
+    const children = getStaticDataSource();
+    const expandedRowKey = "3-0";
+
+    const store = reducer(initailStore, addLoadingRowAC(expandedRowKey));
+
+    const payload = [
+      {
+        key: expandedRowKey
+      },
+      children
+    ];
+
+    const nextStore = reducer(initailStore, updateRowAC(payload));
+
+    expect(store.loadingRows).toHaveProperty(expandedRowKey, true);
+    expect(nextStore.loadingRows).not.toHaveProperty(expandedRowKey, true);
+    expect(nextStore.dataSource).toEqual(store.dataSource);
+  });
+
+  it("updateRow action  with empty child should remove loading row", () => {
+    const expandedRowKey = "3-0";
+
+    const store = reducer(initailStore, addLoadingRowAC(expandedRowKey));
+
+    const payload = [
+      {
+        key: expandedRowKey
+      },
+      null
+    ];
+
+    const nextStore = reducer(initailStore, updateRowAC(payload));
+
+    expect(store.loadingRows).toHaveProperty(expandedRowKey, true);
+    expect(nextStore.loadingRows).not.toHaveProperty(expandedRowKey, true);
+  });
+
+  it("update row with empty child should remove loading row", () => {
+    const expandPayload = {
+      key: ["0-0", "1-0", "2-0", "3-0"]
+    };
+    const store = reducer(initailStore, expandRowAC(expandPayload));
+
+    const expandedRowKey = "3-0";
+
+    const payload = [
+      {
+        key: expandedRowKey
+      },
+      {
+        expanded: false
+      }
+    ];
+
+    const nextStore = reducer(initailStore, updateRowAC(payload));
+
+    expect(store.expandedRowKeys).toContain(expandedRowKey);
+    expect(nextStore.expandedRowKeys).not.toContain(expandedRowKey);
+  });
+
+  it("should recover State", () => {
+    const payload = {
+      columnsPositions,
+      pagination
+    };
+    const store = reducer(initailStore, recoveryStateAC(payload));
+    expect(store.columns).toEqual(columnsPositions);
+    expect(store.pagination["pageSize"]).toBe(pagination.pageSize);
+  });
+
+  it("should recover State (with empty payload)", () => {
+    const payload = {
+      columnsPositions: undefined,
+      pagination: undefined
+    };
+    const store = reducer(initailStore, recoveryStateAC(payload));
+    expect(store.stateIsRecovered).toBeTruthy();
   });
 
   it("should return default store", () => {
     const store = reducer(initailStore, loadingAC(false));
-    //@ts-ignore
-    const nextStore = reducer(store, { type: "invalidType" });
+    const nextStore = reducer(store, { type: "invalidType" } as any);
 
     expect(store).toEqual(nextStore);
   });
