@@ -20,7 +20,6 @@ describe("deep filter", () => {
     const callbackByKey = item => item.key === nodeKey;
 
     const expectedNode = nodes.filter(node => node.key === nodeKey);
-    console.log(expectedNode);
     const result = deepFilter(nodes, callbackByKey);
     expect(result).toEqual(expectedNode);
   });

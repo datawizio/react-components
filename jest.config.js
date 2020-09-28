@@ -3,7 +3,7 @@ module.exports = {
   preset: "ts-jest",
   clearMocks: true,
   collectCoverage: false,
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   setupFiles: ["./setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js"],
   testPathIgnorePatterns: ["node_modules/"],
