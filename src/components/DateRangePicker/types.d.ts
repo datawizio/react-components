@@ -12,7 +12,12 @@ export type DateRangePickerProps = {
   minDate?: DateType;
   format?: string;
 
+  ranges: {
+    [key: string]: DateRange
+  };
+
   fullWidth?: boolean;
+  defaultPresetUsed?: boolean;
   inputReadOnly?: boolean;
   onChange?: (a: any, b: any) => void;
 
@@ -23,10 +28,10 @@ export type DateRangePickerProps = {
 } & typeof DatePicker.RangePicker;
 
 export type IDateRangePicker = {
-  presets: BasicPresetsType;
+  presets: DefaultPresetType;
 } & import("react").FC<DateRangePickerProps>;
 
-export type BasicPresetsType = {
+export type DefaultPresetType = {
   readonly yesterday: DateRange;
   readonly lastWeek: DateRange;
   readonly currentMonth: DateRange;
