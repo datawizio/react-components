@@ -15,11 +15,20 @@ function genColumnsMap(columns) {
   return columnsMap;
 }
 
-function findExpandedRecord(path: string[], children: IRow[]) {
+function findExpandedRecord(
+  path: string[],
+  children: IRow[],
+  changeParentData?: (record: any) => any
+) {
   const next = path.pop();
-  const record = children.find(child => child.key === next);
+  let record = children.find(child => child.key === next);
   if (!record) return { children: [] };
-  if (path.length) return findExpandedRecord(path, record.children);
+  if (path.length) {
+    if (changeParentData) {
+      changeParentData(record);
+    }
+    return findExpandedRecord(path, record.children, changeParentData);
+  }
 
   return record;
 }
@@ -317,7 +326,14 @@ export function reducer(state: TableState, action: Action): TableState {
         const nextDataSource = state.dataSource.concat();
         const path = getRecordPath(key, parentsMap);
 
-        let expandedRecord = findExpandedRecord(path, state.dataSource);
+        let expandedRecord = findExpandedRecord(
+          path,
+          nextDataSource,
+          //@ts-ignore
+          data.changeParentData
+        );
+        //@ts-ignore
+        delete data.changeParentData;
 
         //@ts-ignore
         if (data.expanded === false) {
