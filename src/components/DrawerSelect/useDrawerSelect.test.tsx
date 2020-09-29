@@ -1,11 +1,21 @@
+import "jsdom-global/register";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 import { useDrawerSelect } from "./useDrawerSelect";
-import ActionButton from "antd/lib/modal/ActionButton";
 
 const remoteLoadDataStopAC = payload => ({
   type: "remoteLoadDataStop",
+  payload
+});
+
+const remoteLoadDataStartAC = payload => ({
+  type: "remoteLoadDataStart",
+  payload
+});
+
+const drawerCancelAC = payload => ({
+  type: "drawerCancel",
   payload
 });
 
@@ -64,7 +74,7 @@ function setUp(initialStore, action) {
       });
     };
     newStore = store;
-    return <input onChange={callAction} value={store}></input>;
+    return <button onClick={callAction} data-store={store}></button>;
   }
   const wrapper = mount(<TestComponent />);
   wrapper.update();
@@ -76,12 +86,112 @@ function setUp(initialStore, action) {
 }
 
 describe("useDrawerSelect", () => {
-  it("useDrawerSelect throw Error for invalid action type", () => {
-    const { wrapper, newStore } = setUp(
+  it("remoteLoadDataStart case works correctly", () => {
+    const payload = {
+      optionsState: "value"
+    };
+    const { wrapper } = setUp(
       initialStoreMockData,
-      setSelectedAC(true)
+      remoteLoadDataStartAC(payload)
     );
-    wrapper.find("input").simulate("change");
-    const val = wrapper.find("input").props().value;
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.internalLoading).toBeTruthy();
+    expect(nextStore.optionsState).toBe(payload.optionsState);
+  });
+
+  it("remoteLoadDataStop case works correctly", () => {
+    const payload = {
+      optionsState: "value"
+    };
+    const { wrapper } = setUp(
+      initialStoreMockData,
+      remoteLoadDataStopAC(payload)
+    );
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.internalLoading).toBeFalsy();
+    expect(nextStore.optionsState).toBe(payload.optionsState);
+  });
+
+  it("drawerCancel case works correctly", () => {
+    const payload = {
+      optionsState: "value"
+    };
+
+    const { wrapper } = setUp(initialStoreMockData, drawerCancelAC(payload));
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.searchValue).toBe("");
+    expect(nextStore.drawerVisible).toBeFalsy();
+    expect(nextStore.optionsState).toBe(payload.optionsState);
+  });
+
+  it("openDrawer case works correctly", () => {
+    const { wrapper } = setUp(initialStoreMockData, openDrawerAC());
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.drawerVisible).toBeTruthy();
+  });
+  it("drawerSubmit case works correctly", () => {
+    const payload = {
+      optionsState: "value"
+    };
+
+    const { wrapper } = setUp(initialStoreMockData, drawerSubmitAC(payload));
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.searchValue).toBe("");
+    expect(nextStore.drawerVisible).toBeFalsy();
+    expect(nextStore.optionsState).toBe(payload.optionsState);
+  });
+  it("setSelected case works correctly", () => {
+    const { wrapper } = setUp(initialStoreMockData, setSelectedAC(true));
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.selected).toBeTruthy();
+  });
+  it("setSearchValue case works correctly", () => {
+    const payload = "searchValue";
+    const { wrapper } = setUp(initialStoreMockData, setSearchValueAC(payload));
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.searchValue).toBe(payload);
+  });
+  it("setInternalValue case works correctly", () => {
+    const payload = "internalValue";
+    const { wrapper } = setUp(
+      initialStoreMockData,
+      setInternalValueAC(payload)
+    );
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore.internalValue).toBe(payload);
+  });
+
+  it("setState case works correctly", () => {
+    const payload = {
+      internalLoading: true,
+      page: 5,
+      totalPages: 15,
+      drawerVisible: true,
+      searchValue: "value",
+      internalValue: "internalValue",
+      selected: true,
+      optionsState: []
+    };
+    const { wrapper } = setUp(initialStoreMockData, setStateAC(payload));
+    wrapper.find("button").simulate("click");
+    const nextStore = wrapper.find("button").prop("data-store") as any;
+
+    expect(nextStore).toEqual(payload);
   });
 });
