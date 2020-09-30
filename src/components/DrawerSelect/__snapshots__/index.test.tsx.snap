@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DrawerSelect component Rendered corectly 1`] = `
+<antSelect
+  className="drawer-select"
+  dropdownClassName="drawer-select-dropdown-fake"
+  dropdownRender={[Function]}
+  filterOption={true}
+  listHeight={302}
+  maxTagCount={10}
+  mode="multiple"
+  notFoundContent="NO_DATA"
+  onBeforeBlur={[Function]}
+  onChange={[Function]}
+  onDeselect={[Function]}
+  onFocus={[Function]}
+  onPopupScroll={[Function]}
+  onSearch={[Function]}
+  onSelect={[Function]}
+  open={false}
+  optionFilterProp="title"
+  options={Array []}
+  searchValue=""
+  showSearch={true}
+  tagRender={[Function]}
+/>
+`;

@@ -23,7 +23,8 @@ module.exports = {
   snapshotSerializers: ["enzyme-to-json/serializer"],
   globals: {
     window: {
-      innerWidth: 50
+      innerWidth: 500,
+      innerHeight: 500
     }
   }
 };
