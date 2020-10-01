@@ -16,6 +16,7 @@ export interface DrawerFormProps {
   loading?: boolean;
   hideRequiredMark?: boolean;
   style?: object;
+  width?: number;
   onClose?: () => void;
   onSubmit?: () => void;
 }
@@ -32,6 +33,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   form,
   formStore,
   loading,
+  width,
   onClose,
   onSubmit
 }) => {
@@ -82,7 +84,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
     <Drawer
       title={title}
       style={style}
-      width={window.innerWidth < 500 ? window.innerWidth : 500}
+      width={window.innerWidth < width ? window.innerWidth : width}
       onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
@@ -99,6 +101,10 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       </Form>
     </Drawer>
   );
+};
+
+DrawerForm.defaultProps = {
+  width: 500
 };
 
 export default DrawerForm;
