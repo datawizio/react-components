@@ -84,6 +84,15 @@ export function translateDataSource(dataSource: Array<IRow>): any {
   return [...dataSource].map(row => {
     return Object.entries(row).reduce(
       (acc, [dataIndex, cell]: any) => {
+        if (Array.isArray(cell)) {
+          if (dataIndex === "children") {
+            acc[dataIndex] = translateDataSource(cell);
+            return acc;
+          }
+          //@ts-ignore
+          acc[dataIndex] = cell;
+          return acc;
+        }
         if (typeof cell === "string") acc[dataIndex] = i18n.t(cell) as string;
         if (typeof cell === "object") {
           acc[dataIndex] = {
