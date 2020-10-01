@@ -11,17 +11,17 @@ import { TableContext } from "../Table/context";
 export interface TableTransposeButtonProps {
   buttonText?: string;
   onTranspose: (isTransposed: boolean) => void;
-  resetTableSerch?: boolean;
+  resetTableSearch?: boolean;
 }
 
 const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
-  const { onTranspose, buttonText, resetTableSerch } = props;
+  const { onTranspose, buttonText, resetTableSearch } = props;
   const { translate } = useContext(ConfigContext);
   const { dispatch } = useContext(TableContext);
   const [isTransposed, setTransposed] = useState(false);
 
   const resetSearchValue = () =>
-    resetTableSerch && dispatch({ type: "search", payload: "" });
+    resetTableSearch && dispatch({ type: "search", payload: "" });
 
   const handleTranspose = useCallback(() => {
     setTransposed(!isTransposed);
@@ -41,7 +41,7 @@ const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
 
 TableTransposeButton.defaultProps = {
   buttonText: "TRANSPOSE",
-  resetTableSerch: true
+  resetTableSearch: true
 };
 
 export default TableTransposeButton;
