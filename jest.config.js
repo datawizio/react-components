@@ -1,5 +1,11 @@
+const esModules = ["rc-select"].join("|");
+
 module.exports = {
   roots: ["./src"],
+  preset: "ts-jest",
+  clearMocks: true,
+  collectCoverage: false,
+  testEnvironment: "node",
   setupFiles: ["./setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js"],
   testPathIgnorePatterns: ["node_modules/"],
@@ -14,5 +20,11 @@ module.exports = {
       "identity-obj-proxy",
     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
   },
-  snapshotSerializers: ["enzyme-to-json/serializer"]
+  snapshotSerializers: ["enzyme-to-json/serializer"],
+  globals: {
+    window: {
+      innerWidth: 500,
+      innerHeight: 500
+    }
+  }
 };

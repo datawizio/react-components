@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ToolBar component rendered ToolBar corectly 1`] = `
+<div
+  className="dw-table__toolbar"
+/>
+`;

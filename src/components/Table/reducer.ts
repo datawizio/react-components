@@ -252,7 +252,6 @@ export function reducer(state: TableState, action: Action): TableState {
 
       const expandedRecord = findExpandedRecord(path, state.dataSource);
       expandedRecord.children = children;
-
       return {
         ...state,
         parentsMap,

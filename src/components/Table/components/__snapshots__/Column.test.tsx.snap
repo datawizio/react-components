@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Column component Render column  corectly 1`] = `
+<Column
+  canDrop={false}
+  isOver={false}
+  model={
+    Object {
+      "children": Object {
+        "dataIndex": "aut12-71229",
+        "key": "",
+        "onHeaderCell": [Function],
+        "render": [Function],
+        "resizable": true,
+        "title": "title",
+      },
+      "dataIndex": "aut12-71229",
+      "key": "",
+      "onHeaderCell": [Function],
+      "render": [Function],
+      "resizable": true,
+      "title": "title",
+    }
+  }
+  onClick={[MockFunction]}
+/>
+`;

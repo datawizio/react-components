@@ -17,7 +17,6 @@ export interface ColumnProps
 
 const Column: React.FC<ColumnProps> = props => {
   const { model, onClick, multipleSorting, level, ...restProps } = props;
-
   const [lastWidth, setLastWidth] = useState<number>(0);
 
   const { dispatch } = useContext(TableContext);
