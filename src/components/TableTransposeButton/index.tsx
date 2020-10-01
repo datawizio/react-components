@@ -6,20 +6,27 @@ import { RetweetOutlined } from "@ant-design/icons";
 
 import "./index.less";
 import ConfigContext from "../ConfigProvider/context";
+import { TableContext } from "../Table/context";
 
 export interface TableTransposeButtonProps {
   buttonText?: string;
   onTranspose: (isTransposed: boolean) => void;
+  resetTableSearch?: boolean;
 }
 
 const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
-  const { onTranspose, buttonText } = props;
+  const { onTranspose, buttonText, resetTableSearch } = props;
   const { translate } = useContext(ConfigContext);
+  const { dispatch } = useContext(TableContext);
   const [isTransposed, setTransposed] = useState(false);
+
+  const resetSearchValue = () =>
+    resetTableSearch && dispatch({ type: "search", payload: "" });
 
   const handleTranspose = useCallback(() => {
     setTransposed(!isTransposed);
     onTranspose(!isTransposed);
+    resetSearchValue();
   }, [isTransposed, onTranspose]);
 
   return (
@@ -33,7 +40,8 @@ const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
 };
 
 TableTransposeButton.defaultProps = {
-  buttonText: "TRANSPOSE"
+  buttonText: "TRANSPOSE",
+  resetTableSearch: true
 };
 
 export default TableTransposeButton;
