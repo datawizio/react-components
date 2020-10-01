@@ -221,6 +221,7 @@ exports[`Table component rendered Table corectly 1`] = `
               "render": [Function],
               "resizable": true,
               "sortOrder": undefined,
+              "sorter": false,
             },
             Object {
               "alias10-20279": "Prairie",
@@ -360,6 +361,7 @@ exports[`Table component rendered Table corectly 1`] = `
               "render": [Function],
               "resizable": true,
               "sortOrder": undefined,
+              "sorter": false,
             },
             Object {
               "alias10-20279": "Prairie",
