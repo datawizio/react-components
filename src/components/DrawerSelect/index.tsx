@@ -264,7 +264,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
     const payload: any = { internalValue: !multiple && !value ? [] : value };
-    if (searchValue) {
+    if (searchValue && loadData) {
       payload.optionsState = selectedOptions.current.concat(
         firstLoadedOptions.current
       );

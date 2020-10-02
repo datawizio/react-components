@@ -40,14 +40,9 @@ const TransferTable = ({ columns, loading, ...restProps }) => {
           getCheckboxProps: (item: any) => ({
             disabled: listDisabled || item.disabled
           }),
-          onSelectAll(selected: any, selectedRows: any) {
-            const treeSelectedKeys = selectedRows
-              .filter((item: any) => !item.disabled)
-              .map(({ key }) => key);
-            const diffKeys = selected
-              ? difference(treeSelectedKeys, listSelectedKeys)
-              : difference(listSelectedKeys, treeSelectedKeys);
-            onItemSelectAll(diffKeys, selected);
+          onSelectAll(selected: any) {
+            const treeSelectedKeys = filteredItems.map(({ key }) => key);
+            onItemSelectAll(treeSelectedKeys, selected);
           },
           onSelect({ key }, selected) {
             onItemSelect(key, selected);
