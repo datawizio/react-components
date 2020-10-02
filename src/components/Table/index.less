@@ -117,7 +117,9 @@
   td {
     .row-prefix {
       float: left;
-      margin-right: 8px;
+      & > * {
+        margin-right: 8px;
+      }
     }
 
     .ant-table-row-expand-icon {
