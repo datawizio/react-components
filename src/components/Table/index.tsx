@@ -50,13 +50,14 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     height,
     locale,
     isNested,
-    showExpandIcon,
     children,
     components,
     dataProvider,
+    showExpandIcon,
     showSizeChanger,
     dataProviderDeps,
     templatesProvider,
+    responsiveColumns,
     rowChildrenProvider,
     nestedTableProvider,
     ...restProps
@@ -193,7 +194,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         {
           "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length,
-          "dw-table--nestedable": props.expandable?.expandedRowRender
+          "dw-table--nestedable": props.expandable?.expandedRowRender,
+          "dw-table--responsive-columns": responsiveColumns
         },
         props.className
       ),
@@ -218,38 +220,40 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   }));
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <TableContext.Provider
-        value={{
-          tableProps: props,
-          tableState: state,
-          dispatch: dispatch,
-          baseTableState: baseState
-        }}
-      >
-        <Loader loading={Boolean(baseState.loading)}>
-          {children}
-          <AntdTable
-            {...restProps}
-            {...state}
-            expandIcon={expandIconRender}
-            className={className}
-            onExpand={handleExpandRow}
-            onChange={handleChangeTable}
-            components={customComponents}
-            pagination={
-              props.pagination === false
-                ? false
-                : {
-                    ...state.pagination,
-                    ...props.pagination,
-                    showTotal: totalRenderer
-                  }
-            }
-          />
-        </Loader>
-      </TableContext.Provider>
-    </DndProvider>
+    <div className="dw-table-container">
+      <DndProvider backend={HTML5Backend}>
+        <TableContext.Provider
+          value={{
+            tableProps: props,
+            tableState: state,
+            dispatch: dispatch,
+            baseTableState: baseState
+          }}
+        >
+          <Loader loading={Boolean(baseState.loading)}>
+            {children}
+            <AntdTable
+              {...restProps}
+              {...state}
+              expandIcon={expandIconRender}
+              className={className}
+              onExpand={handleExpandRow}
+              onChange={handleChangeTable}
+              components={customComponents}
+              pagination={
+                props.pagination === false
+                  ? false
+                  : {
+                      ...state.pagination,
+                      ...props.pagination,
+                      showTotal: totalRenderer
+                    }
+              }
+            />
+          </Loader>
+        </TableContext.Provider>
+      </DndProvider>
+    </div>
   );
 }) as FCTable;
 

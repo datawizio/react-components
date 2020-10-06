@@ -3,20 +3,28 @@ export default function resizeDetector(
   onResize: (nextHeight: number, nextWidth: number) => void,
   checkInterval: number = 500
 ): () => void {
-  let lastWidth;
-  let lastHeight;
+  let lastWidth: number;
+  let lastHeight: number;
 
   const updateLastSize = () => {
     lastWidth = el.offsetWidth;
     lastHeight = el.offsetHeight;
   };
 
-  updateLastSize();
+  const notifyListener = async () => {
+    await onResize(el.offsetHeight, el.offsetWidth);
+  };
+
+  const frame = () => {
+    notifyListener();
+    updateLastSize();
+  };
+
+  frame();
 
   const resizeObserverInterval = setInterval(async () => {
     if (lastWidth !== el.offsetWidth || lastHeight !== el.offsetHeight) {
-      await onResize(el.offsetHeight, el.offsetWidth);
-      updateLastSize();
+      frame();
     }
   }, checkInterval);
 
