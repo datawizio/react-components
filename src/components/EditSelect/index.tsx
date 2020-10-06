@@ -118,6 +118,7 @@ const EditSelect: React.FC<EditSelectProps> = ({
       loading={loading}
       onChange={onChange}
       value={value ? value : undefined}
+      notFoundContent={translate("NO_DATA")}
       // onBlur={resetEditingOption}
       // onSelect={handlerRoleTypeChange}
     >
