@@ -80,13 +80,17 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
 
   const nextColumns = useMemo(() => {
     return (function rec(columns) {
-      return columns.map((column: IColumn) => ({
-        ...column,
-        sortOrder: sortParams[column.dataIndex],
-        filteredValue: column.filters && filterParams[column.dataIndex],
-        children:
-          column.children && column.children.length && rec(column.children)
-      }));
+      return columns.map((column: IColumn) => {
+        const record = {
+          ...column,
+          sortOrder: sortParams[column.dataIndex],
+          filteredValue: column.filters && filterParams[column.dataIndex]
+        };
+        if (column.children && column.children.length) {
+          record.children = rec(column.children);
+        }
+        return record;
+      });
     })(initializedColumns);
   }, [sortParams, filterParams, initializedColumns]);
 

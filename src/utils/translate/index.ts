@@ -76,7 +76,7 @@ export function translateColumns(columns: Array<IColumn>) {
         //@ts-ignore
         nextColumn.filters = column.filters.need_translate
           ? translateObjects(filterData, "text")
-          : filterData.map(data => ({ ...data, value: data.value.toString() }));
+          : filterData;
       }
     }
 
