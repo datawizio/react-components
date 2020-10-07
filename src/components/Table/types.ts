@@ -42,6 +42,21 @@ export interface TableProps<RT = any>
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
 
+  /**
+   * Таблица сжимаеться и растягиваеться до высоты которую вы указали в "height"
+   */
+  autoHeight?: boolean;
+
+  /**
+   * Выстовляет размеры таблицы в зависимости от его родителя
+   */
+  responsiveTable?: boolean;
+
+  /**
+   * Растягивает колонки по ширине таблицы если это возможно
+   */
+  responsiveColumns?: boolean;
+
   pageSizeOptions?: Array<string>;
   templates?: Array<TableTemplate>;
   visibleColumnsKeys?: Array<IColumn["key"]>;

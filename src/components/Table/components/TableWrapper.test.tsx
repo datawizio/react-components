@@ -2,8 +2,26 @@ import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
 import TableWrapper from "./TableWrapper";
+import { TableContext } from "../context";
 
-const setUp = (props?) => mount(<TableWrapper {...props} />);
+const context = {
+  tableState: { dTypesConfig: [] },
+  tableProps: {
+    autoHeight: false,
+    responsiveTable: false
+  }
+};
+
+const componentWithContext = props => {
+  return (
+    //@ts-ignore
+    <TableContext.Provider value={context}>
+      <TableWrapper {...props} />
+    </TableContext.Provider>
+  );
+};
+
+const setUp = (props?) => mount(componentWithContext(props));
 
 describe("TableWrapper component", () => {
   let component;
