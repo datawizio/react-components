@@ -173,6 +173,7 @@ export type CellObjectType = {
 export type DTypeConfig<T = any> = {
   sorter?: (a: T, b: T) => number;
   toString: (cellVal: T) => string;
+  toExcel?: (cellVal: T) => any;
   search?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
 

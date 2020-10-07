@@ -69,11 +69,15 @@ export function translateColumns(columns: Array<IColumn>) {
 
     if (column.filters) {
       //@ts-ignore
-      nextColumn.filters = column.filters.need_translate
-        ? //@ts-ignore
-          translateObjects(column.filters.data, "text")
-        : //@ts-ignore
-          column.filters.data;
+      const filterData = column.filters.data;
+      if (Array.isArray(filterData) && filterData.length === 0) {
+        delete nextColumn.filters;
+      } else {
+        //@ts-ignore
+        nextColumn.filters = column.filters.need_translate
+          ? translateObjects(filterData, "text")
+          : filterData.map(data => ({ ...data, value: data.value.toString() }));
+      }
     }
 
     return nextColumn;

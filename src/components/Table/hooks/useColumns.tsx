@@ -16,7 +16,11 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
           };
 
           const isParent = nextColumn.children && nextColumn.children.length;
-          const hasCheckedChildren = isParent && nextColumn.children.find(child => visibleColumnsKeys.includes(child.key));
+          const hasCheckedChildren =
+            isParent &&
+            nextColumn.children.find(child =>
+              visibleColumnsKeys.includes(child.key)
+            );
 
           if (
             !nextColumn.fixed &&
@@ -80,7 +84,8 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
         ...column,
         sortOrder: sortParams[column.dataIndex],
         filteredValue: column.filters && filterParams[column.dataIndex],
-        children: column.children && column.children.length && rec(column.children)
+        children:
+          column.children && column.children.length && rec(column.children)
       }));
     })(initializedColumns);
   }, [sortParams, filterParams, initializedColumns]);
