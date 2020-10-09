@@ -37,6 +37,7 @@ export interface TransferProps {
   targetLoadData?: (params: LoadDataParams) => Promise<LoadDataResponse>;
   targetFilters?: any;
   targetActions?: React.ReactElement;
+  tooltips?: { throwAll: string; throwChoosen: string };
 
   onMoveToRight?: (keys: string[]) => Promise<void>;
   onMoveAllToRight?: () => Promise<void>;
@@ -56,6 +57,7 @@ const Transfer: React.FC<TransferProps> = ({
   targetLoadData,
   targetFilters,
   targetActions,
+  tooltips,
 
   onMoveToRight,
   onMoveAllToRight,
@@ -200,6 +202,7 @@ const Transfer: React.FC<TransferProps> = ({
         moveToLeft={moveToLeft}
         moveAllToLeft={moveAllToLeft}
         disabled={operationDisabled}
+        tooltips={tooltips}
       />
       <List
         ref={targetListRef}

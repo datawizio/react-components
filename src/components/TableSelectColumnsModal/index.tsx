@@ -70,7 +70,11 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
 
   return (
     <div className="select-columns table-toolbar--right">
-      <Button border={false} onClick={() => setIsOpened(true)}>
+      <Button
+        border={false}
+        onClick={() => setIsOpened(true)}
+        title={translate("COLUMNS_BTN_TITLE")}
+      >
         <SettingOutlined className="select-columns__icon" />
         {translate(locale.openButton)}
       </Button>

@@ -40,7 +40,12 @@ const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
 
   return (
     <div className="table-xlsx-exporter table-toolbar--right">
-      <Button {...restProps} border={false} onClick={handleExport}>
+      <Button
+        {...restProps}
+        border={false}
+        onClick={handleExport}
+        title={translate("SAVE_BTN_TITLE")}
+      >
         <DownloadOutlined className={"table-xlsx-exporter__icon"} />
       </Button>
     </div>

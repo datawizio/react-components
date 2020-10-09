@@ -1,8 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { Dropdown, Row, Col } from "antd";
 import Icon from "@ant-design/icons";
 
 import "./index.less";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface IApplication {
   app_id: number | string;
@@ -68,6 +69,7 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client }) => {
   const overlay = useMemo(() => {
     return menu(apps, client);
   }, [apps, client]);
+  const { translate } = useContext(ConfigContext);
 
   return (
     <>
@@ -76,6 +78,7 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client }) => {
           href="#1"
           className="app-switcher-link"
           onClick={e => e.preventDefault()}
+          title={translate("CHANGE_APP_BTN_TITLE")}
         >
           <AppSwitcherIcon />
         </a>

@@ -60,6 +60,7 @@ export interface TableTemplatesProps {
 
 const TableTemplates: React.FC<TableTemplatesProps> = props => {
   const { onCreate, onDelete, onSelectFavorite } = props;
+  const { translate } = useContext(ConfigContext);
 
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
@@ -159,7 +160,12 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   }, [value]);
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      title={translate(
+        value ? "CHANGE_TEMPLATE_BTN_TITLE" : "TEMPLATES_BTN_TITLE"
+      )}
+    >
       <Select
         listHeight={150}
         onChange={handleSelect}
