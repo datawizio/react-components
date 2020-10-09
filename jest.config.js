@@ -2,6 +2,8 @@ const esModules = ["rc-select"].join("|");
 
 module.exports = {
   roots: ["./src"],
+  verbose: true,
+  bail: 1,
   preset: "ts-jest",
   clearMocks: true,
   collectCoverage: false,
