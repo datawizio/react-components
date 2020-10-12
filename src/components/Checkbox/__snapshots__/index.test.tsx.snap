@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox component Checkbox rendered correctly 1`] = `
+<Checkbox
+  className="customClassName"
+>
+  <Checkbox
+    className="customClassName"
+    indeterminate={false}
+  >
+    <label
+      className="customClassName ant-checkbox-wrapper"
+    >
+      <Checkbox
+        className=""
+        defaultChecked={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        prefixCls="ant-checkbox"
+        style={Object {}}
+        type="checkbox"
+      >
+        <span
+          className="ant-checkbox"
+          style={Object {}}
+        >
+          <input
+            checked={false}
+            className="ant-checkbox-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            type="checkbox"
+          />
+          <span
+            className="ant-checkbox-inner"
+          />
+        </span>
+      </Checkbox>
+    </label>
+  </Checkbox>
+</Checkbox>
+`;
