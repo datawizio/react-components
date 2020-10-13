@@ -1,9 +1,10 @@
 import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
+
 import Button from "./index";
 
-const mockButtonProps = {
+const mockProps = {
   border: false,
   className: "customClassName"
 };
@@ -13,7 +14,7 @@ const setUp = (props?) => mount(<Button {...props} />);
 describe("Button component", () => {
   let component;
   beforeEach(() => {
-    component = setUp(mockButtonProps);
+    component = setUp(mockProps);
   });
 
   it("Render button correctly", () => {
@@ -29,11 +30,11 @@ describe("Button component", () => {
   });
 
   it("Button bordered has correct class", () => {
-    const wrapper = setUp({ ...mockButtonProps, border: true });
+    const wrapper = setUp({ ...mockProps, border: true });
     expect(wrapper.find(".no-border").length).toBeFalsy();
   });
 
   it("Button get correct className", () => {
-    expect(component.find(`.${mockButtonProps.className}`).length).toBeTruthy();
+    expect(component.find(`.${mockProps.className}`).length).toBeTruthy();
   });
 });

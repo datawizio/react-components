@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input component Input rendered correctly 1`] = `
+<ForwardRef>
+  <Input
+    type="text"
+  >
+    <ClearableLabeledInput
+      element={
+        <input
+          className="ant-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          type="text"
+        />
+      }
+      focused={false}
+      handleReset={[Function]}
+      inputType="input"
+      prefixCls="ant-input"
+      triggerFocus={[Function]}
+      type="text"
+      value=""
+    >
+      <input
+        className="ant-input"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        type="text"
+        value=""
+      />
+    </ClearableLabeledInput>
+  </Input>
+</ForwardRef>
+`;

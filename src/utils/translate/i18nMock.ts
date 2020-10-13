@@ -1,6 +1,9 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
+const copyrightEng = {
+  COPYRIGHT: "Copyright {{year}}"
+};
 export const translationsEng = {
   ACTIVE_SHOPS_QTY: "Active shops Qty",
   ACTIVE_SKU_QTY: "Active SKU Qty",
@@ -30,7 +33,7 @@ i18n.use(initReactI18next).init({
 
   resources: {
     en: {
-      translations: translationsEng
+      translations: { ...translationsEng, ...copyrightEng }
     }
   }
 });

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackTop component Render BackTop correctly 1`] = `
+<BackTop>
+  <BackTop
+    className="dw-back-top"
+  >
+    <div
+      className="ant-back-top dw-back-top"
+      onClick={[Function]}
+    >
+      <Animate
+        animation={Object {}}
+        component=""
+        componentProps={Object {}}
+        onAppear={[Function]}
+        onEnd={[Function]}
+        onEnter={[Function]}
+        onLeave={[Function]}
+        transitionAppear={false}
+        transitionEnter={true}
+        transitionLeave={true}
+        transitionName="fade"
+      />
+    </div>
+  </BackTop>
+</BackTop>
+`;

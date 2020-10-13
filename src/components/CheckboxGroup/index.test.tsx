@@ -1,9 +1,10 @@
 import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
+
 import CheckboxGroup from "./index";
 
-const mockButtonProps = {
+const mockProps = {
   className: "customClassName"
 };
 
@@ -12,7 +13,7 @@ const setUp = (props?) => mount(<CheckboxGroup {...props} />);
 describe("CheckboxGroup component", () => {
   let component;
   beforeEach(() => {
-    component = setUp(mockButtonProps);
+    component = setUp(mockProps);
   });
 
   it("CheckboxGroup rendered correctly", () => {
@@ -20,6 +21,6 @@ describe("CheckboxGroup component", () => {
   });
 
   it("CheckboxGroup get correct className", () => {
-    expect(component.find(`.${mockButtonProps.className}`).length).toBeTruthy();
+    expect(component.find(`.${mockProps.className}`).length).toBeTruthy();
   });
 });
