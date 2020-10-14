@@ -17,3 +17,14 @@ export const generateTreeList = (path = "0", level = 3) => {
   }
   return list;
 };
+
+export const unTree = (tree) => {
+  let list = [];
+  tree.forEach(item => {
+    if (item) list.push(item);
+    if (item.children && item.children.length) {
+      list = list.concat(unTree(item.children));
+    }
+  });
+  return list;
+};

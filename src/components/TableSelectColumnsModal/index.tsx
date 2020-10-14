@@ -1,16 +1,11 @@
 import * as React from "react";
-
-import Tree from "../Tree";
 import Modal from "../Modal";
 import Button from "../Button";
 import { SettingOutlined } from "@ant-design/icons";
-
 import { TableContext } from "../Table/context";
 import ConfigContext from "../ConfigProvider/context";
-
-import { deepFilter } from "../../utils/deepFilter";
 import { useState, useCallback, useMemo, useContext, useEffect } from "react";
-
+import TreeSearch from "../TreeSearch";
 import "./index.less";
 
 export interface TableSelectColumnsModalProps {
@@ -20,10 +15,11 @@ export interface TableSelectColumnsModalProps {
     openButton: string;
     headerModal: string;
   };
+  withSearch?: boolean;
 }
 
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {
-  const { locale } = props;
+  const { locale, withSearch } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
@@ -31,13 +27,16 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   const [checkedKeys, setCheckedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
 
-  useEffect(() => {
-    setCheckedKeys(
-      tableState.visibleColumnsKeys && tableState.visibleColumnsKeys.length
-        ? tableState.visibleColumnsKeys
-        : baseTableState.columns.map(column => column.key)
-    );
-  }, [tableState.visibleColumnsKeys, baseTableState.columns]);
+  const getColKeysRec = useCallback(columns => {
+    let keys = [];
+    columns.forEach(col => {
+      col && keys.push(col.key);
+      if (col.children && col.children.length) {
+        keys = keys.concat(getColKeysRec(col.children));
+      }
+    });
+    return keys;
+  }, []);
 
   const treeData = useMemo(() => {
     if (!isOpened) return [];
@@ -46,12 +45,13 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
       .filter(column => column.fixed)
       .map(column => column.key);
 
-    return (function rec(columns) {
+    return (function rec(columns, parent) {
       return columns.map(column => ({
         key: column.key,
+        parentKey: parent && parent.key,
         title: column.title,
         disabled: fixedColumnsKeys.includes(column.key),
-        children: column.children && rec(column.children)
+        children: column.children && rec(column.children, column)
       }));
     })(baseTableState.columns);
   }, [isOpened, baseTableState.columns, tableState.columns]);
@@ -61,12 +61,17 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
     setIsOpened(false);
   }, [checkedKeys, dispatch]);
 
-  const onCheck = useCallback(
-    checkedKeys => {
-      setCheckedKeys(checkedKeys || []);
-    },
-    [treeData]
-  );
+  const onCheck = useCallback(checkedKeys => {
+    setCheckedKeys(checkedKeys || []);
+  }, []);
+
+  useEffect(() => {
+    setCheckedKeys(
+      tableState.visibleColumnsKeys && tableState.visibleColumnsKeys.length
+        ? tableState.visibleColumnsKeys
+        : getColKeysRec(baseTableState.columns)
+    );
+  }, [tableState.visibleColumnsKeys, baseTableState.columns, getColKeysRec]);
 
   return (
     <div className="select-columns table-toolbar--right">
@@ -94,9 +99,10 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
           </Button>
         }
       >
-        <Tree
+        <TreeSearch
           checkable
           showCheckAll
+          showSearchInput={withSearch}
           onCheck={onCheck}
           treeData={treeData}
           checkedKeys={checkedKeys}
@@ -114,8 +120,9 @@ TableSelectColumnsModal.defaultProps = {
     apply: "SUBMIT",
     checkAll: "ALL",
     openButton: "COLUMNS",
-    headerModal: "SELECT_COLUMNS"
-  }
+    headerModal: "SELECT_COLUMNS",
+  },
+  withSearch: true
 };
 
 export default TableSelectColumnsModal;
