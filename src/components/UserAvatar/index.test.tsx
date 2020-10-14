@@ -7,9 +7,7 @@ import UserAvatar from "./index";
 
 const mockProps = {
   src: "photoSrc",
-  name: "John Lennon",
-  menu: <></>,
-  showFullName: true
+  name: "John Lennon"
 };
 
 const setUp = (props?) => shallow(<UserAvatar {...props} />);
