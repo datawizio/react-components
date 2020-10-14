@@ -65,7 +65,7 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
       return resizeDetector(
         containerRef.current,
         async () => {
-          await chartRef.current.setSize();
+          if (chartRef.current) await chartRef.current.setSize();
         },
         resizeTimeout
       );
