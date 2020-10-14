@@ -39,4 +39,12 @@ function swapColumns(
   });
 }
 
-export { defineCellType, swapColumns, filterByColumns };
+function getVisibleColumns(columns: Array<IColumn>) {
+  const result = [];
+  columns.forEach(column => {
+    if (column.default_visible !== false) result.push(column.key);
+  });
+  return result.length === columns.length ? [] : result;
+}
+
+export { defineCellType, getVisibleColumns, swapColumns, filterByColumns };
