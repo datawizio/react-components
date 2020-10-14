@@ -141,6 +141,7 @@ export interface IColumn<RT = any>
   dtype?: string;
   dataIndex: string;
   resizable?: boolean;
+  default_visible?: boolean;
 }
 
 /**
