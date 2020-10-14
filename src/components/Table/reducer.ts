@@ -78,7 +78,7 @@ export function initializer(props: TableProps): TableState {
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
     parentsMap: {},
-    visibleColumnsKeys: visibleColumnsKeys || ["name"],
+    visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
     loadingRows: {}
   };
