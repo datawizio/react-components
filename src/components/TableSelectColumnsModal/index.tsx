@@ -26,6 +26,7 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   const [isOpened, setIsOpened] = useState(false);
   const [checkedKeys, setCheckedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const getColKeysRec = useCallback(columns => {
     let keys = [];
@@ -59,7 +60,13 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   const handleApply = useCallback(() => {
     dispatch({ type: "update", payload: { visibleColumnsKeys: checkedKeys } });
     setIsOpened(false);
+    setSearchValue("");
   }, [checkedKeys, dispatch]);
+
+  const handleCancel = useCallback(() => {
+    setIsOpened(false);
+    setSearchValue("");
+  }, []);
 
   const onCheck = useCallback(checkedKeys => {
     setCheckedKeys(checkedKeys || []);
@@ -88,7 +95,8 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
         visible={isOpened}
         title={translate(locale.headerModal)}
         className="select-columns__modal"
-        onCancel={() => setIsOpened(false)}
+        destroyOnClose={true}
+        onCancel={handleCancel}
         footer={
           <Button
             type="primary"
@@ -109,6 +117,8 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
           onExpand={setExpandedKeys}
           expandedKeys={expandedKeys}
           checkAllTitle={translate(locale.checkAll)}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
         />
       </Modal>
     </div>
