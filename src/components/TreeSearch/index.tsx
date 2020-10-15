@@ -200,6 +200,8 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       if (allIdx !== -1) nextKeys.splice(allIdx, 1);
 
       setInternalCheckedKeys(nextKeys);
+
+      onCheck && onCheck(nextKeys, e);
     },
     [recDown, recUp, searchFieldValue]
   );
