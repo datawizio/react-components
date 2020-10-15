@@ -6,7 +6,10 @@ module.exports = {
           "@babel/preset-env",
           {
             modules: "commonjs",
-            debug: false
+            debug: false,
+            targets: {
+              node: "current"
+            }
           }
         ],
         "@babel/preset-flow",
