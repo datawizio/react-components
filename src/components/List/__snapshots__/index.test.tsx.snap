@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`List component List rendered correctly 1`] = `
+<List
+  bordered={false}
+/>
+`;

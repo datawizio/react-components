@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Breadcrumb component Breadcrumb rendered correctly 1`] = `
+<Breadcrumb
+  className="customClassName"
+>
+  <Breadcrumb
+    className="customClassName"
+    separator={<ForwardRef(RightOutlined) />}
+  >
+    <div
+      className="customClassName ant-breadcrumb"
+    />
+  </Breadcrumb>
+</Breadcrumb>
+`;

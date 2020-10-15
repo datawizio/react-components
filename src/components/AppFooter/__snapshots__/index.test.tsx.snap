@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppFooter component Render AppFooter correctly 1`] = `
+<AppFooter>
+  <Footer
+    className="main-footer"
+  >
+    <Basic
+      className="main-footer"
+      prefixCls="ant-layout-footer"
+      tagName="footer"
+    >
+      <footer
+        className="ant-layout-footer main-footer"
+      >
+        COPYRIGHT
+      </footer>
+    </Basic>
+  </Footer>
+</AppFooter>
+`;
