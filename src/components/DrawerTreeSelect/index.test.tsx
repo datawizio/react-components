@@ -15,10 +15,6 @@ const A = () =>
     return <input ref={ref}>moked</input>;
   });
 
-(A.SHOW_ALL = () => "SHOW_ALL"),
-  (A.SHOW_CHILD = () => "SHOW_CHILD"),
-  (A.SHOW_PARENT = () => "SHOW_PARENT");
-
 jest.mock("./antd/AntTreeSelect", () => jest.fn());
 //@ts-ignore
 AntTreeSelect.mockImplementation(() => A);
