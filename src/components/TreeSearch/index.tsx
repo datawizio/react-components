@@ -4,7 +4,8 @@ import React, {
   useCallback,
   useRef,
   useMemo,
-  useEffect
+  useEffect,
+  useContext
 } from "react";
 import { Empty } from "antd";
 import Tree, { TreeProps } from "../Tree";
@@ -17,26 +18,34 @@ import {
 } from "rc-tree-select/es/utils/valueUtil";
 import { unTree } from "../../utils/data/tree";
 import "./index.less";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface AntTreeNodePropsExtended extends AntTreeNodeProps {
   parentKey?: string;
 }
 
 export interface TreeSearchProps extends TreeProps {
+  locale?: {
+    /**
+     * Placeholder для строки поиска
+     */
+    searchInputPlaceholder?: string;
+
+    /**
+     * Текст пустого результата при поиске
+     */
+    emptySearchResultText?: string;
+  };
+
   /**
    * Строка поиска
    */
   searchValue?: string;
 
   /**
-   * Placeholder для строки поиска
+   * Функция, которая сетит строку поиска
    */
-  searchInputPlaceholder?: string;
-
-  /**
-   * Текст пустого результата при поиске
-   */
-  emptySearchResultText?: string;
+  setSearchValue?: (value: string) => void;
 
   /**
    * Показывать/не показывать строку поиска
@@ -64,9 +73,8 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
   const {
     showSearchInput,
     searchValue,
+    setSearchValue,
     renderInput,
-    searchInputPlaceholder,
-    emptySearchResultText,
     defaultExpandedKeys,
     treeData,
     searchCondition,
@@ -74,14 +82,19 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     onCheck,
     ...restProps
   } = props;
+
+  const { searchInputPlaceholder, emptySearchResultText } = props.locale;
+
+  const { translate } = useContext(ConfigContext);
   const timeout = useRef<NodeJS.Timeout>();
 
   const [internalCheckedKeys, setInternalCheckedKeys] = useState<ReactText[]>(
     //@ts-ignore
     checkedKeys
   );
-  const [searchFieldValue, setSearchFieldValue] = useState("");
+
   const [expandedKeys, setExpandedKeys] = useState<Key[]>(defaultExpandedKeys);
+  const [allDisabled, setAllDisabled] = useState<boolean>(false);
 
   const flatData = useMemo(() => {
     return unTree(treeData);
@@ -91,7 +104,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     return searchCondition ? searchCondition : defaultSearchCondition;
   }, [searchCondition]);
 
-  const mergedTreeData = filterOptions(searchFieldValue, treeData, {
+  const mergedTreeData = filterOptions(searchValue, treeData, {
     optionFilterProp: "title",
     filterOption: internalSearchCondition
   });
@@ -103,10 +116,10 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       clearTimeout(timeout.current);
 
       timeout.current = setTimeout(() => {
-        setSearchFieldValue(value);
+        setSearchValue(value);
       }, 200);
     },
-    [setSearchFieldValue]
+    [setSearchValue]
   );
 
   const handleTreeExpand = useCallback((keys: Key[]) => {
@@ -180,7 +193,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       if (node.disabled) return;
 
-      if (searchFieldValue) {
+      if (searchValue) {
         checked
           ? nextCheckedKeysSet.add(node.key)
           : nextCheckedKeysSet.delete(node.key);
@@ -203,15 +216,19 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       onCheck && onCheck(nextKeys, e);
     },
-    [recDown, recUp, searchFieldValue]
+    [recDown, recUp, searchValue]
   );
 
   useEffect(() => {
     const options = flattenOptions(treeData);
-    searchFieldValue
-      ? setExpandedKeys(options.map(o => o.key))
-      : setExpandedKeys(["-1"]);
-  }, [searchFieldValue]);
+    if (searchValue) {
+      setExpandedKeys(options.map(o => o.key));
+      setAllDisabled(true);
+    } else {
+      setExpandedKeys(["-1"]);
+      setAllDisabled(false);
+    }
+  }, [searchValue]);
 
   return (
     <div className="tree-search-container">
@@ -222,7 +239,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           ) : (
             <SearchInput
               onChange={handleSearchInputChange}
-              placeholder={searchInputPlaceholder}
+              placeholder={translate(searchInputPlaceholder)}
             />
           )
         ) : null}
@@ -234,23 +251,30 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           treeData={mergedTreeData}
           checkedKeys={internalCheckedKeys}
           expandedKeys={expandedKeys}
-          checkStrictly={!!searchFieldValue}
+          checkStrictly={!!searchValue}
+          isAllDisabled={allDisabled}
           onExpand={handleTreeExpand}
           onCheck={handleTreeCheck}
         />
       ) : (
-        <Empty description={emptySearchResultText} />
+        <Empty
+          description={translate(emptySearchResultText)}
+          style={{ "marginTop": "15px" }}
+        />
       )}
     </div>
   );
 };
 
 TreeSearch.defaultProps = {
-  searchValue: "",
-  searchInputPlaceholder: "SEARCH",
-  emptySearchResultText: "EMPTY_SEARCH_CATEGORIES",
+  locale: {
+    searchInputPlaceholder: "SEARCH",
+    emptySearchResultText: "NO_DATA"
+  },
   showSearchInput: true,
-  searchCondition: null
+  searchCondition: null,
+  searchValue: "",
+  setSearchValue: () => {}
 };
 
 export default TreeSearch;

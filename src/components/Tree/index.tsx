@@ -21,6 +21,11 @@ export interface TreeProps extends AntTreeProps {
    * Ключ для чекбокса `Check all`
    */
   checkAllKey?: string;
+
+  /**
+   * Отключать ли кликабельность чекбокса `Check all`
+   */
+  isAllDisabled?: boolean;
 }
 
 const Tree: React.FC<TreeProps> = props => {
@@ -28,6 +33,7 @@ const Tree: React.FC<TreeProps> = props => {
     showCheckAll,
     checkAllTitle,
     checkAllKey,
+    isAllDisabled,
     defaultExpandedKeys,
     expandedKeys,
     ...restProps
@@ -43,7 +49,8 @@ const Tree: React.FC<TreeProps> = props => {
         key: checkAllKey,
         title: checkAllTitle,
         children: props.treeData,
-        className: "tree-check-all"
+        className: "tree-check-all",
+        disabled: isAllDisabled
       }
     ];
     if (cDefaultExpandedKeys.indexOf(checkAllKey)) {
@@ -71,7 +78,8 @@ Tree.defaultProps = {
   checkAllTitle: "Check All",
   checkAllKey: "-1",
   defaultExpandedKeys: [],
-  expandedKeys: []
+  expandedKeys: [],
+  isAllDisabled: false,
 };
 
 export default Tree;
