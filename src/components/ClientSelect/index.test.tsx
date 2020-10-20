@@ -36,5 +36,17 @@ describe("ClientSelect component", () => {
     expect(wrapper.html()).toContain(clients[0].name);
   });
 
-  //TODO cover handleChange
+  it("ClientSelect onChange", () => {
+    Object.defineProperty(window, "location", {
+      value: {
+        pathname: "/c/willReplace/report/qwerty"
+      }
+    });
+    const mockValue = "value1";
+    const select = component.find(".client-select").first();
+    const onChange = component.props().onChange;
+    select.prop("onChange")(mockValue);
+    expect(onChange).toBeCalled();
+    expect(onChange).toBeCalledWith(`/c/${mockValue}/report/qwerty`);
+  });
 });
