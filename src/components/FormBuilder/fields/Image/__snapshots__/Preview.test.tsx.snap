@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormBuilder Preview component Preview call  modal 1`] = `
+<div
+  className="ant-upload-list ant-upload-list-picture-card"
+>
+  <div
+    className="ant-upload-list-picture-card-container"
+  >
+    <span>
+      <div
+        className="ant-upload-list-item ant-upload-list-item-done ant-upload-list-item-list-type-picture-card"
+        onClick={[Function]}
+      >
+        <div
+          className="ant-upload-list-item-info"
+        >
+          <span>
+            <img
+              alt="Preview"
+              className="ant-upload-list-item-image"
+              src="value"
+            />
+          </span>
+        </div>
+        <span
+          className="ant-upload-list-item-actions"
+        >
+          <ForwardRef(DeleteOutlined) />
+        </span>
+      </div>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`FormBuilder Preview component Preview rendered correctly 1`] = `
+<div
+  className="ant-upload-list ant-upload-list-picture-card"
+>
+  <div
+    className="ant-upload-list-picture-card-container"
+  >
+    <span>
+      <div
+        className="ant-upload-list-item ant-upload-list-item-done ant-upload-list-item-list-type-picture-card"
+        onClick={[Function]}
+      >
+        <div
+          className="ant-upload-list-item-info"
+        >
+          <span>
+            <img
+              alt="Preview"
+              className="ant-upload-list-item-image"
+              src="value"
+            />
+          </span>
+        </div>
+        <span
+          className="ant-upload-list-item-actions"
+        >
+          <ForwardRef(DeleteOutlined) />
+        </span>
+      </div>
+    </span>
+  </div>
+</div>
+`;
