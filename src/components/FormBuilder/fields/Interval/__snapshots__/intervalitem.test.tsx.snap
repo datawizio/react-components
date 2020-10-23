@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormBuilder IntervalItem component IntervalItem rendered correctly 1`] = `
+<Fragment>
+  <div
+    className="field-interval-label"
+  >
+    label
+    :
+  </div>
+  <Picker
+    disabledDate={[Function]}
+    onChange={[MockFunction]}
+    picker="month"
+    placeholder="UNLIMITED"
+    value="value"
+  />
+</Fragment>
+`;

@@ -26,7 +26,10 @@ module.exports = {
   globals: {
     window: {
       innerWidth: 500,
-      innerHeight: 500
+      innerHeight: 500,
+      location: {
+        pathname: "/c/pathname/report/qwerty"
+      }
     }
   }
 };

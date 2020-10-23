@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FieldEnableSelect component FieldEnableSelect rendered correctly 1`] = `
+<FormItem
+  className="field-enable-select"
+  initialValue="init"
+  label="label"
+  name="name"
+>
+  <Field
+    name="name"
+    onChange={[MockFunction]}
+    placeholder="placeholder"
+    renderField={[MockFunction]}
+  />
+</FormItem>
+`;

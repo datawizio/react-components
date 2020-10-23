@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormBuilder FieldImage component Field Image rendered correctly 1`] = `
+<FormItem
+  label="label"
+  name="Preview name"
+>
+  <Image
+    name="Preview name"
+    onChange={[MockFunction]}
+    placeholder="placeholder"
+  />
+</FormItem>
+`;
