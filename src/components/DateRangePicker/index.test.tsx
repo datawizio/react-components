@@ -1,6 +1,7 @@
 import "jsdom-global/register";
 import React from "react";
 import { shallow, mount } from "enzyme";
+import DateRangePicker from "./index";
 
 jest.mock("./presets", () => ({
   DefaultPreset: {
@@ -12,8 +13,6 @@ jest.mock("./presets", () => ({
     currentYear: "2020-10-22T13:06:36.873Z"
   }
 }));
-
-import DateRangePicker from "./index";
 
 const mockProps = {
   defaultPresetUsed: true,
