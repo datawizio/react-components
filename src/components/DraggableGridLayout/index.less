@@ -4,9 +4,17 @@
 .react-grid-layout {
   position: relative;
   transition: height 200ms ease;
+  img {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
 }
 .react-grid-item {
   border-style: dashed;
+  overflow: hidden;
   border-color: #afafaf;
   border-width: 2px;
   background-color: rgb(204, 222, 248);
