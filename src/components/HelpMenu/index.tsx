@@ -1,9 +1,9 @@
 import * as React from "react";
+import { useContext, useMemo } from "react";
 import { Menu, Dropdown } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import "./index.less";
-import { useContext, useMemo } from "react";
 import ConfigContext from "../ConfigProvider/context";
+import "./index.less";
 
 export interface IHelpMenu {
   onTutorialClick: () => void;
