@@ -1,0 +1,734 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tree component Render Tree (show check all) correctly 1`] = `
+<Tree
+  checkAllKey="-1"
+  checkAllTitle="Check All"
+  defaultExpandedKeys={
+    Array [
+      "-1",
+    ]
+  }
+  expandedKeys={
+    Array [
+      "-1",
+    ]
+  }
+  isAllDisabled={false}
+  showCheckAll={true}
+>
+  <ForwardRef
+    blockNode={false}
+    checkable={false}
+    defaultExpandedKeys={
+      Array [
+        "-1",
+      ]
+    }
+    expandedKeys={
+      Array [
+        "-1",
+      ]
+    }
+    motion={
+      Object {
+        "motionAppear": false,
+        "motionDeadline": 500,
+        "motionName": "ant-motion-collapse",
+        "onAppearActive": [Function],
+        "onAppearStart": [Function],
+        "onEnterActive": [Function],
+        "onEnterStart": [Function],
+        "onLeaveActive": [Function],
+        "onLeaveStart": [Function],
+      }
+    }
+    showIcon={false}
+    treeData={
+      Array [
+        Object {
+          "children": undefined,
+          "className": "tree-check-all",
+          "disabled": false,
+          "key": "-1",
+          "title": "Check All",
+        },
+      ]
+    }
+  >
+    <Tree
+      autoExpandParent={false}
+      blockNode={false}
+      checkStrictly={false}
+      checkable={false}
+      className="ant-tree-icon-hide"
+      defaultCheckedKeys={Array []}
+      defaultExpandAll={false}
+      defaultExpandParent={true}
+      defaultExpandedKeys={
+        Array [
+          "-1",
+        ]
+      }
+      defaultSelectedKeys={Array []}
+      disabled={false}
+      draggable={false}
+      expandedKeys={
+        Array [
+          "-1",
+        ]
+      }
+      itemHeight={20}
+      motion={
+        Object {
+          "motionAppear": false,
+          "motionDeadline": 500,
+          "motionName": "ant-motion-collapse",
+          "onAppearActive": [Function],
+          "onAppearStart": [Function],
+          "onEnterActive": [Function],
+          "onEnterStart": [Function],
+          "onLeaveActive": [Function],
+          "onLeaveStart": [Function],
+        }
+      }
+      multiple={false}
+      prefixCls="ant-tree"
+      selectable={true}
+      showIcon={false}
+      showLine={false}
+      switcherIcon={[Function]}
+      treeData={
+        Array [
+          Object {
+            "children": undefined,
+            "className": "tree-check-all",
+            "disabled": false,
+            "key": "-1",
+            "title": "Check All",
+          },
+        ]
+      }
+    >
+      <div
+        className="ant-tree ant-tree-icon-hide"
+      >
+        <NodeList
+          activeItem={null}
+          checkable={false}
+          checkedKeys={Array []}
+          data={
+            Array [
+              Object {
+                "children": Array [],
+                "className": "tree-check-all",
+                "data": Object {
+                  "children": undefined,
+                  "className": "tree-check-all",
+                  "disabled": false,
+                  "key": "-1",
+                  "title": "Check All",
+                },
+                "disabled": false,
+                "isEnd": Array [
+                  true,
+                ],
+                "isStart": Array [
+                  true,
+                ],
+                "key": "-1",
+                "parent": null,
+                "pos": "0-0",
+                "title": "Check All",
+              },
+            ]
+          }
+          disabled={false}
+          dragOverNodeKey={null}
+          dragging={false}
+          dropPosition={null}
+          expandedKeys={
+            Array [
+              "-1",
+            ]
+          }
+          focused={false}
+          halfCheckedKeys={Array []}
+          itemHeight={20}
+          keyEntities={
+            Object {
+              "-1": Object {
+                "index": 0,
+                "key": "-1",
+                "level": 0,
+                "node": Object {
+                  "children": undefined,
+                  "className": "tree-check-all",
+                  "disabled": false,
+                  "key": "-1",
+                  "title": "Check All",
+                },
+                "parent": undefined,
+                "pos": "0-0",
+              },
+              "RC_TREE_MOTION_0.5435795613119474": Object {
+                "index": 0,
+                "key": "RC_TREE_MOTION_0.5435795613119474",
+                "level": 0,
+                "node": Object {
+                  "key": "RC_TREE_MOTION_0.5435795613119474",
+                },
+                "pos": "0",
+              },
+            }
+          }
+          loadedKeys={Array []}
+          loadingKeys={Array []}
+          motion={
+            Object {
+              "motionAppear": false,
+              "motionDeadline": 500,
+              "motionName": "ant-motion-collapse",
+              "onAppearActive": [Function],
+              "onAppearStart": [Function],
+              "onEnterActive": [Function],
+              "onEnterStart": [Function],
+              "onLeaveActive": [Function],
+              "onLeaveStart": [Function],
+            }
+          }
+          onActiveChange={[Function]}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onListChangeEnd={[Function]}
+          onListChangeStart={[Function]}
+          prefixCls="ant-tree"
+          selectable={true}
+          selectedKeys={Array []}
+          tabIndex={0}
+        >
+          <div
+            role="tree"
+          >
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              style={
+                Object {
+                  "border": 0,
+                  "display": "flex",
+                  "height": 0,
+                  "margin": 0,
+                  "opacity": 0,
+                  "overflow": "hidden",
+                  "padding": 0,
+                  "width": 0,
+                }
+              }
+              tabIndex={0}
+              value=""
+            />
+          </div>
+          <List
+            data={
+              Array [
+                Object {
+                  "children": Array [],
+                  "className": "tree-check-all",
+                  "data": Object {
+                    "children": undefined,
+                    "className": "tree-check-all",
+                    "disabled": false,
+                    "key": "-1",
+                    "title": "Check All",
+                  },
+                  "disabled": false,
+                  "isEnd": Array [
+                    true,
+                  ],
+                  "isStart": Array [
+                    true,
+                  ],
+                  "key": "-1",
+                  "parent": null,
+                  "pos": "0-0",
+                  "title": "Check All",
+                },
+              ]
+            }
+            disabled={false}
+            fullHeight={false}
+            itemHeight={20}
+            itemKey={[Function]}
+            onSkipRender={[Function]}
+            prefixCls="ant-tree-list"
+          >
+            <div
+              className="ant-tree-list"
+              onScroll={[Function]}
+            >
+              <Filler
+                prefixCls="ant-tree-list"
+              >
+                <div
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-tree-list-holder-inner"
+                    style={
+                      Object {
+                        "display": "flex",
+                        "flexDirection": "column",
+                      }
+                    }
+                  >
+                    <ForwardRef(MotionTreeNode)
+                      active={null}
+                      checked={false}
+                      className="tree-check-all"
+                      data={
+                        Object {
+                          "children": undefined,
+                          "className": "tree-check-all",
+                          "disabled": false,
+                          "key": "-1",
+                          "title": "Check All",
+                        }
+                      }
+                      disabled={false}
+                      dragOver={false}
+                      dragOverGapBottom={false}
+                      dragOverGapTop={false}
+                      eventKey="-1"
+                      expanded={true}
+                      halfChecked={false}
+                      isEnd={
+                        Array [
+                          true,
+                        ]
+                      }
+                      isStart={
+                        Array [
+                          true,
+                        ]
+                      }
+                      key="-1"
+                      loaded={false}
+                      loading={false}
+                      motion={
+                        Object {
+                          "motionAppear": false,
+                          "motionDeadline": 500,
+                          "motionName": "ant-motion-collapse",
+                          "onAppearActive": [Function],
+                          "onAppearStart": [Function],
+                          "onEnterActive": [Function],
+                          "onEnterStart": [Function],
+                          "onLeaveActive": [Function],
+                          "onLeaveStart": [Function],
+                        }
+                      }
+                      motionNodes={null}
+                      motionType={null}
+                      onMotionEnd={[Function]}
+                      onMouseMove={[Function]}
+                      pos="0-0"
+                      selected={false}
+                      title="Check All"
+                      treeNodeRequiredProps={
+                        Object {
+                          "checkedKeys": Array [],
+                          "dragOverNodeKey": null,
+                          "dropPosition": null,
+                          "expandedKeys": Array [
+                            "-1",
+                          ],
+                          "halfCheckedKeys": Array [],
+                          "keyEntities": Object {
+                            "-1": Object {
+                              "index": 0,
+                              "key": "-1",
+                              "level": 0,
+                              "node": Object {
+                                "children": undefined,
+                                "className": "tree-check-all",
+                                "disabled": false,
+                                "key": "-1",
+                                "title": "Check All",
+                              },
+                              "parent": undefined,
+                              "pos": "0-0",
+                            },
+                            "RC_TREE_MOTION_0.5435795613119474": Object {
+                              "index": 0,
+                              "key": "RC_TREE_MOTION_0.5435795613119474",
+                              "level": 0,
+                              "node": Object {
+                                "key": "RC_TREE_MOTION_0.5435795613119474",
+                              },
+                              "pos": "0",
+                            },
+                          },
+                          "loadedKeys": Array [],
+                          "loadingKeys": Array [],
+                          "selectedKeys": Array [],
+                        }
+                      }
+                    >
+                      <TreeNode
+                        active={null}
+                        checked={false}
+                        className="tree-check-all"
+                        data={
+                          Object {
+                            "children": undefined,
+                            "className": "tree-check-all",
+                            "disabled": false,
+                            "key": "-1",
+                            "title": "Check All",
+                          }
+                        }
+                        disabled={false}
+                        domRef={[Function]}
+                        dragOver={false}
+                        dragOverGapBottom={false}
+                        dragOverGapTop={false}
+                        eventKey="-1"
+                        expanded={true}
+                        halfChecked={false}
+                        isEnd={
+                          Array [
+                            true,
+                          ]
+                        }
+                        isStart={
+                          Array [
+                            true,
+                          ]
+                        }
+                        loaded={false}
+                        loading={false}
+                        onMouseMove={[Function]}
+                        pos="0-0"
+                        selected={false}
+                        title="Check All"
+                      >
+                        <InternalTreeNode
+                          active={null}
+                          checked={false}
+                          className="tree-check-all"
+                          context={
+                            Object {
+                              "checkStrictly": false,
+                              "checkable": false,
+                              "disabled": false,
+                              "draggable": false,
+                              "filterTreeNode": undefined,
+                              "icon": undefined,
+                              "keyEntities": Object {
+                                "-1": Object {
+                                  "index": 0,
+                                  "key": "-1",
+                                  "level": 0,
+                                  "node": Object {
+                                    "children": undefined,
+                                    "className": "tree-check-all",
+                                    "disabled": false,
+                                    "key": "-1",
+                                    "title": "Check All",
+                                  },
+                                  "parent": undefined,
+                                  "pos": "0-0",
+                                },
+                                "RC_TREE_MOTION_0.5435795613119474": Object {
+                                  "index": 0,
+                                  "key": "RC_TREE_MOTION_0.5435795613119474",
+                                  "level": 0,
+                                  "node": Object {
+                                    "key": "RC_TREE_MOTION_0.5435795613119474",
+                                  },
+                                  "pos": "0",
+                                },
+                              },
+                              "loadData": undefined,
+                              "onNodeCheck": [Function],
+                              "onNodeClick": [Function],
+                              "onNodeContextMenu": [Function],
+                              "onNodeDoubleClick": [Function],
+                              "onNodeDragEnd": [Function],
+                              "onNodeDragEnter": [Function],
+                              "onNodeDragLeave": [Function],
+                              "onNodeDragOver": [Function],
+                              "onNodeDragStart": [Function],
+                              "onNodeDrop": [Function],
+                              "onNodeExpand": [Function],
+                              "onNodeLoad": [Function],
+                              "onNodeMouseEnter": [Function],
+                              "onNodeMouseLeave": [Function],
+                              "onNodeSelect": [Function],
+                              "prefixCls": "ant-tree",
+                              "selectable": true,
+                              "showIcon": false,
+                              "switcherIcon": [Function],
+                            }
+                          }
+                          data={
+                            Object {
+                              "children": undefined,
+                              "className": "tree-check-all",
+                              "disabled": false,
+                              "key": "-1",
+                              "title": "Check All",
+                            }
+                          }
+                          disabled={false}
+                          domRef={[Function]}
+                          dragOver={false}
+                          dragOverGapBottom={false}
+                          dragOverGapTop={false}
+                          eventKey="-1"
+                          expanded={true}
+                          halfChecked={false}
+                          isEnd={
+                            Array [
+                              true,
+                            ]
+                          }
+                          isStart={
+                            Array [
+                              true,
+                            ]
+                          }
+                          loaded={false}
+                          loading={false}
+                          onMouseMove={[Function]}
+                          pos="0-0"
+                          selected={false}
+                          title="Check All"
+                        >
+                          <div
+                            className="tree-check-all ant-tree-treenode ant-tree-treenode-switcher-open"
+                            onMouseMove={[Function]}
+                          >
+                            <Indent
+                              isEnd={
+                                Array [
+                                  true,
+                                ]
+                              }
+                              isStart={
+                                Array [
+                                  true,
+                                ]
+                              }
+                              level={0}
+                              prefixCls="ant-tree"
+                            />
+                            <span
+                              className="ant-tree-switcher ant-tree-switcher-noop"
+                            />
+                            <span
+                              className="ant-tree-node-content-wrapper ant-tree-node-content-wrapper-normal"
+                              onClick={[Function]}
+                              onContextMenu={[Function]}
+                              onDoubleClick={[Function]}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                              title="Check All"
+                            >
+                              <span
+                                className="ant-tree-title"
+                              >
+                                Check All
+                              </span>
+                            </span>
+                          </div>
+                        </InternalTreeNode>
+                      </TreeNode>
+                    </ForwardRef(MotionTreeNode)>
+                  </div>
+                </div>
+              </Filler>
+            </div>
+          </List>
+        </NodeList>
+      </div>
+    </Tree>
+  </ForwardRef>
+</Tree>
+`;
+
+exports[`Tree component Render Tree correctly 1`] = `
+<Tree
+  checkAllKey="-1"
+  checkAllTitle="Check All"
+  defaultExpandedKeys={Array []}
+  expandedKeys={Array []}
+  isAllDisabled={false}
+  showCheckAll={false}
+>
+  <ForwardRef
+    blockNode={false}
+    checkable={false}
+    defaultExpandedKeys={Array []}
+    expandedKeys={Array []}
+    motion={
+      Object {
+        "motionAppear": false,
+        "motionDeadline": 500,
+        "motionName": "ant-motion-collapse",
+        "onAppearActive": [Function],
+        "onAppearStart": [Function],
+        "onEnterActive": [Function],
+        "onEnterStart": [Function],
+        "onLeaveActive": [Function],
+        "onLeaveStart": [Function],
+      }
+    }
+    showIcon={false}
+  >
+    <Tree
+      autoExpandParent={false}
+      blockNode={false}
+      checkStrictly={false}
+      checkable={false}
+      className="ant-tree-icon-hide"
+      defaultCheckedKeys={Array []}
+      defaultExpandAll={false}
+      defaultExpandParent={true}
+      defaultExpandedKeys={Array []}
+      defaultSelectedKeys={Array []}
+      disabled={false}
+      draggable={false}
+      expandedKeys={Array []}
+      itemHeight={20}
+      motion={
+        Object {
+          "motionAppear": false,
+          "motionDeadline": 500,
+          "motionName": "ant-motion-collapse",
+          "onAppearActive": [Function],
+          "onAppearStart": [Function],
+          "onEnterActive": [Function],
+          "onEnterStart": [Function],
+          "onLeaveActive": [Function],
+          "onLeaveStart": [Function],
+        }
+      }
+      multiple={false}
+      prefixCls="ant-tree"
+      selectable={true}
+      showIcon={false}
+      showLine={false}
+      switcherIcon={[Function]}
+    >
+      <div
+        className="ant-tree ant-tree-icon-hide"
+      >
+        <NodeList
+          activeItem={null}
+          checkable={false}
+          checkedKeys={Array []}
+          data={Array []}
+          disabled={false}
+          dragOverNodeKey={null}
+          dragging={false}
+          dropPosition={null}
+          expandedKeys={Array []}
+          focused={false}
+          halfCheckedKeys={Array []}
+          itemHeight={20}
+          keyEntities={Object {}}
+          loadedKeys={Array []}
+          loadingKeys={Array []}
+          motion={
+            Object {
+              "motionAppear": false,
+              "motionDeadline": 500,
+              "motionName": "ant-motion-collapse",
+              "onAppearActive": [Function],
+              "onAppearStart": [Function],
+              "onEnterActive": [Function],
+              "onEnterStart": [Function],
+              "onLeaveActive": [Function],
+              "onLeaveStart": [Function],
+            }
+          }
+          onActiveChange={[Function]}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onListChangeEnd={[Function]}
+          onListChangeStart={[Function]}
+          prefixCls="ant-tree"
+          selectable={true}
+          selectedKeys={Array []}
+          tabIndex={0}
+        >
+          <div
+            role="tree"
+          >
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              style={
+                Object {
+                  "border": 0,
+                  "display": "flex",
+                  "height": 0,
+                  "margin": 0,
+                  "opacity": 0,
+                  "overflow": "hidden",
+                  "padding": 0,
+                  "width": 0,
+                }
+              }
+              tabIndex={0}
+              value=""
+            />
+          </div>
+          <List
+            data={Array []}
+            disabled={false}
+            fullHeight={false}
+            itemHeight={20}
+            itemKey={[Function]}
+            onSkipRender={[Function]}
+            prefixCls="ant-tree-list"
+          >
+            <div
+              className="ant-tree-list"
+              onScroll={[Function]}
+            >
+              <Filler
+                prefixCls="ant-tree-list"
+              >
+                <div
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-tree-list-holder-inner"
+                    style={
+                      Object {
+                        "display": "flex",
+                        "flexDirection": "column",
+                      }
+                    }
+                  />
+                </div>
+              </Filler>
+            </div>
+          </List>
+        </NodeList>
+      </div>
+    </Tree>
+  </ForwardRef>
+</Tree>
+`;

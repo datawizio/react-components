@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Radio component Render Radio correctly 1`] = `
+<Radio>
+  <Radio
+    type="radio"
+  >
+    <label
+      className="ant-radio-wrapper"
+    >
+      <Checkbox
+        className=""
+        defaultChecked={false}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+        prefixCls="ant-radio"
+        style={Object {}}
+        type="radio"
+      >
+        <span
+          className="ant-radio"
+          style={Object {}}
+        >
+          <input
+            checked={false}
+            className="ant-radio-input"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            type="radio"
+          />
+          <span
+            className="ant-radio-inner"
+          />
+        </span>
+      </Checkbox>
+    </label>
+  </Radio>
+</Radio>
+`;
+
+exports[`Radio component Render Radio.Group correctly 1`] = `
+<RadioGroup
+  vertical={true}
+>
+  <RadioGroup
+    className="ant-radio-group-vertical"
+  >
+    <div
+      className="ant-radio-group ant-radio-group-outline ant-radio-group-vertical"
+    />
+  </RadioGroup>
+</RadioGroup>
+`;
+
+exports[`Radio component Render horisontal Radio.Group correctly 1`] = `
+<RadioGroup
+  vertical={false}
+>
+  <RadioGroup
+    className=""
+  >
+    <div
+      className="ant-radio-group ant-radio-group-outline"
+    />
+  </RadioGroup>
+</RadioGroup>
+`;
