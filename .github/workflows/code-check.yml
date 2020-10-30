@@ -37,7 +37,7 @@ jobs:
         run: gulp compile
 
       - name: Run tests
-        run: npx test:ci
+        run: npm run test:ci
 
       - name: Jest Github Action Reporter
         uses: IgnusG/jest-report-action@v2.3.3
