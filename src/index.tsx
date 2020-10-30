@@ -64,6 +64,10 @@ export { default as UserButton } from "./components/UserButton";
 
 export { default as AppSwitcher } from "./components/AppSwitcher";
 
+export { default as Help } from "./components/Help";
+
+export { default as SupportModal } from "./components/Help/components/SupportModal";
+
 export { default as SearchInput } from "./components/SearchInput";
 
 export { default as TableSearch } from "./components/TableSearch";
