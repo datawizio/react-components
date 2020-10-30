@@ -6,7 +6,8 @@ import React, {
   useContext
 } from "react";
 import { Select, DatePicker } from "antd";
-import moment from "moment";
+import dayjs from "dayjs";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
 import ConfigContext from "../ConfigProvider/context";
 import {
@@ -20,6 +21,8 @@ import {
   PREV_PERIOD_OPTIONS
 } from "./constants";
 import "./index.less";
+
+dayjs.extend(quarterOfYear);
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -141,71 +144,70 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
     switch (periodKey) {
       case "today":
-        newPeriod.startDate = moment(clientDate);
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate);
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "last_day":
-        const lastDay = moment(clientDate).subtract(1, "day");
+        const lastDay = dayjs(clientDate).subtract(1, "day");
         newPeriod.startDate = lastDay;
         newPeriod.endDate = lastDay;
         break;
       case "last_7_days":
-        newPeriod.endDate = moment(clientDate);
-        newPeriod.startDate = moment(clientDate).subtract(6, "day");
+        newPeriod.endDate = dayjs(clientDate);
+        newPeriod.startDate = dayjs(clientDate).subtract(6, "day");
         break;
       case "prev_week":
-        newPeriod.startDate = moment(clientDate)
+        newPeriod.startDate = dayjs(clientDate)
           .startOf("week")
           .subtract(1, "week");
-        newPeriod.endDate = moment(newPeriod.startDate).endOf("week");
+        newPeriod.endDate = dayjs(newPeriod.startDate).endOf("week");
         break;
       case "week_begin":
-        newPeriod.startDate = moment(clientDate).startOf("week");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).startOf("week");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "month_begin":
-        newPeriod.startDate = moment(clientDate).startOf("month");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).startOf("month");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "prev_month":
-        const prevMonth = moment(clientDate)
+        const prevMonth = dayjs(clientDate)
           .startOf("month")
           .subtract(1, "month");
 
         newPeriod.startDate = prevMonth;
-        newPeriod.endDate = moment(newPeriod.startDate).endOf("month");
+        newPeriod.endDate = dayjs(newPeriod.startDate).endOf("month");
         break;
       case "season_begin":
-        newPeriod.startDate = moment(clientDate).startOf("quarter");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).startOf("quarter");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "year_begin":
-        newPeriod.startDate = moment(clientDate).startOf("year");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).startOf("year");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "last_30_days":
-        newPeriod.startDate = moment(clientDate).subtract(29, "day");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).subtract(29, "day");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "last_180_days":
-        newPeriod.startDate = moment(clientDate).subtract(179, "day");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).subtract(179, "day");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "last_365_days":
-        newPeriod.startDate = moment(clientDate).subtract(364, "day");
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(clientDate).subtract(364, "day");
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "all_time":
         let startDate;
-        const today = moment().format("YYYY-MM-DD");
+        const today = dayjs().format("YYYY-MM-DD");
         if (clientStartDate > today) {
           startDate = today;
         } else {
           startDate = clientDate;
         }
-        console.log(clientStartDate);
-        newPeriod.startDate = moment(startDate);
-        newPeriod.endDate = moment(clientDate);
+        newPeriod.startDate = dayjs(startDate);
+        newPeriod.endDate = dayjs(clientDate);
         break;
       case "date":
         const [startCustomDate, endCustomDate] = date;
@@ -218,8 +220,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     }
 
     if (
-      moment.isMoment(newPeriod.startDate) &&
-      moment.isMoment(newPeriod.endDate)
+      dayjs.isDayjs(newPeriod.startDate) &&
+      dayjs.isDayjs(newPeriod.endDate)
     ) {
       setPeriod({
         startDate: newPeriod.startDate.format(FORMATTED_PATTERN),
@@ -238,64 +240,64 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
     switch (date) {
       case "today":
-        newPrevPeriod.startDate = moment(clientDate).subtract(1, "day");
-        newPrevPeriod.endDate = moment(clientDate).subtract(1, "day");
+        newPrevPeriod.startDate = dayjs(clientDate).subtract(1, "day");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "day");
         break;
       case "last_day":
-        newPrevPeriod.startDate = moment(clientDate).subtract(2, "day");
-        newPrevPeriod.endDate = moment(clientDate).subtract(2, "day");
+        newPrevPeriod.startDate = dayjs(clientDate).subtract(2, "day");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(2, "day");
         break;
       case "last_7_days":
-        newPrevPeriod.startDate = moment(clientDate).subtract(13, "day");
-        newPrevPeriod.endDate = moment(clientDate).subtract(7, "day");
+        newPrevPeriod.startDate = dayjs(clientDate).subtract(13, "day");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(7, "day");
         break;
       case "prev_week":
-        newPrevPeriod.startDate = moment(clientDate)
+        newPrevPeriod.startDate = dayjs(clientDate)
           .startOf("week")
           .subtract(2, "week");
-        newPrevPeriod.endDate = moment(newPrevPeriod.startDate).endOf("week");
+        newPrevPeriod.endDate = dayjs(newPrevPeriod.startDate).endOf("week");
         break;
       case "week_begin":
-        newPrevPeriod.startDate = moment(clientDate)
+        newPrevPeriod.startDate = dayjs(clientDate)
           .startOf("week")
           .subtract(1, "week");
-        newPrevPeriod.endDate = moment(clientDate).subtract(1, "week");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "week");
         break;
       case "month_begin":
-        newPrevPeriod.startDate = moment(clientDate)
+        newPrevPeriod.startDate = dayjs(clientDate)
           .startOf("month")
           .subtract(1, "month");
-        newPrevPeriod.endDate = moment(clientDate).subtract(1, "month");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "month");
         break;
       case "prev_month":
-        newPrevPeriod.startDate = moment(clientDate)
+        newPrevPeriod.startDate = dayjs(clientDate)
           .startOf("month")
           .subtract(2, "month");
-        newPrevPeriod.endDate = moment(newPrevPeriod.startDate).endOf("month");
+        newPrevPeriod.endDate = dayjs(newPrevPeriod.startDate).endOf("month");
         break;
       case "season_begin":
-        newPrevPeriod.startDate = moment(clientDate)
+        newPrevPeriod.startDate = dayjs(clientDate)
           .startOf("quarter")
           .subtract(1, "quarter");
-        newPrevPeriod.endDate = moment().subtract(1, "quarter");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "quarter");
         break;
       case "year_begin":
-        newPrevPeriod.startDate = moment(clientDate)
+        newPrevPeriod.startDate = dayjs(clientDate)
           .startOf("year")
           .subtract(1, "year");
-        newPrevPeriod.endDate = moment(clientDate).subtract(1, "year");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "year");
         break;
       case "last_30_days":
-        newPrevPeriod.startDate = moment(clientDate).subtract(60, "day");
-        newPrevPeriod.endDate = moment(clientDate).subtract(29, "day");
+        newPrevPeriod.startDate = dayjs(clientDate).subtract(60, "day");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(29, "day");
         break;
       case "last_180_days":
-        newPrevPeriod.startDate = moment(clientDate).subtract(360, "day");
-        newPrevPeriod.endDate = moment(clientDate).subtract(179, "day");
+        newPrevPeriod.startDate = dayjs(clientDate).subtract(360, "day");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(179, "day");
         break;
       case "last_365_days":
-        newPrevPeriod.startDate = moment(clientDate).subtract(710, "day");
-        newPrevPeriod.endDate = moment(clientDate).subtract(364, "day");
+        newPrevPeriod.startDate = dayjs(clientDate).subtract(710, "day");
+        newPrevPeriod.endDate = dayjs(clientDate).subtract(364, "day");
         break;
       default:
         // do nothing
@@ -304,27 +306,27 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
     switch (prev_period) {
       case "prev_last_week":
-        newPrevPeriod.startDate = moment(period.startDate).subtract(1, "week");
-        newPrevPeriod.endDate = moment(period.endDate).subtract(1, "week");
+        newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "week");
+        newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "week");
         break;
       case "prev_last_month":
-        newPrevPeriod.startDate = moment(period.startDate).subtract(1, "month");
-        newPrevPeriod.endDate = moment(period.endDate).subtract(1, "month");
+        newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "month");
+        newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "month");
         break;
       case "prev_last_quarter":
-        newPrevPeriod.startDate = moment(period.startDate).subtract(
+        newPrevPeriod.startDate = dayjs(period.startDate).subtract(
           1,
           "quarter"
         );
-        newPrevPeriod.endDate = moment(period.endDate).subtract(1, "quarter");
+        newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "quarter");
         break;
       case "prev_last_year":
-        newPrevPeriod.startDate = moment(period.startDate).subtract(1, "year");
-        newPrevPeriod.endDate = moment(period.endDate).subtract(1, "year");
+        newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "year");
+        newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "year");
         break;
       case "custom":
-        newPrevPeriod.startDate = moment(date[0]);
-        newPrevPeriod.endDate = moment(date[1]);
+        newPrevPeriod.startDate = dayjs(date[0]);
+        newPrevPeriod.endDate = dayjs(date[1]);
         break;
       default:
         //if selected previous do nothing
@@ -332,8 +334,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     }
 
     if (
-      moment.isMoment(newPrevPeriod.startDate) &&
-      moment.isMoment(newPrevPeriod.endDate)
+      dayjs.isDayjs(newPrevPeriod.startDate) &&
+      dayjs.isDayjs(newPrevPeriod.endDate)
     ) {
       setPrevPeriod({
         startDate: newPrevPeriod.startDate.format(FORMATTED_PATTERN),
@@ -374,7 +376,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
 PeriodSelect.defaultProps = {
   clientDate: "2015-10-28",
-  clientStartDate: "2013-10-28"
+  clientStartDate: "2014-10-20"
 };
 
 export default PeriodSelect;
