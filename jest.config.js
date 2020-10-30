@@ -11,6 +11,7 @@ module.exports = {
   setupFiles: ["./setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js"],
   testPathIgnorePatterns: ["node_modules/"],
+  "reporters": ["default", "jest-junit"],
   "transform": {
     "^.+\\.[tj]sx?$": "babel-jest",
     "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx"

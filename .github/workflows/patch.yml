@@ -49,6 +49,12 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Run tests
+        run: npx test:ci
+
+      - name: Jest Github Action Reporter
+        uses: IgnusG/jest-report-action@v2.3.3
+
       - name: Update version package.json
         run: npm version patch
 
