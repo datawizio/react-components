@@ -8,7 +8,9 @@ const mockProps = {
   placeholder: "placeholder",
   inputPlaceholder: "inputPlaceholder",
   options: [{ key: "key", title: "title" }],
-  onSave: jest.fn()
+  onSave: jest.fn(),
+  onDelete: jest.fn(),
+  onChange: jest.fn()
 };
 
 const setUp = (props?) => mount(<EditSelect {...props} />);
@@ -23,10 +25,14 @@ describe("EditSelect component", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("Render Tree (show check all) correctly", () => {
-    //TODO
-    // const input = component.find("Input").first();
-    // input.simulate("keypress", { key: "Enter" }),
-    //   expect(component.props()).toBeCalled();
+  it("Simulate Input change", () => {
+    const mockEvent = {
+      target: {
+        value: "inputValue"
+      }
+    };
+    const saveButton = component.find("Input").first();
+    saveButton.simulate("change", mockEvent);
+    expect(component).toMatchSnapshot();
   });
 });
