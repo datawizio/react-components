@@ -11,6 +11,8 @@ export interface FCApiError extends React.FC<ApiErrorProps> {
 }
 
 const ApiError: FCApiError = ({ errors }) => {
+  const a = 1;
+
   return <span dangerouslySetInnerHTML={{ __html: errors }} />;
 };
 
