@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 import { FORMATTED_PATTERN } from "./constants";
+import { DateRangeType } from "./types";
 
 export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
   const newPrevPeriod = {
     startDate: null,
     endDate: null
   };
-
   switch (date) {
     case "today":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(1, "day");
@@ -65,7 +65,7 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.endDate = dayjs(clientDate).subtract(179, "day");
       break;
     case "last_365_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(710, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(728, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(364, "day");
       break;
 
@@ -96,7 +96,7 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "year");
       newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "year");
       break;
-    case "custom":
+    case "prev_date":
       newPrevPeriod.startDate = dayjs(date[0]);
       newPrevPeriod.endDate = dayjs(date[1]);
       break;
@@ -183,7 +183,7 @@ export const getPeriod = ({
       if (clientStartDate > today) {
         startDate = today;
       } else {
-        startDate = clientDate;
+        startDate = clientStartDate;
       }
       newPeriod.startDate = dayjs(startDate);
       newPeriod.endDate = dayjs(clientDate);
@@ -204,4 +204,8 @@ export const getPeriod = ({
       endDate: newPeriod.endDate.format(FORMATTED_PATTERN)
     };
   }
+};
+
+export const getDateArrayFromRange = (dateRange: DateRangeType) => {
+  return [dayjs(dateRange.startDate), dayjs(dateRange.endDate)];
 };
