@@ -6,8 +6,6 @@ export interface ISupportModal {
 }
 
 export interface ISupportFormData {
-  service: string;
-  client: string;
   subject: string;
   comment: string;
   uploads?: string[];

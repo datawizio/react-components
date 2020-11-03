@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Form, Modal, Upload, message } from "antd";
+import { UploadFile } from "antd/lib/upload/interface"
 import { UploadOutlined } from "@ant-design/icons";
 import ConfigContext from "../../../ConfigProvider/context";
 import Select from "../../../Select";
@@ -18,45 +19,82 @@ const SupportModal: React.FC<ISupportModal> = ({
   const { translate } = useContext(ConfigContext);
 
   const defaultState = {
-    service: "BES",
-    client: null,
     subject: "",
     comment: "",
-    uploads: []
+    uploads: [],
   };
 
   const [formData, setFormData] = useState<ISupportFormData>(defaultState);
   const [filename, setFilename] = useState<string>("");
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const [form] = Form.useForm();
 
   const fileProps = useMemo(() => {
     return {
       name: "uploaded_data",
-      action: uploadFileURL + "&filename=" + filename,
+      action: `${uploadFileURL}&filename=${filename}`,
+      fileList,
       beforeUpload(file) {
-        const isJpgOrPng =
-          file.type === "image/jpeg" || file.type === "image/png";
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        const sizeLimit = 2;
+        const maxFilesNumber = 5;
+        const availableFileTypes = new Set([
+          "image/jpeg",
+          "image/png",
+          "image/svg+xml",
+          "text/csv",
+          "text/plain",
+          "application/zip",
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "application/vnd.ms-excel",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        ]);
 
-        if (!isJpgOrPng) {
-          message.error("You can only upload JPG/PNG file!");
+        if (formData.uploads.length >= maxFilesNumber) {
+          message.error(`${translate("MAX_FILE_NUMBER")} - ${maxFilesNumber}`, 8);
+          return false;
         }
 
-        if (!isLt2M) {
-          message.error("Image must be smaller than 2MB!");
+        if (file.size / 1024 / 1024 > sizeLimit) {
+          message.error(`${translate("FILE_MUST_BE_SMALLER_THAN")} ${sizeLimit} MB`, 8);
+          return false;
         }
 
-        if (isJpgOrPng && isLt2M) {
-          setFilename(file.name);
+        if (!availableFileTypes.has(file.type)) {
+          message.error(`${translate("WRONG_FILE_FORMAT")}`, 8);
+          return false;
         }
 
-        return isJpgOrPng && isLt2M;
+        setFilename(file.name);
+
+        return true;
       },
       onChange(info) {
+        const uid = info.file.uid;
+        const existingUids = fileList.map(file => file.uid);
+
+        // if beforeUpload() returned false
+        if (!info.file.status) {
+          const idx = info.fileList.findIndex(file => file.uid === uid);
+          if (idx === -1) return;
+          info.fileList.splice(idx, 1);
+        }
+
+        // if beforeUpload() returned true
+        if (info.file.status === "uploading" && !existingUids.includes(uid)) {
+          setFileList(prevState => {
+            return [
+              ...prevState,
+              info.file
+            ]
+          });
+        }
+
         if (info.file.status === "done") {
-          const token = info.file.response.upload.token;
-          setFormData(prevState => {
+          const token = info.file.response?.upload?.token;
+          token && setFormData(prevState => {
             return {
               ...prevState,
               "uploads": [...prevState.uploads, token]
@@ -65,7 +103,14 @@ const SupportModal: React.FC<ISupportModal> = ({
         }
       },
       onRemove(file) {
-        const token = file.response.upload.token;
+        // Remove from fileList
+        const fileListIdx = fileList.findIndex(i => i.uid === file.uid);
+        if (fileListIdx !== -1) {
+          fileList.splice(fileListIdx, 1);
+        }
+
+        // Remove from formData
+        const token = file.response?.upload?.token;
         const idx = formData.uploads.findIndex(item => item === token);
         if (idx === -1) return;
         setFormData(prevState => {
@@ -78,13 +123,13 @@ const SupportModal: React.FC<ISupportModal> = ({
         });
       }
     };
-  }, [filename, formData.uploads, uploadFileURL]);
+  }, [fileList, setFileList, filename, formData.uploads, translate, uploadFileURL]);
 
   const handleFieldChange = useCallback((name, value) => {
     setFormData(prevState => {
       return {
         ...prevState,
-        [name]: value
+        [name]: value.trim()
       };
     });
   }, []);
@@ -92,6 +137,7 @@ const SupportModal: React.FC<ISupportModal> = ({
   const resetFormData = useCallback(() => {
     setFormData(defaultState);
     form.setFieldsValue(defaultState);
+    setFileList([]);
   }, [defaultState, form]);
 
   const handleSubmit = useCallback(() => {
