@@ -68,6 +68,8 @@ export { default as SearchInput } from "./components/SearchInput";
 
 export { default as TableSearch } from "./components/TableSearch";
 
+export { default as PeriodSelect } from "./components/PeriodSelect";
+
 export { default as ClientSelect } from "./components/ClientSelect";
 
 export { default as DrawerSelect } from "./components/DrawerSelect";
