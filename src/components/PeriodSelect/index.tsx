@@ -42,11 +42,13 @@ export interface IDateConfig {
 export interface PeriodSelectProps {
   clientDate?: string;
   clientStartDate?: string;
+  periodLabel?: string;
+  prevPeriodLabel?: string;
   onChange?: (dateConfig: IDateConfig) => void;
 }
 
 const PeriodSelect = (props: PeriodSelectProps) => {
-  const { clientDate, clientStartDate } = props;
+  const { clientDate, clientStartDate, periodLabel, prevPeriodLabel } = props;
   const { translate } = useContext(ConfigContext);
 
   const [selectedPeriod, setSelectedPeriod] = useState<string>(DEFAULT_PERIOD);
@@ -153,7 +155,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   return (
     <div className="period-picker-wrapper">
       <div className="period-container">
-        <span className="period-title">{translate("SELECT_PERIOD")}</span>
+        <span className="period-title">{translate(periodLabel)}</span>
         <Select onChange={handlePeriodChange} value={selectedPeriod}>
           {PERIOD_OPTIONS.map((option, i) => {
             return (
@@ -166,7 +168,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         {showPeriodPicker && <RangePicker onChange={onDataRangeChange} />}
       </div>
       <div className="prev-period-container">
-        <span className="period-title">{translate("SELECT_PREV_PERIOD")}</span>
+        <span className="period-title">{translate(prevPeriodLabel)}</span>
 
         <Select onChange={handlePrevPeriodChange} value={selectedPrevPeriod}>
           {PREV_PERIOD_OPTIONS.map((option, i) => (
@@ -185,7 +187,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
 PeriodSelect.defaultProps = {
   clientDate: "2019-10-28",
-  clientStartDate: "2018-10-20"
+  clientStartDate: "2018-10-20",
+  periodLabel: "SELECT_PERIOD",
+  prevPeriodLabel: "SELECT_PREV_PERIOD"
 };
 
 export default PeriodSelect;
