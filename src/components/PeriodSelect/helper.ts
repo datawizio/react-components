@@ -260,8 +260,8 @@ export const getInitialDateConfig = (
   const initialPeriod = dateConfig.datePicker
     ? dateConfig.datePicker
     : initialDate;
-  const initialPrevPeriod = dateConfig.prev_datePicker
-    ? dateConfig.prev_datePicker
+  const initialPrevPeriod = dateConfig.prevDatePicker
+    ? dateConfig.prevDatePicker
     : initialDate;
 
   const defaultPickerValue = dateConfig.datePicker
@@ -275,13 +275,13 @@ export const getInitialDateConfig = (
       ]
     : [null, null];
 
-  const defaultPrevPickerValue = dateConfig.prev_datePicker
+  const defaultPrevPickerValue = dateConfig.prevDatePicker
     ? [
-        dateConfig.prev_datePicker.startDate
-          ? dayjs(dateConfig.prev_datePicker.startDate)
+        dateConfig.prevDatePicker.startDate
+          ? dayjs(dateConfig.prevDatePicker.startDate)
           : null,
-        dateConfig.prev_datePicker.endDate
-          ? dayjs(dateConfig.prev_datePicker.endDate)
+        dateConfig.prevDatePicker.endDate
+          ? dayjs(dateConfig.prevDatePicker.endDate)
           : null
       ]
     : [null, null];
@@ -301,7 +301,7 @@ export const getInitialDateConfig = (
 export const formatDateConfig = (state: IUsePeriodSelect): IDateConfig => {
   return {
     datePicker: state.period,
-    prev_datePicker: state.prevPeriod,
+    prevDatePicker: state.prevPeriod,
     selectedPeriod: state.selectedPeriod,
     selectedPrevPeriod: state.selectedPrevPeriod
   };

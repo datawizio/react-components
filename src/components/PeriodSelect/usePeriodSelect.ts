@@ -18,7 +18,7 @@ export interface IUsePeriodSelect {
   showPrevPeriodPicker: boolean;
   isPickerEmpty: boolean;
   isPrevPickerEmpty: boolean;
-  avaliblePrevPeriods: any;
+  availblePrevPeriods: any;
   clientDate: string;
   clientStartDate: string;
 }
@@ -29,7 +29,7 @@ function reducer(state: IUsePeriodSelect, action: any) {
       const { periodKey } = action.payload;
       const { clientDate, clientStartDate, period: oldPeriod } = state;
 
-      const avaliblePrevPeriods = PERIOD_AVAILABLE[periodKey];
+      const availblePrevPeriods = PERIOD_AVAILABLE[periodKey];
       const isCustomDate = periodKey === CUSTOM_PERIOD_KEY;
 
       const period = getPeriod({
@@ -50,7 +50,7 @@ function reducer(state: IUsePeriodSelect, action: any) {
         return {
           ...state,
           period,
-          avaliblePrevPeriods,
+          availblePrevPeriods,
           showPeriodPicker: true,
           selectedPeriod: periodKey
         };
@@ -59,7 +59,7 @@ function reducer(state: IUsePeriodSelect, action: any) {
       return {
         ...state,
         period,
-        avaliblePrevPeriods,
+        availblePrevPeriods,
         prevPeriod,
         showPeriodPicker: false,
         showPrevPeriodPicker: false,

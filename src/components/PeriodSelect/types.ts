@@ -5,7 +5,7 @@ export interface DateRangeType {
 
 export interface IDateConfig {
   datePicker: DateRangeType;
-  prev_datePicker: DateRangeType;
+  prevDatePicker: DateRangeType;
   selectedPeriod: PeriodEnum;
   selectedPrevPeriod: PrevPerionEnum;
 }
