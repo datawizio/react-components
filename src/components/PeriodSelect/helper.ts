@@ -1,6 +1,18 @@
-import dayjs from "dayjs";
-import { FORMATTED_PATTERN } from "./constants";
-import { DateRangeType } from "./types";
+import dayjs, { Dayjs } from "dayjs";
+import {
+  CUSTOM_PERIOD_KEY,
+  CUSTOM_PREV_PERIOD_KEY,
+  DEFAULT_PERIOD,
+  DEFAULT_PREV_PERIOD,
+  FORMATTED_PATTERN
+} from "./constants";
+import {
+  DateRangeType,
+  IDateConfig,
+  PeriodEnum,
+  PrevPerionEnum
+} from "./types";
+import { IUsePeriodSelect } from "./usePeriodSelect";
 
 export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
   const newPrevPeriod = {
@@ -74,8 +86,12 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       const endPickerDate = date[1];
 
       const diff = dayjs(endPickerDate).diff(startPickerDate, "day");
-      newPrevPeriod.startDate = dayjs(startPickerDate).subtract(1, "day");
-      newPrevPeriod.endDate = dayjs(startPickerDate).subtract(diff + 1, "day");
+      newPrevPeriod.startDate = dayjs(startPickerDate).subtract(
+        diff + 1,
+        "day"
+      );
+      newPrevPeriod.endDate = dayjs(startPickerDate).subtract(1, "day");
+
       break;
   }
 
@@ -204,6 +220,95 @@ export const getPeriod = ({
       endDate: newPeriod.endDate.format(FORMATTED_PATTERN)
     };
   }
+};
+
+export const actionCreator = (dispatch, type, payload = {}) => {
+  dispatch({
+    type,
+    payload
+  });
+};
+
+type DefaulDateConfigType = {
+  initialSelectedPeriod: PeriodEnum;
+  isCustomPeriod: boolean;
+  initialSelectedPrevPeriod: PrevPerionEnum;
+  isCustomPrevPeriod: boolean;
+  initialPeriod: DateRangeType;
+  initialPrevPeriod: DateRangeType;
+  defaultPickerValue: Array<Dayjs | null>;
+  defaultPrevPickerValue: Array<Dayjs | null>;
+};
+export const getDefaultDateConfig = (
+  dateConfig: IDateConfig
+): DefaulDateConfigType => {
+  const initialDate = {
+    startDate: null,
+    endDate: null
+  };
+  const initialSelectedPeriod = dateConfig.selectedPeriod
+    ? dateConfig.selectedPeriod
+    : DEFAULT_PERIOD;
+  const isCustomPeriod = initialSelectedPeriod === CUSTOM_PERIOD_KEY;
+
+  const initialSelectedPrevPeriod = dateConfig.selectedPrevPeriod
+    ? dateConfig.selectedPrevPeriod
+    : DEFAULT_PREV_PERIOD;
+  const isCustomPrevPeriod =
+    initialSelectedPrevPeriod === CUSTOM_PREV_PERIOD_KEY;
+
+  const initialPeriod = dateConfig.datePicker
+    ? dateConfig.datePicker
+    : initialDate;
+  const initialPrevPeriod = dateConfig.prev_datePicker
+    ? dateConfig.prev_datePicker
+    : initialDate;
+
+  const defaultPickerValue = dateConfig.datePicker
+    ? [
+        dateConfig.datePicker.startDate
+          ? dayjs(dateConfig.datePicker.startDate)
+          : null,
+        dateConfig.datePicker.endDate
+          ? dayjs(dateConfig.datePicker.endDate)
+          : null
+      ]
+    : [null, null];
+
+  const defaultPrevPickerValue = dateConfig.prev_datePicker
+    ? [
+        dateConfig.prev_datePicker.startDate
+          ? dayjs(dateConfig.prev_datePicker.startDate)
+          : null,
+        dateConfig.prev_datePicker.endDate
+          ? dayjs(dateConfig.prev_datePicker.endDate)
+          : null
+      ]
+    : [null, null];
+
+  return {
+    initialSelectedPeriod,
+    isCustomPeriod,
+    initialSelectedPrevPeriod,
+    isCustomPrevPeriod,
+    initialPeriod,
+    initialPrevPeriod,
+    defaultPickerValue,
+    defaultPrevPickerValue
+  };
+};
+
+export const formatDateConfig = (state: IUsePeriodSelect): IDateConfig => {
+  return {
+    datePicker: state.period,
+    prev_datePicker: state.prevPeriod,
+    selectedPeriod: state.selectedPeriod,
+    selectedPrevPeriod: state.selectedPrevPeriod
+  };
+};
+
+export const checkIsEmptyPeriod = (period: DateRangeType): boolean => {
+  return !!period.startDate && !!period.endDate;
 };
 
 export const getDateArrayFromRange = (dateRange: DateRangeType) => {

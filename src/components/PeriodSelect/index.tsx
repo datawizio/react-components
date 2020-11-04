@@ -1,27 +1,24 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useEffect, useCallback, useContext } from "react";
 import { Select, DatePicker } from "antd";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
 import ConfigContext from "../ConfigProvider/context";
 import {
-  CUSTOM_PERIOD_KEY,
-  CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PERIOD,
-  DEFAULT_PREV_PERIOD,
   PERIOD_AVAILABLE,
   PERIOD_OPTIONS,
   PREV_PERIOD_OPTIONS
 } from "./constants";
-import "./index.less";
-import { getDateArrayFromRange, getPeriod, getPrevPeriod } from "./helper";
 import {
-  DateRangeType,
-  IDateConfig,
-  PeriodEnum,
-  PeriodSelectProps,
-  PrevPerionEnum
-} from "./types";
+  actionCreator,
+  checkIsEmptyPeriod,
+  formatDateConfig,
+  getDefaultDateConfig
+} from "./helper";
+import { PeriodSelectProps } from "./types";
+import { usePeriodSelect } from "./usePeriodSelect";
+import "./index.less";
 
 dayjs.extend(quarterOfYear);
 
@@ -29,121 +26,92 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const PeriodSelect = (props: PeriodSelectProps) => {
+  const { translate } = useContext(ConfigContext);
+
   const {
     clientDate,
     clientStartDate,
     periodLabel,
     prevPeriodLabel,
-    dateConfig
+    dateConfig,
+    onChange
   } = props;
 
-  const { translate } = useContext(ConfigContext);
+  const {
+    initialSelectedPeriod,
+    isCustomPeriod,
+    initialSelectedPrevPeriod,
+    isCustomPrevPeriod,
+    initialPeriod,
+    initialPrevPeriod,
+    defaultPickerValue,
+    defaultPrevPickerValue
+  } = getDefaultDateConfig(dateConfig);
 
-  const initialDate = {
-    startDate: null,
-    endDate: null
-  };
-  const initialSelectedPeriod = dateConfig.selectedPeriod
-    ? dateConfig.selectedPeriod
-    : DEFAULT_PERIOD;
-  const initialSelectedPrevPeriod = dateConfig.selectedPrevPeriod
-    ? dateConfig.selectedPrevPeriod
-    : DEFAULT_PREV_PERIOD;
+  const [state, dispatch] = usePeriodSelect({
+    avaliblePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
+    clientDate,
+    clientStartDate,
+    isPickerEmpty: false,
+    isPrevPickerEmpty: false,
+    showPeriodPicker: isCustomPeriod,
+    showPrevPeriodPicker: isCustomPrevPeriod,
+    period: initialPeriod,
+    prevPeriod: initialPrevPeriod,
+    selectedPeriod: initialSelectedPeriod,
+    selectedPrevPeriod: initialSelectedPrevPeriod
+  });
 
-  const initialPeriod = dateConfig.datePicker
-    ? dateConfig.datePicker
-    : initialDate;
-  const initialPrevPeriod = dateConfig.prev_datePicker
-    ? dateConfig.prev_datePicker
-    : initialDate;
-
-  const [selectedPeriod, setSelectedPeriod] = useState<PeriodEnum>(
-    initialSelectedPeriod
-  );
-  const [selectedPrevPeriod, setSelectedPrevPeriod] = useState<PrevPerionEnum>(
-    initialSelectedPrevPeriod
-  );
-
-  const [period, setPeriod] = useState<DateRangeType>(initialPeriod);
-  const [prevPeriod, setPrevPeriod] = useState<DateRangeType>(
-    initialPrevPeriod
-  );
-
-  const [showPeriodPicker, setShowPeriodPicker] = useState<boolean>(false);
-  const [showPrevPeriodPicker, setShowPrevPeriodPicker] = useState<boolean>(
-    false
-  );
-  const [isPickerEmpty, setPickerEmpty] = useState<boolean>(false);
-  const [isPrevPickerEmpty, setPrevPickerEmpty] = useState<boolean>(false);
-
-  const [avaliblePrevPeriods, setAvaliblePeriods] = useState(
-    PERIOD_AVAILABLE[selectedPeriod]
-  );
+  const {
+    avaliblePrevPeriods,
+    isPickerEmpty,
+    isPrevPickerEmpty,
+    showPeriodPicker,
+    showPrevPeriodPicker,
+    period,
+    prevPeriod,
+    selectedPeriod,
+    selectedPrevPeriod
+  } = state;
 
   useEffect(() => {
-    setAvaliblePeriods(PERIOD_AVAILABLE[initialSelectedPeriod]);
-    updatePeriod(selectedPeriod, getDateArrayFromRange(period));
-    updatePrevPeriod(getDateArrayFromRange(prevPeriod), selectedPrevPeriod);
-    console.log("UE []");
-  }, []);
-
-  useEffect(() => {
-    if (selectedPeriod === CUSTOM_PERIOD_KEY) {
-      setShowPeriodPicker(true);
+    if (!checkIsEmptyPeriod(period)) {
+      actionCreator(dispatch, "updatePeriod", {
+        periodKey: DEFAULT_PERIOD
+      });
     } else {
-      setShowPeriodPicker(false);
-      updatePeriod(selectedPeriod);
+      onChange(formatDateConfig(state));
     }
-    console.log("UE [selectedPeriod]");
-  }, [selectedPeriod]);
-
-  useEffect(() => {
-    if (selectedPrevPeriod === CUSTOM_PREV_PERIOD_KEY) {
-      setShowPrevPeriodPicker(true);
-    } else if (
-      selectedPrevPeriod === DEFAULT_PREV_PERIOD &&
-      selectedPeriod === CUSTOM_PERIOD_KEY
-    ) {
-      setShowPrevPeriodPicker(false);
-      updatePrevPeriod(getDateArrayFromRange(period), selectedPrevPeriod);
-    } else {
-      setShowPrevPeriodPicker(false);
-      updatePrevPeriod(selectedPeriod, selectedPrevPeriod);
-    }
-    console.log("UE [selectedPrevPeriod]");
-  }, [selectedPrevPeriod]);
-
-  useEffect(() => {
-    if (
-      period.startDate &&
-      period.endDate &&
-      prevPeriod.startDate &&
-      prevPeriod.endDate &&
-      selectedPeriod &&
-      selectedPrevPeriod
-    ) {
-      props.onChange(formatDataConfig());
-    }
-    console.log("UE [period, prevPeriod]");
-  }, [period, prevPeriod]);
-
-  const formatDataConfig = useCallback((): IDateConfig => {
-    return {
-      datePicker: period,
-      prev_datePicker: prevPeriod,
-      selectedPeriod: selectedPeriod,
-      selectedPrevPeriod: selectedPrevPeriod
-    };
   }, [period, prevPeriod]);
 
   const handlePeriodChange = periodKey => {
-    setAvaliblePeriods(PERIOD_AVAILABLE[periodKey]);
-    setSelectedPeriod(periodKey);
-    setSelectedPrevPeriod(DEFAULT_PREV_PERIOD);
+    actionCreator(dispatch, "updatePeriod", {
+      periodKey
+    });
   };
 
   const handlePrevPeriodChange = prevPeriodKey => {
-    setSelectedPrevPeriod(prevPeriodKey);
+    actionCreator(dispatch, "updatePrevPeriod", {
+      prevPeriodKey
+    });
+  };
+
+  const onDataRangeChange = date => {
+    if (date) {
+      actionCreator(dispatch, "updateDatePicker", {
+        date
+      });
+    } else {
+      actionCreator(dispatch, "clearPicker");
+    }
+  };
+
+  const onPrevDataRangeChange = date => {
+    if (date) {
+      actionCreator(dispatch, "updatePrevDatePicker", { date });
+    } else {
+      actionCreator(dispatch, "clearPrevPicker");
+    }
   };
 
   const isDisabledOption = useCallback(
@@ -153,64 +121,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     [avaliblePrevPeriods]
   );
 
-  const onDataRangeChange = date => {
-    if (date) {
-      updatePeriod(CUSTOM_PERIOD_KEY, date);
-    } else {
-      setPickerEmpty(true);
-    }
-  };
-
-  const onPrevDataRangeChange = date => {
-    if (date) {
-      updatePrevPeriod(date, CUSTOM_PREV_PERIOD_KEY);
-    } else {
-      setPrevPickerEmpty(true);
-    }
-  };
-
-  const updatePeriod = (periodKey, date = null) => {
-    const period = getPeriod({ periodKey, date, clientDate, clientStartDate });
-    setPeriod(period);
-
-    if (
-      selectedPrevPeriod === DEFAULT_PREV_PERIOD &&
-      selectedPeriod === CUSTOM_PERIOD_KEY
-    ) {
-      updatePrevPeriod(getDateArrayFromRange(period), selectedPrevPeriod);
-    } else if (periodKey === "date") {
-      updatePrevPeriod(date, CUSTOM_PREV_PERIOD_KEY);
-    } else {
-      updatePrevPeriod(periodKey);
-    }
-  };
-
-  const updatePrevPeriod = (date, prev_period = "previous") => {
-    const prevPeriod = getPrevPeriod({ date, prev_period, clientDate, period });
-    setPrevPeriod(prevPeriod);
-  };
-
-  const defaultPickerValue = dateConfig.datePicker
-    ? [
-        dateConfig.datePicker.startDate
-          ? dayjs(dateConfig.datePicker.startDate)
-          : null,
-        dateConfig.datePicker.endDate
-          ? dayjs(dateConfig.datePicker.endDate)
-          : null
-      ]
-    : [null, null];
-
-  const defaultPrevPickerValue = dateConfig.prev_datePicker
-    ? [
-        dateConfig.prev_datePicker.startDate
-          ? dayjs(dateConfig.prev_datePicker.startDate)
-          : null,
-        dateConfig.prev_datePicker.endDate
-          ? dayjs(dateConfig.prev_datePicker.endDate)
-          : null
-      ]
-    : [null, null];
+  const isDisabledPrevSelect = !avaliblePrevPeriods.length;
 
   return (
     <div className="period-picker-wrapper">
@@ -236,7 +147,11 @@ const PeriodSelect = (props: PeriodSelectProps) => {
       <div className="prev-period-container">
         <span className="period-title">{translate(prevPeriodLabel)}</span>
 
-        <Select onChange={handlePrevPeriodChange} value={selectedPrevPeriod}>
+        <Select
+          onChange={handlePrevPeriodChange}
+          disabled={isDisabledPrevSelect}
+          value={selectedPrevPeriod}
+        >
           {PREV_PERIOD_OPTIONS.map((option, i) => (
             <Option key={i} disabled={isDisabledOption(option)} value={option}>
               {translate(option)}
@@ -256,23 +171,11 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 };
 
 PeriodSelect.defaultProps = {
-  clientDate: "2019-10-28",
-  clientStartDate: "2018-10-20",
+  clientDate: "2020-11-22",
+  clientStartDate: "2019-10-21",
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
-  // dateConfig: {}
-  dateConfig: {
-    datePicker: {
-      startDate: "2015-12-07",
-      endDate: "2015-12-08"
-    },
-    prev_datePicker: {
-      startDate: "2015-12-02",
-      endDate: "2015-12-03"
-    },
-    selectedPeriod: "date",
-    selectedPrevPeriod: "prev_date"
-  }
+  dateConfig: {}
 };
 
 export default PeriodSelect;
