@@ -3,7 +3,6 @@ export const subjectsList: string[] = [
   "WRONG_DATA",
   "VISUALIZATION_ERROR",
   "CANT_FIND_DATA",
-  "CANT_LOGIN",
   "LONG_WAITING",
   "CANT_UNDERSTAND_REPORT",
   "NOT_UNDERSTAND_HOW_SERVICE_WORKS",
