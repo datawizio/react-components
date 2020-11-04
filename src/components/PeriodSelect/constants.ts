@@ -68,15 +68,15 @@ export const PERIOD_AVAILABLE = {
     "prev_last_year",
     "prev_date"
   ],
-  year_begin: ["prev_last_year"],
+  year_begin: ["prev_last_year", "previous"],
   last_30_days: [
     "previous",
     "prev_last_quarter",
     "prev_last_year",
     "prev_date"
   ],
-  last_180_days: ["previous", "prev_last_year"],
-  last_365_days: ["previous", "prev_last_year"],
+  last_180_days: ["previous", "prev_last_year", "prev_date"],
+  last_365_days: ["previous", "prev_last_year", "prev_date"],
   all_time: [],
   date: ["previous", "prev_date"]
 };
