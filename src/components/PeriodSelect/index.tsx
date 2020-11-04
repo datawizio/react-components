@@ -14,7 +14,7 @@ import {
   actionCreator,
   checkIsEmptyPeriod,
   formatDateConfig,
-  getDefaultDateConfig
+  getInitialDateConfig
 } from "./helper";
 import { PeriodSelectProps } from "./types";
 import { usePeriodSelect } from "./usePeriodSelect";
@@ -46,7 +46,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     initialPrevPeriod,
     defaultPickerValue,
     defaultPrevPickerValue
-  } = getDefaultDateConfig(dateConfig);
+  } = getInitialDateConfig(dateConfig);
 
   const [state, dispatch] = usePeriodSelect({
     avaliblePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],

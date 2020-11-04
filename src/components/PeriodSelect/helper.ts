@@ -239,7 +239,7 @@ type DefaulDateConfigType = {
   defaultPickerValue: Array<Dayjs | null>;
   defaultPrevPickerValue: Array<Dayjs | null>;
 };
-export const getDefaultDateConfig = (
+export const getInitialDateConfig = (
   dateConfig: IDateConfig
 ): DefaulDateConfigType => {
   const initialDate = {
