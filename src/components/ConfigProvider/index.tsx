@@ -12,15 +12,16 @@ import ConfigContext, {
 const ConfigProvider: React.FC<
   ConfigProviderProps & AntdConfigProviderProps
 > = props => {
-  const { children, translate, ...restProps } = props;
+  const { children, translate, direction, ...restProps } = props;
 
   const contextValue = useMemo<ConfigProviderProps>(() => {
     const nextValue: ConfigProviderProps = {};
 
     if (translate) nextValue.translate = translate;
+    if (direction) nextValue.direction = direction;
 
     return nextValue;
-  }, [translate]);
+  }, [direction, translate]);
 
   return (
     <ConfigContext.Provider value={contextValue}>

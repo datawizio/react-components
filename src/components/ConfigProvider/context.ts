@@ -5,6 +5,7 @@ export interface ConfigProviderProps {
     transKey: string,
     interpolationMap?: { [key: string]: any }
   ) => string;
+  direction?: "ltr" | "rtl" | undefined;
 }
 
 export const defaultContextValue = {

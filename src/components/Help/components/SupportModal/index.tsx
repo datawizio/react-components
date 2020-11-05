@@ -164,6 +164,7 @@ const SupportModal: React.FC<ISupportModal> = ({
   return (
     <>
       <Modal
+        className="support-modal"
         title={translate("SUPPORT")}
         centered
         destroyOnClose={true}
