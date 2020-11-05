@@ -91,5 +91,10 @@ export const locales: ILocaleList = {
     name: "pt_PT",
     getAnt: () => import("antd/es/locale/pt_PT"),
     getDayJs: () => import("dayjs/locale/pt")
+  },
+  ar: {
+    name: "ar_EG",
+    getAnt: () => import("antd/es/locale/ar_EG"),
+    getDayJs: () => import("dayjs/locale/ar")
   }
 };
