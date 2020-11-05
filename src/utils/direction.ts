@@ -17,10 +17,10 @@ export const getLangDirection = (locale): IDirection => {
   return direction;
 };
 
-export const setDirectionToHtml = (direction: string): void => {
+export const setDirectionToHtml = (direction: IDirection): void => {
   const htmlTag = document.querySelector("html");
   if (htmlTag) {
     htmlTag.style.direction = direction;
-    htmlTag.classList.add("rtl");
+    htmlTag.classList.add(direction);
   }
 };
