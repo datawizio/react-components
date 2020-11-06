@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu component Menu' rendered correctly 1`] = `
+<Menu
+  Divider={[Function]}
+  Item={[Function]}
+  ItemGroup={[Function]}
+  SubMenu={[Function]}
+  theme="dark"
+/>
+`;

@@ -1,15 +1,19 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
 
 import DrawerForm from "./index";
 
 const mockProps = {
   title: "title",
-  visible: true
+  visible: true,
+  formStore: {
+    watch: jest.fn()
+  },
+  onClose: jest.fn()
 };
 
-const setUp = (props?) => mount(<DrawerForm {...props} />);
+const setUp = (props?) => shallow(<DrawerForm {...props} />);
 
 describe("DrawerForm component", () => {
   let component;
@@ -19,5 +23,12 @@ describe("DrawerForm component", () => {
 
   it("Render DrawerForm correctly", () => {
     expect(component).toMatchSnapshot();
+  });
+
+  it("Render Trigger onClose", () => {
+    const drawer = component.find("Drawer").first();
+    drawer.props().onClose();
+    console.log(drawer.props());
+    expect(component.props()).toBe();
   });
 });
