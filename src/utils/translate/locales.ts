@@ -98,3 +98,23 @@ export const locales: ILocaleList = {
     getDayJs: () => import("dayjs/locale/ar")
   }
 };
+
+export const defaultLangs = new Set([
+  "en",
+  "ru",
+  "uk",
+  "zh-hans",
+  "zh-hant",
+  "ka",
+  "ro",
+  "de",
+  "tr",
+  "lt",
+  "lv",
+  "es",
+  "kk",
+  "ms",
+  "et",
+  "ja",
+  "pt"
+]);
