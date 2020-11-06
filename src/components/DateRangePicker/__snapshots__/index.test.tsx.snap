@@ -32,8 +32,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
     }
     value={
       Array [
-        "2001-12-01T22:00:00.000Z",
-        "2001-12-01T22:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
       ]
     }
   >
@@ -190,8 +190,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
         transitionName="slide-up"
         value={
           Array [
-            "2001-12-01T22:00:00.000Z",
-            "2001-12-01T22:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
           ]
         }
       >
@@ -352,8 +352,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
           transitionName="slide-up"
           value={
             Array [
-              "2001-12-01T22:00:00.000Z",
-              "2001-12-01T22:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
             ]
           }
         >
@@ -395,8 +395,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                             "inRange": true,
                             "panelPosition": "left",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -519,7 +519,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                               },
                             }
                           }
-                          pickerValue={"2001-12-01T22:00:00.000Z"}
+                          pickerValue={"2001-12-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -563,7 +563,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                       <Context.Provider
@@ -573,8 +573,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                             "inRange": true,
                             "panelPosition": "right",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -697,7 +697,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                               },
                             }
                           }
-                          pickerValue={"2002-01-01T22:00:00.000Z"}
+                          pickerValue={"2002-01-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -741,7 +741,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                     </React.Fragment>
@@ -944,8 +944,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                               "inRange": true,
                               "panelPosition": "left",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -1068,7 +1068,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                 },
                               }
                             }
-                            pickerValue={"2001-12-01T22:00:00.000Z"}
+                            pickerValue={"2001-12-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -1112,7 +1112,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                         <Context.Provider
@@ -1122,8 +1122,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                               "inRange": true,
                               "panelPosition": "right",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -1246,7 +1246,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                 },
                               }
                             }
-                            pickerValue={"2002-01-01T22:00:00.000Z"}
+                            pickerValue={"2002-01-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -1290,7 +1290,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                       </React.Fragment>
@@ -1696,8 +1696,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
     onChange={[Function]}
     value={
       Array [
-        "2001-12-01T22:00:00.000Z",
-        "2001-12-01T22:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
       ]
     }
   >
@@ -1843,8 +1843,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
         transitionName="slide-up"
         value={
           Array [
-            "2001-12-01T22:00:00.000Z",
-            "2001-12-01T22:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
           ]
         }
       >
@@ -1994,8 +1994,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
           transitionName="slide-up"
           value={
             Array [
-              "2001-12-01T22:00:00.000Z",
-              "2001-12-01T22:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
             ]
           }
         >
@@ -2037,8 +2037,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                             "inRange": true,
                             "panelPosition": "left",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -2160,7 +2160,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                               },
                             }
                           }
-                          pickerValue={"2001-12-01T22:00:00.000Z"}
+                          pickerValue={"2001-12-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -2194,7 +2194,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                       <Context.Provider
@@ -2204,8 +2204,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                             "inRange": true,
                             "panelPosition": "right",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -2327,7 +2327,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                               },
                             }
                           }
-                          pickerValue={"2002-01-01T22:00:00.000Z"}
+                          pickerValue={"2002-01-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -2361,7 +2361,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                     </React.Fragment>
@@ -2488,8 +2488,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                               "inRange": true,
                               "panelPosition": "left",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -2611,7 +2611,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 },
                               }
                             }
-                            pickerValue={"2001-12-01T22:00:00.000Z"}
+                            pickerValue={"2001-12-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -2645,7 +2645,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                         <Context.Provider
@@ -2655,8 +2655,8 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                               "inRange": true,
                               "panelPosition": "right",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -2778,7 +2778,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 },
                               }
                             }
-                            pickerValue={"2002-01-01T22:00:00.000Z"}
+                            pickerValue={"2002-01-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -2812,7 +2812,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                       </React.Fragment>
@@ -3157,8 +3157,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
     }
     value={
       Array [
-        "2001-12-01T22:00:00.000Z",
-        "2001-12-01T22:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
       ]
     }
   >
@@ -3315,8 +3315,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
         transitionName="slide-up"
         value={
           Array [
-            "2001-12-01T22:00:00.000Z",
-            "2001-12-01T22:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
           ]
         }
       >
@@ -3477,8 +3477,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
           transitionName="slide-up"
           value={
             Array [
-              "2001-12-01T22:00:00.000Z",
-              "2001-12-01T22:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
             ]
           }
         >
@@ -3520,8 +3520,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                             "inRange": true,
                             "panelPosition": "left",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -3644,7 +3644,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                               },
                             }
                           }
-                          pickerValue={"2001-12-01T22:00:00.000Z"}
+                          pickerValue={"2001-12-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -3688,7 +3688,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                       <Context.Provider
@@ -3698,8 +3698,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                             "inRange": true,
                             "panelPosition": "right",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -3822,7 +3822,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                               },
                             }
                           }
-                          pickerValue={"2002-01-01T22:00:00.000Z"}
+                          pickerValue={"2002-01-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -3866,7 +3866,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                     </React.Fragment>
@@ -4069,8 +4069,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                               "inRange": true,
                               "panelPosition": "left",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -4193,7 +4193,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                 },
                               }
                             }
-                            pickerValue={"2001-12-01T22:00:00.000Z"}
+                            pickerValue={"2001-12-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -4237,7 +4237,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                         <Context.Provider
@@ -4247,8 +4247,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                               "inRange": true,
                               "panelPosition": "right",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -4371,7 +4371,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                 },
                               }
                             }
-                            pickerValue={"2002-01-01T22:00:00.000Z"}
+                            pickerValue={"2002-01-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -4415,7 +4415,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                       </React.Fragment>
@@ -4854,8 +4854,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
     }
     value={
       Array [
-        "2001-12-01T22:00:00.000Z",
-        "2001-12-01T22:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
+        "2001-12-02T00:00:00.000Z",
       ]
     }
   >
@@ -5012,8 +5012,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
         transitionName="slide-up"
         value={
           Array [
-            "2001-12-01T22:00:00.000Z",
-            "2001-12-01T22:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
+            "2001-12-02T00:00:00.000Z",
           ]
         }
       >
@@ -5174,8 +5174,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
           transitionName="slide-up"
           value={
             Array [
-              "2001-12-01T22:00:00.000Z",
-              "2001-12-01T22:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
+              "2001-12-02T00:00:00.000Z",
             ]
           }
         >
@@ -5217,8 +5217,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                             "inRange": true,
                             "panelPosition": "left",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -5341,7 +5341,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                               },
                             }
                           }
-                          pickerValue={"2001-12-01T22:00:00.000Z"}
+                          pickerValue={"2001-12-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -5385,7 +5385,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                       <Context.Provider
@@ -5395,8 +5395,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                             "inRange": true,
                             "panelPosition": "right",
                             "rangedValue": Array [
-                              "2001-12-01T22:00:00.000Z",
-                              "2001-12-01T22:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
+                              "2001-12-02T00:00:00.000Z",
                             ],
                           }
                         }
@@ -5519,7 +5519,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                               },
                             }
                           }
-                          pickerValue={"2002-01-01T22:00:00.000Z"}
+                          pickerValue={"2002-01-02T00:00:00.000Z"}
                           placeholder={
                             Array [
                               "Start date",
@@ -5563,7 +5563,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                           }
                           tabIndex={-1}
                           transitionName="slide-up"
-                          value={"2001-12-01T22:00:00.000Z"}
+                          value={"2001-12-02T00:00:00.000Z"}
                         />
                       </Context.Provider>
                     </React.Fragment>
@@ -5766,8 +5766,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                               "inRange": true,
                               "panelPosition": "left",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -5890,7 +5890,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                 },
                               }
                             }
-                            pickerValue={"2001-12-01T22:00:00.000Z"}
+                            pickerValue={"2001-12-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -5934,7 +5934,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                         <Context.Provider
@@ -5944,8 +5944,8 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                               "inRange": true,
                               "panelPosition": "right",
                               "rangedValue": Array [
-                                "2001-12-01T22:00:00.000Z",
-                                "2001-12-01T22:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
+                                "2001-12-02T00:00:00.000Z",
                               ],
                             }
                           }
@@ -6068,7 +6068,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                 },
                               }
                             }
-                            pickerValue={"2002-01-01T22:00:00.000Z"}
+                            pickerValue={"2002-01-02T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -6112,7 +6112,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                             }
                             tabIndex={-1}
                             transitionName="slide-up"
-                            value={"2001-12-01T22:00:00.000Z"}
+                            value={"2001-12-02T00:00:00.000Z"}
                           />
                         </Context.Provider>
                       </React.Fragment>

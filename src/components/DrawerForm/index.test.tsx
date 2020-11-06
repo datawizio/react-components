@@ -24,11 +24,4 @@ describe("DrawerForm component", () => {
   it("Render DrawerForm correctly", () => {
     expect(component).toMatchSnapshot();
   });
-
-  it("Render Trigger onClose", () => {
-    const drawer = component.find("Drawer").first();
-    drawer.props().onClose();
-    console.log(drawer.props());
-    expect(component.props()).toBe();
-  });
 });

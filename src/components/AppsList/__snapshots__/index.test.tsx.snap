@@ -1,0 +1,998 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppsList component Render AppsList correctly 1`] = `
+<AppsList
+  apps={
+    Array [
+      Object {
+        "app_id": "1",
+        "clients": Array [
+          Object {
+            "client_id": 1,
+            "name": "name",
+          },
+        ],
+        "description": "description",
+        "host": "app.com",
+        "logo": "logoPath",
+        "name": "app",
+        "path": "/",
+      },
+    ]
+  }
+  onSelect={[MockFunction]}
+>
+  <Row
+    className="row-apps"
+    gutter={0}
+  >
+    <div
+      className="ant-row row-apps"
+      style={Object {}}
+    >
+      <App
+        app_id="1"
+        clients={
+          Array [
+            Object {
+              "client_id": 1,
+              "name": "name",
+            },
+          ]
+        }
+        description="description"
+        host="app.com"
+        key="1"
+        logo="logoPath"
+        name="app"
+        onButtonClick={[Function]}
+        path="/"
+      >
+        <Col
+          lg={8}
+          md={12}
+          sm={24}
+          xl={8}
+          xs={24}
+          xxl={6}
+        >
+          <div
+            className="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-12 ant-col-lg-8 ant-col-xl-8 ant-col-xxl-6"
+            style={Object {}}
+          >
+            <Card
+              className="card-app"
+            >
+              <div
+                className="ant-card card-app ant-card-bordered"
+              >
+                <div
+                  className="ant-card-body"
+                  style={Object {}}
+                >
+                  <div
+                    className="card-app-logo"
+                  >
+                    <img
+                      alt="app"
+                      src="logoPath"
+                    />
+                  </div>
+                  <div
+                    className="card-app-description"
+                  >
+                    description
+                  </div>
+                  <div
+                    className="card-app-actions"
+                  >
+                    <Button
+                      block={true}
+                      border={true}
+                      onClick={[Function]}
+                      type="primary"
+                    >
+                      <Button
+                        block={true}
+                        className="dw-btn"
+                        ghost={false}
+                        htmlType="button"
+                        loading={false}
+                        onClick={[Function]}
+                        type="primary"
+                      >
+                        <Wave>
+                          <button
+                            className="ant-btn dw-btn ant-btn-primary ant-btn-block"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            <LoadingIcon
+                              existIcon={false}
+                              loading={false}
+                              prefixCls="ant-btn"
+                            >
+                              <ForwardRef
+                                motionName="ant-btn-loading-icon-motion"
+                                onAppearActive={[Function]}
+                                onAppearStart={[Function]}
+                                onEnterActive={[Function]}
+                                onEnterStart={[Function]}
+                                onLeaveActive={[Function]}
+                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <CSSMotion
+                                  internalRef={null}
+                                  motionAppear={true}
+                                  motionEnter={true}
+                                  motionLeave={true}
+                                  motionName="ant-btn-loading-icon-motion"
+                                  onAppearActive={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                />
+                              </ForwardRef>
+                            </LoadingIcon>
+                            <span
+                              key=".0"
+                            >
+                              LEARN_MORE
+                            </span>
+                          </button>
+                        </Wave>
+                      </Button>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Col>
+      </App>
+    </div>
+  </Row>
+</AppsList>
+`;
+
+
+exports[`AppsList component Render AppsList loader 1`] = `
+<AppsList
+  loading={true}
+>
+  <Row
+    className="row-apps"
+    gutter={0}
+  >
+    <div
+      className="ant-row row-apps"
+      style={Object {}}
+    >
+      <AppsLoader>
+        <Col
+          lg={8}
+          md={12}
+          sm={24}
+          xl={8}
+          xs={24}
+          xxl={6}
+        >
+          <div
+            className="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-12 ant-col-lg-8 ant-col-xl-8 ant-col-xxl-6"
+            style={Object {}}
+          >
+            <Card
+              className="card-app"
+              loading={true}
+            >
+              <div
+                className="ant-card card-app ant-card-loading ant-card-bordered"
+              >
+                <div
+                  className="ant-card-body"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-card-loading-content"
+                  >
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={22}
+                        >
+                          <div
+                            className="ant-col ant-col-22"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={8}
+                        >
+                          <div
+                            className="ant-col ant-col-8"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={15}
+                        >
+                          <div
+                            className="ant-col ant-col-15"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={6}
+                        >
+                          <div
+                            className="ant-col ant-col-6"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={18}
+                        >
+                          <div
+                            className="ant-col ant-col-18"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={13}
+                        >
+                          <div
+                            className="ant-col ant-col-13"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={9}
+                        >
+                          <div
+                            className="ant-col ant-col-9"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={4}
+                        >
+                          <div
+                            className="ant-col ant-col-4"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={3}
+                        >
+                          <div
+                            className="ant-col ant-col-3"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={16}
+                        >
+                          <div
+                            className="ant-col ant-col-16"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Col>
+        <Col
+          lg={8}
+          md={12}
+          sm={24}
+          xl={8}
+          xs={24}
+          xxl={6}
+        >
+          <div
+            className="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-12 ant-col-lg-8 ant-col-xl-8 ant-col-xxl-6"
+            style={Object {}}
+          >
+            <Card
+              className="card-app"
+              loading={true}
+            >
+              <div
+                className="ant-card card-app ant-card-loading ant-card-bordered"
+              >
+                <div
+                  className="ant-card-body"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-card-loading-content"
+                  >
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={22}
+                        >
+                          <div
+                            className="ant-col ant-col-22"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={8}
+                        >
+                          <div
+                            className="ant-col ant-col-8"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={15}
+                        >
+                          <div
+                            className="ant-col ant-col-15"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={6}
+                        >
+                          <div
+                            className="ant-col ant-col-6"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={18}
+                        >
+                          <div
+                            className="ant-col ant-col-18"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={13}
+                        >
+                          <div
+                            className="ant-col ant-col-13"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={9}
+                        >
+                          <div
+                            className="ant-col ant-col-9"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={4}
+                        >
+                          <div
+                            className="ant-col ant-col-4"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={3}
+                        >
+                          <div
+                            className="ant-col ant-col-3"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={16}
+                        >
+                          <div
+                            className="ant-col ant-col-16"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Col>
+        <Col
+          lg={8}
+          md={12}
+          sm={24}
+          xl={8}
+          xs={24}
+          xxl={6}
+        >
+          <div
+            className="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-12 ant-col-lg-8 ant-col-xl-8 ant-col-xxl-6"
+            style={Object {}}
+          >
+            <Card
+              className="card-app"
+              loading={true}
+            >
+              <div
+                className="ant-card card-app ant-card-loading ant-card-bordered"
+              >
+                <div
+                  className="ant-card-body"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-card-loading-content"
+                  >
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={22}
+                        >
+                          <div
+                            className="ant-col ant-col-22"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={8}
+                        >
+                          <div
+                            className="ant-col ant-col-8"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={15}
+                        >
+                          <div
+                            className="ant-col ant-col-15"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={6}
+                        >
+                          <div
+                            className="ant-col ant-col-6"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={18}
+                        >
+                          <div
+                            className="ant-col ant-col-18"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={13}
+                        >
+                          <div
+                            className="ant-col ant-col-13"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={9}
+                        >
+                          <div
+                            className="ant-col ant-col-9"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                    <Row
+                      gutter={8}
+                    >
+                      <div
+                        className="ant-row"
+                        style={
+                          Object {
+                            "marginLeft": -4,
+                            "marginRight": -4,
+                          }
+                        }
+                      >
+                        <Col
+                          span={4}
+                        >
+                          <div
+                            className="ant-col ant-col-4"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={3}
+                        >
+                          <div
+                            className="ant-col ant-col-3"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                        <Col
+                          span={16}
+                        >
+                          <div
+                            className="ant-col ant-col-16"
+                            style={
+                              Object {
+                                "paddingLeft": 4,
+                                "paddingRight": 4,
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-loading-block"
+                            />
+                          </div>
+                        </Col>
+                      </div>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Col>
+      </AppsLoader>
+    </div>
+  </Row>
+</AppsList>
+`;
