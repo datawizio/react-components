@@ -38,6 +38,9 @@ jobs:
 
       - name: Run tests
         run: npm run test:ci
+        continue-on-error: true
 
       - name: Jest Github Action Reporter
         uses: IgnusG/jest-report-action@v2.3.3
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
