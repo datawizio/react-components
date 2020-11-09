@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfiniteScroll component Render InfiniteScroll correctly 1`] = `
+<ForwardRef
+  height={550}
+  loader={[Function]}
+  maxPage={3}
+  onBottom={[MockFunction]}
+  overflow="auto"
+  showLoader={true}
+  triggerCoeff={true}
+>
+  <div
+    className="infinite-scroll"
+    onScroll={[Function]}
+    style={
+      Object {
+        "height": 550,
+        "overflow": "auto",
+      }
+    }
+  />
+</ForwardRef>
+`;
