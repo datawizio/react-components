@@ -55,11 +55,11 @@ jobs:
 
       - name: Jest Github Action Reporter
         uses: IgnusG/jest-report-action@v2.3.3
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update version package.json
         run: npm version patch
-        with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm publish
         env:
