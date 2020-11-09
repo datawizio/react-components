@@ -1,6 +1,6 @@
 import "jsdom-global/register";
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { mount } from "enzyme";
 import DateRangePicker from "./index";
 
 jest.mock("./presets", () => ({

@@ -1,14 +1,8 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { shallow } from "enzyme";
 import Table from "./index";
-import {
-  columns,
-  dataSource,
-  getStaticColumn,
-  getStaticDataSource,
-  sortable
-} from "./__mocks__";
+import { getStaticDataSource, sortable } from "./__mocks__";
 
 const mockProps = {
   height: "auto",
