@@ -27,6 +27,6 @@ describe("ApiError component", () => {
 
   it("ApiError show error notification", () => {
     ApiError.showError("errorText");
-    expect(mockShowErrorFunc).toBeCalledTimes(2);
+    expect(mockShowErrorFunc).toBeCalledTimes(1);
   });
 });
