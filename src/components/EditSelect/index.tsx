@@ -106,7 +106,14 @@ const EditSelect: React.FC<EditSelectProps> = ({
         </div>
       );
     },
-    [handleTitleChange, handleSaveClick, editingOption.key, editingOption.title]
+    [
+      inputPlaceholder,
+      translate,
+      handleTitleChange,
+      handleSaveClick,
+      editingOption.key,
+      editingOption.title
+    ]
   );
 
   return (

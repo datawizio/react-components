@@ -9,7 +9,11 @@ import "./index.less";
 
 const { RangePicker } = DatePicker;
 
-const DateRangePicker: IDateRangePicker = ({ fullWidth, defaultPresetUsed, ...props }) => {
+const DateRangePicker: IDateRangePicker = ({
+  fullWidth,
+  defaultPresetUsed,
+  ...props
+}) => {
   const { translate } = useContext(ConfigContext);
 
   const translatedPreset = useMemo(() => {
@@ -24,7 +28,7 @@ const DateRangePicker: IDateRangePicker = ({ fullWidth, defaultPresetUsed, ...pr
     });
 
     return Object.fromEntries(translatedPresetMap.entries());
-  }, [defaultPresetUsed]);
+  }, [defaultPresetUsed, translate]);
 
   const formatDate = useCallback(
     (date: DateType) => {

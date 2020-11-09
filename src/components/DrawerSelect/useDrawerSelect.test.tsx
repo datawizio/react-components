@@ -48,9 +48,9 @@ const setStateAC = payload => ({
   payload
 });
 
-const invalidActionAC = () => ({
-  type: "invalidAction"
-});
+// const invalidActionAC = () => ({
+//   type: "invalidAction"
+// });
 
 const initialStoreMockData = {
   internalLoading: false,

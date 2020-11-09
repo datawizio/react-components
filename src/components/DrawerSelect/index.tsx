@@ -273,7 +273,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       type: "drawerCancel",
       payload
     });
-  }, [dispatch, closeDrawer, value, multiple, searchValue]);
+  }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
