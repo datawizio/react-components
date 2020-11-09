@@ -1,0 +1,22 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import { UserOutlined } from "@ant-design/icons";
+import PeriodSelect from "./index";
+let allData = [];
+
+<Meta title="Components/PeriodSelect" component={PeriodSelect} />
+
+# Period Select
+
+Компонент `PeriodSelect`.
+
+Базовый компонент: [**antd/select**](https://ant.design/components/select/).
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <PeriodSelect
+      onChange={dateConfig => console.log("DATE_CONFIG", dateConfig)}
+    />
+  </Story>
+</Preview>

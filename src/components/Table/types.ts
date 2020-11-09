@@ -39,6 +39,23 @@ export interface TableProps<RT = any>
   showSizeChanger?: boolean;
   multipleSorting?: boolean;
   isResizableColumns?: boolean;
+  isNested?: (row: any) => boolean;
+  showExpandIcon?: (row: any) => boolean;
+
+  /**
+   * Таблица сжимаеться и растягиваеться до высоты которую вы указали в "height"
+   */
+  autoHeight?: boolean;
+
+  /**
+   * Выстовляет размеры таблицы в зависимости от его родителя
+   */
+  responsiveTable?: boolean;
+
+  /**
+   * Растягивает колонки по ширине таблицы если это возможно
+   */
+  responsiveColumns?: boolean;
 
   pageSizeOptions?: Array<string>;
   templates?: Array<TableTemplate>;
@@ -75,6 +92,8 @@ export interface TableState extends Partial<TableProps> {
   filterParams: FilterParams;
   stateIsRecovered?: boolean;
   columnsMap: { [key: string]: IColumn };
+  parentsMap: { [key: string]: string };
+  loadingRows: { [key: string]: boolean };
 }
 
 export interface TableRef {
@@ -85,6 +104,7 @@ export type Action =
   | { type: "expandRow"; payload: IRow }
   | { type: "search"; payload: string }
   | { type: "loading"; payload: boolean }
+  | { type: "resetPagination" }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
   | { type: "update"; payload: Partial<TableState> }
@@ -92,12 +112,14 @@ export type Action =
   | { type: "paginate"; payload: TableState["pagination"] }
   | { type: "filter"; payload: Record<string, Key[] | null> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
-  | { type: "setRowChildren"; payload: [IRow, IRow["children"], string[]] }
+  | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
+  | { type: "addLoadingRow"; payload: string }
   | {
       type: "setNestedTable";
       payload: [IRow, Partial<TableState> | Promise<Partial<TableState>>];
     }
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
+  | { type: "updateRow"; payload: [IColumn["key"], IColumn] }
   | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
   | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };
 
@@ -119,6 +141,7 @@ export interface IColumn<RT = any>
   dtype?: string;
   dataIndex: string;
   resizable?: boolean;
+  default_visible?: boolean;
 }
 
 /**
@@ -151,6 +174,7 @@ export type CellObjectType = {
 export type DTypeConfig<T = any> = {
   sorter?: (a: T, b: T) => number;
   toString: (cellVal: T) => string;
+  toExcel?: (cellVal: T) => any;
   search?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
 
@@ -209,7 +233,10 @@ export type DataProvider = (
 
 export type RowChildrenProviderType = (
   expandedRow: IRow
-) =>
-  | IRow["children"]
-  | Promise<IRow["children"]>
-  | Promise<{ children: IRow["children"]; path: string }>;
+) => IRow["children"] | Promise<IRow["children"]>;
+
+export type PaginationResponse<R> = {
+  count: number;
+  results: R;
+};
+export type TableResponse = PaginationResponse<TableProps>;

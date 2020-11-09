@@ -1,7 +1,7 @@
 @import "~antd/es/button/style/index";
 @import "../../styles/variables";
 
-.ant-btn {
+.dw-btn.ant-btn {
   &.no-border {
     border: none;
     box-shadow: none;
@@ -9,5 +9,12 @@
   &-link {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  &.ant-btn-primary[disabled] {
+    .btn-primary;
+    &:before {
+      display: block;
+    }
   }
 }

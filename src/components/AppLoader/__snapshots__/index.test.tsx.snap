@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppLoader component Render AppLoader correctly 1`] = `
+<AppLoader
+  imageSrc="mockImg"
+>
+  <div
+    className="loader"
+  >
+    <div
+      className="loader-wrapper"
+    >
+      <div
+        className="loader-container"
+      >
+        <div
+          className="loader-logo-container"
+        >
+          <div
+            className="loader-logo"
+          >
+            <img
+              alt="loader"
+              src="mockImg"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="loader-spinner"
+      />
+    </div>
+  </div>
+</AppLoader>
+`;

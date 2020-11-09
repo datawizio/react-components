@@ -17,6 +17,7 @@ export interface TransferProps {
   disabled?: boolean;
   targetKeys?: string[];
   selectedKeys?: string[];
+  operationDisabled?: boolean;
   onChange?: (
     targetKeys: string[],
     direction: string,
@@ -36,6 +37,7 @@ export interface TransferProps {
   targetLoadData?: (params: LoadDataParams) => Promise<LoadDataResponse>;
   targetFilters?: any;
   targetActions?: React.ReactElement;
+  tooltips?: { throwAll: string; throwChoosen: string };
 
   onMoveToRight?: (keys: string[]) => Promise<void>;
   onMoveAllToRight?: () => Promise<void>;
@@ -46,6 +48,7 @@ export interface TransferProps {
 const prefixCls = "ant-transfer";
 
 const Transfer: React.FC<TransferProps> = ({
+  operationDisabled,
   sourceTitle,
   sourceLoadData,
   sourceFilters,
@@ -54,6 +57,7 @@ const Transfer: React.FC<TransferProps> = ({
   targetLoadData,
   targetFilters,
   targetActions,
+  tooltips,
 
   onMoveToRight,
   onMoveAllToRight,
@@ -197,7 +201,8 @@ const Transfer: React.FC<TransferProps> = ({
         leftActive={true}
         moveToLeft={moveToLeft}
         moveAllToLeft={moveAllToLeft}
-        disabled={false}
+        disabled={operationDisabled}
+        tooltips={tooltips}
       />
       <List
         ref={targetListRef}

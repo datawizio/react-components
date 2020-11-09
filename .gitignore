@@ -5,3 +5,9 @@ lib/
 .npmrc
 es/
 storybook-static/
+
+# testing
+/coverage
+junit.xml
+
+.history

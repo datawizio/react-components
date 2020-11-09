@@ -214,7 +214,10 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
 
     React.useImperativeHandle(ref, () => ({
       focus: selectRef.current.focus,
-      blur: selectRef.current.blur
+      blur: selectRef.current.blur,
+      getFormatedValue: () => {
+        return selectValues;
+      }
     }));
 
     // ======================= Tree Data =======================
@@ -658,6 +661,11 @@ class TreeSelect<ValueType = DefaultValueType> extends React.Component<
 
   blur = () => {
     this.selectRef.current.blur();
+  };
+
+  getFormatedValue = () => {
+    //@ts-ignore
+    return this.selectRef.current.getFormatedValue();
   };
 
   render() {

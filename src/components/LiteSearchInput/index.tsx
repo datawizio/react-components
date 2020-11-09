@@ -57,7 +57,7 @@ const LiteSearchInput: React.FC<LiteSearchInputProps> = props => {
   }, [onClear, onSearchDebounced]);
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.value ? props.value : "");
   }, [props.value]);
 
   return (

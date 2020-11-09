@@ -15,6 +15,8 @@ export interface DrawerFormProps {
   form?: any;
   loading?: boolean;
   hideRequiredMark?: boolean;
+  style?: object;
+  width?: number;
   onClose?: () => void;
   onSubmit?: () => void;
 }
@@ -24,12 +26,14 @@ const noop = () => {};
 const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   title,
+  style,
   visible,
   hideRequiredMark,
   children,
   form,
   formStore,
   loading,
+  width,
   onClose,
   onSubmit
 }) => {
@@ -68,7 +72,9 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       actions
     ) : (
       <>
-        <Button onClick={handleFormClose}>{translate("CANCEL")}</Button>
+        <Button onClick={handleFormClose} title={translate("CANCEL_BTN_TITLE")}>
+          {translate("CANCEL")}
+        </Button>
         <Button onClick={handleFormSubmit} type="primary">
           {translate("SUBMIT")}
         </Button>
@@ -79,7 +85,8 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   return (
     <Drawer
       title={title}
-      width={window.innerWidth < 500 ? window.innerWidth : 500}
+      style={style}
+      width={window.innerWidth < width ? window.innerWidth : width}
       onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
@@ -96,6 +103,10 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       </Form>
     </Drawer>
   );
+};
+
+DrawerForm.defaultProps = {
+  width: 500
 };
 
 export default DrawerForm;

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserAvatar component UserAvatar rendered correctly 1`] = `
+<Avatar
+  shape="circle"
+  size="default"
+  src="photoSrc"
+>
+  JL
+</Avatar>
+`;

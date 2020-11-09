@@ -76,7 +76,6 @@ const basicSortHandler: SorterHandlerType = (
   dTypesConfig
 ) => {
   const [dataIndex, order] = Object.entries(sortParams)[0] || [];
-
   if (!order) return { dataSource };
 
   const sortData = dataSource => {

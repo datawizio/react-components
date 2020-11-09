@@ -61,6 +61,12 @@ class TreeSelect<T> extends React.Component<TreeSelectProps<T>, {}> {
     }
   }
 
+  getFormatedValue() {
+    if (this.selectRef.current) {
+      return this.selectRef.current.getFormatedValue();
+    }
+  }
+
   renderTreeSelect = ({
     getPopupContainer: getContextPopupContainer,
     getPrefixCls,

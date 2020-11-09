@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with custom props and triger events 1`] = `
+<mockConstructor
+  className="drawer-tree-select"
+  dropdownClassName="drawer-tree-select-dropdown-fake"
+  dropdownRender={[Function]}
+  listHeight={564}
+  loadData={null}
+  maxTagCount={10}
+  multiple={true}
+  notFoundContent="NO_DATA"
+  onBeforeBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  onSelect={[Function]}
+  onTreeExpand={[Function]}
+  open={false}
+  searchValue=""
+  showSearch={true}
+  tagRender={[Function]}
+  treeExpandedKeys="key"
+  value="value"
+/>
+`;
+
+exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with defaul props 1`] = `
+<mockConstructor
+  className="drawer-tree-select"
+  dropdownClassName="drawer-tree-select-dropdown-fake"
+  dropdownRender={[Function]}
+  listHeight={564}
+  loadData={null}
+  maxTagCount={10}
+  notFoundContent="NO_DATA"
+  onBeforeBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  onSelect={[Function]}
+  onTreeExpand={[Function]}
+  open={false}
+  searchValue=""
+  showSearch={true}
+  tagRender={[Function]}
+/>
+`;

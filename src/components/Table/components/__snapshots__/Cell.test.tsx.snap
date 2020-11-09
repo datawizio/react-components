@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cell component rendered Cell corectly 1`] = `
+<td>
+  <div
+    className="dw-table__cell"
+  />
+</td>
+`;

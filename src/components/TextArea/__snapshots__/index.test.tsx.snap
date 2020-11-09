@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea component Render TextArea correctly 1`] = `
+<TextArea>
+  <TextArea>
+    <ClearableLabeledInput
+      element={
+        <ResizableTextArea
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          prefixCls="ant-input"
+        />
+      }
+      handleReset={[Function]}
+      inputType="text"
+      prefixCls="ant-input"
+      triggerFocus={[Function]}
+      value=""
+    >
+      <ResizableTextArea
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        prefixCls="ant-input"
+        value=""
+      >
+        <ResizeObserver
+          disabled={true}
+          onResize={[Function]}
+        >
+          <textarea
+            className="ant-input"
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            style={Object {}}
+            value=""
+          />
+        </ResizeObserver>
+      </ResizableTextArea>
+    </ClearableLabeledInput>
+  </TextArea>
+</TextArea>
+`;

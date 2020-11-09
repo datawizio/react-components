@@ -16,7 +16,7 @@ export interface CardAppProps {
   path: string;
   description: string;
   allowed?: boolean;
-  clients?: { id: number; name: string }[];
+  clients?: { client_id: number; name: string }[];
   onButtonClick?: (
     clientId: number,
     { appId: number, url: string, allowed: boolean }
@@ -40,13 +40,15 @@ export const App: React.FC<CardAppProps> = ({
   const { translate } = useContext(ConfigContext);
   const [client, setClient] = useState<number>();
 
+  const showClientSelect = path ? path.match(":client_id") !== null : false;
+
   const handleChangeClient = (value: any) => {
     setClient(value);
   };
 
   const getClient = (client: number) => {
     if (client) return client;
-    if (clients && clients.length > 0) return clients[0].id;
+    if (clients && clients.length > 0) return clients[0].client_id;
     return null;
   };
 
@@ -66,7 +68,7 @@ export const App: React.FC<CardAppProps> = ({
           )}
         </div>
         <div className="card-app-description">{translate(description)}</div>
-        {clients && clients.length > 1 && (
+        {showClientSelect && clients && clients.length > 1 && (
           <div className="card-app-clients">
             <Select
               placeholder={translate("SELECT_CLIENT")}
@@ -74,9 +76,14 @@ export const App: React.FC<CardAppProps> = ({
               optionFilterProp="label"
               onChange={handleChangeClient}
               value={client}
+              notFoundContent={translate("NO_DATA")}
             >
               {clients.map(client => (
-                <Select.Option key={client.id} value={client.id}>
+                <Select.Option
+                  key={client.client_id}
+                  value={client.client_id}
+                  label={client.name}
+                >
                   {client.name}
                 </Select.Option>
               ))}

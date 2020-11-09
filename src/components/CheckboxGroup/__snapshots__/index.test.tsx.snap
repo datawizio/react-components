@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckboxGroup component CheckboxGroup rendered correctly 1`] = `
+<CheckboxGroup
+  className="customClassName"
+>
+  <CheckboxGroup
+    className="customClassName"
+    options={Array []}
+  >
+    <div
+      className="ant-checkbox-group customClassName"
+    />
+  </CheckboxGroup>
+</CheckboxGroup>
+`;

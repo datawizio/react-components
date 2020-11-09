@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DrawerForm component Render DrawerForm correctly 1`] = `
+<Drawer
+  actions={
+    <React.Fragment>
+      <Button
+        border={true}
+        onClick={[Function]}
+        title="CANCEL_BTN_TITLE"
+      >
+        CANCEL
+      </Button>
+      <Button
+        border={true}
+        onClick={[Function]}
+        type="primary"
+      >
+        SUBMIT
+      </Button>
+    </React.Fragment>
+  }
+  onClose={[Function]}
+  title="title"
+  visible={true}
+  width={500}
+>
+  <ForwardRef(InternalForm)
+    className="entity-form"
+    colon={false}
+    layout="vertical"
+    onFinish={[Function]}
+  >
+    <Loader />
+  </ForwardRef(InternalForm)>
+</Drawer>
+`;

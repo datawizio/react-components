@@ -150,6 +150,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const showAllRef = useRef<boolean>(false);
 
+  const selectRef = useRef<any>();
+
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
@@ -358,10 +360,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const openDrawer = () => {
     drawerVisibleRef.current = true;
     savePrevRefs();
+    let val = internalValue;
+    if (selectRef && selectRef.current) {
+      val = selectRef.current.getFormatedValue().map(v => v.value);
+    }
 
     dispatch({
       type: "openDrawer",
-      payload: checkSelectAllStatus(internalValue)
+      payload: checkSelectAllStatus(val)
     });
     triggerInputChangeValue(inputRef.current, searchValue.current);
   };
@@ -496,6 +502,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handleLevelChange = (level: string) => {
     levelSelected.current = level;
     onLevelChange && onLevelChange(level);
+    dispatch({
+      type: "setState",
+      payload: { internalValue: [] }
+    });
     internalLoadData(false, []);
   };
 
@@ -710,6 +720,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   return (
     <AntTreeSelect
       {...restProps}
+      ref={selectRef}
       value={internalValue}
       className="drawer-tree-select"
       treeData={stateTreeData}

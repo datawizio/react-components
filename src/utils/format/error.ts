@@ -6,11 +6,13 @@ export function parseErrorText(errors: any, t: any) {
   }
   const msg = Object.keys(errors)
     .map(key => {
-      return errors[key]
-        .map((v: string) => {
-          return t(v);
-        })
-        .join("<br />");
+      return Array.isArray(errors[key])
+        ? errors[key]
+            .map((v: string) => {
+              return t(v);
+            })
+            .join("<br />")
+        : t(errors[key]);
     })
     .join("<br />");
 

@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal component Modal rendered correctly 1`] = `
+<Modal>
+  <Modal
+    confirmLoading={false}
+    maskTransitionName="fade"
+    okType="primary"
+    transitionName="zoom"
+    visible={false}
+    width={520}
+  >
+    <Component
+      closeIcon={
+        <span
+          className="ant-modal-close-x"
+        >
+          <ForwardRef(CloseOutlined)
+            className="ant-modal-close-icon"
+          />
+        </span>
+      }
+      confirmLoading={false}
+      footer={
+        <LocaleReceiver
+          componentName="Modal"
+          defaultLocale={
+            Object {
+              "cancelText": "Cancel",
+              "justOkText": "OK",
+              "okText": "OK",
+            }
+          }
+        >
+          [Function]
+        </LocaleReceiver>
+      }
+      maskTransitionName="fade"
+      okType="primary"
+      onClose={[Function]}
+      prefixCls="ant-modal"
+      transitionName="zoom"
+      visible={false}
+      width={520}
+      wrapClassName=""
+    >
+      <PortalWrapper
+        visible={false}
+      />
+    </Component>
+  </Modal>
+</Modal>
+`;

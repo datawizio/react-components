@@ -15,6 +15,38 @@ function genColumnsMap(columns) {
   return columnsMap;
 }
 
+function findExpandedRecord(
+  path: string[],
+  children: IRow[],
+  changeParentData?: (record: any) => any
+) {
+  const next = path.pop();
+  let record = children.find(child => child.key === next);
+  if (!record) return { children: [] };
+  if (path.length) {
+    if (changeParentData) {
+      changeParentData(record);
+    }
+    return findExpandedRecord(path, record.children, changeParentData);
+  }
+
+  return record;
+}
+
+function getRecordPath(rowKey: any, parentsMap: any) {
+  const path = [];
+
+  const buildPath = (key: string) => {
+    path.push(key);
+    if (!parentsMap[key]) return;
+    buildPath(parentsMap[key]);
+  };
+
+  buildPath(rowKey);
+
+  return path;
+}
+
 export function initializer(props: TableProps): TableState {
   const {
     columns,
@@ -45,8 +77,10 @@ export function initializer(props: TableProps): TableState {
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
+    parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
-    dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig }
+    dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
+    loadingRows: {}
   };
 }
 
@@ -88,7 +122,8 @@ export function reducer(state: TableState, action: Action): TableState {
               oldColumn => oldColumn.dataIndex === column.dataIndex
             );
 
-            oldColumn.children &&
+            oldColumn &&
+              oldColumn.children &&
               oldColumn.children.length &&
               rec(column.children, oldColumn.children);
           }
@@ -119,6 +154,15 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         pagination: action.payload
+      };
+    }
+    case "resetPagination": {
+      return {
+        ...state,
+        pagination: state.pagination && {
+          ...state.pagination,
+          current: 1
+        }
       };
     }
     case "search": {
@@ -166,54 +210,53 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "setNestedTable": {
+      const { loadingRows, parentsMap } = state;
       const [expandedRow, result] = action.payload;
-      const nextDataSource = state.dataSource.concat();
-      const expandedRowIdx = state.dataSource.findIndex(
-        row => row.key === expandedRow.key
-      );
-      nextDataSource[expandedRowIdx] = {
-        ...expandedRow,
-        nested: result
-      } as any;
+
+      delete loadingRows[expandedRow.key];
+
+      const newState: any = {
+        loadingRows
+      };
+
+      if (result) {
+        const path = getRecordPath(expandedRow.key, parentsMap);
+        const nextDataSource = state.dataSource.concat();
+        const expandedRecord = findExpandedRecord(path, state.dataSource);
+        expandedRecord.nested = result;
+
+        newState.dataSource = nextDataSource;
+      }
       return {
         ...state,
-        dataSource: nextDataSource
+        ...newState
       };
-      return;
+    }
+    case "addLoadingRow": {
+      return {
+        ...state,
+        loadingRows: { ...state.loadingRows, [action.payload]: true }
+      };
     }
     case "setRowChildren": {
-      const [expandedRow, children, path] = action.payload;
+      const { parentsMap, loadingRows } = state;
+      const [expandedRow, children] = action.payload;
       const nextDataSource = state.dataSource.concat();
+      delete loadingRows[expandedRow.key];
+      children &&
+        children.forEach(child => {
+          parentsMap[child.key] = expandedRow.key;
+        });
 
-      if (path === null) {
-        const expandedRowIdx = state.dataSource.findIndex(
-          row => row.key === expandedRow.key
-        );
+      const path = getRecordPath(expandedRow.key, parentsMap);
 
-        nextDataSource[expandedRowIdx] = {
-          ...expandedRow,
-          children
-        } as any;
-        return {
-          ...state,
-          dataSource: nextDataSource
-        };
-      }
-
-      const findExpandedRecord = (path: string[], children: IRow[]) => {
-        const next = path.shift();
-        const record = children.find(child => child.key === next.toString());
-        if (!record) return { children: [] };
-        if (path.length) return findExpandedRecord(path, record.children);
-
-        return record;
-      };
-      const expandedRecord = findExpandedRecord([...path], state.dataSource);
+      const expandedRecord = findExpandedRecord(path, state.dataSource);
       expandedRecord.children = children;
-
       return {
         ...state,
-        dataSource: nextDataSource
+        parentsMap,
+        dataSource: nextDataSource,
+        loadingRows
       };
     }
     case "swapColumns": {
@@ -269,6 +312,45 @@ export function reducer(state: TableState, action: Action): TableState {
       }
 
       return nextState;
+    }
+    case "updateRow": {
+      const [key, data] = action.payload;
+      const { parentsMap, loadingRows, expandedRowKeys } = state;
+      delete loadingRows[key];
+      const newState: any = {
+        loadingRows
+      };
+
+      if (data) {
+        const nextDataSource = state.dataSource.concat();
+        const path = getRecordPath(key, parentsMap);
+
+        let expandedRecord = findExpandedRecord(
+          path,
+          nextDataSource,
+          //@ts-ignore
+          data.changeParentData
+        );
+        //@ts-ignore
+        delete data.changeParentData;
+
+        //@ts-ignore
+        if (data.expanded === false) {
+          newState.expandedRowKeys = expandedRowKeys.filter(
+            rowKey => rowKey != key
+          );
+        }
+        if (!Array.isArray(expandedRecord.children)) {
+          delete data.children;
+        }
+        expandedRecord = Object.assign(expandedRecord, data);
+        newState.dataSource = nextDataSource;
+      }
+
+      return {
+        ...state,
+        ...newState
+      };
     }
     case "update": {
       let nextState = { ...state, ...action.payload };

@@ -18,6 +18,8 @@ export { default as Loader } from "./components/Loader";
 
 export { default as Select } from "./components/Select";
 
+export { default as BackTop } from "./components/BackTop";
+
 export { default as ApiError } from "./components/ApiError";
 
 export { default as AppsList } from "./components/AppsList";
@@ -62,9 +64,15 @@ export { default as UserButton } from "./components/UserButton";
 
 export { default as AppSwitcher } from "./components/AppSwitcher";
 
+export { default as Help } from "./components/Help";
+
+export { default as SupportModal } from "./components/Help/components/SupportModal";
+
 export { default as SearchInput } from "./components/SearchInput";
 
 export { default as TableSearch } from "./components/TableSearch";
+
+export { default as PeriodSelect } from "./components/PeriodSelect";
 
 export { default as ClientSelect } from "./components/ClientSelect";
 
@@ -73,6 +81,8 @@ export { default as DrawerSelect } from "./components/DrawerSelect";
 export { default as CheckboxGroup } from "./components/CheckboxGroup";
 
 export { default as ErrorBoundary } from "./components/ErrorBoundary";
+
+export { default as TransferTable } from "./components/TransferTable";
 
 export { default as ConfigProvider } from "./components/ConfigProvider";
 

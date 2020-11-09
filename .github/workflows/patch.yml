@@ -49,6 +49,15 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Run tests
+        run: npm run test:ci
+        continue-on-error: true
+
+      - name: Jest Github Action Reporter
+        uses: IgnusG/jest-report-action@v2.3.3
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Update version package.json
         run: npm version patch
 

@@ -6,7 +6,7 @@ name: Eslint
 # events but only for the master branch
 on:
   pull_request:
-    branches: [master]
+    branches: [master, develop]
   # push:
   #   branches: [master]
 
@@ -35,3 +35,12 @@ jobs:
 
       - name: Check build
         run: gulp compile
+
+      - name: Run tests
+        run: npm run test:ci
+        continue-on-error: true
+
+      - name: Jest Github Action Reporter
+        uses: IgnusG/jest-report-action@v2.3.3
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}

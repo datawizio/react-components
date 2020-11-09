@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` DatePicker component DatePicker rendered correctly 1`] = `
+<LocaleReceiver
+  componentName="DatePicker"
+  defaultLocale={[Function]}
+>
+  <Component />
+</LocaleReceiver>
+`;

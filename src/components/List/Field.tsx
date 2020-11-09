@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import List from "../List";
-import { RightOutlined } from "@ant-design/icons";
-import { ListItemFieldProps } from "./types.d";
+import { RightOutlined, LeftOutlined } from "@ant-design/icons";
+import { ListItemFieldProps } from "./types";
+import ConfigContext from "../ConfigProvider/context";
 
 const ListItemField: React.FC<ListItemFieldProps> = ({
   title,
@@ -10,13 +11,15 @@ const ListItemField: React.FC<ListItemFieldProps> = ({
   value,
   onClick
 }) => {
+  const { direction } = useContext(ConfigContext);
+  const icon = direction === "rtl" ? <LeftOutlined /> : <RightOutlined />;
   return (
     <List.Item onClick={onClick} className="list-item-field">
       <div className="list-item-field-container">
         <List.Item.Meta title={title} description={description} />
         <div className="value-container">{value}</div>
       </div>
-      <RightOutlined />
+      {icon}
     </List.Item>
   );
 };

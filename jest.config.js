@@ -1,8 +1,17 @@
+const esModules = ["rc-select"].join("|");
+
 module.exports = {
   roots: ["./src"],
+  verbose: true,
+  bail: 1,
+  preset: "ts-jest",
+  clearMocks: true,
+  collectCoverage: false,
+  testEnvironment: "node",
   setupFiles: ["./setupTests.ts"],
   moduleFileExtensions: ["ts", "tsx", "js"],
   testPathIgnorePatterns: ["node_modules/"],
+  "reporters": ["default", "jest-junit"],
   "transform": {
     "^.+\\.[tj]sx?$": "babel-jest",
     "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx"
@@ -14,5 +23,14 @@ module.exports = {
       "identity-obj-proxy",
     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
   },
-  snapshotSerializers: ["enzyme-to-json/serializer"]
+  snapshotSerializers: ["enzyme-to-json/serializer"],
+  globals: {
+    window: {
+      innerWidth: 500,
+      innerHeight: 500,
+      location: {
+        pathname: "/c/pathname/report/qwerty"
+      }
+    }
+  }
 };

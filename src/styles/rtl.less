@@ -1,0 +1,140 @@
+.rtl {
+  direction: rtl;
+
+  /* Layout */
+
+  .right-part-layout {
+    margin-left: unset;
+    margin-right: 240px;
+  }
+
+  .left-menu.ant-layout-sider-collapsed + .right-part-layout {
+    margin-left: unset;
+    margin-right: 50px;
+  }
+
+  .ant-layout-footer.main-footer {
+    background-position: 12px;
+    direction: ltr;
+  }
+
+  /* Left Menu */
+
+  .left-menu {
+    left: unset;
+    right: 0;
+
+    .ant-menu-item-text-container {
+      padding-left: unset;
+      padding-right: 22px;
+    }
+
+    .ant-menu-rtl {
+      border-left: none;
+    }
+
+    .anticon {
+      margin-right: unset;
+      margin-left: 10px;
+    }
+  }
+
+  /* Drawer */
+
+  .ant-drawer-right {
+    .ant-drawer-content-wrapper {
+      right: unset;
+      left: 0;
+      transition: unset;
+
+      .ant-drawer-close {
+        right: unset;
+        left: 0;
+      }
+
+      .ant-form-item-label {
+        text-align: right;
+      }
+    }
+  }
+
+  /* Tutorial */
+
+  .ant-back-top.dw-back-top {
+    right: unset;
+    left: 80px;
+  }
+
+  /* Ant Select Dropdown */
+
+  .ant-select-single {
+    .ant-select-selector {
+      text-align: right;
+      padding-left: 30px;
+      padding-right: 4px;
+
+      .ant-select-selection-search {
+        right: 0;
+        left: 25px;
+      }
+
+      .ant-select-selection-item {
+        padding-right: 0;
+      }
+
+      .ant-select-selection-placeholder {
+        text-align: right;
+        padding-right: 0;
+      }
+    }
+  }
+
+  .ant-select-arrow {
+    right: unset;
+    left: 11px;
+  }
+
+  /* Ant Notification Message */
+
+  .ant-notification-notice-close {
+    right: unset;
+    left: 22px;
+  }
+
+  .ant-notification-notice-message {
+    margin-left: unset;
+    margin-right: 16px;
+  }
+
+  /* Datepicker */
+  .ant-picker-dropdown {
+    .ant-picker-header {
+      direction: ltr;
+    }
+  }
+
+  /* Common */
+
+  .ant-dropdown-menu {
+    text-align: right;
+  }
+
+  .ant-form-item-label > label.ant-form-item-required::before {
+    margin-right: unset;
+    margin-left: 4px;
+  }
+
+  .ant-modal-confirm .ant-modal-confirm-btns button + button {
+    margin-left: unset;
+    margin-right: 8px;
+  }
+
+  .ant-upload-list-picture-card-container {
+    width: 100%;
+  }
+
+  .ant-form-item-explain {
+    text-align: right;
+  }
+
+}

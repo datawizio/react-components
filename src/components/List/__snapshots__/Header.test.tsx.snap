@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListHeader component ListHeader rendered correctly 1`] = `
+<ListItemHeader
+  title="title"
+>
+  <Item
+    className="list-item-header"
+  >
+    <li
+      className="ant-list-item list-item-header"
+    >
+      title
+    </li>
+  </Item>
+</ListItemHeader>
+`;

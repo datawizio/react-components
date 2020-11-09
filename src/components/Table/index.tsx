@@ -23,6 +23,11 @@ import Cell from "./components/Cell";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
 import TableWrapper from "./components/TableWrapper";
+import {
+  LoadingOutlined,
+  RightOutlined,
+  DownOutlined
+} from "@ant-design/icons";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -44,12 +49,15 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     width,
     height,
     locale,
+    isNested,
     children,
     components,
     dataProvider,
+    showExpandIcon,
     showSizeChanger,
     dataProviderDeps,
     templatesProvider,
+    responsiveColumns,
     rowChildrenProvider,
     nestedTableProvider,
     ...restProps
@@ -70,6 +78,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     loading: false
   };
 
+  if (dataSourceState.expandedRowKeys) delete dataSourceState.expandedRowKeys;
+
   const fetchData = useAsyncProviders(state, dispatch, props);
 
   usePropsToState(dispatch, props);
@@ -85,40 +95,39 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
-      if (rowChildrenProvider && row.children && !row.children.length) {
-        let children = [],
-          path = null;
-        const result = await rowChildrenProvider(row);
-        if (result?.hasOwnProperty("children")) {
-          //@ts-ignore
-          children = result.children;
-          //@ts-ignore
-          path = result.path;
-        } else {
-          //@ts-ignore
-          children = result;
+      let toogle = true;
+      if ((isNested && isNested(row)) || (!isNested && nestedTableProvider)) {
+        if (!row.nested) {
+          dispatch({
+            type: "addLoadingRow",
+            payload: row.key
+          });
+          const result = await nestedTableProvider(row);
+          if (!result) toogle = false;
+          dispatch({
+            type: "setNestedTable",
+            payload: [row, result]
+          });
         }
+      } else if (rowChildrenProvider && row.children && !row.children.length) {
+        dispatch({
+          type: "addLoadingRow",
+          payload: row.key
+        });
+        const children = await rowChildrenProvider(row);
         dispatch({
           type: "setRowChildren",
-          payload: [row, children.length ? children : undefined, path]
+          payload: [row, children.length ? children : undefined]
         });
       }
 
-      if (nestedTableProvider && !row.nested) {
-        const result = await nestedTableProvider(row);
-
+      toogle &&
         dispatch({
-          type: "setNestedTable",
-          payload: [row, result]
+          type: isExpanded ? "expandRow" : "collapseRow",
+          payload: row
         });
-      }
-
-      dispatch({
-        type: isExpanded ? "expandRow" : "collapseRow",
-        payload: row
-      });
     },
-    [rowChildrenProvider]
+    [rowChildrenProvider, nestedTableProvider, isNested]
   );
 
   const totalRenderer = useCallback(
@@ -126,6 +135,41 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       return translate(locale.total, { current, to, total });
     },
     [translate, locale.total]
+  );
+
+  const expandIconRender = useCallback(
+    ({ expanded, onExpand, record, prefixCls, expandable }) => {
+      const iconPrefix = `${prefixCls}-row-expand-icon`;
+      if (state.loadingRows[record.key]) return <LoadingOutlined />;
+      let icon = null;
+      let internalExpandable =
+        expandable || (showExpandIcon && showExpandIcon(record));
+      if (internalExpandable) {
+        icon = <RightOutlined />;
+        if (expanded) {
+          icon = <DownOutlined />;
+        }
+      }
+
+      return (
+        <button
+          type="button"
+          onClick={e => {
+            onExpand(record, e!);
+            e.stopPropagation();
+          }}
+          className={clsx(iconPrefix, {
+            [`${iconPrefix}-spaced`]: !internalExpandable,
+            [`${iconPrefix}-expanded`]: expandable && expanded,
+            [`${iconPrefix}-collapsed`]: expandable && !expanded
+          })}
+          aria-label={expanded ? locale.collapse : locale.expand}
+        >
+          {icon}
+        </button>
+      );
+    },
+    [state.loadingRows]
   );
 
   const customComponents = useMemo<TableProps["components"]>(
@@ -150,7 +194,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         {
           "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length,
-          "dw-table--nestedable": props.expandable?.expandedRowRender
+          "dw-table--nestedable": props.expandable?.expandedRowRender,
+          "dw-table--responsive-columns": responsiveColumns
         },
         props.className
       ),
@@ -162,41 +207,53 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "loading", payload: true });
       await fetchData();
       dispatch({ type: "loading", payload: false });
+    },
+    updateRow(rowKey: string, data: any) {
+      dispatch({ type: "updateRow", payload: [rowKey, data] });
+    },
+    addLoadingRow(rowKey: string) {
+      dispatch({ type: "addLoadingRow", payload: rowKey });
+    },
+    resetPagination() {
+      dispatch({ type: "resetPagination" });
     }
   }));
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <TableContext.Provider
-        value={{
-          tableProps: props,
-          tableState: state,
-          dispatch: dispatch,
-          baseTableState: baseState
-        }}
-      >
-        <Loader loading={Boolean(baseState.loading)}>
-          {children}
-          <AntdTable
-            {...restProps}
-            {...state}
-            className={className}
-            onExpand={handleExpandRow}
-            onChange={handleChangeTable}
-            components={customComponents}
-            pagination={
-              props.pagination === false
-                ? false
-                : {
-                    ...state.pagination,
-                    ...props.pagination,
-                    showTotal: totalRenderer
-                  }
-            }
-          />
-        </Loader>
-      </TableContext.Provider>
-    </DndProvider>
+    <div className="dw-table-container">
+      <DndProvider backend={HTML5Backend}>
+        <TableContext.Provider
+          value={{
+            tableProps: props,
+            tableState: state,
+            dispatch: dispatch,
+            baseTableState: baseState
+          }}
+        >
+          <Loader loading={Boolean(baseState.loading)}>
+            {children}
+            <AntdTable
+              {...restProps}
+              {...state}
+              expandIcon={expandIconRender}
+              className={className}
+              onExpand={handleExpandRow}
+              onChange={handleChangeTable}
+              components={customComponents}
+              pagination={
+                props.pagination === false
+                  ? false
+                  : {
+                      ...state.pagination,
+                      ...props.pagination,
+                      showTotal: totalRenderer
+                    }
+              }
+            />
+          </Loader>
+        </TableContext.Provider>
+      </DndProvider>
+    </div>
   );
 }) as FCTable;
 

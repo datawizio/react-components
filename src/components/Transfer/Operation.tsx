@@ -4,6 +4,8 @@ import DoubleLeftOutlined from "@ant-design/icons/DoubleLeftOutlined";
 import RightOutlined from "@ant-design/icons/RightOutlined";
 import DoubleRightOutlined from "@ant-design/icons/DoubleRightOutlined";
 import Button from "../Button";
+import { useContext } from "react";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface TransferOperationProps {
   className?: string;
@@ -16,6 +18,7 @@ export interface TransferOperationProps {
   style?: React.CSSProperties;
   disabled?: boolean;
   direction?: "ltr" | "rtl";
+  tooltips?: { throwAll: string; throwChoosen: string };
 }
 
 const Operation = ({
@@ -28,42 +31,50 @@ const Operation = ({
   rightActive,
   className,
   style,
-  direction
-}: TransferOperationProps) => (
-  <div className={className} style={style}>
-    <Button
-      type="primary"
-      size="small"
-      disabled={disabled || !rightActive}
-      onClick={moveAllToRight}
-      icon={
-        direction !== "rtl" ? <DoubleRightOutlined /> : <DoubleLeftOutlined />
-      }
-    />
-    <Button
-      type="primary"
-      size="small"
-      disabled={disabled || !rightActive}
-      onClick={moveToRight}
-      icon={direction !== "rtl" ? <RightOutlined /> : <LeftOutlined />}
-    />
-    <Button
-      type="primary"
-      size="small"
-      disabled={disabled || !leftActive}
-      onClick={moveToLeft}
-      icon={direction !== "rtl" ? <LeftOutlined /> : <RightOutlined />}
-    />
-    <Button
-      type="primary"
-      size="small"
-      disabled={disabled || !leftActive}
-      onClick={moveAllToLeft}
-      icon={
-        direction !== "rtl" ? <DoubleLeftOutlined /> : <DoubleRightOutlined />
-      }
-    />
-  </div>
-);
+  direction,
+  tooltips
+}: TransferOperationProps) => {
+  const { translate } = useContext(ConfigContext);
+  return (
+    <div className={className} style={style}>
+      <Button
+        type="primary"
+        size="small"
+        disabled={disabled || !rightActive}
+        onClick={moveAllToRight}
+        title={tooltips ? translate(tooltips.throwAll) : ""}
+        icon={
+          direction !== "rtl" ? <DoubleRightOutlined /> : <DoubleLeftOutlined />
+        }
+      />
+      <Button
+        type="primary"
+        size="small"
+        disabled={disabled || !rightActive}
+        onClick={moveToRight}
+        title={tooltips ? translate(tooltips.throwChoosen) : ""}
+        icon={direction !== "rtl" ? <RightOutlined /> : <LeftOutlined />}
+      />
+      <Button
+        type="primary"
+        size="small"
+        disabled={disabled || !leftActive}
+        onClick={moveToLeft}
+        title={tooltips ? translate(tooltips.throwChoosen) : ""}
+        icon={direction !== "rtl" ? <LeftOutlined /> : <RightOutlined />}
+      />
+      <Button
+        type="primary"
+        size="small"
+        disabled={disabled || !leftActive}
+        onClick={moveAllToLeft}
+        title={tooltips ? translate(tooltips.throwAll) : ""}
+        icon={
+          direction !== "rtl" ? <DoubleLeftOutlined /> : <DoubleRightOutlined />
+        }
+      />
+    </div>
+  );
+};
 
 export default Operation;

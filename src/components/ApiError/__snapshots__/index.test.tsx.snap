@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ApiError component ApiError rendered correctly 1`] = `
+<span
+  dangerouslySetInnerHTML={
+    Object {
+      "__html": "errorsText",
+    }
+  }
+/>
+`;

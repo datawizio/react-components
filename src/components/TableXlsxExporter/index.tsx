@@ -18,10 +18,14 @@ export interface TableXlsxExporterProps extends ButtonProps {
     tableState: TableState,
     filename: string
   ) => Promise<BlobPart> | Promise<void>;
+  exportHandlerCallback?: (
+    fileData: BlobPart | Blob,
+    filename: string
+  ) => any;
 }
 
 const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
-  const { exportHandler, filename, ...restProps } = props;
+  const { exportHandler, exportHandlerCallback, filename, ...restProps } = props;
 
   const { translate } = useContext(ConfigContext);
   const { tableState } = useContext(TableContext);
@@ -31,16 +35,26 @@ const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
       const messageKey = "exporting-" + filename;
 
       message.loading({ content: translate("LOADING"), key: messageKey });
-      const fileData = await exportHandler(tableState, filename);
 
+      const fileData = await exportHandler(tableState, filename);
       fileData && saveAs(new Blob([fileData]), filename);
+
       message.success({ content: translate("SUCCESS"), key: messageKey });
+
+      if (exportHandlerCallback && fileData) {
+        await exportHandlerCallback(new Blob([fileData]), filename);
+      }
     }
-  }, [tableState, translate, exportHandler, filename]);
+  }, [tableState, translate, exportHandler, filename, exportHandlerCallback]);
 
   return (
     <div className="table-xlsx-exporter table-toolbar--right">
-      <Button {...restProps} border={false} onClick={handleExport}>
+      <Button
+        {...restProps}
+        border={false}
+        onClick={handleExport}
+        title={translate("SAVE_BTN_TITLE")}
+      >
         <DownloadOutlined className={"table-xlsx-exporter__icon"} />
       </Button>
     </div>

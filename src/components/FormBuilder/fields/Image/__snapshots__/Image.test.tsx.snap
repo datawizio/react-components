@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormBuilder Image component Image rendered correctly 1`] = `
+<ImgCrop
+  aspect={1}
+  grid={false}
+  modalCancel="CANCEL"
+  modalOk="SUBMIT"
+  modalTitle="EDIT_IMAGE"
+  modalWidth={520}
+  rotate={false}
+  shape="round"
+  styleImport={true}
+  zoom={true}
+>
+  <Dragger
+    action={[Function]}
+    beforeUpload={[Function]}
+    className="field-image-upload-container"
+    customRequest={[Function]}
+    listType="picture-card"
+    showUploadList={false}
+  >
+    <Preview
+      onDelete={[Function]}
+      value="value"
+    />
+  </Dragger>
+</ImgCrop>
+`;

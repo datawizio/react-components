@@ -27,14 +27,15 @@
     }
   }
 
-  .dw-table__column {
+  .dw-table__column,
+  th {
     width: 300px;
     transition: none !important;
 
     top: 0;
     z-index: 5;
     overflow: hidden;
-    white-space: nowrap;
+    //white-space: nowrap;
     position: sticky !important;
 
     &--resizable {
@@ -75,6 +76,10 @@
     .ant-table-filter-column-title {
       padding: 8px !important;
     }
+
+    .ant-table-selection {
+      display: flex;
+    }
   }
 
   &__cell {
@@ -84,27 +89,51 @@
       margin-top: 0;
       min-width: 17px;
       min-height: 17px;
+      display: flex;
+      align-items: center;
+      border: 0;
+      font-size: 12px;
+      &.ant-table-row-expand-icon-spaced {
+        cursor: default;
+      }
+      &::before,
+      &::after {
+        height: 0;
+      }
     }
   }
 
   &__cell-data {
+    width: 100%;
     display: flex;
     align-items: center;
   }
 
+  &--responsive-columns {
+    table {
+      width: 100% !important;
+    }
+  }
+
   table {
     table-layout: fixed;
-    width: max-content !important;
+    width: max-content;
   }
 
   td {
     .row-prefix {
       float: left;
-      margin-right: 8px;
+      & > * {
+        margin-right: 8px;
+      }
     }
 
     .ant-table-row-expand-icon {
       float: none;
+    }
+
+    .anticon-loading {
+      margin-right: 11px;
     }
 
     position: relative;
@@ -119,14 +148,17 @@
       border-right: 0;
       width: 20px !important;
       .dw-table__cell {
-        display: block;
+        flex-direction: column;
       }
+    }
+    .ant-table-expanded-row > td {
+      overflow: auto;
     }
   }
 
   &.nested-table {
     .ant-table {
-      margin-left: 39px !important;
+      margin-left: 38px !important;
     }
     .ant-table-container {
       border-top: 0;
@@ -145,10 +177,6 @@
     table {
       width: 100% !important;
       height: 100% !important;
-
-      thead {
-        display: none;
-      }
 
       td {
         left: 50%;
@@ -190,5 +218,9 @@
 .set-position-header(@n, @size) {
   thead {
     .set-columns-positions(@n, @size);
+  }
+
+  .ant-table-tbody > tr > td {
+    border-bottom: 1.5px solid #f0f0f0;
   }
 }

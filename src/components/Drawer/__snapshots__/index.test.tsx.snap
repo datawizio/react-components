@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Drawer component Drawer rendered correctly 1`] = `
+<Drawer
+  actions="actions"
+  footer={<span />}
+>
+  <withConfigConsumer(Drawer)
+    footer={<span />}
+  >
+    <Drawer
+      closable={true}
+      footer={<span />}
+      getPrefixCls={[Function]}
+      height={256}
+      keyboard={true}
+      level={null}
+      mask={true}
+      maskClosable={true}
+      placement="right"
+      prefixCls="ant-drawer"
+      renderEmpty={[Function]}
+      width={256}
+    >
+      <DrawerWrapper
+        afterVisibleChange={[Function]}
+        className=""
+        defaultOpen={false}
+        duration=".3s"
+        ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+        forceRender={false}
+        getContainer="body"
+        handler={false}
+        keyboard={true}
+        level={null}
+        maskClosable={true}
+        maskStyle={Object {}}
+        onChange={[Function]}
+        placement="right"
+        prefixCls="ant-drawer"
+        showMask={true}
+        style={
+          Object {
+            "transform": undefined,
+            "zIndex": undefined,
+          }
+        }
+        width={256}
+        wrapperClassName=""
+      >
+        <PortalWrapper
+          forceRender={false}
+          getContainer="body"
+          visible={false}
+          wrapperClassName=""
+        />
+      </DrawerWrapper>
+    </Drawer>
+  </withConfigConsumer(Drawer)>
+</Drawer>
+`;
+
+exports[`Drawer component Drawer without footer & actions block 1`] = `
+<Drawer
+  actions={null}
+  footer={null}
+>
+  <withConfigConsumer(Drawer)
+    footer={null}
+  >
+    <Drawer
+      closable={true}
+      footer={null}
+      getPrefixCls={[Function]}
+      height={256}
+      keyboard={true}
+      level={null}
+      mask={true}
+      maskClosable={true}
+      placement="right"
+      prefixCls="ant-drawer"
+      renderEmpty={[Function]}
+      width={256}
+    >
+      <DrawerWrapper
+        afterVisibleChange={[Function]}
+        className=""
+        defaultOpen={false}
+        duration=".3s"
+        ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+        forceRender={false}
+        getContainer="body"
+        handler={false}
+        keyboard={true}
+        level={null}
+        maskClosable={true}
+        maskStyle={Object {}}
+        onChange={[Function]}
+        placement="right"
+        prefixCls="ant-drawer"
+        showMask={true}
+        style={
+          Object {
+            "transform": undefined,
+            "zIndex": undefined,
+          }
+        }
+        width={256}
+        wrapperClassName=""
+      >
+        <PortalWrapper
+          forceRender={false}
+          getContainer="body"
+          visible={false}
+          wrapperClassName=""
+        />
+      </DrawerWrapper>
+    </Drawer>
+  </withConfigConsumer(Drawer)>
+</Drawer>
+`;
+
+exports[`Drawer component Drawer without footer block 1`] = `
+<Drawer
+  actions="actions"
+  footer={null}
+>
+  <withConfigConsumer(Drawer)
+    footer={
+      <div
+        className="ant-drawer-actions"
+      >
+        actions
+      </div>
+    }
+  >
+    <Drawer
+      closable={true}
+      footer={
+        <div
+          className="ant-drawer-actions"
+        >
+          actions
+        </div>
+      }
+      getPrefixCls={[Function]}
+      height={256}
+      keyboard={true}
+      level={null}
+      mask={true}
+      maskClosable={true}
+      placement="right"
+      prefixCls="ant-drawer"
+      renderEmpty={[Function]}
+      width={256}
+    >
+      <DrawerWrapper
+        afterVisibleChange={[Function]}
+        className=""
+        defaultOpen={false}
+        duration=".3s"
+        ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+        forceRender={false}
+        getContainer="body"
+        handler={false}
+        keyboard={true}
+        level={null}
+        maskClosable={true}
+        maskStyle={Object {}}
+        onChange={[Function]}
+        placement="right"
+        prefixCls="ant-drawer"
+        showMask={true}
+        style={
+          Object {
+            "transform": undefined,
+            "zIndex": undefined,
+          }
+        }
+        width={256}
+        wrapperClassName=""
+      >
+        <PortalWrapper
+          forceRender={false}
+          getContainer="body"
+          visible={false}
+          wrapperClassName=""
+        />
+      </DrawerWrapper>
+    </Drawer>
+  </withConfigConsumer(Drawer)>
+</Drawer>
+`;

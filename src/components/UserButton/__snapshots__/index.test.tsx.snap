@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserButton component UserButton rendered correctly 1`] = `
+<Dropdown
+  className="user-dropdown"
+  mouseEnterDelay={0.15}
+  mouseLeaveDelay={0.1}
+  overlay={<React.Fragment />}
+  trigger={
+    Array [
+      "click",
+    ]
+  }
+>
+  <Button
+    border={false}
+    className="user-name"
+  >
+    <UserAvatar
+      name="FullUserName"
+      src="photopath"
+    />
+    <span
+      className="user-button-fullname"
+    >
+      FullUserName
+    </span>
+    <ForwardRef(DownOutlined) />
+  </Button>
+</Dropdown>
+`;
