@@ -16,19 +16,11 @@
   "description": "Datawiz.io component library for React JS",
   "scripts": {
     "build": "gulp compile",
-<<<<<<< HEAD
-    "test": "jest --watch",
-    "test:once": "jest",
-    "test:ci": "jest -ci --reporters=default --reporters=jest-junit",
-    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
-    "test:coverage": "jest --coverage",
-=======
     "test": "TZ=UTC jest --watch",
     "test:once": " TZ=UTC jest",
     "test:ci": "TZ=UTC jest -ci --reporters=default --reporters=jest-junit",
     "test:debug": "TZ=UTC node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand",
     "test:coverage": "TZ=UTC jest --coverage",
->>>>>>> add timezone preset
     "debug-storybook": "start-storybook --debug-webpack",
     "storybook": "start-storybook -p 6006 -s stories/static",
     "build-storybook": "build-storybook -s stories/static",
