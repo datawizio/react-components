@@ -33,7 +33,7 @@ export interface DrawerSelectProps<VT>
   asyncData?: boolean;
 
   /**
-   * Title Drawerа
+   * Title Drawer-а
    */
   drawerTitle?: string;
 
@@ -52,7 +52,8 @@ export interface DrawerSelectProps<VT>
    */
   loadData?: (
     filters: any,
-    page: number
+    page: number,
+    search: string
   ) => Promise<{ data: any; totalPages: number }>;
 
   multiple?: boolean;
@@ -68,7 +69,7 @@ export interface DrawerSelectProps<VT>
   withPagination?: boolean;
 
   /**
-   * Event when user click Submit
+   * Event when user clicks Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
@@ -196,10 +197,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const loadPage = useCallback(
     async (search, page = 0, first = false) => {
       if (!loadData) return;
+
       if (page !== 0 && page >= totalPages) {
         return;
       }
+
       let state: any = {};
+
       if (!page) state.optionsState = selectedOptions.current;
 
       dispatch({
@@ -214,7 +218,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         filters.first = true;
       }
 
-      const { data, totalPages: pages } = await loadData(filters, page);
+      const { data, totalPages: pages } = await loadData(filters, page, search);
 
       const options = convertOptions(
         data,
@@ -239,6 +243,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       } else {
         state.optionsState = optionsState.concat(options.options);
       }
+
       dispatch({
         type: "remoteLoadDataStop",
         payload: state
