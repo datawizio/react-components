@@ -232,7 +232,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
   return (
     <div className="tree-search-container">
-      <div className="tree-search-input">
+      <div className="tree-search-input" style={{marginBottom: '15px'}}>
         {showSearchInput ? (
           renderInput ? (
             renderInput(handleSearchInputChange)
@@ -257,10 +257,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           onCheck={handleTreeCheck}
         />
       ) : (
-        <Empty
-          description={translate(emptySearchResultText)}
-          style={{ "marginTop": "15px" }}
-        />
+        <Empty description={translate(emptySearchResultText)} />
       )}
     </div>
   );

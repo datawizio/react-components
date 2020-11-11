@@ -37,7 +37,7 @@ export interface TransferProps {
   targetLoadData?: (params: LoadDataParams) => Promise<LoadDataResponse>;
   targetFilters?: any;
   targetActions?: React.ReactElement;
-  tooltips?: { throwAll: string; throwChoosen: string };
+  tooltips?: { throwAll: string; throwChosen: string };
 
   onMoveToRight?: (keys: string[]) => Promise<void>;
   onMoveAllToRight?: () => Promise<void>;
