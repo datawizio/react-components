@@ -82,11 +82,12 @@
     .ant-select-selector {
       text-align: right;
       padding-left: 30px;
-      padding-right: 4px;
+      padding-right: 8px;
 
       .ant-select-selection-search {
         right: 0;
         left: 25px;
+        padding-right: 5px;
       }
 
       .ant-select-selection-item {
@@ -250,6 +251,16 @@
   .ant-picker,
   .ant-picker-panel-container {
     direction: ltr;
+
+    .ant-picker-input input {
+      text-align: right;
+    }
+
+    .ant-picker-suffix {
+      position: absolute;
+      left: 0;
+      margin-left: unset;
+    }
 
     .ant-picker-clear {
       right: unset;
