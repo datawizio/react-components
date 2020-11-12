@@ -52,6 +52,7 @@
   /* Drawer */
 
   .ant-drawer {
+    transition: unset;
 
     .ant-drawer-mask {
       left: 400px;
@@ -237,7 +238,7 @@
   }
 
   .ant-table-pagination.ant-pagination {
-    direction: ltr;
+    float: left;
 
     .ant-select-item {
       text-align: right;
@@ -251,6 +252,11 @@
     .ant-pagination-options-size-changer.ant-select {
       margin-right: unset;
       margin-left: 8px;
+    }
+
+    .ant-pagination-prev .anticon,
+    .ant-pagination-next .anticon {
+      transform: rotate(180deg);
     }
   }
 
