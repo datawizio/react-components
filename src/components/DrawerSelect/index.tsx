@@ -18,11 +18,13 @@ import { Skeleton, Tag } from "antd";
 
 import { AntTreeNode } from "antd/lib/tree";
 
+import ConfigContext from "../ConfigProvider/context";
+
 import { triggerInputChangeValue } from "../../utils/trigger";
+import { getUniqueItems } from "../../utils/data/dataHelpers";
+import { useDrawerSelect } from "./useDrawerSelect";
 
 import "./index.less";
-import { useDrawerSelect } from "./useDrawerSelect";
-import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
@@ -268,24 +270,33 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
+
     const payload: any = { internalValue: !multiple && !value ? [] : value };
+
     if (searchValue && loadData) {
       payload.optionsState = selectedOptions.current.concat(
         firstLoadedOptions.current
       );
     }
+
     dispatch({
       type: "drawerCancel",
       payload
     });
+
+    handleSearch("");
+
+    //eslint-disable-next-line
   }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
+
     const payload: any = {};
+
     if (searchValue) {
-      payload.optionsState = selectedOptions.current.concat(
-        firstLoadedOptions.current
+      payload.optionsState = getUniqueItems(
+        selectedOptions.current.concat(firstLoadedOptions.current)
       );
     }
 
@@ -293,7 +304,12 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       type: "drawerSubmit",
       payload
     });
+
     triggerOnChange(internalValue);
+
+    handleSearch("");
+
+    //eslint-disable-next-line
   }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
 
   const handleDrawerFocus = e => {

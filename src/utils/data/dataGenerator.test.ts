@@ -9,9 +9,11 @@ describe("data generation utils", () => {
     it("returns the correct obj with fullName property", () => {
       expect(genUsersData(1)[0]).toHaveProperty("fullName");
     });
+
     it("returns the correct obj with avatar property", () => {
       expect(genUsersData(1)[0]).toHaveProperty("avatar");
     });
+
     it("returns the correct obj with address property", () => {
       expect(genUsersData(1)[0]).toHaveProperty("address");
     });
