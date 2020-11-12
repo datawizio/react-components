@@ -94,3 +94,14 @@ export function genDataSource(
 
   return dataSource;
 }
+
+export function genItems(
+  count: number
+): Array<{ key: number | string; title: string; }> {
+  return new Array(count).fill(null).map(() => {
+    return {
+      key: faker.random.uuid(),
+      title: faker.random.word()
+    };
+  });
+}
