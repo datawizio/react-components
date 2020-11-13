@@ -241,9 +241,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       };
 
       if (page === 0) {
-        state.optionsState = selectedOptions.current.concat(options.options);
+        state.optionsState = getUniqueItems(selectedOptions.current.concat(options.options));
       } else {
-        state.optionsState = optionsState.concat(options.options);
+        state.optionsState = getUniqueItems(optionsState.concat(options.options));
       }
 
       dispatch({
@@ -274,8 +274,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     const payload: any = { internalValue: !multiple && !value ? [] : value };
 
     if (searchValue && loadData) {
-      payload.optionsState = selectedOptions.current.concat(
-        firstLoadedOptions.current
+      payload.optionsState = getUniqueItems(
+        selectedOptions.current.concat(firstLoadedOptions.current)
       );
     }
 
