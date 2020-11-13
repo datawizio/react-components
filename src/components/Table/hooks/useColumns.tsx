@@ -84,7 +84,10 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
         const record = {
           ...column,
           sortOrder: sortParams[column.dataIndex],
-          filteredValue: column.filters && filterParams[column.dataIndex]
+          filteredValue:
+            column.filters && filterParams[column.dataIndex]
+              ? filterParams[column.dataIndex]
+              : []
         };
         if (column.children && column.children.length) {
           record.children = rec(column.children);

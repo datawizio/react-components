@@ -111,6 +111,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     e.stopPropagation();
     e.preventDefault();
     setValue(null);
+    dispatch({ type: "filter", payload: {} });
   }, []);
 
   const handleCreate = useCallback(
