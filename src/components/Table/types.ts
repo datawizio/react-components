@@ -142,6 +142,7 @@ export interface IColumn<RT = any>
   dataIndex: string;
   resizable?: boolean;
   default_visible?: boolean;
+  max_value?: number;
 }
 
 /**

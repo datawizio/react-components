@@ -81,6 +81,8 @@ const Column: React.FC<ColumnProps> = props => {
 
   const styles: object = useMemo((): object => {
     const defaultWidth = 200;
+    const defaultSubCellWidth = 20;
+    const defaultMaxValue = 10;
 
     if (model.children && model.children.length) {
       return {
@@ -88,8 +90,19 @@ const Column: React.FC<ColumnProps> = props => {
       };
     }
 
+    // if BarTable columns
+    if (model.max_value === 0 || model.max_value < defaultMaxValue) {
+      model.max_value = defaultMaxValue;
+    }
+
+    if (model.max_value) {
+      return {
+        width: model.max_value * defaultSubCellWidth + "px"
+      };
+    }
+
     return {};
-  }, [model.children]);
+  }, [model.children, model.max_value]);
 
   return (
     <th
