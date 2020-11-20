@@ -1,6 +1,7 @@
 import * as React from "react";
 import Skeleton from "../Skeleton";
 import * as Highcharts from "highcharts";
+import Treemap from "highcharts/modules/treemap";
 import resizeDetector from "../../utils/resizeDetector";
 
 import {
@@ -11,6 +12,7 @@ import {
   useImperativeHandle
 } from "react";
 
+Treemap(Highcharts);
 export interface HighChartProps {
   /**
    * highcharts config: https://api.highcharts.com/highcharts/.
