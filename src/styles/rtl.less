@@ -52,7 +52,7 @@
   /* Drawer */
 
   .ant-drawer {
-    transition: unset;
+    transition: unset !important;
 
     .ant-drawer-mask {
       left: 400px;
@@ -61,7 +61,7 @@
     .ant-drawer-content-wrapper {
       right: unset;
       left: 0;
-      transition: unset;
+      transition: unset !important;
 
       .ant-drawer-close {
         right: unset;
@@ -108,10 +108,15 @@
         padding-right: 0;
       }
     }
+
+    .ant-select-clear {
+      right: unset;
+      left: 32px;
+    }
   }
 
   .ant-select-arrow {
-    right: unset;
+    right: unset !important;
     left: 11px;
   }
 
@@ -144,6 +149,34 @@
   .ant-select-tree {
     .ant-select-tree-checkbox {
       margin: 4px 0 0 8px;
+    }
+  }
+
+  /* Input Number */
+
+  .ant-input-number {
+    .ant-input-number-handler-wrap {
+      right: unset;
+      left: 0;
+    }
+
+    input {
+      text-align: right;
+    }
+  }
+
+  /* Transfer List */
+
+  .ant-transfer-list {
+    .ant-transfer-list-content-item {
+      .ant-transfer-list-content-item > span {
+        padding-right: unset;
+      }
+
+      .ant-transfer-list-content-item-text {
+        padding-left: unset;
+        padding-right: 8px;
+      }
     }
   }
 
@@ -260,6 +293,11 @@
     }
   }
 
+  .ant-table.ant-table-bordered .ant-table-container {
+    border-left: 0;
+    border-right: 1px solid #f0f0f0;
+  }
+
   /* Date Picker */
 
   .ant-picker,
@@ -272,7 +310,7 @@
 
     .ant-picker-suffix {
       position: absolute;
-      left: 0;
+      left: 8px;
       margin-left: unset;
     }
 
@@ -334,9 +372,14 @@
     margin-left: 8px;
   }
 
-  .ant-btn>.ant-btn-loading-icon .anticon {
+  .ant-btn > .ant-btn-loading-icon .anticon {
     padding-right: unset;
     padding-left: 8px;
+  }
+
+  .ant-badge-status-text {
+    margin-left: unset;
+    margin-right: 8px;
   }
 
 }
