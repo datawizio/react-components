@@ -1,3 +1,5 @@
+export { default as Help } from "./components/Help";
+
 export { default as List } from "./components/List";
 
 export { default as Menu } from "./components/Menu";
@@ -64,10 +66,6 @@ export { default as UserButton } from "./components/UserButton";
 
 export { default as AppSwitcher } from "./components/AppSwitcher";
 
-export { default as Help } from "./components/Help";
-
-export { default as SupportModal } from "./components/Help/components/SupportModal";
-
 export { default as SearchInput } from "./components/SearchInput";
 
 export { default as TableSearch } from "./components/TableSearch";
@@ -86,9 +84,11 @@ export { default as TransferTable } from "./components/TransferTable";
 
 export { default as ConfigProvider } from "./components/ConfigProvider";
 
+export { default as InfiniteScroll } from "./components/InfiniteScroll";
+
 export { default as TableTemplates } from "./components/TableTemplates";
 
-export { default as InfiniteScroll } from "./components/InfiniteScroll";
+export { default as TransferFilter } from "./components/TransferFilter";
 
 export { default as LiteSearchInput } from "./components/LiteSearchInput";
 
@@ -99,5 +99,7 @@ export { default as DrawerTreeSelect } from "./components/DrawerTreeSelect";
 export { default as TableXlsxExporter } from "./components/TableXlsxExporter";
 
 export { default as TableTransposeButton } from "./components/TableTransposeButton";
+
+export { default as SupportModal } from "./components/Help/components/SupportModal";
 
 export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";
