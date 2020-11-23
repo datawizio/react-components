@@ -65,6 +65,6 @@ describe("BarTable component", () => {
   });
 
   it("BarTable exists", () => {
-    expect(component.find("#BarTable table").length).toBeTruthy();
+    expect(component.find(".BarTable table").length).toBeTruthy();
   });
 });

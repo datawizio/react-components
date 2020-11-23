@@ -49,7 +49,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
   <ForwardRef
     bordered={true}
     cellRenderProps={Object {}}
-    className=""
+    className="BarTable"
     columns={Array []}
     columnsConfig={
       Object {
@@ -75,7 +75,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
     dataSource={Array []}
     filterHandler={[Function]}
     height="244px"
-    id="BarTable"
     isResizableColumns={true}
     locale={
       Object {
@@ -451,7 +450,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                 <Table
                   bordered={true}
                   cellRenderProps={Object {}}
-                  className="dw-table dw-table--loading dw-table--empty"
+                  className="dw-table dw-table--loading dw-table--empty BarTable"
                   columns={Array []}
                   columnsConfig={
                     Object {
@@ -508,7 +507,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                   expandedRowKeys={Array []}
                   filterHandler={[Function]}
                   filterParams={Object {}}
-                  id="BarTable"
                   isResizableColumns={true}
                   loading={false}
                   loadingRows={Object {}}
@@ -535,7 +533,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                   visibleColumnsKeys={Array []}
                 >
                   <div
-                    className="ant-table-wrapper dw-table dw-table--loading dw-table--empty"
+                    className="ant-table-wrapper dw-table dw-table--loading dw-table--empty BarTable"
                   >
                     <Spin
                       size="default"
@@ -624,7 +622,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                             expandedRowKeys={Array []}
                             filterHandler={[Function]}
                             filterParams={Object {}}
-                            id="BarTable"
                             internalHooks="rc-table-internal-hook"
                             internalRefs={
                               Object {
@@ -745,7 +742,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                           >
                             <div
                               className="ant-table ant-table-small ant-table-bordered ant-table-empty ant-table-layout-fixed"
-                              id="BarTable"
                             >
                               <Component
                                 pingLeft={false}
@@ -817,7 +813,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                     "expandedRowKeys": Array [],
                                     "filterHandler": [Function],
                                     "filterParams": Object {},
-                                    "id": "BarTable",
                                     "internalHooks": "rc-table-internal-hook",
                                     "internalRefs": Object {
                                       "body": Object {
