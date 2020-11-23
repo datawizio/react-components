@@ -1,0 +1,30 @@
+.bar-table-title {
+  text-align: center;
+}
+
+.BarTable.ant-table-wrapper.dw-table {
+  table {
+    thead {
+      th:not(:last-child) {
+        border-right: 1px solid #ddd;
+      }
+    }
+
+    tbody {
+      tr > td:not(:last-child) {
+        border-right: 1px solid #ddd;
+      }
+
+      tr:last-child {
+        height: 30px;
+        background-color: #fafafa;
+
+        td {
+          padding: 3px 8px;
+          height: 30px;
+          background-color: #fafafa;
+        }
+      }
+    }
+  }
+}

@@ -82,6 +82,8 @@ export { default as ErrorBoundary } from "./components/ErrorBoundary";
 
 export { default as TransferTable } from "./components/TransferTable";
 
+export { default as BarTable } from "./components/BarTable";
+
 export { default as ConfigProvider } from "./components/ConfigProvider";
 
 export { default as InfiniteScroll } from "./components/InfiniteScroll";
