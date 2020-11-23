@@ -23,7 +23,7 @@ const BarTable: React.FC<IBarTable> = ({ dataProvider, titleKey, height, tooltip
 
   const config: TableProps = useMemo(() => {
     return {
-      id: "BarTable",
+      className: "BarTable",
       height: height ? `${height}px` : `${defaultHeight}px`,
       columnsConfig: {
         status: {
