@@ -178,6 +178,7 @@ export type DTypeConfig<T = any> = {
   toExcel?: (cellVal: T) => any;
   search?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
+  tooltip?: (cellVal: T, row: IRow, column: IColumn) => React.ReactNode;
 
   render?: (
     cellVal: T,
