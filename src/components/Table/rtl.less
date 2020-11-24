@@ -1,15 +1,18 @@
 .rtl {
   .dw-table {
-    .table-toolbar--left {
-      float: right;
-      margin-right: unset;
-      margin-left: 3px;
-    }
 
-    .table-toolbar--right {
-      float: left;
-      margin-right: unset;
-      margin-left: 3px;
+    &__toolbar {
+      .table-toolbar--left {
+        float: right;
+        margin-right: unset;
+        margin-left: 3px;
+      }
+
+      .table-toolbar--right {
+        float: left;
+        margin-right: unset;
+        margin-left: 3px;
+      }
     }
 
     .dw-table__column,
@@ -85,16 +88,16 @@
         }
       }
     }
+  }
 
-    .ant-table-bordered {
-      .ant-table-cell {
-        border-right: unset;
-        border-left: 1px solid #f0f0f0;
-      }
-      .ant-table-cell:first-child {
-        border-left: unset;
-      }
+  .dw-table.dw-table--nestedable {
+    .ant-table-cell {
+      border-right: unset;
+      border-left: 1px solid #f0f0f0;
     }
 
+    .ant-table-cell:first-child {
+      border-left: unset;
+    }
   }
 }

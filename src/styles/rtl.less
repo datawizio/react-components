@@ -257,6 +257,10 @@
 
   .ant-table-cell {
     text-align: right;
+
+    .ant-table-row-expand-icon > .anticon-right {
+      transform: rotate(180deg);
+    }
   }
 
   .ant-table-column-sorter {
@@ -317,6 +321,35 @@
     .ant-picker-clear {
       right: unset;
       left: 30px;
+    }
+  }
+
+  /* Cascader */
+
+  .ant-cascader-picker {
+    &-arrow {
+      right: unset;
+      left: 12px;
+    }
+
+    &-clear {
+      right: unset;
+      left: 32px;
+    }
+  }
+
+  .ant-cascader-menu {
+    &-item {
+
+      &-expand-icon {
+        right: unset;
+        left: 6px;
+        transform: rotate(180deg);
+      }
+    }
+
+    &-item-expand {
+      padding-right: 6px;
     }
   }
 
