@@ -25,9 +25,12 @@ const BarTable: React.FC<IBarTable> = ({ dataProvider, titleKey, height, tooltip
     return {
       className: "BarTable",
       height: height ? `${height}px` : `${defaultHeight}px`,
+      sortable: false,
+      isResizableColumns: false,
       columnsConfig: {
         status: {
-          fixed: "left"
+          fixed: "left",
+          resizable: true
         }
       },
       dTypesConfig: {
