@@ -73,7 +73,12 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client }) => {
 
   return (
     <>
-      <Dropdown overlay={overlay} trigger={["click"]} placement="bottomCenter">
+      <Dropdown
+        overlay={overlay}
+        trigger={["click"]}
+        placement="bottomCenter"
+        overlayClassName="AppSwitcher__dropdown"
+      >
         <a
           href="#1"
           className="app-switcher-link"
