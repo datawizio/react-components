@@ -36,6 +36,7 @@ export interface TableProps<RT = any>
 
   async?: boolean;
   sortable?: boolean;
+  forceColumns?: boolean;
   showSizeChanger?: boolean;
   multipleSorting?: boolean;
   isResizableColumns?: boolean;
