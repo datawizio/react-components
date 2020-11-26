@@ -54,6 +54,7 @@ export function initializer(props: TableProps): TableState {
     dataSource,
     pagination,
     searchValue,
+    forceColumns,
     dTypesConfig,
     showSizeChanger,
     pageSizeOptions,
@@ -65,6 +66,8 @@ export function initializer(props: TableProps): TableState {
     loading,
     dataSource,
     searchValue,
+
+    forceColumns,
 
     pagination: {
       showSizeChanger,
@@ -107,6 +110,9 @@ export function reducer(state: TableState, action: Action): TableState {
         state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
 
       const nextColumns = (function rec(newColumns, oldColumns) {
+        if (state.forceColumns) {
+          return newColumns;
+        }
         const sameDataIndex = newColumn => oldColumn =>
           newColumn.dataIndex === oldColumn.dataIndex;
 
