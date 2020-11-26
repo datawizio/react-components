@@ -60,6 +60,8 @@ export { default as TreeSelect } from "./components/TreeSelect";
 
 export { default as UserAvatar } from "./components/UserAvatar";
 
+export { default as UserItem } from "./components/UserItem";
+
 export { default as UserButton } from "./components/UserButton";
 
 export { default as AppSwitcher } from "./components/AppSwitcher";

@@ -1,0 +1,24 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+import UserItem from "./index";
+
+<Meta title="Components/UserItem" component={UserItem} />
+
+# UserItem
+
+Компонент предназначен для вывода инфо о юзере
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <UserItem
+      email="email.com"
+      fullName="Stepan Bandera"
+      photo="https://www.mzk1.ru/wp-content/uploads/2018/03/stepan-bandera.jpg"
+    />
+  </Story>
+</Preview>
+
+## Props
+
+<Props of={UserItem} />
