@@ -1,0 +1,35 @@
+@import "~antd/es/layout/style/index";
+@import "../../styles/variables";
+
+.top-bar {
+  background-color: @layout-body-background;
+  border-bottom: 1px solid @divider-border-color;
+  display: flex;
+  width: 100%;
+  padding: 0 @padding-lg 0 0;
+  align-items: center;
+  .fill-element {
+    flex: 1;
+  }
+  &.dw-dark {
+    background-color: @bg-dark-color;
+    border-bottom: none;
+    box-shadow: 0 0 10px black;
+    z-index: 100;
+    .tutorial-link,
+    .anticon-menu-unfold,
+    .anticon-menu-fold {
+      color: @icon-color-dark-theme;
+      font-size: 18px;
+    }
+    .divider {
+      border-right: 1px solid @divider-dark-border-color;
+    }
+  }
+
+  .divider {
+    height: 100%;
+    border-right: 1px solid @divider-border-color;
+    margin: 0 @margin-md;
+  }
+}

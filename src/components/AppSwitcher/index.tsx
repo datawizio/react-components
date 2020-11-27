@@ -4,11 +4,13 @@ import Icon from "@ant-design/icons";
 
 import "./index.less";
 import ConfigContext from "../ConfigProvider/context";
+import clsx from "clsx";
 
 export interface IApplication {
   app_id: number | string;
   name: string;
   description: string;
+
   logo?: string;
   host: string;
   path: string | null;
@@ -63,20 +65,24 @@ const AppSwitcherIcon = () => <Icon component={AppSwitcherSvg} />;
 export interface IAppSwitcher {
   apps: IApplication[];
   client: number;
+  theme?: "dark" | "light";
 }
 
-const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client }) => {
+const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client, theme }) => {
   const overlay = useMemo(() => {
     return menu(apps, client);
   }, [apps, client]);
   const { translate } = useContext(ConfigContext);
-
+  const className = clsx({
+    "app-switcher-link": true,
+    "dw-dark": theme === "dark"
+  });
   return (
     <>
       <Dropdown overlay={overlay} trigger={["click"]} placement="bottomCenter">
         <a
           href="#1"
-          className="app-switcher-link"
+          className={className}
           onClick={e => e.preventDefault()}
           title={translate("CHANGE_APP_BTN_TITLE")}
         >

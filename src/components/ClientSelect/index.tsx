@@ -5,22 +5,30 @@ import Select from "../Select";
 import { SelectValue } from "antd/lib/select";
 
 import "./index.less";
+import clsx from "clsx";
 
 export interface ClientSelectProps {
   clients: [{ id: number; name: string }];
   client: number;
+  theme?: "dark" | "light";
   onChange?: (url: string) => void;
 }
 
 const ClientSelect: React.FC<ClientSelectProps> = ({
   clients,
   client,
+  theme,
   onChange
 }) => {
   const handleChange = (value: SelectValue) => {
     const arr = window.location.pathname.split("/").slice(3);
     onChange && onChange(`/c/${value}/${arr.join("/")}`);
   };
+
+  const className = clsx({
+    "client-select": true,
+    "dw-dark": theme === "dark"
+  });
 
   return (
     <>
@@ -32,7 +40,7 @@ const ClientSelect: React.FC<ClientSelectProps> = ({
           showSearch
           optionFilterProp="label"
           onChange={handleChange}
-          className="client-select"
+          className={className}
         >
           {clients.map(client => (
             <Select.Option
