@@ -95,7 +95,7 @@ export interface TransferFilterProps {
   targetTitle?: string;
   targetFilters?: any;
   targetActions?: React.ReactElement;
-  tooltips?: { throwAll: string; throwChoosen: string };
+  tooltips?: { throwAll: string; throwChosen: string };
 
   pagination?: PaginationType;
 }

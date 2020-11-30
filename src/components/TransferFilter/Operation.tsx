@@ -18,7 +18,7 @@ export interface TransferOperationProps {
   style?: React.CSSProperties;
   disabled?: boolean;
   direction?: "ltr" | "rtl";
-  tooltips?: { throwAll: string; throwChoosen: string };
+  tooltips?: { throwAll: string; throwChosen: string };
 }
 
 const Operation = ({
@@ -52,7 +52,7 @@ const Operation = ({
         size="small"
         disabled={disabled || !rightActive}
         onClick={moveToRight}
-        title={tooltips ? translate(tooltips.throwChoosen) : ""}
+        title={tooltips ? translate(tooltips.throwChosen) : ""}
         icon={direction !== "rtl" ? <RightOutlined /> : <LeftOutlined />}
       />
       <Button
@@ -60,7 +60,7 @@ const Operation = ({
         size="small"
         disabled={disabled || !leftActive}
         onClick={moveToLeft}
-        title={tooltips ? translate(tooltips.throwChoosen) : ""}
+        title={tooltips ? translate(tooltips.throwChosen) : ""}
         icon={direction !== "rtl" ? <LeftOutlined /> : <RightOutlined />}
       />
       <Button
