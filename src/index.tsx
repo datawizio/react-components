@@ -70,6 +70,8 @@ export { default as UserButton } from "./components/UserButton";
 
 export { default as AppSwitcher } from "./components/AppSwitcher";
 
+export { default as ColorPicker } from "./components/ColorPicker";
+
 export { default as SearchInput } from "./components/SearchInput";
 
 export { default as TableSearch } from "./components/TableSearch";
