@@ -163,11 +163,17 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "resetPagination": {
+      const newState: any = {
+        current: 1
+      };
+      if (action.payload) {
+        newState.pageSize = action.payload;
+      }
       return {
         ...state,
         pagination: state.pagination && {
           ...state.pagination,
-          current: 1
+          ...newState
         }
       };
     }
