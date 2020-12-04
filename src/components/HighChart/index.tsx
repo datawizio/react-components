@@ -73,7 +73,6 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
 
   useEffect(() => {
     if (containerRef.current) {
-      if (chartRef.current) chartRef.current.destroy();
       chartRef.current = Highcharts[constructorType](
         containerRef.current,
         config || { title: { text: "" } }

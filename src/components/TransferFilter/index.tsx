@@ -99,6 +99,8 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   };
 
   const moveToRight = () => {
+    if (sourceChecked.length === 0) return;
+
     if (internalValue.include === null) {
       internalValue.include = [...sourceChecked];
     } else if (internalValue.include.length === 0) {
@@ -145,6 +147,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   };
 
   const moveToLeft = () => {
+    if (targetChecked.length === 0) return;
     if (
       Array.isArray(internalValue.include) &&
       internalValue.include.length === 0
