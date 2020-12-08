@@ -121,6 +121,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     [availblePrevPeriods]
   );
 
+  const disabledDates = current => {
+    if (current < dayjs(clientStartDate)) {
+      return true;
+    } else if (current > dayjs(clientDate)) {
+      return true;
+    }
+    return false;
+  };
+
   const isDisabledPrevSelect = !availblePrevPeriods.length;
 
   return (
@@ -141,6 +150,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDataRangeChange}
+            disabledDate={disabledDates}
+            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
           />
         )}
       </div>
@@ -163,6 +174,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDataRangeChange}
+            disabledDate={disabledDates}
+            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
           />
         )}
       </div>
