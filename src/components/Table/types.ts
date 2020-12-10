@@ -235,7 +235,8 @@ export type DataProvider = (
 ) => Partial<TableState> | Promise<Partial<TableState>>;
 
 export type RowChildrenProviderType = (
-  expandedRow: IRow
+  expandedRow: IRow,
+  state: TableState
 ) => IRow["children"] | Promise<IRow["children"]>;
 
 export type PaginationResponse<R> = {
