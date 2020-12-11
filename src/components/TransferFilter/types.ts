@@ -85,7 +85,8 @@ export interface TransferFilterProps {
 
   sourceTitle?: string;
   loadData?: (
-    params: TransferFilterLoadDataParams
+    params: TransferFilterLoadDataParams,
+    part: string
   ) => Promise<TransferFilterLoadDataResponse>;
   loadDataByIds?: (
     params: TransferFilterLoadDataByIdsParams

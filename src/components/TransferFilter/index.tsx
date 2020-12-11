@@ -52,12 +52,12 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   const sourceListRef = useRef<any>();
 
   const sourceLoadData = async (params: TransferFilterLoadDataParams) => {
-    return await loadData(params);
+    return await loadData(params, "source");
   };
 
   const targetLoadData = async (params: TransferFilterLoadDataParams) => {
     params.lastLevel = true;
-    return await loadData(params);
+    return await loadData(params, "target");
   };
 
   const onLeftItemSelect = (selectedItem: ICheckedItem, checked: boolean) => {
