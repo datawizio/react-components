@@ -61,18 +61,23 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   }, [config]);
 
   useEffect(() => {
-    if (!loading && responsible && containerRef.current)
+    if (!loading && responsible && containerRef.current) {
       return resizeDetector(
         containerRef.current,
         async () => {
+          containerRef.current.style.visibility = "visible";
           if (chartRef.current) await chartRef.current.setSize();
         },
         resizeTimeout
       );
+    }
   }, [resizeTimeout, responsible, chartRef, loading, containerRef.current]);
 
   useEffect(() => {
     if (containerRef.current) {
+      if (responsible) {
+        containerRef.current.style.visibility = "hidden";
+      }
       chartRef.current = Highcharts[constructorType](
         containerRef.current,
         config || { title: { text: "" } }
