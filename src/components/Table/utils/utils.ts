@@ -40,11 +40,17 @@ function swapColumns(
 }
 
 function getVisibleColumns(columns: Array<IColumn>) {
-  const result = [];
+  let result = [];
   columns.forEach(column => {
-    if (column.default_visible !== false) result.push(column.key);
+    const isParent = column.children?.length;
+    if (!isParent && column.default_visible !== false) {
+      result.push(column.key);
+    }
+    if (isParent) {
+      result = result.concat(getVisibleColumns(column.children));
+    }
   });
-  return result.length === columns.length ? [] : result;
+  return result;
 }
 
 export { defineCellType, getVisibleColumns, swapColumns, filterByColumns };
