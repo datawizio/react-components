@@ -55,6 +55,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
       Object {
         "status": Object {
           "fixed": "left",
+          "resizable": true,
         },
       }
     }
@@ -75,7 +76,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
     dataSource={Array []}
     filterHandler={[Function]}
     height="244px"
-    isResizableColumns={true}
+    isResizableColumns={false}
     locale={
       Object {
         "total": "TABLE_TOTAL",
@@ -95,7 +96,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
     showSorterTooltip={false}
     size="small"
     sortHandler={[Function]}
-    sortable={true}
+    sortable={false}
     tableLayout="fixed"
     width="auto"
   >
@@ -456,6 +457,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                     Object {
                       "status": Object {
                         "fixed": "left",
+                        "resizable": true,
                       },
                     }
                   }
@@ -507,7 +509,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                   expandedRowKeys={Array []}
                   filterHandler={[Function]}
                   filterParams={Object {}}
-                  isResizableColumns={true}
+                  isResizableColumns={false}
                   loading={false}
                   loadingRows={Object {}}
                   onChange={[Function]}
@@ -528,7 +530,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                   size="small"
                   sortHandler={[Function]}
                   sortParams={Object {}}
-                  sortable={true}
+                  sortable={false}
                   tableLayout="fixed"
                   visibleColumnsKeys={Array []}
                 >
@@ -556,6 +558,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                               Object {
                                 "status": Object {
                                   "fixed": "left",
+                                  "resizable": true,
                                 },
                               }
                             }
@@ -712,7 +715,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                 },
                               }
                             }
-                            isResizableColumns={true}
+                            isResizableColumns={false}
                             loading={false}
                             loadingRows={Object {}}
                             onChange={[Function]}
@@ -735,7 +738,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                             size="small"
                             sortHandler={[Function]}
                             sortParams={Object {}}
-                            sortable={true}
+                            sortable={false}
                             tableLayout="fixed"
                             transformColumns={[Function]}
                             visibleColumnsKeys={Array []}
@@ -755,6 +758,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                     "columnsConfig": Object {
                                       "status": Object {
                                         "fixed": "left",
+                                        "resizable": true,
                                       },
                                     },
                                     "columnsMap": Object {},
@@ -813,6 +817,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                     "expandedRowKeys": Array [],
                                     "filterHandler": [Function],
                                     "filterParams": Object {},
+                                    "forceColumns": undefined,
                                     "internalHooks": "rc-table-internal-hook",
                                     "internalRefs": Object {
                                       "body": Object {
@@ -901,7 +906,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                         </div>,
                                       },
                                     },
-                                    "isResizableColumns": true,
+                                    "isResizableColumns": false,
                                     "loading": false,
                                     "loadingRows": Object {},
                                     "mergedExpandedKeys": Set {},
@@ -924,7 +929,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                     "size": "small",
                                     "sortHandler": [Function],
                                     "sortParams": Object {},
-                                    "sortable": true,
+                                    "sortable": false,
                                     "stickyOffsets": Object {
                                       "left": Array [
                                         0,
