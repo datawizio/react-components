@@ -30,6 +30,7 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
         </Row>
       </div>
     }
+    overlayClassName="AppSwitcher__dropdown"
     placement="bottomCenter"
     trigger={
       Array [
@@ -41,7 +42,7 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
       mouseEnterDelay={0.15}
       mouseLeaveDelay={0.1}
       overlay={[Function]}
-      overlayClassName=""
+      overlayClassName="AppSwitcher__dropdown"
       placement="bottomCenter"
       prefixCls="ant-dropdown"
       transitionName="slide-up"
@@ -187,7 +188,7 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
         overlay={[Function]}
         popup={[Function]}
         popupAlign={Object {}}
-        popupClassName=""
+        popupClassName="AppSwitcher__dropdown"
         popupPlacement="bottomCenter"
         popupStyle={Object {}}
         popupTransitionName="slide-up"
