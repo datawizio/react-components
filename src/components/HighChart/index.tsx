@@ -54,6 +54,7 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
 
   const chartRef = useRef<Highcharts.Chart>();
   const containerRef = useRef<HTMLDivElement>();
+  const firstTime = useRef<boolean>(true);
 
   const height = useMemo(() => {
     const heightByConfig = config && config.chart && config.chart.height;
@@ -61,23 +62,11 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
   }, [config]);
 
   useEffect(() => {
-    if (!loading && responsible && containerRef.current) {
-      return resizeDetector(
-        containerRef.current,
-        async () => {
-          containerRef.current.style.visibility = "visible";
-          if (chartRef.current) await chartRef.current.setSize();
-        },
-        resizeTimeout
-      );
-    }
-  }, [resizeTimeout, responsible, chartRef, loading, containerRef.current]);
-
-  useEffect(() => {
     if (containerRef.current) {
-      if (responsible) {
+      if (responsible && firstTime.current) {
         containerRef.current.style.visibility = "hidden";
       }
+
       chartRef.current = Highcharts[constructorType](
         containerRef.current,
         config || { title: { text: "" } }
@@ -85,12 +74,27 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
     }
 
     return () => {
+      firstTime.current = true;
       if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null;
       }
     };
   }, [config, constructorType]);
+
+  useEffect(() => {
+    if (!loading && responsible && containerRef.current) {
+      return resizeDetector(
+        containerRef.current,
+        async () => {
+          firstTime.current = false;
+          containerRef.current.style.visibility = "visible";
+          if (chartRef.current) await chartRef.current.setSize();
+        },
+        resizeTimeout
+      );
+    }
+  }, [resizeTimeout, responsible, chartRef, loading, containerRef.current]);
 
   useImperativeHandle(ref, () => ({
     get chart() {

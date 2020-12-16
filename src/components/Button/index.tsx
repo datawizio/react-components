@@ -10,13 +10,23 @@ import "./index.less";
 export interface ButtonProps extends AntButtonProps {
   /** Отображать кнопку с границей или без */
   border?: boolean;
+
+  highlight?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ border, className, ...props }) => {
+const Button: React.FC<ButtonProps> = ({
+  border,
+  highlight,
+  className,
+  ...props
+}) => {
   return (
     <AntButton
       {...props}
-      className={clsx("dw-btn", className, { "no-border": !border })}
+      className={clsx("dw-btn", className, {
+        "no-border": !border,
+        "highlight": highlight
+      })}
     />
   );
 };

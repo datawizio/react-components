@@ -10,14 +10,16 @@ export interface LoaderProps {
    * Show/hide loader
    */
   loading?: boolean;
+  className?: string;
 }
 
-const Loader: React.FC<LoaderProps> = ({ loading, children }) => {
+const Loader: React.FC<LoaderProps> = ({ loading, className, children }) => {
   return (
     <Spin
       spinning={loading}
       className="datawiz-loader"
       indicator={<LoadingOutlined />}
+      wrapperClassName={className}
     >
       {children}
     </Spin>

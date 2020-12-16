@@ -370,8 +370,9 @@ export default class TransferList extends React.PureComponent<
       target: { value: filterValue }
     } = e;
     const { direction, value, local } = this.props;
-
-    this.bodyRef.current.resetPage();
+    if (this.bodyRef.current) {
+      this.bodyRef.current.resetPage();
+    }
 
     if (isLocalDataSource(value.include, direction, local)) {
       this.setState({ filterValue, page: 1 });
