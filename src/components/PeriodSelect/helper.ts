@@ -20,11 +20,11 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
     endDate: null
   };
   switch (date) {
-    case "today":
+    case "last_update_date":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(1, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "day");
       break;
-    case "last_day":
+    case "penultimate_update_date":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(2, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(2, "day");
       break;
@@ -140,11 +140,11 @@ export const getPeriod = ({
   };
 
   switch (periodKey) {
-    case "today":
+    case "last_update_date":
       newPeriod.startDate = dayjs(clientDate);
       newPeriod.endDate = dayjs(clientDate);
       break;
-    case "last_day":
+    case "penultimate_update_date":
       const lastDay = dayjs(clientDate).subtract(1, "day");
       newPeriod.startDate = lastDay;
       newPeriod.endDate = lastDay;
@@ -195,9 +195,9 @@ export const getPeriod = ({
       break;
     case "all_time":
       let startDate;
-      const today = dayjs().format("YYYY-MM-DD");
-      if (clientStartDate > today) {
-        startDate = today;
+      const last_update_date = dayjs().format("YYYY-MM-DD");
+      if (clientStartDate > last_update_date) {
+        startDate = last_update_date;
       } else {
         startDate = clientStartDate;
       }

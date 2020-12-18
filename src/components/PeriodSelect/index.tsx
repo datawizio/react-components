@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useContext } from "react";
-import { Select, DatePicker } from "antd";
+import { Select } from "antd";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
@@ -18,6 +18,7 @@ import {
 } from "./helper";
 import { PeriodSelectProps } from "./types";
 import { usePeriodSelect } from "./usePeriodSelect";
+import { DatePicker } from "../..";
 import "./index.less";
 
 dayjs.extend(quarterOfYear);

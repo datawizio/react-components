@@ -16,7 +16,7 @@ export const PREV_PERIOD_OPTIONS = [
 ];
 
 export const PERIOD_AVAILABLE = {
-  today: [
+  last_update_date: [
     "previous",
     "prev_last_week",
     "prev_last_month",
@@ -24,7 +24,7 @@ export const PERIOD_AVAILABLE = {
     "prev_last_year",
     "prev_date"
   ],
-  last_day: [
+  penultimate_update_date: [
     "previous",
     "prev_last_week",
     "prev_last_month",

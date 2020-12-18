@@ -11,8 +11,8 @@ export interface IDateConfig {
 }
 
 export type PeriodEnum =
-  | "today"
-  | "last_day"
+  | "last_update_date"
+  | "penultimate_update_date"
   | "last_7_days"
   | "prev_week"
   | "week_begin"
