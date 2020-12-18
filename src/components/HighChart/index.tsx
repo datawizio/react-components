@@ -74,7 +74,7 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
     }
 
     return () => {
-      firstTime.current = true;
+      // firstTime.current = true;
       if (chartRef.current) {
         chartRef.current.destroy();
         chartRef.current = null;
