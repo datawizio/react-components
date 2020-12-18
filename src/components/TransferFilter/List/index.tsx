@@ -360,7 +360,9 @@ export default class TransferList extends React.PureComponent<
     }
     if (direction === "right") {
       const set = new Set(value.exclude);
-      return dataSource.filter(item => !set.has(item.key));
+      return dataSource.filter(
+        item => !set.has(item.key) && this.matchFilter(item)
+      );
     }
     return dataSource;
   }
@@ -406,7 +408,9 @@ export default class TransferList extends React.PureComponent<
 
   matchFilter = (item: TransferFilterItem) => {
     const { filterValue } = this.state;
-    return item.title.indexOf(filterValue) >= 0;
+    return (
+      item.title.toLowerCase().indexOf(filterValue.trim().toLowerCase()) >= 0
+    );
   };
 
   getTotalCount(filteredItems: any[]) {

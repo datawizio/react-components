@@ -14,12 +14,15 @@ export const ButtonAddAll: React.FC<ButtonAddAllProps> = ({
 }) => {
   const handleClick = e => {
     e.stopPropagation();
-    onClick(
-      node.children.map(item => ({
-        key: item.key as string,
-        title: item.sourceTitle as string
-      }))
-    );
+    const children = [];
+    node.children.forEach(item => {
+      if (!item.disabled)
+        children.push({
+          key: item.key as string,
+          title: item.sourceTitle as string
+        });
+    });
+    onClick(children);
   };
 
   return node && node.children && node.children.length > 0 ? (

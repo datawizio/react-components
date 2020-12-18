@@ -22,6 +22,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     <Popover
       trigger="click"
       overlayClassName="color-picker-popover"
+      destroyTooltipOnHide
       content={
         <SketchPicker
           color={value ?? "#FFF"}
