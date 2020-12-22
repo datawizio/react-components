@@ -22,6 +22,7 @@ export type FCTable = {
 type _OverwrittenTableProps<RT> = {
   columns?: Array<IColumn<RT>>;
   dataSource?: DataSourceType;
+
   locale?: {
     total: string;
   } & TableLocale;
@@ -35,6 +36,7 @@ export interface TableProps<RT = any>
   searchValue?: string;
 
   async?: boolean;
+  showAllColumns?: boolean;
   sortable?: boolean;
   forceColumns?: boolean;
   showSizeChanger?: boolean;

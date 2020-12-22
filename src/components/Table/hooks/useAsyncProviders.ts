@@ -15,7 +15,9 @@ function useAsyncProviders(
     if (dataProvider) {
       const data = await dataProvider(state);
       if (first) {
-        data.visibleColumnsKeys = getVisibleColumns(data.columns);
+        data.visibleColumnsKeys = data.showAllColumns
+          ? []
+          : getVisibleColumns(data.columns);
       }
       dispatch({ type: "update", payload: data });
     }
