@@ -51,7 +51,7 @@ function getVisibleColumns(columns: Array<IColumn>) {
       }
       if (isParent) {
         flatList = false;
-        result = result.concat(getVisibleColumns(column.children));
+        result = result.concat(dig(column.children));
       }
     });
     return result;
@@ -61,7 +61,6 @@ function getVisibleColumns(columns: Array<IColumn>) {
   if (flatList) {
     return result.length === columns.length ? [] : result;
   }
-
   return result;
 }
 
