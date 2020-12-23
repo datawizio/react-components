@@ -6,7 +6,8 @@ const basicDTypesConfig = {
     toString: value => value && value.toLocaleString(),
     filter: (value, filterBy) => value === filterBy,
     search: (value, searchBy) => value.toString().includes(searchBy),
-    render: value => value && value.toLocaleString()
+    render: value =>
+      value && value.toLocaleString(undefined, { maximumFractionDigits: 4 })
   } as DTypeConfig<number>,
 
   "boolean": {
