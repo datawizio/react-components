@@ -89,11 +89,37 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       }
     });
 
+    if (selectedItems.length == 0) {
+      dispatch({
+        type: "setState",
+        payload: {
+          sourceChecked: [],
+          sourceCheckedObj: {}
+        }
+      });
+
+      return;
+    }
+
     dispatch({
       type: "setState",
       payload: {
         sourceChecked,
         sourceCheckedObj
+      }
+    });
+  };
+
+  const onRightItemsSelect = (selectedItems: ICheckedItem[]) => {
+    const targetChecked = [];
+    selectedItems.forEach(item => {
+      targetChecked.push(item.key);
+    });
+
+    dispatch({
+      type: "setState",
+      payload: {
+        targetChecked
       }
     });
   };
@@ -260,6 +286,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
         loadData={targetLoadData}
         loadDataByIds={loadDataByIds}
         onItemSelect={onRightItemSelect}
+        onItemsSelect={onRightItemsSelect}
       />
     </div>
   );

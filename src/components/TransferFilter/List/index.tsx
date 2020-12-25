@@ -192,6 +192,65 @@ export default class TransferList extends React.PureComponent<
     });
   };
 
+  getCheckStatus(filteredItems: TransferFilterItem[]) {
+    const { include, exclude } = this.props.value;
+    const isLeftDirection = this.props.direction === "left";
+
+    const disableAll =
+      isLeftDirection && (include === null || include.length > 0);
+    const disabledKeys = new Set(isLeftDirection ? exclude : []);
+
+    const { checkedKeys } = this.props;
+    const checkedSet = new Set(checkedKeys);
+    if (checkedKeys.length === 0 || disableAll) {
+      return "none";
+    }
+    if (
+      filteredItems.every(
+        item => checkedSet.has(item.key) || disabledKeys.has(item.key)
+      )
+    ) {
+      return "all";
+    }
+    return "part";
+  }
+
+  getCheckBox(
+    filteredItems: TransferFilterItem[],
+    onItemSelectAll: (dataSource: ICheckedItem[]) => void,
+    showSelectAll?: boolean,
+    disabled?: boolean
+  ): false | JSX.Element {
+    const { include, exclude } = this.props.value;
+    const isLeftDirection = this.props.direction === "left";
+
+    const checkStatus = this.getCheckStatus(filteredItems);
+    const checkedAll = checkStatus === "all";
+
+    const disableAll =
+      isLeftDirection && (include === null || include.length > 0);
+    const disabledKeys = new Set(isLeftDirection ? exclude : []);
+
+    const checkAllCheckbox = showSelectAll !== false && (
+      <Checkbox
+        disabled={disableAll}
+        checked={checkedAll}
+        indeterminate={checkStatus === "part"}
+        onChange={() => {
+          const items = checkedAll
+            ? []
+            : filteredItems
+                .filter(item => !disabledKeys.has(item.key))
+                .map(({ key, title }) => ({ key, title }));
+          // Only select enabled items
+          onItemSelectAll(items);
+        }}
+      />
+    );
+
+    return checkAllCheckbox;
+  }
+
   handleFiltersChange(filters: any) {
     this.setState(
       {
@@ -451,15 +510,16 @@ export default class TransferList extends React.PureComponent<
       disabled,
       showSearch,
       actions,
-      type
+      showSelectAll,
+      type,
+      onItemsSelect
     } = this.props;
-
-    // const totalCount = this.getTotalCount();
 
     // ====================== Get filtered, checked item list ======================
 
     const filteredItems = this.getFilteredItems(dataSource);
-
+    const totalCount =
+      type === "list" ? this.getTotalCount(filteredItems) : null;
     // ================================= List Body =================================
 
     const listBody = this.getListBody(
@@ -476,12 +536,12 @@ export default class TransferList extends React.PureComponent<
 
     // ================================ List Footer ================================
 
-    // const checkAllCheckbox = this.getCheckBox(
-    //   filteredItems,
-    //   onItemSelectAll,
-    //   showSelectAll,
-    //   disabled
-    // );
+    const checkAllCheckbox = this.getCheckBox(
+      filteredItems,
+      onItemsSelect,
+      showSelectAll,
+      disabled
+    );
 
     // ================================== Render ===================================
     return (
@@ -495,9 +555,10 @@ export default class TransferList extends React.PureComponent<
 
           {/* Header */}
           <div className={`${prefixCls}-header`}>
-            {/* {checkAllCheckbox} */}
+            {checkAllCheckbox}
             <span className={`${prefixCls}-header-selected`}>
               {selectedText}: {checkedKeys.length}
+              {totalCount !== null && ` / ${totalCount}`}
             </span>
           </div>
 
