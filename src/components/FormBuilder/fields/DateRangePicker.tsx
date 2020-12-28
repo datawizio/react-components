@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 import { Form } from "antd";
 import DateRangePicker from "../../DateRangePicker";
@@ -14,6 +14,7 @@ export interface DateRangePickerParams {
 export interface FieldDateRangePickerProps
   extends FormFieldProps<DateRangePickerParams> {
   format?: string;
+  storeFormat?: string;
   maxDate?: string;
   minDate?: string;
   defaultPickerValue?: any;
@@ -21,11 +22,13 @@ export interface FieldDateRangePickerProps
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
   format: string;
+  storeFormat?: string;
   value: DateRangePickerParams;
 }
 
 const Field: React.FC<FieldProps> = ({
   format,
+  storeFormat,
   value,
   onChange,
   ...restProps
@@ -40,8 +43,10 @@ const Field: React.FC<FieldProps> = ({
       onChange={onChange}
       onClear={handleClear}
       format={format}
-      dateFrom={value.from}
-      dateTo={value.to}
+      dateFrom={
+        value.from && storeFormat ? dayjs(value.from, storeFormat) : value.from
+      }
+      dateTo={value.to && storeFormat ? dayjs(value.to, storeFormat) : value.to}
       fullWidth
       {...restProps}
     />
