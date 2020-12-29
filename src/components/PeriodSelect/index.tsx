@@ -141,7 +141,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           {PERIOD_OPTIONS.map((option, i) => {
             return (
               <Option key={i} value={option}>
-                {translate(option.toUpperCase())}
+                {translate(
+                  option === "date" ? "SET_DATE" : option.toUpperCase()
+                )}
               </Option>
             );
           })}
