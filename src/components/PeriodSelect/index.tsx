@@ -35,6 +35,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     periodLabel,
     prevPeriodLabel,
     dateConfig,
+    format,
     onChange
   } = props;
 
@@ -155,6 +156,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             onChange={onDataRangeChange}
             disabledDate={disabledDates}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            format={format}
           />
         )}
       </div>
@@ -179,6 +181,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             onChange={onPrevDataRangeChange}
             disabledDate={disabledDates}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            format={format}
           />
         )}
       </div>

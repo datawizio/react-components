@@ -35,6 +35,7 @@ export type PrevPerionEnum =
   | "prev_date";
 
 export interface PeriodSelectProps {
+  format?: string;
   clientDate?: string;
   clientStartDate?: string;
   periodLabel?: string;
