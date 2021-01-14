@@ -125,6 +125,15 @@ export default class TransferList extends React.PureComponent<
         }
       }
     }
+
+    if (this.props.direction === "right") {
+      if (
+        this.props.value.include.length === 0 &&
+        this.props.value.exclude !== prevProps.value.exclude
+      ) {
+        this.loadPage();
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -321,6 +330,7 @@ export default class TransferList extends React.PureComponent<
       page,
       type,
       search: filterValue,
+      exclude: value.exclude,
       ...value,
       ...filters,
       full: direction === "right" ? true : false
@@ -417,12 +427,15 @@ export default class TransferList extends React.PureComponent<
     if (isLocalDataSource(value.include, direction, local)) {
       return dataSource.filter(item => this.matchFilter(item));
     }
-    if (direction === "right") {
-      const set = new Set(value.exclude);
-      return dataSource.filter(
-        item => !set.has(item.key) && this.matchFilter(item)
-      );
-    }
+    // if (direction === "right") {
+    //   const set = new Set(value.exclude);
+    //   const res = dataSource.filter(
+    //     item => !set.has(item.key) && this.matchFilter(item)
+    //   );
+    //   console.log(res);
+    //   return res;
+    // }
+
     return dataSource;
   }
 
