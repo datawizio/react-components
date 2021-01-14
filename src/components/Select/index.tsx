@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useMemo } from "react";
-
-import { Select as AntSelect } from "antd";
+import { Select as AntSelect, Tag } from "antd";
+import { useDebouncedCallback } from "use-debounce";
 
 import { FCSelect } from "./types";
+import { getUniqueItemsObj } from "../../utils/data/dataHelpers";
 
 import "./index.less";
 
@@ -26,32 +27,34 @@ const Select: FCSelect = props => {
 
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
+  const [rawOptions, setRawOptions] = useState({});
   const [page, setPage] = useState(0);
+  const [isLast, setIsLast] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
-  const loadPage = useCallback(
-    async (searchValue, page = 0) => {
-      if (!loadData) return;
-      if (!page) setOptions([]);
+  const [loadPage] = useDebouncedCallback(async (searchValue, page = 0) => {
+    if (!loadData) return;
 
-      setPage(page);
-      setLoading(true);
+    setLoading(true);
 
+    try {
       const data = await loadData(searchValue, page);
-      setOptions(options.concat(dataToOptions(data)));
 
-      setLoading(false);
-    },
-    [loadData, setPage, setLoading, setOptions, options]
-  );
+      setRawOptions(getUniqueItemsObj(data, rawOptions, "value", "text"));
 
-  const handleDropdownVisibleChange = useCallback(
-    (open: boolean) => {
-      if (open && asyncData) {
-        loadPage(0);
+      if (page) {
+        setOptions(options.concat(dataToOptions(data)));
+      } else {
+        setOptions(dataToOptions(data));
       }
-    },
-    [asyncData, loadPage]
-  );
+
+      setPage(page as any);
+    } catch (e) {
+      setIsLast(true);
+    } finally {
+      setLoading(false);
+    }
+  }, 500);
 
   const handlePopupScroll = useCallback(
     e => {
@@ -59,35 +62,73 @@ const Select: FCSelect = props => {
 
       //debounce?
       if (loading) return;
-      if (target.scrollTop + target.offsetHeight >= target.scrollHeight - 100) {
-        loadPage(page + 1);
+      if (
+        target.scrollTop + target.offsetHeight >= target.scrollHeight - 100 &&
+        !isLast
+      ) {
+        loadPage(searchValue, page + 1);
       }
     },
     [loading, page, loadPage]
   );
 
-  const handleSearch = useCallback(() => {
-    loadPage(0);
-  }, [loadPage]);
+  const handleDropdownVisibleChange = useCallback(
+    (open: boolean) => {
+      if (open && asyncData) {
+        loadPage(searchValue, 0);
+      } else if (!open) {
+        setSearchValue("");
+        setOptions([]);
+      }
+    },
+    [asyncData, loadPage]
+  );
+
+  const handleSearch = useCallback(
+    searchString => {
+      setSearchValue(searchString);
+      setIsLast(false);
+      loadPage(searchString);
+    },
+    [loadPage]
+  );
 
   const searchProps = useMemo(
     () =>
       asyncData && withPagination
         ? {
+            searchValue,
             onSearch: handleSearch,
             filterOption: false,
             onPopupScroll: handlePopupScroll
           }
         : {},
-    [handleSearch, handlePopupScroll, withPagination, asyncData]
+    [handleSearch, handlePopupScroll, withPagination, asyncData, searchValue]
   );
 
+  const tagRender = props => {
+    const label =
+      typeof props.label === "string" ? props.label : rawOptions[props.value];
+
+    return (
+      <span className="ant-select-selection-item">
+        <Tag
+          closable={props.closable}
+          onClose={props.onClose}
+          className="ant-select-selection-item-content"
+        >
+          {label}
+        </Tag>
+      </span>
+    );
+  };
   return (
     <AntSelect
       {...restProps}
       {...searchProps}
       notFoundContent={loading ? loadingContent : notFoundContent}
       loading={loading}
+      tagRender={tagRender}
       onDropdownVisibleChange={asyncData ? handleDropdownVisibleChange : null}
     >
       {asyncData ? options : props.children}
