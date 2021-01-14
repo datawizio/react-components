@@ -22,6 +22,7 @@ const Select: FCSelect = props => {
     notFoundContent,
     loadData,
     withPagination,
+    useCustomTagRender,
     ...restProps
   } = props;
 
@@ -128,7 +129,7 @@ const Select: FCSelect = props => {
       {...searchProps}
       notFoundContent={loading ? loadingContent : notFoundContent}
       loading={loading}
-      tagRender={tagRender}
+      tagRender={useCustomTagRender ? tagRender : null}
       onDropdownVisibleChange={asyncData ? handleDropdownVisibleChange : null}
     >
       {asyncData ? options : props.children}

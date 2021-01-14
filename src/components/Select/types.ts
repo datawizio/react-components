@@ -21,6 +21,10 @@ export interface SelectProps<VT> extends AntSelectProps<VT> {
    * Подгрузка ассинхронных данных с пагинацией
    */
   withPagination?: boolean;
+  /**
+   * use custom tagRender
+   */
+  useCustomTagRender?: boolean;
 }
 
 export interface FCSelectProps extends React.FC<SelectProps<SelectValue>> {}
