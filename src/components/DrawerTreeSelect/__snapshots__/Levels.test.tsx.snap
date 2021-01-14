@@ -36,6 +36,7 @@ exports[`Levels Inner level render correctly 1`] = `
         },
       ]
     }
+    tagRender={[Function]}
     transitionName="slide-up"
     value="value"
   >
@@ -63,6 +64,7 @@ exports[`Levels Inner level render correctly 1`] = `
       }
       prefixCls="ant-select"
       removeIcon={<ForwardRef(CloseOutlined) />}
+      tagRender={[Function]}
       transitionName="slide-up"
       value="value"
     >
@@ -90,6 +92,7 @@ exports[`Levels Inner level render correctly 1`] = `
         }
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        tagRender={[Function]}
         transitionName="slide-up"
         value="value"
       >
@@ -355,6 +358,7 @@ exports[`Levels Inner level render correctly 1`] = `
                 removeIcon={<ForwardRef(CloseOutlined) />}
                 searchValue=""
                 showSearch={false}
+                tagRender={[Function]}
                 transitionName="slide-up"
                 value="value"
                 values={
@@ -464,6 +468,7 @@ exports[`Levels Inner level render correctly 1`] = `
                     removeIcon={<ForwardRef(CloseOutlined) />}
                     searchValue=""
                     showSearch={false}
+                    tagRender={[Function]}
                     transitionName="slide-up"
                     value="value"
                     values={
@@ -687,6 +692,7 @@ exports[`Levels Levels to match snapshot 1`] = `
           },
         ]
       }
+      tagRender={[Function]}
       transitionName="slide-up"
       value="value"
     >
@@ -714,6 +720,7 @@ exports[`Levels Levels to match snapshot 1`] = `
         }
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        tagRender={[Function]}
         transitionName="slide-up"
         value="value"
       >
@@ -741,6 +748,7 @@ exports[`Levels Levels to match snapshot 1`] = `
           }
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
+          tagRender={[Function]}
           transitionName="slide-up"
           value="value"
         >
@@ -1006,6 +1014,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue=""
                   showSearch={false}
+                  tagRender={[Function]}
                   transitionName="slide-up"
                   value="value"
                   values={
@@ -1115,6 +1124,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={false}
+                      tagRender={[Function]}
                       transitionName="slide-up"
                       value="value"
                       values={
