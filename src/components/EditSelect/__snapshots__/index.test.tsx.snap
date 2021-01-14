@@ -38,6 +38,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
       onDropdownVisibleChange={null}
       optionLabelProp="label"
       placeholder="placeholder"
+      tagRender={null}
       transitionName="slide-up"
     >
       <Select
@@ -58,6 +59,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
         placeholder="placeholder"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        tagRender={null}
         transitionName="slide-up"
       >
         <ForwardRef(Select)
@@ -78,6 +80,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
           placeholder="placeholder"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
+          tagRender={null}
           transitionName="slide-up"
         >
           <div
@@ -405,6 +408,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue=""
                   showSearch={false}
+                  tagRender={null}
                   transitionName="slide-up"
                   values={Array []}
                 >
@@ -498,6 +502,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={false}
+                      tagRender={null}
                       transitionName="slide-up"
                       values={Array []}
                     >
@@ -702,6 +707,7 @@ exports[`EditSelect component Simulate Input change 1`] = `
       onDropdownVisibleChange={null}
       optionLabelProp="label"
       placeholder="placeholder"
+      tagRender={null}
       transitionName="slide-up"
     >
       <Select
@@ -722,6 +728,7 @@ exports[`EditSelect component Simulate Input change 1`] = `
         placeholder="placeholder"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        tagRender={null}
         transitionName="slide-up"
       >
         <ForwardRef(Select)
@@ -742,6 +749,7 @@ exports[`EditSelect component Simulate Input change 1`] = `
           placeholder="placeholder"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
+          tagRender={null}
           transitionName="slide-up"
         >
           <div
@@ -1070,6 +1078,7 @@ exports[`EditSelect component Simulate Input change 1`] = `
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue="inputValue"
                   showSearch={false}
+                  tagRender={null}
                   transitionName="slide-up"
                   values={Array []}
                 >
@@ -1161,6 +1170,7 @@ exports[`EditSelect component Simulate Input change 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue="inputValue"
                       showSearch={false}
+                      tagRender={null}
                       transitionName="slide-up"
                       values={Array []}
                     >

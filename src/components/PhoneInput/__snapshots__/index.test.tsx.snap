@@ -41,6 +41,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           optionFilterProp="title"
           optionLabelProp="label"
           showSearch={true}
+          tagRender={null}
           transitionName="slide-up"
           value="UA"
         >
@@ -63,6 +64,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
+            tagRender={null}
             transitionName="slide-up"
             value="UA"
           >
@@ -85,6 +87,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
+              tagRender={null}
               transitionName="slide-up"
               value="UA"
             >
@@ -11563,6 +11566,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
+                      tagRender={null}
                       transitionName="slide-up"
                       value="UA"
                       values={
@@ -11677,6 +11681,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
                           showSearch={true}
+                          tagRender={null}
                           transitionName="slide-up"
                           value="UA"
                           values={
@@ -11959,6 +11964,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           optionFilterProp="title"
           optionLabelProp="label"
           showSearch={true}
+          tagRender={null}
           transitionName="slide-up"
           value="UA"
         >
@@ -11981,6 +11987,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
+            tagRender={null}
             transitionName="slide-up"
             value="UA"
           >
@@ -12003,6 +12010,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
+              tagRender={null}
               transitionName="slide-up"
               value="UA"
             >
@@ -23481,6 +23489,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
+                      tagRender={null}
                       transitionName="slide-up"
                       value="UA"
                       values={
@@ -23595,6 +23604,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
                           showSearch={true}
+                          tagRender={null}
                           transitionName="slide-up"
                           value="UA"
                           values={
