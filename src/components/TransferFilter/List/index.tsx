@@ -128,6 +128,7 @@ export default class TransferList extends React.PureComponent<
 
     if (this.props.direction === "right") {
       if (
+        this.props.value.include !== null &&
         this.props.value.include.length === 0 &&
         this.props.value.exclude !== prevProps.value.exclude
       ) {
