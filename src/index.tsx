@@ -22,6 +22,8 @@ export { default as Select } from "./components/Select";
 
 export { default as TopBar } from "./components/TopBar";
 
+export { default as StatusData } from "./components/StatusData";
+
 export { default as BackTop } from "./components/BackTop";
 
 export { default as ApiError } from "./components/ApiError";
