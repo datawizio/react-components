@@ -199,6 +199,7 @@ const SupportModal: React.FC<ISupportModal> = ({
           >
             <Select
               placeholder={translate("CHOOSE_PROBLEM")}
+              dropdownClassName="subjects-dropdown"
               onChange={value => handleFieldChange("subject", value)}
             >
               {subjectsList.map(item => (
