@@ -81,4 +81,25 @@ export const PERIOD_AVAILABLE = {
   date: ["previous", "prev_date"]
 };
 
+export const AVAILABLE_PERIODS_FOR_DATES = {
+  week: [
+    "previous",
+    "prev_last_week",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "prev_date"
+  ],
+  mounth: [
+    "previous",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "prev_date"
+  ],
+  quarter: ["previous", "prev_last_quarter", "prev_last_year", "prev_date"],
+  year: ["previous", "prev_last_year", "prev_date"],
+  date: ["previous", "prev_date"]
+};
+
 export const PERIOD_OPTIONS = Object.keys(PERIOD_AVAILABLE);

@@ -84,6 +84,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     } else {
       onChange(formatDateConfig(state));
     }
+    //eslint-disable-next-line
   }, [period, prevPeriod]);
 
   const handlePeriodChange = periodKey => {
@@ -190,8 +191,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 };
 
 PeriodSelect.defaultProps = {
-  clientDate: "2020-11-22",
-  clientStartDate: "2019-10-21",
+  clientDate: "2021-11-28",
+  clientStartDate: "2020-10-21",
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
   dateConfig: {}

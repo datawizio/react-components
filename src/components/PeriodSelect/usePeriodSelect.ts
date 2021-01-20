@@ -6,7 +6,12 @@ import {
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PREV_PERIOD
 } from "./constants";
-import { getDateArrayFromRange, getPeriod, getPrevPeriod } from "./helper";
+import {
+  getAvailablePeriodsForDates,
+  getDateArrayFromRange,
+  getPeriod,
+  getPrevPeriod
+} from "./helper";
 import { DateRangeType, PeriodEnum, PrevPerionEnum } from "./types";
 
 export interface IUsePeriodSelect {
@@ -142,6 +147,8 @@ function reducer(state: IUsePeriodSelect, action: any) {
         ...state,
         period,
         prevPeriod: isCustomPrevDate ? oldPrevPeriod : prevPeriod,
+        availblePrevPeriods: getAvailablePeriodsForDates(period),
+        selectedPrevPeriod: DEFAULT_PREV_PERIOD,
         isPickerEmpty: false
       };
     }
