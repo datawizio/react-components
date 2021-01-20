@@ -51,7 +51,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   } = getInitialDateConfig(dateConfig);
 
   const [state, dispatch] = usePeriodSelect({
-    availblePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
+    availablePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
     clientDate,
     clientStartDate,
     isPickerEmpty: false,
@@ -65,7 +65,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   });
 
   const {
-    availblePrevPeriods,
+    availablePrevPeriods,
     isPickerEmpty,
     isPrevPickerEmpty,
     showPeriodPicker,
@@ -119,9 +119,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
   const isDisabledOption = useCallback(
     option => {
-      return !availblePrevPeriods.includes(option);
+      return !availablePrevPeriods.includes(option);
     },
-    [availblePrevPeriods]
+    [availablePrevPeriods]
   );
 
   const disabledDates = current => {
@@ -133,7 +133,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     return false;
   };
 
-  const isDisabledPrevSelect = !availblePrevPeriods.length;
+  const isDisabledPrevSelect = !availablePrevPeriods.length;
 
   return (
     <div className="period-picker-wrapper">
