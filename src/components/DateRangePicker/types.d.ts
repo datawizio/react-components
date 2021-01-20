@@ -20,6 +20,7 @@ export type DateRangePickerProps = {
   defaultPresetUsed?: boolean;
   inputReadOnly?: boolean;
   onChange?: (a: any, b: any) => void;
+  isDisabledDate?: (date: Dayjs) => boolean;
 
   /**
    * Клик по крестику

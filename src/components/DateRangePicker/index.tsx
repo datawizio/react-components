@@ -12,6 +12,7 @@ const { RangePicker } = DatePicker;
 const DateRangePicker: IDateRangePicker = ({
   fullWidth,
   defaultPresetUsed,
+  isDisabledDate,
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -46,7 +47,7 @@ const DateRangePicker: IDateRangePicker = ({
     return [formatDate(props.maxDate), formatDate(props.minDate)];
   }, [props.maxDate, props.minDate, formatDate]);
 
-  const isDisabledDate = useCallback(
+  const isDisabledDateDefault = useCallback(
     date => {
       return (maxDate && date > maxDate) || (minDate && date < minDate);
     },
@@ -66,7 +67,7 @@ const DateRangePicker: IDateRangePicker = ({
       className={fullWidth ? "ant-picker-full-width" : ""}
       onChange={onChange}
       value={[dateFrom, dateTo]}
-      disabledDate={isDisabledDate}
+      disabledDate={isDisabledDate || isDisabledDateDefault}
     />
   );
 };

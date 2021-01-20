@@ -18,18 +18,21 @@ export interface FieldDateRangePickerProps
   maxDate?: string;
   minDate?: string;
   defaultPickerValue?: any;
+  isDisabledDate?: (current: Dayjs) => boolean;
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
   format: string;
   storeFormat?: string;
   value: DateRangePickerParams;
+  isDisabledDate?: (current: Dayjs) => boolean;
 }
 
 const Field: React.FC<FieldProps> = ({
   format,
   storeFormat,
   value,
+  isDisabledDate,
   onChange,
   ...restProps
 }) => {
@@ -47,6 +50,7 @@ const Field: React.FC<FieldProps> = ({
         value.from && storeFormat ? dayjs(value.from, storeFormat) : value.from
       }
       dateTo={value.to && storeFormat ? dayjs(value.to, storeFormat) : value.to}
+      isDisabledDate={isDisabledDate}
       fullWidth
       {...restProps}
     />
@@ -54,7 +58,7 @@ const Field: React.FC<FieldProps> = ({
 };
 
 export const FieldDateRangePicker: React.FC<FieldDateRangePickerProps> = React.memo(
-  ({ format, label, rules, name, onChange, ...restProps }) => {
+  ({ format, label, rules, name, onChange, isDisabledDate, ...restProps }) => {
     const handleChange = ([from, to]: [Dayjs, Dayjs]) => {
       onChange({ name, value: { from, to } });
     };
@@ -65,6 +69,7 @@ export const FieldDateRangePicker: React.FC<FieldDateRangePickerProps> = React.m
           //@ts-ignore
           onChange={handleChange}
           format={format}
+          isDisabledDate={isDisabledDate}
           {...restProps}
         />
       </Form.Item>
