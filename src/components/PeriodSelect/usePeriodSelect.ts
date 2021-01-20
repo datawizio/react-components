@@ -14,7 +14,7 @@ import {
 } from "./helper";
 import { DateRangeType, PeriodEnum, PrevPerionEnum } from "./types";
 
-export interface IUsePeriodSelect {
+export interface IUserPeriodSelect {
   selectedPeriod: PeriodEnum;
   selectedPrevPeriod: PrevPerionEnum;
   period: DateRangeType;
@@ -28,7 +28,7 @@ export interface IUsePeriodSelect {
   clientStartDate: string;
 }
 
-function reducer(state: IUsePeriodSelect, action: any) {
+function reducer(state: IUserPeriodSelect, action: any) {
   switch (action.type) {
     case "updatePeriod": {
       const { periodKey } = action.payload;
@@ -194,8 +194,8 @@ function reducer(state: IUsePeriodSelect, action: any) {
   }
 }
 
-export const usePeriodSelect = (initialState: IUsePeriodSelect) => {
+export const usePeriodSelect = (initialState: IUserPeriodSelect) => {
   const [state, dispatch] = useReducer<any>(reducer, initialState);
 
-  return [state as IUsePeriodSelect, dispatch as any];
+  return [state as IUserPeriodSelect, dispatch as any];
 };

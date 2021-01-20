@@ -13,7 +13,7 @@ import {
   PeriodEnum,
   PrevPerionEnum
 } from "./types";
-import { IUsePeriodSelect } from "./usePeriodSelect";
+import { IUserPeriodSelect } from "./usePeriodSelect";
 
 export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
   const newPrevPeriod = {
@@ -299,7 +299,7 @@ export const getInitialDateConfig = (
   };
 };
 
-export const formatDateConfig = (state: IUsePeriodSelect): IDateConfig => {
+export const formatDateConfig = (state: IUserPeriodSelect): IDateConfig => {
   return {
     datePicker: state.period,
     prevDatePicker: state.prevPeriod,
