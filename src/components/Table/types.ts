@@ -75,6 +75,7 @@ export interface TableProps<RT = any>
   };
 
   rowPrefix?: RowPrefix;
+  rowPrefixDeps?: (row: IRow) => any[];
 
   sortHandler?: SorterHandlerType;
   globalHandler?: GlobalHandlerType;

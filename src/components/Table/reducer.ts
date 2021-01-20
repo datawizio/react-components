@@ -355,10 +355,11 @@ export function reducer(state: TableState, action: Action): TableState {
         if (!Array.isArray(expandedRecord.children)) {
           delete data.children;
         }
-        expandedRecord = Object.assign(expandedRecord, data);
+        Object.keys(data).forEach(key => {
+          expandedRecord[key] = data[key];
+        });
         newState.dataSource = nextDataSource;
       }
-
       return {
         ...state,
         ...newState

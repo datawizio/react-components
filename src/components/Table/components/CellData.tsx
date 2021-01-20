@@ -18,7 +18,7 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
   const { value, row, column, xIndex, yIndex, columnLevel } = props;
   const {
     tableState: { dTypesConfig },
-    tableProps: { cellRenderProps, rowPrefix }
+    tableProps: { cellRenderProps, rowPrefix, rowPrefixDeps }
   } = useContext(TableContext);
 
   const typeConfig = useMemo(() => {
@@ -31,6 +31,8 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
       : value;
   }, [typeConfig, value, xIndex, cellRenderProps, column, row]);
 
+  const deps = rowPrefixDeps ? rowPrefixDeps(row) : [];
+
   const rowPrefixRender = useMemo(() => {
     return (
       rowPrefix &&
@@ -38,7 +40,7 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
       columnLevel === 1 &&
       rowPrefix(value, row, column, xIndex)
     );
-  }, [rowPrefix, value, xIndex, column, row, columnLevel, yIndex]);
+  }, [rowPrefix, value, xIndex, column, row, columnLevel, yIndex, ...deps]);
 
   return (
     <div className="dw-table__cell-data">
