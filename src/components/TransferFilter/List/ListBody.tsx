@@ -65,8 +65,8 @@ class ListBody extends React.Component<
     onItemSelect({ key: item.key, title: item.title }, !checked);
   };
 
-  onItemsSelect = (items: ICheckedItem[]) => {
-    this.props.onItemsSelect(items);
+  onItemsSelect = (items: ICheckedItem[], checked: boolean) => {
+    this.props.onItemsSelect(items, checked);
   };
 
   resetPage = () => {

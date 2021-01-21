@@ -16,7 +16,7 @@ export interface ListTreeProps {
   expandedKeys: string[];
   loadData: (node: EventDataNode) => Promise<void>;
   onItemSelect: (item: ICheckedItem) => void;
-  onItemsSelect: (items: ICheckedItem[]) => void;
+  onItemsSelect: (items: ICheckedItem[], checked: boolean) => void;
 }
 
 export const ListTree: React.FC<ListTreeProps> = ({
@@ -38,6 +38,7 @@ export const ListTree: React.FC<ListTreeProps> = ({
     disableAll,
     disabledKeys,
     enabledKeys,
+    selectedKeys,
     onItemsSelect,
     null,
     {

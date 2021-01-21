@@ -61,7 +61,7 @@ export interface TransferListProps {
   ) => Promise<TransferFilterLoadDataResponse>;
   loadDataByIds?: (params: any) => Promise<any>;
   onItemSelect: (item: ICheckedItem, check: boolean) => void;
-  onItemsSelect?: (items: ICheckedItem[]) => void;
+  onItemsSelect?: (items: ICheckedItem[], check: boolean) => void;
 }
 
 interface TransferListState {
@@ -227,7 +227,7 @@ export default class TransferList extends React.PureComponent<
 
   getCheckBox(
     filteredItems: TransferFilterItem[],
-    onItemSelectAll: (dataSource: ICheckedItem[]) => void,
+    onItemSelectAll: (dataSource: ICheckedItem[], check: boolean) => void,
     showSelectAll?: boolean,
     disabled?: boolean
   ): false | JSX.Element {
@@ -253,7 +253,7 @@ export default class TransferList extends React.PureComponent<
                 .filter(item => !disabledKeys.has(item.key))
                 .map(({ key, title }) => ({ key, title }));
           // Only select enabled items
-          onItemSelectAll(items);
+          onItemSelectAll(items, true);
         }}
       />
     );

@@ -17,7 +17,8 @@ function parseSimpleTreeData(
   disableAll: boolean,
   disabledSet: Set<string>,
   enabledSet: Set<string>,
-  onItemsSelect: (items: ICheckedItem[]) => void,
+  selectedSet: Set<string>,
+  onItemsSelect: (items: ICheckedItem[], checked: boolean) => void,
   { id, pId, rootPId }: SimpleModeConfig
 ): DataNode[] {
   const keyNodes = {};
@@ -33,7 +34,11 @@ function parseSimpleTreeData(
     clone.title = (
       <>
         {clone.title}
-        <ButtonAddAll node={keyNodes[key]} onClick={onItemsSelect} />
+        <ButtonAddAll
+          node={keyNodes[key]}
+          selected={selectedSet}
+          onClick={onItemsSelect}
+        />
       </>
     );
     return clone;
@@ -136,7 +141,8 @@ export default function useTreeData(
   disableAll: boolean,
   disabled: string[],
   enabled: string[],
-  onItemsSelect: (items: ICheckedItem[]) => void,
+  selected: string[],
+  onItemsSelect: (items: ICheckedItem[], checked: boolean) => void,
   children: React.ReactNode,
   {
     getLabelProp,
@@ -152,6 +158,7 @@ export default function useTreeData(
     formatTreeData?: InnerDataNode[];
     disableAll?: boolean;
     disabled?: string[];
+    selected?: number;
     enabled?: string[];
   }>({});
 
@@ -160,6 +167,7 @@ export default function useTreeData(
       cacheRef.current.treeData === treeData &&
       cacheRef.current.disableAll === disableAll &&
       cacheRef.current.disabled === disabled &&
+      cacheRef.current.selected === selected.length &&
       cacheRef.current.enabled === enabled
         ? cacheRef.current.formatTreeData
         : formatTreeData(
@@ -169,6 +177,7 @@ export default function useTreeData(
                   disableAll,
                   new Set(disabled),
                   new Set(enabled),
+                  new Set(selected),
                   onItemsSelect,
                   {
                     id: "id",
@@ -185,6 +194,7 @@ export default function useTreeData(
     cacheRef.current.disableAll = disableAll;
     cacheRef.current.disabled = disabled;
     cacheRef.current.enabled = enabled;
+    cacheRef.current.selected = selected.length;
   } else {
     cacheRef.current.formatTreeData =
       cacheRef.current.children === children
