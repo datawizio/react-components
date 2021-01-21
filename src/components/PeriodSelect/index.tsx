@@ -51,7 +51,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   } = getInitialDateConfig(dateConfig);
 
   const [state, dispatch] = usePeriodSelect({
-    availblePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
+    availablePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
     clientDate,
     clientStartDate,
     isPickerEmpty: false,
@@ -65,7 +65,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   });
 
   const {
-    availblePrevPeriods,
+    availablePrevPeriods,
     isPickerEmpty,
     isPrevPickerEmpty,
     showPeriodPicker,
@@ -84,6 +84,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     } else {
       onChange(formatDateConfig(state));
     }
+    //eslint-disable-next-line
   }, [period, prevPeriod]);
 
   const handlePeriodChange = periodKey => {
@@ -118,9 +119,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
   const isDisabledOption = useCallback(
     option => {
-      return !availblePrevPeriods.includes(option);
+      return !availablePrevPeriods.includes(option);
     },
-    [availblePrevPeriods]
+    [availablePrevPeriods]
   );
 
   const disabledDates = current => {
@@ -132,7 +133,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     return false;
   };
 
-  const isDisabledPrevSelect = !availblePrevPeriods.length;
+  const isDisabledPrevSelect = !availablePrevPeriods.length;
 
   return (
     <div className="period-picker-wrapper">
@@ -190,8 +191,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 };
 
 PeriodSelect.defaultProps = {
-  clientDate: "2020-11-22",
-  clientStartDate: "2019-10-21",
+  clientDate: "2021-11-28",
+  clientStartDate: "2020-10-21",
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
   dateConfig: {}

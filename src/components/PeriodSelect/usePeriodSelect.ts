@@ -6,10 +6,15 @@ import {
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PREV_PERIOD
 } from "./constants";
-import { getDateArrayFromRange, getPeriod, getPrevPeriod } from "./helper";
+import {
+  getAvailablePeriodsForDates,
+  getDateArrayFromRange,
+  getPeriod,
+  getPrevPeriod
+} from "./helper";
 import { DateRangeType, PeriodEnum, PrevPerionEnum } from "./types";
 
-export interface IUsePeriodSelect {
+export interface IUserPeriodSelect {
   selectedPeriod: PeriodEnum;
   selectedPrevPeriod: PrevPerionEnum;
   period: DateRangeType;
@@ -18,18 +23,18 @@ export interface IUsePeriodSelect {
   showPrevPeriodPicker: boolean;
   isPickerEmpty: boolean;
   isPrevPickerEmpty: boolean;
-  availblePrevPeriods: any;
+  availablePrevPeriods: any;
   clientDate: string;
   clientStartDate: string;
 }
 
-function reducer(state: IUsePeriodSelect, action: any) {
+function reducer(state: IUserPeriodSelect, action: any) {
   switch (action.type) {
     case "updatePeriod": {
       const { periodKey } = action.payload;
       const { clientDate, clientStartDate, period: oldPeriod } = state;
 
-      const availblePrevPeriods = PERIOD_AVAILABLE[periodKey];
+      const availablePrevPeriods = PERIOD_AVAILABLE[periodKey];
       const isCustomDate = periodKey === CUSTOM_PERIOD_KEY;
 
       const period = getPeriod({
@@ -50,7 +55,7 @@ function reducer(state: IUsePeriodSelect, action: any) {
         return {
           ...state,
           period,
-          availblePrevPeriods,
+          availablePrevPeriods,
           showPeriodPicker: true,
           selectedPeriod: periodKey
         };
@@ -59,7 +64,7 @@ function reducer(state: IUsePeriodSelect, action: any) {
       return {
         ...state,
         period,
-        availblePrevPeriods,
+        availablePrevPeriods,
         prevPeriod,
         showPeriodPicker: false,
         showPrevPeriodPicker: false,
@@ -142,6 +147,8 @@ function reducer(state: IUsePeriodSelect, action: any) {
         ...state,
         period,
         prevPeriod: isCustomPrevDate ? oldPrevPeriod : prevPeriod,
+        availablePrevPeriods: getAvailablePeriodsForDates(period),
+        selectedPrevPeriod: DEFAULT_PREV_PERIOD,
         isPickerEmpty: false
       };
     }
@@ -187,8 +194,8 @@ function reducer(state: IUsePeriodSelect, action: any) {
   }
 }
 
-export const usePeriodSelect = (initialState: IUsePeriodSelect) => {
+export const usePeriodSelect = (initialState: IUserPeriodSelect) => {
   const [state, dispatch] = useReducer<any>(reducer, initialState);
 
-  return [state as IUsePeriodSelect, dispatch as any];
+  return [state as IUserPeriodSelect, dispatch as any];
 };

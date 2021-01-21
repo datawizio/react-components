@@ -4,7 +4,8 @@ import {
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PERIOD,
   DEFAULT_PREV_PERIOD,
-  FORMATTED_PATTERN
+  FORMATTED_PATTERN,
+  AVAILABLE_PERIODS_FOR_DATES
 } from "./constants";
 import {
   DateRangeType,
@@ -12,7 +13,7 @@ import {
   PeriodEnum,
   PrevPerionEnum
 } from "./types";
-import { IUsePeriodSelect } from "./usePeriodSelect";
+import { IUserPeriodSelect } from "./usePeriodSelect";
 
 export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
   const newPrevPeriod = {
@@ -298,7 +299,7 @@ export const getInitialDateConfig = (
   };
 };
 
-export const formatDateConfig = (state: IUsePeriodSelect): IDateConfig => {
+export const formatDateConfig = (state: IUserPeriodSelect): IDateConfig => {
   return {
     datePicker: state.period,
     prevDatePicker: state.prevPeriod,
@@ -313,4 +314,30 @@ export const checkIsEmptyPeriod = (period: DateRangeType): boolean => {
 
 export const getDateArrayFromRange = (dateRange: DateRangeType) => {
   return [dayjs(dateRange.startDate), dayjs(dateRange.endDate)];
+};
+
+export const getAvailablePeriodsForDates = (dateRange: DateRangeType) => {
+  const weekLength = 7;
+  const daysDiff = dayjs(dateRange.endDate).diff(dateRange.startDate, "day");
+  const mounthLength = dayjs(dateRange.startDate).daysInMonth();
+
+  const startQuarter = dayjs(dateRange.startDate).startOf("quarter");
+  const endQuarter = dayjs(dateRange.startDate).endOf("quarter");
+  const quarterLength = dayjs(endQuarter).diff(startQuarter, "day") + 1;
+
+  const startYear = dayjs(dateRange.startDate).startOf("year");
+  const endYear = dayjs(dateRange.startDate).endOf("year");
+  const yearLength = Math.abs(dayjs(endYear).diff(startYear, "day") + 1);
+
+  if (daysDiff < yearLength && daysDiff > quarterLength) {
+    return AVAILABLE_PERIODS_FOR_DATES["year"];
+  } else if (daysDiff < quarterLength && daysDiff >= mounthLength) {
+    return AVAILABLE_PERIODS_FOR_DATES["quarter"];
+  } else if (daysDiff < mounthLength && daysDiff >= weekLength) {
+    return AVAILABLE_PERIODS_FOR_DATES["mounth"];
+  } else if (daysDiff < weekLength) {
+    return AVAILABLE_PERIODS_FOR_DATES["week"];
+  }
+
+  return AVAILABLE_PERIODS_FOR_DATES["date"];
 };
