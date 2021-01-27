@@ -1,5 +1,7 @@
 export { default as Help } from "./components/Help";
 
+export { default as Polling } from "./components/Polling";
+
 export { default as List } from "./components/List";
 
 export { default as Menu } from "./components/Menu";
