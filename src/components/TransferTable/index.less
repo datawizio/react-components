@@ -14,3 +14,17 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .transfer-table {
+    display: flex;
+    flex-direction: column;
+    .ant-transfer-list {
+      max-width: unset !important;
+      width: 100% !important;
+    }
+    .ant-transfer-operation {
+      transform: rotate(90deg);
+    }
+  }
+}
