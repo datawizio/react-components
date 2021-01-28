@@ -70,8 +70,10 @@ const Polling: React.FC<PollingProps> = ({ questions, onSubmit }) => {
 
   const submit = useCallback(
     (mark = null, polled = true) => {
-      const step = steps.find(step => step.active);
-      if (!step) return;
+      const stepIdx = steps.findIndex(step => step.active);
+      if (stepIdx === -1) return;
+
+      const step = steps[stepIdx];
 
       const payload: PollingPayload = {
         polling_template: step.polling_template,
@@ -91,9 +93,6 @@ const Polling: React.FC<PollingProps> = ({ questions, onSubmit }) => {
       setTextValue("");
 
       if (!pollingShown) return;
-
-      const stepIdx = steps.findIndex((el: PollingStep) => el.id === step.id);
-      if (stepIdx === -1) return;
 
       polled && goToNextStep(stepIdx);
     },
