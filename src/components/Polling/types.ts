@@ -1,21 +1,20 @@
 export interface PollingProps {
   questions: PollingQuestion[];
-  onSubmit: (payload: PollingPayload) => any;
+  onSubmit: (payload: PollingPayload) => void;
+}
+
+export interface StepProps {
+  step: PollingStep;
+  onSubmit: (value?: number | string | null, polled?: boolean) => void;
 }
 
 export interface PollingQuestion {
   question_key: string;
   polling_template: number;
   feedback_type: string;
-  frequency_in_days?: number;
-  first_request_after_days?: number;
 }
 
-export interface PollingStep {
-  question_key: string;
-  polling_template: number;
-  feedback_type: string;
-  active: boolean;
+export interface PollingStep extends PollingQuestion {
   id: string;
   mark?: number | null;
   comment?: string;
