@@ -42,6 +42,7 @@ const Polling: React.FC<PollingProps> = ({ questions, onSubmit }) => {
     });
 
     setSteps(result);
+    setPollingShown(!!result.length);
   }, [questions]);
 
   const goToNextStep = useCallback(
@@ -81,7 +82,7 @@ const Polling: React.FC<PollingProps> = ({ questions, onSubmit }) => {
       };
 
       if (step.feedback_type === "mark" && polled) {
-        payload.mark = step.mark = mark;
+        payload.mark = mark;
       }
 
       if (step.feedback_type === "text" && polled) {
