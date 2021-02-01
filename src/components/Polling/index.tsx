@@ -11,7 +11,12 @@ import {
 } from "./types";
 import "./index.less";
 
-const Polling: React.FC<PollingProps> = ({ questions, onSubmit }) => {
+const Polling: React.FC<PollingProps> = ({
+  questions,
+  onSubmit,
+  onPollingHide,
+  onPollingShow
+}) => {
   const { t } = useTranslation();
   const [activeStepIdx, setActiveStepIdx] = useState<number>(0);
   const [pollingShown, setPollingShown] = useState<boolean>(!!questions.length);
@@ -85,6 +90,10 @@ const Polling: React.FC<PollingProps> = ({ questions, onSubmit }) => {
   useEffect(() => {
     setPollingShown(!!steps.length);
   }, [steps]);
+
+  useEffect(() => {
+    pollingShown ? onPollingShow() : onPollingHide();
+  }, [onPollingHide, onPollingShow, pollingShown]);
 
   return pollingShown ? (
     <Row className="polling-container" key={steps[activeStepIdx].id}>
