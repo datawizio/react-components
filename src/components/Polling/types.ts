@@ -1,8 +1,8 @@
 export interface PollingProps {
   questions: PollingQuestion[];
   onSubmit: (payload: PollingPayload) => void;
-  onPollingHide?: () => any;
-  onPollingShow?: () => any;
+  onPollingHide?: () => void;
+  onPollingShow?: () => void;
 }
 
 export interface StepProps {
