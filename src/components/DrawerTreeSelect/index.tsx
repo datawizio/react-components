@@ -439,6 +439,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [closeDrawer, value, multiple, dispatch]);
 
   const handlerDrawerSubmit = useCallback(() => {
+    if (searchValue.current && remoteSearch) {
+      searchValue.current = "";
+      internalLoadData();
+    }
     closeDrawer();
     dispatch({
       type: "drawerSubmit"
