@@ -92,7 +92,9 @@ const Polling: React.FC<PollingProps> = ({
   }, [steps]);
 
   useEffect(() => {
-    pollingShown ? onPollingShow() : onPollingHide();
+    pollingShown
+      ? onPollingShow && onPollingShow()
+      : onPollingHide && onPollingHide();
   }, [onPollingHide, onPollingShow, pollingShown]);
 
   return pollingShown ? (
