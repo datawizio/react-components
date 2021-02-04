@@ -9,10 +9,11 @@ export const FieldPassword: React.FC<FieldTextProps> = React.memo(
   ({ label, rules, name, placeholder, onChange }) => {
     const handleFieldChange = useCallback(
       ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({
-          name,
-          value
-        });
+        onChange &&
+          onChange({
+            name,
+            value
+          });
       },
       [onChange]
     );

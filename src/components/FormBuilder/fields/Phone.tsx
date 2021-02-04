@@ -35,7 +35,7 @@ export const FieldPhone: React.FC<FieldPhoneProps> = ({
   }, [rules, translate]);
 
   const handleChange = (value: string) => {
-    onChange({ name, value });
+    onChange && onChange({ name, value });
   };
 
   return (

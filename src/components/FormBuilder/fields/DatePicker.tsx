@@ -9,7 +9,7 @@ import { FieldDatePickerProps } from "../types";
 export const FieldDatePicker: React.FC<FieldDatePickerProps> = React.memo(
   ({ format, label, rules, name, placeholder, fullWidth, onChange }) => {
     const handleChange = (value: Dayjs) => {
-      onChange({ name, value });
+      onChange && onChange({ name, value });
     };
 
     return (

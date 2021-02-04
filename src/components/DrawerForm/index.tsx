@@ -18,6 +18,7 @@ export interface DrawerFormProps {
   loading?: boolean;
   style?: object;
   width?: number;
+  convertState?: (state: any) => any;
   onClose?: () => void;
   onSubmit?: () => void;
 }
@@ -36,6 +37,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   formStore,
   loading,
   width,
+  convertState,
   onClose,
   onSubmit
 }) => {
@@ -45,6 +47,9 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
     () =>
       formStore && formStore.watch
         ? formStore.watch(state => {
+            if (convertState) {
+              state = convertState(state);
+            }
             form.setFieldsValue(state);
           })
         : noop,
