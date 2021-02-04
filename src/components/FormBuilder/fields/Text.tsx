@@ -9,10 +9,11 @@ export const FieldText: React.FC<FieldTextProps> = React.memo(
   ({ onChange, rules, name, label, ...props }) => {
     const handleFieldChange = useCallback(
       ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({
-          name,
-          value
-        });
+        onChange &&
+          onChange({
+            name,
+            value
+          });
       },
       [onChange]
     );

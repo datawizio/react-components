@@ -10,10 +10,11 @@ export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
   ({ label, rules, name, placeholder, onChange }) => {
     const handleFieldChange = useCallback(
       ({ target: { checked } }: CheckboxChangeEvent) => {
-        onChange({
-          name,
-          value: checked
-        });
+        onChange &&
+          onChange({
+            name,
+            value: checked
+          });
       },
       [onChange, name]
     );

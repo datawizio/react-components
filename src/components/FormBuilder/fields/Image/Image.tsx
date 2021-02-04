@@ -31,15 +31,14 @@ export const Image: React.FC<ImageProps> = ({
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      //@ts-ignore
-      if (reader.result) onChange({ name, value: reader.result });
+      if (reader.result && onChange)
+        onChange({ name, value: reader.result as string });
     };
     return "";
-    // return Promise.reject();
   };
 
   const handleDelete = () => {
-    onChange({ name, value: null });
+    onChange && onChange({ name, value: null });
   };
 
   const uploadButton = value ? (

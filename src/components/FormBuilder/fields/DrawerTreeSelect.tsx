@@ -19,11 +19,12 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
 }) => {
   const handleFieldChange = (value: any, selected: any) => {
     if (!multiple && value.length === 0) value = "";
-    onChange({
-      name,
-      value,
-      selected
-    });
+    onChange &&
+      onChange({
+        name,
+        value,
+        selected
+      });
   };
   return (
     <Form.Item

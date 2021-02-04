@@ -35,7 +35,7 @@ const Field: React.FC<FieldProps> = ({
 }) => {
   const handleClear = useCallback(() => {
     //@ts-ignore
-    onChange([null, null]);
+    onChange && onChange([null, null]);
   }, []);
   return (
     //@ts-ignore
@@ -56,7 +56,7 @@ const Field: React.FC<FieldProps> = ({
 export const FieldDateRangePicker: React.FC<FieldDateRangePickerProps> = React.memo(
   ({ format, label, rules, name, onChange, ...restProps }) => {
     const handleChange = ([from, to]: [Dayjs, Dayjs]) => {
-      onChange({ name, value: { from, to } });
+      onChange && onChange({ name, value: { from, to } });
     };
 
     return (

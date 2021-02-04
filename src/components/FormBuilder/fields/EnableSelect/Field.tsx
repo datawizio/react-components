@@ -27,13 +27,14 @@ export const Field: React.FC<FieldEnableSelectFieldProps> = ({
   ]);
 
   const handleCheckboxChange = (e: CheckboxChangeEvent) => {
-    onChange({
-      name,
-      value: {
-        value: value.value,
-        enabled: e.target.checked
-      }
-    });
+    onChange &&
+      onChange({
+        name,
+        value: {
+          value: value.value,
+          enabled: e.target.checked
+        }
+      });
   };
 
   return (

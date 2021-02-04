@@ -34,7 +34,7 @@ export const FieldInterval: React.FC<FieldIntervalProps> = ({
   const { translate } = useContext(ConfigContext);
 
   const handleChange = (value: IntervalType) => {
-    onChange({ name, value });
+    onChange && onChange({ name, value });
   };
 
   const internalRules = useMemo(() => {

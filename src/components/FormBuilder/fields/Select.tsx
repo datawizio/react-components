@@ -16,11 +16,12 @@ export const FieldSelect: React.FC<FieldSelectProps> = ({
   ...restProps
 }) => {
   const handleFieldChange = (value: any, selected: any) => {
-    onChange({
-      name,
-      value,
-      selected
-    });
+    onChange &&
+      onChange({
+        name,
+        value,
+        selected
+      });
   };
 
   return (
