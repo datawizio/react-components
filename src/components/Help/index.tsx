@@ -9,12 +9,14 @@ export interface IHelp {
   onSupportModalSubmit?: (data: ISupportFormData) => void;
   onTutorialLinkClick?: () => void;
   onSupportLinkClick?: () => void;
+  onServiceUpdateClick?: () => void;
   uploadFileURL?: string;
 }
 
 const Help: React.FC<IHelp> = ({
   onTutorialLinkClick,
   onSupportLinkClick,
+  onServiceUpdateClick,
   onSupportModalSubmit,
   uploadFileURL
 }) => {
@@ -30,6 +32,7 @@ const Help: React.FC<IHelp> = ({
       <HelpMenu
         onTutorialClick={onTutorialLinkClick}
         onSupportClick={handleSupportLinkClick}
+        onServiceUpdateClick={onServiceUpdateClick}
       />
       <SupportModal
         uploadFileURL={uploadFileURL}
