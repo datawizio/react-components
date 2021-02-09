@@ -61,7 +61,8 @@ function fillBackgroundCell(cell, color) {
 export async function exportTableToXLSX(
   tableState: TableState,
   filename: string,
-  sheetName?: string
+  sheetName?: string,
+  cellRenderProps?: string
 ): Promise<BlobPart> {
   const { columns, columnsMap, dataSource, dTypesConfig } = tableState;
 
@@ -122,7 +123,7 @@ export async function exportTableToXLSX(
           acc[columnKey] = "unknown";
           if (dType) {
             acc[columnKey] = dType.toExcel
-              ? dType.toExcel(cellValue)
+              ? dType.toExcel(cellValue, rowData, columnKey, cellRenderProps)
               : dType.toString(cellValue);
           }
           return acc;
