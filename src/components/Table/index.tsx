@@ -211,6 +211,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     updateRow(rowKey: string, data: any) {
       dispatch({ type: "updateRow", payload: [rowKey, data] });
     },
+    getState() {
+      return state;
+    },
     addLoadingRow(rowKey: string) {
       dispatch({ type: "addLoadingRow", payload: rowKey });
     },
