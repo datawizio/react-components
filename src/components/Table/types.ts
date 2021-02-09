@@ -234,7 +234,8 @@ export type SortParams = {
  */
 
 export type DataProvider = (
-  state: TableState
+  state: TableState,
+  fetchAll?: boolean
 ) => Partial<TableState> | Promise<Partial<TableState>>;
 
 export type RowChildrenProviderType = (
