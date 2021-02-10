@@ -295,7 +295,6 @@ export default class TransferList extends React.PureComponent<
   };
 
   loadTreeData = async (treeNode: EventDataNode) => {
-    const { dataSource } = this.state;
     const { loadData, value, type } = this.props;
     if (treeNode.children && treeNode.children.length > 0) return;
     const { data } = await loadData({
@@ -303,7 +302,7 @@ export default class TransferList extends React.PureComponent<
       expanded: treeNode.key as string,
       ...value
     });
-
+    const { dataSource } = this.state;
     const state: any = {
       dataSource: dataSource.concat(data)
     };
