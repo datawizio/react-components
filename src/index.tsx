@@ -115,3 +115,17 @@ export { default as TableTransposeButton } from "./components/TableTransposeButt
 export { default as SupportModal } from "./components/Help/components/SupportModal";
 
 export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";
+
+export { FieldText } from "./components/FormBuilder/fields/Text";
+export { FieldPhone } from "./components/FormBuilder/fields/Phone";
+export { FieldImage } from "./components/FormBuilder/fields/Image";
+export { FieldRadio } from "./components/FormBuilder/fields/Radio";
+export { FieldSelect } from "./components/FormBuilder/fields/Select";
+export { FieldSwitch } from "./components/FormBuilder/fields/Switch";
+export { FieldCheckbox } from "./components/FormBuilder/fields/Checkbox";
+export { FieldPassword } from "./components/FormBuilder/fields/Password";
+export { FieldDatePicker } from "./components/FormBuilder/fields/DatePicker";
+export { FieldDrawerSelect } from "./components/FormBuilder/fields/DrawerSelect";
+export { FieldEnableSelect } from "./components/FormBuilder/fields/EnableSelect";
+export { FieldDateRangePicker } from "./components/FormBuilder/fields/DateRangePicker";
+export { FieldDrawerTreeSelect } from "./components/FormBuilder/fields/DrawerTreeSelect";
