@@ -114,7 +114,7 @@ export type Action =
   | { type: "update"; payload: Partial<TableState> }
   | { type: "recoveryState"; payload: TableTemplateState }
   | { type: "paginate"; payload: TableState["pagination"] }
-  | { type: "filter"; payload: Record<string, Key[] | null> }
+  | { type: "filter"; payload: Record<string, (string | number | boolean)[]> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | { type: "addLoadingRow"; payload: string }
@@ -184,7 +184,7 @@ export type DTypeConfig<T = any> = {
     row?: IRow,
     columnKey?: string,
     cellRenderProps?: any
-  ) => string;
+  ) => any;
   search?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
   tooltip?: (cellVal: T, row: IRow, column: IColumn) => React.ReactNode;

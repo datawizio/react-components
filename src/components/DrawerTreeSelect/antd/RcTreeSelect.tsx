@@ -1,16 +1,15 @@
-/* eslint-disable */
-
-import React from "react";
-import { RefSelectProps } from "rc-select/lib/generate";
-import generateSelector, { SelectProps } from "./RcSelect";
+import * as React from "react";
+import { useMemo } from "react";
+import generateSelector, { SelectProps, RefSelectProps } from "./RcSelect";
 import { getLabeledValue } from "rc-select/lib/utils/valueUtil";
 import { convertDataToEntities } from "rc-tree/lib/utils/treeUtil";
-import { conductCheck, isMatched } from "../utils/conductUtil";
+import { conductCheck } from "rc-tree/lib/utils/conductUtil";
 import { IconType } from "rc-tree/lib/interface";
 import {
   FilterFunc,
   INTERNAL_PROPS_MARK
 } from "rc-select/lib/interface/generator";
+import useMergedState from "rc-util/lib/hooks/useMergedState";
 import warning from "rc-util/lib/warning";
 import OptionList from "rc-tree-select/es/OptionList";
 import TreeNode from "rc-tree-select/es/TreeNode";
@@ -34,7 +33,7 @@ import {
   removeValue,
   getRawValueLabeled,
   toArray
-} from "../utils/valueUtil";
+} from "rc-tree-select/es/utils/valueUtil";
 import warningProps from "rc-tree-select/es/utils/warningPropsUtil";
 import { SelectContext } from "rc-tree-select/es/Context";
 import useTreeData from "rc-tree-select/es/hooks/useTreeData";
@@ -106,7 +105,6 @@ export interface TreeSelectProps<ValueType = DefaultValueType>
     | "onChange"
     | "mode"
     | "menuItemSelectedIcon"
-    | "dropdownRender"
     | "dropdownAlign"
     | "backfill"
     | "getInputElement"
@@ -129,8 +127,6 @@ export interface TreeSelectProps<ValueType = DefaultValueType>
   searchValue?: string;
   autoClearSearchValue?: boolean;
 
-  maxTagTextLength?: number;
-  maxTagCount?: number;
   maxTagPlaceholder?: (omittedValues: LabelValueType[]) => React.ReactNode;
 
   loadData?: (dataNode: LegacyDataNode) => Promise<unknown>;
@@ -164,6 +160,7 @@ export interface TreeSelectProps<ValueType = DefaultValueType>
   ) => void;
   onTreeExpand?: (expandedKeys: Key[]) => void;
   onTreeLoad?: (loadedKeys: Key[]) => void;
+  onDropdownVisibleChange?: (open: boolean) => void;
 
   // Legacy
   /** `searchPlaceholder` has been removed since search box has been merged into input box */
@@ -190,7 +187,6 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       children,
       treeIcon,
       showTreeIcon,
-      searchValue,
       switcherIcon,
       treeLine,
       treeMotion,
@@ -213,8 +209,10 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
     const selectRef = React.useRef<RefSelectProps>(null);
 
     React.useImperativeHandle(ref, () => ({
+      scrollTo: selectRef.current.scrollTo,
       focus: selectRef.current.focus,
       blur: selectRef.current.blur,
+      //MY
       getFormatedValue: () => {
         return selectValues;
       }
@@ -223,23 +221,27 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
     // ======================= Tree Data =======================
     // Legacy both support `label` or `title` if not set.
     // We have to fallback to function to handle this
-    const getTreeNodeLabelProp = (node: DataNode): React.ReactNode => {
-      if (treeNodeLabelProp) {
-        return node[treeNodeLabelProp];
-      }
-
+    const getTreeNodeTitle = (node: DataNode): React.ReactNode => {
       if (!treeData) {
         return node.title;
       }
       return node.label || node.title;
     };
 
+    const getTreeNodeLabelProp = (node: DataNode): React.ReactNode => {
+      if (treeNodeLabelProp) {
+        return node[treeNodeLabelProp];
+      }
+
+      return getTreeNodeTitle(node);
+    };
+
     const mergedTreeData = useTreeData(treeData, children, {
-      getLabelProp: getTreeNodeLabelProp,
+      getLabelProp: getTreeNodeTitle,
       simpleMode: treeDataSimpleMode
     });
 
-    const flattedOptions = React.useMemo(() => flattenOptions(mergedTreeData), [
+    const flattedOptions = useMemo(() => flattenOptions(mergedTreeData), [
       mergedTreeData
     ]);
     const [cacheKeyMap, cacheValueMap] = useKeyValueMap(flattedOptions);
@@ -249,7 +251,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
     );
 
     // Only generate keyEntities for check conduction when is `treeCheckable`
-    const { keyEntities: conductKeyEntities } = React.useMemo(() => {
+    const { keyEntities: conductKeyEntities } = useMemo(() => {
       if (treeConduction) {
         return convertDataToEntities(mergedTreeData as any);
       }
@@ -257,10 +259,12 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
     }, [mergedTreeData, treeCheckable, treeCheckStrictly]);
 
     // ========================= Value =========================
-    const [value, setValue] = React.useState<DefaultValueType>(
-      props.defaultValue
+    const [value, setValue] = useMergedState<DefaultValueType>(
+      props.defaultValue,
+      {
+        value: props.value
+      }
     );
-    const mergedValue = "value" in props ? props.value : value;
 
     /** Get `missingRawValues` which not exist in the tree yet */
     const splitRawValues = (newRawValues: RawValueType[]) => {
@@ -282,11 +286,11 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
     const [rawValues, rawHalfCheckedKeys]: [
       RawValueType[],
       RawValueType[]
-    ] = React.useMemo(() => {
+    ] = useMemo(() => {
       const valueHalfCheckedKeys: RawValueType[] = [];
       const newRawValues: RawValueType[] = [];
 
-      toArray(mergedValue).forEach(item => {
+      toArray(value).forEach(item => {
         if (item && typeof item === "object" && "value" in item) {
           if (item.halfChecked && treeCheckStrictly) {
             const entity = getEntityByValue(item.value);
@@ -321,7 +325,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       }
       return [newRawValues, valueHalfCheckedKeys];
     }, [
-      mergedValue,
+      value,
       mergedMultiple,
       mergedLabelInValue,
       treeCheckable,
@@ -329,7 +333,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
     ]);
     const selectValues = useSelectValues(rawValues, {
       treeConduction,
-      value: mergedValue,
+      value,
       showCheckedStrategy,
       conductKeyEntities,
       getEntityByValue,
@@ -370,7 +374,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
         let returnValues = mergedLabelInValue
           ? getRawValueLabeled(
               eventValues,
-              mergedValue,
+              value,
               getEntityByValue,
               getTreeNodeLabelProp
             )
@@ -389,7 +393,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
             ...(returnValues as LabelValueType[]),
             ...getRawValueLabeled(
               halfValues,
-              mergedValue,
+              value,
               getEntityByValue,
               getTreeNodeLabelProp
             )
@@ -443,6 +447,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       source: SelectSource
     ) => {
       const eventValue = mergedLabelInValue ? selectValue : selectValue;
+
       if (!mergedMultiple) {
         // Single mode always set value
         triggerChange(
@@ -451,21 +456,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
           source
         );
       } else {
-        let selectedValues: any[] = [];
-        if (searchValue && option.children) {
-          selectedValues = option.children
-            .filter(
-              (child: any) =>
-                //@ts-ignore
-                isMatched(child, searchValue) || isMatched(option, searchValue)
-            )
-            .map(item => item.key);
-        }
-        let newRawValues = addValue(
-          rawValues,
-          //@ts-ignore
-          selectedValues.length ? selectedValues : selectValue
-        );
+        let newRawValues = addValue(rawValues, selectValue);
 
         // Add keys if tree conduction
         if (treeConduction) {
@@ -502,23 +493,9 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       option: DataNode,
       source: SelectSource
     ) => {
-      const eventValue = selectValue;
+      const eventValue = mergedLabelInValue ? selectValue : selectValue;
 
-      let selectedValues: any[] = [];
-      if (searchValue && option.children) {
-        selectedValues = option.children
-          .filter(
-            (child: any) =>
-              //@ts-ignore
-              isMatched(child, searchValue) || isMatched(option, searchValue)
-          )
-          .map(item => item.key);
-      }
-
-      let newRawValues = removeValue(
-        rawValues, //@ts-ignore
-        selectedValues.length ? selectedValues : selectValue
-      );
+      let newRawValues = removeValue(rawValues, selectValue);
 
       // Remove keys if tree conduction
       if (treeConduction) {
@@ -662,9 +639,8 @@ class TreeSelect<ValueType = DefaultValueType> extends React.Component<
   blur = () => {
     this.selectRef.current.blur();
   };
-
+  //MY
   getFormatedValue = () => {
-    //@ts-ignore
     return this.selectRef.current.getFormatedValue();
   };
 

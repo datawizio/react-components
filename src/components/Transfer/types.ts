@@ -77,7 +77,7 @@ export interface TransferProps {
     direction: TransferDirection,
     e: React.SyntheticEvent<HTMLUListElement>
   ) => void;
-  children?: (props: TransferListBodyProps) => React.ReactNode;
+  children?: (props: TransferListBodyProps<any>) => React.ReactNode;
   showSelectAll?: boolean;
   selectAllLabels?: SelectAllLabel[];
 }

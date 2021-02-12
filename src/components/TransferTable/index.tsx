@@ -3,7 +3,7 @@ import { Table as AntTable, Transfer } from "antd";
 import { TransferProps } from "antd/es/transfer";
 import ConfigContext from "../ConfigProvider/context";
 
-export interface TransferTableProps extends TransferProps {
+export interface TransferTableProps extends TransferProps<any> {
   columns: any;
   filteredInfo: any;
   onTableChange: () => void;
