@@ -36,7 +36,6 @@ function getMainLevelItems(items: any[], level: string | number | null = 1) {
       break;
     }
   }
-
   return set;
 }
 
@@ -82,6 +81,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   drawerTitle,
   drawerWidth,
   formatRender,
+  headerHeight,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
   treeData,
@@ -581,6 +581,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       prevTreeData.current = stateTreeData;
     }
 
+    if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
+      allLeafItems.current = getAllLeafItems(treeData);
+    }
+
     dispatch({
       type: "setState",
       payload: {
@@ -735,11 +739,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const listHeight =
     window.innerHeight -
+    (headerHeight ? headerHeight : 0) -
     204 -
     (formatRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
-
   return (
     <AntTreeSelect
       {...restProps}
