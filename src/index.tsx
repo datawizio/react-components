@@ -16,6 +16,8 @@ export { default as Radio } from "./components/Radio";
 
 export { default as Button } from "./components/Button";
 
+export { default as CheckboxButton } from "./components/CheckboxButton";
+
 export { default as Drawer } from "./components/Drawer";
 
 export { default as Loader } from "./components/Loader";
