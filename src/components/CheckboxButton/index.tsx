@@ -1,7 +1,7 @@
-import React, { useCallback, useRef } from "react";
-import i18next from "i18next";
+import React, { useCallback, useContext, useRef } from "react";
 import { Button } from "antd";
 import clsx from "clsx";
+import ConfigContext from "../ConfigProvider/context";
 
 interface CheckboxButtonProps {
   className?: string;
@@ -18,6 +18,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   text,
   onChange
 }) => {
+  const { translate } = useContext(ConfigContext);
   const btnRef = useRef(null);
 
   let buttonClasses = clsx({
@@ -42,7 +43,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
       className={buttonClasses}
       onClick={handleButtonClick}
     >
-      {!icon && text && i18next.t(text)}
+      {!icon && text && translate(text)}
     </Button>
   );
 };
