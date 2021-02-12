@@ -96,6 +96,7 @@ export interface FieldDrawerSelectProps
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;
   treeData?: any;
+  headerHeight?: number;
   drawerTitle?: string;
   multiple?: boolean;
   treeDataSimpleMode?: boolean;
