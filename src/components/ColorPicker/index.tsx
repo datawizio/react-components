@@ -8,16 +8,19 @@ export interface ColorPickerProps {
   value?: string;
   onChange?: (value: string) => void;
   defaultColors?: string[];
+  render?: (value: string) => JSX.Element;
 }
 
 const ColorPicker: React.FC<ColorPickerProps> = ({
   defaultColors,
   value,
-  onChange
+  onChange,
+  render
 }) => {
   const handleChange = (val: ColorResult) => {
     onChange && onChange(val.hex);
   };
+
   return (
     <Popover
       trigger="click"
@@ -32,7 +35,11 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
         />
       }
     >
-      <div className="color-picker" style={{ background: value }}></div>
+      {render ? (
+        render(value)
+      ) : (
+        <div className="color-picker" style={{ background: value }}></div>
+      )}
     </Popover>
   );
 };
