@@ -41,11 +41,10 @@ exports[`Loader component Loader rendered correctly 1`] = `
         >
           <span
             aria-label="loading"
-            className="anticon anticon-loading ant-spin-dot"
+            className="anticon anticon-loading anticon-spin ant-spin-dot"
             role="img"
           >
             <IconReact
-              className="anticon-spin"
               icon={
                 Object {
                   "icon": Object {
@@ -70,7 +69,6 @@ exports[`Loader component Loader rendered correctly 1`] = `
             >
               <svg
                 aria-hidden="true"
-                className="anticon-spin"
                 data-icon="loading"
                 fill="currentColor"
                 focusable="false"

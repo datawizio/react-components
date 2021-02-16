@@ -2,7 +2,9 @@
 @import "../../styles/variables";
 
 .ant-radio-group.ant-radio-group-vertical {
+  width: 100%;
   .ant-radio-wrapper {
+    width: 100%;
     display: flex;
     margin-top: @margin-lg;
     .ant-radio {
@@ -11,10 +13,11 @@
         top: 3px;
         height: 16px;
       }
+      & ~ span {
+        width: 100%;
+      }
     }
   }
-}
-.ant-radio-wrapper {
   .ant-list-item-meta {
     white-space: normal;
     .ant-list-item-meta-title {

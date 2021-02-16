@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { shallow } from "enzyme";
 import Cell from "./Cell";
 
@@ -6,11 +6,9 @@ const setUp = (props?) => shallow(<Cell {...props} />);
 
 describe("Cell component", () => {
   let component;
-  let instance;
 
   beforeEach(() => {
     component = setUp();
-    instance = component.instance();
   });
 
   it("rendered Cell corectly", () => {

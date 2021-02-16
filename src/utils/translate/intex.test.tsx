@@ -5,12 +5,12 @@ import { I18nextProvider } from "react-i18next";
 
 import {
   translateArray,
-  translateChart,
   translateColumns,
   translateDataSource,
   translateObjects,
   translateTableResponse
 } from "./index";
+import { translateChart } from "./chart";
 
 const translateKeys = Object.keys(translationsEng);
 const mockColumns = translateKeys.map((translationKey, id) => ({

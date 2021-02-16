@@ -3,7 +3,7 @@
 // @ts-nocheck
 
 import * as React from "react";
-import omit from "omit.js";
+import omit from "rc-util/lib/omit";
 import classNames from "classnames";
 import RcSelect, { SelectProps as RcSelectProps } from "./RcSelect";
 import { Option, OptGroup } from "rc-select";

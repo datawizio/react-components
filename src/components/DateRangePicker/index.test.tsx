@@ -29,6 +29,8 @@ describe(" DateRangePicker component", () => {
     component = setUp(mockProps);
   });
 
+  Object.defineProperty(window, "cancelAnimationFrame", () => {});
+
   it("DateRangePicker rendered correctly", () => {
     expect(component).toMatchSnapshot();
   });

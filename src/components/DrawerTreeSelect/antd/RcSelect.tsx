@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /**
  * To match accessibility requirement, we always provide an input in the component.
  * Other element will not set `tabIndex` to avoid `onBlur` sequence problem.
@@ -10,12 +8,19 @@
  */
 
 import * as React from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import KeyCode from "rc-util/lib/KeyCode";
 import classNames from "classnames";
 import useMergedState from "rc-util/lib/hooks/useMergedState";
+import { ScrollTo } from "rc-virtual-list/lib/List";
 import Selector, { RefSelectorProps } from "rc-select/es/Selector";
 import SelectTrigger, { RefTriggerProps } from "rc-select/es/SelectTrigger";
-import { RenderNode, Mode, RenderDOMFunc } from "rc-select/es/interface";
+import {
+  RenderNode,
+  Mode,
+  RenderDOMFunc,
+  OnActiveValue
+} from "rc-select/es/interface";
 import {
   GetLabeledValue,
   FilterOptions,
@@ -46,12 +51,8 @@ import useDelayReset from "rc-select/es/hooks/useDelayReset";
 import useLayoutEffect from "rc-select/es/hooks/useLayoutEffect";
 import { getSeparatedContent } from "rc-select/es/utils/valueUtil";
 import useSelectTriggerControl from "rc-select/es/hooks/useSelectTriggerControl";
-
-import {
-  RefSelectProps,
-  SelectProps as RcSelectProps,
-  GenerateConfig
-} from "rc-select/es/generate";
+import useCacheDisplayValue from "rc-select/es/hooks/useCacheDisplayValue";
+import useCacheOptions from "rc-select/es/hooks/useCacheOptions";
 
 const DEFAULT_OMIT_PROPS = [
   "removeIcon",
@@ -61,12 +62,197 @@ const DEFAULT_OMIT_PROPS = [
   "maxTagTextLength",
   "maxTagPlaceholder",
   "choiceTransitionName",
-  "onInputKeyDown"
+  "onInputKeyDown",
+  "tabIndex"
 ];
 
+export interface RefSelectProps {
+  focus: () => void;
+  blur: () => void;
+  //MY
+  getFormatedValue?: () => any;
+  scrollTo?: ScrollTo;
+}
+
 export interface SelectProps<OptionsType extends object[], ValueType>
-  extends RcSelectProps<OptionsType, ValueType> {
+  extends React.AriaAttributes {
+  prefixCls?: string;
+  id?: string;
+  className?: string;
+  style?: React.CSSProperties;
+
+  // Options
+  options?: OptionsType;
+  children?: React.ReactNode;
+  mode?: Mode;
+
+  // Value
+  value?: ValueType;
+  defaultValue?: ValueType;
+  labelInValue?: boolean;
+  /** Config max length of input. This is only work when `mode` is `combobox` */
+  maxLength?: number;
+
+  // Search
+  inputValue?: string;
+  searchValue?: string;
+  optionFilterProp?: string;
+  /**
+   * In Select, `false` means do nothing.
+   * In TreeSelect, `false` will highlight match item.
+   * It's by design.
+   */
+  filterOption?: boolean | FilterFunc<OptionsType[number]>;
+  filterSort?: (
+    optionA: OptionsType[number],
+    optionB: OptionsType[number]
+  ) => number;
+  showSearch?: boolean;
+  autoClearSearchValue?: boolean;
+  onSearch?: (value: string) => void;
+  onClear?: OnClear;
+
+  // Icons
+  allowClear?: boolean;
+  clearIcon?: React.ReactNode;
+  showArrow?: boolean;
+  inputIcon?: RenderNode;
+  removeIcon?: React.ReactNode;
+  menuItemSelectedIcon?: RenderNode;
+
+  // Dropdown
+  open?: boolean;
+  defaultOpen?: boolean;
+  listHeight?: number;
+  listItemHeight?: number;
+  dropdownStyle?: React.CSSProperties;
+  dropdownClassName?: string;
+  dropdownMatchSelectWidth?: boolean | number;
+  virtual?: boolean;
+  dropdownRender?: (menu: React.ReactElement) => React.ReactElement;
+  dropdownAlign?: any;
+  animation?: string;
+  transitionName?: string;
+  getPopupContainer?: RenderDOMFunc;
+  direction?: string;
+
+  // Others
+  disabled?: boolean;
+  loading?: boolean;
+  autoFocus?: boolean;
+  defaultActiveFirstOption?: boolean;
+  notFoundContent?: React.ReactNode;
+  placeholder?: React.ReactNode;
+  backfill?: boolean;
+  getInputElement?: () => JSX.Element;
+  optionLabelProp?: string;
+  maxTagTextLength?: number;
+  maxTagCount?: number | "responsive";
+  maxTagPlaceholder?:
+    | React.ReactNode
+    | ((omittedValues: LabelValueType[]) => React.ReactNode);
+  tokenSeparators?: string[];
+  tagRender?: (props: CustomTagProps) => React.ReactElement;
+  showAction?: ("focus" | "click")[];
+  tabIndex?: number;
+
+  // Events
+  onKeyUp?: React.KeyboardEventHandler<HTMLDivElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
+  onPopupScroll?: React.UIEventHandler<HTMLDivElement>;
+  onDropdownVisibleChange?: (open: boolean) => void;
+  onSelect?: (
+    value: SingleType<ValueType>,
+    option: OptionsType[number]
+  ) => void;
+  onDeselect?: (
+    value: SingleType<ValueType>,
+    option: OptionsType[number]
+  ) => void;
+  onInputKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
+  onClick?: React.MouseEventHandler;
+  onChange?: (
+    value: ValueType,
+    option: OptionsType[number] | OptionsType
+  ) => void;
+  onBlur?: React.FocusEventHandler<HTMLElement>;
+  // MY
   onBeforeBlur?: (event: React.FocusEvent<HTMLElement>) => boolean;
+  onFocus?: React.FocusEventHandler<HTMLElement>;
+  onMouseDown?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
+
+  // Motion
+  choiceTransitionName?: string;
+
+  // Internal props
+  /**
+   * Only used in current version for internal event process.
+   * Do not use in production environment.
+   */
+  internalProps?: {
+    mark?: string;
+    onClear?: OnClear;
+    skipTriggerChange?: boolean;
+    skipTriggerSelect?: boolean;
+    onRawSelect?: (
+      value: RawValueType,
+      option: OptionsType[number],
+      source: SelectSource
+    ) => void;
+    onRawDeselect?: (
+      value: RawValueType,
+      option: OptionsType[number],
+      source: SelectSource
+    ) => void;
+  };
+}
+
+export interface GenerateConfig<OptionsType extends object[]> {
+  prefixCls: string;
+  components: {
+    optionList: React.ForwardRefExoticComponent<
+      React.PropsWithoutRef<
+        Omit<OptionListProps<OptionsType>, "options"> & { options: OptionsType }
+      > &
+        React.RefAttributes<RefOptionListProps>
+    >;
+  };
+  /** Convert jsx tree into `OptionsType` */
+  convertChildrenToData: (children: React.ReactNode) => OptionsType;
+  /** Flatten nest options into raw option list */
+  flattenOptions: (
+    options: OptionsType,
+    props: any
+  ) => FlattenOptionsType<OptionsType>;
+  /** Convert single raw value into { label, value } format. Will be called by each value */
+  getLabeledValue: GetLabeledValue<FlattenOptionsType<OptionsType>>;
+  filterOptions: FilterOptions<OptionsType>;
+  findValueOption: // Need still support legacy ts api
+  | ((
+        values: RawValueType[],
+        options: FlattenOptionsType<OptionsType>
+      ) => OptionsType)
+    // New API add prevValueOptions support
+    | ((
+        values: RawValueType[],
+        options: FlattenOptionsType<OptionsType>,
+        info?: { prevValueOptions?: OptionsType[] }
+      ) => OptionsType);
+  /** Check if a value is disabled */
+  isValueDisabled: (
+    value: RawValueType,
+    options: FlattenOptionsType<OptionsType>
+  ) => boolean;
+  warningProps?: (props: any) => void;
+  fillOptionsWithMissingValue?: (
+    options: OptionsType,
+    value: DefaultValueType,
+    optionLabelProp: string,
+    labelInValue: boolean
+  ) => OptionsType;
+  omitDOMProps?: (props: object) => object;
 }
 
 /**
@@ -120,6 +306,7 @@ export default function generateSelector<
       inputValue,
       searchValue,
       filterOption,
+      filterSort,
       optionFilterProp = "value",
       autoClearSearchValue = true,
       onSearch,
@@ -138,6 +325,7 @@ export default function generateSelector<
       notFoundContent = "Not Found",
       optionLabelProp,
       backfill,
+      tabIndex,
       getInputElement,
       getPopupContainer,
 
@@ -163,6 +351,7 @@ export default function generateSelector<
       onPopupScroll,
       onDropdownVisibleChange,
       onFocus,
+      //MY
       onBeforeBlur,
       onBlur,
       onKeyUp,
@@ -172,6 +361,7 @@ export default function generateSelector<
       onChange,
       onSelect,
       onDeselect,
+      onClear,
 
       internalProps = {},
 
@@ -185,17 +375,25 @@ export default function generateSelector<
       delete domProps[prop];
     });
 
-    const containerRef = React.useRef<HTMLDivElement>(null);
-    const triggerRef = React.useRef<RefTriggerProps>(null);
-    const selectorRef = React.useRef<RefSelectorProps>(null);
-    const listRef = React.useRef<RefOptionListProps>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<RefTriggerProps>(null);
+    const selectorRef = useRef<RefSelectorProps>(null);
+    const listRef = useRef<RefOptionListProps>(null);
+
+    const tokenWithEnter = useMemo(
+      () =>
+        (tokenSeparators || []).some(tokenSeparator =>
+          ["\n", "\r\n"].includes(tokenSeparator)
+        ),
+      [tokenSeparators]
+    );
 
     /** Used for component focused management */
     const [mockFocused, setMockFocused, cancelSetMockFocused] = useDelayReset();
 
     // Inner id for accessibility usage. Only work in client side
-    const [innerId, setInnerId] = React.useState<string>();
-    React.useEffect(() => {
+    const [innerId, setInnerId] = useState<string>();
+    useEffect(() => {
       setInnerId(`rc_select_${getUUID()}`);
     }, []);
     const mergedId = id || innerId;
@@ -215,60 +413,50 @@ export default function generateSelector<
       showSearch !== undefined ? showSearch : isMultiple || mode === "combobox";
 
     // ============================== Ref ===============================
-    const selectorDomRef = React.useRef<HTMLDivElement>(null);
+    const selectorDomRef = useRef<HTMLDivElement>(null);
 
     React.useImperativeHandle(ref, () => ({
       focus: selectorRef.current.focus,
-      blur: selectorRef.current.blur
+      blur: selectorRef.current.blur,
+      scrollTo: listRef.current?.scrollTo as ScrollTo
     }));
 
     // ============================= Value ==============================
-    const [innerValue, setInnerValue] = React.useState<ValueType>(
-      value || defaultValue
-    );
-    const baseValue = value !== undefined ? value : innerValue;
-
-    // Should reset when controlled to be uncontrolled
-    const prevValueRef = React.useRef(value);
-    React.useEffect(() => {
-      if (
-        prevValueRef.current !== value &&
-        (value === undefined || value === null)
-      ) {
-        setInnerValue(undefined);
-      }
-      prevValueRef.current = value;
-    }, [value]);
+    const [mergedValue, setMergedValue] = useMergedState(defaultValue, {
+      value
+    });
 
     /** Unique raw values */
-    const mergedRawValue = React.useMemo<RawValueType[]>(
+    const [mergedRawValue, mergedValueMap] = useMemo<
+      [RawValueType[], Map<RawValueType, LabelValueType>]
+    >(
       () =>
-        toInnerValue(baseValue, {
+        toInnerValue(mergedValue, {
           labelInValue: mergedLabelInValue,
           combobox: mode === "combobox"
         }),
-      [baseValue, mergedLabelInValue]
+      [mergedValue, mergedLabelInValue]
     );
     /** We cache a set of raw values to speed up check */
-    const rawValues = React.useMemo<Set<RawValueType>>(
+    const rawValues = useMemo<Set<RawValueType>>(
       () => new Set(mergedRawValue),
       [mergedRawValue]
     );
 
     // ============================= Option =============================
     // Set by option list active, it will merge into search input when mode is `combobox`
-    const [activeValue, setActiveValue] = React.useState<string>(null);
-    const [innerSearchValue, setInnerSearchValue] = React.useState("");
+    const [activeValue, setActiveValue] = useState<string>(null);
+    const [innerSearchValue, setInnerSearchValue] = useState("");
     let mergedSearchValue = innerSearchValue;
-    if (mode === "combobox" && value !== undefined) {
-      mergedSearchValue = value as string;
+    if (mode === "combobox" && mergedValue !== undefined) {
+      mergedSearchValue = mergedValue as string;
     } else if (searchValue !== undefined) {
       mergedSearchValue = searchValue;
     } else if (inputValue) {
       mergedSearchValue = inputValue;
     }
 
-    const mergedOptions = React.useMemo<OptionsType>((): OptionsType => {
+    const mergedOptions = useMemo<OptionsType>((): OptionsType => {
       let newOptions = options;
       if (newOptions === undefined) {
         newOptions = convertChildrenToData(children);
@@ -281,22 +469,24 @@ export default function generateSelector<
       if (mode === "tags" && fillOptionsWithMissingValue) {
         newOptions = fillOptionsWithMissingValue(
           newOptions,
-          baseValue,
+          mergedValue,
           mergedOptionLabelProp,
           labelInValue
         );
       }
 
       return newOptions || ([] as OptionsType);
-    }, [options, children, mode, baseValue]);
+    }, [options, children, mode, mergedValue]);
 
-    const mergedFlattenOptions: FlattenOptionsType<OptionsType> = React.useMemo(
+    const mergedFlattenOptions: FlattenOptionsType<OptionsType> = useMemo(
       () => flattenOptions(mergedOptions, props),
       [mergedOptions]
     );
 
+    const getValueOption = useCacheOptions(mergedFlattenOptions);
+
     // Display options for OptionList
-    const displayOptions = React.useMemo<OptionsType>(() => {
+    const displayOptions = useMemo<OptionsType>(() => {
       if (!mergedSearchValue || !mergedShowSearch) {
         return [...mergedOptions] as OptionsType;
       }
@@ -313,7 +503,9 @@ export default function generateSelector<
       );
       if (
         mode === "tags" &&
-        filteredOptions.every(opt => opt.value !== mergedSearchValue)
+        filteredOptions.every(
+          opt => opt[optionFilterProp] !== mergedSearchValue
+        )
       ) {
         filteredOptions.unshift({
           value: mergedSearchValue,
@@ -321,53 +513,70 @@ export default function generateSelector<
           key: "__RC_SELECT_TAG_PLACEHOLDER__"
         });
       }
+      if (filterSort && Array.isArray(filteredOptions)) {
+        return ([...filteredOptions] as OptionsType).sort(filterSort);
+      }
 
       return filteredOptions;
-    }, [mergedOptions, mergedSearchValue, mode, mergedShowSearch]);
+    }, [mergedOptions, mergedSearchValue, mode, mergedShowSearch, filterSort]);
 
-    const displayFlattenOptions: FlattenOptionsType<OptionsType> = React.useMemo(
+    const displayFlattenOptions: FlattenOptionsType<OptionsType> = useMemo(
       () => flattenOptions(displayOptions, props),
       [displayOptions]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (listRef.current && listRef.current.scrollTo) {
         listRef.current.scrollTo(0);
       }
     }, [mergedSearchValue]);
 
     // ============================ Selector ============================
-    const displayValues = React.useMemo<DisplayLabelValueType[]>(
-      () =>
-        mergedRawValue.map((val: RawValueType) => {
-          const displayValue = getLabeledValue(val, {
-            options: mergedFlattenOptions,
-            prevValue: baseValue,
-            labelInValue: mergedLabelInValue,
-            optionLabelProp: mergedOptionLabelProp
-          });
+    let displayValues = useMemo<DisplayLabelValueType[]>(() => {
+      const tmpValues = mergedRawValue.map((val: RawValueType) => {
+        const valueOptions = getValueOption([val]);
+        const displayValue = getLabeledValue(val, {
+          options: valueOptions,
+          prevValueMap: mergedValueMap,
+          labelInValue: mergedLabelInValue,
+          optionLabelProp: mergedOptionLabelProp
+        });
 
-          return {
-            ...displayValue,
-            disabled: isValueDisabled(val, mergedFlattenOptions)
-          };
-        }),
-      [baseValue, mergedOptions]
-    );
+        return {
+          ...displayValue,
+          disabled: isValueDisabled(val, valueOptions)
+        };
+      });
+
+      if (
+        !mode &&
+        tmpValues.length === 1 &&
+        tmpValues[0].value === null &&
+        tmpValues[0].label === null
+      ) {
+        return [];
+      }
+
+      return tmpValues;
+    }, [mergedValue, mergedOptions, mode]);
+
+    // Polyfill with cache label
+    displayValues = useCacheDisplayValue(displayValues);
 
     const triggerSelect = (
       newValue: RawValueType,
       isSelect: boolean,
       source: SelectSource
     ) => {
-      const outOption = findValueOption([newValue], mergedFlattenOptions)[0];
+      const newValueOption = getValueOption([newValue]);
+      const outOption = findValueOption([newValue], newValueOption)[0];
 
       if (!internalProps.skipTriggerSelect) {
         // Skip trigger `onSelect` or `onDeselect` if configured
         const selectValue = (mergedLabelInValue
           ? getLabeledValue(newValue, {
-              options: mergedFlattenOptions,
-              prevValue: baseValue,
+              options: newValueOption,
+              prevValueMap: mergedValueMap,
               labelInValue: mergedLabelInValue,
               optionLabelProp: mergedOptionLabelProp
             })
@@ -390,18 +599,21 @@ export default function generateSelector<
       }
     };
 
+    // We need cache options here in case user update the option list
+    const [prevValueOptions, setPrevValueOptions] = useState([]);
+
     const triggerChange = (newRawValues: RawValueType[]) => {
       if (useInternalProps && internalProps.skipTriggerChange) {
         return;
       }
-
+      const newRawValuesOptions = getValueOption(newRawValues);
       const outValues = toOuterValues<FlattenOptionsType<OptionsType>>(
         Array.from(newRawValues),
         {
           labelInValue: mergedLabelInValue,
-          options: mergedFlattenOptions,
+          options: newRawValuesOptions,
           getLabeledValue,
-          prevValue: baseValue,
+          prevValueMap: mergedValueMap,
           optionLabelProp: mergedOptionLabelProp
         }
       );
@@ -411,12 +623,25 @@ export default function generateSelector<
         : outValues[0]) as ValueType;
       // Skip trigger if prev & current value is both empty
       if (onChange && (mergedRawValue.length !== 0 || outValues.length !== 0)) {
-        const outOptions = findValueOption(newRawValues, mergedFlattenOptions);
+        const outOptions = findValueOption(newRawValues, newRawValuesOptions, {
+          prevValueOptions
+        });
+
+        // We will cache option in case it removed by ajax
+        setPrevValueOptions(
+          outOptions.map((option, index) => {
+            const clone = { ...option };
+            Object.defineProperty(clone, "_INTERNAL_OPTION_VALUE_", {
+              get: () => newRawValues[index]
+            });
+            return clone;
+          })
+        );
 
         onChange(outValue, isMultiple ? outOptions : outOptions[0]);
       }
 
-      setInnerValue(outValue);
+      setMergedValue(outValue);
     };
 
     const onInternalSelect = (
@@ -521,16 +746,19 @@ export default function generateSelector<
     );
 
     // ============================= Search =============================
-    const triggerSearch = (searchText: string, fromTyping: boolean = true) => {
+    const triggerSearch = (
+      searchText: string,
+      fromTyping: boolean,
+      isCompositing: boolean
+    ) => {
       let ret = true;
       let newSearchText = searchText;
       setActiveValue(null);
 
       // Check if match the `tokenSeparators`
-      const patchLabels: string[] = getSeparatedContent(
-        searchText,
-        tokenSeparators
-      );
+      const patchLabels: string[] = isCompositing
+        ? null
+        : getSeparatedContent(searchText, tokenSeparators);
       let patchRawValues: RawValueType[] = patchLabels;
 
       if (mode === "combobox") {
@@ -576,17 +804,31 @@ export default function generateSelector<
       return ret;
     };
 
+    // Only triggered when menu is closed & mode is tags
+    // If menu is open, OptionList will take charge
+    // If mode isn't tags, press enter is not meaningful when you can't see any option
+    const onSearchSubmit = (searchText: string) => {
+      const newRawValues = Array.from(
+        new Set<RawValueType>([...mergedRawValue, searchText])
+      );
+      triggerChange(newRawValues);
+      newRawValues.forEach(newRawValue => {
+        triggerSelect(newRawValue, true, "input");
+      });
+      setInnerSearchValue("");
+    };
+
     // Close dropdown when disabled change
-    React.useEffect(() => {
+    useEffect(() => {
       if (innerOpen && !!disabled) {
         setInnerOpen(false);
       }
     }, [disabled]);
 
     // Close will clean up single mode search text
-    React.useEffect(() => {
+    useEffect(() => {
       if (!mergedOpen && !isMultiple && mode !== "combobox") {
-        triggerSearch("", false);
+        triggerSearch("", false, false);
       }
     }, [mergedOpen]);
 
@@ -658,7 +900,7 @@ export default function generateSelector<
 
     // ========================== Focus / Blur ==========================
     /** Record real focus status */
-    const focusRef = React.useRef<boolean>(false);
+    const focusRef = useRef<boolean>(false);
 
     const onContainerFocus: React.FocusEventHandler<HTMLElement> = (
       ...args
@@ -680,8 +922,8 @@ export default function generateSelector<
     };
 
     const onContainerBlur: React.FocusEventHandler<HTMLElement> = (...args) => {
+      /// MY!!!
       if (onBeforeBlur && !onBeforeBlur(...args)) return;
-
       setMockFocused(false, () => {
         focusRef.current = false;
         onToggleOpen(false);
@@ -694,7 +936,7 @@ export default function generateSelector<
       if (mergedSearchValue) {
         // `tags` mode should move `searchValue` into values
         if (mode === "tags") {
-          triggerSearch("", false);
+          triggerSearch("", false, false);
           triggerChange(
             Array.from(new Set([...mergedRawValue, mergedSearchValue]))
           );
@@ -709,6 +951,15 @@ export default function generateSelector<
       }
     };
 
+    const activeTimeoutIds: number[] = [];
+    useEffect(
+      () => () => {
+        activeTimeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
+        activeTimeoutIds.splice(0, activeTimeoutIds.length);
+      },
+      []
+    );
+
     const onInternalMouseDown: React.MouseEventHandler<HTMLDivElement> = (
       event,
       ...restArgs
@@ -719,12 +970,20 @@ export default function generateSelector<
 
       // We should give focus back to selector if clicked item is not focusable
       if (popupElement && popupElement.contains(target as HTMLElement)) {
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
+          const index = activeTimeoutIds.indexOf(timeoutId);
+          if (index !== -1) {
+            activeTimeoutIds.splice(index, 1);
+          }
+
           cancelSetMockFocused();
+
           if (!popupElement.contains(document.activeElement)) {
             selectorRef.current.focus();
           }
         });
+
+        activeTimeoutIds.push(timeoutId);
       }
 
       if (onMouseDown) {
@@ -733,24 +992,37 @@ export default function generateSelector<
     };
 
     // ========================= Accessibility ==========================
-    const [accessibilityIndex, setAccessibilityIndex] = React.useState<number>(
-      0
-    );
+    const [accessibilityIndex, setAccessibilityIndex] = useState<number>(0);
     const mergedDefaultActiveFirstOption =
       defaultActiveFirstOption !== undefined
         ? defaultActiveFirstOption
         : mode !== "combobox";
 
-    const onActiveValue = (active: RawValueType, index: number) => {
+    const onActiveValue: OnActiveValue = (
+      active,
+      index,
+      { source = "keyboard" } = {}
+    ) => {
       setAccessibilityIndex(index);
 
-      if (backfill && mode === "combobox" && active !== null) {
+      if (
+        backfill &&
+        mode === "combobox" &&
+        active !== null &&
+        source === "keyboard"
+      ) {
         setActiveValue(String(active));
       }
     };
 
     // ============================= Popup ==============================
-    const [containerWidth, setContainerWidth] = React.useState(null);
+    const [containerWidth, setContainerWidth] = useState(null);
+
+    const [, forceUpdate] = useState({});
+    // We need force update here since popup dom is render async
+    function onPopupMouseEnter() {
+      forceUpdate({});
+    }
 
     useLayoutEffect(() => {
       if (triggerOpen) {
@@ -783,6 +1055,7 @@ export default function generateSelector<
         searchValue={mergedSearchValue}
         menuItemSelectedIcon={menuItemSelectedIcon}
         virtual={virtual !== false && dropdownMatchSelectWidth !== false}
+        onMouseEnter={onPopupMouseEnter}
       />
     );
 
@@ -794,8 +1067,12 @@ export default function generateSelector<
         internalProps.onClear();
       }
 
+      if (onClear) {
+        onClear();
+      }
+
       triggerChange([]);
-      triggerSearch("", false);
+      triggerSearch("", false, false);
     };
 
     if (
@@ -921,7 +1198,9 @@ export default function generateSelector<
             searchValue={mergedSearchValue}
             activeValue={activeValue}
             onSearch={triggerSearch}
+            onSearchSubmit={onSearchSubmit}
             onSelect={onInternalSelectionSelect}
+            tokenWithEnter={tokenWithEnter}
           />
         </SelectTrigger>
 

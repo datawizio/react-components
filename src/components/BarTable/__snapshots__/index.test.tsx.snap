@@ -27,7 +27,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
             component="h4"
             style={
               Object {
-                "WebkitLineClamp": null,
+                "WebkitLineClamp": undefined,
               }
             }
           >
@@ -35,7 +35,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
               className="ant-typography bar-table-title"
               style={
                 Object {
-                  "WebkitLineClamp": null,
+                  "WebkitLineClamp": undefined,
                 }
               }
             >
@@ -154,11 +154,10 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                     >
                       <span
                         aria-label="loading"
-                        className="anticon anticon-loading ant-spin-dot"
+                        className="anticon anticon-loading anticon-spin ant-spin-dot"
                         role="img"
                       >
                         <IconReact
-                          className="anticon-spin"
                           icon={
                             Object {
                               "icon": Object {
@@ -183,7 +182,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                         >
                           <svg
                             aria-hidden="true"
-                            className="anticon-spin"
                             data-icon="loading"
                             fill="currentColor"
                             focusable="false"
@@ -231,11 +229,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                           title="COLUMNS_BTN_TITLE"
                         >
                           <Button
-                            block={false}
                             className="dw-btn no-border"
-                            ghost={false}
-                            htmlType="button"
-                            loading={false}
                             onClick={[Function]}
                             title="COLUMNS_BTN_TITLE"
                           >
@@ -251,7 +245,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                   loading={false}
                                   prefixCls="ant-btn"
                                 >
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionName="ant-btn-loading-icon-motion"
                                     onAppearActive={[Function]}
                                     onAppearStart={[Function]}
@@ -262,22 +256,8 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="ant-btn-loading-icon-motion"
-                                      onAppearActive={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
-                                      onLeaveStart={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </LoadingIcon>
                                 <ForwardRef(SettingOutlined)
                                   className="select-columns__icon"
@@ -313,7 +293,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                       role="img"
                                     >
                                       <IconReact
-                                        className=""
                                         icon={
                                           Object {
                                             "icon": Object {
@@ -338,7 +317,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                       >
                                         <svg
                                           aria-hidden="true"
-                                          className=""
                                           data-icon="setting"
                                           fill="currentColor"
                                           focusable="false"
@@ -404,7 +382,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                             visible={false}
                             width={520}
                           >
-                            <Component
+                            <Dialog
                               className="select-columns__modal"
                               closeIcon={
                                 <span
@@ -417,6 +395,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                               }
                               confirmLoading={false}
                               destroyOnClose={true}
+                              focusTriggerAfterClose={true}
                               footer={
                                 <Button
                                   border={true}
@@ -437,11 +416,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                               visible={false}
                               width={520}
                               wrapClassName=""
-                            >
-                              <PortalWrapper
-                                visible={false}
-                              />
-                            </Component>
+                            />
                           </Modal>
                         </Modal>
                       </div>
@@ -699,11 +674,11 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                                       </g>
                                                     </svg>
                                                   </div>
-                                                  <p
+                                                  <div
                                                     class="ant-empty-description"
                                                   >
                                                     No Data
-                                                  </p>
+                                                  </div>
                                                 </div>
                                               </div>
                                             </td>
@@ -891,11 +866,11 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                                             </g>
                                                           </svg>
                                                         </div>
-                                                        <p
+                                                        <div
                                                           class="ant-empty-description"
                                                         >
                                                           No Data
-                                                        </p>
+                                                        </div>
                                                       </div>
                                                     </div>
                                                   </td>
@@ -1121,6 +1096,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                               }
                                               expandedKeys={Set {}}
                                               getRowKey={[Function]}
+                                              measureColumnWidth={false}
                                             >
                                               <tbody
                                                 className="ant-table-tbody"
@@ -1132,7 +1108,6 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                                   component="tr"
                                                   componentWidth={0}
                                                   expanded={true}
-                                                  fixHeader={false}
                                                   prefixCls="ant-table"
                                                 >
                                                   <tr
@@ -1217,11 +1192,11 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                                                         </svg>
                                                                       </Simple>
                                                                     </div>
-                                                                    <p
+                                                                    <div
                                                                       className="ant-empty-description"
                                                                     >
                                                                       No Data
-                                                                    </p>
+                                                                    </div>
                                                                   </div>
                                                                 </LocaleReceiver>
                                                               </Empty>

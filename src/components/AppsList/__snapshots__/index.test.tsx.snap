@@ -24,11 +24,17 @@ exports[`AppsList component Render AppsList correctly 1`] = `
 >
   <Row
     className="row-apps"
-    gutter={0}
   >
     <div
       className="ant-row row-apps"
-      style={Object {}}
+      style={
+        Object {
+          "marginBottom": undefined,
+          "marginLeft": undefined,
+          "marginRight": undefined,
+          "marginTop": undefined,
+        }
+      }
     >
       <App
         app_id="1"
@@ -64,7 +70,7 @@ exports[`AppsList component Render AppsList correctly 1`] = `
               className="card-app"
             >
               <div
-                className="ant-card card-app ant-card-bordered"
+                className="ant-card ant-card-bordered card-app"
               >
                 <div
                   className="ant-card-body"
@@ -95,15 +101,12 @@ exports[`AppsList component Render AppsList correctly 1`] = `
                       <Button
                         block={true}
                         className="dw-btn"
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
                         onClick={[Function]}
                         type="primary"
                       >
                         <Wave>
                           <button
-                            className="ant-btn dw-btn ant-btn-primary ant-btn-block"
+                            className="ant-btn ant-btn-primary ant-btn-block dw-btn"
                             onClick={[Function]}
                             type="button"
                           >
@@ -112,7 +115,7 @@ exports[`AppsList component Render AppsList correctly 1`] = `
                               loading={false}
                               prefixCls="ant-btn"
                             >
-                              <ForwardRef
+                              <CSSMotion
                                 motionName="ant-btn-loading-icon-motion"
                                 onAppearActive={[Function]}
                                 onAppearStart={[Function]}
@@ -123,22 +126,8 @@ exports[`AppsList component Render AppsList correctly 1`] = `
                                 removeOnLeave={true}
                                 visible={false}
                               >
-                                <CSSMotion
-                                  internalRef={null}
-                                  motionAppear={true}
-                                  motionEnter={true}
-                                  motionLeave={true}
-                                  motionName="ant-btn-loading-icon-motion"
-                                  onAppearActive={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
-                                  onLeaveStart={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                />
-                              </ForwardRef>
+                                <DomWrapper />
+                              </CSSMotion>
                             </LoadingIcon>
                             <span
                               key=".0"
@@ -161,18 +150,23 @@ exports[`AppsList component Render AppsList correctly 1`] = `
 </AppsList>
 `;
 
-
 exports[`AppsList component Render AppsList loader 1`] = `
 <AppsList
   loading={true}
 >
   <Row
     className="row-apps"
-    gutter={0}
   >
     <div
       className="ant-row row-apps"
-      style={Object {}}
+      style={
+        Object {
+          "marginBottom": undefined,
+          "marginLeft": undefined,
+          "marginRight": undefined,
+          "marginTop": undefined,
+        }
+      }
     >
       <AppsLoader>
         <Col
@@ -192,7 +186,7 @@ exports[`AppsList component Render AppsList loader 1`] = `
               loading={true}
             >
               <div
-                className="ant-card card-app ant-card-loading ant-card-bordered"
+                className="ant-card ant-card-loading ant-card-bordered card-app"
               >
                 <div
                   className="ant-card-body"
@@ -208,8 +202,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -239,8 +235,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -287,8 +285,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -335,8 +335,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -383,8 +385,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -464,7 +468,7 @@ exports[`AppsList component Render AppsList loader 1`] = `
               loading={true}
             >
               <div
-                className="ant-card card-app ant-card-loading ant-card-bordered"
+                className="ant-card ant-card-loading ant-card-bordered card-app"
               >
                 <div
                   className="ant-card-body"
@@ -480,8 +484,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -511,8 +517,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -559,8 +567,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -607,8 +617,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -655,8 +667,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -736,7 +750,7 @@ exports[`AppsList component Render AppsList loader 1`] = `
               loading={true}
             >
               <div
-                className="ant-card card-app ant-card-loading ant-card-bordered"
+                className="ant-card ant-card-loading ant-card-bordered card-app"
               >
                 <div
                   className="ant-card-body"
@@ -752,8 +766,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -783,8 +799,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -831,8 +849,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -879,8 +899,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >
@@ -927,8 +949,10 @@ exports[`AppsList component Render AppsList loader 1`] = `
                         className="ant-row"
                         style={
                           Object {
+                            "marginBottom": undefined,
                             "marginLeft": -4,
                             "marginRight": -4,
+                            "marginTop": undefined,
                           }
                         }
                       >

@@ -19,15 +19,13 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
       <div
         className="app-switcher-container"
       >
-        <Row
-          gutter={0}
-        >
+        <ForwardRef>
           <App
             app_id="first app"
             description="Admin Panel"
             name="AP"
           />
-        </Row>
+        </ForwardRef>
       </div>
     }
     overlayClassName="AppSwitcher__dropdown"
@@ -197,7 +195,7 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
         stretch="minWidth"
       >
         <a
-          className="app-switcher-link ant-dropdown-trigger"
+          className="ant-dropdown-trigger app-switcher-link"
           href="#1"
           key="trigger"
           onClick={[Function]}

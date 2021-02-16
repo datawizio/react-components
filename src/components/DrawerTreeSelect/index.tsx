@@ -578,11 +578,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         treeData,
         levelSelected.current
       );
+      if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
+        allLeafItems.current = getAllLeafItems(treeData);
+      }
       prevTreeData.current = stateTreeData;
-    }
-
-    if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
-      allLeafItems.current = getAllLeafItems(treeData);
     }
 
     dispatch({

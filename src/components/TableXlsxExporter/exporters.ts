@@ -59,7 +59,7 @@ function fillBackgroundCell(cell, color) {
 }
 
 export async function exportTableToXLSX(
-  tableState: TableState,
+  tableState: TableState | null,
   filename: string,
   sheetName?: string,
   cellRenderProps?: string

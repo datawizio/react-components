@@ -6,11 +6,9 @@ const setUp = (props?) => shallow(<ToolBar {...props} />);
 
 describe("ToolBar component", () => {
   let component;
-  let instance;
 
   beforeEach(() => {
     component = setUp();
-    instance = component.instance();
   });
 
   it("rendered ToolBar corectly", () => {

@@ -27,7 +27,7 @@ describe("UserButton component", () => {
     expect(component.html()).toContain(mockProps.fullName);
   });
 
-  it("UserButton hide show full name", () => {
+  it("UserButton hide full name", () => {
     const wrapper = setUp({ ...mockProps, showFullName: false });
     expect(wrapper.html()).not.toContain(mockProps.fullName);
   });

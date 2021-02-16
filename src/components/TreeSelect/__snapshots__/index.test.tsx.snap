@@ -8,17 +8,14 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
   showCheckAll={false}
   treeDefaultExpandedKeys={Array []}
 >
-  <TreeSelect
-    bordered={true}
-    choiceTransitionName="zoom"
+  <ForwardRef(InternalTreeSelect)
     className="dw-tree-select"
     dropdownClassName="dw-tree-select__dropdown"
     maxTagCount={10}
-    transitionName="slide-up"
     treeDefaultExpandedKeys={Array []}
   >
     <TreeSelect
-      choiceTransitionName="zoom"
+      choiceTransitionName=""
       className="ant-tree-select dw-tree-select"
       clearIcon={<ForwardRef(CloseCircleFilled) />}
       dropdownClassName="dw-tree-select__dropdown ant-tree-select-dropdown"
@@ -26,7 +23,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
       listHeight={256}
       listItemHeight={26}
       maxTagCount={10}
-      menuItemSelectedIcon={null}
       notFoundContent={
         <Context.Consumer>
           [Function]
@@ -41,7 +37,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
       treeMotion={null}
     >
       <ForwardRef
-        choiceTransitionName="zoom"
+        choiceTransitionName=""
         className="ant-tree-select dw-tree-select"
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         dropdownClassName="dw-tree-select__dropdown ant-tree-select-dropdown"
@@ -49,7 +45,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
         listHeight={256}
         listItemHeight={26}
         maxTagCount={10}
-        menuItemSelectedIcon={null}
         notFoundContent={
           <Context.Consumer>
             [Function]
@@ -64,7 +59,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
         treeMotion={null}
       >
         <Select
-          choiceTransitionName="zoom"
+          choiceTransitionName=""
           className="ant-tree-select dw-tree-select"
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           dropdownClassName="dw-tree-select__dropdown ant-tree-select-dropdown"
@@ -83,7 +78,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
           listHeight={256}
           listItemHeight={26}
           maxTagCount={10}
-          menuItemSelectedIcon={null}
           mode={null}
           notFoundContent={
             <Context.Consumer>
@@ -126,7 +120,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                   height={256}
                   id="rc_select_TEST_OR_SSR"
                   itemHeight={26}
-                  menuItemSelectedIcon={null}
                   multiple={false}
                   notFoundContent={
                     <Context.Consumer>
@@ -134,6 +127,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                     </Context.Consumer>
                   }
                   onActiveValue={[Function]}
+                  onMouseEnter={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   options={Array []}
@@ -233,7 +227,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                       height={256}
                       id="rc_select_TEST_OR_SSR"
                       itemHeight={26}
-                      menuItemSelectedIcon={null}
                       multiple={false}
                       notFoundContent={
                         <Context.Consumer>
@@ -241,6 +234,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                         </Context.Consumer>
                       }
                       onActiveValue={[Function]}
+                      onMouseEnter={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={Array []}
@@ -267,7 +261,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                 <Selector
                   accessibilityIndex={0}
                   activeValue={null}
-                  choiceTransitionName="zoom"
+                  choiceTransitionName=""
                   className="ant-tree-select dw-tree-select"
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   domRef={
@@ -290,6 +284,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                             readonly=""
                             role="combobox"
                             style="opacity: 0;"
+                            type="search"
                             unselectable="on"
                             value=""
                           />
@@ -319,7 +314,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                   listHeight={256}
                   listItemHeight={26}
                   maxTagCount={10}
-                  menuItemSelectedIcon={null}
                   mode={null}
                   multiple={false}
                   notFoundContent={
@@ -331,6 +325,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                   onDeselect={null}
                   onDropdownVisibleChange={[Function]}
                   onSearch={[Function]}
+                  onSearchSubmit={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   optionFilterProp="value"
@@ -341,6 +336,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                   showSearch={false}
                   showTreeIcon={false}
                   switcherIcon={[Function]}
+                  tokenWithEnter={false}
                   transitionName="slide-up"
                   treeDefaultExpandedKeys={Array []}
                   treeMotion={null}
@@ -355,7 +351,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                     <SingleSelector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName="zoom"
+                      choiceTransitionName=""
                       className="ant-tree-select dw-tree-select"
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       domRef={
@@ -378,6 +374,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                                 readonly=""
                                 role="combobox"
                                 style="opacity: 0;"
+                                type="search"
                                 unselectable="on"
                                 value=""
                               />
@@ -406,6 +403,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                             readonly=""
                             role="combobox"
                             style="opacity: 0;"
+                            type="search"
                             unselectable="on"
                             value=""
                           />,
@@ -425,7 +423,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                       listHeight={256}
                       listItemHeight={26}
                       maxTagCount={10}
-                      menuItemSelectedIcon={null}
                       mode={null}
                       multiple={false}
                       notFoundContent={
@@ -434,15 +431,16 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                         </Context.Consumer>
                       }
                       onChange={null}
-                      onCompositionEnd={[Function]}
-                      onCompositionStart={[Function]}
                       onDeselect={null}
                       onDropdownVisibleChange={[Function]}
                       onInputChange={[Function]}
+                      onInputCompositionEnd={[Function]}
+                      onInputCompositionStart={[Function]}
                       onInputKeyDown={[Function]}
                       onInputMouseDown={[Function]}
                       onInputPaste={[Function]}
                       onSearch={[Function]}
+                      onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       optionFilterProp="value"
@@ -453,6 +451,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                       showSearch={false}
                       showTreeIcon={false}
                       switcherIcon={[Function]}
+                      tokenWithEnter={false}
                       transitionName="slide-up"
                       treeDefaultExpandedKeys={Array []}
                       treeMotion={null}
@@ -499,6 +498,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                                 "opacity": 0,
                               }
                             }
+                            type="search"
                             unselectable="on"
                             value=""
                           />
@@ -537,8 +537,11 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                 }
                 unselectable="on"
               >
-                <ForwardRef(DownOutlined)>
+                <ForwardRef(DownOutlined)
+                  className="ant-select-suffix"
+                >
                   <AntdIcon
+                    className="ant-select-suffix"
                     icon={
                       Object {
                         "icon": Object {
@@ -563,11 +566,10 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                   >
                     <span
                       aria-label="down"
-                      className="anticon anticon-down"
+                      className="anticon anticon-down ant-select-suffix"
                       role="img"
                     >
                       <IconReact
-                        className=""
                         icon={
                           Object {
                             "icon": Object {
@@ -592,7 +594,6 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          className=""
                           data-icon="down"
                           fill="currentColor"
                           focusable="false"
@@ -616,7 +617,7 @@ exports[`TreeSelect component Render TreeSelect correctly 1`] = `
         </Select>
       </ForwardRef>
     </TreeSelect>
-  </TreeSelect>
+  </ForwardRef(InternalTreeSelect)>
 </TreeSelect>
 `;
 
@@ -632,13 +633,10 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
     ]
   }
 >
-  <TreeSelect
-    bordered={true}
-    choiceTransitionName="zoom"
+  <ForwardRef(InternalTreeSelect)
     className="dw-tree-select"
     dropdownClassName="dw-tree-select__dropdown"
     maxTagCount={10}
-    transitionName="slide-up"
     treeData={
       Array [
         Object {
@@ -656,7 +654,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
     }
   >
     <TreeSelect
-      choiceTransitionName="zoom"
+      choiceTransitionName=""
       className="ant-tree-select dw-tree-select"
       clearIcon={<ForwardRef(CloseCircleFilled) />}
       dropdownClassName="dw-tree-select__dropdown ant-tree-select-dropdown"
@@ -664,7 +662,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
       listHeight={256}
       listItemHeight={26}
       maxTagCount={10}
-      menuItemSelectedIcon={null}
       notFoundContent={
         <Context.Consumer>
           [Function]
@@ -693,7 +690,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
       treeMotion={null}
     >
       <ForwardRef
-        choiceTransitionName="zoom"
+        choiceTransitionName=""
         className="ant-tree-select dw-tree-select"
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         dropdownClassName="dw-tree-select__dropdown ant-tree-select-dropdown"
@@ -701,7 +698,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
         listHeight={256}
         listItemHeight={26}
         maxTagCount={10}
-        menuItemSelectedIcon={null}
         notFoundContent={
           <Context.Consumer>
             [Function]
@@ -730,7 +726,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
         treeMotion={null}
       >
         <Select
-          choiceTransitionName="zoom"
+          choiceTransitionName=""
           className="ant-tree-select dw-tree-select"
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           dropdownClassName="dw-tree-select__dropdown ant-tree-select-dropdown"
@@ -749,7 +745,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
           listHeight={256}
           listItemHeight={26}
           maxTagCount={10}
-          menuItemSelectedIcon={null}
           mode={null}
           notFoundContent={
             <Context.Consumer>
@@ -831,7 +826,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                   height={256}
                   id="rc_select_TEST_OR_SSR"
                   itemHeight={26}
-                  menuItemSelectedIcon={null}
                   multiple={false}
                   notFoundContent={
                     <Context.Consumer>
@@ -839,6 +833,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                     </Context.Consumer>
                   }
                   onActiveValue={[Function]}
+                  onMouseEnter={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   options={
@@ -962,7 +957,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                       height={256}
                       id="rc_select_TEST_OR_SSR"
                       itemHeight={26}
-                      menuItemSelectedIcon={null}
                       multiple={false}
                       notFoundContent={
                         <Context.Consumer>
@@ -970,6 +964,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                         </Context.Consumer>
                       }
                       onActiveValue={[Function]}
+                      onMouseEnter={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={
@@ -1006,7 +1001,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                 <Selector
                   accessibilityIndex={0}
                   activeValue={null}
-                  choiceTransitionName="zoom"
+                  choiceTransitionName=""
                   className="ant-tree-select dw-tree-select"
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   domRef={
@@ -1029,6 +1024,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                             readonly=""
                             role="combobox"
                             style="opacity: 0;"
+                            type="search"
                             unselectable="on"
                             value=""
                           />
@@ -1058,7 +1054,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                   listHeight={256}
                   listItemHeight={26}
                   maxTagCount={10}
-                  menuItemSelectedIcon={null}
                   mode={null}
                   multiple={false}
                   notFoundContent={
@@ -1070,6 +1065,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                   onDeselect={null}
                   onDropdownVisibleChange={[Function]}
                   onSearch={[Function]}
+                  onSearchSubmit={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   optionFilterProp="value"
@@ -1091,6 +1087,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                   showSearch={false}
                   showTreeIcon={false}
                   switcherIcon={[Function]}
+                  tokenWithEnter={false}
                   transitionName="slide-up"
                   treeData={
                     Array [
@@ -1119,7 +1116,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                     <SingleSelector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName="zoom"
+                      choiceTransitionName=""
                       className="ant-tree-select dw-tree-select"
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       domRef={
@@ -1142,6 +1139,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                                 readonly=""
                                 role="combobox"
                                 style="opacity: 0;"
+                                type="search"
                                 unselectable="on"
                                 value=""
                               />
@@ -1170,6 +1168,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                             readonly=""
                             role="combobox"
                             style="opacity: 0;"
+                            type="search"
                             unselectable="on"
                             value=""
                           />,
@@ -1189,7 +1188,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                       listHeight={256}
                       listItemHeight={26}
                       maxTagCount={10}
-                      menuItemSelectedIcon={null}
                       mode={null}
                       multiple={false}
                       notFoundContent={
@@ -1198,15 +1196,16 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                         </Context.Consumer>
                       }
                       onChange={null}
-                      onCompositionEnd={[Function]}
-                      onCompositionStart={[Function]}
                       onDeselect={null}
                       onDropdownVisibleChange={[Function]}
                       onInputChange={[Function]}
+                      onInputCompositionEnd={[Function]}
+                      onInputCompositionStart={[Function]}
                       onInputKeyDown={[Function]}
                       onInputMouseDown={[Function]}
                       onInputPaste={[Function]}
                       onSearch={[Function]}
+                      onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       optionFilterProp="value"
@@ -1228,6 +1227,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                       showSearch={false}
                       showTreeIcon={false}
                       switcherIcon={[Function]}
+                      tokenWithEnter={false}
                       transitionName="slide-up"
                       treeData={
                         Array [
@@ -1288,6 +1288,7 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                                 "opacity": 0,
                               }
                             }
+                            type="search"
                             unselectable="on"
                             value=""
                           />
@@ -1326,8 +1327,11 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                 }
                 unselectable="on"
               >
-                <ForwardRef(DownOutlined)>
+                <ForwardRef(DownOutlined)
+                  className="ant-select-suffix"
+                >
                   <AntdIcon
+                    className="ant-select-suffix"
                     icon={
                       Object {
                         "icon": Object {
@@ -1352,11 +1356,10 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                   >
                     <span
                       aria-label="down"
-                      className="anticon anticon-down"
+                      className="anticon anticon-down ant-select-suffix"
                       role="img"
                     >
                       <IconReact
-                        className=""
                         icon={
                           Object {
                             "icon": Object {
@@ -1381,7 +1384,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          className=""
                           data-icon="down"
                           fill="currentColor"
                           focusable="false"
@@ -1405,6 +1407,6 @@ exports[`TreeSelect component Render TreeSelect with check all 1`] = `
         </Select>
       </ForwardRef>
     </TreeSelect>
-  </TreeSelect>
+  </ForwardRef(InternalTreeSelect)>
 </TreeSelect>
 `;

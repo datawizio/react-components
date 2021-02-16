@@ -45,7 +45,6 @@ exports[`LiteSearchInput component LiteSearchInput rendered correctly 1`] = `
           role="img"
         >
           <IconReact
-            className=""
             icon={
               Object {
                 "icon": Object {
@@ -70,7 +69,6 @@ exports[`LiteSearchInput component LiteSearchInput rendered correctly 1`] = `
           >
             <svg
               aria-hidden="true"
-              className=""
               data-icon="search"
               fill="currentColor"
               focusable="false"
