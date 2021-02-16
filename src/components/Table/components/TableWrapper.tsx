@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useRef, useState, useEffect, useMemo, useContext } from "react";
 import resizeDetector from "../../../utils/resizeDetector";
-import { getAbsoluteHeight, getAbsoluteWidth } from "../../../utils/sizeUtils";
+import { getAbsoluteHeight } from "../../../utils/sizeUtils";
 import { TableContext } from "../context";
 
 const TableWrapper: React.FC<React.HTMLAttributes<any>> = props => {

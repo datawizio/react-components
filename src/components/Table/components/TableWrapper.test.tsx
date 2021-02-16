@@ -25,7 +25,6 @@ const setUp = (props?) => mount(componentWithContext(props));
 
 describe("TableWrapper component", () => {
   let component;
-  let instance;
 
   beforeEach(() => {
     component = setUp({
@@ -34,7 +33,6 @@ describe("TableWrapper component", () => {
         width: 1
       }
     });
-    instance = component.instance();
   });
 
   it("rendered TableWrapper corectly", () => {
