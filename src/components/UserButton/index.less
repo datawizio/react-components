@@ -3,6 +3,7 @@
 
 @import "../Button/index.less";
 @import "../../styles/variables";
+@import "./rtl";
 
 .ant-btn.user-name {
   height: 32px;
@@ -15,6 +16,13 @@
   .anticon-down {
     padding-top: 5px;
     font-size: 12px;
+  }
+
+  &.dw-dark {
+    background-color: @bg-dark-color;
+    .anticon {
+      color: @icon-color-dark-theme;
+    }
   }
 }
 

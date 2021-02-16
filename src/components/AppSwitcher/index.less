@@ -9,6 +9,11 @@
 
 .app-switcher-link {
   display: flex;
+  &.dw-dark {
+    .app-switcher-icon {
+      color: @icon-color-dark-theme;
+    }
+  }
 }
 
 .app-switcher-container {
@@ -50,5 +55,11 @@
       background: rgb(142, 116, 198);
       border-radius: 5px;
     }
+  }
+}
+
+.rtl {
+  .AppSwitcher__dropdown {
+    left: 8px !important;
   }
 }

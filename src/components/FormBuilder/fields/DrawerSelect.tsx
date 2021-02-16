@@ -18,11 +18,12 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
   ...restProps
 }) => {
   const handleFieldChange = (value: any, selected: any) => {
-    onChange({
-      name,
-      value,
-      selected
-    });
+    onChange &&
+      onChange({
+        name,
+        value,
+        selected
+      });
   };
 
   return (

@@ -50,6 +50,7 @@ export interface IntervalItemProps {
 export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
   format?: string;
   fullWidth?: boolean;
+  inputReadOnly?: boolean;
 }
 
 export interface FieldTextProps extends FormFieldProps<string> {}
@@ -95,6 +96,7 @@ export interface FieldDrawerSelectProps
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;
   treeData?: any;
+  headerHeight?: number;
   drawerTitle?: string;
   multiple?: boolean;
   treeDataSimpleMode?: boolean;

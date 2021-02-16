@@ -1,4 +1,4 @@
-import { genUsersData } from "./dataGenerators";
+import { genItems, genUsersData } from "./dataGenerators";
 
 describe("data generation utils", () => {
   describe("genUserData", () => {
@@ -9,11 +9,21 @@ describe("data generation utils", () => {
     it("returns the correct obj with fullName property", () => {
       expect(genUsersData(1)[0]).toHaveProperty("fullName");
     });
+
     it("returns the correct obj with avatar property", () => {
       expect(genUsersData(1)[0]).toHaveProperty("avatar");
     });
+
     it("returns the correct obj with address property", () => {
       expect(genUsersData(1)[0]).toHaveProperty("address");
     });
+  });
+
+  it("genItems() generates data correctly", () => {
+    const count = 5;
+    const items = genItems(count);
+    expect(items.length).toBe(count);
+    expect(items[0]).toHaveProperty("key");
+    expect(items[0]).toHaveProperty("title");
   });
 });

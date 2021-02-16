@@ -28,9 +28,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
     value={1}
     withPagination={false}
   >
-    <Select
-      bordered={true}
-      choiceTransitionName="zoom"
+    <ForwardRef(InternalSelect)
       className="client-select"
       loading={false}
       notFoundContent="No data"
@@ -38,11 +36,10 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
       onDropdownVisibleChange={null}
       optionFilterProp="label"
       showSearch={true}
-      transitionName="slide-up"
+      tagRender={null}
       value={1}
     >
       <Select
-        choiceTransitionName="zoom"
         className="client-select"
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         dropdownClassName=""
@@ -58,11 +55,11 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
         showSearch={true}
+        tagRender={null}
         transitionName="slide-up"
         value={1}
       >
         <ForwardRef(Select)
-          choiceTransitionName="zoom"
           className="client-select"
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           dropdownClassName=""
@@ -78,6 +75,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
           showSearch={true}
+          tagRender={null}
           transitionName="slide-up"
           value={1}
         >
@@ -129,6 +127,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   multiple={false}
                   notFoundContent="No data"
                   onActiveValue={[Function]}
+                  onMouseEnter={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   options={
@@ -274,6 +273,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       multiple={false}
                       notFoundContent="No data"
                       onActiveValue={[Function]}
+                      onMouseEnter={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={
@@ -319,7 +319,6 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                 <Selector
                   accessibilityIndex={0}
                   activeValue={null}
-                  choiceTransitionName="zoom"
                   className="client-select"
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   domRef={
@@ -339,15 +338,14 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                             autocomplete="off"
                             class="ant-select-selection-search-input"
                             id="rc_select_TEST_OR_SSR"
-                            readonly=""
                             role="combobox"
-                            style="opacity: 0;"
-                            unselectable="on"
+                            type="search"
                             value=""
                           />
                         </span>
                         <span
                           class="ant-select-selection-item"
+                          title="cl1"
                         >
                           cl1
                         </span>
@@ -368,6 +366,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   onChange={[Function]}
                   onDropdownVisibleChange={null}
                   onSearch={[Function]}
+                  onSearchSubmit={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   optionFilterProp="label"
@@ -375,6 +374,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue=""
                   showSearch={true}
+                  tagRender={null}
+                  tokenWithEnter={false}
                   transitionName="slide-up"
                   value={1}
                   values={
@@ -396,7 +397,6 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                     <SingleSelector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName="zoom"
                       className="client-select"
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       domRef={
@@ -416,15 +416,14 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                                 autocomplete="off"
                                 class="ant-select-selection-search-input"
                                 id="rc_select_TEST_OR_SSR"
-                                readonly=""
                                 role="combobox"
-                                style="opacity: 0;"
-                                unselectable="on"
+                                type="search"
                                 value=""
                               />
                             </span>
                             <span
                               class="ant-select-selection-item"
+                              title="cl1"
                             >
                               cl1
                             </span>
@@ -446,10 +445,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                             autocomplete="off"
                             class="ant-select-selection-search-input"
                             id="rc_select_TEST_OR_SSR"
-                            readonly=""
                             role="combobox"
-                            style="opacity: 0;"
-                            unselectable="on"
+                            type="search"
                             value=""
                           />,
                         }
@@ -461,14 +458,15 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       multiple={false}
                       notFoundContent="No data"
                       onChange={[Function]}
-                      onCompositionEnd={[Function]}
-                      onCompositionStart={[Function]}
                       onDropdownVisibleChange={null}
                       onInputChange={[Function]}
+                      onInputCompositionEnd={[Function]}
+                      onInputCompositionStart={[Function]}
                       onInputKeyDown={[Function]}
                       onInputMouseDown={[Function]}
                       onInputPaste={[Function]}
                       onSearch={[Function]}
+                      onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       optionFilterProp="label"
@@ -476,6 +474,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
+                      tagRender={null}
+                      tokenWithEnter={false}
                       transitionName="slide-up"
                       value={1}
                       values={
@@ -495,6 +495,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                         <Input
                           accessibilityIndex={0}
                           attrs={Object {}}
+                          editable={true}
                           id="rc_select_TEST_OR_SSR"
                           inputElement={null}
                           onChange={[Function]}
@@ -521,20 +522,22 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                             onKeyDown={[Function]}
                             onMouseDown={[Function]}
                             onPaste={[Function]}
-                            readOnly={true}
+                            readOnly={false}
                             role="combobox"
                             style={
                               Object {
-                                "opacity": 0,
+                                "opacity": null,
                               }
                             }
-                            unselectable="on"
+                            type="search"
+                            unselectable={null}
                             value=""
                           />
                         </Input>
                       </span>
                       <span
                         className="ant-select-selection-item"
+                        title="cl1"
                       >
                         cl1
                       </span>
@@ -568,8 +571,11 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                 }
                 unselectable="on"
               >
-                <ForwardRef(DownOutlined)>
+                <ForwardRef(DownOutlined)
+                  className="ant-select-suffix"
+                >
                   <AntdIcon
+                    className="ant-select-suffix"
                     icon={
                       Object {
                         "icon": Object {
@@ -594,11 +600,10 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   >
                     <span
                       aria-label="down"
-                      className="anticon anticon-down"
+                      className="anticon anticon-down ant-select-suffix"
                       role="img"
                     >
                       <IconReact
-                        className=""
                         icon={
                           Object {
                             "icon": Object {
@@ -623,7 +628,6 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          className=""
                           data-icon="down"
                           fill="currentColor"
                           focusable="false"
@@ -646,7 +650,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
           </div>
         </ForwardRef(Select)>
       </Select>
-    </Select>
+    </ForwardRef(InternalSelect)>
   </Select>
   <div
     className="divider"

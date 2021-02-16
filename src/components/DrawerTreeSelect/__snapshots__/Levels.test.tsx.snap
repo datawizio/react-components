@@ -19,9 +19,7 @@ exports[`Levels Inner level render correctly 1`] = `
   value="value"
   withPagination={false}
 >
-  <Select
-    bordered={true}
-    choiceTransitionName="zoom"
+  <ForwardRef(InternalSelect)
     className="drawer-tree-select-levels"
     defaultValue="value"
     loading={false}
@@ -36,11 +34,10 @@ exports[`Levels Inner level render correctly 1`] = `
         },
       ]
     }
-    transitionName="slide-up"
+    tagRender={null}
     value="value"
   >
     <Select
-      choiceTransitionName="zoom"
       className="drawer-tree-select-levels"
       clearIcon={<ForwardRef(CloseCircleFilled) />}
       defaultValue="value"
@@ -63,11 +60,11 @@ exports[`Levels Inner level render correctly 1`] = `
       }
       prefixCls="ant-select"
       removeIcon={<ForwardRef(CloseOutlined) />}
+      tagRender={null}
       transitionName="slide-up"
       value="value"
     >
       <ForwardRef(Select)
-        choiceTransitionName="zoom"
         className="drawer-tree-select-levels"
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         defaultValue="value"
@@ -90,6 +87,7 @@ exports[`Levels Inner level render correctly 1`] = `
         }
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        tagRender={null}
         transitionName="slide-up"
         value="value"
       >
@@ -129,6 +127,7 @@ exports[`Levels Inner level render correctly 1`] = `
                 multiple={false}
                 notFoundContent="No data"
                 onActiveValue={[Function]}
+                onMouseEnter={[Function]}
                 onSelect={[Function]}
                 onToggleOpen={[Function]}
                 options={
@@ -254,6 +253,7 @@ exports[`Levels Inner level render correctly 1`] = `
                     multiple={false}
                     notFoundContent="No data"
                     onActiveValue={[Function]}
+                    onMouseEnter={[Function]}
                     onSelect={[Function]}
                     onToggleOpen={[Function]}
                     options={
@@ -291,7 +291,6 @@ exports[`Levels Inner level render correctly 1`] = `
               <Selector
                 accessibilityIndex={0}
                 activeValue={null}
-                choiceTransitionName="zoom"
                 className="drawer-tree-select-levels"
                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                 defaultValue="value"
@@ -315,12 +314,14 @@ exports[`Levels Inner level render correctly 1`] = `
                           readonly=""
                           role="combobox"
                           style="opacity: 0;"
+                          type="search"
                           unselectable="on"
                           value=""
                         />
                       </span>
                       <span
                         class="ant-select-selection-item"
+                        title="value"
                       >
                         value
                       </span>
@@ -341,6 +342,7 @@ exports[`Levels Inner level render correctly 1`] = `
                 onChange={[Function]}
                 onDropdownVisibleChange={null}
                 onSearch={[Function]}
+                onSearchSubmit={[Function]}
                 onSelect={[Function]}
                 onToggleOpen={[Function]}
                 options={
@@ -355,12 +357,15 @@ exports[`Levels Inner level render correctly 1`] = `
                 removeIcon={<ForwardRef(CloseOutlined) />}
                 searchValue=""
                 showSearch={false}
+                tagRender={null}
+                tokenWithEnter={false}
                 transitionName="slide-up"
                 value="value"
                 values={
                   Array [
                     Object {
                       "disabled": undefined,
+                      "isCacheable": true,
                       "key": "value",
                       "label": "value",
                       "value": "value",
@@ -376,7 +381,6 @@ exports[`Levels Inner level render correctly 1`] = `
                   <SingleSelector
                     accessibilityIndex={0}
                     activeValue={null}
-                    choiceTransitionName="zoom"
                     className="drawer-tree-select-levels"
                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                     defaultValue="value"
@@ -400,12 +404,14 @@ exports[`Levels Inner level render correctly 1`] = `
                               readonly=""
                               role="combobox"
                               style="opacity: 0;"
+                              type="search"
                               unselectable="on"
                               value=""
                             />
                           </span>
                           <span
                             class="ant-select-selection-item"
+                            title="value"
                           >
                             value
                           </span>
@@ -430,6 +436,7 @@ exports[`Levels Inner level render correctly 1`] = `
                           readonly=""
                           role="combobox"
                           style="opacity: 0;"
+                          type="search"
                           unselectable="on"
                           value=""
                         />,
@@ -442,14 +449,15 @@ exports[`Levels Inner level render correctly 1`] = `
                     multiple={false}
                     notFoundContent="No data"
                     onChange={[Function]}
-                    onCompositionEnd={[Function]}
-                    onCompositionStart={[Function]}
                     onDropdownVisibleChange={null}
                     onInputChange={[Function]}
+                    onInputCompositionEnd={[Function]}
+                    onInputCompositionStart={[Function]}
                     onInputKeyDown={[Function]}
                     onInputMouseDown={[Function]}
                     onInputPaste={[Function]}
                     onSearch={[Function]}
+                    onSearchSubmit={[Function]}
                     onSelect={[Function]}
                     onToggleOpen={[Function]}
                     options={
@@ -464,12 +472,15 @@ exports[`Levels Inner level render correctly 1`] = `
                     removeIcon={<ForwardRef(CloseOutlined) />}
                     searchValue=""
                     showSearch={false}
+                    tagRender={null}
+                    tokenWithEnter={false}
                     transitionName="slide-up"
                     value="value"
                     values={
                       Array [
                         Object {
                           "disabled": undefined,
+                          "isCacheable": true,
                           "key": "value",
                           "label": "value",
                           "value": "value",
@@ -517,6 +528,7 @@ exports[`Levels Inner level render correctly 1`] = `
                               "opacity": 0,
                             }
                           }
+                          type="search"
                           unselectable="on"
                           value=""
                         />
@@ -524,6 +536,7 @@ exports[`Levels Inner level render correctly 1`] = `
                     </span>
                     <span
                       className="ant-select-selection-item"
+                      title="value"
                     >
                       value
                     </span>
@@ -557,8 +570,11 @@ exports[`Levels Inner level render correctly 1`] = `
               }
               unselectable="on"
             >
-              <ForwardRef(DownOutlined)>
+              <ForwardRef(DownOutlined)
+                className="ant-select-suffix"
+              >
                 <AntdIcon
+                  className="ant-select-suffix"
                   icon={
                     Object {
                       "icon": Object {
@@ -583,11 +599,10 @@ exports[`Levels Inner level render correctly 1`] = `
                 >
                   <span
                     aria-label="down"
-                    className="anticon anticon-down"
+                    className="anticon anticon-down ant-select-suffix"
                     role="img"
                   >
                     <IconReact
-                      className=""
                       icon={
                         Object {
                           "icon": Object {
@@ -612,7 +627,6 @@ exports[`Levels Inner level render correctly 1`] = `
                     >
                       <svg
                         aria-hidden="true"
-                        className=""
                         data-icon="down"
                         fill="currentColor"
                         focusable="false"
@@ -635,7 +649,7 @@ exports[`Levels Inner level render correctly 1`] = `
         </div>
       </ForwardRef(Select)>
     </Select>
-  </Select>
+  </ForwardRef(InternalSelect)>
 </Select>
 `;
 
@@ -670,9 +684,7 @@ exports[`Levels Levels to match snapshot 1`] = `
     value="value"
     withPagination={false}
   >
-    <Select
-      bordered={true}
-      choiceTransitionName="zoom"
+    <ForwardRef(InternalSelect)
       className="drawer-tree-select-levels"
       defaultValue="value"
       loading={false}
@@ -687,11 +699,10 @@ exports[`Levels Levels to match snapshot 1`] = `
           },
         ]
       }
-      transitionName="slide-up"
+      tagRender={null}
       value="value"
     >
       <Select
-        choiceTransitionName="zoom"
         className="drawer-tree-select-levels"
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         defaultValue="value"
@@ -714,11 +725,11 @@ exports[`Levels Levels to match snapshot 1`] = `
         }
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        tagRender={null}
         transitionName="slide-up"
         value="value"
       >
         <ForwardRef(Select)
-          choiceTransitionName="zoom"
           className="drawer-tree-select-levels"
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           defaultValue="value"
@@ -741,6 +752,7 @@ exports[`Levels Levels to match snapshot 1`] = `
           }
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
+          tagRender={null}
           transitionName="slide-up"
           value="value"
         >
@@ -780,6 +792,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                   multiple={false}
                   notFoundContent="No data"
                   onActiveValue={[Function]}
+                  onMouseEnter={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   options={
@@ -905,6 +918,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                       multiple={false}
                       notFoundContent="No data"
                       onActiveValue={[Function]}
+                      onMouseEnter={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={
@@ -942,7 +956,6 @@ exports[`Levels Levels to match snapshot 1`] = `
                 <Selector
                   accessibilityIndex={0}
                   activeValue={null}
-                  choiceTransitionName="zoom"
                   className="drawer-tree-select-levels"
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   defaultValue="value"
@@ -966,12 +979,14 @@ exports[`Levels Levels to match snapshot 1`] = `
                             readonly=""
                             role="combobox"
                             style="opacity: 0;"
+                            type="search"
                             unselectable="on"
                             value=""
                           />
                         </span>
                         <span
                           class="ant-select-selection-item"
+                          title="value"
                         >
                           value
                         </span>
@@ -992,6 +1007,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                   onChange={[Function]}
                   onDropdownVisibleChange={null}
                   onSearch={[Function]}
+                  onSearchSubmit={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
                   options={
@@ -1006,12 +1022,15 @@ exports[`Levels Levels to match snapshot 1`] = `
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue=""
                   showSearch={false}
+                  tagRender={null}
+                  tokenWithEnter={false}
                   transitionName="slide-up"
                   value="value"
                   values={
                     Array [
                       Object {
                         "disabled": undefined,
+                        "isCacheable": true,
                         "key": "value",
                         "label": "value",
                         "value": "value",
@@ -1027,7 +1046,6 @@ exports[`Levels Levels to match snapshot 1`] = `
                     <SingleSelector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName="zoom"
                       className="drawer-tree-select-levels"
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       defaultValue="value"
@@ -1051,12 +1069,14 @@ exports[`Levels Levels to match snapshot 1`] = `
                                 readonly=""
                                 role="combobox"
                                 style="opacity: 0;"
+                                type="search"
                                 unselectable="on"
                                 value=""
                               />
                             </span>
                             <span
                               class="ant-select-selection-item"
+                              title="value"
                             >
                               value
                             </span>
@@ -1081,6 +1101,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                             readonly=""
                             role="combobox"
                             style="opacity: 0;"
+                            type="search"
                             unselectable="on"
                             value=""
                           />,
@@ -1093,14 +1114,15 @@ exports[`Levels Levels to match snapshot 1`] = `
                       multiple={false}
                       notFoundContent="No data"
                       onChange={[Function]}
-                      onCompositionEnd={[Function]}
-                      onCompositionStart={[Function]}
                       onDropdownVisibleChange={null}
                       onInputChange={[Function]}
+                      onInputCompositionEnd={[Function]}
+                      onInputCompositionStart={[Function]}
                       onInputKeyDown={[Function]}
                       onInputMouseDown={[Function]}
                       onInputPaste={[Function]}
                       onSearch={[Function]}
+                      onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={
@@ -1115,12 +1137,15 @@ exports[`Levels Levels to match snapshot 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={false}
+                      tagRender={null}
+                      tokenWithEnter={false}
                       transitionName="slide-up"
                       value="value"
                       values={
                         Array [
                           Object {
                             "disabled": undefined,
+                            "isCacheable": true,
                             "key": "value",
                             "label": "value",
                             "value": "value",
@@ -1168,6 +1193,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                                 "opacity": 0,
                               }
                             }
+                            type="search"
                             unselectable="on"
                             value=""
                           />
@@ -1175,6 +1201,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                       </span>
                       <span
                         className="ant-select-selection-item"
+                        title="value"
                       >
                         value
                       </span>
@@ -1208,8 +1235,11 @@ exports[`Levels Levels to match snapshot 1`] = `
                 }
                 unselectable="on"
               >
-                <ForwardRef(DownOutlined)>
+                <ForwardRef(DownOutlined)
+                  className="ant-select-suffix"
+                >
                   <AntdIcon
+                    className="ant-select-suffix"
                     icon={
                       Object {
                         "icon": Object {
@@ -1234,11 +1264,10 @@ exports[`Levels Levels to match snapshot 1`] = `
                   >
                     <span
                       aria-label="down"
-                      className="anticon anticon-down"
+                      className="anticon anticon-down ant-select-suffix"
                       role="img"
                     >
                       <IconReact
-                        className=""
                         icon={
                           Object {
                             "icon": Object {
@@ -1263,7 +1292,6 @@ exports[`Levels Levels to match snapshot 1`] = `
                       >
                         <svg
                           aria-hidden="true"
-                          className=""
                           data-icon="down"
                           fill="currentColor"
                           focusable="false"
@@ -1286,7 +1314,7 @@ exports[`Levels Levels to match snapshot 1`] = `
           </div>
         </ForwardRef(Select)>
       </Select>
-    </Select>
+    </ForwardRef(InternalSelect)>
   </Select>
 </Levels>
 `;

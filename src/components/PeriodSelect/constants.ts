@@ -16,7 +16,7 @@ export const PREV_PERIOD_OPTIONS = [
 ];
 
 export const PERIOD_AVAILABLE = {
-  today: [
+  last_update_date: [
     "previous",
     "prev_last_week",
     "prev_last_month",
@@ -24,7 +24,7 @@ export const PERIOD_AVAILABLE = {
     "prev_last_year",
     "prev_date"
   ],
-  last_day: [
+  penultimate_update_date: [
     "previous",
     "prev_last_week",
     "prev_last_month",
@@ -78,6 +78,27 @@ export const PERIOD_AVAILABLE = {
   last_180_days: ["previous", "prev_last_year", "prev_date"],
   last_365_days: ["previous", "prev_last_year", "prev_date"],
   all_time: [],
+  date: ["previous", "prev_date"]
+};
+
+export const AVAILABLE_PERIODS_FOR_DATES = {
+  week: [
+    "previous",
+    "prev_last_week",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "prev_date"
+  ],
+  mounth: [
+    "previous",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "prev_date"
+  ],
+  quarter: ["previous", "prev_last_quarter", "prev_last_year", "prev_date"],
+  year: ["previous", "prev_last_year", "prev_date"],
   date: ["previous", "prev_date"]
 };
 

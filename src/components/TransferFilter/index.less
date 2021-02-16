@@ -1,0 +1,63 @@
+@import "~antd/es/transfer/style/index";
+@import "~antd/es/tree/style/index";
+@import "../LiteSearchInput/index";
+@import "../../styles/variables";
+
+.dw-transfer-filter {
+  display: flex;
+  align-items: center;
+  .ant-transfer-list-container {
+    flex: 1;
+    max-width: calc(50% - 20px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .ant-transfer-list {
+      width: 100%;
+      flex: 1;
+      min-height: 300px;
+      &-title {
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        height: 48px;
+        &-text {
+          flex: 1;
+        }
+      }
+      &-header {
+        display: flex;
+        .ant-checkbox-wrapper {
+          flex: 1;
+        }
+      }
+      &-skeleton {
+        display: flex;
+        padding: 5px 12px;
+        & > span:first-of-type {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .ant-pagination {
+      padding-top: 7px;
+      padding-right: 4px;
+      text-align: end;
+    }
+  }
+
+  .ant-transfer-operation {
+    .ant-btn {
+      margin-bottom: 4px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .button-add-all {
+    padding-left: 10px;
+    color: @primary-color;
+  }
+}

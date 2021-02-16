@@ -1,0 +1,27 @@
+.bar-cell {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  height: 100%;
+
+  .bar-sub-cell-wrapper {
+    height: 100%;
+
+    .bar-sub-cell {
+      height: 100%;
+      width: 20px;
+      border-right: 1px solid #eee;
+      box-sizing: border-box;
+      display: inline-block;
+
+      .bar-item {
+        height: 20px;
+        margin-top: 50%;
+      }
+    }
+
+    .bar-sub-cell:last-child {
+      border-right: none;
+    }
+  }
+}

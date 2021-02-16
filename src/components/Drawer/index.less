@@ -12,4 +12,35 @@
       margin-left: @margin-xs;
     }
   }
+
+  .ant-drawer-header {
+    padding: 16px 36px 16px 24px;
+  }
+}
+
+@media (max-width: 823px), (max-height: 420px) {
+  .ant-drawer-wrapper-body {
+    .ant-drawer-header {
+      padding: 8px 12px;
+    }
+    .ant-drawer-close {
+      padding: 12px;
+    }
+    .ant-drawer-body {
+      padding: 12px 24px;
+    }
+    .ant-picker-dropdown-range {
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, 0);
+    }
+  }
+  .ant-select-tree-list {
+    min-height: 50px;
+  }
+  .drawer-tree-select-dropdown
+    .ant-drawer-body
+    .drawer-tree-select-dropdown-toolbar {
+    min-height: 20px !important;
+  }
 }

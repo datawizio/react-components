@@ -1,5 +1,15 @@
+@import "./variables";
+
 .rtl {
   direction: rtl;
+
+  .force-ltr {
+    direction: ltr !important;
+  }
+
+  .force-rtl {
+    direction: rtl !important;
+  }
 
   /* Layout */
 
@@ -41,11 +51,17 @@
 
   /* Drawer */
 
-  .ant-drawer-right {
+  .ant-drawer {
+    transition: unset !important;
+
+    .ant-drawer-mask {
+      left: 400px;
+    }
+
     .ant-drawer-content-wrapper {
       right: unset;
       left: 0;
-      transition: unset;
+      transition: unset !important;
 
       .ant-drawer-close {
         right: unset;
@@ -55,27 +71,32 @@
       .ant-form-item-label {
         text-align: right;
       }
+
+      .ant-select-item {
+        padding-left: unset;
+        padding-right: 0;
+      }
+
+      .ant-select-item::before {
+        margin-right: 0;
+        margin-left: 10px;
+      }
     }
+
   }
 
-  /* Tutorial */
-
-  .ant-back-top.dw-back-top {
-    right: unset;
-    left: 80px;
-  }
-
-  /* Ant Select Dropdown */
+  /* Select Dropdown - Single */
 
   .ant-select-single {
     .ant-select-selector {
       text-align: right;
       padding-left: 30px;
-      padding-right: 4px;
+      padding-right: 8px;
 
       .ant-select-selection-search {
         right: 0;
         left: 25px;
+        padding-right: 5px;
       }
 
       .ant-select-selection-item {
@@ -87,14 +108,79 @@
         padding-right: 0;
       }
     }
+
+    .ant-select-clear {
+      right: unset;
+      left: 12px;
+    }
   }
 
   .ant-select-arrow {
-    right: unset;
-    left: 11px;
+    right: unset !important;
+    left: 12px;
   }
 
-  /* Ant Notification Message */
+  /* Select Dropdown - Multiple */
+
+  .ant-select-multiple {
+    .ant-select-selector {
+      padding-right: 4px !important;
+      padding-left: 24px;
+    }
+
+    .ant-select-clear {
+      right: unset;
+      left: 12px;
+    }
+
+    .ant-tag .anticon-close {
+      margin-left: unset;
+      margin-right: 3px;
+    }
+
+    .ant-select-selection-item .ant-select-selection-item-content {
+      margin-right: unset;
+      margin-left: 4px;
+    }
+  }
+
+  /* Select Tree */
+
+  .ant-select-tree {
+    .ant-select-tree-checkbox {
+      margin: 4px 0 0 8px;
+    }
+  }
+
+  /* Input Number */
+
+  .ant-input-number {
+    .ant-input-number-handler-wrap {
+      right: unset;
+      left: 0;
+    }
+
+    input {
+      text-align: right;
+    }
+  }
+
+  /* Transfer List */
+
+  .ant-transfer-list {
+    .ant-transfer-list-content-item {
+      .ant-transfer-list-content-item > span {
+        padding-right: unset;
+      }
+
+      .ant-transfer-list-content-item-text {
+        padding-left: unset;
+        padding-right: 8px;
+      }
+    }
+  }
+
+  /* Notification Message */
 
   .ant-notification-notice-close {
     right: unset;
@@ -106,14 +192,180 @@
     margin-right: 16px;
   }
 
+  .ant-notification.ant-notification-topRight {
+    right: unset !important;
+    left: 2px;
+  }
+
   /* Datepicker */
+
   .ant-picker-dropdown {
     .ant-picker-header {
       direction: ltr;
     }
   }
 
-  /* Common */
+  /* Search Input */
+
+  .ant-input-search:not(.ant-input-search-enter-button) {
+    padding-right: 11px;
+    padding-left: 0;
+  }
+
+  .ant-input-search-icon::before {
+    transform: translateX(10px);
+  }
+
+  .ant-input-suffix {
+    margin-left: unset;
+    margin-right: 4px;
+
+    .ant-input-search-icon {
+      margin-left: unset;
+      margin-right: 0.5em;
+    }
+  }
+
+  /* Modal */
+
+  .ant-modal:not(.geo-location__modal) {
+
+    .ant-modal-close {
+      right: unset;
+      left: 0;
+    }
+
+    .ant-modal-title {
+      text-align: right;
+    }
+
+    .ant-modal-footer button + button {
+      margin-left: unset;
+      margin-right: 8px;
+    }
+
+  }
+
+  /* List */
+
+  .ant-list-item .list-item-field-container {
+    padding-right: unset;
+    padding-left: @padding-xss;
+  }
+
+  .ant-list-item .ant-list-item-meta-avatar {
+    margin-right: unset;
+    margin-left: @margin-md;
+  }
+
+  /* Table */
+
+  .ant-table-cell {
+    text-align: right;
+
+    .ant-table-row-expand-icon > .anticon-right {
+      transform: rotate(180deg);
+    }
+  }
+
+  .ant-table-column-sorter {
+    margin-left: unset;
+    margin-right: 8px;
+  }
+
+  .ant-table-filter-dropdown .ant-checkbox-wrapper + span,
+  .ant-table-filter-dropdown-submenu .ant-checkbox-wrapper + span {
+    padding-left: unset;
+    padding-right: 8px;
+  }
+
+  .ant-table-pagination.ant-pagination {
+    float: left;
+
+    .ant-select-item {
+      text-align: right;
+    }
+
+    .ant-select-selection-item {
+      padding-right: unset;
+      padding-left: 21px;
+    }
+
+    .ant-pagination-options-size-changer.ant-select {
+      margin-right: unset;
+      margin-left: 8px;
+    }
+
+    .ant-pagination-prev .anticon,
+    .ant-pagination-next .anticon {
+      transform: rotate(180deg);
+    }
+  }
+
+  .ant-table.ant-table-bordered .ant-table-container {
+    border-left: 0;
+    border-right: 1px solid #f0f0f0;
+  }
+
+  /* Date Picker */
+
+  .ant-picker,
+  .ant-picker-panel-container {
+    direction: ltr;
+
+    .ant-picker-input input {
+      text-align: right;
+    }
+
+    .ant-picker-suffix {
+      position: absolute;
+      left: 8px;
+      margin-left: unset;
+    }
+
+    .ant-picker-clear {
+      right: unset;
+      left: 8px;
+    }
+  }
+
+  /* Cascader */
+
+  .ant-cascader-picker {
+    &-arrow {
+      right: unset;
+      left: 12px;
+    }
+
+    &-clear {
+      right: unset;
+      left: 12px;
+    }
+  }
+
+  .ant-cascader-menu {
+    min-width: 220px !important;
+
+    &-item {
+
+      &-expand-icon {
+        right: unset;
+        left: 6px;
+        transform: rotate(180deg);
+      }
+    }
+
+    &-item-expand {
+      padding-right: 6px;
+    }
+  }
+
+  /* Other */
+
+  .phone-cell {
+    direction: ltr;
+    text-align: right;
+  }
 
   .ant-dropdown-menu {
     text-align: right;
@@ -135,6 +387,39 @@
 
   .ant-form-item-explain {
     text-align: right;
+  }
+
+  .ant-btn > .anticon + span,
+  .ant-btn > span + .anticon {
+    margin-left: unset;
+    margin-right: 8px;
+  }
+
+  .ant-dropdown-menu-item > .anticon:first-child,
+  .ant-dropdown-menu-submenu-title > .anticon:first-child,
+  .ant-dropdown-menu-item > span > .anticon:first-child,
+  .ant-dropdown-menu-submenu-title > span > .anticon:first-child {
+    margin-right: unset;
+    margin-left: 8px;
+  }
+
+  .ant-tree .ant-tree-checkbox {
+    margin: 4px 0 0 8px;
+  }
+
+  .ant-message .anticon {
+    margin-right: unset;
+    margin-left: 8px;
+  }
+
+  .ant-btn > .ant-btn-loading-icon .anticon {
+    padding-right: unset;
+    padding-left: 8px;
+  }
+
+  .ant-badge-status-text {
+    margin-left: unset;
+    margin-right: 8px;
   }
 
 }

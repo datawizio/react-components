@@ -14,6 +14,9 @@ exports[`Radio component Render Radio correctly 1`] = `
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyPress={[Function]}
+        onKeyUp={[Function]}
         prefixCls="ant-radio"
         style={Object {}}
         type="radio"
@@ -28,6 +31,9 @@ exports[`Radio component Render Radio correctly 1`] = `
             onBlur={[Function]}
             onChange={[Function]}
             onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            onKeyUp={[Function]}
             type="radio"
           />
           <span
@@ -44,13 +50,13 @@ exports[`Radio component Render Radio.Group correctly 1`] = `
 <RadioGroup
   vertical={true}
 >
-  <RadioGroup
+  <ForwardRef
     className="ant-radio-group-vertical"
   >
     <div
       className="ant-radio-group ant-radio-group-outline ant-radio-group-vertical"
     />
-  </RadioGroup>
+  </ForwardRef>
 </RadioGroup>
 `;
 
@@ -58,12 +64,12 @@ exports[`Radio component Render horisontal Radio.Group correctly 1`] = `
 <RadioGroup
   vertical={false}
 >
-  <RadioGroup
+  <ForwardRef
     className=""
   >
     <div
       className="ant-radio-group ant-radio-group-outline"
     />
-  </RadioGroup>
+  </ForwardRef>
 </RadioGroup>
 `;

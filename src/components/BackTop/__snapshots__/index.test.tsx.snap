@@ -9,19 +9,13 @@ exports[`BackTop component Render BackTop correctly 1`] = `
       className="ant-back-top dw-back-top"
       onClick={[Function]}
     >
-      <Animate
-        animation={Object {}}
-        component=""
-        componentProps={Object {}}
-        onAppear={[Function]}
-        onEnd={[Function]}
-        onEnter={[Function]}
-        onLeave={[Function]}
-        transitionAppear={false}
-        transitionEnter={true}
-        transitionLeave={true}
-        transitionName="fade"
-      />
+      <CSSMotion
+        motionName="fade"
+        removeOnLeave={true}
+        visible={false}
+      >
+        <DomWrapper />
+      </CSSMotion>
     </div>
   </BackTop>
 </BackTop>

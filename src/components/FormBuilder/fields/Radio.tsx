@@ -10,10 +10,11 @@ export const FieldRadio: React.FC<FieldRadioProps> = React.memo(
   ({ label, rules, name, options, onChange }) => {
     const handleFieldChange = useCallback(
       ({ target: { value } }: RadioChangeEvent) => {
-        onChange({
-          name,
-          value
-        });
+        onChange &&
+          onChange({
+            name,
+            value
+          });
       },
       [name, onChange]
     );

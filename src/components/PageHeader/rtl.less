@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.rtl {
+  .page-header {
+    & > * {
+      margin-right: unset;
+      margin-left: @margin-xs;
+
+      &:last-of-type {
+        margin-right: unset;
+        margin-left: 0;
+      }
+    }
+    &-back {
+      transform: rotate(180deg);
+    }
+  }
+}

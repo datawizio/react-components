@@ -28,9 +28,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
         value="UA"
         withPagination={false}
       >
-        <Select
-          bordered={true}
-          choiceTransitionName="zoom"
+        <ForwardRef(InternalSelect)
           className="phone-input-select"
           dropdownClassName="phone-input-select-dropdown"
           dropdownMatchSelectWidth={false}
@@ -41,11 +39,10 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           optionFilterProp="title"
           optionLabelProp="label"
           showSearch={true}
-          transitionName="slide-up"
+          tagRender={null}
           value="UA"
         >
           <Select
-            choiceTransitionName="zoom"
             className="phone-input-select"
             clearIcon={<ForwardRef(CloseCircleFilled) />}
             dropdownClassName="phone-input-select-dropdown"
@@ -63,11 +60,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
+            tagRender={null}
             transitionName="slide-up"
             value="UA"
           >
             <ForwardRef(Select)
-              choiceTransitionName="zoom"
               className="phone-input-select"
               clearIcon={<ForwardRef(CloseCircleFilled) />}
               dropdownClassName="phone-input-select-dropdown"
@@ -85,6 +82,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
+              tagRender={null}
               transitionName="slide-up"
               value="UA"
             >
@@ -3357,6 +3355,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       multiple={false}
                       notFoundContent="NO_DATA"
                       onActiveValue={[Function]}
+                      onMouseEnter={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={
@@ -9086,6 +9085,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           multiple={false}
                           notFoundContent="NO_DATA"
                           onActiveValue={[Function]}
+                          onMouseEnter={[Function]}
                           onSelect={[Function]}
                           onToggleOpen={[Function]}
                           options={
@@ -11494,7 +11494,6 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                     <Selector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName="zoom"
                       className="phone-input-select"
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       domRef={
@@ -11514,10 +11513,8 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                                 autocomplete="off"
                                 class="ant-select-selection-search-input"
                                 id="rc_select_TEST_OR_SSR"
-                                readonly=""
                                 role="combobox"
-                                style="opacity: 0;"
-                                unselectable="on"
+                                type="search"
                                 value=""
                               />
                             </span>
@@ -11555,6 +11552,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       onChange={[Function]}
                       onDropdownVisibleChange={null}
                       onSearch={[Function]}
+                      onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       optionFilterProp="title"
@@ -11563,6 +11561,8 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
+                      tagRender={null}
+                      tokenWithEnter={false}
                       transitionName="slide-up"
                       value="UA"
                       values={
@@ -11584,7 +11584,6 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                         <SingleSelector
                           accessibilityIndex={0}
                           activeValue={null}
-                          choiceTransitionName="zoom"
                           className="phone-input-select"
                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                           domRef={
@@ -11604,10 +11603,8 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                                     autocomplete="off"
                                     class="ant-select-selection-search-input"
                                     id="rc_select_TEST_OR_SSR"
-                                    readonly=""
                                     role="combobox"
-                                    style="opacity: 0;"
-                                    unselectable="on"
+                                    type="search"
                                     value=""
                                   />
                                 </span>
@@ -11646,10 +11643,8 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                                 autocomplete="off"
                                 class="ant-select-selection-search-input"
                                 id="rc_select_TEST_OR_SSR"
-                                readonly=""
                                 role="combobox"
-                                style="opacity: 0;"
-                                unselectable="on"
+                                type="search"
                                 value=""
                               />,
                             }
@@ -11661,14 +11656,15 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           multiple={false}
                           notFoundContent="NO_DATA"
                           onChange={[Function]}
-                          onCompositionEnd={[Function]}
-                          onCompositionStart={[Function]}
                           onDropdownVisibleChange={null}
                           onInputChange={[Function]}
+                          onInputCompositionEnd={[Function]}
+                          onInputCompositionStart={[Function]}
                           onInputKeyDown={[Function]}
                           onInputMouseDown={[Function]}
                           onInputPaste={[Function]}
                           onSearch={[Function]}
+                          onSearchSubmit={[Function]}
                           onSelect={[Function]}
                           onToggleOpen={[Function]}
                           optionFilterProp="title"
@@ -11677,6 +11673,8 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
                           showSearch={true}
+                          tagRender={null}
+                          tokenWithEnter={false}
                           transitionName="slide-up"
                           value="UA"
                           values={
@@ -11696,6 +11694,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                             <Input
                               accessibilityIndex={0}
                               attrs={Object {}}
+                              editable={true}
                               id="rc_select_TEST_OR_SSR"
                               inputElement={null}
                               onChange={[Function]}
@@ -11722,14 +11721,15 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                                 onKeyDown={[Function]}
                                 onMouseDown={[Function]}
                                 onPaste={[Function]}
-                                readOnly={true}
+                                readOnly={false}
                                 role="combobox"
                                 style={
                                   Object {
-                                    "opacity": 0,
+                                    "opacity": null,
                                   }
                                 }
-                                unselectable="on"
+                                type="search"
+                                unselectable={null}
                                 value=""
                               />
                             </Input>
@@ -11782,8 +11782,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                     }
                     unselectable="on"
                   >
-                    <ForwardRef(DownOutlined)>
+                    <ForwardRef(DownOutlined)
+                      className="ant-select-suffix"
+                    >
                       <AntdIcon
+                        className="ant-select-suffix"
                         icon={
                           Object {
                             "icon": Object {
@@ -11808,11 +11811,10 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       >
                         <span
                           aria-label="down"
-                          className="anticon anticon-down"
+                          className="anticon anticon-down ant-select-suffix"
                           role="img"
                         >
                           <IconReact
-                            className=""
                             icon={
                               Object {
                                 "icon": Object {
@@ -11837,7 +11839,6 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           >
                             <svg
                               aria-hidden="true"
-                              className=""
                               data-icon="down"
                               fill="currentColor"
                               focusable="false"
@@ -11860,7 +11861,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
               </div>
             </ForwardRef(Select)>
           </Select>
-        </Select>
+        </ForwardRef(InternalSelect)>
       </Select>
       <ForwardRef
         className="phone-input-input"
@@ -11877,6 +11878,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           value="12345678"
         >
           <ClearableLabeledInput
+            bordered={true}
             className="phone-input-input"
             element={
               <input
@@ -11946,9 +11948,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
         value="UA"
         withPagination={false}
       >
-        <Select
-          bordered={true}
-          choiceTransitionName="zoom"
+        <ForwardRef(InternalSelect)
           className="phone-input-select"
           dropdownClassName="phone-input-select-dropdown"
           dropdownMatchSelectWidth={false}
@@ -11959,11 +11959,10 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           optionFilterProp="title"
           optionLabelProp="label"
           showSearch={true}
-          transitionName="slide-up"
+          tagRender={null}
           value="UA"
         >
           <Select
-            choiceTransitionName="zoom"
             className="phone-input-select"
             clearIcon={<ForwardRef(CloseCircleFilled) />}
             dropdownClassName="phone-input-select-dropdown"
@@ -11981,11 +11980,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
+            tagRender={null}
             transitionName="slide-up"
             value="UA"
           >
             <ForwardRef(Select)
-              choiceTransitionName="zoom"
               className="phone-input-select"
               clearIcon={<ForwardRef(CloseCircleFilled) />}
               dropdownClassName="phone-input-select-dropdown"
@@ -12003,6 +12002,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
+              tagRender={null}
               transitionName="slide-up"
               value="UA"
             >
@@ -15275,6 +15275,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       multiple={false}
                       notFoundContent="NO_DATA"
                       onActiveValue={[Function]}
+                      onMouseEnter={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       options={
@@ -21004,6 +21005,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           multiple={false}
                           notFoundContent="NO_DATA"
                           onActiveValue={[Function]}
+                          onMouseEnter={[Function]}
                           onSelect={[Function]}
                           onToggleOpen={[Function]}
                           options={
@@ -23412,7 +23414,6 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                     <Selector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName="zoom"
                       className="phone-input-select"
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       domRef={
@@ -23432,10 +23433,8 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                                 autocomplete="off"
                                 class="ant-select-selection-search-input"
                                 id="rc_select_TEST_OR_SSR"
-                                readonly=""
                                 role="combobox"
-                                style="opacity: 0;"
-                                unselectable="on"
+                                type="search"
                                 value=""
                               />
                             </span>
@@ -23473,6 +23472,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       onChange={[Function]}
                       onDropdownVisibleChange={null}
                       onSearch={[Function]}
+                      onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
                       optionFilterProp="title"
@@ -23481,6 +23481,8 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
+                      tagRender={null}
+                      tokenWithEnter={false}
                       transitionName="slide-up"
                       value="UA"
                       values={
@@ -23502,7 +23504,6 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                         <SingleSelector
                           accessibilityIndex={0}
                           activeValue={null}
-                          choiceTransitionName="zoom"
                           className="phone-input-select"
                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                           domRef={
@@ -23522,10 +23523,8 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                                     autocomplete="off"
                                     class="ant-select-selection-search-input"
                                     id="rc_select_TEST_OR_SSR"
-                                    readonly=""
                                     role="combobox"
-                                    style="opacity: 0;"
-                                    unselectable="on"
+                                    type="search"
                                     value=""
                                   />
                                 </span>
@@ -23564,10 +23563,8 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                                 autocomplete="off"
                                 class="ant-select-selection-search-input"
                                 id="rc_select_TEST_OR_SSR"
-                                readonly=""
                                 role="combobox"
-                                style="opacity: 0;"
-                                unselectable="on"
+                                type="search"
                                 value=""
                               />,
                             }
@@ -23579,14 +23576,15 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           multiple={false}
                           notFoundContent="NO_DATA"
                           onChange={[Function]}
-                          onCompositionEnd={[Function]}
-                          onCompositionStart={[Function]}
                           onDropdownVisibleChange={null}
                           onInputChange={[Function]}
+                          onInputCompositionEnd={[Function]}
+                          onInputCompositionStart={[Function]}
                           onInputKeyDown={[Function]}
                           onInputMouseDown={[Function]}
                           onInputPaste={[Function]}
                           onSearch={[Function]}
+                          onSearchSubmit={[Function]}
                           onSelect={[Function]}
                           onToggleOpen={[Function]}
                           optionFilterProp="title"
@@ -23595,6 +23593,8 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
                           showSearch={true}
+                          tagRender={null}
+                          tokenWithEnter={false}
                           transitionName="slide-up"
                           value="UA"
                           values={
@@ -23614,6 +23614,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                             <Input
                               accessibilityIndex={0}
                               attrs={Object {}}
+                              editable={true}
                               id="rc_select_TEST_OR_SSR"
                               inputElement={null}
                               onChange={[Function]}
@@ -23640,14 +23641,15 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                                 onKeyDown={[Function]}
                                 onMouseDown={[Function]}
                                 onPaste={[Function]}
-                                readOnly={true}
+                                readOnly={false}
                                 role="combobox"
                                 style={
                                   Object {
-                                    "opacity": 0,
+                                    "opacity": null,
                                   }
                                 }
-                                unselectable="on"
+                                type="search"
+                                unselectable={null}
                                 value=""
                               />
                             </Input>
@@ -23700,8 +23702,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                     }
                     unselectable="on"
                   >
-                    <ForwardRef(DownOutlined)>
+                    <ForwardRef(DownOutlined)
+                      className="ant-select-suffix"
+                    >
                       <AntdIcon
+                        className="ant-select-suffix"
                         icon={
                           Object {
                             "icon": Object {
@@ -23726,11 +23731,10 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       >
                         <span
                           aria-label="down"
-                          className="anticon anticon-down"
+                          className="anticon anticon-down ant-select-suffix"
                           role="img"
                         >
                           <IconReact
-                            className=""
                             icon={
                               Object {
                                 "icon": Object {
@@ -23755,7 +23759,6 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           >
                             <svg
                               aria-hidden="true"
-                              className=""
                               data-icon="down"
                               fill="currentColor"
                               focusable="false"
@@ -23778,7 +23781,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
               </div>
             </ForwardRef(Select)>
           </Select>
-        </Select>
+        </ForwardRef(InternalSelect)>
       </Select>
       <ForwardRef
         className="phone-input-input"
@@ -23795,6 +23798,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           value="UA"
         >
           <ClearableLabeledInput
+            bordered={true}
             className="phone-input-input"
             element={
               <input

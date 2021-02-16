@@ -1,0 +1,29 @@
+.StatusData__container {
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: bold;
+  position: fixed;
+  bottom: 0;
+  background: #09011c;
+  padding: 22px 0 14px 22px;
+  font-size: 12px;
+  width: 232px;
+  display: block;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  p:last-child {
+    font-style: italic;
+  }
+}
+
+.ant-layout-sider-collapsed .StatusData__container {
+  display: none;
+}
+
+.rtl {
+  .StatusData__container {
+    padding: 22px 22px 14px 0;
+  }
+}

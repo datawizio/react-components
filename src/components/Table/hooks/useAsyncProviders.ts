@@ -13,11 +13,17 @@ function useAsyncProviders(
 
   const fetchData = useCallback(async (first = false) => {
     if (dataProvider) {
-      const data = await dataProvider(state);
-      if (first) {
-        data.visibleColumnsKeys = getVisibleColumns(data.columns);
+      try {
+        const data = await dataProvider(state);
+        if (first) {
+          data.visibleColumnsKeys = data.showAllColumns
+            ? []
+            : getVisibleColumns(data.columns);
+        }
+        dispatch({ type: "update", payload: data });
+      } catch (e) {
+        console.warn("Table loading failed: " + e.message);
       }
-      dispatch({ type: "update", payload: data });
     }
     // eslint-disable-next-line
   }, [dataProvider].concat(dataProviderDeps && dataProviderDeps(state)));

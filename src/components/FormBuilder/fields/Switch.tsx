@@ -8,10 +8,11 @@ export const FieldSwitch: React.FC<FieldCheckboxProps> = React.memo(
   ({ label, rules, name, onChange }) => {
     const handleFieldChange = useCallback(
       (checked: boolean) => {
-        onChange({
-          name,
-          value: checked
-        });
+        onChange &&
+          onChange({
+            name,
+            value: checked
+          });
       },
       [onChange, name]
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useContext } from "react";
-import { Select, DatePicker } from "antd";
+import { Select } from "antd";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
@@ -18,6 +18,7 @@ import {
 } from "./helper";
 import { PeriodSelectProps } from "./types";
 import { usePeriodSelect } from "./usePeriodSelect";
+import { DatePicker } from "../..";
 import "./index.less";
 
 dayjs.extend(quarterOfYear);
@@ -34,6 +35,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     periodLabel,
     prevPeriodLabel,
     dateConfig,
+    format,
     onChange
   } = props;
 
@@ -49,7 +51,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   } = getInitialDateConfig(dateConfig);
 
   const [state, dispatch] = usePeriodSelect({
-    availblePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
+    availablePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
     clientDate,
     clientStartDate,
     isPickerEmpty: false,
@@ -63,7 +65,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   });
 
   const {
-    availblePrevPeriods,
+    availablePrevPeriods,
     isPickerEmpty,
     isPrevPickerEmpty,
     showPeriodPicker,
@@ -82,6 +84,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     } else {
       onChange(formatDateConfig(state));
     }
+    //eslint-disable-next-line
   }, [period, prevPeriod]);
 
   const handlePeriodChange = periodKey => {
@@ -116,12 +119,21 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
   const isDisabledOption = useCallback(
     option => {
-      return !availblePrevPeriods.includes(option);
+      return !availablePrevPeriods.includes(option);
     },
-    [availblePrevPeriods]
+    [availablePrevPeriods]
   );
 
-  const isDisabledPrevSelect = !availblePrevPeriods.length;
+  const disabledDates = current => {
+    if (current < dayjs(clientStartDate)) {
+      return true;
+    } else if (current > dayjs(clientDate)) {
+      return true;
+    }
+    return false;
+  };
+
+  const isDisabledPrevSelect = !availablePrevPeriods.length;
 
   return (
     <div className="period-picker-wrapper">
@@ -131,7 +143,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           {PERIOD_OPTIONS.map((option, i) => {
             return (
               <Option key={i} value={option}>
-                {translate(option)}
+                {translate(
+                  option === "date" ? "SET_DATE" : option.toUpperCase()
+                )}
               </Option>
             );
           })}
@@ -141,6 +155,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDataRangeChange}
+            disabledDate={disabledDates}
+            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            format={format}
           />
         )}
       </div>
@@ -154,7 +171,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         >
           {PREV_PERIOD_OPTIONS.map((option, i) => (
             <Option key={i} disabled={isDisabledOption(option)} value={option}>
-              {translate(option)}
+              {translate(option.toUpperCase())}
             </Option>
           ))}
         </Select>
@@ -163,6 +180,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDataRangeChange}
+            disabledDate={disabledDates}
+            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            format={format}
           />
         )}
       </div>
@@ -171,8 +191,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 };
 
 PeriodSelect.defaultProps = {
-  clientDate: "2020-11-22",
-  clientStartDate: "2019-10-21",
+  clientDate: "2021-11-28",
+  clientStartDate: "2020-10-21",
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
   dateConfig: {}

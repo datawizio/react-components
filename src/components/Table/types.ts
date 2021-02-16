@@ -22,6 +22,7 @@ export type FCTable = {
 type _OverwrittenTableProps<RT> = {
   columns?: Array<IColumn<RT>>;
   dataSource?: DataSourceType;
+
   locale?: {
     total: string;
   } & TableLocale;
@@ -35,7 +36,9 @@ export interface TableProps<RT = any>
   searchValue?: string;
 
   async?: boolean;
+  showAllColumns?: boolean;
   sortable?: boolean;
+  forceColumns?: boolean;
   showSizeChanger?: boolean;
   multipleSorting?: boolean;
   isResizableColumns?: boolean;
@@ -72,6 +75,7 @@ export interface TableProps<RT = any>
   };
 
   rowPrefix?: RowPrefix;
+  rowPrefixDeps?: (row: IRow) => any[];
 
   sortHandler?: SorterHandlerType;
   globalHandler?: GlobalHandlerType;
@@ -104,13 +108,13 @@ export type Action =
   | { type: "expandRow"; payload: IRow }
   | { type: "search"; payload: string }
   | { type: "loading"; payload: boolean }
-  | { type: "resetPagination" }
+  | { type: "resetPagination"; payload?: number }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
   | { type: "update"; payload: Partial<TableState> }
   | { type: "recoveryState"; payload: TableTemplateState }
   | { type: "paginate"; payload: TableState["pagination"] }
-  | { type: "filter"; payload: Record<string, Key[] | null> }
+  | { type: "filter"; payload: Record<string, (string | number | boolean)[]> }
   | { type: "updateColumns"; payload: TableProps["columns"] }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | { type: "addLoadingRow"; payload: string }
@@ -142,6 +146,7 @@ export interface IColumn<RT = any>
   dataIndex: string;
   resizable?: boolean;
   default_visible?: boolean;
+  max_value?: number;
 }
 
 /**
@@ -174,9 +179,15 @@ export type CellObjectType = {
 export type DTypeConfig<T = any> = {
   sorter?: (a: T, b: T) => number;
   toString: (cellVal: T) => string;
-  toExcel?: (cellVal: T) => any;
+  toExcel?: (
+    cellVal: T,
+    row?: IRow,
+    columnKey?: string,
+    cellRenderProps?: any
+  ) => any;
   search?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
+  tooltip?: (cellVal: T, row: IRow, column: IColumn) => React.ReactNode;
 
   render?: (
     cellVal: T,
@@ -228,11 +239,13 @@ export type SortParams = {
  */
 
 export type DataProvider = (
-  state: TableState
+  state: TableState,
+  fetchAll?: boolean
 ) => Partial<TableState> | Promise<Partial<TableState>>;
 
 export type RowChildrenProviderType = (
-  expandedRow: IRow
+  expandedRow: IRow,
+  state: TableState
 ) => IRow["children"] | Promise<IRow["children"]>;
 
 export type PaginationResponse<R> = {

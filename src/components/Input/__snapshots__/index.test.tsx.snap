@@ -6,6 +6,7 @@ exports[`Input component Input rendered correctly 1`] = `
     type="text"
   >
     <ClearableLabeledInput
+      bordered={true}
       element={
         <input
           className="ant-input"

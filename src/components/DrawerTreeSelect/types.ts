@@ -23,6 +23,8 @@ export interface DrawerTreeSelectProps<VT>
   additionalFilters?: any;
   asyncData?: boolean;
 
+  headerHeight?: number;
+
   /**
    * Title Drawerа
    */

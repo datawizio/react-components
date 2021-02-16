@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 import { Form } from "antd";
 import DateRangePicker from "../../DateRangePicker";
@@ -14,17 +14,28 @@ export interface DateRangePickerParams {
 export interface FieldDateRangePickerProps
   extends FormFieldProps<DateRangePickerParams> {
   format?: string;
+  storeFormat?: string;
+  maxDate?: string;
+  minDate?: string;
+  defaultPickerValue?: any;
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
   format: string;
+  storeFormat?: string;
   value: DateRangePickerParams;
 }
 
-const Field: React.FC<FieldProps> = ({ format, value, onChange }) => {
+const Field: React.FC<FieldProps> = ({
+  format,
+  storeFormat,
+  value,
+  onChange,
+  ...restProps
+}) => {
   const handleClear = useCallback(() => {
     //@ts-ignore
-    onChange([null, null]);
+    onChange && onChange([null, null]);
   }, []);
   return (
     //@ts-ignore
@@ -32,17 +43,20 @@ const Field: React.FC<FieldProps> = ({ format, value, onChange }) => {
       onChange={onChange}
       onClear={handleClear}
       format={format}
-      dateFrom={value.from}
-      dateTo={value.to}
+      dateFrom={
+        value.from && storeFormat ? dayjs(value.from, storeFormat) : value.from
+      }
+      dateTo={value.to && storeFormat ? dayjs(value.to, storeFormat) : value.to}
       fullWidth
+      {...restProps}
     />
   );
 };
 
 export const FieldDateRangePicker: React.FC<FieldDateRangePickerProps> = React.memo(
-  ({ format, label, rules, name, onChange }) => {
+  ({ format, label, rules, name, onChange, ...restProps }) => {
     const handleChange = ([from, to]: [Dayjs, Dayjs]) => {
-      onChange({ name, value: { from, to } });
+      onChange && onChange({ name, value: { from, to } });
     };
 
     return (
@@ -51,6 +65,7 @@ export const FieldDateRangePicker: React.FC<FieldDateRangePickerProps> = React.m
           //@ts-ignore
           onChange={handleChange}
           format={format}
+          {...restProps}
         />
       </Form.Item>
     );

@@ -1,7 +1,9 @@
 @import "../../styles/variables";
+@import "./rtl";
 
 .ant-select.client-select.ant-select-show-search.ant-select-single {
   width: 120px;
+
   .ant-select-selector {
     cursor: pointer;
     border: 0;
@@ -25,6 +27,21 @@
   &.ant-select-open {
     .ant-select-selection-search-input {
       cursor: text;
+    }
+  }
+
+  &.dw-dark {
+    .ant-select-selector {
+      background-color: @bg-dark-color;
+    }
+    .ant-select-arrow {
+      color: @icon-color-dark-theme;
+    }
+    .ant-select-selection-item {
+      color: @icon-color-dark-theme;
+    }
+    .ant-select-selection-search-input {
+      color: @icon-color-dark-theme;
     }
   }
 }

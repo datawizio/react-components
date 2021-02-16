@@ -4,13 +4,12 @@ exports[`CheckboxGroup component CheckboxGroup rendered correctly 1`] = `
 <CheckboxGroup
   className="customClassName"
 >
-  <CheckboxGroup
+  <Memo(CheckboxGroup)
     className="customClassName"
-    options={Array []}
   >
     <div
       className="ant-checkbox-group customClassName"
     />
-  </CheckboxGroup>
+  </Memo(CheckboxGroup)>
 </CheckboxGroup>
 `;

@@ -74,9 +74,9 @@ import { useState, useMemo, useCallback } from "react";
                 <TableXlsxExporter exportHandler={exportTableToXLSX} />
                 <TableTemplates
                   templates={[
-                    { title: "test1", favorite: true },
-                    { title: "test2", favorite: false },
-                    { title: "test3", favorite: false }
+                    { title: "test1", favorite: true, state: {} },
+                    { title: "test2", favorite: false, state: {} },
+                    { title: "test3", favorite: false, state: {} }
                   ]}
                 />
                 <TableSelectColumnsModal />

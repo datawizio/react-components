@@ -1,14 +1,23 @@
-import React, { useCallback, useContext, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { Table as AntTable, Transfer } from "antd";
 import { TransferProps } from "antd/es/transfer";
 import ConfigContext from "../ConfigProvider/context";
 
-export interface TransferTableProps extends TransferProps {
+export interface TransferTableProps extends TransferProps<any> {
   columns: any;
+  filteredInfo: any;
+  onTableChange: () => void;
 }
 
-const TransferTable = ({ columns, loading, ...restProps }) => {
+const TransferTable = ({
+  columns,
+  loading,
+  filteredInfo,
+  onTableChange,
+  ...restProps
+}) => {
   const { translate } = useContext(ConfigContext);
+
   const label = useCallback(
     ({ selectedCount, totalCount }) => (
       <>
@@ -17,6 +26,7 @@ const TransferTable = ({ columns, loading, ...restProps }) => {
     ),
     [translate]
   );
+
   const selectAllLabels = useMemo(() => {
     return [label, label];
   }, [label]);
@@ -29,6 +39,7 @@ const TransferTable = ({ columns, loading, ...restProps }) => {
       showSelectAll={false}
     >
       {({
+        direction,
         filteredItems,
         onItemSelectAll,
         onItemSelect,
@@ -36,6 +47,8 @@ const TransferTable = ({ columns, loading, ...restProps }) => {
         disabled
       }) => (
         <Table
+          direction={direction}
+          filter={filteredInfo[direction]}
           loading={loading}
           columns={columns}
           items={filteredItems}
@@ -43,6 +56,7 @@ const TransferTable = ({ columns, loading, ...restProps }) => {
           onItemSelect={onItemSelect}
           listSelectedKeys={selectedKeys}
           listDisabled={disabled}
+          onTableChange={onTableChange}
         />
       )}
     </Transfer>
@@ -50,19 +64,22 @@ const TransferTable = ({ columns, loading, ...restProps }) => {
 };
 
 const Table = ({
+  direction,
+  filter,
   loading,
   columns,
   items,
   onItemSelectAll,
   onItemSelect,
   listSelectedKeys,
-  listDisabled
+  listDisabled,
+  onTableChange
 }) => {
-  const [filter, setFilter] = useState<Array<string>>([]);
   const filteredItems = useMemo(() => {
     const set = new Set(filter);
     return items.filter(item => set.size === 0 || set.has(item.app_name));
   }, [filter, items]);
+
   const rowSelection = {
     getCheckboxProps: (item: any) => ({
       disabled: listDisabled || item.disabled
@@ -77,17 +94,22 @@ const Table = ({
     selectedRowKeys: listSelectedKeys
   };
 
+  const handleTableChange = (pagination, filter) => {
+    onTableChange(direction, pagination, filter);
+  };
+
+  const internalColumns = useMemo(() => {
+    return [columns[0], { ...columns[1], filteredValue: filter }];
+  }, [columns, filter]);
+
   return (
     <AntTable
       rowSelection={rowSelection}
-      columns={columns}
+      columns={internalColumns}
       dataSource={filteredItems}
       loading={loading}
       size="small"
-      onChange={(pagination, filter) => {
-        //@ts-ignore
-        setFilter(filter.app_name);
-      }}
+      onChange={handleTableChange}
       onRow={({ key }) => ({
         onClick: () => {
           onItemSelect(key, !listSelectedKeys.includes(key));

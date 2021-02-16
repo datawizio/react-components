@@ -114,7 +114,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           type: "addLoadingRow",
           payload: row.key
         });
-        const children = await rowChildrenProvider(row);
+        const children = await rowChildrenProvider(row, state);
         dispatch({
           type: "setRowChildren",
           payload: [row, children.length ? children : undefined]
@@ -127,7 +127,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           payload: row
         });
     },
-    [rowChildrenProvider, nestedTableProvider, isNested]
+    [rowChildrenProvider, nestedTableProvider, isNested, state]
   );
 
   const totalRenderer = useCallback(
@@ -211,11 +211,14 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     updateRow(rowKey: string, data: any) {
       dispatch({ type: "updateRow", payload: [rowKey, data] });
     },
+    getState() {
+      return state;
+    },
     addLoadingRow(rowKey: string) {
       dispatch({ type: "addLoadingRow", payload: rowKey });
     },
-    resetPagination() {
-      dispatch({ type: "resetPagination" });
+    resetPagination(pageSize?: number) {
+      dispatch({ type: "resetPagination", payload: pageSize });
     }
   }));
 

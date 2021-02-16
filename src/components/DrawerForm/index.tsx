@@ -11,12 +11,14 @@ export interface DrawerFormProps {
   title: string;
   visible: boolean;
   actions?: React.ReactElement;
-  formStore?: any;
+  className?: string;
   form?: any;
-  loading?: boolean;
   hideRequiredMark?: boolean;
+  formStore?: any;
+  loading?: boolean;
   style?: object;
   width?: number;
+  convertState?: (state: any) => any;
   onClose?: () => void;
   onSubmit?: () => void;
 }
@@ -25,6 +27,7 @@ const noop = () => {};
 
 const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
+  className,
   title,
   style,
   visible,
@@ -34,6 +37,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   formStore,
   loading,
   width,
+  convertState,
   onClose,
   onSubmit
 }) => {
@@ -43,6 +47,9 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
     () =>
       formStore && formStore.watch
         ? formStore.watch(state => {
+            if (convertState) {
+              state = convertState(state);
+            }
             form.setFieldsValue(state);
           })
         : noop,
@@ -90,6 +97,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
+      className={className}
     >
       <Form
         layout="vertical"

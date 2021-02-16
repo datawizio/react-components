@@ -18,11 +18,13 @@ import { Skeleton, Tag } from "antd";
 
 import { AntTreeNode } from "antd/lib/tree";
 
+import ConfigContext from "../ConfigProvider/context";
+
 import { triggerInputChangeValue } from "../../utils/trigger";
+import { getUniqueItems } from "../../utils/data/dataHelpers";
+import { useDrawerSelect } from "./useDrawerSelect";
 
 import "./index.less";
-import { useDrawerSelect } from "./useDrawerSelect";
-import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
@@ -33,7 +35,7 @@ export interface DrawerSelectProps<VT>
   asyncData?: boolean;
 
   /**
-   * Title Drawerа
+   * Title Drawer-а
    */
   drawerTitle?: string;
 
@@ -52,7 +54,8 @@ export interface DrawerSelectProps<VT>
    */
   loadData?: (
     filters: any,
-    page: number
+    page: number,
+    search: string
   ) => Promise<{ data: any; totalPages: number }>;
 
   multiple?: boolean;
@@ -68,7 +71,7 @@ export interface DrawerSelectProps<VT>
   withPagination?: boolean;
 
   /**
-   * Event when user click Submit
+   * Event when user clicks Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
@@ -196,10 +199,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const loadPage = useCallback(
     async (search, page = 0, first = false) => {
       if (!loadData) return;
+
       if (page !== 0 && page >= totalPages) {
         return;
       }
+
       let state: any = {};
+
       if (!page) state.optionsState = selectedOptions.current;
 
       dispatch({
@@ -214,7 +220,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         filters.first = true;
       }
 
-      const { data, totalPages: pages } = await loadData(filters, page);
+      const { data, totalPages: pages } = await loadData(filters, page, search);
 
       const options = convertOptions(
         data,
@@ -235,10 +241,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       };
 
       if (page === 0) {
-        state.optionsState = selectedOptions.current.concat(options.options);
+        state.optionsState = getUniqueItems(selectedOptions.current.concat(options.options));
       } else {
-        state.optionsState = optionsState.concat(options.options);
+        state.optionsState = getUniqueItems(optionsState.concat(options.options));
       }
+
       dispatch({
         type: "remoteLoadDataStop",
         payload: state
@@ -263,24 +270,33 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleDrawerCancel = useCallback(() => {
     closeDrawer();
+
     const payload: any = { internalValue: !multiple && !value ? [] : value };
+
     if (searchValue && loadData) {
-      payload.optionsState = selectedOptions.current.concat(
-        firstLoadedOptions.current
+      payload.optionsState = getUniqueItems(
+        selectedOptions.current.concat(firstLoadedOptions.current)
       );
     }
+
     dispatch({
       type: "drawerCancel",
       payload
     });
+
+    handleSearch("");
+
+    //eslint-disable-next-line
   }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
 
   const handleDrawerSubmit = useCallback(() => {
     closeDrawer();
+
     const payload: any = {};
+
     if (searchValue) {
-      payload.optionsState = selectedOptions.current.concat(
-        firstLoadedOptions.current
+      payload.optionsState = getUniqueItems(
+        selectedOptions.current.concat(firstLoadedOptions.current)
       );
     }
 
@@ -288,7 +304,12 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       type: "drawerSubmit",
       payload
     });
+
     triggerOnChange(internalValue);
+
+    handleSearch("");
+
+    //eslint-disable-next-line
   }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
 
   const handleDrawerFocus = e => {

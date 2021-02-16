@@ -36,8 +36,18 @@ function getMainLevelItems(items: any[], level: string | number | null = 1) {
       break;
     }
   }
-
   return set;
+}
+
+function getAllLeafItems(items: any[]) {
+  const array: string[] = [];
+  for (let item of items) {
+    if (item.isLeaf) {
+      array.push(item.id);
+    }
+  }
+
+  return array;
 }
 
 function isAllItemsChecked(items: string[], set: Set<string>) {
@@ -71,6 +81,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   drawerTitle,
   drawerWidth,
   formatRender,
+  headerHeight,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
   treeData,
@@ -130,6 +141,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const [, setSearchValue] = useState<string>("");
   const mainLevelItems = useRef<Set<string>>();
+  const allLeafItems = useRef<string[]>([]);
 
   const formatSelected = useRef<string[]>([]);
   const searchValue = useRef<string>();
@@ -233,6 +245,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       if (levels && levels.length === 1) {
         levelSelected.current = levels[0].value;
       }
+      if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
+        allLeafItems.current = getAllLeafItems(data);
+      }
       mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
 
       const newState: any = {
@@ -325,6 +340,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     const state: any = {
       selectAllState: "checked"
     };
+    if (!emptyIsAll && showCheckedStrategy !== "SHOW_PARENT") {
+      state.internalValue = allLeafItems.current;
+      return state;
+    }
     if (mainLevelItems.current) {
       state.internalValue = Array.from(mainLevelItems.current);
     }
@@ -420,6 +439,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [closeDrawer, value, multiple, dispatch]);
 
   const handlerDrawerSubmit = useCallback(() => {
+    if (searchValue.current && remoteSearch) {
+      searchValue.current = "";
+      internalLoadData();
+    }
     closeDrawer();
     dispatch({
       type: "drawerSubmit"
@@ -555,6 +578,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         treeData,
         levelSelected.current
       );
+      if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
+        allLeafItems.current = getAllLeafItems(treeData);
+      }
       prevTreeData.current = stateTreeData;
     }
 
@@ -712,11 +738,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const listHeight =
     window.innerHeight -
+    (headerHeight ? headerHeight : 0) -
     204 -
     (formatRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
-
   return (
     <AntTreeSelect
       {...restProps}

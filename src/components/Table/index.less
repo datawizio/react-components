@@ -5,6 +5,9 @@
 @import "../Select/index";
 @import "../Loader/index";
 @import "../../styles/variables";
+@import "./dtypes/DTBar/styles";
+@import "./dtypes/DTNumberRange/styles";
+@import "./rtl";
 
 .dw-table {
   &__wrapper {
@@ -137,9 +140,8 @@
     }
 
     position: relative;
-
     overflow: hidden;
-    white-space: nowrap;
+    white-space: pre-line;
     text-overflow: ellipsis;
   }
 
@@ -222,5 +224,11 @@
 
   .ant-table-tbody > tr > td {
     border-bottom: 1.5px solid #f0f0f0;
+  }
+}
+
+.ant-table-filter-dropdown {
+  .ant-dropdown-menu {
+    max-height: calc(100vh / 2);
   }
 }

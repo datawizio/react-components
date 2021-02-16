@@ -54,6 +54,7 @@ export function initializer(props: TableProps): TableState {
     dataSource,
     pagination,
     searchValue,
+    forceColumns,
     dTypesConfig,
     showSizeChanger,
     pageSizeOptions,
@@ -65,6 +66,8 @@ export function initializer(props: TableProps): TableState {
     loading,
     dataSource,
     searchValue,
+
+    forceColumns,
 
     pagination: {
       showSizeChanger,
@@ -107,6 +110,9 @@ export function reducer(state: TableState, action: Action): TableState {
         state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
 
       const nextColumns = (function rec(newColumns, oldColumns) {
+        if (state.forceColumns) {
+          return newColumns;
+        }
         const sameDataIndex = newColumn => oldColumn =>
           newColumn.dataIndex === oldColumn.dataIndex;
 
@@ -157,11 +163,17 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "resetPagination": {
+      const newState: any = {
+        current: 1
+      };
+      if (action.payload) {
+        newState.pageSize = action.payload;
+      }
       return {
         ...state,
         pagination: state.pagination && {
           ...state.pagination,
-          current: 1
+          ...newState
         }
       };
     }
@@ -343,10 +355,11 @@ export function reducer(state: TableState, action: Action): TableState {
         if (!Array.isArray(expandedRecord.children)) {
           delete data.children;
         }
-        expandedRecord = Object.assign(expandedRecord, data);
+        Object.keys(data).forEach(key => {
+          expandedRecord[key] = data[key];
+        });
         newState.dataSource = nextDataSource;
       }
-
       return {
         ...state,
         ...newState

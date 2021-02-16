@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Form, Modal, Upload, message } from "antd";
-import { UploadFile } from "antd/lib/upload/interface"
+import { UploadFile } from "antd/lib/upload/interface";
 import { UploadOutlined } from "@ant-design/icons";
 import ConfigContext from "../../../ConfigProvider/context";
 import Select from "../../../Select";
@@ -8,7 +8,7 @@ import TextArea from "../../../TextArea";
 import Button from "../../../Button";
 import { subjectsList } from "./subjects";
 import { ISupportModal, ISupportFormData } from "./types";
-import "./style.less";
+import "./index.less";
 
 const SupportModal: React.FC<ISupportModal> = ({
   onSubmit,
@@ -21,7 +21,7 @@ const SupportModal: React.FC<ISupportModal> = ({
   const defaultState = {
     subject: "",
     comment: "",
-    uploads: [],
+    uploads: []
   };
 
   const [formData, setFormData] = useState<ISupportFormData>(defaultState);
@@ -49,16 +49,22 @@ const SupportModal: React.FC<ISupportModal> = ({
           "application/msword",
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
           "application/vnd.ms-excel",
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         ]);
 
         if (formData.uploads.length >= maxFilesNumber) {
-          message.error(`${translate("MAX_FILE_NUMBER")} - ${maxFilesNumber}`, 8);
+          message.error(
+            `${translate("MAX_FILE_NUMBER")} - ${maxFilesNumber}`,
+            8
+          );
           return false;
         }
 
         if (file.size / 1024 / 1024 > sizeLimit) {
-          message.error(`${translate("FILE_MUST_BE_SMALLER_THAN")} ${sizeLimit} MB`, 8);
+          message.error(
+            `${translate("FILE_MUST_BE_SMALLER_THAN")} ${sizeLimit} MB`,
+            8
+          );
           return false;
         }
 
@@ -85,21 +91,19 @@ const SupportModal: React.FC<ISupportModal> = ({
         // if beforeUpload() returned true
         if (info.file.status === "uploading" && !existingUids.includes(uid)) {
           setFileList(prevState => {
-            return [
-              ...prevState,
-              info.file
-            ]
+            return [...prevState, info.file];
           });
         }
 
         if (info.file.status === "done") {
           const token = info.file.response?.upload?.token;
-          token && setFormData(prevState => {
-            return {
-              ...prevState,
-              "uploads": [...prevState.uploads, token]
-            };
-          });
+          token &&
+            setFormData(prevState => {
+              return {
+                ...prevState,
+                "uploads": [...prevState.uploads, token]
+              };
+            });
         }
       },
       onRemove(file) {
@@ -123,7 +127,14 @@ const SupportModal: React.FC<ISupportModal> = ({
         });
       }
     };
-  }, [fileList, setFileList, filename, formData.uploads, translate, uploadFileURL]);
+  }, [
+    fileList,
+    setFileList,
+    filename,
+    formData.uploads,
+    translate,
+    uploadFileURL
+  ]);
 
   const handleFieldChange = useCallback((name, value) => {
     setFormData(prevState => {
@@ -188,6 +199,7 @@ const SupportModal: React.FC<ISupportModal> = ({
           >
             <Select
               placeholder={translate("CHOOSE_PROBLEM")}
+              dropdownClassName="subjects-dropdown"
               onChange={value => handleFieldChange("subject", value)}
             >
               {subjectsList.map(item => (

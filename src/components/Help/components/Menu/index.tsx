@@ -8,9 +8,10 @@ import "./index.less";
 export interface IHelpMenu {
   onTutorialClick: () => void;
   onSupportClick: () => void;
+  onServiceUpdateClick: () => void;
 }
 
-const HelpMenu: React.FC<IHelpMenu> = ({ onTutorialClick, onSupportClick }) => {
+const HelpMenu: React.FC<IHelpMenu> = ({ onTutorialClick, onSupportClick, onServiceUpdateClick }) => {
   const { translate } = useContext(ConfigContext);
 
   const menu = useMemo(() => {
@@ -22,9 +23,12 @@ const HelpMenu: React.FC<IHelpMenu> = ({ onTutorialClick, onSupportClick }) => {
         <Menu.Item key="2" onClick={onSupportClick}>
           {translate("SUPPORT")}
         </Menu.Item>
+        <Menu.Item key="3" onClick={onServiceUpdateClick}>
+          {translate("SERVICE_UPDATE")}
+        </Menu.Item>
       </Menu>
     );
-  }, []);
+  }, [onServiceUpdateClick, onSupportClick, onTutorialClick, translate]);
 
   return (
     <>

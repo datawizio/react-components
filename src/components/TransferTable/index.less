@@ -1,5 +1,6 @@
 @import "~antd/es/transfer/style/index";
 @import "../../styles/variables";
+@import "./rtl";
 
 .transfer-table {
   .ant-transfer-list {
@@ -10,6 +11,20 @@
     .ant-transfer-list-header-selected {
       flex: 1;
       text-align: end;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .transfer-table {
+    display: flex;
+    flex-direction: column;
+    .ant-transfer-list {
+      max-width: unset !important;
+      width: 100% !important;
+    }
+    .ant-transfer-operation {
+      transform: rotate(90deg);
     }
   }
 }
