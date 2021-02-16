@@ -19,7 +19,6 @@ exports[`EnableSelect Field component Field rendered correctly 1`] = `
   >
     <Checkbox
       checked={true}
-      indeterminate={false}
       onChange={[Function]}
     >
       <label
@@ -32,6 +31,9 @@ exports[`EnableSelect Field component Field rendered correctly 1`] = `
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyPress={[Function]}
+          onKeyUp={[Function]}
           prefixCls="ant-checkbox"
           style={Object {}}
           type="checkbox"
@@ -46,6 +48,9 @@ exports[`EnableSelect Field component Field rendered correctly 1`] = `
               onBlur={[Function]}
               onChange={[Function]}
               onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyPress={[Function]}
+              onKeyUp={[Function]}
               type="checkbox"
             />
             <span

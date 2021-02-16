@@ -10,7 +10,7 @@ exports[`Modal component Modal rendered correctly 1`] = `
     visible={false}
     width={520}
   >
-    <Component
+    <Dialog
       closeIcon={
         <span
           className="ant-modal-close-x"
@@ -21,6 +21,7 @@ exports[`Modal component Modal rendered correctly 1`] = `
         </span>
       }
       confirmLoading={false}
+      focusTriggerAfterClose={true}
       footer={
         <LocaleReceiver
           componentName="Modal"
@@ -47,7 +48,7 @@ exports[`Modal component Modal rendered correctly 1`] = `
       <PortalWrapper
         visible={false}
       />
-    </Component>
+    </Dialog>
   </Modal>
 </Modal>
 `;

@@ -9,7 +9,7 @@ exports[`Breadcrumb component Breadcrumb rendered correctly 1`] = `
     separator={<ForwardRef(RightOutlined) />}
   >
     <div
-      className="customClassName ant-breadcrumb"
+      className="ant-breadcrumb customClassName"
     />
   </Breadcrumb>
 </Breadcrumb>

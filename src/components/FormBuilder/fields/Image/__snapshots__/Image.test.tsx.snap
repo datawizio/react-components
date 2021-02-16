@@ -1,16 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FormBuilder Image component Image rendered correctly 1`] = `
-<ImgCrop
+<ForwardRef
   aspect={1}
+  fillColor="white"
   grid={false}
+  maxZoom={3}
+  minZoom={1}
   modalCancel="CANCEL"
   modalOk="SUBMIT"
   modalTitle="EDIT_IMAGE"
-  modalWidth={520}
+  quality={0.4}
   rotate={false}
   shape="round"
-  styleImport={true}
   zoom={true}
 >
   <Dragger
@@ -26,5 +28,5 @@ exports[`FormBuilder Image component Image rendered correctly 1`] = `
       value="value"
     />
   </Dragger>
-</ImgCrop>
+</ForwardRef>
 `;

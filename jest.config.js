@@ -28,6 +28,7 @@ module.exports = {
     window: {
       innerWidth: 500,
       innerHeight: 500,
+      cancelAnimationFrame: function () {},
       location: {
         pathname: "/c/pathname/report/qwerty"
       }

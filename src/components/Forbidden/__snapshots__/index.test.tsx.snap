@@ -326,17 +326,13 @@ exports[`Forbidden component Render Forbidden correctly 1`] = `
             type="primary"
           >
             <Button
-              block={false}
               className="dw-btn"
-              ghost={false}
-              htmlType="button"
-              loading={false}
               onClick={[Function]}
               type="primary"
             >
               <Wave>
                 <button
-                  className="ant-btn dw-btn ant-btn-primary"
+                  className="ant-btn ant-btn-primary dw-btn"
                   onClick={[Function]}
                   type="button"
                 >
@@ -345,7 +341,7 @@ exports[`Forbidden component Render Forbidden correctly 1`] = `
                     loading={false}
                     prefixCls="ant-btn"
                   >
-                    <ForwardRef
+                    <CSSMotion
                       motionName="ant-btn-loading-icon-motion"
                       onAppearActive={[Function]}
                       onAppearStart={[Function]}
@@ -356,22 +352,8 @@ exports[`Forbidden component Render Forbidden correctly 1`] = `
                       removeOnLeave={true}
                       visible={false}
                     >
-                      <CSSMotion
-                        internalRef={null}
-                        motionAppear={true}
-                        motionEnter={true}
-                        motionLeave={true}
-                        motionName="ant-btn-loading-icon-motion"
-                        onAppearActive={[Function]}
-                        onAppearStart={[Function]}
-                        onEnterActive={[Function]}
-                        onEnterStart={[Function]}
-                        onLeaveActive={[Function]}
-                        onLeaveStart={[Function]}
-                        removeOnLeave={true}
-                        visible={false}
-                      />
-                    </ForwardRef>
+                      <DomWrapper />
+                    </CSSMotion>
                   </LoadingIcon>
                   <span
                     key=".0"

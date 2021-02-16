@@ -6,10 +6,9 @@ exports[`Checkbox component Checkbox rendered correctly 1`] = `
 >
   <Checkbox
     className="customClassName"
-    indeterminate={false}
   >
     <label
-      className="customClassName ant-checkbox-wrapper"
+      className="ant-checkbox-wrapper customClassName"
     >
       <Checkbox
         className=""
@@ -17,6 +16,9 @@ exports[`Checkbox component Checkbox rendered correctly 1`] = `
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyPress={[Function]}
+        onKeyUp={[Function]}
         prefixCls="ant-checkbox"
         style={Object {}}
         type="checkbox"
@@ -31,6 +33,9 @@ exports[`Checkbox component Checkbox rendered correctly 1`] = `
             onBlur={[Function]}
             onChange={[Function]}
             onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            onKeyUp={[Function]}
             type="checkbox"
           />
           <span

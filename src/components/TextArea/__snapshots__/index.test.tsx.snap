@@ -2,41 +2,49 @@
 
 exports[`TextArea component Render TextArea correctly 1`] = `
 <TextArea>
-  <TextArea>
+  <ForwardRef>
     <ClearableLabeledInput
+      bordered={true}
       element={
-        <ResizableTextArea
+        <TextArea
+          className=""
           onChange={[Function]}
-          onKeyDown={[Function]}
           prefixCls="ant-input"
         />
       }
       handleReset={[Function]}
       inputType="text"
       prefixCls="ant-input"
-      triggerFocus={[Function]}
       value=""
     >
-      <ResizableTextArea
+      <TextArea
+        className=""
         onChange={[Function]}
-        onKeyDown={[Function]}
         prefixCls="ant-input"
         value=""
       >
-        <ResizeObserver
-          disabled={true}
-          onResize={[Function]}
+        <ResizableTextArea
+          className=""
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          prefixCls="ant-input"
+          value=""
         >
-          <textarea
-            className="ant-input"
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            style={Object {}}
-            value=""
-          />
-        </ResizeObserver>
-      </ResizableTextArea>
+          <ResizeObserver
+            disabled={true}
+            onResize={[Function]}
+          >
+            <textarea
+              className="ant-input"
+              onChange={[Function]}
+              onKeyDown={[Function]}
+              style={Object {}}
+              value=""
+            />
+          </ResizeObserver>
+        </ResizableTextArea>
+      </TextArea>
     </ClearableLabeledInput>
-  </TextArea>
+  </ForwardRef>
 </TextArea>
 `;
