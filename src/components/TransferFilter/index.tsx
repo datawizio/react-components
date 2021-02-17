@@ -52,6 +52,9 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   const sourceListRef = useRef<any>();
 
   const sourceLoadData = async (params: TransferFilterLoadDataParams) => {
+    if (params.exclude) {
+      delete params.exclude;
+    }
     return await loadData(params, "source");
   };
 
