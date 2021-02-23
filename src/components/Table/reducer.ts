@@ -258,6 +258,7 @@ export function reducer(state: TableState, action: Action): TableState {
       children &&
         children.forEach(child => {
           parentsMap[child.key] = expandedRow.key;
+          child.children = child.has_children ? [] : child.children;
         });
 
       const path = getRecordPath(expandedRow.key, parentsMap);
