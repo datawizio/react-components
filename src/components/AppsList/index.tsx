@@ -12,6 +12,7 @@ export interface IApp {
   app_id: string;
   name: string;
   logo: string;
+  dark_logo: string;
   host: string;
   path: string;
   description: string;
