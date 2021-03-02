@@ -92,7 +92,6 @@ export interface FieldDrawerSelectProps
     page: number
   ) => Promise<{ data: [any]; totalPages: number }>;
 }
-
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;
   treeData?: any;
