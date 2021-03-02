@@ -15,6 +15,7 @@ export interface IApplication {
   host: string;
   path: string | null;
   icon?: string;
+  dark_icon?: string;
   allowed?: boolean;
   clients?: { id: number; name: string }[];
   showButton?: boolean;
@@ -25,6 +26,7 @@ const App: React.FC<IApplication & { client: number }> = ({
   name,
   host,
   icon,
+  dark_icon,
   path
 }) => {
   const handleClick = () => {
@@ -36,7 +38,7 @@ const App: React.FC<IApplication & { client: number }> = ({
     <Col span={8} onClick={handleClick}>
       <div className="logo">
         <div>
-          <img src={icon} alt={name} />
+          <img src={window.theme === "dark" ? dark_icon : icon} alt={name} />
         </div>
       </div>
       <div className="title">{name}</div>

@@ -1,13 +1,14 @@
 @import "../../styles/mixin/retina-image";
+@import "../../styles/variables.less";
 
 .ant-layout-footer.main-footer {
-  border-top: 1px solid #e9e9e9;
+  border-top: 1px solid @divider-border-color;
   padding: 13px;
   text-align: center;
 
   .retina-image(
-    "/static/images/nielsen-logo.png",
-    "/static/images/nielsen-logo@2x.png",
+    @nielsen-logo,
+    @nielsen-logo2x,
     85px,
     30px
   );
