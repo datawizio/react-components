@@ -1,5 +1,7 @@
 @import "../../styles/variables";
 @import "../../styles/mixin/retina-image";
+@import "../../styles/variables.less";
+// @import "../../styles/dark-variables.less";
 
 .ant-layout-footer.main-footer {
   border-top: 1px solid @divider-border-color;
@@ -7,8 +9,8 @@
   text-align: center;
 
   .retina-image(
-    "/static/images/nielsen-logo.png",
-    "/static/images/nielsen-logo@2x.png",
+    @nielsen-logo,
+    @nielsen-logo2x,
     85px,
     30px
   );

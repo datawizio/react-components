@@ -1,8 +1,10 @@
 declare global {
   interface Window {
-    theme: "dark" | "light";
+    theme: ITheme;
   }
 }
+
+export type ITheme = "dark" | "light";
 
 window.theme = "light";
 
@@ -18,7 +20,7 @@ const removeAllOldStyles = () => {
   }
 };
 
-export const changeTheme = (theme: "dark" | "light") => {
+export const changeTheme = (theme: ITheme) => {
   window.theme = theme;
   const allStyles: any = document.getElementsByTagName("link");
   const newHrefs: string[] = [];
