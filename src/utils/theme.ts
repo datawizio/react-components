@@ -47,7 +47,9 @@ export const changeTheme = (theme: ITheme) => {
     document.getElementsByTagName("head")[0].appendChild(link);
   });
 
-  removeAllOldStyles();
+  setTimeout(() => {
+    removeAllOldStyles();
+  }, 500)
 };
 
 export const catchAppendStylesheet = () => {
