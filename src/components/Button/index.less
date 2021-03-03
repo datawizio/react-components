@@ -6,14 +6,17 @@
     border: none;
     box-shadow: none;
   }
+
   &.highlight:not(:hover) {
     background: none;
     border: none;
     box-shadow: none;
   }
+
   &.highlight:hover {
     .btn-default;
   }
+
   &-link {
     padding-left: 0;
     padding-right: 0;
@@ -21,8 +24,13 @@
 
   &.ant-btn-primary[disabled] {
     .btn-primary;
+
     &:before {
       display: block;
     }
   }
+}
+
+.theme-dark .dw-btn.ant-btn.ant-btn-primary[disabled][disabled] {
+  color: gray !important;
 }
