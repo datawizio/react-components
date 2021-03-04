@@ -159,7 +159,10 @@ export function reducer(state: TableState, action: Action): TableState {
     case "paginate": {
       return {
         ...state,
-        pagination: action.payload
+        pagination: {
+          ...action.payload,
+          current: (action.payload && action.payload.current) || 1
+        }
       };
     }
     case "resetPagination": {
