@@ -1,4 +1,5 @@
 @loader-bg-color: #ffffff;
+@loader-bg-dark-color: #1f1f1f;
 @loader-color: rgb(142, 116, 198);
 @loader-size: 110px;
 @loader-space-size: 3px;
@@ -11,7 +12,7 @@
 
 .loader {
   background-color: @loader-bg-color;
-  height: calc(100vh - 16px);
+  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -68,6 +69,17 @@
         width: @loader-size + 8;
         height: @loader-size + 8;
       }
+    }
+  }
+}
+
+.loader-dark {
+  background-color: @loader-bg-dark-color;
+  .loader-wrapper {
+    .loader-spinner {
+      border-top: 4px solid @loader-bg-dark-color;
+      border-right: 4px solid @loader-bg-dark-color;
+      border-bottom: 4px solid @loader-bg-dark-color;
     }
   }
 }

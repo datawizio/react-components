@@ -22,6 +22,7 @@ const removeAllOldStyles = () => {
 
 export const changeTheme = (theme: ITheme) => {
   window.theme = theme;
+  localStorage.setItem("theme", theme);
   const allStyles: any = document.getElementsByTagName("link");
   const newHrefs: string[] = [];
 

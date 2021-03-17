@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx"
 
 import "./index.less";
 
@@ -7,8 +8,10 @@ export interface AppLoaderProps {
 }
 
 const AppLoader: React.FC<AppLoaderProps> = ({ imageSrc }) => {
+  const theme =  localStorage.getItem("theme");
+  const isDark = theme === "dark";
   return (
-    <div className="loader">
+    <div className={clsx( "loader", isDark && "loader-dark")}>
       <div className="loader-wrapper">
         <div className="loader-container">
           <div className="loader-logo-container">
