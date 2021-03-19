@@ -20,7 +20,7 @@
 
   .left-menu.ant-layout-sider-collapsed + .right-part-layout {
     margin-left: unset;
-    margin-right: 50px;
+    margin-right: 0;
   }
 
   .ant-layout-footer.main-footer {
@@ -207,7 +207,7 @@
 
   /* Search Input */
 
-  .ant-input-search:not(.ant-input-search-enter-button) {
+  .ant-input-search:not(.ant-input-search-enter-button, .ant-input-group-wrapper) {
     padding-right: 11px;
     padding-left: 0;
   }
@@ -284,6 +284,7 @@
 
     .ant-select-item {
       text-align: right;
+      padding-right: 12px;
     }
 
     .ant-select-selection-item {
@@ -420,6 +421,12 @@
   .ant-badge-status-text {
     margin-left: unset;
     margin-right: 8px;
+  }
+
+  .ant-select-tree-list-scrollbar,
+  .rc-virtual-list-scrollbar {
+    right: unset !important;
+    left: 0 !important;
   }
 
 }

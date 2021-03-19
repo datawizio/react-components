@@ -15,6 +15,10 @@
     margin-bottom: 0;
   }
 
+  p:first-child {
+    direction: ltr !important;
+  }
+
   p:last-child {
     font-style: italic;
   }
@@ -27,5 +31,9 @@
 .rtl {
   .StatusData__container {
     padding: 22px 22px 14px 0;
+
+    p:first-child {
+      text-align: right;
+    }
   }
 }
