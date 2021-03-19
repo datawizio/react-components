@@ -8,6 +8,7 @@ exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with custom props a
   listHeight={564}
   loadData={null}
   maxTagCount={10}
+  maxTagPlaceholder={[Function]}
   multiple={true}
   notFoundContent="NO_DATA"
   onBeforeBlur={[Function]}
@@ -32,6 +33,7 @@ exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with defaul props 1
   listHeight={564}
   loadData={null}
   maxTagCount={10}
+  maxTagPlaceholder={[Function]}
   notFoundContent="NO_DATA"
   onBeforeBlur={[Function]}
   onChange={[Function]}
