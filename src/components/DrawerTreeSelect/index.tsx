@@ -635,6 +635,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     );
   };
 
+  const maxTagPlaceholder = props => {
+    if (isSelectedAll && props?.length) return
+    return <Tag>{`+${props.length}...`}</Tag>
+  }
+
   const format = useMemo(() => {
     if (!formatRender) return null;
     return formatRender({
@@ -748,7 +753,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       {...restProps}
       ref={selectRef}
       value={internalValue}
-      className="drawer-tree-select"
+      className={clsx({
+        "drawer-tree-select": true,
+        "drawer-tree-selected-all": isSelectedAll
+      })}
       treeData={stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
@@ -772,6 +780,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       onTreeExpand={handlerTreeExpand}
       onSelect={handleTreeSelect}
       tagRender={tagRender}
+      maxTagPlaceholder={maxTagPlaceholder}
     />
   );
 };
