@@ -13,11 +13,13 @@ export interface ColumnProps
     React.HTMLAttributes<any> {
   level: number;
   model: IColumn;
+  onWidthChange: (columnKey: string, width: number) => void;
 }
 
 const Column: React.FC<ColumnProps> = props => {
-  const { model, onClick, multipleSorting, level, ...restProps } = props;
+  const { model, onClick, multipleSorting, level, onWidthChange, ...restProps } = props;
   const [lastWidth, setLastWidth] = useState<number>(0);
+  const columnRef = React.useRef(null)
 
   const { dispatch } = useContext(TableContext);
 
@@ -52,9 +54,30 @@ const Column: React.FC<ColumnProps> = props => {
     [model.fixed, dragRef, dropRef]
   );
 
-  const onMouseDownHandler = useCallback(event => {
-    setLastWidth(event.target.offsetWidth);
+  React.useEffect(() => {
+    if(!onWidthChange) return;
+    window.addEventListener("mouseup", onMouseUpHandler);
+    return () => {
+      window.removeEventListener("mouseup", onMouseUpHandler);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onMouseUpHandler = useCallback(() => {
+    if(columnRef?.current && onWidthChange) {
+      const colKey = model.originalKey ? model.originalKey : model.key; 
+      //@ts-ignore 
+      onWidthChange(colKey, columnRef.current?.offsetWidth);
+    }
+  }, [model.originalKey, model.key, onWidthChange]);
+ 
+
+  const onMouseDownHandler = useCallback(event => {
+    if(onWidthChange) {
+      columnRef.current = event.target
+    }
+    setLastWidth(event.target.offsetWidth);
+  }, [onWidthChange]);
 
   const onClickHandler = useCallback(
     event => {
@@ -84,6 +107,12 @@ const Column: React.FC<ColumnProps> = props => {
     const defaultSubCellWidth = 20;
     const defaultMaxValue = 10;
 
+    if (model.width) {
+      return {
+        width: model.width
+      }
+    }
+
     if (model.children && model.children.length) {
       return {
         width: model.children.length * defaultWidth + "px"
@@ -102,8 +131,7 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     return {};
-  }, [model.children, model.max_value]);
-
+  }, [model.children, model.max_value, model.width]);
   return (
     <th
       {...restProps}
