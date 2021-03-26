@@ -44,6 +44,7 @@ export interface TableProps<RT = any>
   isResizableColumns?: boolean;
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
+  onColumnWidthChange?: (columnKey: string, width: number) => void;
 
   /**
    * Таблица сжимаеться и растягиваеться до высоты которую вы указали в "height"
@@ -147,6 +148,8 @@ export interface IColumn<RT = any>
   resizable?: boolean;
   default_visible?: boolean;
   max_value?: number;
+  width?: number;
+  originalKey?: string;
 }
 
 /**

@@ -60,6 +60,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     responsiveColumns,
     rowChildrenProvider,
     nestedTableProvider,
+    onColumnWidthChange,
     ...restProps
   } = props;
 
@@ -177,8 +178,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       ...components,
       table: props => <TableWrapper {...props} style={{ height, width }} />,
       header: {
-        cell: props =>
-          Boolean(props.model) ? <Column {...props} /> : <th {...props} />
+        cell: props => {
+          return Boolean(props.model) ? <Column {...props} onWidthChange={onColumnWidthChange} /> : <th {...props} />
+        }
       },
       body: {
         cell: props => <Cell {...props} />

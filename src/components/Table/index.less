@@ -32,7 +32,7 @@
 
   .dw-table__column,
   th {
-    width: 300px;
+    // width: 300px;
     transition: none !important;
 
     top: 0;
@@ -235,4 +235,8 @@
 
 .theme-dark .dw-table td.ant-table-column-sort {
   background: @body-background;
+}
+
+.ant-table-thead > tr:not(:last-child) > th[colspan] {
+  border-bottom-width: 1px;
 }
