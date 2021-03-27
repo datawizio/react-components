@@ -107,9 +107,9 @@ const Column: React.FC<ColumnProps> = props => {
     const defaultSubCellWidth = 20;
     const defaultMaxValue = 10;
 
-    if (model.width) {
+    if (model.colWidth) {
       return {
-        width: model.width
+        width: model.colWidth
       }
     }
 
@@ -131,7 +131,7 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     return {};
-  }, [model.children, model.max_value, model.width]);
+  }, [model.children, model.max_value, model.colWidth]);
   return (
     <th
       {...restProps}

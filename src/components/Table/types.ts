@@ -148,7 +148,7 @@ export interface IColumn<RT = any>
   resizable?: boolean;
   default_visible?: boolean;
   max_value?: number;
-  width?: number;
+  colWidth?: number;
   originalKey?: string;
 }
 
