@@ -122,5 +122,6 @@ export const defaultLangs = new Set([
   "et",
   "ja",
   "pt",
-  "ar"
+  "ar",
+  "ko"
 ]);
