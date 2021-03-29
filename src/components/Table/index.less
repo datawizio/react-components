@@ -209,6 +209,14 @@
       .set-position-header(10, 47);
     }
   }
+  .ant-table-thead {
+    tr:first-child  {
+      th, .dw-table__column {
+        //default column width
+        width: 300px;
+      }
+    }
+  }
 }
 
 .set-columns-positions(@n, @size, @i: 2) when (@i =< @n) {
