@@ -36,6 +36,7 @@ export interface TableProps<RT = any>
   searchValue?: string;
 
   async?: boolean;
+  autoColWidth?: boolean;
   showAllColumns?: boolean;
   sortable?: boolean;
   forceColumns?: boolean;

@@ -217,6 +217,17 @@
       }
     }
   }
+
+
+  &--auto-col-width {
+    .ant-table-thead {
+      tr {
+        th, .dw-table__column {
+          width: unset;
+        }
+      }
+    }
+  }
 }
 
 .set-columns-positions(@n, @size, @i: 2) when (@i =< @n) {
