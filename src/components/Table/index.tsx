@@ -52,6 +52,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     isNested,
     children,
     components,
+    autoColWidth,
     dataProvider,
     showExpandIcon,
     showSizeChanger,
@@ -197,11 +198,12 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length,
           "dw-table--nestedable": props.expandable?.expandedRowRender,
-          "dw-table--responsive-columns": responsiveColumns
+          "dw-table--responsive-columns": responsiveColumns,
+          "dw-table--auto-col-width" : autoColWidth,
         },
         props.className
       ),
-    [baseState.loading, props.className, state.dataSource.length]
+    [baseState.loading, props.className, state.dataSource.length, autoColWidth]
   );
 
   useImperativeHandle(ref, () => ({
@@ -266,6 +268,7 @@ Table.defaultProps = {
   bordered: true,
   sortable: true,
   isResizableColumns: true,
+  autoColWidth: false,
 
   showSorterTooltip: false,
 
