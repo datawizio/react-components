@@ -11,6 +11,8 @@ import {
   useImperativeHandle
 } from "react";
 
+import "./index.less";
+
 export interface HighChartProps {
   /**
    * highcharts config: https://api.highcharts.com/highcharts/.
