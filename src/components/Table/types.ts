@@ -37,6 +37,7 @@ export interface TableProps<RT = any>
 
   async?: boolean;
   autoColWidth?: boolean;
+  compressColumns?: boolean;
   showAllColumns?: boolean;
   sortable?: boolean;
   forceColumns?: boolean;

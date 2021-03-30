@@ -221,9 +221,22 @@
 
   &--auto-col-width {
     .ant-table-thead {
-      tr {
+      tr:first-child {
         th, .dw-table__column {
           width: unset;
+        }
+      }
+    }
+  }
+
+  &--compress-columns {
+    th.ant-table-cell {
+      min-width: 50px;
+      .ant-table-column-sorters {
+        width: inherit;
+        min-width: 100%;
+        span:first-of-type {
+          width: 100%;
         }
       }
     }
