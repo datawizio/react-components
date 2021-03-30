@@ -65,6 +65,9 @@
     }
 
     &__cell-data {
+      direction: ltr;
+      justify-content: flex-end;
+
       .status-cell {
         .status-text {
           padding-left: unset;
@@ -90,6 +93,13 @@
     }
   }
 
+  .ant-table-bordered {
+    table {
+      border-right: unset;
+      border-left: 1px solid #f0f0f0;
+    }
+  }
+
   .dw-table.dw-table--nestedable {
     .ant-table-cell {
       border-right: unset;
@@ -104,6 +114,13 @@
   .dw-table.nested-table {
     .ant-table-cell:first-child {
       border-left: 1px solid #f0f0f0;
+    }
+  }
+
+  .theme-dark {
+    table {
+      border-right: unset;
+      border-left: 1px solid rgba(255, 255, 255, 0.45);
     }
   }
 
