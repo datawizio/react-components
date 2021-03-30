@@ -221,7 +221,7 @@
 
   &--auto-col-width {
     .ant-table-thead {
-      tr {
+      tr:first-child {
         th, .dw-table__column {
           width: unset;
         }
@@ -236,7 +236,7 @@
         width: inherit;
         min-width: 100%;
         span:first-of-type {
-          width: inherit;
+          width: 100%;
         }
       }
     }

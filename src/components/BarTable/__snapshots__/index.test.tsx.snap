@@ -60,6 +60,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
         },
       }
     }
+    compressColumns={false}
     dTypesConfig={
       Object {
         "bar": Object {
