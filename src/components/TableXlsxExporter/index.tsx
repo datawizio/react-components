@@ -36,6 +36,7 @@ const TableXlsxExporter: React.FC<TableXlsxExporterProps> = props => {
   } = props;
 
   const { translate } = useContext(ConfigContext);
+
   const context = useContext(TableContext);
 
   const tableState = useMemo(() => {
