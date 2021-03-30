@@ -47,6 +47,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
     </Base>
   </Title>
   <ForwardRef
+    autoColWidth={false}
     bordered={true}
     cellRenderProps={Object {}}
     className="BarTable"
