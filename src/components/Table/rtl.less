@@ -1,5 +1,9 @@
 .rtl {
   .dw-table {
+    table {
+      border-right: unset;
+      border-left: 1px solid #f0f0f0;
+    }
 
     &__toolbar {
       .table-toolbar--left {
@@ -35,6 +39,7 @@
         right: unset;
         left: 10px;
       }
+
       .ant-table-filter-column {
         padding-left: 30px;
       }
@@ -96,13 +101,6 @@
     }
   }
 
-  .ant-table-bordered {
-    .dw-table table {
-      border-right: unset;
-      border-left: 1px solid #f0f0f0;
-    }
-  }
-
   .dw-table.dw-table--nestedable {
     .ant-table-cell {
       border-right: unset;
@@ -121,9 +119,11 @@
   }
 
   .theme-dark {
-    .dw-table table {
-      border-right: unset;
-      border-left: 1px solid rgba(255, 255, 255, 0.45);
+    .dw-table {
+      table {
+        border-right: unset;
+        border-left: 1px solid rgba(255, 255, 255, 0.45);
+      }
     }
   }
 
