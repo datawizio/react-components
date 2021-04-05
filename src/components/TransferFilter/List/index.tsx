@@ -480,6 +480,10 @@ export default class TransferList extends React.PureComponent<
 
   matchFilter = (item: TransferFilterItem) => {
     const { filterValue } = this.state;
+    const searchArray = filterValue.split(";");
+    if (item.article && searchArray.includes(item.article)) {
+      return true;
+    }
     return (
       item.title.toLowerCase().indexOf(filterValue.trim().toLowerCase()) >= 0
     );
