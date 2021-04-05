@@ -18,7 +18,7 @@ import {
 } from "../types";
 import { PaginationType } from "antd/es/transfer/interface";
 import { EventDataNode } from "rc-tree/es/interface";
-import { isLocalDataSource } from "../helper";
+import { searchByArticle, isLocalDataSource } from "../helper";
 
 const defaultRender = () => null;
 
@@ -481,7 +481,8 @@ export default class TransferList extends React.PureComponent<
   matchFilter = (item: TransferFilterItem) => {
     const { filterValue } = this.state;
     return (
-      item.title.toLowerCase().indexOf(filterValue.trim().toLowerCase()) >= 0
+      item.title.toLowerCase().indexOf(filterValue.trim().toLowerCase()) >= 0 ||
+      searchByArticle(filterValue, item)
     );
   };
 
