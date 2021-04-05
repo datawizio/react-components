@@ -117,6 +117,7 @@ exports[`Table component rendered Table corectly 1`] = `
           },
           "dispatch": [Function],
           "tableProps": Object {
+            "autoColWidth": false,
             "bordered": true,
             "cellRenderProps": Object {},
             "className": "",
@@ -149,6 +150,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             ],
             "columnsConfig": Object {},
+            "compressColumns": false,
             "dTypesConfig": Object {},
             "dataSource": Array [
               Object {
