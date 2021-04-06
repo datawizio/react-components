@@ -251,7 +251,11 @@ export default class TransferList extends React.PureComponent<
             ? []
             : filteredItems
                 .filter(item => !disabledKeys.has(item.key))
-                .map(({ key, title }) => ({ key, title }));
+                .map(({ key, title, article }) => ({
+                  key,
+                  title,
+                  ...(article ? { article } : {})
+                }));
           // Only select enabled items
           onItemSelectAll(items, true);
         }}
