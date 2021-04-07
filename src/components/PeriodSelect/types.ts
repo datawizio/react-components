@@ -39,6 +39,7 @@ export interface PeriodSelectProps {
   clientDate?: string;
   clientStartDate?: string;
   periodLabel?: string;
+  limitMaxDate?: boolean;
   prevPeriodLabel?: string;
   dateConfig?: IDateConfig;
   onChange?: (dateConfig: IDateConfig) => void;
