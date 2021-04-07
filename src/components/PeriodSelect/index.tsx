@@ -100,21 +100,21 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   };
 
   const onDataRangeChange = date => {
-    if (date) {
-      actionCreator(dispatch, "updateDatePicker", {
-        date
-      });
-    } else {
-      actionCreator(dispatch, "clearPicker");
-    }
+    actionCreator(dispatch, "updateDatePicker", {
+      date
+    });
+  };
+
+  const onDateRangeClear = () => {
+    actionCreator(dispatch, "clearPicker");
   };
 
   const onPrevDataRangeChange = date => {
-    if (date) {
-      actionCreator(dispatch, "updatePrevDatePicker", { date });
-    } else {
-      actionCreator(dispatch, "clearPrevPicker");
-    }
+    actionCreator(dispatch, "updatePrevDatePicker", { date });
+  };
+
+  const onPrevDateRangeClear = () => {
+    actionCreator(dispatch, "clearPrevPicker");
   };
 
   const isDisabledOption = useCallback(
@@ -143,14 +143,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPeriodPicker && (
           <DateRangePicker
-            dateFrom={dayjs(period.startDate)}
-            dateTo={dayjs(period.endDate)}
+            dateFrom={!isPickerEmpty && dayjs(period.startDate)}
+            dateTo={!isPickerEmpty && dayjs(period.endDate)}
             minDate={dayjs(clientStartDate)}
             maxDate={limitMaxDate && dayjs(clientDate)}
             defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDataRangeChange}
+            onClear={onDateRangeClear}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
           />
@@ -172,14 +173,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPrevPeriodPicker && (
           <DateRangePicker
-            dateFrom={dayjs(prevPeriod.startDate)}
-            dateTo={dayjs(prevPeriod.endDate)}
+            dateFrom={!isPrevPickerEmpty && dayjs(prevPeriod.startDate)}
+            dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
             minDate={dayjs(clientStartDate)}
             maxDate={limitMaxDate && dayjs(clientDate)}
             defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDataRangeChange}
+            onClear={onPrevDateRangeClear}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
           />
