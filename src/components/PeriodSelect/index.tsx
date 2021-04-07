@@ -99,7 +99,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     });
   };
 
-  const onDataRangeChange = date => {
+  const onDateRangeChange = date => {
     actionCreator(dispatch, "updateDatePicker", {
       date
     });
@@ -109,7 +109,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     actionCreator(dispatch, "clearPicker");
   };
 
-  const onPrevDataRangeChange = date => {
+  const onPrevDateRangeChange = date => {
     actionCreator(dispatch, "updatePrevDatePicker", { date });
   };
 
@@ -150,7 +150,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
-            onChange={onDataRangeChange}
+            onChange={onDateRangeChange}
             onClear={onDateRangeClear}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
@@ -180,7 +180,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
-            onChange={onPrevDataRangeChange}
+            onChange={onPrevDateRangeChange}
             onClear={onPrevDateRangeClear}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
