@@ -18,13 +18,12 @@ import {
 } from "./helper";
 import { PeriodSelectProps } from "./types";
 import { usePeriodSelect } from "./usePeriodSelect";
-import { DatePicker } from "../..";
+import { DateRangePicker } from "../..";
 import "./index.less";
 
 dayjs.extend(quarterOfYear);
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const PeriodSelect = (props: PeriodSelectProps) => {
   const { translate } = useContext(ConfigContext);
@@ -34,6 +33,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     clientStartDate,
     periodLabel,
     prevPeriodLabel,
+    limitMaxDate,
     dateConfig,
     format,
     onChange
@@ -124,15 +124,6 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     [availablePrevPeriods]
   );
 
-  const disabledDates = current => {
-    if (current < dayjs(clientStartDate)) {
-      return true;
-    } else if (current > dayjs(clientDate)) {
-      return true;
-    }
-    return false;
-  };
-
   const isDisabledPrevSelect = !availablePrevPeriods.length;
 
   return (
@@ -151,11 +142,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           })}
         </Select>
         {showPeriodPicker && (
-          <RangePicker
+          <DateRangePicker
+            dateFrom={dayjs(period.startDate)}
+            dateTo={dayjs(period.endDate)}
+            minDate={dayjs(clientStartDate)}
+            maxDate={limitMaxDate && dayjs(clientDate)}
+            defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDataRangeChange}
-            disabledDate={disabledDates}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
           />
@@ -176,11 +171,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           ))}
         </Select>
         {showPrevPeriodPicker && (
-          <RangePicker
+          <DateRangePicker
+            dateFrom={dayjs(prevPeriod.startDate)}
+            dateTo={dayjs(prevPeriod.endDate)}
+            minDate={dayjs(clientStartDate)}
+            maxDate={limitMaxDate && dayjs(clientDate)}
+            defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDataRangeChange}
-            disabledDate={disabledDates}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
           />
@@ -195,7 +194,8 @@ PeriodSelect.defaultProps = {
   clientStartDate: "2020-10-21",
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
-  dateConfig: {}
+  dateConfig: {},
+  limitMaxDate: false
 };
 
 export default PeriodSelect;
