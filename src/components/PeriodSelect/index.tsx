@@ -147,7 +147,6 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             dateTo={!isPickerEmpty && dayjs(period.endDate)}
             minDate={dayjs(clientStartDate)}
             maxDate={limitMaxDate && dayjs(clientDate)}
-            defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDateRangeChange}
@@ -177,7 +176,6 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
             minDate={dayjs(clientStartDate)}
             maxDate={limitMaxDate && dayjs(clientDate)}
-            defaultPresetUsed={true}
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDateRangeChange}

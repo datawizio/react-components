@@ -17,9 +17,10 @@ const DateRangePicker: IDateRangePicker = ({
   const { translate } = useContext(ConfigContext);
 
   const translatedPreset = useMemo(() => {
-    if (!defaultPresetUsed) return;
+    if (!defaultPresetUsed && !props.ranges) return;
+    const preset = props.ranges ? props.ranges : DefaultPreset;
 
-    const defaultPresetMap = new Map(Object.entries(DefaultPreset));
+    const defaultPresetMap = new Map(Object.entries(preset));
     const translatedPresetMap = new Map();
 
     defaultPresetMap.forEach((value, key) => {
@@ -28,7 +29,7 @@ const DateRangePicker: IDateRangePicker = ({
     });
 
     return Object.fromEntries(translatedPresetMap.entries());
-  }, [defaultPresetUsed, translate]);
+  }, [defaultPresetUsed, props.ranges, translate]);
 
   const formatDate = useCallback(
     (date: DateType) => {
@@ -62,7 +63,7 @@ const DateRangePicker: IDateRangePicker = ({
   return (
     <RangePicker
       {...props}
-      ranges={defaultPresetUsed ? translatedPreset : props.ranges}
+      ranges={translatedPreset}
       className={fullWidth ? "ant-picker-full-width" : ""}
       onChange={onChange}
       value={[dateFrom, dateTo]}

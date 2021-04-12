@@ -3,6 +3,9 @@ import DatePicker from "../DatePicker";
 
 export type DateType = string | Dayjs;
 export type DateRange = [Dayjs, Dayjs];
+export type PresetsRangeType = {
+  [key: string]: DateRange;
+};
 
 export type DateRangePickerProps = {
   dateFrom?: DateType;
@@ -12,9 +15,7 @@ export type DateRangePickerProps = {
   minDate?: DateType;
   format?: string;
 
-  ranges: {
-    [key: string]: DateRange
-  };
+  ranges: PresetsRangeType;
 
   fullWidth?: boolean;
   defaultPresetUsed?: boolean;
