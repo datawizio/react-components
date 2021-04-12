@@ -5,6 +5,7 @@ import { Form } from "antd";
 import DateRangePicker from "../../DateRangePicker";
 
 import { FormFieldProps } from "../types";
+import { PresetsRangeType } from "../../DateRangePicker/types";
 
 export interface DateRangePickerParams {
   from: Dayjs;
@@ -18,6 +19,7 @@ export interface FieldDateRangePickerProps
   maxDate?: string;
   minDate?: string;
   defaultPickerValue?: any;
+  ranges?: PresetsRangeType;
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
