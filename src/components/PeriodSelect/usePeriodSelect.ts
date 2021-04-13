@@ -55,7 +55,7 @@ function reducer(state: IUserPeriodSelect, action: any) {
         return {
           ...state,
           period,
-          availablePrevPeriods,
+          availablePrevPeriods: getAvailablePeriodsForDates(period),
           isPickerEmpty: false,
           showPeriodPicker: true,
           selectedPeriod: periodKey
