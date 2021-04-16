@@ -9,8 +9,8 @@
 
   .ant-drawer-actions {
     text-align: right;
-
-    button {
+    & > button,
+    & > .ant-btn-group {
       margin-left: @margin-xs;
       padding: 4px 10px;
 
@@ -57,7 +57,6 @@
       }
     }
   }
-
 }
 
 .rtl {
