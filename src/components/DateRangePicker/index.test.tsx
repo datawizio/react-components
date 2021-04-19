@@ -15,7 +15,7 @@ jest.mock("./presets", () => ({
 }));
 
 const mockProps = {
-  defaultPresetUsed: true,
+  useDefaultPreset: false,
   fullWidth: true,
   maxDate: "2020-10-22T13:06:36.873Z",
   onChange: jest.fn()
