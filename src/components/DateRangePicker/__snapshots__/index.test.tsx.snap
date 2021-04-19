@@ -4,12 +4,12 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
 <DateRangePicker
   dateFrom="02-12-2001"
   dateTo="02-12-2001"
-  defaultPresetUsed={true}
   format="DD-MM-YYYY"
   fullWidth={true}
   inputReadOnly={true}
   maxDate="2020-10-22T13:06:36.873Z"
   onChange={[MockFunction]}
+  useDefaultPreset={false}
 >
   <RangePicker
     className="ant-picker-full-width"
@@ -20,16 +20,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
     inputReadOnly={true}
     maxDate="2020-10-22T13:06:36.873Z"
     onChange={[Function]}
-    ranges={
-      Object {
-        "currentMonth": "2020-10-22T13:06:36.873Z",
-        "currentYear": "2020-10-22T13:06:36.873Z",
-        "lastWeek": "2020-10-22T13:06:36.873Z",
-        "last_30_days": "2020-10-22T13:06:36.873Z",
-        "last_90_days": "2020-10-22T13:06:36.873Z",
-        "yesterday": "2020-10-22T13:06:36.873Z",
-      }
-    }
     value={
       Array [
         "2001-12-02T00:00:00.000Z",
@@ -160,16 +150,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
           <span
             className="ant-picker-prev-icon"
           />
-        }
-        ranges={
-          Object {
-            "currentMonth": "2020-10-22T13:06:36.873Z",
-            "currentYear": "2020-10-22T13:06:36.873Z",
-            "lastWeek": "2020-10-22T13:06:36.873Z",
-            "last_30_days": "2020-10-22T13:06:36.873Z",
-            "last_90_days": "2020-10-22T13:06:36.873Z",
-            "yesterday": "2020-10-22T13:06:36.873Z",
-          }
         }
         separator={
           <span
@@ -325,16 +305,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
             <span
               className="ant-picker-prev-icon"
             />
-          }
-          ranges={
-            Object {
-              "currentMonth": "2020-10-22T13:06:36.873Z",
-              "currentYear": "2020-10-22T13:06:36.873Z",
-              "lastWeek": "2020-10-22T13:06:36.873Z",
-              "last_30_days": "2020-10-22T13:06:36.873Z",
-              "last_90_days": "2020-10-22T13:06:36.873Z",
-              "yesterday": "2020-10-22T13:06:36.873Z",
-            }
           }
           separator={
             <span
@@ -543,16 +513,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                 className="ant-picker-prev-icon"
                               />
                             }
-                            ranges={
-                              Object {
-                                "currentMonth": "2020-10-22T13:06:36.873Z",
-                                "currentYear": "2020-10-22T13:06:36.873Z",
-                                "lastWeek": "2020-10-22T13:06:36.873Z",
-                                "last_30_days": "2020-10-22T13:06:36.873Z",
-                                "last_90_days": "2020-10-22T13:06:36.873Z",
-                                "yesterday": "2020-10-22T13:06:36.873Z",
-                              }
-                            }
                             separator={
                               <span
                                 aria-label="to"
@@ -725,16 +685,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                 className="ant-picker-prev-icon"
                               />
                             }
-                            ranges={
-                              Object {
-                                "currentMonth": "2020-10-22T13:06:36.873Z",
-                                "currentYear": "2020-10-22T13:06:36.873Z",
-                                "lastWeek": "2020-10-22T13:06:36.873Z",
-                                "last_30_days": "2020-10-22T13:06:36.873Z",
-                                "last_90_days": "2020-10-22T13:06:36.873Z",
-                                "yesterday": "2020-10-22T13:06:36.873Z",
-                              }
-                            }
                             separator={
                               <span
                                 aria-label="to"
@@ -760,82 +710,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                           />
                         </Context.Provider>
                       </React.Fragment>
-                    </div>
-                    <div
-                      className="ant-picker-footer"
-                    >
-                      <ul
-                        className="ant-picker-ranges"
-                      >
-                        <React.Fragment>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              yesterday
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              lastWeek
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              currentMonth
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              last_30_days
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              last_90_days
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              currentYear
-                            </PickerTag>
-                          </li>
-                        </React.Fragment>
-                      </ul>
                     </div>
                   </React.Fragment>
                 </div>
@@ -1102,16 +976,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                   className="ant-picker-prev-icon"
                                 />
                               }
-                              ranges={
-                                Object {
-                                  "currentMonth": "2020-10-22T13:06:36.873Z",
-                                  "currentYear": "2020-10-22T13:06:36.873Z",
-                                  "lastWeek": "2020-10-22T13:06:36.873Z",
-                                  "last_30_days": "2020-10-22T13:06:36.873Z",
-                                  "last_90_days": "2020-10-22T13:06:36.873Z",
-                                  "yesterday": "2020-10-22T13:06:36.873Z",
-                                }
-                              }
                               separator={
                                 <span
                                   aria-label="to"
@@ -1284,16 +1148,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                   className="ant-picker-prev-icon"
                                 />
                               }
-                              ranges={
-                                Object {
-                                  "currentMonth": "2020-10-22T13:06:36.873Z",
-                                  "currentYear": "2020-10-22T13:06:36.873Z",
-                                  "lastWeek": "2020-10-22T13:06:36.873Z",
-                                  "last_30_days": "2020-10-22T13:06:36.873Z",
-                                  "last_90_days": "2020-10-22T13:06:36.873Z",
-                                  "yesterday": "2020-10-22T13:06:36.873Z",
-                                }
-                              }
                               separator={
                                 <span
                                   aria-label="to"
@@ -1319,82 +1173,6 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                             />
                           </Context.Provider>
                         </React.Fragment>
-                      </div>
-                      <div
-                        className="ant-picker-footer"
-                      >
-                        <ul
-                          className="ant-picker-ranges"
-                        >
-                          <React.Fragment>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                yesterday
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                lastWeek
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                currentMonth
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                last_30_days
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                last_90_days
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                currentYear
-                              </PickerTag>
-                            </li>
-                          </React.Fragment>
-                        </ul>
                       </div>
                     </React.Fragment>
                   </div>
@@ -3173,12 +2951,12 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
 <DateRangePicker
   dateFrom="02-12-2001"
   dateTo="02-12-2001"
-  defaultPresetUsed={true}
   format="DD-MM-YYYY"
   fullWidth={true}
   inputReadOnly={true}
   maxDate="2020-10-22T13:06:36.873Z"
   onChange={[MockFunction]}
+  useDefaultPreset={false}
 >
   <RangePicker
     className="ant-picker-full-width"
@@ -3189,16 +2967,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
     inputReadOnly={true}
     maxDate="2020-10-22T13:06:36.873Z"
     onChange={[Function]}
-    ranges={
-      Object {
-        "currentMonth": "2020-10-22T13:06:36.873Z",
-        "currentYear": "2020-10-22T13:06:36.873Z",
-        "lastWeek": "2020-10-22T13:06:36.873Z",
-        "last_30_days": "2020-10-22T13:06:36.873Z",
-        "last_90_days": "2020-10-22T13:06:36.873Z",
-        "yesterday": "2020-10-22T13:06:36.873Z",
-      }
-    }
     value={
       Array [
         "2001-12-02T00:00:00.000Z",
@@ -3329,16 +3097,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
           <span
             className="ant-picker-prev-icon"
           />
-        }
-        ranges={
-          Object {
-            "currentMonth": "2020-10-22T13:06:36.873Z",
-            "currentYear": "2020-10-22T13:06:36.873Z",
-            "lastWeek": "2020-10-22T13:06:36.873Z",
-            "last_30_days": "2020-10-22T13:06:36.873Z",
-            "last_90_days": "2020-10-22T13:06:36.873Z",
-            "yesterday": "2020-10-22T13:06:36.873Z",
-          }
         }
         separator={
           <span
@@ -3494,16 +3252,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
             <span
               className="ant-picker-prev-icon"
             />
-          }
-          ranges={
-            Object {
-              "currentMonth": "2020-10-22T13:06:36.873Z",
-              "currentYear": "2020-10-22T13:06:36.873Z",
-              "lastWeek": "2020-10-22T13:06:36.873Z",
-              "last_30_days": "2020-10-22T13:06:36.873Z",
-              "last_90_days": "2020-10-22T13:06:36.873Z",
-              "yesterday": "2020-10-22T13:06:36.873Z",
-            }
           }
           separator={
             <span
@@ -3712,16 +3460,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                 className="ant-picker-prev-icon"
                               />
                             }
-                            ranges={
-                              Object {
-                                "currentMonth": "2020-10-22T13:06:36.873Z",
-                                "currentYear": "2020-10-22T13:06:36.873Z",
-                                "lastWeek": "2020-10-22T13:06:36.873Z",
-                                "last_30_days": "2020-10-22T13:06:36.873Z",
-                                "last_90_days": "2020-10-22T13:06:36.873Z",
-                                "yesterday": "2020-10-22T13:06:36.873Z",
-                              }
-                            }
                             separator={
                               <span
                                 aria-label="to"
@@ -3894,16 +3632,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                 className="ant-picker-prev-icon"
                               />
                             }
-                            ranges={
-                              Object {
-                                "currentMonth": "2020-10-22T13:06:36.873Z",
-                                "currentYear": "2020-10-22T13:06:36.873Z",
-                                "lastWeek": "2020-10-22T13:06:36.873Z",
-                                "last_30_days": "2020-10-22T13:06:36.873Z",
-                                "last_90_days": "2020-10-22T13:06:36.873Z",
-                                "yesterday": "2020-10-22T13:06:36.873Z",
-                              }
-                            }
                             separator={
                               <span
                                 aria-label="to"
@@ -3929,82 +3657,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                           />
                         </Context.Provider>
                       </React.Fragment>
-                    </div>
-                    <div
-                      className="ant-picker-footer"
-                    >
-                      <ul
-                        className="ant-picker-ranges"
-                      >
-                        <React.Fragment>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              yesterday
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              lastWeek
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              currentMonth
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              last_30_days
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              last_90_days
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              currentYear
-                            </PickerTag>
-                          </li>
-                        </React.Fragment>
-                      </ul>
                     </div>
                   </React.Fragment>
                 </div>
@@ -4271,16 +3923,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                   className="ant-picker-prev-icon"
                                 />
                               }
-                              ranges={
-                                Object {
-                                  "currentMonth": "2020-10-22T13:06:36.873Z",
-                                  "currentYear": "2020-10-22T13:06:36.873Z",
-                                  "lastWeek": "2020-10-22T13:06:36.873Z",
-                                  "last_30_days": "2020-10-22T13:06:36.873Z",
-                                  "last_90_days": "2020-10-22T13:06:36.873Z",
-                                  "yesterday": "2020-10-22T13:06:36.873Z",
-                                }
-                              }
                               separator={
                                 <span
                                   aria-label="to"
@@ -4453,16 +4095,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                   className="ant-picker-prev-icon"
                                 />
                               }
-                              ranges={
-                                Object {
-                                  "currentMonth": "2020-10-22T13:06:36.873Z",
-                                  "currentYear": "2020-10-22T13:06:36.873Z",
-                                  "lastWeek": "2020-10-22T13:06:36.873Z",
-                                  "last_30_days": "2020-10-22T13:06:36.873Z",
-                                  "last_90_days": "2020-10-22T13:06:36.873Z",
-                                  "yesterday": "2020-10-22T13:06:36.873Z",
-                                }
-                              }
                               separator={
                                 <span
                                   aria-label="to"
@@ -4488,82 +4120,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                             />
                           </Context.Provider>
                         </React.Fragment>
-                      </div>
-                      <div
-                        className="ant-picker-footer"
-                      >
-                        <ul
-                          className="ant-picker-ranges"
-                        >
-                          <React.Fragment>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                yesterday
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                lastWeek
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                currentMonth
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                last_30_days
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                last_90_days
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                currentYear
-                              </PickerTag>
-                            </li>
-                          </React.Fragment>
-                        </ul>
                       </div>
                     </React.Fragment>
                   </div>
@@ -4874,7 +4430,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
 <DateRangePicker
   dateFrom="02-12-2001"
   dateTo="02-12-2001"
-  defaultPresetUsed={true}
   format="DD-MM-YYYY"
   fullWidth={true}
   inputReadOnly={true}
@@ -4898,6 +4453,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
       ],
     }
   }
+  useDefaultPreset={false}
 >
   <RangePicker
     className="ant-picker-full-width"
@@ -4908,16 +4464,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
     inputReadOnly={true}
     maxDate="2020-10-22T13:06:36.873Z"
     onChange={[Function]}
-    ranges={
-      Object {
-        "currentMonth": "2020-10-22T13:06:36.873Z",
-        "currentYear": "2020-10-22T13:06:36.873Z",
-        "lastWeek": "2020-10-22T13:06:36.873Z",
-        "last_30_days": "2020-10-22T13:06:36.873Z",
-        "last_90_days": "2020-10-22T13:06:36.873Z",
-        "yesterday": "2020-10-22T13:06:36.873Z",
-      }
-    }
     value={
       Array [
         "2001-12-02T00:00:00.000Z",
@@ -5048,16 +4594,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
           <span
             className="ant-picker-prev-icon"
           />
-        }
-        ranges={
-          Object {
-            "currentMonth": "2020-10-22T13:06:36.873Z",
-            "currentYear": "2020-10-22T13:06:36.873Z",
-            "lastWeek": "2020-10-22T13:06:36.873Z",
-            "last_30_days": "2020-10-22T13:06:36.873Z",
-            "last_90_days": "2020-10-22T13:06:36.873Z",
-            "yesterday": "2020-10-22T13:06:36.873Z",
-          }
         }
         separator={
           <span
@@ -5213,16 +4749,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
             <span
               className="ant-picker-prev-icon"
             />
-          }
-          ranges={
-            Object {
-              "currentMonth": "2020-10-22T13:06:36.873Z",
-              "currentYear": "2020-10-22T13:06:36.873Z",
-              "lastWeek": "2020-10-22T13:06:36.873Z",
-              "last_30_days": "2020-10-22T13:06:36.873Z",
-              "last_90_days": "2020-10-22T13:06:36.873Z",
-              "yesterday": "2020-10-22T13:06:36.873Z",
-            }
           }
           separator={
             <span
@@ -5431,16 +4957,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                 className="ant-picker-prev-icon"
                               />
                             }
-                            ranges={
-                              Object {
-                                "currentMonth": "2020-10-22T13:06:36.873Z",
-                                "currentYear": "2020-10-22T13:06:36.873Z",
-                                "lastWeek": "2020-10-22T13:06:36.873Z",
-                                "last_30_days": "2020-10-22T13:06:36.873Z",
-                                "last_90_days": "2020-10-22T13:06:36.873Z",
-                                "yesterday": "2020-10-22T13:06:36.873Z",
-                              }
-                            }
                             separator={
                               <span
                                 aria-label="to"
@@ -5613,16 +5129,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                 className="ant-picker-prev-icon"
                               />
                             }
-                            ranges={
-                              Object {
-                                "currentMonth": "2020-10-22T13:06:36.873Z",
-                                "currentYear": "2020-10-22T13:06:36.873Z",
-                                "lastWeek": "2020-10-22T13:06:36.873Z",
-                                "last_30_days": "2020-10-22T13:06:36.873Z",
-                                "last_90_days": "2020-10-22T13:06:36.873Z",
-                                "yesterday": "2020-10-22T13:06:36.873Z",
-                              }
-                            }
                             separator={
                               <span
                                 aria-label="to"
@@ -5648,82 +5154,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                           />
                         </Context.Provider>
                       </React.Fragment>
-                    </div>
-                    <div
-                      className="ant-picker-footer"
-                    >
-                      <ul
-                        className="ant-picker-ranges"
-                      >
-                        <React.Fragment>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              yesterday
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              lastWeek
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              currentMonth
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              last_30_days
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              last_90_days
-                            </PickerTag>
-                          </li>
-                          <li
-                            className="ant-picker-preset"
-                          >
-                            <PickerTag
-                              onClick={[Function]}
-                              onMouseEnter={[Function]}
-                              onMouseLeave={[Function]}
-                            >
-                              currentYear
-                            </PickerTag>
-                          </li>
-                        </React.Fragment>
-                      </ul>
                     </div>
                   </React.Fragment>
                 </div>
@@ -5990,16 +5420,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                   className="ant-picker-prev-icon"
                                 />
                               }
-                              ranges={
-                                Object {
-                                  "currentMonth": "2020-10-22T13:06:36.873Z",
-                                  "currentYear": "2020-10-22T13:06:36.873Z",
-                                  "lastWeek": "2020-10-22T13:06:36.873Z",
-                                  "last_30_days": "2020-10-22T13:06:36.873Z",
-                                  "last_90_days": "2020-10-22T13:06:36.873Z",
-                                  "yesterday": "2020-10-22T13:06:36.873Z",
-                                }
-                              }
                               separator={
                                 <span
                                   aria-label="to"
@@ -6172,16 +5592,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                   className="ant-picker-prev-icon"
                                 />
                               }
-                              ranges={
-                                Object {
-                                  "currentMonth": "2020-10-22T13:06:36.873Z",
-                                  "currentYear": "2020-10-22T13:06:36.873Z",
-                                  "lastWeek": "2020-10-22T13:06:36.873Z",
-                                  "last_30_days": "2020-10-22T13:06:36.873Z",
-                                  "last_90_days": "2020-10-22T13:06:36.873Z",
-                                  "yesterday": "2020-10-22T13:06:36.873Z",
-                                }
-                              }
                               separator={
                                 <span
                                   aria-label="to"
@@ -6207,82 +5617,6 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                             />
                           </Context.Provider>
                         </React.Fragment>
-                      </div>
-                      <div
-                        className="ant-picker-footer"
-                      >
-                        <ul
-                          className="ant-picker-ranges"
-                        >
-                          <React.Fragment>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                yesterday
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                lastWeek
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                currentMonth
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                last_30_days
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                last_90_days
-                              </PickerTag>
-                            </li>
-                            <li
-                              className="ant-picker-preset"
-                            >
-                              <PickerTag
-                                onClick={[Function]}
-                                onMouseEnter={[Function]}
-                                onMouseLeave={[Function]}
-                              >
-                                currentYear
-                              </PickerTag>
-                            </li>
-                          </React.Fragment>
-                        </ul>
                       </div>
                     </React.Fragment>
                   </div>

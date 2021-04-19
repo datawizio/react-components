@@ -1,26 +1,84 @@
 import * as React from "react";
 import { useMemo, useCallback, useContext } from "react";
 import dayjs, { Dayjs } from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import DatePicker from "../DatePicker";
 import ConfigContext from "../ConfigProvider/context";
-import { DefaultPreset } from "./presets";
+import { DefaultPreset, DefaultPresetPrev } from "./presets";
 import { DateType, IDateRangePicker, DateRangePickerProps } from "./types";
 import "./index.less";
+
+dayjs.extend(customParseFormat);
 
 const { RangePicker } = DatePicker;
 
 const DateRangePicker: IDateRangePicker = ({
   fullWidth,
-  defaultPresetUsed,
+  ranges,
+  presets,
+  currDateRange,
+  useDefaultPreset,
+  defaultPresetExceptions,
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
 
-  const translatedPreset = useMemo(() => {
-    if (!defaultPresetUsed && !props.ranges) return;
-    const preset = props.ranges ? props.ranges : DefaultPreset;
+  const getPresets = useCallback(() => {
+    if (!ranges && !useDefaultPreset && !presets) return; // presets absent
 
-    const defaultPresetMap = new Map(Object.entries(preset));
+    /* params priority:
+     * - ranges
+     * - presets
+     * - useDefaultPreset
+     * */
+
+    if (ranges) return ranges;
+
+    if (presets && presets.length) {
+      let result = {};
+
+      const defaultPreset = DefaultPreset(props.minDate, props.maxDate);
+      const defaultPresetPrev = DefaultPresetPrev(
+        currDateRange?.date_from || props.dateFrom,
+        currDateRange?.date_to || props.dateTo
+      );
+
+      presets.forEach(item => {
+        if (defaultPreset[item]) result[item] = defaultPreset[item];
+        if (defaultPresetPrev[item.toUpperCase()])
+          result[item.toUpperCase()] = defaultPresetPrev[item.toUpperCase()];
+      });
+
+      return result;
+    }
+
+    if (useDefaultPreset) {
+      const defaultPreset = { ...DefaultPreset(props.minDate, props.maxDate) };
+      if (defaultPresetExceptions && defaultPresetExceptions.length) {
+        defaultPresetExceptions.forEach(item => {
+          delete defaultPreset[item];
+        });
+      }
+      return defaultPreset;
+    }
+  }, [
+    currDateRange,
+    defaultPresetExceptions,
+    presets,
+    props.dateFrom,
+    props.dateTo,
+    props.maxDate,
+    props.minDate,
+    ranges,
+    useDefaultPreset
+  ]);
+
+  const translatedPreset = useMemo(() => {
+    const presetRanges = getPresets();
+
+    if (!presetRanges) return;
+
+    const defaultPresetMap = new Map(Object.entries(presetRanges));
     const translatedPresetMap = new Map();
 
     defaultPresetMap.forEach((value, key) => {
@@ -29,7 +87,7 @@ const DateRangePicker: IDateRangePicker = ({
     });
 
     return Object.fromEntries(translatedPresetMap.entries());
-  }, [defaultPresetUsed, props.ranges, translate]);
+  }, [getPresets, translate]);
 
   const formatDate = useCallback(
     (date: DateType) => {

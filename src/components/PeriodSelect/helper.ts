@@ -316,10 +316,10 @@ export const getDateArrayFromRange = (dateRange: DateRangeType) => {
   return [dayjs(dateRange.startDate), dayjs(dateRange.endDate)];
 };
 
-export const getAvailablePeriodsForDates = (dateRange: DateRangeType) => {
+export const getAvailablePeriodsForDates = (dateRange: DateRangeType, forceEmpty = false) => {
   const weekLength = 7;
   const daysDiff = dayjs(dateRange.endDate).diff(dateRange.startDate, "day");
-  const mounthLength = dayjs(dateRange.startDate).daysInMonth();
+  const monthLength = dayjs(dateRange.startDate).daysInMonth();
 
   const startQuarter = dayjs(dateRange.startDate).startOf("quarter");
   const endQuarter = dayjs(dateRange.startDate).endOf("quarter");
@@ -331,13 +331,13 @@ export const getAvailablePeriodsForDates = (dateRange: DateRangeType) => {
 
   if (daysDiff < yearLength && daysDiff > quarterLength) {
     return AVAILABLE_PERIODS_FOR_DATES["year"];
-  } else if (daysDiff < quarterLength && daysDiff >= mounthLength) {
+  } else if (daysDiff < quarterLength && daysDiff >= monthLength) {
     return AVAILABLE_PERIODS_FOR_DATES["quarter"];
-  } else if (daysDiff < mounthLength && daysDiff >= weekLength) {
-    return AVAILABLE_PERIODS_FOR_DATES["mounth"];
+  } else if (daysDiff < monthLength && daysDiff >= weekLength) {
+    return AVAILABLE_PERIODS_FOR_DATES["month"];
   } else if (daysDiff < weekLength) {
     return AVAILABLE_PERIODS_FOR_DATES["week"];
   }
 
-  return AVAILABLE_PERIODS_FOR_DATES["date"];
+  return forceEmpty ? [] : AVAILABLE_PERIODS_FOR_DATES["date"];
 };
