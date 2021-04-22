@@ -11,3 +11,64 @@
 .ant-picker.ant-picker-full-width {
   width: 100%;
 }
+
+@media (max-width: 576px) {
+  .ant-picker-range-wrapper {
+    width: 320px;
+  }
+  .ant-picker-panel-container {
+    min-height: 340px !important;
+  }
+  .ant-picker-panels {
+    width: 320px;
+    display: unset !important;
+  }
+  .ant-picker-panel.ant-picker-panel-has-range {
+    width: 100vw !important;
+  }
+
+  .ant-picker-date-panel .ant-picker-content {
+    width: 100vw !important;
+  }
+
+  .ant-picker-date-panel {
+    width: 100vw !important;
+  }
+}
+
+@media screen and (max-width: 576px),
+  screen and (orientation: landscape) and (max-height: 576px) {
+  .ant-picker-dropdown-range {
+    top: 0 !important;
+    bottom: 50px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    height: 80vh !important;
+    position: fixed !important;
+    padding-top: 0 !important;
+
+    .ant-picker-range-wrapper {
+      width: 100% !important;
+      justify-content: flex-end;
+
+      .ant-picker-ranges {
+        width: 100vw !important;
+        padding: 2px !important;
+        line-height: 24px !important;
+
+        .ant-picker-preset {
+          .ant-tag {
+            margin-right: 2px;
+            padding-left: 3px !important;
+            padding-right: 3px !important;
+          }
+        }
+      }
+
+      .ant-picker-range-arrow {
+        display: none;
+      }
+    }
+  }
+}
