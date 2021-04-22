@@ -92,6 +92,7 @@
   &__cell {
     display: flex;
     align-items: center;
+
     .ant-table-row-expand-icon {
       margin-top: 0;
       min-width: 17px;
@@ -100,9 +101,11 @@
       align-items: center;
       border: 0;
       font-size: 12px;
+
       &.ant-table-row-expand-icon-spaced {
         cursor: default;
       }
+
       &::before,
       &::after {
         height: 0;
@@ -130,6 +133,7 @@
   td {
     .row-prefix {
       float: left;
+
       & > * {
         margin-right: 8px;
       }
@@ -153,10 +157,12 @@
     .ant-table-bordered .ant-table-cell.ant-table-row-expand-icon-cell {
       border-right: 0;
       width: 20px !important;
+
       .dw-table__cell {
         flex-direction: column;
       }
     }
+
     .ant-table-expanded-row > td {
       overflow: auto;
     }
@@ -166,6 +172,7 @@
     .ant-table {
       margin-left: 38px !important;
     }
+
     .ant-table-container {
       border-top: 0;
     }
@@ -209,8 +216,9 @@
       .set-position-header(10, 47);
     }
   }
+
   .ant-table-thead {
-    tr:first-child  {
+    tr:first-child {
       th, .dw-table__column {
         //default column width
         width: 300px;
@@ -232,9 +240,11 @@
   &--compress-columns {
     th.ant-table-cell {
       min-width: 50px;
+
       .ant-table-column-sorters {
         width: inherit;
         min-width: 100%;
+
         span:first-of-type {
           width: 100%;
         }
@@ -275,4 +285,20 @@
 
 .ant-table-thead > tr:not(:last-child) > th[colspan] {
   border-bottom-width: 1px;
+}
+
+@media (max-width: 768px) {
+  .dw-table {
+    table {
+      width: auto;
+
+      .ant-table-cell-fix-left {
+        left: unset !important;
+      }
+
+      .ant-table-cell-fix-right {
+        right: unset !important;
+      }
+    }
+  }
 }
