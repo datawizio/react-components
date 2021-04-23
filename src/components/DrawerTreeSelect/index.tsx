@@ -195,7 +195,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         return onChange("");
       }
       if (isSelectedAll) {
-        dispatch({ type: "resetIntervalValue" });
+        dispatch({ type: "resetInternalValue" });
         return onChange([]);
       }
       onChange(value);
