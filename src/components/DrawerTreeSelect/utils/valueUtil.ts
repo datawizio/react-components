@@ -201,6 +201,7 @@ export function addValue(rawValues: RawValueType[], value: RawValueType) {
 
   return Array.from(values);
 }
+
 export function removeValue(rawValues: RawValueType[], value: RawValueType) {
   const values = new Set(rawValues);
   if (Array.isArray(value)) {
@@ -209,4 +210,16 @@ export function removeValue(rawValues: RawValueType[], value: RawValueType) {
     values.delete(value);
   }
   return Array.from(values);
+}
+
+// check if selected keys are present in tree
+// filter keys by new tree data
+export const filterSelectedKeys = (keys, tree) => {
+  const treeDataSet = new Set(tree.map((item) => item.value));
+  if (keys.length) {
+    return keys.filter((item) => {
+      return treeDataSet.has(item);
+    });
+  }
+  return [];
 }

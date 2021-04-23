@@ -20,7 +20,7 @@ export interface IUseDrawerTreeSelect {
 
 function reducer(state: IUseDrawerTreeSelect, action: any) {
   switch (action.type) {
-    case "resetIntervalValue":
+    case "resetInternalValue":
       return { ...state, internalValue: [] };
     case "remoteLoadDataStart": {
       const newState: any = {
