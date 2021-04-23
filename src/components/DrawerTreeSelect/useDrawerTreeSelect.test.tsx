@@ -4,8 +4,8 @@ import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 
-const resetIntervalValueAC = () => ({
-  type: "resetIntervalValue"
+const resetInternalValueAC = () => ({
+  type: "resetInternalValue"
 });
 
 const remoteLoadDataStartAC = payload => ({
@@ -96,8 +96,8 @@ function setUp(initialStore, action) {
 }
 
 describe("Drawer tree select reducer", () => {
-  it("resetIntervalValue action", () => {
-    const { wrapper } = setUp(initialStoreMockData, resetIntervalValueAC());
+  it("resetInternalValue action", () => {
+    const { wrapper } = setUp(initialStoreMockData, resetInternalValueAC());
     wrapper.find("button").simulate("click");
     const nextStore = wrapper.find("button").prop("data-store") as any;
 

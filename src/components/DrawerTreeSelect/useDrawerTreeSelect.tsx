@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { SelectValue } from "../DrawerSelect/antd/AntSelect";
 import { AntTreeNode } from "antd/es/tree";
 import { LevelsType } from "./types";
@@ -7,7 +8,7 @@ import { Key } from "antd/es/table/interface";
 
 export interface IUseDrawerTreeSelect {
   drawerVisible: boolean;
-  internalValue: SelectValue;
+  internalValue: any;
   selected: AntTreeNode;
   stateTreeData: any;
   internalLoading: boolean;
@@ -20,7 +21,7 @@ export interface IUseDrawerTreeSelect {
 
 function reducer(state: IUseDrawerTreeSelect, action: any) {
   switch (action.type) {
-    case "resetIntervalValue":
+    case "resetInternalValue":
       return { ...state, internalValue: [] };
     case "remoteLoadDataStart": {
       const newState: any = {
@@ -33,9 +34,15 @@ function reducer(state: IUseDrawerTreeSelect, action: any) {
       return { ...state, ...newState };
     }
     case "remoteLoadDataStop": {
-      return { ...state, internalLoading: false, ...action.payload };
+      action.payload.internalValue = filterInternalValue(state, action.payload.stateTreeData);
+      return {
+        ...state,
+        internalLoading: false,
+        ...action.payload
+      };
     }
     case "drawerCancel": {
+      action.payload.internalValue = filterInternalValue(state, action.payload.stateTreeData);
       return {
         ...state,
         selectAllState: "",
@@ -94,6 +101,18 @@ function reducer(state: IUseDrawerTreeSelect, action: any) {
     default:
       throw new Error();
   }
+}
+
+export const filterInternalValue = (state, stateTreeData) => {
+  // check if selected keys are present in tree
+  // filter internalValue by payload stateTreeData
+  const stateTreeDataSet = new Set(stateTreeData.map(item => item.value));
+  if (state.internalValue.length) {
+    return state.internalValue.filter(item => {
+      return stateTreeDataSet.has(item);
+    });
+  }
+  return [];
 }
 
 export const useDrawerTreeSelect = (initialState: IUseDrawerTreeSelect) => {

@@ -195,7 +195,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         return onChange("");
       }
       if (isSelectedAll) {
-        dispatch({ type: "resetIntervalValue" });
+        dispatch({ type: "resetInternalValue" });
         return onChange([]);
       }
       onChange(value);
@@ -282,6 +282,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         type: "remoteLoadDataStop",
         payload: newState
       });
+
       if (expanded) {
         dispatch({
           type: "setState",
@@ -448,7 +449,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       type: "drawerSubmit"
     });
     triggerOnChange(internalValue);
-  }, [triggerOnChange, closeDrawer, internalValue, dispatch]);
+  }, [remoteSearch, closeDrawer, dispatch, triggerOnChange, internalValue, internalLoadData]);
 
   const handlerDrawerFocus = e => {
     if (internalLoading) return;
