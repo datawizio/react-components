@@ -8,14 +8,18 @@ import "./index.less";
 
 export interface TableSearchProps {
   placeholder?: string;
+  onSearch?: () => void;
 }
 
-const TableSearch: React.FC<TableSearchProps> = ({ placeholder }) => {
+const TableSearch: React.FC<TableSearchProps> = ({ placeholder, onSearch }) => {
   const {
     dispatch,
     tableState: { searchValue }
   } = useContext(TableContext);
-
+  const onSearchHandler = (value) => {
+    onSearch && onSearch();
+    dispatch({ type: "search", payload: value });
+  }
   return (
     <div className="table-search table-toolbar--left">
       <LiteSearchInput
@@ -23,7 +27,7 @@ const TableSearch: React.FC<TableSearchProps> = ({ placeholder }) => {
         debounceDelay={1000}
         placeholder={placeholder}
         style={{ width: "230px" }}
-        onSearch={value => dispatch({ type: "search", payload: value })}
+        onSearch={value => onSearchHandler(value)}
       />
     </div>
   );
