@@ -15,12 +15,12 @@ export interface TableSelectColumnsModalProps {
     openButton: string;
     headerModal: string;
   };
-  sendActivity?: () => void;
+  onSubmit?: () => void;
   withSearch?: boolean;
 }
 
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {
-  const { locale, withSearch, sendActivity } = props;
+  const { locale, withSearch, onSubmit } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
@@ -59,11 +59,11 @@ const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props =>
   }, [isOpened, baseTableState.columns, tableState.columns]);
 
   const handleApply = useCallback(() => {
-    sendActivity();
+    onSubmit && onSubmit();
     dispatch({ type: "update", payload: { visibleColumnsKeys: checkedKeys } });
     setIsOpened(false);
     setSearchValue("");
-  }, [checkedKeys, dispatch]);
+  }, [checkedKeys, dispatch, onSubmit]);
 
   const handleCancel = useCallback(() => {
     setIsOpened(false);

@@ -8,16 +8,16 @@ import "./index.less";
 
 export interface TableSearchProps {
   placeholder?: string;
-  sendActivity?: () => void;
+  onSearch?: () => void;
 }
 
-const TableSearch: React.FC<TableSearchProps> = ({ placeholder, sendActivity }) => {
+const TableSearch: React.FC<TableSearchProps> = ({ placeholder, onSearch }) => {
   const {
     dispatch,
     tableState: { searchValue }
   } = useContext(TableContext);
   const onSearchHandler = (value) => {
-    sendActivity();
+    onSearch && onSearch();
     dispatch({ type: "search", payload: value });
   }
   return (
