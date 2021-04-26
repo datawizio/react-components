@@ -54,12 +54,13 @@ type MaybePromise<T> = T | Promise<T>;
 export interface TableTemplatesProps {
   templates?: () => MaybePromise<TableTemplate>;
   onDelete: (template: TableTemplate) => void;
+  sendActivity?: () => void;
   onSelectFavorite: (template: TableTemplate) => void;
   onCreate: (template: TableTemplate) => void | Promise<TableTemplate>;
 }
 
 const TableTemplates: React.FC<TableTemplatesProps> = props => {
-  const { onCreate, onDelete, onSelectFavorite } = props;
+  const { onCreate, onDelete, onSelectFavorite, sendActivity } = props;
   const { translate } = useContext(ConfigContext);
 
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
@@ -76,11 +77,12 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   const handleSelect = useCallback(
     value => {
+      sendActivity();
       const template = templates.find(template => template.title === value);
       setValue(template.title);
       setTemplateToState(template);
     },
-    [templates, setTemplateToState]
+    [templates, setTemplateToState, sendActivity]
   );
 
   const handleSelectFavorite = useCallback(
