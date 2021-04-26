@@ -2,7 +2,7 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import HelpMenu from "./components/Menu";
 import SupportModal from "./components/SupportModal";
-import {ISupportFormData} from "./components/SupportModal/types";
+import { ISupportFormData } from "./components/SupportModal/types";
 import "./index.less";
 
 export interface IHelp {
@@ -10,6 +10,7 @@ export interface IHelp {
   onTutorialLinkClick?: () => void;
   onSupportLinkClick?: () => void;
   onServiceUpdateClick?: () => void;
+  onHelperClick?: () => void;
   uploadFileURL?: string;
 }
 
@@ -18,6 +19,7 @@ const Help: React.FC<IHelp> = ({
   onSupportLinkClick,
   onServiceUpdateClick,
   onSupportModalSubmit,
+  onHelperClick,
   uploadFileURL
 }) => {
   const [supportModalVisible, setSupportModalVisible] = useState(false);
@@ -32,6 +34,7 @@ const Help: React.FC<IHelp> = ({
       <HelpMenu
         onTutorialClick={onTutorialLinkClick}
         onSupportClick={handleSupportLinkClick}
+        onHelperClick={onHelperClick}
         onServiceUpdateClick={onServiceUpdateClick}
       />
       <SupportModal
