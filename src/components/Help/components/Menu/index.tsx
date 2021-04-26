@@ -32,9 +32,11 @@ const HelpMenu: React.FC<IHelpMenu> = ({
         <Menu.Item key="3" onClick={onServiceUpdateClick}>
           {translate("SERVICE_UPDATE")}
         </Menu.Item>
-        <Menu.Item key="4" onClick={onHelperClick}>
-          {translate("BES_HELPER")}
-        </Menu.Item>
+        {onHelperClick && (
+          <Menu.Item key="4" onClick={onHelperClick}>
+            {translate("BES_HELPER")}
+          </Menu.Item>
+        )}
       </Menu>
     );
   }, [
