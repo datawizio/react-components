@@ -9,9 +9,15 @@ export interface IHelpMenu {
   onTutorialClick: () => void;
   onSupportClick: () => void;
   onServiceUpdateClick: () => void;
+  onHelperClick: () => void;
 }
 
-const HelpMenu: React.FC<IHelpMenu> = ({ onTutorialClick, onSupportClick, onServiceUpdateClick }) => {
+const HelpMenu: React.FC<IHelpMenu> = ({
+  onTutorialClick,
+  onSupportClick,
+  onHelperClick,
+  onServiceUpdateClick
+}) => {
   const { translate } = useContext(ConfigContext);
 
   const menu = useMemo(() => {
@@ -26,14 +32,27 @@ const HelpMenu: React.FC<IHelpMenu> = ({ onTutorialClick, onSupportClick, onServ
         <Menu.Item key="3" onClick={onServiceUpdateClick}>
           {translate("SERVICE_UPDATE")}
         </Menu.Item>
+        <Menu.Item key="4" onClick={onHelperClick}>
+          {translate("BES_HELPER")}
+        </Menu.Item>
       </Menu>
     );
-  }, [onServiceUpdateClick, onSupportClick, onTutorialClick, translate]);
+  }, [
+    onServiceUpdateClick,
+    onSupportClick,
+    onTutorialClick,
+    onHelperClick,
+    translate
+  ]);
 
   return (
     <>
       <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-        <Button type="link" className="help-icon" onClick={e => e.preventDefault()}>
+        <Button
+          type="link"
+          className="help-icon"
+          onClick={e => e.preventDefault()}
+        >
           <QuestionCircleOutlined />
         </Button>
       </Dropdown>
