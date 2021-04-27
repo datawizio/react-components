@@ -130,7 +130,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         const state = {
           forceFetch: tableState.forceFetch + 1,
           visibleColumnsKeys: tableProps.visibleColumnsKeys
-          // columns: []
         };
         dispatch({ type: "update", payload: state });
         return;

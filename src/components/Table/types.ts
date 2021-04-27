@@ -132,7 +132,6 @@ export type Action =
   | {
       type: "visibleColumnsKeys";
       payload: TableState["visibleColumnsKeys"];
-      forceFetch?: boolean;
     };
 
 /**
