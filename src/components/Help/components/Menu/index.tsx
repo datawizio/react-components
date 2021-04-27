@@ -23,15 +23,19 @@ const HelpMenu: React.FC<IHelpMenu> = ({
   const menu = useMemo(() => {
     return (
       <Menu theme="light" className="help-menu-dropdown">
-        <Menu.Item key="1" onClick={onTutorialClick}>
-          {translate("READ_TUTORIAL")}
-        </Menu.Item>
+        {onTutorialClick && (
+          <Menu.Item key="1" onClick={onTutorialClick}>
+            {translate("READ_TUTORIAL")}
+          </Menu.Item>
+        )}
         <Menu.Item key="2" onClick={onSupportClick}>
           {translate("SUPPORT")}
         </Menu.Item>
-        <Menu.Item key="3" onClick={onServiceUpdateClick}>
-          {translate("SERVICE_UPDATE")}
-        </Menu.Item>
+        {onServiceUpdateClick && (
+          <Menu.Item key="3" onClick={onServiceUpdateClick}>
+            {translate("SERVICE_UPDATE")}
+          </Menu.Item>
+        )}
         {onHelperClick && (
           <Menu.Item key="4" onClick={onHelperClick}>
             {translate("BES_HELPER")}
