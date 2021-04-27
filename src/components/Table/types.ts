@@ -98,6 +98,7 @@ export interface TableState extends Partial<TableProps> {
   sortParams: SortParams;
   filterParams: FilterParams;
   stateIsRecovered?: boolean;
+  forceFetch: number;
   columnsMap: { [key: string]: IColumn };
   parentsMap: { [key: string]: string };
   loadingRows: { [key: string]: boolean };
@@ -128,7 +129,10 @@ export type Action =
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
   | { type: "updateRow"; payload: [IColumn["key"], IColumn] }
   | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
-  | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };
+  | {
+      type: "visibleColumnsKeys";
+      payload: TableState["visibleColumnsKeys"];
+    };
 
 /**
  * DataSource types

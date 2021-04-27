@@ -53,7 +53,8 @@ function useAsyncProviders(
     fetchData,
     templatesProvider,
     recoveryState,
-    state.stateIsRecovered
+    state.stateIsRecovered,
+    state.forceFetch
   ]);
 
   useEffect(() => {
