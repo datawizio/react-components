@@ -52,6 +52,7 @@ function SelectValue({ value }) {
 type MaybePromise<T> = T | Promise<T>;
 
 export interface TableTemplatesProps {
+  fetchAfterApply?: boolean;
   templates?: () => MaybePromise<TableTemplate>;
   onDelete: (template: TableTemplate) => void;
   onSelect?: () => void;
@@ -60,16 +61,27 @@ export interface TableTemplatesProps {
 }
 
 const TableTemplates: React.FC<TableTemplatesProps> = props => {
-  const { onCreate, onDelete, onSelectFavorite, onSelect } = props;
+  const {
+    fetchAfterApply,
+    onCreate,
+    onDelete,
+    onSelectFavorite,
+    onSelect
+  } = props;
   const { translate } = useContext(ConfigContext);
 
-  const { tableState, dispatch, baseTableState } = useContext(TableContext);
+  const { tableState, dispatch, baseTableState, tableProps } = useContext(
+    TableContext
+  );
 
   const [templates, setTemplates] = useState([]);
   const [value, setValue] = useState<string>(null);
 
   const setTemplateToState = useCallback(
     template => {
+      if (fetchAfterApply) {
+        template.state.forceFetch = tableState.forceFetch + 1;
+      }
       dispatch({ type: "recoveryState", payload: template.state });
     },
     [dispatch]
@@ -109,12 +121,25 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     [onDelete, value]
   );
 
-  const handleClear = useCallback(e => {
-    e.stopPropagation();
-    e.preventDefault();
-    setValue(null);
-    dispatch({ type: "filter", payload: {} });
-  }, []);
+  const handleClear = useCallback(
+    e => {
+      e.stopPropagation();
+      e.preventDefault();
+      setValue(null);
+      if (fetchAfterApply) {
+        const state = {
+          forceFetch: tableState.forceFetch + 1,
+          visibleColumnsKeys: tableProps.visibleColumnsKeys
+          // columns: []
+        };
+        dispatch({ type: "update", payload: state });
+        return;
+      }
+
+      dispatch({ type: "filter", payload: {} });
+    },
+    [tableState.forceFetch]
+  );
 
   const handleCreate = useCallback(
     async title => {

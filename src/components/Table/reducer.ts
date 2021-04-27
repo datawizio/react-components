@@ -83,7 +83,8 @@ export function initializer(props: TableProps): TableState {
     parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
-    loadingRows: {}
+    loadingRows: {},
+    forceFetch: 1
   };
 }
 
@@ -326,7 +327,6 @@ export function reducer(state: TableState, action: Action): TableState {
           );
         })(columnsPositions);
       }
-
       return nextState;
     }
     case "updateRow": {
