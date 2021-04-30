@@ -636,9 +636,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   };
 
   const maxTagPlaceholder = props => {
-    if (isSelectedAll && props?.length) return
-    return <Tag>{`+${props.length}...`}</Tag>
-  }
+    if (isSelectedAll && props?.length) return;
+    return <Tag>{`+${props.length}...`}</Tag>;
+  };
 
   const format = useMemo(() => {
     if (!formatRender) return null;

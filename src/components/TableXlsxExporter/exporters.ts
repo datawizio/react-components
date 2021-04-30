@@ -69,7 +69,6 @@ export async function exportTableToXLSX(
   const wb = new ExcelJS.Workbook(); // make a workbook
   const ws = wb.addWorksheet(sheetName || filename); // make a worksheet
   const columnsMaxLevel = getDeepMaxLevel(columns);
-
   // recursive draw columns
   (function drawColumns(columns, rowIdx = 1, colIdx = 1) {
     columns.forEach(column => {
@@ -101,13 +100,11 @@ export async function exportTableToXLSX(
       }
     });
   })(columns);
-
   // add columns
   ws.columns = getDeepChildren(columns).map(({ dataIndex, width }) => ({
     key: dataIndex,
     width: Number(width || 200) / 10
   }));
-
   // recursive add row for tree table
   (function drawRows(rows, level = 0) {
     rows.forEach(rowData => {

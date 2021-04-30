@@ -862,7 +862,8 @@ export default function generateSelector<
         !clearLock &&
         isMultiple &&
         !mergedSearchValue &&
-        mergedRawValue.length
+        mergedRawValue.length &&
+        false // MY!
       ) {
         const removeInfo = removeLastEnabledValue(
           displayValues,
