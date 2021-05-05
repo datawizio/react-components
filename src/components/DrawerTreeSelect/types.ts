@@ -68,6 +68,11 @@ export interface DrawerTreeSelectProps<VT>
    * Event when user click Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+  onChangeReturnObject?: (obj: {
+    value: SelectValue;
+    level: string | number;
+    selected?: AntTreeNode;
+  }) => void;
 
   onLevelChange?: (level: string) => void;
 }

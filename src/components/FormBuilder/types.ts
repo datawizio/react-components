@@ -107,6 +107,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   isFlatList?: boolean;
   remoteSearch?: boolean;
   emptyIsAll?: boolean;
+  level?: string | number;
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;

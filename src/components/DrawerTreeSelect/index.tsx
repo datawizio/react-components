@@ -89,6 +89,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   value,
   isFlatList,
   onChange,
+  onChangeReturnObject,
   onLevelChange,
   loadData,
   loadChildren,
@@ -186,22 +187,32 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       inputRef.current = el;
     }
   };
+  const callOnChange = useCallback(
+    (value: any, selected?: any) => {
+      if (onChangeReturnObject) {
+        onChangeReturnObject({ value, level: levelSelected.current, selected });
+        return;
+      }
+      onChange && onChange(value, selected);
+    },
+    [onChangeReturnObject, onChange]
+  );
 
   const triggerOnChange = useCallback(
     value => {
       if (!onChange) return;
       if (!multiple) {
-        if (value[0]) return onChange(value[0], selected);
-        return onChange("");
+        if (value[0]) return callOnChange(value[0], selected);
+        return callOnChange("");
       }
       if (isSelectedAll) {
         dispatch({ type: "resetInternalValue" });
-        return onChange([]);
+        return callOnChange([]);
       }
-      onChange(value);
+      callOnChange(value);
     },
     //eslint-disable-next-line
-    [multiple, selected, onChange, selectAllState, emptyIsAll]
+    [multiple, selected, onChange, selectAllState, emptyIsAll, callOnChange]
   );
 
   const getAllFilters = (first: boolean, newValue?: string[]) => {
