@@ -15,15 +15,15 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
   placeholder,
   rules,
   onChange,
+  level,
   ...restProps
 }) => {
-  const handleFieldChange = (value: any, selected: any) => {
-    if (!multiple && value.length === 0) value = "";
+  const handleFieldChange = (obj: any) => {
+    if (!multiple && obj.value.length === 0) obj.value = "";
     onChange &&
       onChange({
         name,
-        value,
-        selected
+        ...obj
       });
   };
   return (
@@ -36,11 +36,11 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
       <DrawerTreeSelect
         placeholder={placeholder}
         drawerTitle={drawerTitle ? drawerTitle : placeholder}
-        level={1}
+        level={level ?? 1}
         treeNodeFilterProp="title"
         treeCheckable={true}
         showSearch
-        onChange={handleFieldChange}
+        onChangeReturnObject={handleFieldChange}
         allowClear
         multiple={multiple}
         {...restProps}
