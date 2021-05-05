@@ -70,16 +70,16 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "year");
       break;
     case "last_30_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(60, "day");
-      newPrevPeriod.endDate = dayjs(clientDate).subtract(29, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(59, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(30, "day");
       break;
     case "last_180_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(360, "day");
-      newPrevPeriod.endDate = dayjs(clientDate).subtract(179, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(359, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(180, "day");
       break;
     case "last_365_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(728, "day");
-      newPrevPeriod.endDate = dayjs(clientDate).subtract(364, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(729, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(365, "day");
       break;
 
     default:
