@@ -6,6 +6,7 @@ import Select from "../../Select";
 import { FieldSelectProps } from "../types";
 
 export const FieldSelect: React.FC<FieldSelectProps> = ({
+  allowClear,
   label,
   rules,
   name,
@@ -36,7 +37,7 @@ export const FieldSelect: React.FC<FieldSelectProps> = ({
         options={options}
         placeholder={placeholder}
         onChange={handleFieldChange}
-        allowClear={true}
+        allowClear={allowClear}
       />
     </Form.Item>
   );
