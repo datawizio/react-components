@@ -54,7 +54,7 @@
   "peerDependencies": {
     "antd": "4.12.3",
     "exceljs": "^4.0.1",
-    "highcharts": "^8.1.0",
+    "highcharts": "^9.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "i18next": "^19.8.4"
@@ -132,7 +132,7 @@
     "gulp-eslint": "^6.0.0",
     "gulp-strip-code": "^0.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",
-    "highcharts": "^8.1.0",
+    "highcharts": "^9.0.0",
     "i18next": "^19.7.0",
     "jest": "^24.9.0",
     "jsdom": "16.4.0",
