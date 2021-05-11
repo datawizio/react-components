@@ -114,6 +114,7 @@
   }
 
   &__cell-data {
+    word-break: break-word;
     width: 100%;
     display: flex;
     align-items: center;
@@ -127,7 +128,7 @@
 
   table {
     table-layout: fixed;
-    width: max-content;
+    width: 100%;
   }
 
   td {
@@ -219,18 +220,19 @@
 
   .ant-table-thead {
     tr:first-child {
-      th, .dw-table__column {
+      th,
+      .dw-table__column {
         //default column width
         width: 300px;
       }
     }
   }
 
-
   &--auto-col-width {
     .ant-table-thead {
       tr:first-child {
-        th, .dw-table__column {
+        th,
+        .dw-table__column {
           width: unset;
         }
       }
