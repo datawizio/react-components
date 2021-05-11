@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateRange, DefaultPresetPrevType, DefaultPresetType } from "./types";
-import { genPrevPeriod } from "./utils";
+import { genPrevPeriod, reverseDate } from "./utils";
 
 dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
@@ -109,8 +109,10 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
     return [min, max];
   },
   prev_last_year: (dateFrom = null, dateTo = null): DateRange => {
+    // @ts-ignore
+    const diff = dayjs(reverseDate(dateTo)).diff(reverseDate(dateFrom), "day");
     const min = dayjs(dateFrom, format).subtract(1, "year");
-    const max = dayjs(dateTo, format).subtract(1, "year");
+    const max = min.add(+diff, "day");
     return [min, max];
   }
 };
