@@ -110,8 +110,9 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "quarter");
       break;
     case "prev_last_year":
+      const diff = dayjs(period.endDate).diff(period.startDate, "day");
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "year");
-      newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "year");
+      newPrevPeriod.endDate = dayjs(newPrevPeriod.startDate).add(+diff, "day");
       break;
     case "prev_date":
       newPrevPeriod.startDate = dayjs(date[0]);
