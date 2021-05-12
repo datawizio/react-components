@@ -16,7 +16,7 @@ export interface IUseDrawerTreeSelect {
   internalTreeDataCount: number;
   internalTreeExpandedKeys: Key[];
   fakeVisible: boolean;
-  showSelect: boolean;
+  showSelectAll: boolean;
 }
 
 function reducer(state: IUseDrawerTreeSelect, action: any) {

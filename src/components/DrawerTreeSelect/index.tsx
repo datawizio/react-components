@@ -97,7 +97,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   multiple,
   remoteSearch,
   loading,
-  showSelectAll,
+  showSelectAll: propsShowSelectAll,
   emptyIsAll,
   placeholder,
   ...restProps
@@ -125,11 +125,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       selectAllState,
       internalTreeDataCount,
       internalTreeExpandedKeys,
-      showSelect
+      showSelectAll
     },
     dispatch
   ] = useDrawerTreeSelect({
-    showSelect: true,
+    showSelectAll: true,
     fakeVisible: false,
     drawerVisible: false,
     internalValue: value,
@@ -275,11 +275,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         newState.internalTreeDataCount = count;
       }
 
-      if (count === 0 || !showSelectAll) {
-        newState.showSelect = false;
-      } else {
-        newState.showSelect = true;
-      }
+      newState.showSelectAll = !(count === 0 || !propsShowSelectAll);
 
       if (showLevels && levels) {
         newState.internalLevels = levels;
@@ -708,7 +704,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             loading={internalLoading}
           />
           <div className="drawer-tree-select-dropdown-toolbar">
-            {showSelect && !searchValue.current && (
+            {showSelectAll && !searchValue.current && (
               <Checkbox
                 onChange={handleSelectAllChange}
                 checked={selectAllState === "checked"}
@@ -766,7 +762,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     204 -
     (formatRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
-    (showSelectAll ? 34 : 0);
+    (propsShowSelectAll ? 34 : 0);
   return (
     <AntTreeSelect
       {...restProps}
