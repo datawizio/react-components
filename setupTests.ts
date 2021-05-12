@@ -14,6 +14,15 @@ global.console.error = message => {
   throw new Error(message);
 };
 
+global.localStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn(),
+  removeItem: jest.fn(),
+  key: jest.fn(),
+  length: 1,
+} 
+
 global.cancelAnimationFrame = function () {
   // setTimeout(callback, 0);
 };

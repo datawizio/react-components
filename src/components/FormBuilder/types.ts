@@ -68,6 +68,7 @@ export interface FieldRadioProps extends FormFieldProps<string> {
 
 export interface FieldSelectProps extends FormFieldProps<string> {
   options: RadioOptionType[];
+  allowClear?: boolean;
 }
 
 export type EnableSelectValueType = {
@@ -92,7 +93,6 @@ export interface FieldDrawerSelectProps
     page: number
   ) => Promise<{ data: [any]; totalPages: number }>;
 }
-
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;
   treeData?: any;
@@ -108,6 +108,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   isFlatList?: boolean;
   remoteSearch?: boolean;
   emptyIsAll?: boolean;
+  level?: string | number;
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;

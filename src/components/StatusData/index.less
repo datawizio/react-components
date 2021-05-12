@@ -1,16 +1,22 @@
+@import "../../styles/variables";
+
 .StatusData__container {
   color: rgba(255, 255, 255, 0.65);
   font-weight: bold;
   position: fixed;
   bottom: 0;
-  background: #09011c;
+  background: @sidebar-bg-color;
   padding: 22px 0 14px 22px;
   font-size: 12px;
-  width: 232px;
+  width: 240px;
   display: block;
 
   p {
     margin-bottom: 0;
+  }
+
+  p:first-child {
+    direction: ltr !important;
   }
 
   p:last-child {
@@ -25,5 +31,9 @@
 .rtl {
   .StatusData__container {
     padding: 22px 22px 14px 0;
+
+    p:first-child {
+      text-align: right;
+    }
   }
 }

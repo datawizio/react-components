@@ -70,16 +70,16 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "year");
       break;
     case "last_30_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(60, "day");
-      newPrevPeriod.endDate = dayjs(clientDate).subtract(29, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(59, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(30, "day");
       break;
     case "last_180_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(360, "day");
-      newPrevPeriod.endDate = dayjs(clientDate).subtract(179, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(359, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(180, "day");
       break;
     case "last_365_days":
-      newPrevPeriod.startDate = dayjs(clientDate).subtract(728, "day");
-      newPrevPeriod.endDate = dayjs(clientDate).subtract(364, "day");
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(729, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(365, "day");
       break;
 
     default:
@@ -110,8 +110,9 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "quarter");
       break;
     case "prev_last_year":
+      const diff = dayjs(period.endDate).diff(period.startDate, "day");
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "year");
-      newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "year");
+      newPrevPeriod.endDate = dayjs(newPrevPeriod.startDate).add(+diff, "day");
       break;
     case "prev_date":
       newPrevPeriod.startDate = dayjs(date[0]);
@@ -316,10 +317,10 @@ export const getDateArrayFromRange = (dateRange: DateRangeType) => {
   return [dayjs(dateRange.startDate), dayjs(dateRange.endDate)];
 };
 
-export const getAvailablePeriodsForDates = (dateRange: DateRangeType) => {
+export const getAvailablePeriodsForDates = (dateRange: DateRangeType, forceEmpty = false) => {
   const weekLength = 7;
   const daysDiff = dayjs(dateRange.endDate).diff(dateRange.startDate, "day");
-  const mounthLength = dayjs(dateRange.startDate).daysInMonth();
+  const monthLength = dayjs(dateRange.startDate).daysInMonth();
 
   const startQuarter = dayjs(dateRange.startDate).startOf("quarter");
   const endQuarter = dayjs(dateRange.startDate).endOf("quarter");
@@ -331,13 +332,13 @@ export const getAvailablePeriodsForDates = (dateRange: DateRangeType) => {
 
   if (daysDiff < yearLength && daysDiff > quarterLength) {
     return AVAILABLE_PERIODS_FOR_DATES["year"];
-  } else if (daysDiff < quarterLength && daysDiff >= mounthLength) {
+  } else if (daysDiff < quarterLength && daysDiff >= monthLength) {
     return AVAILABLE_PERIODS_FOR_DATES["quarter"];
-  } else if (daysDiff < mounthLength && daysDiff >= weekLength) {
-    return AVAILABLE_PERIODS_FOR_DATES["mounth"];
+  } else if (daysDiff < monthLength && daysDiff >= weekLength) {
+    return AVAILABLE_PERIODS_FOR_DATES["month"];
   } else if (daysDiff < weekLength) {
     return AVAILABLE_PERIODS_FOR_DATES["week"];
   }
 
-  return AVAILABLE_PERIODS_FOR_DATES["date"];
+  return forceEmpty ? [] : AVAILABLE_PERIODS_FOR_DATES["date"];
 };

@@ -27,6 +27,7 @@ const TableTransposeButton: React.FC<TableTransposeButtonProps> = props => {
     setTransposed(!isTransposed);
     onTranspose(!isTransposed);
     resetSearchValue();
+    dispatch({ type: "visibleColumnsKeys", payload: [] });
   }, [isTransposed, onTranspose]);
 
   return (

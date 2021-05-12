@@ -96,6 +96,11 @@ export const locales: ILocaleList = {
     name: "ar_EG",
     getAnt: () => import("antd/es/locale/ar_EG"),
     getDayJs: () => import("dayjs/locale/ar")
+  },
+  ko: {
+    name: "ko_KR",
+    getAnt: () => import("antd/es/locale/ko_KR"),
+    getDayJs: () => import("dayjs/locale/ko")
   }
 };
 
@@ -117,5 +122,6 @@ export const defaultLangs = new Set([
   "et",
   "ja",
   "pt",
-  "ar"
+  "ar",
+  "ko"
 ]);

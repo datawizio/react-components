@@ -4,16 +4,24 @@
 @iconMargin: 13px;
 @sideMargin: @iconMargin * 2 + @padding;
 
-.side-button {
+.side-button-container {
   position: fixed !important;
+  &--right {
+    right: 0;
+  }
+  &--left {
+    direction: ltr;
+    left: 0;
+  }
+}
 
+.side-button {
   &:hover {
     transform: translateX(0);
   }
 }
 
 .side-button--right {
-  right: 0;
   padding: 0 @padding 0 0 !important;
   transform: translateX(calc(100% - @sideMargin));
 
@@ -23,8 +31,6 @@
 }
 
 .side-button--left {
-  direction: ltr;
-  left: 0;
   padding: 0 0 0 @padding !important;
   transform: translateX(calc(-1 * (100% - @sideMargin)));
 

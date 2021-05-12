@@ -52,14 +52,17 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     isNested,
     children,
     components,
+    autoColWidth,
     dataProvider,
     showExpandIcon,
+    compressColumns,
     showSizeChanger,
     dataProviderDeps,
     templatesProvider,
     responsiveColumns,
     rowChildrenProvider,
     nestedTableProvider,
+    onColumnWidthChange,
     ...restProps
   } = props;
 
@@ -177,8 +180,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       ...components,
       table: props => <TableWrapper {...props} style={{ height, width }} />,
       header: {
-        cell: props =>
-          Boolean(props.model) ? <Column {...props} /> : <th {...props} />
+        cell: props => {
+          return Boolean(props.model) ? <Column {...props} onWidthChange={onColumnWidthChange} /> : <th {...props} />
+        }
       },
       body: {
         cell: props => <Cell {...props} />
@@ -195,11 +199,13 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length,
           "dw-table--nestedable": props.expandable?.expandedRowRender,
-          "dw-table--responsive-columns": responsiveColumns
+          "dw-table--responsive-columns": responsiveColumns,
+          "dw-table--auto-col-width" : autoColWidth,
+          "dw-table--compress-columns" : compressColumns,
         },
         props.className
       ),
-    [baseState.loading, props.className, state.dataSource.length]
+    [baseState.loading, props.className, state.dataSource.length, autoColWidth, compressColumns]
   );
 
   useImperativeHandle(ref, () => ({
@@ -264,6 +270,8 @@ Table.defaultProps = {
   bordered: true,
   sortable: true,
   isResizableColumns: true,
+  autoColWidth: false,
+  compressColumns: false,
 
   showSorterTooltip: false,
 

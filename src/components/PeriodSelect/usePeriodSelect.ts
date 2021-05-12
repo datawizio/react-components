@@ -55,7 +55,8 @@ function reducer(state: IUserPeriodSelect, action: any) {
         return {
           ...state,
           period,
-          availablePrevPeriods,
+          availablePrevPeriods: getAvailablePeriodsForDates(period),
+          isPickerEmpty: false,
           showPeriodPicker: true,
           selectedPeriod: periodKey
         };
@@ -67,6 +68,7 @@ function reducer(state: IUserPeriodSelect, action: any) {
         availablePrevPeriods,
         prevPeriod,
         showPeriodPicker: false,
+        isPickerEmpty: false,
         showPrevPeriodPicker: false,
         selectedPrevPeriod: DEFAULT_PREV_PERIOD,
         selectedPeriod: periodKey
@@ -101,6 +103,7 @@ function reducer(state: IUserPeriodSelect, action: any) {
       if (isCustomPrevDate) {
         return {
           ...state,
+          isPrevPickerEmpty: false,
           selectedPrevPeriod: prevPeriodKey,
           showPrevPeriodPicker: true
         };
@@ -109,6 +112,7 @@ function reducer(state: IUserPeriodSelect, action: any) {
       return {
         ...state,
         prevPeriod,
+        isPrevPickerEmpty: false,
         selectedPrevPeriod: prevPeriodKey,
         showPrevPeriodPicker: false
       };
@@ -167,7 +171,7 @@ function reducer(state: IUserPeriodSelect, action: any) {
       return {
         ...state,
         prevPeriod,
-        isPickerEmpty: false
+        isPrevPickerEmpty: false
       };
     }
 

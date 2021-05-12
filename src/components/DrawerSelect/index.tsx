@@ -506,9 +506,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   return (
     <AntSelect
+      filterOption={true}
       {...restProps}
       value={internalValue}
-      filterOption={true}
       className="drawer-select"
       mode="multiple"
       open={drawerVisible}

@@ -18,13 +18,12 @@ import {
 } from "./helper";
 import { PeriodSelectProps } from "./types";
 import { usePeriodSelect } from "./usePeriodSelect";
-import { DatePicker } from "../..";
+import { DateRangePicker } from "../..";
 import "./index.less";
 
 dayjs.extend(quarterOfYear);
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const PeriodSelect = (props: PeriodSelectProps) => {
   const { translate } = useContext(ConfigContext);
@@ -34,6 +33,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     clientStartDate,
     periodLabel,
     prevPeriodLabel,
+    limitMaxDate,
     dateConfig,
     format,
     onChange
@@ -99,22 +99,22 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     });
   };
 
-  const onDataRangeChange = date => {
-    if (date) {
-      actionCreator(dispatch, "updateDatePicker", {
-        date
-      });
-    } else {
-      actionCreator(dispatch, "clearPicker");
-    }
+  const onDateRangeChange = date => {
+    actionCreator(dispatch, "updateDatePicker", {
+      date
+    });
   };
 
-  const onPrevDataRangeChange = date => {
-    if (date) {
-      actionCreator(dispatch, "updatePrevDatePicker", { date });
-    } else {
-      actionCreator(dispatch, "clearPrevPicker");
-    }
+  const onDateRangeClear = () => {
+    actionCreator(dispatch, "clearPicker");
+  };
+
+  const onPrevDateRangeChange = date => {
+    actionCreator(dispatch, "updatePrevDatePicker", { date });
+  };
+
+  const onPrevDateRangeClear = () => {
+    actionCreator(dispatch, "clearPrevPicker");
   };
 
   const isDisabledOption = useCallback(
@@ -123,15 +123,6 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     },
     [availablePrevPeriods]
   );
-
-  const disabledDates = current => {
-    if (current < dayjs(clientStartDate)) {
-      return true;
-    } else if (current > dayjs(clientDate)) {
-      return true;
-    }
-    return false;
-  };
 
   const isDisabledPrevSelect = !availablePrevPeriods.length;
 
@@ -151,11 +142,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           })}
         </Select>
         {showPeriodPicker && (
-          <RangePicker
+          <DateRangePicker
+            dateFrom={!isPickerEmpty && dayjs(period.startDate)}
+            dateTo={!isPickerEmpty && dayjs(period.endDate)}
+            minDate={dayjs(clientStartDate)}
+            maxDate={limitMaxDate && dayjs(clientDate)}
             //@ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
-            onChange={onDataRangeChange}
-            disabledDate={disabledDates}
+            onChange={onDateRangeChange}
+            onClear={onDateRangeClear}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
           />
@@ -176,11 +171,15 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           ))}
         </Select>
         {showPrevPeriodPicker && (
-          <RangePicker
+          <DateRangePicker
+            dateFrom={!isPrevPickerEmpty && dayjs(prevPeriod.startDate)}
+            dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
+            minDate={dayjs(clientStartDate)}
+            maxDate={limitMaxDate && dayjs(clientDate)}
             //@ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
-            onChange={onPrevDataRangeChange}
-            disabledDate={disabledDates}
+            onChange={onPrevDateRangeChange}
+            onClear={onPrevDateRangeClear}
             defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
             format={format}
           />
@@ -195,7 +194,8 @@ PeriodSelect.defaultProps = {
   clientStartDate: "2020-10-21",
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
-  dateConfig: {}
+  dateConfig: {},
+  limitMaxDate: false
 };
 
 export default PeriodSelect;

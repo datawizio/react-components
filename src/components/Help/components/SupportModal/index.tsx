@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Form, Modal, Upload, message } from "antd";
-import { UploadFile } from "antd/lib/upload/interface";
 import { UploadOutlined } from "@ant-design/icons";
 import ConfigContext from "../../../ConfigProvider/context";
 import Select from "../../../Select";
@@ -26,7 +25,6 @@ const SupportModal: React.FC<ISupportModal> = ({
 
   const [formData, setFormData] = useState<ISupportFormData>(defaultState);
   const [filename, setFilename] = useState<string>("");
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const [form] = Form.useForm();
 
@@ -34,7 +32,6 @@ const SupportModal: React.FC<ISupportModal> = ({
     return {
       name: "uploaded_data",
       action: `${uploadFileURL}&filename=${filename}`,
-      fileList,
       beforeUpload(file) {
         const sizeLimit = 2;
         const maxFilesNumber = 5;
@@ -79,20 +76,12 @@ const SupportModal: React.FC<ISupportModal> = ({
       },
       onChange(info) {
         const uid = info.file.uid;
-        const existingUids = fileList.map(file => file.uid);
 
         // if beforeUpload() returned false
         if (!info.file.status) {
           const idx = info.fileList.findIndex(file => file.uid === uid);
           if (idx === -1) return;
           info.fileList.splice(idx, 1);
-        }
-
-        // if beforeUpload() returned true
-        if (info.file.status === "uploading" && !existingUids.includes(uid)) {
-          setFileList(prevState => {
-            return [...prevState, info.file];
-          });
         }
 
         if (info.file.status === "done") {
@@ -107,13 +96,6 @@ const SupportModal: React.FC<ISupportModal> = ({
         }
       },
       onRemove(file) {
-        // Remove from fileList
-        const fileListIdx = fileList.findIndex(i => i.uid === file.uid);
-        if (fileListIdx !== -1) {
-          fileList.splice(fileListIdx, 1);
-        }
-
-        // Remove from formData
         const token = file.response?.upload?.token;
         const idx = formData.uploads.findIndex(item => item === token);
         if (idx === -1) return;
@@ -128,8 +110,6 @@ const SupportModal: React.FC<ISupportModal> = ({
       }
     };
   }, [
-    fileList,
-    setFileList,
     filename,
     formData.uploads,
     translate,
@@ -148,7 +128,6 @@ const SupportModal: React.FC<ISupportModal> = ({
   const resetFormData = useCallback(() => {
     setFormData(defaultState);
     form.setFieldsValue(defaultState);
-    setFileList([]);
   }, [defaultState, form]);
 
   const handleSubmit = useCallback(() => {

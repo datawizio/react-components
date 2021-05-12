@@ -83,7 +83,8 @@ export function initializer(props: TableProps): TableState {
     parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
-    loadingRows: {}
+    loadingRows: {},
+    forceFetch: 1
   };
 }
 
@@ -159,7 +160,10 @@ export function reducer(state: TableState, action: Action): TableState {
     case "paginate": {
       return {
         ...state,
-        pagination: action.payload
+        pagination: {
+          ...action.payload,
+          current: (action.payload && action.payload.current) || 1
+        }
       };
     }
     case "resetPagination": {
@@ -258,6 +262,7 @@ export function reducer(state: TableState, action: Action): TableState {
       children &&
         children.forEach(child => {
           parentsMap[child.key] = expandedRow.key;
+          child.children = child.has_children ? [] : child.children;
         });
 
       const path = getRecordPath(expandedRow.key, parentsMap);
@@ -322,7 +327,6 @@ export function reducer(state: TableState, action: Action): TableState {
           );
         })(columnsPositions);
       }
-
       return nextState;
     }
     case "updateRow": {

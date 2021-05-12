@@ -62,7 +62,14 @@ class ListBody extends React.Component<
   onItemSelect = (item: TransferFilterItem) => {
     const { onItemSelect, selectedKeys } = this.props;
     const checked = selectedKeys.indexOf(item.key) >= 0;
-    onItemSelect({ key: item.key, title: item.title }, !checked);
+    onItemSelect(
+      {
+        key: item.key,
+        title: item.title,
+        ...(item?.article ? { article: item?.article } : {})
+      },
+      !checked
+    );
   };
 
   onItemsSelect = (items: ICheckedItem[], checked: boolean) => {

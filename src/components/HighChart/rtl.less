@@ -1,0 +1,29 @@
+.rtl {
+  .highcharts-label.highcharts-tooltip,
+  .highcharts-label.highcharts-tooltip * {
+    text-align: right;
+    direction: rtl;
+
+    b {
+      direction: ltr;
+      display: inline-flex;
+    }
+  }
+
+  .highcharts-contextmenu {
+    text-align: right;
+  }
+
+  .hc-point-value,
+  .hc-tooltip-value {
+    direction: ltr;
+    display: inline-flex;
+  }
+
+  .theme-dark {
+    .highcharts-label.highcharts-tooltip,
+    .highcharts-label.highcharts-tooltip h3 {
+      color: white;
+    }
+  }
+}

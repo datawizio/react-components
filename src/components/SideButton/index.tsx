@@ -11,27 +11,35 @@ export interface SideButtonProps extends ButtonProps {
   renderTo?: Element;
   icon: React.ReactNode;
   side?: "left" | "right";
+  extra?: React.ReactNode;
 }
 
 const SideButton: React.FC<SideButtonProps> = props => {
-  const { icon, text, side, renderTo, ...restProps } = props;
+  const { icon, text, side, renderTo, style, extra, ...restProps } = props;
 
   return createPortal(
-    <Button {...restProps} className={"side-button side-button--" + side}>
-      {side === "right" && (
-        <>
-          <span className="side-button__icon">{icon}</span>
-          <span className="side-button__text">{text}</span>
-        </>
-      )}
+    <div
+      style={style}
+      className={"side-button-container side-button-container--" + side}
+    >
+      <Button {...restProps} className={"side-button side-button--" + side}>
+        {side === "right" && (
+          <>
+            <span className="side-button__icon">{icon}</span>
+            <span className="side-button__text">{text}</span>
+          </>
+        )}
 
-      {side === "left" && (
-        <>
-          <span className="side-button__text">{text}</span>
-          <span className="side-button__icon">{icon}</span>
-        </>
-      )}
-    </Button>,
+        {side === "left" && (
+          <>
+            <span className="side-button__text">{text}</span>
+            <span className="side-button__icon">{icon}</span>
+          </>
+        )}
+      </Button>
+
+      {extra}
+    </div>,
     renderTo
   );
 };

@@ -90,7 +90,7 @@ export const AVAILABLE_PERIODS_FOR_DATES = {
     "prev_last_year",
     "prev_date"
   ],
-  mounth: [
+  month: [
     "previous",
     "prev_last_month",
     "prev_last_quarter",

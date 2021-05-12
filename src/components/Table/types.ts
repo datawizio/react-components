@@ -36,6 +36,8 @@ export interface TableProps<RT = any>
   searchValue?: string;
 
   async?: boolean;
+  autoColWidth?: boolean;
+  compressColumns?: boolean;
   showAllColumns?: boolean;
   sortable?: boolean;
   forceColumns?: boolean;
@@ -44,6 +46,7 @@ export interface TableProps<RT = any>
   isResizableColumns?: boolean;
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
+  onColumnWidthChange?: (columnKey: string, width: number) => void;
 
   /**
    * Таблица сжимаеться и растягиваеться до высоты которую вы указали в "height"
@@ -95,6 +98,7 @@ export interface TableState extends Partial<TableProps> {
   sortParams: SortParams;
   filterParams: FilterParams;
   stateIsRecovered?: boolean;
+  forceFetch: number;
   columnsMap: { [key: string]: IColumn };
   parentsMap: { [key: string]: string };
   loadingRows: { [key: string]: boolean };
@@ -125,7 +129,10 @@ export type Action =
   | { type: "updateDataSource"; payload: TableProps["dataSource"] }
   | { type: "updateRow"; payload: [IColumn["key"], IColumn] }
   | { type: "swapColumns"; payload: [IColumn["key"], IColumn["key"]] }
-  | { type: "visibleColumnsKeys"; payload: TableState["visibleColumnsKeys"] };
+  | {
+      type: "visibleColumnsKeys";
+      payload: TableState["visibleColumnsKeys"];
+    };
 
 /**
  * DataSource types
@@ -147,6 +154,8 @@ export interface IColumn<RT = any>
   resizable?: boolean;
   default_visible?: boolean;
   max_value?: number;
+  colWidth?: number;
+  originalKey?: string;
 }
 
 /**

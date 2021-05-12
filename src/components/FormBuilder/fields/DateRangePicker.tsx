@@ -5,6 +5,7 @@ import { Form } from "antd";
 import DateRangePicker from "../../DateRangePicker";
 
 import { FormFieldProps } from "../types";
+import { DateType, PresetsRangeType } from "../../DateRangePicker/types";
 
 export interface DateRangePickerParams {
   from: Dayjs;
@@ -18,6 +19,14 @@ export interface FieldDateRangePickerProps
   maxDate?: string;
   minDate?: string;
   defaultPickerValue?: any;
+  ranges?: PresetsRangeType;
+  presets?: string[];
+  useDefaultPreset?: boolean;
+  defaultPresetExceptions?: string[];
+  currDateRange?: {
+    date_from: DateType;
+    date_to: DateType;
+  };
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
@@ -36,7 +45,7 @@ const Field: React.FC<FieldProps> = ({
   const handleClear = useCallback(() => {
     //@ts-ignore
     onChange && onChange([null, null]);
-  }, []);
+  }, [onChange]);
   return (
     //@ts-ignore
     <DateRangePicker

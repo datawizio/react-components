@@ -12,6 +12,7 @@ export interface CardAppProps {
   app_id: number;
   name: string;
   logo: string;
+  dark_logo: string;
   host: string;
   path: string;
   description: string;
@@ -29,6 +30,7 @@ export const App: React.FC<CardAppProps> = ({
   app_id,
   name,
   logo,
+  dark_logo,
   description,
   clients,
   host,
@@ -62,7 +64,7 @@ export const App: React.FC<CardAppProps> = ({
       <Card className="card-app">
         <div className="card-app-logo">
           {logo ? (
-            <img src={logo} alt={name} />
+            <img src={window.theme === "dark" ? dark_logo : logo} alt={name} />
           ) : (
             <div className="card-app-name">{name}</div>
           )}

@@ -89,6 +89,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   value,
   isFlatList,
   onChange,
+  onChangeReturnObject,
   onLevelChange,
   loadData,
   loadChildren,
@@ -186,22 +187,32 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       inputRef.current = el;
     }
   };
+  const callOnChange = useCallback(
+    (value: any, selected?: any) => {
+      if (onChangeReturnObject) {
+        onChangeReturnObject({ value, level: levelSelected.current, selected });
+        return;
+      }
+      onChange && onChange(value, selected);
+    },
+    [onChangeReturnObject, onChange]
+  );
 
   const triggerOnChange = useCallback(
     value => {
       if (!onChange) return;
       if (!multiple) {
-        if (value[0]) return onChange(value[0], selected);
-        return onChange("");
+        if (value[0]) return callOnChange(value[0], selected);
+        return callOnChange("");
       }
       if (isSelectedAll) {
-        dispatch({ type: "resetIntervalValue" });
-        return onChange([]);
+        dispatch({ type: "resetInternalValue" });
+        return callOnChange([]);
       }
-      onChange(value);
+      callOnChange(value);
     },
     //eslint-disable-next-line
-    [multiple, selected, onChange, selectAllState, emptyIsAll]
+    [multiple, selected, onChange, selectAllState, emptyIsAll, callOnChange]
   );
 
   const getAllFilters = (first: boolean, newValue?: string[]) => {
@@ -635,6 +646,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     );
   };
 
+  const maxTagPlaceholder = props => {
+    if (isSelectedAll && props?.length) return;
+    return <Tag>{`+${props.length}...`}</Tag>;
+  };
+
   const format = useMemo(() => {
     if (!formatRender) return null;
     return formatRender({
@@ -748,7 +764,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       {...restProps}
       ref={selectRef}
       value={internalValue}
-      className="drawer-tree-select"
+      className={clsx({
+        "drawer-tree-select": true,
+        "drawer-tree-selected-all": isSelectedAll
+      })}
       treeData={stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
@@ -772,6 +791,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       onTreeExpand={handlerTreeExpand}
       onSelect={handleTreeSelect}
       tagRender={tagRender}
+      maxTagPlaceholder={maxTagPlaceholder}
     />
   );
 };

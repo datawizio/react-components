@@ -1,5 +1,9 @@
 .rtl {
   .dw-table {
+    table {
+      border-right: unset;
+      border-left: 1px solid #f0f0f0;
+    }
 
     &__toolbar {
       .table-toolbar--left {
@@ -35,6 +39,10 @@
         right: unset;
         left: 10px;
       }
+
+      .ant-table-filter-column {
+        padding-left: 30px;
+      }
     }
 
     td {
@@ -65,6 +73,9 @@
     }
 
     &__cell-data {
+      direction: ltr;
+      justify-content: flex-end;
+
       .status-cell {
         .status-text {
           padding-left: unset;
@@ -104,6 +115,15 @@
   .dw-table.nested-table {
     .ant-table-cell:first-child {
       border-left: 1px solid #f0f0f0;
+    }
+  }
+
+  .theme-dark {
+    .dw-table {
+      table {
+        border-right: unset;
+        border-left: 1px solid rgba(255, 255, 255, 0.45);
+      }
     }
   }
 

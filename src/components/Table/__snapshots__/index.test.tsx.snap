@@ -98,6 +98,7 @@ exports[`Table component rendered Table corectly 1`] = `
             "expandedRowKeys": Array [],
             "filterParams": Object {},
             "forceColumns": undefined,
+            "forceFetch": 1,
             "loading": undefined,
             "loadingRows": Object {},
             "pagination": Object {
@@ -117,6 +118,7 @@ exports[`Table component rendered Table corectly 1`] = `
           },
           "dispatch": [Function],
           "tableProps": Object {
+            "autoColWidth": false,
             "bordered": true,
             "cellRenderProps": Object {},
             "className": "",
@@ -149,6 +151,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             ],
             "columnsConfig": Object {},
+            "compressColumns": false,
             "dTypesConfig": Object {},
             "dataSource": Array [
               Object {
@@ -310,6 +313,7 @@ exports[`Table component rendered Table corectly 1`] = `
             "expandedRowKeys": Array [],
             "filterParams": Object {},
             "forceColumns": undefined,
+            "forceFetch": 1,
             "loading": false,
             "loadingRows": Object {},
             "pagination": Object {
@@ -468,6 +472,7 @@ exports[`Table component rendered Table corectly 1`] = `
           expandedRowKeys={Array []}
           filterHandler={[Function]}
           filterParams={Object {}}
+          forceFetch={1}
           isResizableColumns={true}
           loading={false}
           loadingRows={Object {}}
