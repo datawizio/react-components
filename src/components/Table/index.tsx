@@ -42,7 +42,7 @@ import { TableProps, FCTable, TableRef } from "./types";
 
 import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
-import { getBrowserName } from "../../utils/navigatorInfo";
+import { isSafari } from "../../utils/navigatorInfo";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
@@ -68,8 +68,6 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   } = props;
 
   const { translate } = useContext(ConfigContext);
-
-  const isSafari = getBrowserName().includes("Safari");
 
   const [baseState, dispatch] = useReducer(reducer, props, initializer);
 
@@ -209,7 +207,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--responsive-columns": responsiveColumns,
           "dw-table--auto-col-width": autoColWidth,
           "dw-table--compress-columns": compressColumns,
-          "dw-table--safari": isSafari
+          "dw-table--safari": isSafari()
         },
         props.className
       ),
@@ -220,8 +218,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       props.className,
       responsiveColumns,
       autoColWidth,
-      compressColumns,
-      isSafari
+      compressColumns
     ]
   );
 
