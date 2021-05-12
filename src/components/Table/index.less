@@ -128,7 +128,12 @@
 
   table {
     table-layout: fixed;
-    width: 100%;
+    width: max-content;
+  }
+  &--safari {
+    table {
+      width: 100% !important;
+    }
   }
 
   td {
