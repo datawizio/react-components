@@ -13,6 +13,7 @@ export interface DrawerFormProps {
   actions?: React.ReactElement;
   className?: string;
   form?: any;
+  layout?: "horizontal" | "vertical";
   hideRequiredMark?: boolean;
   formStore?: any;
   loading?: boolean;
@@ -28,6 +29,7 @@ const noop = () => {};
 const DrawerForm: React.FC<DrawerFormProps> = ({
   actions,
   className,
+  layout,
   title,
   style,
   visible,
@@ -100,7 +102,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       className={className}
     >
       <Form
-        layout="vertical"
+        layout={layout ?? "vertical"}
         colon={false}
         form={form}
         onFinish={handleFormSubmit}
