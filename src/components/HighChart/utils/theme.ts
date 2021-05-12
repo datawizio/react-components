@@ -5,6 +5,7 @@ export const setHighchartsTheme = () => {
   if (window.theme === "dark") {
     // @ts-ignore
     Highcharts.theme = DarkUnica;
+    // @ts-ignore
     Highcharts.setOptions(Highcharts.theme);
   }
 };
