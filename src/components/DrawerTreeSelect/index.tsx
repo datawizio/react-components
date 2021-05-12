@@ -129,7 +129,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     },
     dispatch
   ] = useDrawerTreeSelect({
-    showSelectAll: true,
+    showSelectAll: propsShowSelectAll,
     fakeVisible: false,
     drawerVisible: false,
     internalValue: value,
@@ -275,7 +275,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         newState.internalTreeDataCount = count;
       }
 
-      newState.showSelectAll = !(count === 0 || !propsShowSelectAll);
+      newState.showSelectAll = count > 0 && propsShowSelectAll;
 
       if (showLevels && levels) {
         newState.internalLevels = levels;
@@ -762,7 +762,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     204 -
     (formatRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
-    (propsShowSelectAll ? 34 : 0);
+    (showSelectAll ? 34 : 0);
   return (
     <AntTreeSelect
       {...restProps}
