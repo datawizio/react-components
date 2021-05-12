@@ -97,7 +97,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   multiple,
   remoteSearch,
   loading,
-  showSelectAll,
+  showSelectAll: propsShowSelectAll,
   emptyIsAll,
   placeholder,
   ...restProps
@@ -124,10 +124,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       internalLevels,
       selectAllState,
       internalTreeDataCount,
-      internalTreeExpandedKeys
+      internalTreeExpandedKeys,
+      showSelectAll
     },
     dispatch
   ] = useDrawerTreeSelect({
+    showSelectAll: propsShowSelectAll,
     fakeVisible: false,
     drawerVisible: false,
     internalValue: value,
@@ -272,6 +274,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       if (count) {
         newState.internalTreeDataCount = count;
       }
+
+      newState.showSelectAll = count > 0 && propsShowSelectAll;
 
       if (showLevels && levels) {
         newState.internalLevels = levels;
