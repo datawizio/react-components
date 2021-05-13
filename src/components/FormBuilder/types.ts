@@ -114,7 +114,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   treeDefaultExpandAll?: boolean;
   loadData?: (filters: any) => Promise<any>;
   loadChildren?: (id: string) => Promise<any>;
-  formatRender?: ({ props }: any) => React.ReactElement;
+  markersRender?: ({ props }: any) => React.ReactElement;
 }
 
 export interface FieldImageProps extends FormFieldProps<string> {}
