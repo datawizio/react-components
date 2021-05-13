@@ -258,7 +258,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       if (levels && levels.length === 1) {
         levelSelected.current = levels[0].value;
       }
-      if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
+      if (showCheckedStrategy === "SHOW_CHILD") {
         allLeafItems.current = getAllLeafItems(data);
       }
       mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
@@ -275,7 +275,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         newState.internalTreeDataCount = count;
       }
 
-      newState.showSelectAll = count > 0 && propsShowSelectAll;
+      newState.showSelectAll = (count > 0 || data.length > 0) && propsShowSelectAll;
 
       if (showLevels && levels) {
         newState.internalLevels = levels;
@@ -355,7 +355,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     const state: any = {
       selectAllState: "checked"
     };
-    if (!emptyIsAll && showCheckedStrategy !== "SHOW_PARENT") {
+    if (showCheckedStrategy === "SHOW_CHILD") {
       state.internalValue = allLeafItems.current;
       return state;
     }
@@ -593,7 +593,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         treeData,
         levelSelected.current
       );
-      if (!emptyIsAll && showCheckedStrategy === "SHOW_CHILD") {
+      if (showCheckedStrategy === "SHOW_CHILD") {
         allLeafItems.current = getAllLeafItems(treeData);
       }
       prevTreeData.current = stateTreeData;
