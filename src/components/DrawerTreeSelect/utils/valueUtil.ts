@@ -223,3 +223,9 @@ export const filterSelectedKeys = (keys, tree) => {
   }
   return [];
 }
+
+export const getShopIds = (arr) => {
+  return arr
+      .map(item => item.level === "shops" && item.id)
+      .filter(item => item);
+}

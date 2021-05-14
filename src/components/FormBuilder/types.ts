@@ -109,12 +109,14 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   remoteSearch?: boolean;
   emptyIsAll?: boolean;
   level?: string | number;
+  value?: string[] | number[];
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;
   loadData?: (filters: any) => Promise<any>;
   loadChildren?: (id: string) => Promise<any>;
   markersRender?: ({ props }: any) => React.ReactElement;
+  selectedMarkers?: string[];
 }
 
 export interface FieldImageProps extends FormFieldProps<string> {}

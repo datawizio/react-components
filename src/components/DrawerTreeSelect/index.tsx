@@ -7,7 +7,6 @@ import React, {
   useContext
 } from "react";
 import clsx from "clsx";
-
 import { Skeleton, Tag } from "antd";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
@@ -15,16 +14,16 @@ import Button from "../Button";
 import { Levels } from "./Levels";
 import AntTreeSelect from "./antd/AntTreeSelect";
 import Checkbox from "../Checkbox";
-
 import { triggerInputChangeValue } from "../../utils/trigger";
-
 import { IDrawerTreeSelectFilters, FCDrawerTreeSelect } from "./types";
 import { SelectValue } from "antd/lib/tree-select";
 import { DataNode } from "rc-tree-select/es/interface";
-
-import "./index.less";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
+import { getShopIds } from "./utils/valueUtil";
+import "./index.less";
+
+/**********************************************************************************************************************/
 
 function getMainLevelItems(items: any[], level: string | number | null = 1) {
   const set = new Set<string>();
@@ -73,6 +72,8 @@ function calcEmptyIsAll(
   return true;
 }
 
+/**********************************************************************************************************************/
+
 const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   additionalFilters,
   asyncData,
@@ -82,6 +83,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   drawerTitle,
   drawerWidth,
   markersRender,
+  selectedMarkers,
   headerHeight,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
@@ -147,7 +149,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const mainLevelItems = useRef<Set<string>>();
   const allLeafItems = useRef<string[]>([]);
 
-  const markersSelected = useRef<string[]>([]);
+  const markersSelected = useRef<string[]>(selectedMarkers);
   const searchValue = useRef<string>();
   const levelSelected = useRef<string | number | null>(
     showLevels ? level : null
@@ -330,11 +332,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       return selectAll();
     }
 
+    const stateTreeDataLength = getShopIds(stateTreeData).length;
+
     if (showCheckedStrategy === "SHOW_PARENT") {
       checked = isAllItemsChecked(values ? values : [], mainLevelItems.current);
     } else {
-      checked = values.length === internalTreeDataCount;
+      checked = !values.length || values.length === stateTreeDataLength;
     }
+
     if (!checked && values.length) {
       return {
         selectAllState: "indeterminate"
@@ -514,6 +519,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       } else {
         state.internalValue = extra.checked ? [extra.triggerValue] : [];
       }
+
+      state.internalTreeDataCount = state.internalValue.length;
 
       dispatch({
         type: "setState",

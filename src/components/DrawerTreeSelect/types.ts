@@ -59,6 +59,8 @@ export interface DrawerTreeSelectProps<VT>
 
   emptyIsAll?: boolean;
 
+  selectedMarkers?: string[];
+
   markersRender?: ((props: MarkersRenderProps) => React.ReactElement) | null;
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
