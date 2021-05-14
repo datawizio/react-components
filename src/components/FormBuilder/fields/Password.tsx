@@ -21,7 +21,7 @@ export const FieldPassword: React.FC<FieldTextProps> = React.memo(
     return (
       <Form.Item name={name} label={label} rules={rules}>
         <Input.Password
-          name={name}
+          name={name as string}
           placeholder={placeholder}
           onChange={handleFieldChange}
         />

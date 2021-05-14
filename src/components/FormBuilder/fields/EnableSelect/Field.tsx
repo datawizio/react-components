@@ -6,7 +6,7 @@ import { IFormFieldChanged } from "../../types";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 
 export interface FieldEnableSelectFieldProps {
-  name: string;
+  name: string | string[];
   placeholder: string;
   value?: EnableSelectValueType;
   renderField: (value: EnableSelectValueType) => any;

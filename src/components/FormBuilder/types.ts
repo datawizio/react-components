@@ -2,7 +2,7 @@ import { Rule } from "antd/lib/form";
 import { Dayjs } from "dayjs";
 
 export interface IFormFieldChanged<Type> {
-  name: string;
+  name: string | string[];
   value: Type;
   selected?: any;
 }
@@ -121,7 +121,7 @@ export interface FieldImageProps extends FormFieldProps<string> {}
 
 export interface ImageProps {
   t?: any;
-  name: string;
+  name: string | string [];
   value?: string;
   placeholder?: string;
   onChange: (change: IFormFieldChanged<string>) => void;
