@@ -8,7 +8,7 @@ export interface IFormFieldChanged<Type> {
 }
 
 export interface FormFieldProps<Type> {
-  name: string;
+  name: string | string[];
   placeholder?: string;
   label?: string;
   rules?: Rule[];
