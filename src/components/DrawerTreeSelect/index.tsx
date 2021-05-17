@@ -332,12 +332,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       return selectAll();
     }
 
-    const stateTreeDataLength = getShopIds(stateTreeData).length;
+    const shopsCount = stateTreeData ? getShopIds(stateTreeData).length : 0;
 
     if (showCheckedStrategy === "SHOW_PARENT") {
       checked = isAllItemsChecked(values ? values : [], mainLevelItems.current);
     } else {
-      checked = !values.length || values.length === stateTreeDataLength;
+      checked = !values.length || values.length === shopsCount;
     }
 
     if (!checked && values.length) {
