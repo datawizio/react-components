@@ -21,7 +21,7 @@ export const FieldRadio: React.FC<FieldRadioProps> = React.memo(
 
     return (
       <Form.Item name={name} label={label} rules={rules}>
-        <Radio.Group name={name} onChange={handleFieldChange}>
+        <Radio.Group onChange={handleFieldChange}>
           {options.map(option => (
             <Radio value={option.value} key={option.value}>
               {option.label}

@@ -26,9 +26,7 @@ export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
         rules={rules}
         valuePropName="checked"
       >
-        <Checkbox name={name} onChange={handleFieldChange}>
-          {placeholder}
-        </Checkbox>
+        <Checkbox onChange={handleFieldChange}>{placeholder}</Checkbox>
       </Form.Item>
     );
   }

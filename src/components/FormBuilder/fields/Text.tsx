@@ -24,7 +24,6 @@ export const FieldText: React.FC<FieldTextProps> = React.memo(
           {...props}
           //@ts-ignore
           ref={ref}
-          name={name}
           onChange={handleFieldChange}
         />
       </Form.Item>
