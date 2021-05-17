@@ -16,6 +16,7 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
   rules,
   onChange,
   level,
+  forceOnChange, // prevent object return
   ...restProps
 }) => {
   const handleFieldChange = (obj: any) => {
@@ -40,7 +41,7 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
         treeNodeFilterProp="title"
         treeCheckable={true}
         showSearch
-        onChangeReturnObject={handleFieldChange}
+        onChangeReturnObject={forceOnChange ? undefined : handleFieldChange}
         allowClear
         multiple={multiple}
         {...restProps}
