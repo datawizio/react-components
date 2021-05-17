@@ -76,6 +76,10 @@ export interface DrawerSelectProps<VT>
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
 
+function extractProperty(array: Array<object>, propertyName: string) {
+  return array.map(item => item[propertyName]);
+}
+
 function convertOptions(
   source,
   valueProp: string,
@@ -83,11 +87,11 @@ function convertOptions(
   selectedOptions: any[] = [],
   value: string[] = []
 ) {
-  const selected = selectedOptions;
+  const selected = [];
   const options = [];
   const set = new Set(value);
 
-  const selectedIds = selected.map(item => item[valueProp]);
+  const selectedIds = selectedOptions.map(item => item[valueProp]);
   const selectedSet = new Set(selectedIds);
 
   source.forEach(opt => {
@@ -96,8 +100,10 @@ function convertOptions(
       value: opt[valueProp],
       label: opt[labelProp]
     };
-    if (selectedSet.has(opt[valueProp])) return;
-
+    if (selectedSet.has(opt[valueProp])) {
+      selected.push(obj);
+      return;
+    }
     if (set.has(opt[valueProp])) {
       selected.push(obj);
       return;
@@ -206,7 +212,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       let state: any = {};
 
-      if (!page) state.optionsState = selectedOptions.current;
+      if (!page) state.optionsState = [];
 
       dispatch({
         type: "remoteLoadDataStart",
@@ -214,6 +220,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       });
 
       const filters = { ...additionalFilters, search };
+
+      filters.selected = extractProperty(selectedOptions.current, valueProp);
 
       if (first) {
         filters.selected = value;
@@ -241,9 +249,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       };
 
       if (page === 0) {
-        state.optionsState = getUniqueItems(selectedOptions.current.concat(options.options));
+        state.optionsState = getUniqueItems(
+          options.selected.concat(options.options)
+        );
       } else {
-        state.optionsState = getUniqueItems(optionsState.concat(options.options));
+        state.optionsState = getUniqueItems(
+          optionsState.concat(options.options)
+        );
       }
 
       dispatch({
