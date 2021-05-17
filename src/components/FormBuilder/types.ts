@@ -68,6 +68,7 @@ export interface FieldRadioProps extends FormFieldProps<string> {
 
 export interface FieldSelectProps extends FormFieldProps<string> {
   options: RadioOptionType[];
+  mode?: "multiple" | "tags";
   allowClear?: boolean;
 }
 
