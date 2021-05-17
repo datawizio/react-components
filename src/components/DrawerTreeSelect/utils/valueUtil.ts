@@ -224,8 +224,8 @@ export const filterSelectedKeys = (keys, tree) => {
   return [];
 }
 
-export const getShopIds = (arr) => {
+export const getLastLevelIds = (arr, level = "shops") => {
   return arr
-      .map(item => item.level === "shops" && item.id)
+      .map(item => item.level === level && item.id)
       .filter(item => item);
 }
