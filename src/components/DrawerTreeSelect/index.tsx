@@ -20,7 +20,7 @@ import { SelectValue } from "antd/lib/tree-select";
 import { DataNode } from "rc-tree-select/es/interface";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
-import { getShopIds } from "./utils/valueUtil";
+import { getLastLevelIds } from "./utils/valueUtil";
 import "./index.less";
 
 /**********************************************************************************************************************/
@@ -332,12 +332,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       return selectAll();
     }
 
-    const stateTreeDataLength = getShopIds(stateTreeData).length;
+    const lastLevelItemsCount = stateTreeData ? getLastLevelIds(stateTreeData).length : 0;
 
     if (showCheckedStrategy === "SHOW_PARENT") {
       checked = isAllItemsChecked(values ? values : [], mainLevelItems.current);
     } else {
-      checked = !values.length || values.length === stateTreeDataLength;
+      checked = !values.length || values.length === lastLevelItemsCount;
     }
 
     if (!checked && values.length) {
