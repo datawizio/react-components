@@ -5,8 +5,8 @@ import { TreeSelectProps as AntTreeSelectProps } from "./antd/AntTreeSelect";
 import { AntTreeNode } from "antd/lib/tree";
 
 export interface IDrawerTreeSelectFilters {
+  shop_markers?: string[];
   search?: string;
-  formats?: string[];
   level?: string | number;
   value?: SelectValue;
   first?: boolean;
@@ -14,7 +14,7 @@ export interface IDrawerTreeSelectFilters {
 
 export type LevelsType = { value: string; label: string }[];
 
-export interface FormatRenderProps {
+export interface MarkersRenderProps {
   onChange?: (selected: string[]) => void;
 }
 
@@ -26,7 +26,7 @@ export interface DrawerTreeSelectProps<VT>
   headerHeight?: number;
 
   /**
-   * Title Drawerа
+   * Title Drawer-а
    */
   drawerTitle?: string;
 
@@ -59,7 +59,9 @@ export interface DrawerTreeSelectProps<VT>
 
   emptyIsAll?: boolean;
 
-  formatRender?: ((props: FormatRenderProps) => React.ReactElement) | null;
+  selectedMarkers?: string[];
+
+  markersRender?: ((props: MarkersRenderProps) => React.ReactElement) | null;
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
 
