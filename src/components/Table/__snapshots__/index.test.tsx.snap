@@ -47,6 +47,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             },
+            "columnsSorter": undefined,
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
@@ -262,6 +263,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             },
+            "columnsSorter": undefined,
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
