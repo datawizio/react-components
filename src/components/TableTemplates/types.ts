@@ -11,4 +11,8 @@ export type TableTemplateState = {
   columnsPositions: Array<LiteColumn>;
 } & Partial<TableState>;
 
-export type LiteColumn = { dataIndex: string; children?: LiteColumn };
+export type LiteColumn = {
+  dataIndex: string;
+  children?: LiteColumn;
+  order?: number;
+};

@@ -22,6 +22,7 @@ function pickState(
   const columnsPositions = (function rec(columns) {
     return columns.map(column => ({
       dataIndex: column.dataIndex,
+      order: column.order,
       children:
         column.children && column.children.length && rec(column.children)
     }));
@@ -129,9 +130,13 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       if (fetchAfterApply) {
         const state = {
           forceFetch: tableState.forceFetch + 1,
-          visibleColumnsKeys: tableProps.visibleColumnsKeys
+          visibleColumnsKeys: tableProps.visibleColumnsKeys,
+          columns: []
         };
-        dispatch({ type: "update", payload: state });
+        dispatch({
+          type: "update",
+          payload: state
+        });
         return;
       }
 

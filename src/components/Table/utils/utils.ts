@@ -25,8 +25,10 @@ function swapColumns(
     if (keyFrom === column.key) {
       const idxTo = columns.findIndex(column => column.key === keyTo);
 
-      if (idxTo !== -1)
+      if (idxTo !== -1) {
+        columns[idxFrom].order = columns[idxTo].order - 1;
         [columns[idxFrom], columns[idxTo]] = [columns[idxTo], columns[idxFrom]];
+      }
 
       return true;
     }

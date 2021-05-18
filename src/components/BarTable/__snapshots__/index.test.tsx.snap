@@ -754,6 +754,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                       },
                                     },
                                     "columnsMap": Object {},
+                                    "columnsSorter": undefined,
                                     "components": Object {
                                       "body": Object {
                                         "cell": [Function],
