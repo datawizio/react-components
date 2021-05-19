@@ -54,6 +54,10 @@ export { default as Breadcrumb } from "./components/Breadcrumb";
 
 export { default as DatePicker } from "./components/DatePicker";
 
+export { default as TimePicker } from "./components/TimePicker";
+
+export { default as TimeRangePicker } from "./components/TimeRangePicker";
+
 export { default as DrawerForm } from "./components/DrawerForm";
 
 export { default as EditSelect } from "./components/EditSelect";
