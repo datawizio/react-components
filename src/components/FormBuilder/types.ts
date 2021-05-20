@@ -119,6 +119,10 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   loadChildren?: (id: string) => Promise<any>;
   markersRender?: ({ props }: any) => React.ReactElement;
   selectedMarkers?: string[];
+
+  onDrawerCloseCallback?: () => void;
+  onDrawerOpenCallback?: () => void;
+  onDrawerSubmitCallback?: () => void;
 }
 
 export interface FieldImageProps extends FormFieldProps<string> {}

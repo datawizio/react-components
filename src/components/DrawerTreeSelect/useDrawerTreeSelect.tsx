@@ -59,7 +59,8 @@ function reducer(state: IUseDrawerTreeSelect, action: any) {
         ...state,
         drawerVisible: false,
         fakeVisible: false,
-        internalTreeExpandedKeys: []
+        internalTreeExpandedKeys: [],
+        ...action.payload
       };
     }
     case "setSelected": {
