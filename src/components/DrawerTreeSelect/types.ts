@@ -79,6 +79,7 @@ export interface DrawerTreeSelectProps<VT>
   onLevelChange?: (level: string) => void;
 
   onDrawerCloseCallback?: () => void;
+  onDrawerCancelCallback?: () => void;
   onDrawerOpenCallback?: () => void;
   onDrawerSubmitCallback?: () => void;
 }

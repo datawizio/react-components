@@ -121,6 +121,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   selectedMarkers?: string[];
 
   onDrawerCloseCallback?: () => void;
+  onDrawerCancelCallback?: () => void;
   onDrawerOpenCallback?: () => void;
   onDrawerSubmitCallback?: () => void;
 }
