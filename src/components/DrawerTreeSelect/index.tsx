@@ -805,7 +805,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
                 {translate("SELECTED")}
               </div>
               <div className="drawer-tree-select-selected-count">
-                {selectAllState === "checked" && !selectedMarkers.length
+                {selectAllState === "checked" && !selectedMarkers?.length
                   ? selectAllText
                   : internalValue
                   ? internalValue.length
