@@ -220,6 +220,7 @@ export type DTypeConfig<T = any> = {
     index: number,
     renderProps: TableProps["cellRenderProps"]
   ) => React.ReactNode;
+  defaultValue?: any;
 };
 
 /**
