@@ -69,6 +69,7 @@ export async function exportTableToXLSX(
   const wb = new ExcelJS.Workbook(); // make a workbook
   const ws = wb.addWorksheet(sheetName || filename); // make a worksheet
   const columnsMaxLevel = getDeepMaxLevel(columns);
+  const dafaultValues = {};
   // recursive draw columns
   (function drawColumns(columns, rowIdx = 1, colIdx = 1) {
     columns.forEach(column => {
@@ -81,6 +82,12 @@ export async function exportTableToXLSX(
       aroundBorderCell(cell);
       alignCenterCellText(cell);
       fillBackgroundCell(cell, "efefef");
+
+      const dType =
+        dTypesConfig[defineCellType(null, columnsMap[column.dataIndex])];
+      if (dType && typeof dType.defaultValue !== "undefined") {
+        dafaultValues[column.dataIndex] = 0;
+      }
 
       // check children for correct merge cells width
       if (column.children && column.children.length) {
@@ -127,8 +134,8 @@ export async function exportTableToXLSX(
         },
         {}
       );
-
       const row = ws.addRow({
+        ...dafaultValues,
         ...rowToDraw,
         key,
         [firstColumn]: margin + rowToDraw[firstColumn]
