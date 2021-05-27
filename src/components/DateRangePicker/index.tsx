@@ -107,9 +107,13 @@ const DateRangePicker: IDateRangePicker = ({
 
   const isDisabledDate = useCallback(
     date => {
-      return (maxDate && date > maxDate) || (minDate && date < minDate);
+      const formatedDate = formatDate(date.format("DD-MM-YYYY"));
+      return (
+        (maxDate && formatedDate > maxDate) ||
+        (minDate && formatedDate < minDate)
+      );
     },
-    [maxDate, minDate]
+    [maxDate, minDate, formatDate]
   );
 
   function onChange(value): void {
