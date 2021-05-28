@@ -10,13 +10,15 @@ export interface IHelpMenu {
   onSupportClick: () => void;
   onServiceUpdateClick: () => void;
   onHelperClick: () => void;
+  tourMenu?: React.ReactElement;
 }
 
 const HelpMenu: React.FC<IHelpMenu> = ({
   onTutorialClick,
   onSupportClick,
   onHelperClick,
-  onServiceUpdateClick
+  onServiceUpdateClick,
+  tourMenu
 }) => {
   const { translate } = useContext(ConfigContext);
 
@@ -41,6 +43,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
             {translate("BES_HELPER")}
           </Menu.Item>
         )}
+        {tourMenu && tourMenu}
       </Menu>
     );
   }, [
@@ -48,7 +51,8 @@ const HelpMenu: React.FC<IHelpMenu> = ({
     onSupportClick,
     onTutorialClick,
     onHelperClick,
-    translate
+    translate,
+    tourMenu
   ]);
 
   return (
