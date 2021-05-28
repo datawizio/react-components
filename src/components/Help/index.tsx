@@ -12,6 +12,7 @@ export interface IHelp {
   onServiceUpdateClick?: () => void;
   onHelperClick?: () => void;
   uploadFileURL?: string;
+  tourMenu?: React.ReactElement;
 }
 
 const Help: React.FC<IHelp> = ({
@@ -20,7 +21,8 @@ const Help: React.FC<IHelp> = ({
   onServiceUpdateClick,
   onSupportModalSubmit,
   onHelperClick,
-  uploadFileURL
+  uploadFileURL,
+  tourMenu
 }) => {
   const [supportModalVisible, setSupportModalVisible] = useState(false);
 
@@ -36,6 +38,7 @@ const Help: React.FC<IHelp> = ({
         onSupportClick={handleSupportLinkClick}
         onHelperClick={onHelperClick}
         onServiceUpdateClick={onServiceUpdateClick}
+        tourMenu={tourMenu}
       />
       <SupportModal
         uploadFileURL={uploadFileURL}
