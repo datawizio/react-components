@@ -9,5 +9,22 @@
     "dtype",
     "highcharts"
   ],
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#147cb3",
+    "activityBar.activeBorder": "#f28ccf",
+    "activityBar.background": "#147cb3",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#f28ccf",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#0f5c85",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#147cb3",
+    "titleBar.activeBackground": "#0f5c85",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#0f5c8599",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#0f5c85"
 }

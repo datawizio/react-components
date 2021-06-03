@@ -89,7 +89,7 @@ function convertOptions(
 ) {
   const selected = [];
   const options = [];
-  const set = new Set(value);
+  const set = new Set(Array.isArray(value) ? value : [value]);
 
   const selectedIds = selectedOptions.map(item => item[valueProp]);
   const selectedSet = new Set(selectedIds);
