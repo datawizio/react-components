@@ -26,6 +26,8 @@ exports[`Levels Inner level render correctly 1`] = `
     notFoundContent="No data"
     onChange={[Function]}
     onDropdownVisibleChange={null}
+    optionFilterProp="label"
+    optionLabelProp="label"
     options={
       Array [
         Object {
@@ -50,6 +52,8 @@ exports[`Levels Inner level render correctly 1`] = `
       notFoundContent="No data"
       onChange={[Function]}
       onDropdownVisibleChange={null}
+      optionFilterProp="label"
+      optionLabelProp="label"
       options={
         Array [
           Object {
@@ -77,6 +81,8 @@ exports[`Levels Inner level render correctly 1`] = `
         notFoundContent="No data"
         onChange={[Function]}
         onDropdownVisibleChange={null}
+        optionFilterProp="label"
+        optionLabelProp="label"
         options={
           Array [
             Object {
@@ -345,6 +351,8 @@ exports[`Levels Inner level render correctly 1`] = `
                 onSearchSubmit={[Function]}
                 onSelect={[Function]}
                 onToggleOpen={[Function]}
+                optionFilterProp="label"
+                optionLabelProp="label"
                 options={
                   Array [
                     Object {
@@ -460,6 +468,8 @@ exports[`Levels Inner level render correctly 1`] = `
                     onSearchSubmit={[Function]}
                     onSelect={[Function]}
                     onToggleOpen={[Function]}
+                    optionFilterProp="label"
+                    optionLabelProp="label"
                     options={
                       Array [
                         Object {
@@ -691,6 +701,8 @@ exports[`Levels Levels to match snapshot 1`] = `
       notFoundContent="No data"
       onChange={[Function]}
       onDropdownVisibleChange={null}
+      optionFilterProp="label"
+      optionLabelProp="label"
       options={
         Array [
           Object {
@@ -715,6 +727,8 @@ exports[`Levels Levels to match snapshot 1`] = `
         notFoundContent="No data"
         onChange={[Function]}
         onDropdownVisibleChange={null}
+        optionFilterProp="label"
+        optionLabelProp="label"
         options={
           Array [
             Object {
@@ -742,6 +756,8 @@ exports[`Levels Levels to match snapshot 1`] = `
           notFoundContent="No data"
           onChange={[Function]}
           onDropdownVisibleChange={null}
+          optionFilterProp="label"
+          optionLabelProp="label"
           options={
             Array [
               Object {
@@ -1010,6 +1026,8 @@ exports[`Levels Levels to match snapshot 1`] = `
                   onSearchSubmit={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
+                  optionFilterProp="label"
+                  optionLabelProp="label"
                   options={
                     Array [
                       Object {
@@ -1125,6 +1143,8 @@ exports[`Levels Levels to match snapshot 1`] = `
                       onSearchSubmit={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
+                      optionFilterProp="label"
+                      optionLabelProp="label"
                       options={
                         Array [
                           Object {
