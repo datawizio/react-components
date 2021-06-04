@@ -8,6 +8,7 @@ import "./index.less";
 
 export interface SideButtonProps extends ButtonProps {
   text: string;
+  className: string;
   renderTo?: Element;
   icon: React.ReactNode;
   side?: "left" | "right";
@@ -15,12 +16,21 @@ export interface SideButtonProps extends ButtonProps {
 }
 
 const SideButton: React.FC<SideButtonProps> = props => {
-  const { icon, text, side, renderTo, style, extra, ...restProps } = props;
+  const {
+    className,
+    icon,
+    text,
+    side,
+    renderTo,
+    style,
+    extra,
+    ...restProps
+  } = props;
 
   return createPortal(
     <div
       style={style}
-      className={"side-button-container side-button-container--" + side}
+      className={`side-button-container side-button-container--${side} ${className}`}
     >
       <Button {...restProps} className={"side-button side-button--" + side}>
         {side === "right" && (
