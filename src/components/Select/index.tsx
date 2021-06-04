@@ -1,19 +1,9 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { Select as AntSelect, Tag } from "antd";
 import { useDebouncedCallback } from "use-debounce";
-
 import { FCSelect } from "./types";
 import { getUniqueItemsObj } from "../../utils/data/dataHelpers";
-
 import "./index.less";
-
-function dataToOptions(data: [any]) {
-  return data.map(item => (
-    <Select.Option key={item.value} value={item.value}>
-      {item.text}
-    </Select.Option>
-  ));
-}
 
 const Select: FCSelect = props => {
   const {
@@ -23,6 +13,7 @@ const Select: FCSelect = props => {
     loadData,
     withPagination,
     useCustomTagRender,
+    optionRender,
     ...restProps
   } = props;
 
@@ -32,6 +23,19 @@ const Select: FCSelect = props => {
   const [page, setPage] = useState(0);
   const [isLast, setIsLast] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+
+  const dataToOptions = (data: [any]) => {
+    return data.map(item => {
+      if (optionRender) {
+        return optionRender(item);
+      }
+      return (
+        <Select.Option key={item.value} value={item.value}>
+          {item.text}
+        </Select.Option>
+      );
+    });
+  };
 
   const [loadPage] = useDebouncedCallback(async (searchValue, page = 0) => {
     if (!loadData) return;
@@ -123,10 +127,13 @@ const Select: FCSelect = props => {
       </span>
     );
   };
+
   return (
     <AntSelect
       {...restProps}
       {...searchProps}
+      optionFilterProp="label"
+      optionLabelProp="label"
       notFoundContent={loading ? loadingContent : notFoundContent}
       loading={loading}
       tagRender={useCustomTagRender ? tagRender : null}

@@ -13,6 +13,11 @@ export interface SelectProps<VT> extends AntSelectProps<VT> {
   asyncData?: boolean;
 
   /**
+   * Function for customized options
+   * */
+  optionRender?: (option: any) => any;
+
+  /**
    * Текст Loading...
    */
   loadingContent?: string;

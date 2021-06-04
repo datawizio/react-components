@@ -58,6 +58,11 @@ export interface DrawerSelectProps<VT>
     search: string
   ) => Promise<{ data: any; totalPages: number }>;
 
+  /**
+   * Function for customized options
+   * */
+  optionRender?: (option: any) => any;
+
   multiple?: boolean;
 
   /**
@@ -131,6 +136,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     isFlatList,
     onChange,
     options,
+    optionRender,
     labelProp,
     loadData,
     loading,
@@ -517,33 +523,37 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     [searchValue, internalLoading, drawerVisible, internalValue]
   );
 
-  return (
-    <AntSelect
-      filterOption={true}
-      {...restProps}
-      value={internalValue}
-      className="drawer-select"
-      mode="multiple"
-      open={drawerVisible}
-      loading={internalLoading}
-      //@ts-ignore
-      dropdownRender={dropdownRender}
-      searchValue={searchValue}
-      tagRender={tagRender}
-      dropdownClassName="drawer-select-dropdown-fake"
-      showSearch={true}
-      onSearch={handleSearch}
-      optionFilterProp="title"
-      listHeight={window.innerHeight - 198 - (multiple ? 27 : 0)}
-      notFoundContent={internalLoading ? loadingText : noDataText}
-      onBeforeBlur={handleSelectBeforeBlur}
-      onFocus={handleDrawerFocus}
-      onSelect={handleSelect}
-      onDeselect={handleDeselect}
-      onPopupScroll={handlePopupScroll}
-      onChange={handleChange}
-      options={optionsState}
-    />
+  const properties = {
+    filterOption: true,
+    ...restProps,
+    value: internalValue,
+    className: "drawer-select",
+    open: drawerVisible,
+    loading: internalLoading,
+    dropdownRender: dropdownRender,
+    searchValue: searchValue,
+    tagRender: tagRender,
+    dropdownClassName: "drawer-select-dropdown-fake",
+    showSearch: true,
+    onSearch: handleSearch,
+    optionFilterProp: "label",
+    optionLabelProp: "label",
+    listHeight: window.innerHeight - 198 - (multiple ? 27 : 0),
+    notFoundContent: internalLoading ? loadingText : noDataText,
+    onBeforeBlur: handleSelectBeforeBlur,
+    onFocus: handleDrawerFocus,
+    onSelect: handleSelect,
+    onDeselect: handleDeselect,
+    onPopupScroll: handlePopupScroll,
+    onChange: handleChange
+  };
+
+  return optionRender ? (
+    <AntSelect {...properties} mode="multiple">
+      {optionsState && optionsState.map(option => optionRender(option))}
+    </AntSelect>
+  ) : (
+    <AntSelect {...properties} mode="multiple" options={optionsState} />
   );
 };
 
