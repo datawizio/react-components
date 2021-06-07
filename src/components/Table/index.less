@@ -223,12 +223,16 @@
     }
   }
 
-  .ant-table-thead {
-    tr:first-child {
-      th,
-      .dw-table__column {
-        //default column width
-        width: 300px;
+  .ant-table {
+    .ant-table-wrapper:not(.nested-table) {
+      .ant-table-thead {
+        tr:first-child {
+          th,
+          .dw-table__column {
+            //default column width
+            width: 300px;
+          }
+        }
       }
     }
   }
