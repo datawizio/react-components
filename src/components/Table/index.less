@@ -223,12 +223,14 @@
     }
   }
 
-  .ant-table-thead {
-    tr:first-child {
-      th,
-      .dw-table__column {
-        //default column width
-        width: 300px;
+  &:not(.dw-table--nestedable) {
+    .ant-table-thead {
+      tr:first-child {
+        th,
+        .dw-table__column {
+          //default column width
+          width: 300px;
+        }
       }
     }
   }
