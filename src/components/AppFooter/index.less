@@ -12,10 +12,19 @@
     102px,
     24px
   );
+
   background-repeat: no-repeat;
   background-position: calc(100% - 12px);
   padding-right: 104px;
+
   @media (min-width: 700px) {
     padding-right: 13px;
+  }
+
+  @media (max-width: 420px) {
+    padding-left: 8px;
+    background-position: calc(100% - 8px);
+    font-size: 13px;
+    text-align: left;
   }
 }
