@@ -1,18 +1,13 @@
 import React, { useRef, useContext } from "react";
-
 import List from "./List";
 import Operation from "./Operation";
-
 import { parseValue, useTransfer } from "./hooks/useTransfer";
-
 import {
   ICheckedItem,
   TransferFilterLoadDataParams,
   TransferFilterProps
 } from "./types";
-
 import ConfigContext from "../ConfigProvider/context";
-
 import "./index.less";
 
 const prefixCls = "ant-transfer";
@@ -30,7 +25,6 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   type,
   tooltips,
   value,
-
   onChange,
   loadData,
   loadDataByIds
@@ -216,6 +210,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       }
     });
   };
+
   const moveAllToLeft = () => {
     internalValue.include = null;
     internalValue.exclude = [];
