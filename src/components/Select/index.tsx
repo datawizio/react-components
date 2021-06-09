@@ -44,21 +44,24 @@ const Select: FCSelect = props => {
 
     try {
       const data = await loadData(searchValue, page);
+
       const dataIsArray = Array.isArray(data);
       //@ts-ignore
-      const options = dataIsArray ? data : data.options;
+      const dataOptions = dataIsArray ? data : data.options;
       //@ts-ignore
       const next = dataIsArray ? true : data.next;
 
       setRawOptions(getUniqueItemsObj(options, rawOptions, "value", "text"));
 
       if (page) {
-        setOptions(options.concat(dataToOptions(options)));
+        setOptions(options.concat(dataToOptions(dataOptions)));
       } else {
-        setOptions(dataToOptions(options));
+        setOptions(dataToOptions(dataOptions));
       }
 
-      if (next === null) setIsLast(true);
+      if (next === null) {
+        setIsLast(true);
+      }
 
       setPage(page as any);
     } catch (e) {
