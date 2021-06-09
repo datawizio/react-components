@@ -5,7 +5,10 @@ export interface SelectProps<VT> extends AntSelectProps<VT> {
   /**
    * Функция которая будет вызываться для подгрузки данных с параметрами `searchValue`, `page`
    */
-  loadData?: (string, number) => [any];
+  loadData?: (
+    string,
+    number
+  ) => [any] | { options: [any]; next: string | null };
 
   /**
    * Данные будут загружаться ассинхронно. Будет вызываться функция `loadData`
