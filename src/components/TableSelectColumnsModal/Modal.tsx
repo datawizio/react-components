@@ -42,10 +42,18 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
 
   const handleApply = useCallback(() => {
     onSubmit && onSubmit();
-    const payload: any = { visibleColumnsKeys: checkedKeys };
-    if (props.fetchAfterApply) {
+    const visibleColumnsKeys =
+      props.filterSelectedColumns && props.filterSelectedColumns(checkedKeys);
+
+    const payload: any = { visibleColumnsKeys };
+
+    if (
+      (typeof props.fetchAfterApply === "boolean" && props.fetchAfterApply) ||
+      props.fetchAfterApply(visibleColumnsKeys, tableState.dataSource[0])
+    ) {
       payload.forceFetch = tableState.forceFetch + 1;
     }
+
     dispatch({ type: "update", payload });
     setIsOpened(false);
     setSearchValue("");
