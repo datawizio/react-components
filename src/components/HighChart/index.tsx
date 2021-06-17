@@ -90,7 +90,9 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
         containerRef.current,
         async () => {
           firstTime.current = false;
-          containerRef.current.style.visibility = "visible";
+          if (containerRef.current) {
+            containerRef.current.style.visibility = "visible";
+          }
           if (chartRef.current) await chartRef.current.setSize();
         },
         resizeTimeout

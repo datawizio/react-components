@@ -182,7 +182,7 @@ const SupportModal: React.FC<ISupportModal> = ({
               onChange={value => handleFieldChange("subject", value)}
             >
               {subjectsList.map(item => (
-                <Select.Option key={item} value={item}>
+                <Select.Option key={item} value={item} label={translate(item)}>
                   {translate(item)}
                 </Select.Option>
               ))}
