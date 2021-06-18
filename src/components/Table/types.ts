@@ -190,7 +190,7 @@ export type RowPrefix<T = any> = (
 /**
  * Cell types
  */
-export type BodyCellType = string | number | boolean | CellObjectType;
+export type BodyCellType = string | number | boolean | object | CellObjectType;
 
 export type CellObjectType = {
   dtype: string;
