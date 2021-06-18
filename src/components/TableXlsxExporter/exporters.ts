@@ -84,7 +84,7 @@ export async function exportTableToXLSX(
       fillBackgroundCell(cell, "efefef");
 
       const dType =
-        dTypesConfig[defineCellType(null, columnsMap[column.dataIndex])];
+        dTypesConfig[defineCellType({}, columnsMap[column.dataIndex])];
       if (dType && typeof dType.defaultValue !== "undefined") {
         dafaultValues[column.dataIndex] = 0;
       }
