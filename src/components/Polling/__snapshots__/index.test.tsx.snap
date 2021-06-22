@@ -2,6 +2,7 @@
 
 exports[`Polling component Polling rendered correctly 1`] = `
 <Polling
+  cancelGenerateId={true}
   onPollingHide={[MockFunction]}
   onPollingShow={
     [MockFunction] {
@@ -29,7 +30,7 @@ exports[`Polling component Polling rendered correctly 1`] = `
 >
   <Row
     className="polling-container"
-    key="1624112356127113"
+    key="0"
   >
     <div
       className="ant-row polling-container"
@@ -47,7 +48,7 @@ exports[`Polling component Polling rendered correctly 1`] = `
         step={
           Object {
             "feedback_type": "test",
-            "id": "1624112356127113",
+            "id": "0",
             "polling_template": 2,
             "question_key": "1",
           }
@@ -169,6 +170,7 @@ exports[`Polling component Polling rendered correctly 1`] = `
 
 exports[`Polling component Polling with empty questions rendered correctly 1`] = `
 <Polling
+  cancelGenerateId={true}
   onPollingHide={
     [MockFunction] {
       "calls": Array [
@@ -202,6 +204,7 @@ exports[`Polling component Polling with empty questions rendered correctly 1`] =
 
 exports[`Polling component Polling with feedback type mark rendered correctly 1`] = `
 <Polling
+  cancelGenerateId={true}
   onPollingHide={[MockFunction]}
   onPollingShow={
     [MockFunction] {
@@ -234,7 +237,7 @@ exports[`Polling component Polling with feedback type mark rendered correctly 1`
 >
   <Row
     className="polling-container"
-    key="1624112356177247"
+    key="0"
   >
     <div
       className="ant-row polling-container"
@@ -252,7 +255,7 @@ exports[`Polling component Polling with feedback type mark rendered correctly 1`
         step={
           Object {
             "feedback_type": "mark",
-            "id": "1624112356177247",
+            "id": "0",
             "mark": null,
             "polling_template": 2,
             "question_key": "1",
@@ -292,7 +295,7 @@ exports[`Polling component Polling with feedback type mark rendered correctly 1`
                 step={
                   Object {
                     "feedback_type": "mark",
-                    "id": "1624112356177247",
+                    "id": "0",
                     "mark": null,
                     "polling_template": 2,
                     "question_key": "1",
@@ -463,6 +466,7 @@ exports[`Polling component Polling with feedback type mark rendered correctly 1`
 
 exports[`Polling component Polling with feedback type text rendered correctly 1`] = `
 <Polling
+  cancelGenerateId={true}
   onPollingHide={[MockFunction]}
   onPollingShow={
     [MockFunction] {
@@ -495,7 +499,7 @@ exports[`Polling component Polling with feedback type text rendered correctly 1`
 >
   <Row
     className="polling-container"
-    key="1624112356231385"
+    key="0"
   >
     <div
       className="ant-row polling-container"
@@ -514,7 +518,7 @@ exports[`Polling component Polling with feedback type text rendered correctly 1`
           Object {
             "comment": "",
             "feedback_type": "text",
-            "id": "1624112356231385",
+            "id": "0",
             "polling_template": 2,
             "question_key": "1",
           }
@@ -554,7 +558,7 @@ exports[`Polling component Polling with feedback type text rendered correctly 1`
                   Object {
                     "comment": "",
                     "feedback_type": "text",
-                    "id": "1624112356231385",
+                    "id": "0",
                     "polling_template": 2,
                     "question_key": "1",
                   }

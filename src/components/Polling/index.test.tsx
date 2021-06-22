@@ -23,6 +23,7 @@ const mockProps = {
   questions: [
     { question_key: "1", polling_template: 2, feedback_type: "test" }
   ],
+  cancelGenerateId: true,
   onSubmit: jest.fn(),
   onPollingHide: jest.fn(),
   onPollingShow: jest.fn()
@@ -37,11 +38,13 @@ describe("Polling component", () => {
   });
 
   it("Polling rendered correctly", () => {
+    console.log(component.props());
     expect(component).toMatchSnapshot();
   });
 
   it("Polling with empty questions rendered correctly", () => {
     const wrapper = setUp({ ...mockProps, questions: [] });
+    console.log(wrapper.props());
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -52,6 +55,7 @@ describe("Polling component", () => {
         { question_key: "1", polling_template: 2, feedback_type: "mark" }
       ]
     });
+    console.log(wrapper.props());
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -62,6 +66,8 @@ describe("Polling component", () => {
         { question_key: "1", polling_template: 2, feedback_type: "text" }
       ]
     });
+    console.log(wrapper.props());
+
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -76,7 +82,6 @@ describe("Polling component", () => {
     mark.simulate("click");
     expect(wrapper.prop("onSubmit")).toBeCalledTimes(1);
   });
-  // polling-marks
 
   it("Polling send text", () => {
     const wrapper = setUp({
