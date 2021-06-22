@@ -62,6 +62,7 @@ export interface TableProps<RT = any>
    * Растягивает колонки по ширине таблицы если это возможно
    */
   responsiveColumns?: boolean;
+  sortParams?: SortParams;
 
   pageSizeOptions?: Array<string>;
   templates?: Array<TableTemplate>;

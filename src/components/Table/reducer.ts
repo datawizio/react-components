@@ -54,6 +54,7 @@ export function initializer(props: TableProps): TableState {
     dataSource,
     pagination,
     searchValue,
+    sortParams,
     forceColumns,
     dTypesConfig,
     showSizeChanger,
@@ -78,7 +79,7 @@ export function initializer(props: TableProps): TableState {
       ...(pagination || {})
     },
 
-    sortParams: {},
+    sortParams: sortParams ?? {},
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
