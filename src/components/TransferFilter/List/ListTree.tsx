@@ -68,6 +68,7 @@ export const ListTree: React.FC<ListTreeProps> = ({
       checkedKeys={selectedKeys}
       treeData={treeData}
       loadData={loadData}
+      loadedKeys={[]}
       onExpand={handleExpand}
       //@ts-ignore
       onCheck={handleCheck}

@@ -28,6 +28,7 @@ export type TransferFilterLoadDataParams = {
   lastLevel?: boolean;
   exclude: Array<string>;
   include: Array<string> | null;
+  level?: number;
 };
 
 export type TransferFilterLoadDataResponse = {
@@ -35,6 +36,7 @@ export type TransferFilterLoadDataResponse = {
   totalPages: number;
   count: number;
   expanded?: string[] | null;
+  levels?: number[] | null;
 };
 
 export type TransferDirection = "left" | "right";
