@@ -1,4 +1,4 @@
-import { TableState } from "../Table/types";
+import { TableState, ISheet } from "../Table/types";
 import ExcelJS from "exceljs/dist/exceljs.min.js";
 import { defineCellType } from "../Table/utils/utils";
 
@@ -62,12 +62,40 @@ export async function exportTableToXLSX(
   tableState: TableState | null,
   filename: string,
   sheetName?: string,
-  cellRenderProps?: string
+  cellRenderProps?: string,
+  additionalSheet?: ISheet
 ): Promise<BlobPart> {
   const { columns, columnsMap, dataSource, dTypesConfig } = tableState;
 
   const wb = new ExcelJS.Workbook(); // make a workbook
   const ws = wb.addWorksheet(sheetName || filename); // make a worksheet
+
+  (function addAdditionalSheet(sheet) {
+    const newSheet = wb.addWorksheet(sheet.name, {});
+    const columns = Object.keys(sheet.state);
+
+    newSheet.columns = columns.map(columnName => {
+      return { header: columnName, key: columnName, width: 20 };
+    });
+
+    columns.forEach(columnKey => {
+      const col = newSheet.getColumn(columnKey);
+      col.values = [columnKey, ...sheet.state[columnKey]];
+    });
+
+    newSheet.eachRow(Row => {
+      Row.eachCell(Cell => {
+        Cell.alignment = { wrapText: true };
+      });
+    });
+
+    newSheet.getRow(1).eachCell(cell => {
+      aroundBorderCell(cell);
+      alignCenterCellText(cell);
+      fillBackgroundCell(cell, "efefef");
+    });
+  })(additionalSheet);
+
   const columnsMaxLevel = getDeepMaxLevel(columns);
   const dafaultValues = {};
   // recursive draw columns
