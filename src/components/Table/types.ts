@@ -113,6 +113,15 @@ export interface TableState extends Partial<TableProps> {
   ) => void;
 }
 
+export interface ISheetState {
+  [key: string]: Array<any>;
+}
+
+export interface ISheet {
+  name: string;
+  state: ISheetState;
+}
+
 export interface TableRef {
   reload: () => void;
 }
