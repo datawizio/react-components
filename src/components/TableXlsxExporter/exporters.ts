@@ -71,7 +71,8 @@ export async function exportTableToXLSX(
   const ws = wb.addWorksheet(sheetName || filename); // make a worksheet
 
   (function addAdditionalSheet(sheet) {
-    const newSheet = wb.addWorksheet(sheet.name, {});
+    if (!sheet?.name || !sheet?.state) return;
+    const newSheet = wb.addWorksheet(sheet.name);
     const columns = Object.keys(sheet.state);
 
     newSheet.columns = columns.map(columnName => {
