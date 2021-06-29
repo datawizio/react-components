@@ -1,6 +1,5 @@
 import "jsdom-global/register";
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 import ListBodyWrapper from "./ListBody";
 

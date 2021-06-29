@@ -4,14 +4,6 @@ import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import Transfer from "./index";
 
-const listCommonProps = {
-  prefixCls: "ant-transfer-list",
-  selectedText: "string",
-  searchText: "string",
-  titleText: "string",
-  sourceLoadData: jest.fn(),
-  noDataText: "Not Found"
-};
 const mockProps = {
   operationDisabled: false,
   sourceTitle: "string",
