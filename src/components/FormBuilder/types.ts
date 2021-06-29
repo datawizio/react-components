@@ -2,13 +2,13 @@ import { Rule } from "antd/lib/form";
 import { Dayjs } from "dayjs";
 
 export interface IFormFieldChanged<Type> {
-  name: string;
+  name: string | string[];
   value: Type;
   selected?: any;
 }
 
 export interface FormFieldProps<Type> {
-  name: string;
+  name: string | string[];
   placeholder?: string;
   label?: string;
   rules?: Rule[];
@@ -68,6 +68,8 @@ export interface FieldRadioProps extends FormFieldProps<string> {
 
 export interface FieldSelectProps extends FormFieldProps<string> {
   options: RadioOptionType[];
+  mode?: "multiple" | "tags";
+  showSearch?: boolean;
   allowClear?: boolean;
 }
 
@@ -109,19 +111,26 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   remoteSearch?: boolean;
   emptyIsAll?: boolean;
   level?: string | number;
+  value?: string[] | number[];
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;
   loadData?: (filters: any) => Promise<any>;
   loadChildren?: (id: string) => Promise<any>;
-  formatRender?: ({ props }: any) => React.ReactElement;
+  markersRender?: ({ props }: any) => React.ReactElement;
+  selectedMarkers?: string[];
+
+  onDrawerCloseCallback?: () => void;
+  onDrawerCancelCallback?: () => void;
+  onDrawerOpenCallback?: () => void;
+  onDrawerSubmitCallback?: () => void;
 }
 
 export interface FieldImageProps extends FormFieldProps<string> {}
 
 export interface ImageProps {
   t?: any;
-  name: string;
+  name: string | string[];
   value?: string;
   placeholder?: string;
   onChange: (change: IFormFieldChanged<string>) => void;

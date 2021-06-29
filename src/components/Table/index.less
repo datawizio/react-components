@@ -128,7 +128,12 @@
 
   table {
     table-layout: fixed;
-    width: 100%;
+    width: max-content;
+  }
+  &--safari {
+    table {
+      width: 100% !important;
+    }
   }
 
   td {
@@ -190,7 +195,7 @@
   &--empty {
     table {
       width: 100% !important;
-      height: 100% !important;
+      height: auto !important;
 
       td {
         left: 50%;
@@ -218,12 +223,14 @@
     }
   }
 
-  .ant-table-thead {
-    tr:first-child {
-      th,
-      .dw-table__column {
-        //default column width
-        width: 300px;
+  &:not(.dw-table--nestedable) {
+    .ant-table-thead {
+      tr:first-child {
+        th,
+        .dw-table__column {
+          //default column width
+          width: 300px;
+        }
       }
     }
   }

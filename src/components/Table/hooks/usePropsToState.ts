@@ -21,7 +21,8 @@ function usePropsToState(dispatch: Dispatch<Action>, props: TableProps) {
   }, [searchValue, dispatch]);
 
   useEffect(() => {
-    if (columns) dispatch({ type: "updateColumns", payload: columns || [] });
+    if (columns.length > 0)
+      dispatch({ type: "updateColumns", payload: columns || [] });
   }, [columns, dispatch]);
 
   useEffect(() => {

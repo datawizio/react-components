@@ -8,14 +8,14 @@ import { FieldTextProps } from "../types";
 export const FieldText: React.FC<FieldTextProps> = React.memo(
   React.forwardRef(({ onChange, rules, name, label, ...props }, ref) => {
     const handleFieldChange = useCallback(
-      ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
+      ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
         onChange &&
           onChange({
             name,
             value
           });
       },
-      [onChange]
+      [name, onChange]
     );
 
     return (
@@ -24,7 +24,6 @@ export const FieldText: React.FC<FieldTextProps> = React.memo(
           {...props}
           //@ts-ignore
           ref={ref}
-          name={name}
           onChange={handleFieldChange}
         />
       </Form.Item>

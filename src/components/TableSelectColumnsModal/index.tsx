@@ -14,9 +14,11 @@ export interface TableSelectColumnsModalProps {
     openButton: string;
     headerModal: string;
   };
+  showSelectedCount?: boolean;
   onSubmit?: () => void;
   withSearch?: boolean;
-  fetchAfterApply?: boolean;
+  fetchAfterApply?: (selected: string[], row: any) => boolean | boolean;
+  filterSelectedColumns?: (selected: string[]) => string[];
 }
 
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {

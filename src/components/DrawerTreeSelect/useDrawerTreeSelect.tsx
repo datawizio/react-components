@@ -16,6 +16,7 @@ export interface IUseDrawerTreeSelect {
   internalTreeDataCount: number;
   internalTreeExpandedKeys: Key[];
   fakeVisible: boolean;
+  showSelectAll: boolean;
 }
 
 function reducer(state: IUseDrawerTreeSelect, action: any) {
@@ -58,7 +59,8 @@ function reducer(state: IUseDrawerTreeSelect, action: any) {
         ...state,
         drawerVisible: false,
         fakeVisible: false,
-        internalTreeExpandedKeys: []
+        internalTreeExpandedKeys: [],
+        ...action.payload
       };
     }
     case "setSelected": {

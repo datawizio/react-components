@@ -22,6 +22,7 @@ function pickState(
   const columnsPositions = (function rec(columns) {
     return columns.map(column => ({
       dataIndex: column.dataIndex,
+      order: column.order,
       children:
         column.children && column.children.length && rec(column.children)
     }));
@@ -53,6 +54,7 @@ type MaybePromise<T> = T | Promise<T>;
 
 export interface TableTemplatesProps {
   fetchAfterApply?: boolean;
+  sortFirstColumn?: boolean;
   templates?: () => MaybePromise<TableTemplate>;
   onDelete: (template: TableTemplate) => void;
   onSelect?: () => void;
@@ -79,10 +81,24 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   const setTemplateToState = useCallback(
     template => {
+      let sortParams = template.state.sortParams;
+      const columnsPositions = template.state.columnsPositions;
+      if (
+        props.sortFirstColumn &&
+        Object.keys(sortParams).length === 0 &&
+        columnsPositions.length > 1
+      ) {
+        sortParams = {
+          [columnsPositions[1].dataIndex]: "descend"
+        };
+      }
       if (fetchAfterApply) {
         template.state.forceFetch = tableState.forceFetch + 1;
       }
-      dispatch({ type: "recoveryState", payload: template.state });
+      dispatch({
+        type: "recoveryState",
+        payload: { ...template.state, sortParams }
+      });
     },
     [dispatch]
   );
@@ -129,9 +145,13 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       if (fetchAfterApply) {
         const state = {
           forceFetch: tableState.forceFetch + 1,
-          visibleColumnsKeys: tableProps.visibleColumnsKeys
+          visibleColumnsKeys: tableProps.visibleColumnsKeys,
+          columns: []
         };
-        dispatch({ type: "update", payload: state });
+        dispatch({
+          type: "update",
+          payload: state
+        });
         return;
       }
 

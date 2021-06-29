@@ -40,7 +40,7 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
         treeNodeFilterProp="title"
         treeCheckable={true}
         showSearch
-        onChangeReturnObject={handleFieldChange}
+        onChangeReturnObject={onChange ? handleFieldChange : undefined}
         allowClear
         multiple={multiple}
         {...restProps}

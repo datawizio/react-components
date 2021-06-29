@@ -62,6 +62,7 @@ export interface TableProps<RT = any>
    * Растягивает колонки по ширине таблицы если это возможно
    */
   responsiveColumns?: boolean;
+  sortParams?: SortParams;
 
   pageSizeOptions?: Array<string>;
   templates?: Array<TableTemplate>;
@@ -76,6 +77,10 @@ export interface TableProps<RT = any>
   columnsConfig?: {
     [columnKey: string]: Partial<IColumn>;
   };
+  columnsSorter?: (
+    columns: IColumn[],
+    oldColumnsInfo: { [k: string]: Partial<IColumn> }
+  ) => void;
 
   rowPrefix?: RowPrefix;
   rowPrefixDeps?: (row: IRow) => any[];
@@ -102,6 +107,19 @@ export interface TableState extends Partial<TableProps> {
   columnsMap: { [key: string]: IColumn };
   parentsMap: { [key: string]: string };
   loadingRows: { [key: string]: boolean };
+  columnsSorter?: (
+    columns: IColumn[],
+    oldColumnsInfo: { [k: string]: Partial<IColumn> }
+  ) => void;
+}
+
+export interface ISheetState {
+  [key: string]: Array<any>;
+}
+
+export interface ISheet {
+  name: string;
+  state: ISheetState;
 }
 
 export interface TableRef {
@@ -115,11 +133,17 @@ export type Action =
   | { type: "resetPagination"; payload?: number }
   | { type: "collapseRow"; payload: IRow }
   | { type: "sort"; payload: SorterResult<any>[] }
-  | { type: "update"; payload: Partial<TableState> }
+  | {
+      type: "update";
+      payload: Partial<TableState>;
+    }
   | { type: "recoveryState"; payload: TableTemplateState }
   | { type: "paginate"; payload: TableState["pagination"] }
   | { type: "filter"; payload: Record<string, (string | number | boolean)[]> }
-  | { type: "updateColumns"; payload: TableProps["columns"] }
+  | {
+      type: "updateColumns";
+      payload: TableProps["columns"];
+    }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | { type: "addLoadingRow"; payload: string }
   | {
@@ -156,6 +180,7 @@ export interface IColumn<RT = any>
   max_value?: number;
   colWidth?: number;
   originalKey?: string;
+  order?: number;
 }
 
 /**
@@ -175,7 +200,7 @@ export type RowPrefix<T = any> = (
 /**
  * Cell types
  */
-export type BodyCellType = string | number | boolean | CellObjectType;
+export type BodyCellType = string | number | boolean | object | CellObjectType;
 
 export type CellObjectType = {
   dtype: string;
@@ -205,6 +230,7 @@ export type DTypeConfig<T = any> = {
     index: number,
     renderProps: TableProps["cellRenderProps"]
   ) => React.ReactNode;
+  defaultValue?: any;
 };
 
 /**

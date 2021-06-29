@@ -54,11 +54,13 @@ export function initializer(props: TableProps): TableState {
     dataSource,
     pagination,
     searchValue,
+    sortParams,
     forceColumns,
     dTypesConfig,
     showSizeChanger,
     pageSizeOptions,
-    visibleColumnsKeys
+    visibleColumnsKeys,
+    columnsSorter
   } = props;
 
   return {
@@ -68,6 +70,7 @@ export function initializer(props: TableProps): TableState {
     searchValue,
 
     forceColumns,
+    columnsSorter,
 
     pagination: {
       showSizeChanger,
@@ -76,7 +79,7 @@ export function initializer(props: TableProps): TableState {
       ...(pagination || {})
     },
 
-    sortParams: {},
+    sortParams: sortParams ?? {},
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
@@ -109,30 +112,43 @@ export function reducer(state: TableState, action: Action): TableState {
         state.visibleColumnsKeys &&
         state.visibleColumnsKeys.length &&
         state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
-
       const nextColumns = (function rec(newColumns, oldColumns) {
         if (state.forceColumns) {
           return newColumns;
         }
-        const sameDataIndex = newColumn => oldColumn =>
-          newColumn.dataIndex === oldColumn.dataIndex;
 
-        newColumns.sort(
-          (a, b) =>
-            oldColumns.findIndex(sameDataIndex(a)) -
-            oldColumns.findIndex(sameDataIndex(b))
-        );
+        const oldColumnsInfo: any = {};
+        oldColumns.forEach((column, index) => {
+          oldColumnsInfo[column.dataIndex] = {
+            index,
+            order: column.order
+          };
+        });
+
+        if (state.columnsSorter) {
+          state.columnsSorter(newColumns, oldColumnsInfo);
+        } else {
+          newColumns.sort((a, b) => {
+            const aIndex = oldColumnsInfo[a.dataIndex]
+              ? oldColumnsInfo[a.dataIndex].index
+              : 0;
+            const bIndex = oldColumnsInfo[b.dataIndex]
+              ? oldColumnsInfo[b.dataIndex].index
+              : 0;
+            return aIndex - bIndex;
+          });
+        }
 
         newColumns.forEach(column => {
+          const oldColumn = oldColumnsInfo[column.dataIndex];
           if (column.children && column.children.length) {
-            const oldColumn = oldColumns.find(
-              oldColumn => oldColumn.dataIndex === column.dataIndex
-            );
-
             oldColumn &&
               oldColumn.children &&
               oldColumn.children.length &&
               rec(column.children, oldColumn.children);
+          }
+          if (oldColumn && oldColumn.order) {
+            column.order = oldColumn.order;
           }
         });
 
@@ -322,6 +338,8 @@ export function reducer(state: TableState, action: Action): TableState {
               ({
                 ...column,
                 ...state.columnsMap[column.dataIndex],
+                order:
+                  column.order ?? state.columnsMap[column.dataIndex]?.order,
                 children: column.children && rec(column.children as any)
               } as any)
           );

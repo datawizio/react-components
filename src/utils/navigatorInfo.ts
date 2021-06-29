@@ -31,10 +31,14 @@ export function getBrowserName() {
 
 export function getGeoLocation(callback: (pos: any) => void) {
   navigator.geolocation &&
-  navigator.geolocation.getCurrentPosition(pos => {
-    callback({
-      latitude: pos.coords.latitude,
-      longitude: pos.coords.longitude
+    navigator.geolocation.getCurrentPosition(pos => {
+      callback({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude
+      });
     });
-  });
+}
+
+export function isSafari() {
+  return getBrowserName().includes("Safari");
 }

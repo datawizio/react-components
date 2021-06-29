@@ -18,7 +18,7 @@ export const generateTreeList = (path = "0", level = 3) => {
   return list;
 };
 
-export const unTree = (tree) => {
+export const unTree = tree => {
   let list = [];
   tree.forEach(item => {
     if (item) list.push(item);
@@ -27,4 +27,16 @@ export const unTree = (tree) => {
     }
   });
   return list;
+};
+
+export const findItemInTreeById = (items: any, id: number) => {
+  if (items) {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === id) {
+        return items[i];
+      }
+      const found: any = findItemInTreeById(items[i].children, id);
+      if (found) return found;
+    }
+  }
 };

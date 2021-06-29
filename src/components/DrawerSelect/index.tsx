@@ -58,6 +58,11 @@ export interface DrawerSelectProps<VT>
     search: string
   ) => Promise<{ data: any; totalPages: number }>;
 
+  /**
+   * Function for customized options
+   * */
+  optionRender?: (option: any) => any;
+
   multiple?: boolean;
 
   /**
@@ -76,6 +81,10 @@ export interface DrawerSelectProps<VT>
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 }
 
+function extractProperty(array: Array<object>, propertyName: string) {
+  return array.map(item => item[propertyName]);
+}
+
 function convertOptions(
   source,
   valueProp: string,
@@ -83,11 +92,11 @@ function convertOptions(
   selectedOptions: any[] = [],
   value: string[] = []
 ) {
-  const selected = selectedOptions;
+  const selected = [];
   const options = [];
-  const set = new Set(value);
+  const set = new Set(Array.isArray(value) ? value : [value]);
 
-  const selectedIds = selected.map(item => item[valueProp]);
+  const selectedIds = selectedOptions.map(item => item[valueProp]);
   const selectedSet = new Set(selectedIds);
 
   source.forEach(opt => {
@@ -96,8 +105,10 @@ function convertOptions(
       value: opt[valueProp],
       label: opt[labelProp]
     };
-    if (selectedSet.has(opt[valueProp])) return;
-
+    if (selectedSet.has(opt[valueProp])) {
+      selected.push(obj);
+      return;
+    }
     if (set.has(opt[valueProp])) {
       selected.push(obj);
       return;
@@ -125,6 +136,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     isFlatList,
     onChange,
     options,
+    optionRender,
     labelProp,
     loadData,
     loading,
@@ -206,7 +218,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       let state: any = {};
 
-      if (!page) state.optionsState = selectedOptions.current;
+      if (!page) state.optionsState = [];
 
       dispatch({
         type: "remoteLoadDataStart",
@@ -214,6 +226,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       });
 
       const filters = { ...additionalFilters, search };
+
+      filters.selected = extractProperty(selectedOptions.current, valueProp);
 
       if (first) {
         filters.selected = value;
@@ -241,9 +255,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       };
 
       if (page === 0) {
-        state.optionsState = getUniqueItems(selectedOptions.current.concat(options.options));
+        state.optionsState = getUniqueItems(
+          options.selected.concat(options.options)
+        );
       } else {
-        state.optionsState = getUniqueItems(optionsState.concat(options.options));
+        state.optionsState = getUniqueItems(
+          optionsState.concat(options.options)
+        );
       }
 
       dispatch({
@@ -424,6 +442,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const tagRender = useCallback(
     props => {
+      const isLongTag = props.label.length > 50;
       if (!optionsState || optionsState.length === 0) {
         return (
           <span className="ant-select-selection-placeholder">
@@ -437,15 +456,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
             closable={props.closable}
             onClose={props.onClose}
             className="ant-select-selection-item-content"
+            title={props.label}
           >
-            {props.label}
+            {isLongTag ? `${props.label.slice(0, 50)}...` : props.label}
           </Tag>
         </span>
       );
     },
     [optionsState, loadingText]
   );
-
   const dropdownRender = useCallback(
     menu => {
       menuRef.current = menu;
@@ -504,33 +523,37 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     [searchValue, internalLoading, drawerVisible, internalValue]
   );
 
-  return (
-    <AntSelect
-      filterOption={true}
-      {...restProps}
-      value={internalValue}
-      className="drawer-select"
-      mode="multiple"
-      open={drawerVisible}
-      loading={internalLoading}
-      //@ts-ignore
-      dropdownRender={dropdownRender}
-      searchValue={searchValue}
-      tagRender={tagRender}
-      dropdownClassName="drawer-select-dropdown-fake"
-      showSearch={true}
-      onSearch={handleSearch}
-      optionFilterProp="title"
-      listHeight={window.innerHeight - 198 - (multiple ? 27 : 0)}
-      notFoundContent={internalLoading ? loadingText : noDataText}
-      onBeforeBlur={handleSelectBeforeBlur}
-      onFocus={handleDrawerFocus}
-      onSelect={handleSelect}
-      onDeselect={handleDeselect}
-      onPopupScroll={handlePopupScroll}
-      onChange={handleChange}
-      options={optionsState}
-    />
+  const properties = {
+    filterOption: true,
+    ...restProps,
+    value: internalValue,
+    className: "drawer-select",
+    open: drawerVisible,
+    loading: internalLoading,
+    dropdownRender: dropdownRender,
+    searchValue: searchValue,
+    tagRender: tagRender,
+    dropdownClassName: "drawer-select-dropdown-fake",
+    showSearch: true,
+    onSearch: handleSearch,
+    optionFilterProp: "label",
+    optionLabelProp: "label",
+    listHeight: window.innerHeight - 198 - (multiple ? 27 : 0),
+    notFoundContent: internalLoading ? loadingText : noDataText,
+    onBeforeBlur: handleSelectBeforeBlur,
+    onFocus: handleDrawerFocus,
+    onSelect: handleSelect,
+    onDeselect: handleDeselect,
+    onPopupScroll: handlePopupScroll,
+    onChange: handleChange
+  };
+
+  return optionRender ? (
+    <AntSelect {...properties} mode="multiple">
+      {optionsState && optionsState.map(option => optionRender(option))}
+    </AntSelect>
+  ) : (
+    <AntSelect {...properties} mode="multiple" options={optionsState} />
   );
 };
 

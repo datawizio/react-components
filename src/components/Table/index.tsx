@@ -42,6 +42,7 @@ import { TableProps, FCTable, TableRef } from "./types";
 
 import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
+import { isSafari } from "../../utils/navigatorInfo";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
@@ -181,7 +182,11 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       table: props => <TableWrapper {...props} style={{ height, width }} />,
       header: {
         cell: props => {
-          return Boolean(props.model) ? <Column {...props} onWidthChange={onColumnWidthChange} /> : <th {...props} />
+          return Boolean(props.model) ? (
+            <Column {...props} onWidthChange={onColumnWidthChange} />
+          ) : (
+            <th {...props} />
+          );
         }
       },
       body: {
@@ -200,12 +205,21 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--empty": !state.dataSource.length,
           "dw-table--nestedable": props.expandable?.expandedRowRender,
           "dw-table--responsive-columns": responsiveColumns,
-          "dw-table--auto-col-width" : autoColWidth,
-          "dw-table--compress-columns" : compressColumns,
+          "dw-table--auto-col-width": autoColWidth,
+          "dw-table--compress-columns": compressColumns,
+          "dw-table--safari": isSafari()
         },
         props.className
       ),
-    [baseState.loading, props.className, state.dataSource.length, autoColWidth, compressColumns]
+    [
+      baseState.loading,
+      state.dataSource.length,
+      props.expandable,
+      props.className,
+      responsiveColumns,
+      autoColWidth,
+      compressColumns
+    ]
   );
 
   useImperativeHandle(ref, () => ({

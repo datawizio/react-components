@@ -232,7 +232,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
   return (
     <div className="tree-search-container">
-      <div className="tree-search-input" style={{marginBottom: '15px'}}>
+      <div className="tree-search-input" style={{ marginBottom: "15px" }}>
         {showSearchInput ? (
           renderInput ? (
             renderInput(handleSearchInputChange)
