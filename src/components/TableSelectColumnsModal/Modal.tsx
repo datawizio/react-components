@@ -31,7 +31,7 @@ const getColKeysRec = columns => {
 };
 
 export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModalProps> = props => {
-  const { locale, withSearch, treeData, onSubmit } = props;
+  const { showSelectedCount, locale, withSearch, treeData, onSubmit } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
@@ -40,11 +40,16 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
+  const visibleColumnsKeys = React.useMemo(
+    () =>
+      props.filterSelectedColumns
+        ? props.filterSelectedColumns(checkedKeys)
+        : checkedKeys,
+    [props.filterSelectedColumns, checkedKeys]
+  );
+
   const handleApply = useCallback(() => {
     onSubmit && onSubmit();
-    const visibleColumnsKeys = props.filterSelectedColumns
-      ? props.filterSelectedColumns(checkedKeys)
-      : checkedKeys;
 
     const payload: any = { visibleColumnsKeys };
     if (
@@ -97,7 +102,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
         footer={
           <Button
             type="primary"
-            disabled={!checkedKeys.length}
+            disabled={!visibleColumnsKeys.length}
             onClick={handleApply}
           >
             {translate(locale.apply)}
@@ -117,6 +122,11 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
+        {showSelectedCount && (
+          <div className="select-columns__modal-selected">
+            {translate("SELECTED")}: {visibleColumnsKeys.length}
+          </div>
+        )}
       </Modal>
     </div>
   );
