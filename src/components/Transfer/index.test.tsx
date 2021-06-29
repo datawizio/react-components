@@ -75,6 +75,7 @@ describe("Transfer component", () => {
       //@ts-ignore
       <Transfer {...mockProps} onMoveAllToRight={handeMoveAllToRight} />
     );
+    wrapper.find("TransferList").first().setState({ loading: false });
     act(() => {
       wrapper
         .find(".ant-transfer-operation")
@@ -91,7 +92,7 @@ describe("Transfer component", () => {
       //@ts-ignore
       <Transfer {...mockProps} onMoveToRight={handeMoveToRight} />
     );
-
+    wrapper.find("TransferList").first().setState({ loading: false });
     act(() => {
       wrapper
         .find(".ant-transfer-operation")
@@ -108,7 +109,7 @@ describe("Transfer component", () => {
       //@ts-ignore
       <Transfer {...mockProps} onMoveToLeft={handeMoveToLeft} />
     );
-
+    wrapper.find("TransferList").first().setState({ loading: false });
     act(() => {
       wrapper
         .find(".ant-transfer-operation")
@@ -125,7 +126,7 @@ describe("Transfer component", () => {
       //@ts-ignore
       <Transfer {...mockProps} onMoveAllToLeft={handeMoveAllToLeft} />
     );
-
+    wrapper.find("TransferList").first().setState({ loading: false });
     act(() => {
       wrapper
         .find(".ant-transfer-operation")

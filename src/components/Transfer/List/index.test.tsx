@@ -3,7 +3,7 @@ import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import TransferList from "./index";
-import { TransferDirection, TransferItem } from "../types";
+import { TransferDirection } from "../types";
 
 const waitForComponentToPaint = async wrapper => {
   await act(async () => {
@@ -78,6 +78,7 @@ describe("TransferList", () => {
 
   it("should render corectly with search", () => {
     const wrapper = setUp({ ...listCommonProps, showSearch: true });
+    wrapper.setState({ loading: false });
     expect(wrapper).toMatchSnapshot();
   });
   it("should check top Checkbox while all available items are checked", () => {
