@@ -4,30 +4,6 @@ import { usePeriodSelect } from "./usePeriodSelect";
 import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 
-const updatePeriodAC = payload => ({
-  type: "updatePeriod",
-  payload
-});
-const updatePrevPeriodAC = payload => ({
-  type: "updatePrevPeriod",
-  payload
-});
-const updateDatePickerAC = payload => ({
-  type: "updateDatePicker",
-  payload
-});
-const updatePrevDatePickerAC = payload => ({
-  type: "updatePrevDatePicker",
-  payload
-});
-const clearPickerAC = payload => ({
-  type: "clearPicker",
-  payload
-});
-const clearPrevPickerAC = payload => ({
-  type: "clearPrevPicker",
-  payload
-});
 const setStateAC = payload => ({
   type: "setState",
   payload
@@ -82,11 +58,9 @@ describe("Period select reducer", () => {
     const payload = {
       [propStoreKey]: "nextValue"
     };
-
     const { wrapper } = setUp(initialStoreMockData, setStateAC(payload));
     wrapper.find("button").simulate("click");
     const nextStore = wrapper.find("button").prop("data-store") as any;
-
     expect(nextStore[propStoreKey]).toBe(payload[propStoreKey]);
   });
 });
