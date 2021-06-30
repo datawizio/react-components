@@ -6,21 +6,22 @@ import Input from "../../Input";
 import { FieldTextProps } from "../types";
 
 export const FieldPassword: React.FC<FieldTextProps> = React.memo(
-  ({ label, rules, name, placeholder, onChange }) => {
+  ({ label, rules, name, placeholder, onChange, ...props }) => {
     const handleFieldChange = useCallback(
-      ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) => {
+      ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
         onChange &&
           onChange({
             name,
             value
           });
       },
-      [onChange]
+      [name, onChange]
     );
 
     return (
       <Form.Item name={name} label={label} rules={rules}>
         <Input.Password
+          {...props}
           placeholder={placeholder}
           onChange={handleFieldChange}
         />
