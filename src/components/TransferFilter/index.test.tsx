@@ -246,7 +246,6 @@ describe("TransferFilter component", () => {
         count: 3
       });
     wrapper.render();
-    console.log(wrapper.find("TransferList").first().props());
 
     act(() => {
       wrapper
@@ -265,43 +264,5 @@ describe("TransferFilter component", () => {
         .first()
         .hasClass("ant-checkbox-checked")
     ).toBeTruthy();
-  });
-
-  it("tree", () => {
-    const wrapper = setUp({
-      ...mockProps,
-      value: { exclude: [], include: null },
-      type: "tree"
-    });
-    wrapper.render();
-    wrapper
-      .find("TransferList")
-      .first()
-      .setState({
-        dataSource: [
-          {
-            key: "a",
-            title: "a",
-            ifLeaf: false,
-            level: 1
-          },
-          {
-            key: "b",
-            title: "b",
-            ifLeaf: false,
-            level: 2
-          },
-          {
-            key: "c",
-            title: "c",
-            ifLeaf: false,
-            level: 2
-          }
-        ],
-        loading: false,
-        count: 3
-      });
-    wrapper.render();
-    expect(component).toMatchSnapshot();
   });
 });
