@@ -1,0 +1,337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListBody component ListBody render corectly 1`] = `
+<ListBodyWrapper
+  filteredItems={
+    Array [
+      Object {
+        "ifLeaf": false,
+        "key": "a",
+        "level": 1,
+        "title": "a",
+      },
+      Object {
+        "ifLeaf": false,
+        "key": "b",
+        "level": 2,
+        "title": "b",
+      },
+      Object {
+        "ifLeaf": false,
+        "key": "c",
+        "level": 2,
+        "title": "c",
+      },
+    ]
+  }
+  loadData={[MockFunction]}
+  loading={false}
+  onItemSelect={[MockFunction]}
+  prefixCls="list-body"
+  selectedKeys={Array []}
+  type="tree"
+  value={
+    Object {
+      "exclude": Array [],
+      "include": Array [],
+    }
+  }
+>
+  <ListBody
+    filteredItems={
+      Array [
+        Object {
+          "ifLeaf": false,
+          "key": "a",
+          "level": 1,
+          "title": "a",
+        },
+        Object {
+          "ifLeaf": false,
+          "key": "b",
+          "level": 2,
+          "title": "b",
+        },
+        Object {
+          "ifLeaf": false,
+          "key": "c",
+          "level": 2,
+          "title": "c",
+        },
+      ]
+    }
+    loadData={[MockFunction]}
+    loading={false}
+    onItemSelect={[MockFunction]}
+    prefixCls="list-body"
+    selectedKeys={Array []}
+    type="tree"
+    value={
+      Object {
+        "exclude": Array [],
+        "include": Array [],
+      }
+    }
+  >
+    <ul
+      className="list-body-content"
+    >
+      <ListTree
+        filteredItems={
+          Array [
+            Object {
+              "ifLeaf": false,
+              "key": "a",
+              "level": 1,
+              "title": "a",
+            },
+            Object {
+              "ifLeaf": false,
+              "key": "b",
+              "level": 2,
+              "title": "b",
+            },
+            Object {
+              "ifLeaf": false,
+              "key": "c",
+              "level": 2,
+              "title": "c",
+            },
+          ]
+        }
+        onItemSelect={[Function]}
+        onItemsSelect={[Function]}
+        selectedKeys={Array []}
+      >
+        <ForwardRef
+          blockNode={true}
+          checkStrictly={true}
+          checkable={true}
+          checkedKeys={Array []}
+          motion={
+            Object {
+              "motionAppear": false,
+              "motionDeadline": 500,
+              "motionName": "ant-motion-collapse",
+              "onAppearActive": [Function],
+              "onAppearEnd": [Function],
+              "onAppearStart": [Function],
+              "onEnterActive": [Function],
+              "onEnterEnd": [Function],
+              "onEnterStart": [Function],
+              "onLeaveActive": [Function],
+              "onLeaveEnd": [Function],
+              "onLeaveStart": [Function],
+            }
+          }
+          onCheck={[Function]}
+          onExpand={[Function]}
+          selectable={true}
+          showIcon={false}
+          treeData={Array []}
+        >
+          <Tree
+            allowDrop={[Function]}
+            autoExpandParent={false}
+            blockNode={true}
+            checkStrictly={true}
+            checkable={
+              <span
+                className="ant-tree-checkbox-inner"
+              />
+            }
+            checkedKeys={Array []}
+            className="ant-tree-icon-hide ant-tree-block-node"
+            defaultCheckedKeys={Array []}
+            defaultExpandAll={false}
+            defaultExpandParent={true}
+            defaultExpandedKeys={Array []}
+            defaultSelectedKeys={Array []}
+            disabled={false}
+            draggable={false}
+            dropIndicatorRender={[Function]}
+            itemHeight={20}
+            motion={
+              Object {
+                "motionAppear": false,
+                "motionDeadline": 500,
+                "motionName": "ant-motion-collapse",
+                "onAppearActive": [Function],
+                "onAppearEnd": [Function],
+                "onAppearStart": [Function],
+                "onEnterActive": [Function],
+                "onEnterEnd": [Function],
+                "onEnterStart": [Function],
+                "onLeaveActive": [Function],
+                "onLeaveEnd": [Function],
+                "onLeaveStart": [Function],
+              }
+            }
+            multiple={false}
+            onCheck={[Function]}
+            onExpand={[Function]}
+            prefixCls="ant-tree"
+            selectable={true}
+            showIcon={false}
+            showLine={false}
+            switcherIcon={[Function]}
+            treeData={Array []}
+          >
+            <div
+              className="ant-tree ant-tree-icon-hide ant-tree-block-node"
+            >
+              <NodeList
+                activeItem={null}
+                checkable={true}
+                checkedKeys={Array []}
+                data={Array []}
+                disabled={false}
+                dragOverNodeKey={null}
+                dragging={false}
+                dropPosition={null}
+                expandedKeys={Array []}
+                focused={false}
+                halfCheckedKeys={Array []}
+                itemHeight={20}
+                keyEntities={
+                  Object {
+                    "RC_TREE_MOTION_0.8853654896161185": Object {
+                      "index": 0,
+                      "key": "RC_TREE_MOTION_0.8853654896161185",
+                      "level": 0,
+                      "node": Object {
+                        "key": "RC_TREE_MOTION_0.8853654896161185",
+                      },
+                      "pos": "0",
+                    },
+                  }
+                }
+                loadedKeys={Array []}
+                loadingKeys={Array []}
+                motion={
+                  Object {
+                    "motionAppear": false,
+                    "motionDeadline": 500,
+                    "motionName": "ant-motion-collapse",
+                    "onAppearActive": [Function],
+                    "onAppearEnd": [Function],
+                    "onAppearStart": [Function],
+                    "onEnterActive": [Function],
+                    "onEnterEnd": [Function],
+                    "onEnterStart": [Function],
+                    "onLeaveActive": [Function],
+                    "onLeaveEnd": [Function],
+                    "onLeaveStart": [Function],
+                  }
+                }
+                onActiveChange={[Function]}
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onListChangeEnd={[Function]}
+                onListChangeStart={[Function]}
+                prefixCls="ant-tree"
+                selectable={true}
+                selectedKeys={Array []}
+                tabIndex={0}
+              >
+                <div
+                  role="tree"
+                >
+                  <input
+                    disabled={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    style={
+                      Object {
+                        "border": 0,
+                        "display": "flex",
+                        "height": 0,
+                        "margin": 0,
+                        "opacity": 0,
+                        "overflow": "hidden",
+                        "padding": 0,
+                        "width": 0,
+                      }
+                    }
+                    tabIndex={0}
+                    value=""
+                  />
+                </div>
+                <div
+                  aria-hidden={true}
+                  className="ant-tree-treenode"
+                  style={
+                    Object {
+                      "height": 0,
+                      "overflow": "hidden",
+                      "pointerEvents": "none",
+                      "position": "absolute",
+                      "visibility": "hidden",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-tree-indent"
+                  >
+                    <div
+                      className="ant-tree-indent-unit"
+                    />
+                  </div>
+                </div>
+                <List
+                  data={Array []}
+                  fullHeight={false}
+                  itemHeight={20}
+                  itemKey={[Function]}
+                  prefixCls="ant-tree-list"
+                >
+                  <div
+                    className="ant-tree-list"
+                    style={
+                      Object {
+                        "position": "relative",
+                      }
+                    }
+                  >
+                    <div
+                      className="ant-tree-list-holder"
+                      onScroll={[Function]}
+                      style={null}
+                    >
+                      <Filler
+                        onInnerResize={[Function]}
+                        prefixCls="ant-tree-list"
+                      >
+                        <div
+                          style={Object {}}
+                        >
+                          <ResizeObserver
+                            onResize={[Function]}
+                          >
+                            <div
+                              className="ant-tree-list-holder-inner"
+                              style={
+                                Object {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                }
+                              }
+                            />
+                          </ResizeObserver>
+                        </div>
+                      </Filler>
+                    </div>
+                  </div>
+                </List>
+              </NodeList>
+            </div>
+          </Tree>
+        </ForwardRef>
+      </ListTree>
+    </ul>
+  </ListBody>
+</ListBodyWrapper>
+`;
