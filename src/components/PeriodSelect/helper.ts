@@ -73,6 +73,10 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.startDate = dayjs(clientDate).subtract(59, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(30, "day");
       break;
+    case "last_90_days":
+      newPrevPeriod.startDate = dayjs(clientDate).subtract(179, "day");
+      newPrevPeriod.endDate = dayjs(clientDate).subtract(90, "day");
+      break;
     case "last_180_days":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(359, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(180, "day");
@@ -185,6 +189,10 @@ export const getPeriod = ({
       break;
     case "last_30_days":
       newPeriod.startDate = dayjs(clientDate).subtract(29, "day");
+      newPeriod.endDate = dayjs(clientDate);
+      break;
+    case "last_90_days":
+      newPeriod.startDate = dayjs(clientDate).subtract(89, "day");
       newPeriod.endDate = dayjs(clientDate);
       break;
     case "last_180_days":
@@ -317,7 +325,10 @@ export const getDateArrayFromRange = (dateRange: DateRangeType) => {
   return [dayjs(dateRange.startDate), dayjs(dateRange.endDate)];
 };
 
-export const getAvailablePeriodsForDates = (dateRange: DateRangeType, forceEmpty = false) => {
+export const getAvailablePeriodsForDates = (
+  dateRange: DateRangeType,
+  forceEmpty = false
+) => {
   const weekLength = 7;
   const daysDiff = dayjs(dateRange.endDate).diff(dateRange.startDate, "day");
   const monthLength = dayjs(dateRange.startDate).daysInMonth();
