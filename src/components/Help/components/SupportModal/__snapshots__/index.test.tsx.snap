@@ -4228,7 +4228,7 @@ exports[`SupportModal component SupportModal fileUpload 1`] = `
                                                   >
                                                     <input
                                                       accept=""
-                                                      key="rc-upload-1625038183092-4"
+                                                      key="rc-upload-1625144776852-4"
                                                       multiple={false}
                                                       onChange={[Function]}
                                                       onClick={[Function]}
@@ -7122,7 +7122,7 @@ exports[`SupportModal component SupportModal rendered correctly 1`] = `
                                                   >
                                                     <input
                                                       accept=""
-                                                      key="rc-upload-1625038183092-1"
+                                                      key="rc-upload-1625144776852-1"
                                                       multiple={false}
                                                       onChange={[Function]}
                                                       onClick={[Function]}
