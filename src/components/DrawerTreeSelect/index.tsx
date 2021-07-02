@@ -359,9 +359,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     if (showCheckedStrategy === "SHOW_PARENT") {
       checked = isAllItemsChecked(values ? values : [], mainLevelItems.current);
     } else {
-      checked =
-        (!values.length && emptyIsAll) ||
-        values.length === allLeafItems.current.length;
+      checked = values.length === allLeafItems.current.length;
     }
 
     if (!checked && values.length) {
