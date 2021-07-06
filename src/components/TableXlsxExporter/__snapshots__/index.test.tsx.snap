@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableXlsxExporter component should export corectly 1`] = `
+<Table
+  bordered={true}
+  cellRenderProps={Object {}}
+  className="dw-table dw-table--empty"
+  columns={Array []}
+  columnsConfig={Object {}}
+  columnsMap={Object {}}
+  components={
+    Object {
+      "body": Object {
+        "cell": [Function],
+      },
+      "header": Object {
+        "cell": [Function],
+      },
+      "table": [Function],
+    }
+  }
+  dTypesConfig={
+    Object {
+      "boolean": Object {
+        "filter": [Function],
+        "sorter": [Function],
+        "toString": [Function],
+      },
+      "number": Object {
+        "filter": [Function],
+        "render": [Function],
+        "search": [Function],
+        "sorter": [Function],
+        "toString": [Function],
+      },
+      "string": Object {
+        "filter": [Function],
+        "search": [Function],
+        "sorter": [Function],
+        "toString": [Function],
+      },
+    }
+  }
+  dataSource={Array []}
+  expandIcon={[Function]}
+  expandedRowKeys={Array []}
+  filterHandler={[Function]}
+  filterParams={Object {}}
+  forceFetch={1}
+  isResizableColumns={true}
+  loading={false}
+  loadingRows={Object {}}
+  onChange={[Function]}
+  onExpand={[Function]}
+  pageSizeOptions={
+    Array [
+      "20",
+      "35",
+      "50",
+      "100",
+    ]
+  }
+  pagination={
+    Object {
+      "pageSize": 20,
+      "pageSizeOptions": Array [
+        "20",
+        "35",
+        "50",
+        "100",
+      ],
+      "showSizeChanger": true,
+      "showTotal": [Function],
+    }
+  }
+  parentsMap={Object {}}
+  rowKey="key"
+  searchHandler={[Function]}
+  showSorterTooltip={false}
+  size="small"
+  sortHandler={[Function]}
+  sortParams={Object {}}
+  sortable={true}
+  tableLayout="fixed"
+  visibleColumnsKeys={Array []}
+/>
+`;
+
+exports[`TableXlsxExporter component should render corectly 1`] = `
+<TableXlsxExporter
+  filename="exported_table.xlsx"
+>
+  <div
+    className="table-xlsx-exporter table-toolbar--right"
+  >
+    <Button
+      border={false}
+      icon={
+        <ForwardRef(DownloadOutlined)
+          className="table-xlsx-exporter__icon"
+        />
+      }
+      loading={false}
+      onClick={[Function]}
+      title="SAVE_BTN_TITLE"
+    >
+      <Button
+        className="dw-btn no-border"
+        icon={
+          <ForwardRef(DownloadOutlined)
+            className="table-xlsx-exporter__icon"
+          />
+        }
+        loading={false}
+        onClick={[Function]}
+        title="SAVE_BTN_TITLE"
+      >
+        <Wave>
+          <button
+            className="ant-btn ant-btn-icon-only dw-btn no-border"
+            onClick={[Function]}
+            title="SAVE_BTN_TITLE"
+            type="button"
+          >
+            <ForwardRef(DownloadOutlined)
+              className="table-xlsx-exporter__icon"
+            >
+              <AntdIcon
+                className="table-xlsx-exporter__icon"
+                icon={
+                  Object {
+                    "icon": Object {
+                      "attrs": Object {
+                        "focusable": "false",
+                        "viewBox": "64 64 896 896",
+                      },
+                      "children": Array [
+                        Object {
+                          "attrs": Object {
+                            "d": "M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z",
+                          },
+                          "tag": "path",
+                        },
+                      ],
+                      "tag": "svg",
+                    },
+                    "name": "download",
+                    "theme": "outlined",
+                  }
+                }
+              >
+                <span
+                  aria-label="download"
+                  className="anticon anticon-download table-xlsx-exporter__icon"
+                  role="img"
+                >
+                  <IconReact
+                    icon={
+                      Object {
+                        "icon": Object {
+                          "attrs": Object {
+                            "focusable": "false",
+                            "viewBox": "64 64 896 896",
+                          },
+                          "children": Array [
+                            Object {
+                              "attrs": Object {
+                                "d": "M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z",
+                              },
+                              "tag": "path",
+                            },
+                          ],
+                          "tag": "svg",
+                        },
+                        "name": "download",
+                        "theme": "outlined",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      data-icon="download"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      key="svg-download"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"
+                        key="svg-download-svg-0"
+                      />
+                    </svg>
+                  </IconReact>
+                </span>
+              </AntdIcon>
+            </ForwardRef(DownloadOutlined)>
+          </button>
+        </Wave>
+      </Button>
+    </Button>
+  </div>
+</TableXlsxExporter>
+`;
