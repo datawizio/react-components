@@ -12,7 +12,7 @@
     & > .ant-btn-group {
       margin-left: @margin-xs;
     }
-    & > button {
+    & > .ant-btn {
       margin-left: @margin-xs;
       padding: 4px 10px;
 
@@ -57,6 +57,27 @@
       .drawer-tree-select-dropdown-toolbar {
         min-height: 20px !important;
       }
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  .ant-drawer-actions {
+    display: flex;
+    flex-direction: column;
+    .ant-btn {
+      margin: 10px 0 0 0 !important;
+      &:first-child {
+        margin: 0 !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 340px) {
+  .ant-drawer-header {
+    & > .ant-drawer-title {
+      margin-right: 10px;
     }
   }
 }
