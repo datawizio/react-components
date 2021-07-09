@@ -11,8 +11,6 @@ import {
   getStatickModel,
   sortable
 } from "../Table/__mocks__";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { exportTableToXLSX } from "./exporters";
 import { TableProps } from "../Table/types";
 
@@ -48,7 +46,7 @@ describe("TableXlsxExporter component", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("should export corectly", async () => {
+  it("should loading notice render corectly", () => {
     useContextMock.mockReturnValue({ ...mockTableProps });
     const wrapper = shallow(
       <Table {...mockTableProps}>
@@ -57,23 +55,16 @@ describe("TableXlsxExporter component", () => {
         </Table.ToolBar>
       </Table>
     );
-    console.log(wrapper.props().children.props);
-
-    expect(wrapper.find("Table")).toMatchSnapshot();
-
     wrapper.render();
 
     const XlsxExporterButton = wrapper.find("TableXlsxExporter").dive();
-    console.log(XlsxExporterButton.props());
 
-    await waitFor(() => {
-      XlsxExporterButton.find("Button").first().simulate("click");
-    });
+    XlsxExporterButton.find("Button").first().simulate("click");
 
-    // wrapper.update();
+    wrapper.update();
 
-    // expect(
-    //   document.querySelectorAll(".ant-message-notice")[0].textContent
-    // ).toBe("LOADING");
+    expect(
+      document.querySelectorAll(".ant-message-notice")[0].textContent
+    ).toBe("LOADING");
   });
 });
