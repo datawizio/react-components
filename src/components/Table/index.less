@@ -19,6 +19,21 @@
     display: flow-root;
     position: relative;
 
+    @media (max-width: 440px) {
+      display: flex;
+      flex-direction: column;
+      .lite-search {
+        width: 100% !important;
+      }
+      .custom-table-toolbar {
+        display: flex;
+        flex-direction: row-reverse;
+        @media (max-width: 340px) {
+          justify-content: center;
+        }
+      }
+    }
+
     .table-toolbar--left {
       float: left;
       margin-right: 3px;
@@ -118,6 +133,10 @@
     width: 100%;
     display: flex;
     align-items: center;
+
+    @media (max-width: 440px) {
+      word-break: normal !important;
+    }
   }
 
   &--responsive-columns {
@@ -129,6 +148,9 @@
   table {
     table-layout: fixed;
     width: max-content;
+    @media (max-width: 440px) {
+      table-layout: auto !important;
+    }
   }
   &--safari {
     table {
@@ -307,6 +329,24 @@
 
       .ant-table-cell-fix-right {
         right: unset !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 440px) {
+  .dw-table {
+    .lite-search {
+      width: 100% !important;
+    }
+
+    .ant-table-pagination {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      & > .ant-pagination-total-text {
+        text-align: right;
+        margin-bottom: 5px;
+        width: 300px;
       }
     }
   }
