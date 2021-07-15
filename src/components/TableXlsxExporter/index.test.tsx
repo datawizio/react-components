@@ -11,7 +11,6 @@ import {
   sortable
 } from "../Table/__mocks__";
 import { exportTableToXLSX } from "./exporters";
-import { Menu } from "antd";
 
 const mockTableProps = {
   height: "auto",
@@ -101,33 +100,5 @@ describe("TableXlsxExporter component", () => {
     expect(
       document.querySelectorAll(".ant-message-notice")[0].textContent
     ).toBe("LOADING");
-  });
-
-  it("should TableXlsxExporter with menu render corectly", () => {
-    const mockProps = {
-      height: "auto",
-      width: "auto",
-
-      sortable,
-      columns: getStaticColumn(),
-      dataSource: getStaticDataSource()
-    };
-
-    const menuItems = () => {
-      return [<Menu.Item key="exporter">"SAVE_XLS"</Menu.Item>];
-    };
-
-    const wrapper = mount(
-      // @ts-ignore
-      <Table {...mockProps}>
-        <Table.ToolBar>
-          <TableXlsxExporter
-            exportHandler={exportTableToXLSX}
-            menuItems={menuItems}
-          />
-        </Table.ToolBar>
-      </Table>
-    );
-    expect(wrapper).toMatchSnapshot();
   });
 });
