@@ -2,14 +2,7 @@ import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
-import {
-  waitFor,
-  render,
-  fireEvent,
-  screen,
-  cleanup,
-  getByLabelText
-} from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import TableXlsxExporter from "./index";
 import Table from "../Table";
 import {
@@ -105,7 +98,6 @@ describe("TableXlsxExporter component", () => {
     act(() => {
       fireEvent.click(saveButton);
     });
-
     expect(
       document.querySelectorAll(".ant-message-notice")[0].textContent
     ).toBe("LOADING");
