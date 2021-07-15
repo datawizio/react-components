@@ -46,6 +46,7 @@ import { isSafari } from "../../utils/navigatorInfo";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
+    errorRender,
     style,
     width,
     height,
@@ -241,7 +242,6 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "resetPagination", payload: pageSize });
     }
   }));
-
   return (
     <div className="dw-table-container">
       <DndProvider backend={HTML5Backend}>
@@ -255,24 +255,28 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         >
           <Loader loading={Boolean(baseState.loading)}>
             {children}
-            <AntdTable
-              {...restProps}
-              {...state}
-              expandIcon={expandIconRender}
-              className={className}
-              onExpand={handleExpandRow}
-              onChange={handleChangeTable}
-              components={customComponents}
-              pagination={
-                props.pagination === false
-                  ? false
-                  : {
-                      ...state.pagination,
-                      ...props.pagination,
-                      showTotal: totalRenderer
-                    }
-              }
-            />
+            {state.error && errorRender ? (
+              errorRender(state.error)
+            ) : (
+              <AntdTable
+                {...restProps}
+                {...state}
+                expandIcon={expandIconRender}
+                className={className}
+                onExpand={handleExpandRow}
+                onChange={handleChangeTable}
+                components={customComponents}
+                pagination={
+                  props.pagination === false
+                    ? false
+                    : {
+                        ...state.pagination,
+                        ...props.pagination,
+                        showTotal: totalRenderer
+                      }
+                }
+              />
+            )}
           </Loader>
         </TableContext.Provider>
       </DndProvider>

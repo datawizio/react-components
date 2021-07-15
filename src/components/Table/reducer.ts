@@ -49,6 +49,7 @@ function getRecordPath(rowKey: any, parentsMap: any) {
 
 export function initializer(props: TableProps): TableState {
   const {
+    error,
     columns,
     loading,
     dataSource,
@@ -64,6 +65,7 @@ export function initializer(props: TableProps): TableState {
   } = props;
 
   return {
+    error,
     columns,
     loading,
     dataSource,
@@ -389,7 +391,6 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "update": {
       let nextState = { ...state, ...action.payload };
-
       if (action.payload.columns)
         nextState = reducer(
           { ...nextState, columns: state.columns },

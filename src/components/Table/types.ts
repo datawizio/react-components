@@ -48,6 +48,10 @@ export interface TableProps<RT = any>
   showExpandIcon?: (row: any) => boolean;
   onColumnWidthChange?: (columnKey: string, width: number) => void;
 
+  error?: { message: string };
+
+  errorRender?: (error: { message: string }) => React.ReactElement;
+
   /**
    * Таблица сжимаеться и растягиваеться до высоты которую вы указали в "height"
    */
