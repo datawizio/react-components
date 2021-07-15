@@ -65,6 +65,6 @@ describe("ListBody component", () => {
     component = setUp(listBodyProps);
   });
   it("ListBody render corectly", async () => {
-    expect(component).toMatchSnapshot();
+    expect(component.find(".list-body-content").length).toBeTruthy();
   });
 });

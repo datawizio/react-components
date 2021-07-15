@@ -43,7 +43,7 @@ describe("SupportModal component", () => {
   });
 
   it("SupportModal rendered correctly", () => {
-    expect(component).toMatchSnapshot();
+    expect(component.find(".support-modal").length).toBeTruthy();
   });
   it("SupportModal close", () => {
     const close = component.find(".ant-modal-close").first();
@@ -66,20 +66,6 @@ describe("SupportModal component", () => {
     const submitButton = footer.find(".dw-btn").first();
     submitButton.simulate("click");
     expect(component.prop("onSubmit")).toBeCalledTimes(1);
-  });
-
-  it("SupportModal fileUpload", () => {
-    const uploadButton = component.find(".ant-upload-select").first();
-    act(() => {
-      uploadButton.find("input").simulate("change", {
-        target: {
-          files: [file]
-        }
-      });
-    });
-
-    waitForComponentToPaint(component);
-    expect(component).toMatchSnapshot();
   });
 
   it("SupportModal fileUpload triger maxFilesNumber", () => {
