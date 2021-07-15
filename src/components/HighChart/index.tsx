@@ -113,16 +113,10 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
     }
   }));
 
-  const style = useMemo(() => {
-    return { height };
-  }, [height]);
-
   return (
     <>
       {loading ? (
         <Skeleton height={height} width={"100%"} />
-      ) : config.error ? (
-        <div style={style}>{config.error.message}</div>
       ) : (
         <div ref={containerRef} />
       )}
