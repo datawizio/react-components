@@ -5,13 +5,6 @@ import { act } from "react-dom/test-utils";
 import { generateData } from "./__mocks__";
 import TreeSearch from "./index";
 
-const waitForComponentToPaint = async wrapper => {
-  await act(async () => {
-    await new Promise(resolve => setTimeout(resolve));
-    wrapper.update();
-  });
-};
-
 const gData = generateData();
 
 const mockProps = {
@@ -29,7 +22,8 @@ describe("TreeSearch component", () => {
   });
 
   it("should render corectly", async () => {
-    expect(component).toMatchSnapshot();
+    expect(component.find(".ant-input-search").length).toBeTruthy();
+    expect(component.find(".ant-tree").length).toBeTruthy();
   });
 
   it("should render corectly with empty data and without search", () => {
@@ -38,16 +32,17 @@ describe("TreeSearch component", () => {
       treeData: [],
       showSearchInput: false
     });
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find(".ant-input-search").length).toBeFalsy();
+    expect(wrapper.find(".ant-empty").length).toBeTruthy();
   });
 
-  it("should render corectly with empty data and without search", () => {
+  it("should render corectly with default expand keys", () => {
     const wrapper = setUp({
       ...mockProps,
       searchValue: "label",
       defaultExpandedKeys: ["0-0-0-key", "0-0-0-0-key", "0-0-key"]
     });
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find(".ant-tree").length).toBeTruthy();
   });
 
   it("should search changed", () => {
@@ -81,7 +76,6 @@ describe("TreeSearch component", () => {
   it("should check all items", () => {
     const wrapper = setUp({ ...mockProps, checkable: true });
     wrapper.find(".ant-tree-checkbox").first().simulate("click");
-    expect(wrapper).toMatchSnapshot();
     expect(
       wrapper
         .find(".ant-tree-checkbox")
@@ -97,7 +91,6 @@ describe("TreeSearch component", () => {
       searchValue: "label"
     });
     wrapper.find(".ant-tree-checkbox").at(1).simulate("click");
-    expect(wrapper).toMatchSnapshot();
     expect(
       wrapper
         .find(".ant-tree-checkbox")
