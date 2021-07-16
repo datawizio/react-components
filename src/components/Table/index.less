@@ -155,6 +155,19 @@
   &--safari {
     table {
       width: 100% !important;
+      thead {
+        th.dw-table__column--resizable:active {
+          width: unset !important;
+        }
+
+        th.dw-table__column--resizable.ant-table-column-has-sorters {
+          cursor: auto;
+
+          .ant-table-column-sorters {
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 

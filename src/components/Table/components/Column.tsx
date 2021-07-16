@@ -46,6 +46,8 @@ const Column: React.FC<ColumnProps> = props => {
 
   const dndRef = useCallback(
     ref => {
+      if(onWidthChange) columnRef.current = ref;
+      setLastWidth(ref?.offsetWidth);
       if (!model.fixed) {
         dragRef(ref);
         dropRef(ref);
@@ -72,12 +74,6 @@ const Column: React.FC<ColumnProps> = props => {
   }, [model.originalKey, model.key, onWidthChange]);
  
 
-  const onMouseDownHandler = useCallback(event => {
-    if(onWidthChange) {
-      columnRef.current = event.target
-    }
-    setLastWidth(event.target.offsetWidth);
-  }, [onWidthChange]);
 
   const onClickHandler = useCallback(
     event => {
@@ -139,7 +135,7 @@ const Column: React.FC<ColumnProps> = props => {
       className={className}
       onClick={onClickHandler}
       title={String(model.title)}
-      onMouseDown={onMouseDownHandler}
+      onMouseUp={onMouseUpHandler}
       style={{ ...styles, ...props.style }}
     />
   );
