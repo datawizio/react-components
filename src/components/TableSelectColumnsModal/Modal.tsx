@@ -36,7 +36,9 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
   const [isOpened, setIsOpened] = useState(false);
+  const [isInitialPreset, setIsInitialPreset] = useState(true);
   const [checkedKeys, setCheckedKeys] = useState([]);
+  const [initialCheckedKeys, setInitialCheckedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
@@ -62,24 +64,33 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
 
     dispatch({ type: "update", payload });
     setIsOpened(false);
+    setCheckedKeys(checkedKeys);
+    setIsInitialPreset(true);
     setSearchValue("");
   }, [checkedKeys, dispatch, tableState.forceFetch, onSubmit]);
 
   const handleCancel = useCallback(() => {
     setIsOpened(false);
     setSearchValue("");
-  }, []);
+    setCheckedKeys(initialCheckedKeys);
+  }, [initialCheckedKeys]);
 
   const onCheck = useCallback(checkedKeys => {
     setCheckedKeys(checkedKeys || []);
   }, []);
 
   useEffect(() => {
-    setCheckedKeys(
+    const checkedKeysList =
       tableState.visibleColumnsKeys && tableState.visibleColumnsKeys.length
         ? tableState.visibleColumnsKeys
-        : getColKeysRec(baseTableState.columns)
-    );
+        : getColKeysRec(baseTableState.columns);
+
+    setCheckedKeys(checkedKeysList);
+
+    if (isInitialPreset) {
+      setInitialCheckedKeys(checkedKeysList);
+      setIsInitialPreset(false);
+    }
   }, [tableState.visibleColumnsKeys, baseTableState.columns, getColKeysRec]);
 
   return (
@@ -92,7 +103,6 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
         <SettingOutlined className="select-columns__icon" />
         {translate(locale.openButton)}
       </Button>
-
       <Modal
         visible={isOpened}
         title={translate(locale.headerModal)}
