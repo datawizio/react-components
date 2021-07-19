@@ -21,6 +21,7 @@ export type PeriodEnum =
   | "season_begin"
   | "year_begin"
   | "last_30_days"
+  | "last_90_days"
   | "last_180_days"
   | "last_365_days"
   | "all_time"
