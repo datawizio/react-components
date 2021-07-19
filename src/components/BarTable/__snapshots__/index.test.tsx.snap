@@ -799,6 +799,7 @@ exports[`BarTable component BarTable renders correctly 1`] = `
                                     "emptyText": <Context.Consumer>
                                       [Function]
                                     </Context.Consumer>,
+                                    "error": undefined,
                                     "expandIcon": [Function],
                                     "expandable": Object {
                                       "__PARENT_RENDER_ICON__": undefined,
