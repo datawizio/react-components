@@ -3,12 +3,27 @@
 @import "./rtl";
 
 .help-icon {
-  color: @icon-color;
+  color: @help-icon-color !important;
   padding-top: 2px;
   margin-right: 16px;
-
+  border: 2px solid !important;
+  border-radius: 100px !important;
+  height: 25px !important;
+  display: flex !important;
+  align-items: center;
+  & > .anticon-question-circle {
+    margin-top: 2px !important;
+  }
   &:hover {
-    color: @primary-color;
+    color: @help-icon-color-hover !important;
+  }
+  @media (max-width: @screen-xs) {
+    border: none !important;
+    margin-right: 6px;
+    padding: 5px 10px !important;
+    & > span:last-child {
+      display: none;
+    }
   }
 }
 

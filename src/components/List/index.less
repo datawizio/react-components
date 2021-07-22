@@ -16,13 +16,13 @@
     &:hover {
       background-color: @table-row-hover-bg;
     }
-    @media (max-width: 440px) {
+    @media (max-width: @screen-xs) {
       padding-right: 2px;
       .anticon-right {
         margin-top: 9px;
       }
     }
-    @media (max-width: 340px) {
+    @media (max-width: @screen-xxs) {
       padding-bottom: 10px;
       padding-top: 5px;
     }
@@ -46,7 +46,7 @@
           padding-top: @padding-xs;
         }
       }
-      @media (max-width: 440px) {
+      @media (max-width: @screen-xs) {
         height: max-content;
         flex-direction: row !important;
         align-items: flex-start !important;
