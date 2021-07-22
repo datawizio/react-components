@@ -1,7 +1,10 @@
 import * as React from "react";
 import { useContext, useMemo } from "react";
 import { Menu, Dropdown, Button } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import {
+  CustomerServiceOutlined,
+  QuestionCircleOutlined
+} from "@ant-design/icons";
 import ConfigContext from "../../../ConfigProvider/context";
 import "./index.less";
 
@@ -30,16 +33,13 @@ const HelpMenu: React.FC<IHelpMenu> = ({
             {translate("READ_TUTORIAL")}
           </Menu.Item>
         )}
-        <Menu.Item key="2" onClick={onSupportClick}>
-          {translate("SUPPORT")}
-        </Menu.Item>
         {onServiceUpdateClick && (
-          <Menu.Item key="3" onClick={onServiceUpdateClick}>
+          <Menu.Item key="2" onClick={onServiceUpdateClick}>
             {translate("SERVICE_UPDATE")}
           </Menu.Item>
         )}
         {onHelperClick && (
-          <Menu.Item key="4" onClick={onHelperClick}>
+          <Menu.Item key="3" onClick={onHelperClick}>
             {translate("BES_HELPER")}
           </Menu.Item>
         )}
@@ -48,7 +48,6 @@ const HelpMenu: React.FC<IHelpMenu> = ({
     );
   }, [
     onServiceUpdateClick,
-    onSupportClick,
     onTutorialClick,
     onHelperClick,
     translate,
@@ -57,13 +56,22 @@ const HelpMenu: React.FC<IHelpMenu> = ({
 
   return (
     <>
+      <Button
+        type="link"
+        className="help-icon"
+        onClick={onSupportClick}
+        icon={<CustomerServiceOutlined />}
+      >
+        {translate("SUPPORT")}
+      </Button>
       <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
         <Button
           type="link"
           className="help-icon"
           onClick={e => e.preventDefault()}
+          icon={<QuestionCircleOutlined />}
         >
-          <QuestionCircleOutlined />
+          {translate("TEACHING")}
         </Button>
       </Dropdown>
     </>
