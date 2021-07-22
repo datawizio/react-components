@@ -4,7 +4,7 @@ declare global {
   }
 }
 
-export type ITheme = "dark" | "light";
+export type ITheme = "dark" | "light" | "system";
 
 window.theme = "light";
 
@@ -20,9 +20,24 @@ const removeAllOldStyles = () => {
   }
 };
 
-export const changeTheme = (theme: ITheme) => {
+export const changeThemeHandler = (e: any) => {
+  changeTheme(e.matches ? "dark" : "light", true);
+};
+
+export const changeTheme = (theme: ITheme, fromHandler = false) => {
+  const matchMediaDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+
+  if (theme === "system") {
+    const isSystemDark = matchMediaDark.matches;
+    theme = isSystemDark ? "dark" : "light";
+    matchMediaDark.addEventListener("change", changeThemeHandler);
+  } else {
+    !fromHandler && matchMediaDark.removeEventListener("change", changeThemeHandler);
+  }
+
   window.theme = theme;
   localStorage.setItem("theme", theme);
+
   const allStyles: any = document.getElementsByTagName("link");
   const newHrefs: string[] = [];
 
@@ -50,7 +65,7 @@ export const changeTheme = (theme: ITheme) => {
 
   setTimeout(() => {
     removeAllOldStyles();
-  }, 500)
+  }, 500);
 };
 
 export const catchAppendStylesheet = () => {
