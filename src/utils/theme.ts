@@ -20,29 +20,19 @@ const removeAllOldStyles = () => {
   }
 };
 
-export const changeTheme = (theme: ITheme, fromListener = false) => {
+export const changeThemeHandler = (e: any) => {
+  changeTheme(e.matches ? "dark" : "light", true);
+};
 
-  const changeThemeSync = (e: any) => {
-    changeTheme(e.matches ? "dark" : "light", true);
-  };
+export const changeTheme = (theme: ITheme, fromHandler = false) => {
+  const matchMediaDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
 
   if (theme === "system") {
-    const isSystemDark =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-
+    const isSystemDark = matchMediaDark.matches;
     theme = isSystemDark ? "dark" : "light";
-
-    window.matchMedia &&
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", changeThemeSync);
+    matchMediaDark.addEventListener("change", changeThemeHandler);
   } else {
-    !fromListener &&
-    window.matchMedia &&
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .removeEventListener("change", changeThemeSync);
+    !fromHandler && matchMediaDark.removeEventListener("change", changeThemeHandler);
   }
 
   window.theme = theme;
