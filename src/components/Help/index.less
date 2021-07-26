@@ -2,27 +2,32 @@
 
 @import "./rtl";
 
-.help-icon {
-  color: @help-icon-color !important;
-  padding-top: 2px;
+button.help-icon {
+  color: @help-icon-color;
   margin-right: 16px;
-  border: 2px solid !important;
-  border-radius: 100px !important;
-  height: 25px !important;
-  display: flex !important;
+  border: 1px solid;
+  border-radius: 100px;
+  height: 21px;
+  display: flex;
+  font-size: 12px;
   align-items: center;
   & > .anticon-question-circle {
-    margin-top: 2px !important;
+    margin-top: 2px;
   }
   &:hover {
-    color: @help-icon-color-hover !important;
+    color: @help-icon-color-hover;
+    border-color: @help-icon-color-hover;
   }
   @media (max-width: @screen-xs) {
-    border: none !important;
+    border: none;
     margin-right: 6px;
-    padding: 5px 10px !important;
+    padding: 5px 10px;
+    font-size: 14px;
     & > span:last-child {
       display: none;
+    }
+    &.ant-btn.ant-btn-link.teaching-btn {
+      padding-left: 0;
     }
   }
 }
