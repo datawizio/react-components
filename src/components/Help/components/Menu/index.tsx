@@ -64,16 +64,21 @@ const HelpMenu: React.FC<IHelpMenu> = ({
       >
         {translate("SUPPORT")}
       </Button>
-      <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-        <Button
-          type="link"
-          className="help-icon teaching-btn"
-          onClick={e => e.preventDefault()}
-          icon={<QuestionCircleOutlined />}
-        >
-          {translate("TEACHING")}
-        </Button>
-      </Dropdown>
+      {(onTutorialClick ||
+        onServiceUpdateClick ||
+        onHelperClick ||
+        tourMenu) && (
+        <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+          <Button
+            type="link"
+            className="help-icon teaching-btn"
+            onClick={e => e.preventDefault()}
+            icon={<QuestionCircleOutlined />}
+          >
+            {translate("TEACHING")}
+          </Button>
+        </Dropdown>
+      )}
     </>
   );
 };
