@@ -14,6 +14,8 @@ const Select: FCSelect = props => {
     withPagination,
     useCustomTagRender,
     optionRender,
+    optionFilterProp,
+    optionLabelProp,
     ...restProps
   } = props;
 
@@ -30,7 +32,7 @@ const Select: FCSelect = props => {
         return optionRender(item);
       }
       return (
-        <Select.Option key={item.value} value={item.value}>
+        <Select.Option key={item.value} value={item.value} label={item.text}>
           {item.text}
         </Select.Option>
       );
@@ -142,8 +144,8 @@ const Select: FCSelect = props => {
     <AntSelect
       {...restProps}
       {...searchProps}
-      optionFilterProp="label"
-      optionLabelProp="label"
+      optionFilterProp={optionFilterProp || "label"}
+      optionLabelProp={optionLabelProp || "label"}
       notFoundContent={loading ? loadingContent : notFoundContent}
       loading={loading}
       tagRender={useCustomTagRender ? tagRender : null}
