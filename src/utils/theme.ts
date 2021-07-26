@@ -22,6 +22,7 @@ const removeAllOldStyles = () => {
 
 export const changeThemeHandler = (e: any) => {
   changeTheme(e.matches ? "dark" : "light", true);
+  window.location.reload();
 };
 
 export const changeTheme = (theme: ITheme, fromHandler = false) => {
