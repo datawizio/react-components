@@ -58,7 +58,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
     <>
       <Button
         type="link"
-        className="help-icon"
+        className="help-icon support-btn"
         onClick={onSupportClick}
         icon={<CustomerServiceOutlined />}
       >
@@ -67,7 +67,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
       <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
         <Button
           type="link"
-          className="help-icon"
+          className="help-icon teaching-btn"
           onClick={e => e.preventDefault()}
           icon={<QuestionCircleOutlined />}
         >
