@@ -85,6 +85,7 @@ export function initializer(props: TableProps): TableState {
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
+    columnsWidth: {},
     parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
@@ -103,6 +104,17 @@ export function reducer(state: TableState, action: Action): TableState {
         dataSource: action.payload
       };
     }
+    case "columnWidthChange":
+      if (state.columnsWidth[action.payload.key] === action.payload.width) {
+        return state;
+      }
+      return {
+        ...state,
+        columnsWidth: {
+          ...state.columnsWidth,
+          [action.payload.key]: action.payload.width
+        }
+      };
     case "updateColumns": {
       const nextColumnsMap = genColumnsMap(action.payload);
       const nextSortParams = filterByColumns(nextColumnsMap, state.sortParams);
@@ -314,12 +326,25 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "collapseRow": {
-      return {
+      const newState = {
         ...state,
         expandedRowKeys: state.expandedRowKeys.filter(
           key => key !== action.payload.key
         )
       };
+      if (
+        action.payload.children &&
+        Array.isArray(action.payload.children) &&
+        action.payload.children.length > 300
+      ) {
+        const { parentsMap } = state;
+        const path = getRecordPath(action.payload.key, parentsMap);
+        const nextDataSource = state.dataSource.concat();
+        const expandedRecord = findExpandedRecord(path, state.dataSource);
+        expandedRecord.children = [];
+        newState.dataSource = nextDataSource;
+      }
+      return newState;
     }
     case "loading": {
       return {

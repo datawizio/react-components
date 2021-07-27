@@ -14,6 +14,7 @@ export interface ColumnProps
     React.HTMLAttributes<any> {
   level: number;
   model: IColumn;
+  isHeader?: boolean;
   onWidthChange: (columnKey: string, width: number) => void;
 }
 
@@ -24,13 +25,19 @@ const Column: React.FC<ColumnProps> = props => {
     multipleSorting,
     level,
     onWidthChange,
+    isHeader,
     ...restProps
   } = props;
   const isSafariBrowser = isSafari();
   const [lastWidth, setLastWidth] = useState<number>(0);
+  const startedResize = React.useRef(false);
   const columnRef = React.useRef(null);
+  const lastWidthRef = React.useRef(0);
 
-  const { dispatch } = useContext(TableContext);
+  const {
+    dispatch,
+    tableState: { columnsWidth }
+  } = useContext(TableContext);
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
@@ -78,6 +85,7 @@ const Column: React.FC<ColumnProps> = props => {
 
   const dndRef = useCallback(
     ref => {
+      columnRef.current = ref;
       dragRef(ref);
       dropRef(ref);
     },
@@ -93,18 +101,58 @@ const Column: React.FC<ColumnProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  React.useEffect(() => {
+    if (!isHeader) return;
+    const colKey = model.originalKey ? model.originalKey : model.key;
+    // if (model.resizable) return ;
+    const sortersEl = columnRef.current.getElementsByClassName(
+      "ant-table-column-sorters"
+    );
+    if (sortersEl.length > 0) {
+      sortersEl[0].style["min-width"] = "0%";
+      setTimeout(() => {
+        sortersEl[0].style["min-width"] = "100%";
+      }, 1000);
+      //
+    }
+    const fn = () => {
+      if (
+        columnRef?.current &&
+        lastWidthRef.current !== columnRef.current?.offsetWidth
+      ) {
+        lastWidthRef.current = columnRef.current?.offsetWidth;
+
+        dispatch({
+          type: "columnWidthChange",
+          payload: {
+            key: colKey as string,
+            width: columnRef.current?.offsetWidth
+          }
+        });
+      }
+    };
+    fn();
+    const interval = setInterval(fn, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isHeader]);
+
   const onMouseUpHandler = useCallback(() => {
-    if (columnRef?.current && onWidthChange) {
+    if (startedResize?.current) {
       const colKey = model.originalKey ? model.originalKey : model.key;
       //@ts-ignore
       onWidthChange(colKey, columnRef.current?.offsetWidth);
+
+      startedResize.current = false;
     }
   }, [model.originalKey, model.key, onWidthChange]);
 
   const onMouseDownHandler = useCallback(
     event => {
       if (onWidthChange) {
-        columnRef.current = event.target;
+        startedResize.current = true;
       }
       setLastWidth(event.target.offsetWidth);
     },
@@ -133,7 +181,6 @@ const Column: React.FC<ColumnProps> = props => {
       restProps.className
     );
   }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
-
   const styles: object = useMemo((): object => {
     const defaultWidth = 200;
     const defaultSubCellWidth = 20;

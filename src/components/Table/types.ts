@@ -38,9 +38,9 @@ export interface TableProps<RT = any>
   extends Overwrite<AntdTableProps<RT>, _OverwrittenTableProps<RT>> {
   width?: string | number;
   height?: string | number;
-
+  vid?: string;
   searchValue?: string;
-
+  virtual?: boolean;
   async?: boolean;
   autoColWidth?: boolean;
   compressColumns?: boolean;
@@ -89,6 +89,7 @@ export interface TableProps<RT = any>
   columnsConfig?: {
     [columnKey: string]: Partial<IColumn>;
   };
+
   columnsSorter?: IColumnsSorter;
 
   rowPrefix?: RowPrefix;
@@ -120,6 +121,9 @@ export interface TableState extends Partial<TableProps> {
   loadingRows: { [key: string]: boolean };
   columnsSwapped?: boolean;
   columnsSorter?: IColumnsSorter;
+  columnsWidth?: {
+    [columnKey: string]: number;
+  };
 }
 
 export interface ISheetState {
@@ -165,6 +169,10 @@ export type Action =
   | {
       type: "visibleColumnsKeys";
       payload: TableState["visibleColumnsKeys"];
+    }
+  | {
+      type: "columnWidthChange";
+      payload: { key: string; width: number };
     };
 
 /**

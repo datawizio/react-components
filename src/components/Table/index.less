@@ -44,7 +44,20 @@
       margin-right: 3px;
     }
   }
-
+  .ant-table-small .ant-table-tbody > tr.fake-first-row {
+    height: 0;
+    & > th {
+      padding: 0;
+      border: 0;
+    }
+  }
+  .virtuallist {
+    .ant-table-tbody {
+      .ant-table-row {
+        height: 50px;
+      }
+    }
+  }
   .dw-table__column,
   th {
     // width: 300px;
