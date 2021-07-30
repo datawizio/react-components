@@ -73,6 +73,12 @@ export interface FieldSelectProps extends FormFieldProps<string> {
   allowClear?: boolean;
 }
 
+export interface FieldSliderProps extends FormFieldProps<string | number> {
+  min: number;
+  max: number;
+  step?: number;
+}
+
 export type EnableSelectValueType = {
   enabled: boolean;
   value: any;
