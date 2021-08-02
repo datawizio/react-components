@@ -55,6 +55,8 @@ export interface DrawerTreeSelectProps<VT>
 
   selectAllText?: string;
 
+  onCheckedDependValue?: (fieldName: string) => string[];
+
   treeDataCount?: number;
 
   emptyIsAll?: boolean;

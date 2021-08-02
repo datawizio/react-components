@@ -26,6 +26,8 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
         ...obj
       });
   };
+
+  console.log("FieldDrawerTreeSelect rest props", { restProps });
   return (
     <Form.Item
       name={name}

@@ -91,6 +91,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   value,
   isFlatList,
   onChange,
+  onCheckedDependValue,
   onChangeReturnObject,
   onLevelChange,
   onDrawerCloseCallback,
@@ -108,6 +109,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   placeholder,
   ...restProps
 }) => {
+  console.log("DrawerTreeSelect", { restProps });
   const { translate } = useContext(ConfigContext);
 
   const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
@@ -567,11 +569,21 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const handleTreeSelectChange = useCallback(
     (value, labels, extra) => {
+      const { triggerValue, checked } = extra;
+
+      let dependValues = [];
+      if (checked && onCheckedDependValue) {
+        dependValues = onCheckedDependValue(triggerValue);
+        console.log("inside ", dependValues);
+      }
+      console.log({ dependValues });
+
       let state: any = {};
       if (multiple) {
-        state.internalValue = value;
+        state.internalValue = [...value, ...dependValues];
         if (value) {
           const check = checkSelectAllStatus(value, true);
+          console.log({ state, check });
           state = { ...state, ...check };
         }
       } else {
@@ -580,6 +592,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
       state.internalTreeDataCount = state.internalValue.length;
 
+      console.log("!!!!!!!!!!!!!handleTreeSelectChange", { state });
       dispatch({
         type: "setState",
         payload: state
@@ -739,6 +752,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const dropdownRender = useCallback(
     menu => {
+      console.log({ menu });
       return (
         <Drawer
           // destroyOnClose
@@ -835,6 +849,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     (markersRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
+
+  const classesData = stateTreeData?.map(x => {
+    x.className = x.value;
+    return x;
+  });
+
   return (
     <AntTreeSelect
       {...restProps}
@@ -844,7 +864,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         "drawer-tree-select": true,
         "drawer-tree-selected-all": isSelectedAll
       })}
-      treeData={stateTreeData}
+      treeData={classesData || stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
       searchValue={searchValue.current ? searchValue.current : ""}
