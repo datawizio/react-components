@@ -72,7 +72,9 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const handleCancel = useCallback(() => {
     setIsOpened(false);
     setSearchValue("");
-    setCheckedKeys(initialCheckedKeys);
+    if (initialCheckedKeys.length > 0) {
+      setCheckedKeys(initialCheckedKeys);
+    }
   }, [initialCheckedKeys]);
 
   const onCheck = useCallback(checkedKeys => {
@@ -84,13 +86,12 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
       tableState.visibleColumnsKeys && tableState.visibleColumnsKeys.length
         ? tableState.visibleColumnsKeys
         : getColKeysRec(baseTableState.columns);
-
     setCheckedKeys(checkedKeysList);
 
-    if (isInitialPreset) {
-      setInitialCheckedKeys(checkedKeysList);
-      setIsInitialPreset(false);
-    }
+    // if (isInitialPreset) {
+    setInitialCheckedKeys(checkedKeysList);
+    setIsInitialPreset(false);
+    // }
   }, [tableState.visibleColumnsKeys, baseTableState.columns, getColKeysRec]);
 
   return (
