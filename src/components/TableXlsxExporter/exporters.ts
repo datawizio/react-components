@@ -98,7 +98,7 @@ export async function exportTableToXLSX(
   })(additionalSheet);
 
   const columnsMaxLevel = getDeepMaxLevel(columns);
-  const dafaultValues = {};
+  const defaultValues = {};
   // recursive draw columns
   (function drawColumns(columns, rowIdx = 1, colIdx = 1) {
     columns.forEach(column => {
@@ -115,7 +115,7 @@ export async function exportTableToXLSX(
       const dType =
         dTypesConfig[defineCellType({}, columnsMap[column.dataIndex])];
       if (dType && typeof dType.defaultValue !== "undefined") {
-        dafaultValues[column.dataIndex] = 0;
+        defaultValues[column.dataIndex] = 0;
       }
 
       // check children for correct merge cells width
@@ -164,7 +164,7 @@ export async function exportTableToXLSX(
         {}
       );
       const row = ws.addRow({
-        ...dafaultValues,
+        ...defaultValues,
         ...rowToDraw,
         key,
         [firstColumn]: margin + rowToDraw[firstColumn]
