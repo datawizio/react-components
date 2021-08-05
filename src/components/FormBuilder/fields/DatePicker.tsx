@@ -18,7 +18,8 @@ const Field: React.FC<FieldProps> = ({
 }) => {
   const formatedValue = useMemo<Dayjs>(() => {
     if (!value) return null;
-    return dayjs(value);
+    if (typeof value === "string") return dayjs(value);
+    return value;
   }, [value]);
 
   return (
