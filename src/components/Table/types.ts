@@ -101,6 +101,8 @@ export interface TableProps<RT = any>
   nestedTableProvider?: (
     expandedTow: IRow
   ) => Promise<Partial<TableState> | Promise<Partial<TableState>>>;
+
+  isTotalRow?: (rowKey: string) => boolean;
 }
 
 export interface TableState extends Partial<TableProps> {

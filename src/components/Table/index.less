@@ -103,7 +103,9 @@
       display: flex;
     }
   }
-
+  tr.dw-row-total > td {
+    background-color: @table-header-bg;
+  }
   &__cell {
     display: flex;
     align-items: center;
@@ -155,6 +157,20 @@
   &--safari {
     table {
       width: 100% !important;
+      thead {
+        th.dw-table__column--resizable:active {
+          min-width: unset !important;
+          width: 120px !important;
+        }
+
+        th.dw-table__column--resizable.ant-table-column-has-sorters {
+          cursor: auto;
+
+          .ant-table-column-sorters {
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 

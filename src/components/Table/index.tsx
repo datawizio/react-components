@@ -43,6 +43,7 @@ import { TableProps, FCTable, TableRef } from "./types";
 import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
 import { isSafari } from "../../utils/navigatorInfo";
+import Row from "./components/Row";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
@@ -65,6 +66,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     rowChildrenProvider,
     nestedTableProvider,
     onColumnWidthChange,
+    isTotalRow,
     ...restProps
   } = props;
 
@@ -191,7 +193,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         }
       },
       body: {
-        cell: props => <Cell {...props} />
+        cell: props => <Cell {...props} />,
+        row: props => <Row {...props} isTotalRow={isTotalRow} />
       }
     }),
     [height, width, components]

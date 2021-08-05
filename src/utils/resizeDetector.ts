@@ -12,6 +12,7 @@ export default function resizeDetector(
   };
 
   const notifyListener = async () => {
+    if (el.offsetWidth === 0) return;
     await onResize(el.offsetHeight, el.offsetWidth);
   };
 
