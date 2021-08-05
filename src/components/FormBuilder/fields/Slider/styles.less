@@ -1,17 +1,25 @@
 .dw-slider {
   width: 100% !important;
-
-  .ant-form-item-control-input-content {
-    display: flex !important;
-  }
+  display: flex;
 
   &-input {
     width: 100px !important;
+
+    .ant-form-item-label {
+      overflow: visible;
+
+      label {
+        width: 300px;
+      }
+    }
   }
 
   &-interval {
-    width: calc(100% - 112px) !important;
+    width: calc(100% - 100px) !important;
     margin-right: 0 !important;
-    margin-left: 12px !important;
+
+    .ant-form-item-label {
+      visibility: hidden;
+    }
   }
 }

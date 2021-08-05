@@ -413,6 +413,7 @@ exports[`Table component rendered Table corectly 1`] = `
             Object {
               "body": Object {
                 "cell": [Function],
+                "row": [Function],
               },
               "header": Object {
                 "cell": [Function],
