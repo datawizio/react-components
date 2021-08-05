@@ -20,6 +20,7 @@ import { SelectValue } from "antd/lib/tree-select";
 import { DataNode } from "rc-tree-select/es/interface";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
+import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
 import "./index.less";
 
 /**********************************************************************************************************************/
@@ -86,6 +87,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   headerHeight,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
+  dependentItems,
   treeData,
   treeDataCount,
   value,
@@ -109,7 +111,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   placeholder,
   ...restProps
 }) => {
-  console.log("DrawerTreeSelect", { restProps });
   const { translate } = useContext(ConfigContext);
 
   const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
@@ -571,19 +572,17 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     (value, labels, extra) => {
       const { triggerValue, checked } = extra;
 
-      let dependValues = [];
+      console.log({ value, labels, extra });
+
       if (checked && onCheckedDependValue) {
-        dependValues = onCheckedDependValue(triggerValue);
-        console.log("inside ", dependValues);
+        onCheckedDependValue(triggerValue);
       }
-      console.log({ dependValues });
 
       let state: any = {};
       if (multiple) {
-        state.internalValue = [...value, ...dependValues];
+        state.internalValue = value;
         if (value) {
           const check = checkSelectAllStatus(value, true);
-          console.log({ state, check });
           state = { ...state, ...check };
         }
       } else {
@@ -592,7 +591,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
       state.internalTreeDataCount = state.internalValue.length;
 
-      console.log("!!!!!!!!!!!!!handleTreeSelectChange", { state });
+      console.log("DISPATCH setState!!!!", { state });
       dispatch({
         type: "setState",
         payload: state
@@ -661,6 +660,19 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   };
 
   // ---- EFFECTS ------
+
+  useEffect(() => {
+    if (!dependentItems?.length) return;
+    dispatch({
+      type: "internalValue",
+      payload: [...internalValue, ...dependentItems]
+    });
+    console.log("DISPATCH INTERNAL VALUE", {
+      dependentItems,
+      result: [...internalValue, ...dependentItems]
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [useDeepEqualMemo(dependentItems)]);
 
   useEffect(() => {
     dispatch({
@@ -752,7 +764,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const dropdownRender = useCallback(
     menu => {
-      console.log({ menu });
       return (
         <Drawer
           // destroyOnClose
@@ -855,6 +866,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     return x;
   });
 
+  console.log("BEFORE RENDER", { internalValue });
   return (
     <AntTreeSelect
       {...restProps}
