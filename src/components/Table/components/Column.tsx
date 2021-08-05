@@ -17,9 +17,16 @@ export interface ColumnProps
 }
 
 const Column: React.FC<ColumnProps> = props => {
-  const { model, onClick, multipleSorting, level, onWidthChange, ...restProps } = props;
+  const {
+    model,
+    onClick,
+    multipleSorting,
+    level,
+    onWidthChange,
+    ...restProps
+  } = props;
   const [lastWidth, setLastWidth] = useState<number>(0);
-  const columnRef = React.useRef(null)
+  const columnRef = React.useRef(null);
 
   const { dispatch } = useContext(TableContext);
 
@@ -46,7 +53,7 @@ const Column: React.FC<ColumnProps> = props => {
 
   const dndRef = useCallback(
     ref => {
-      if(onWidthChange) columnRef.current = ref;
+      if (onWidthChange) columnRef.current = ref;
       setLastWidth(ref?.offsetWidth);
       if (!model.fixed) {
         dragRef(ref);
@@ -57,23 +64,26 @@ const Column: React.FC<ColumnProps> = props => {
   );
 
   React.useEffect(() => {
-    if(!onWidthChange) return;
+    if (!onWidthChange) return;
     window.addEventListener("mouseup", onMouseUpHandler);
     return () => {
       window.removeEventListener("mouseup", onMouseUpHandler);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onMouseUpHandler = useCallback(() => {
-    if(columnRef?.current && onWidthChange) {
-      const colKey = model.originalKey ? model.originalKey : model.key; 
-      //@ts-ignore 
+    if (columnRef?.current && onWidthChange) {
+      const colKey = model.originalKey ? model.originalKey : model.key;
+      //@ts-ignore
       onWidthChange(colKey, columnRef.current?.offsetWidth);
     }
-  }, [model.originalKey, model.key, onWidthChange]);
- 
-
+  }, [
+    model.originalKey,
+    model.key,
+    onWidthChange,
+    columnRef.current?.offsetWidth
+  ]);
 
   const onClickHandler = useCallback(
     event => {
@@ -106,7 +116,7 @@ const Column: React.FC<ColumnProps> = props => {
     if (model.colWidth) {
       return {
         width: model.colWidth
-      }
+      };
     }
 
     if (model.children && model.children.length) {
