@@ -444,7 +444,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const tagRender = useCallback(
     props => {
-      const isLongTag = props.label.length > 50;
+      const isLongTag = props.label?.length > 50;
       if (!optionsState || optionsState.length === 0) {
         return (
           <span className="ant-select-selection-placeholder">
