@@ -126,6 +126,11 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   markersRender?: ({ props }: any) => React.ReactElement;
   selectedMarkers?: string[];
 
+  dependentItems?: Array<any>;
+  onCheckedDependentValue?: (
+    checkedValue: string,
+    selectedItems: Array<string>
+  ) => void;
   onDrawerCloseCallback?: () => void;
   onDrawerCancelCallback?: () => void;
   onDrawerOpenCallback?: () => void;

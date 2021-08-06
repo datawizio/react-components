@@ -20,6 +20,7 @@ import { SelectValue } from "antd/lib/tree-select";
 import { DataNode } from "rc-tree-select/es/interface";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
+import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
 import "./index.less";
 
 /**********************************************************************************************************************/
@@ -86,11 +87,13 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   headerHeight,
   treeDefaultExpandedKeys,
   treeExpandedKeys,
+  dependentItems,
   treeData,
   treeDataCount,
   value,
   isFlatList,
   onChange,
+  onCheckedDependentValue,
   onChangeReturnObject,
   onLevelChange,
   onDrawerCloseCallback,
@@ -567,6 +570,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const handleTreeSelectChange = useCallback(
     (value, labels, extra) => {
+      const { triggerValue, checked } = extra;
+
+      if (checked && onCheckedDependentValue) {
+        onCheckedDependentValue(triggerValue, value);
+      }
+
       let state: any = {};
       if (multiple) {
         state.internalValue = value;
@@ -648,6 +657,15 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   };
 
   // ---- EFFECTS ------
+
+  useEffect(() => {
+    if (!dependentItems?.length) return;
+    dispatch({
+      type: "internalValue",
+      payload: [...internalValue, ...dependentItems]
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [useDeepEqualMemo(dependentItems)]);
 
   useEffect(() => {
     dispatch({
@@ -835,6 +853,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     (markersRender === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
+
   return (
     <AntTreeSelect
       {...restProps}
