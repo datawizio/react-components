@@ -397,9 +397,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (maxSelectedCount && value.length > maxSelectedCount) {
         const messageKey = "select-over-then-" + maxSelectedCount;
         message.error({
-          content: `${translate(
-            "COUNT_MUST_BE_SMALLER_THEN"
-          )} ${maxSelectedCount}`,
+          content: translate("COUNT_MUST_BE_SMALLER_THEN", {
+            maxCount: maxSelectedCount
+          }),
           key: messageKey
         });
 
