@@ -14,7 +14,7 @@ import { SelectValue } from "antd/lib/tree-select";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
-import { Skeleton, Tag } from "antd";
+import { Skeleton, Tag, message } from "antd";
 
 import { AntTreeNode } from "antd/lib/tree";
 
@@ -69,6 +69,12 @@ export interface DrawerSelectProps<VT>
    * Value prop
    */
   valueProp?: string;
+
+  /**
+   * max selected count
+   */
+
+  maxSelectedCount?: number;
 
   /**
    * Подгрузка ассинхронных данных с пагинацией
@@ -146,6 +152,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     mode,
     multiple,
     withPagination,
+    maxSelectedCount,
     ...restProps
   } = props;
 
@@ -387,6 +394,18 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         newValue = value[1] ? [value[1]] : [value[0]];
       }
 
+      if (maxSelectedCount && value.length > maxSelectedCount) {
+        const messageKey = "select-over-then-" + maxSelectedCount;
+        message.error({
+          content: `${translate(
+            "COUNT_MUST_BE_SMALLER_THEN"
+          )} ${maxSelectedCount}`,
+          key: messageKey
+        });
+
+        return;
+      }
+
       dispatch({
         type: "setInternalValue",
         payload: newValue
@@ -396,7 +415,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         triggerOnChange(value);
       }
     },
-    [dispatch, drawerVisible, triggerOnChange, multiple]
+    [dispatch, drawerVisible, triggerOnChange, multiple, maxSelectedCount]
   );
 
   const handlePopupScroll = useCallback(

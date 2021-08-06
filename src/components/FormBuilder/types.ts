@@ -96,6 +96,7 @@ export interface FieldDrawerSelectProps
   multiple?: boolean;
   options?: any;
   loading?: boolean;
+  maxSelectedCount?: number;
   loadData?: (
     search: string,
     page: number
