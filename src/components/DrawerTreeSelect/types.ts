@@ -55,7 +55,10 @@ export interface DrawerTreeSelectProps<VT>
 
   selectAllText?: string;
 
-  onCheckedDependValue?: (fieldName: string) => void;
+  onCheckedDependentValue?: (
+    fieldName: string,
+    selectedItems: Array<string>
+  ) => void;
 
   dependentItems?: Array<any>;
 

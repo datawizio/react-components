@@ -93,7 +93,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   value,
   isFlatList,
   onChange,
-  onCheckedDependValue,
+  onCheckedDependentValue,
   onChangeReturnObject,
   onLevelChange,
   onDrawerCloseCallback,
@@ -572,10 +572,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     (value, labels, extra) => {
       const { triggerValue, checked } = extra;
 
-      console.log({ value, labels, extra });
-
-      if (checked && onCheckedDependValue) {
-        onCheckedDependValue(triggerValue);
+      if (checked && onCheckedDependentValue) {
+        onCheckedDependentValue(triggerValue, value);
       }
 
       let state: any = {};
@@ -591,7 +589,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
       state.internalTreeDataCount = state.internalValue.length;
 
-      console.log("DISPATCH setState!!!!", { state });
       dispatch({
         type: "setState",
         payload: state
@@ -666,10 +663,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     dispatch({
       type: "internalValue",
       payload: [...internalValue, ...dependentItems]
-    });
-    console.log("DISPATCH INTERNAL VALUE", {
-      dependentItems,
-      result: [...internalValue, ...dependentItems]
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [useDeepEqualMemo(dependentItems)]);
@@ -861,12 +854,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
 
-  const classesData = stateTreeData?.map(x => {
-    x.className = x.value;
-    return x;
-  });
-
-  console.log("BEFORE RENDER", { internalValue });
   return (
     <AntTreeSelect
       {...restProps}
@@ -876,7 +863,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         "drawer-tree-select": true,
         "drawer-tree-selected-all": isSelectedAll
       })}
-      treeData={classesData || stateTreeData}
+      treeData={stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
       searchValue={searchValue.current ? searchValue.current : ""}

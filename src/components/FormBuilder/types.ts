@@ -127,7 +127,10 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   selectedMarkers?: string[];
 
   dependentItems?: Array<any>;
-  onCheckedDependValue?: (checkedValue: string) => void;
+  onCheckedDependentValue?: (
+    checkedValue: string,
+    selectedItems: Array<string>
+  ) => void;
   onDrawerCloseCallback?: () => void;
   onDrawerCancelCallback?: () => void;
   onDrawerOpenCallback?: () => void;
