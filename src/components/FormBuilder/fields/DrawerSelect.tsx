@@ -10,6 +10,7 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
   name,
   initialValue,
   placeholder,
+  maxSelectedCount,
   multiple,
   options,
   loadData,
@@ -40,6 +41,7 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
         drawerTitle={placeholder}
         loadData={loadData}
         loading={loading}
+        maxSelectedCount={maxSelectedCount}
         placeholder={placeholder}
         onChange={handleFieldChange}
         allowClear={true}
