@@ -13,6 +13,7 @@ export interface IHelpMenu {
   onSupportClick: () => void;
   onServiceUpdateClick: () => void;
   onHelperClick: () => void;
+  onVisibleChange: (visible: boolean) => void;
   tourMenu?: React.ReactElement;
 }
 
@@ -20,6 +21,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
   onTutorialClick,
   onSupportClick,
   onHelperClick,
+  onVisibleChange,
   onServiceUpdateClick,
   tourMenu
 }) => {
@@ -68,7 +70,12 @@ const HelpMenu: React.FC<IHelpMenu> = ({
         onServiceUpdateClick ||
         onHelperClick ||
         tourMenu) && (
-        <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
+        <Dropdown
+          onVisibleChange={onVisibleChange}
+          overlay={menu}
+          trigger={["click"]}
+          placement="bottomRight"
+        >
           <Button
             type="link"
             className="help-icon teaching-btn"
