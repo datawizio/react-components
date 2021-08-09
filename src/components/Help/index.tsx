@@ -11,6 +11,7 @@ export interface IHelp {
   onSupportLinkClick?: () => void;
   onServiceUpdateClick?: () => void;
   onHelperClick?: () => void;
+  onVisibleChange?: (visible: boolean) => void;
   uploadFileURL?: string;
   tourMenu?: React.ReactElement;
 }
@@ -21,6 +22,7 @@ const Help: React.FC<IHelp> = ({
   onServiceUpdateClick,
   onSupportModalSubmit,
   onHelperClick,
+  onVisibleChange,
   uploadFileURL,
   tourMenu
 }) => {
@@ -38,6 +40,7 @@ const Help: React.FC<IHelp> = ({
         onSupportClick={handleSupportLinkClick}
         onHelperClick={onHelperClick}
         onServiceUpdateClick={onServiceUpdateClick}
+        onVisibleChange={onVisibleChange}
         tourMenu={tourMenu}
       />
       <SupportModal
