@@ -391,7 +391,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (multiple) {
         newValue = value;
       } else {
-        newValue = value[0] ? [value[0]] : value;
+        newValue = value[1] ? [value[1]] : [value[0]];
       }
 
       if (maxSelectedCount && value.length > maxSelectedCount) {
@@ -408,7 +408,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       dispatch({
         type: "setInternalValue",
-        payload: newValue
+        payload: newValue[0] ? newValue : value
       });
 
       if (!drawerVisible) {
