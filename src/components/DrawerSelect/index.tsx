@@ -391,7 +391,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (multiple) {
         newValue = value;
       } else {
-        newValue = value[1] ? [value[1]] : [value[0]];
+        newValue = value[0] ? [value[0]] : value;
       }
 
       if (maxSelectedCount && value.length > maxSelectedCount) {
