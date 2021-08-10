@@ -408,7 +408,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       dispatch({
         type: "setInternalValue",
-        payload: newValue[0] ? newValue : value
+        payload: newValue && newValue[0] ? newValue : value
       });
 
       if (!drawerVisible) {
