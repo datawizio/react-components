@@ -27,7 +27,9 @@ function swapColumns(
 
       if (idxTo !== -1) {
         columns[idxFrom].order = columns[idxTo].order - 1;
-        [columns[idxFrom], columns[idxTo]] = [columns[idxTo], columns[idxFrom]];
+        idxFrom > idxTo
+          ? columns.splice(idxTo + 1, 0, columns.splice(idxFrom, 1)[0])
+          : columns.splice(idxTo, 0, columns.splice(idxFrom, 1)[0]);
       }
 
       return true;
