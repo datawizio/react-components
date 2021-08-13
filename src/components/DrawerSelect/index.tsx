@@ -290,7 +290,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     },
 
     //eslint-disable-next-line
-    [loadData, dispatch, optionsState, valueProp, labelProp, totalPages]
+    [
+      loadData,
+      dispatch,
+      optionsState,
+      valueProp,
+      labelProp,
+      totalPages,
+      onLoadData
+    ]
   );
 
   //  -------- HANDLERS --------
