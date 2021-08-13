@@ -85,6 +85,8 @@ export interface DrawerSelectProps<VT>
    * Event when user clicks Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+
+  onLoadData?: (data: any, value: any) => { value?: any };
 }
 
 function extractProperty(array: Array<object>, propertyName: string) {
@@ -153,6 +155,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     multiple,
     withPagination,
     maxSelectedCount,
+    onLoadData,
     ...restProps
   } = props;
 
@@ -244,6 +247,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       }
 
       const { data, totalPages: pages } = await loadData(filters, page, search);
+
+      if (onLoadData) {
+        const { value: loadValue } = onLoadData(data, value);
+        if (loadValue) {
+          triggerOnChange(loadValue);
+        }
+      }
 
       const options = convertOptions(
         data,
