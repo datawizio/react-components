@@ -53,7 +53,9 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
   inputReadOnly?: boolean;
 }
 
-export interface FieldTextProps extends FormFieldProps<string> {}
+export interface FieldTextProps extends FormFieldProps<string> {
+  type?: string;
+}
 
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
 
