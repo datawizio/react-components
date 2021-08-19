@@ -8,6 +8,8 @@ export type ITheme = "dark" | "light" | "system";
 
 window.theme = "light";
 
+const httpSet = new Set(["http:", "https:"]);
+
 const removeAllOldStyles = () => {
   const allStyles: any = document.getElementsByTagName("link");
   let j = 0;
@@ -26,7 +28,6 @@ export const changeThemeHandler = (e: any) => {
 };
 
 export const changeTheme = (theme: ITheme, fromHandler = false) => {
-  const httpSet = new Set(["http", "https"]);
   const matchMediaDark =
     window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -76,7 +77,7 @@ export const changeTheme = (theme: ITheme, fromHandler = false) => {
 
 export const catchAppendStylesheet = () => {
   var f = Element.prototype.appendChild;
-  const httpSet = new Set(["http", "https"]);
+
   //@ts-ignore
   Element.prototype.appendChild = function () {
     const element = arguments[0];
@@ -85,7 +86,6 @@ export const catchAppendStylesheet = () => {
       !element.getAttribute("force")
     ) {
       let href = element.getAttribute("href").split("/");
-
       if (httpSet.has(href[0]) && href[2] !== window.location.hostname) {
         f.apply(this, arguments);
         return;
