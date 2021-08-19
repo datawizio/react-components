@@ -58,3 +58,8 @@ export function initChat({
     d.getElementsByTagName("head")[0].appendChild(s);
   })();
 }
+
+export function resetChat() {
+  window.CRISP_TOKEN_ID = "";
+  window.$crisp.push(["do", "session:reset"]);
+}
