@@ -26,14 +26,16 @@ export const changeThemeHandler = (e: any) => {
 };
 
 export const changeTheme = (theme: ITheme, fromHandler = false) => {
-  const matchMediaDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+  const matchMediaDark =
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
 
   if (theme === "system") {
     const isSystemDark = matchMediaDark.matches;
     theme = isSystemDark ? "dark" : "light";
     matchMediaDark.addEventListener("change", changeThemeHandler);
   } else {
-    !fromHandler && matchMediaDark.removeEventListener("change", changeThemeHandler);
+    !fromHandler &&
+      matchMediaDark.removeEventListener("change", changeThemeHandler);
   }
 
   window.theme = theme;
@@ -45,7 +47,9 @@ export const changeTheme = (theme: ITheme, fromHandler = false) => {
   for (let style of allStyles) {
     if (style.getAttribute("rel") !== "stylesheet") continue;
     let href = style.getAttribute("href").split("/");
-    if (theme === "light") {
+    if (href[2] !== window.location.hostname) {
+      newHrefs.push(href.join("/"));
+    } else if (theme === "light") {
       href = href.filter((i: string) => i !== "dark");
     } else {
       const index = href.indexOf("dist");
@@ -79,6 +83,12 @@ export const catchAppendStylesheet = () => {
       !element.getAttribute("force")
     ) {
       let href = element.getAttribute("href").split("/");
+
+      if (href[2] !== window.location.hostname) {
+        f.apply(this, arguments);
+        return;
+      }
+
       if (window.theme === "light") {
         href = href.filter((i: string) => i !== "dark");
       } else {
