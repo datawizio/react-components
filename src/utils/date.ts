@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import i18n from "i18next";
 import { capitalize } from "./text";
 
 export const formatDateTime = (dateOrigin, translate) => {
@@ -28,3 +29,50 @@ export const formatDateTime = (dateOrigin, translate) => {
 
   return output;
 };
+
+export const generateDays = (count: number = 31) => {
+  return new Array(count).fill(0).map((item, idx) => {
+    return {
+      value: idx + 1,
+      label: String(idx + 1)
+    };
+  });
+};
+
+export const generateMonths = () => {
+  const monthsList = [
+    "JANUARY",
+    "FEBRUARY",
+    "MARCH",
+    "APRIL",
+    "MAY",
+    "JUNE",
+    "JULY",
+    "AUGUST",
+    "SEPTEMBER",
+    "OCTOBER",
+    "NOVEMBER",
+    "DECEMBER"
+  ];
+  return monthsList.map((month, idx) => {
+    return {
+      value: idx + 1,
+      label: String(i18n.t(month))
+    };
+  });
+};
+
+export const generateYears = (count: number = 100) => {
+  let currentYear = new Date().getFullYear();
+  let result = [];
+  for (let i = 0; i < count; i++) {
+    result.push({
+      label: currentYear,
+      value: String(currentYear)
+    });
+    currentYear--;
+  }
+  return result;
+};
+
+
