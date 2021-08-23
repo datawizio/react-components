@@ -6,6 +6,7 @@ export type LoadDataParams = {
   pageCount?: number;
   search?: string;
   value?: string[];
+  componentId?: number;
 };
 
 export type LoadDataResponse = {
