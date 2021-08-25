@@ -32,7 +32,12 @@ const Select: FCSelect = props => {
         return optionRender(item);
       }
       return (
-        <Select.Option key={item.value} value={item.value} label={item.text}>
+        <Select.Option
+          key={item.value}
+          value={item.value}
+          label={item.text}
+          disabled={!!item.disabled}
+        >
           {item.text}
         </Select.Option>
       );

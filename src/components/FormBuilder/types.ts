@@ -62,6 +62,7 @@ export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
 export type RadioOptionType = {
   value: any;
   label: string;
+  disabled?: boolean;
 };
 
 export interface FieldRadioProps extends FormFieldProps<string> {
