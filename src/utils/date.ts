@@ -39,21 +39,22 @@ export const generateDays = (count: number = 31) => {
   });
 };
 
+export const monthsList = [
+  "JANUARY",
+  "FEBRUARY",
+  "MARCH",
+  "APRIL",
+  "MAY",
+  "JUNE",
+  "JULY",
+  "AUGUST",
+  "SEPTEMBER",
+  "OCTOBER",
+  "NOVEMBER",
+  "DECEMBER"
+];
+
 export const generateMonths = () => {
-  const monthsList = [
-    "JANUARY",
-    "FEBRUARY",
-    "MARCH",
-    "APRIL",
-    "MAY",
-    "JUNE",
-    "JULY",
-    "AUGUST",
-    "SEPTEMBER",
-    "OCTOBER",
-    "NOVEMBER",
-    "DECEMBER"
-  ];
   return monthsList.map((month, idx) => {
     return {
       value: idx + 1,
@@ -74,5 +75,3 @@ export const generateYears = (count: number = 100) => {
   }
   return result;
 };
-
-
