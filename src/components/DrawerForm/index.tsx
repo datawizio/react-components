@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useEffect } from "react";
+import React, { useMemo, useContext, useEffect, useCallback } from "react";
 
 import { Form } from "antd";
 import Drawer from "../Drawer";
@@ -71,12 +71,12 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
     onClose && onClose();
   };
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = useCallback(async () => {
     try {
       form && (await form.validateFields());
       onSubmit && onSubmit();
     } catch (e) {}
-  };
+  }, [form, onSubmit]);
 
   const internalActions = useMemo(() => {
     return actions ? (
@@ -92,7 +92,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       </>
     );
     //eslint-disable-next-line
-  }, [actions, translate]);
+  }, [handleFormSubmit, actions, translate]);
   return (
     <Drawer
       title={title}
