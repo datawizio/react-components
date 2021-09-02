@@ -1,6 +1,6 @@
 {
   "name": "@datawizio/react-components",
-  "version": "1.2.55",
+  "version": "1.2.56",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
