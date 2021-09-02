@@ -16,6 +16,7 @@ declare global {
     CRISP_RUNTIME_CONFIG: any;
     CRISP_TOKEN_ID?: string | number;
     CRISP_WEBSITE_ID: string;
+    CONFIG: any;
   }
 }
 
@@ -49,7 +50,7 @@ export function initChat({
     locale: lang
   };
   window.CRISP_TOKEN_ID = user.user_id;
-  window.CRISP_WEBSITE_ID = "0fedd57b-c655-402e-b6f9-502131085dc9";
+  window.CRISP_WEBSITE_ID = window.CONFIG.CRISP_WEBSITE_ID;
   (function () {
     const d = document;
     const s: any = d.createElement("script");
