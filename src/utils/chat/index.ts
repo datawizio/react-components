@@ -50,7 +50,7 @@ export function initChat({
     locale: lang
   };
   window.CRISP_TOKEN_ID = user.user_id;
-  window.CRISP_WEBSITE_ID = window.CONFIG.CRISP_WEBSITE_ID;
+  window.CRISP_WEBSITE_ID = window.CONFIG.cripsWebsiteId;
   (function () {
     const d = document;
     const s: any = d.createElement("script");
