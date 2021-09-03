@@ -1,16 +1,12 @@
 import * as React from "react";
 import { useContext, useMemo } from "react";
 import { Menu, Dropdown, Button } from "antd";
-import {
-  CustomerServiceOutlined,
-  QuestionCircleOutlined
-} from "@ant-design/icons";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import ConfigContext from "../../../ConfigProvider/context";
 import "./index.less";
 
 export interface IHelpMenu {
   onTutorialClick: () => void;
-  onSupportClick: () => void;
   onServiceUpdateClick: () => void;
   onHelperClick: () => void;
   onVisibleChange: (visible: boolean) => void;
@@ -19,7 +15,6 @@ export interface IHelpMenu {
 
 const HelpMenu: React.FC<IHelpMenu> = ({
   onTutorialClick,
-  onSupportClick,
   onHelperClick,
   onVisibleChange,
   onServiceUpdateClick,
@@ -58,14 +53,6 @@ const HelpMenu: React.FC<IHelpMenu> = ({
 
   return (
     <>
-      <Button
-        type="link"
-        className="help-icon support-btn"
-        onClick={onSupportClick}
-        icon={<CustomerServiceOutlined />}
-      >
-        {translate("SUPPORT")}
-      </Button>
       {(onTutorialClick ||
         onServiceUpdateClick ||
         onHelperClick ||

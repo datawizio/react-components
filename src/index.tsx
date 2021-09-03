@@ -118,8 +118,6 @@ export { default as TableXlsxExporter } from "./components/TableXlsxExporter";
 
 export { default as TableTransposeButton } from "./components/TableTransposeButton";
 
-export { default as SupportModal } from "./components/Help/components/SupportModal";
-
 export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";
 
 export { FieldText } from "./components/FormBuilder/fields/Text";
