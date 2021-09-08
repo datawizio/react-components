@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import clsx from "clsx";
 
 import DatePicker from "../DatePicker";
 
@@ -33,7 +34,7 @@ const TimeRangePicker = React.forwardRef<any, TimePickerProps>(
           ]
         }
         //@ts-ignore
-        dropdownClassName={props.popupClassName}
+        dropdownClassName={clsx("time-range-picker", props.popupClassName)}
         picker="time"
         className={fullWidth ? "ant-picker-w100" : ""}
         mode={undefined}
