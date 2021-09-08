@@ -1,4 +1,5 @@
 import React from "react";
+import { openChat } from "../../utils/chat";
 
 import Button from "../Button";
 import ConfigContext from "../ConfigProvider/context";
@@ -6,18 +7,20 @@ import ConfigContext from "../ConfigProvider/context";
 type ErrorBoundaryState = {
   hasError: boolean;
   eventId: string;
+  error: any;
+  errorInfo: any;
 };
 
 export default class ErrorBoundary extends React.Component<
   {
     onError: (error: any, errorInfo: any) => Promise<string>;
-    onReportFeedbackClick: (eventId: string) => void;
+    onReportFeedbackClick?: (eventId: string) => void;
   },
   ErrorBoundaryState
 > {
   constructor(props: any) {
     super(props);
-    this.state = { hasError: false, eventId: "" };
+    this.state = { hasError: false, eventId: "", error: "", errorInfo: "" };
   }
 
   static getDerivedStateFromError() {
@@ -26,12 +29,17 @@ export default class ErrorBoundary extends React.Component<
 
   async componentDidCatch(error: any, errorInfo: any) {
     const eventId = await this.props.onError(error, errorInfo);
-
-    this.setState({ eventId });
+    this.setState({ eventId, error, errorInfo });
   }
 
   handlerButtonClick = () => {
-    this.props.onReportFeedbackClick(this.state.eventId);
+    openChat(
+      this.state.error.stack,
+      this.state.errorInfo.componentStack,
+      this.state.error.eventId
+    );
+    this.props.onReportFeedbackClick &&
+      this.props.onReportFeedbackClick(this.state.eventId);
   };
 
   render() {

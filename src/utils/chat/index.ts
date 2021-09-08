@@ -1,3 +1,5 @@
+import i18next from "i18next";
+
 export interface IUser {
   full_name: string;
   email: string;
@@ -63,4 +65,20 @@ export function initChat({
 export function resetChat() {
   window.CRISP_TOKEN_ID = "";
   window.$crisp.push(["do", "session:reset"]);
+}
+
+export function openChat(error, errorInfo, sentryErrorId) {
+  const obj = sentryErrorId
+    ? {
+        sentryErrorId
+      }
+    : { error, errorInfo };
+
+  window.$crisp.push([
+    "set",
+    "session:event",
+    [[["report_problem", obj, "red"]]]
+  ]);
+
+  window.$crisp.push(["do", "chat:open"]);
 }
