@@ -20,6 +20,10 @@ const setUp = (props?) =>
 
 describe("ErrorBoundary component", () => {
   let component;
+  beforeAll(() => {
+    window.$crisp = [];
+  });
+
   beforeEach(() => {
     component = setUp(mockProps);
   });
