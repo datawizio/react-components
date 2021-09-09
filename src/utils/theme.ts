@@ -81,6 +81,7 @@ export const catchAppendStylesheet = () => {
   //@ts-ignore
   Element.prototype.appendChild = function () {
     const element = arguments[0];
+
     if (
       element.nodeName.toLowerCase() === "link" &&
       !element.getAttribute("force")
