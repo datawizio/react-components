@@ -31,7 +31,8 @@ module.exports = {
       cancelAnimationFrame: function () {},
       location: {
         pathname: "/c/pathname/report/qwerty"
-      }
+      },
+      $crisp: []
     }
   }
 };
