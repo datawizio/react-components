@@ -9,6 +9,7 @@ React.useLayoutEffect = React.useEffect;
 Enzyme.configure({ adapter: new Adapter() });
 
 global.document = dom.window.document;
+global.$crisp = [];
 
 global.console.error = message => {
   throw new Error(message);
@@ -20,8 +21,8 @@ global.localStorage = {
   clear: jest.fn(),
   removeItem: jest.fn(),
   key: jest.fn(),
-  length: 1,
-} 
+  length: 1
+};
 
 global.cancelAnimationFrame = function () {
   // setTimeout(callback, 0);
