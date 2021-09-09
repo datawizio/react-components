@@ -72,8 +72,7 @@ export function openChat(error, errorInfo, sentryErrorId) {
     ? {
         sentryErrorId
       }
-    : { error, errorInfo };
-
+    : { error };
   window.$crisp.push([
     "set",
     "session:event",
