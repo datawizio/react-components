@@ -329,7 +329,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       payload
     });
 
-    handleSearch("");
+    if (searchValue) handleSearch("");
 
     //eslint-disable-next-line
   }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
@@ -351,8 +351,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     });
 
     triggerOnChange(internalValue);
-
-    handleSearch("");
+    if (searchValue) handleSearch("");
 
     //eslint-disable-next-line
   }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
