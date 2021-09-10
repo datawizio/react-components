@@ -28,6 +28,12 @@ type _OverwrittenTableProps<RT> = {
   } & TableLocale;
 };
 
+type IColumnsSorter = (
+  columns: IColumn[],
+  oldColumnsInfo: { [k: string]: Partial<IColumn> },
+  columnsSwapped?: boolean
+) => void;
+
 export interface TableProps<RT = any>
   extends Overwrite<AntdTableProps<RT>, _OverwrittenTableProps<RT>> {
   width?: string | number;
@@ -81,10 +87,7 @@ export interface TableProps<RT = any>
   columnsConfig?: {
     [columnKey: string]: Partial<IColumn>;
   };
-  columnsSorter?: (
-    columns: IColumn[],
-    oldColumnsInfo: { [k: string]: Partial<IColumn> }
-  ) => void;
+  columnsSorter?: IColumnsSorter;
 
   rowPrefix?: RowPrefix;
   rowPrefixDeps?: (row: IRow) => any[];
@@ -113,10 +116,8 @@ export interface TableState extends Partial<TableProps> {
   columnsMap: { [key: string]: IColumn };
   parentsMap: { [key: string]: string };
   loadingRows: { [key: string]: boolean };
-  columnsSorter?: (
-    columns: IColumn[],
-    oldColumnsInfo: { [k: string]: Partial<IColumn> }
-  ) => void;
+  columnsSwapped?: boolean;
+  columnsSorter?: IColumnsSorter;
 }
 
 export interface ISheetState {
@@ -187,6 +188,7 @@ export interface IColumn<RT = any>
   colWidth?: number;
   originalKey?: string;
   order?: number;
+  index?: number;
 }
 
 /**
