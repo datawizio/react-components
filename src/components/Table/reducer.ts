@@ -89,6 +89,7 @@ export function initializer(props: TableProps): TableState {
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
     loadingRows: {},
+    columnsSwapped: false,
     forceFetch: 1
   };
 }
@@ -128,7 +129,7 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         if (state.columnsSorter) {
-          state.columnsSorter(newColumns, oldColumnsInfo);
+          state.columnsSorter(newColumns, oldColumnsInfo, state.columnsSwapped);
         } else {
           newColumns.sort((a, b) => {
             const aIndex = oldColumnsInfo[a.dataIndex]
@@ -302,6 +303,7 @@ export function reducer(state: TableState, action: Action): TableState {
 
       return {
         ...state,
+        columnsSwapped: true,
         columns: nextColumns
       };
     }
