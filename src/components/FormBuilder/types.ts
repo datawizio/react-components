@@ -14,6 +14,7 @@ export interface FormFieldProps<Type> {
   rules?: Rule[];
   initialValue?: any;
   onChange?: (change: IFormFieldChanged<Type>) => void;
+  onDeselect?: (param: string | number) => void;
 }
 
 export interface FieldIntervalProps extends FormFieldProps<IntervalType> {
@@ -95,7 +96,7 @@ export interface FieldPhoneProps extends FormFieldProps<string> {}
 export interface FieldDrawerSelectProps
   extends FormFieldProps<string | string[]> {
   additionalFilters?: any;
-
+  allowClear?: boolean;
   multiple?: boolean;
   options?: any;
   loading?: boolean;
@@ -123,6 +124,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   emptyIsAll?: boolean;
   level?: string | number;
   value?: string[] | number[];
+  allowClear?: boolean;
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;

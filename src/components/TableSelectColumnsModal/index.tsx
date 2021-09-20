@@ -15,9 +15,9 @@ export interface TableSelectColumnsModalProps {
     headerModal: string;
   };
   showSelectedCount?: boolean;
-  onSubmit?: () => void;
+  onSubmit?: (selected?: string[]) => void;
   withSearch?: boolean;
-  fetchAfterApply?: (selected: string[], row: any) => boolean | boolean;
+  fetchAfterApply?: (selected: string[], row: any) => boolean;
   filterSelectedColumns?: (selected: string[]) => string[];
 }
 

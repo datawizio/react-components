@@ -53,6 +53,8 @@ export interface TableProps<RT = any>
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
   onColumnWidthChange?: (columnKey: string, width: number) => void;
+  expandRowCallback?: (row: any) => void;
+  sortColumnCallback?: (column: any) => void;
 
   error?: { message: string };
 

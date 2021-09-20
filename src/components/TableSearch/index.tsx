@@ -8,7 +8,7 @@ import "./index.less";
 
 export interface TableSearchProps {
   placeholder?: string;
-  onSearch?: () => void;
+  onSearch?: (value: string) => void;
 }
 
 const TableSearch: React.FC<TableSearchProps> = ({ placeholder, onSearch }) => {
@@ -17,7 +17,7 @@ const TableSearch: React.FC<TableSearchProps> = ({ placeholder, onSearch }) => {
     tableState: { searchValue }
   } = useContext(TableContext);
   const onSearchHandler = (value) => {
-    onSearch && onSearch();
+    onSearch && onSearch(value);
     dispatch({ type: "search", payload: value });
   }
   return (

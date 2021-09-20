@@ -16,6 +16,7 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
   loadData,
   onChange,
   loading,
+  allowClear,
   ...restProps
 }) => {
   const handleFieldChange = (value: any, selected: any) => {
@@ -44,7 +45,7 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
         maxSelectedCount={maxSelectedCount}
         placeholder={placeholder}
         onChange={handleFieldChange}
-        allowClear={true}
+        allowClear={allowClear || typeof allowClear === "undefined"}
       />
     </Form.Item>
   );

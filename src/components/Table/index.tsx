@@ -66,6 +66,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     rowChildrenProvider,
     nestedTableProvider,
     onColumnWidthChange,
+    expandRowCallback,
+    sortColumnCallback,
     isTotalRow,
     ...restProps
   } = props;
@@ -92,12 +94,15 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   usePropsToState(dispatch, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
-    (pagination, filters, sorter) => {
+    (pagination, filters, sorter, { currentDataSource, action }) => {
       dispatch({ type: "filter", payload: filters });
       dispatch({ type: "sort", payload: [].concat(sorter) });
       dispatch({ type: "paginate", payload: pagination as any });
+      if (action === "sort" && sortColumnCallback) {
+        sortColumnCallback(sorter);
+      }
     },
-    []
+    [sortColumnCallback]
   );
 
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
@@ -133,8 +138,18 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           type: isExpanded ? "expandRow" : "collapseRow",
           payload: row
         });
+
+      if (isExpanded) {
+        expandRowCallback && expandRowCallback(row);
+      }
     },
-    [rowChildrenProvider, nestedTableProvider, isNested, state]
+    [
+      rowChildrenProvider,
+      nestedTableProvider,
+      isNested,
+      state,
+      expandRowCallback
+    ]
   );
 
   const totalRenderer = useCallback(

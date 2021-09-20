@@ -57,7 +57,7 @@ export interface TableTemplatesProps {
   sortFirstColumn?: boolean;
   templates?: () => MaybePromise<TableTemplate>;
   onDelete: (template: TableTemplate) => void;
-  onSelect?: () => void;
+  onSelect?: (template?: TableTemplate) => void;
   onSelectFavorite: (template: TableTemplate) => void;
   onCreate: (template: TableTemplate) => void | Promise<TableTemplate>;
 }
@@ -105,8 +105,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   const handleSelect = useCallback(
     value => {
-      onSelect && onSelect();
       const template = templates.find(template => template.title === value);
+      onSelect && onSelect(template);
       setValue(template.title);
       setTemplateToState(template);
     },

@@ -51,7 +51,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   );
 
   const handleApply = useCallback(() => {
-    onSubmit && onSubmit();
+    onSubmit && onSubmit(visibleColumnsKeys);
 
     const payload: any = { visibleColumnsKeys };
     if (
