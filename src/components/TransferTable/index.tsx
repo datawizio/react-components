@@ -1,12 +1,17 @@
 import React, { useCallback, useContext, useMemo } from "react";
 import { Table as AntTable, Transfer } from "antd";
 import { TransferProps } from "antd/es/transfer";
+import { TableProps } from "antd/es/table";
+
 import ConfigContext from "../ConfigProvider/context";
 
-export interface TransferTableProps extends TransferProps<any> {
+export interface TransferTableProps
+  extends Omit<TransferProps<any>, "listStyle"> {
   columns: any;
+  loading: boolean;
   filteredInfo: any;
-  onTableChange: () => void;
+  onTableChange: (...params: any) => void;
+  transferTableProps?: TableProps<any>;
 }
 
 const TransferTable = ({
@@ -14,8 +19,9 @@ const TransferTable = ({
   loading,
   filteredInfo,
   onTableChange,
+  transferTableProps,
   ...restProps
-}) => {
+}: TransferTableProps) => {
   const { translate } = useContext(ConfigContext);
 
   const label = useCallback(
@@ -47,6 +53,7 @@ const TransferTable = ({
         disabled
       }) => (
         <Table
+          transferTableProps={transferTableProps}
           direction={direction}
           filter={filteredInfo[direction]}
           loading={loading}
@@ -73,7 +80,8 @@ const Table = ({
   onItemSelect,
   listSelectedKeys,
   listDisabled,
-  onTableChange
+  onTableChange,
+  transferTableProps
 }) => {
   const filteredItems = useMemo(() => {
     const set = new Set(filter);
@@ -104,6 +112,7 @@ const Table = ({
 
   return (
     <AntTable
+      {...transferTableProps}
       rowSelection={rowSelection}
       columns={internalColumns}
       dataSource={filteredItems}
