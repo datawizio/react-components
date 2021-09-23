@@ -12,8 +12,8 @@ export const getReportName = (
   }
 
   let result: string[] = res.split("/");
-  //res = result.length === 3 ? `${result[0]}_${result[2]}` : result[0];
 
+  // BI
   const idx = result.findIndex(item => item === "report");
   if (idx !== -1) {
     return result[idx + 1];
@@ -28,7 +28,10 @@ export const getReportName = (
     return result[cardIdx];
   }
 
-  return defaultReportName;
+  // AP, DC, BES
+  res = result.length === 3 ? `${result[0]}_${result[2]}` : result[0];
+
+  return res || defaultReportName;
 };
 
 export const cardSlugs = new Set([
