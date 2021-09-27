@@ -13,6 +13,7 @@ export interface FormFieldProps<Type> {
   label?: string;
   rules?: Rule[];
   initialValue?: any;
+  disabled?: boolean;
   onChange?: (change: IFormFieldChanged<Type>) => void;
   onDeselect?: (param: string | number) => void;
 }
