@@ -6,6 +6,7 @@ import DateRangePicker from "../../DateRangePicker";
 
 import { FormFieldProps } from "../types";
 import { DateType, PresetsRangeType } from "../../DateRangePicker/types";
+import { CalendarTypes } from "../../DatePicker";
 
 export interface DateRangePickerParams {
   from: Dayjs;
@@ -14,6 +15,7 @@ export interface DateRangePickerParams {
 
 export interface FieldDateRangePickerProps
   extends FormFieldProps<DateRangePickerParams> {
+  type?: CalendarTypes;
   format?: string;
   storeFormat?: string;
   maxDate?: string;

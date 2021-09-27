@@ -1,5 +1,6 @@
 import { Rule } from "antd/lib/form";
 import { Dayjs } from "dayjs";
+import { CalendarTypes } from "../DatePicker";
 
 export interface IFormFieldChanged<Type> {
   name: string | string[];
@@ -53,6 +54,7 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
   format?: string;
   fullWidth?: boolean;
   inputReadOnly?: boolean;
+  type?: CalendarTypes;
 }
 
 export interface FieldTextProps extends FormFieldProps<string> {

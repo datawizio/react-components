@@ -3,7 +3,7 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateRange, DefaultPresetPrevType, DefaultPresetType } from "./types";
 import { genPrevPeriod, reverseDate } from "./utils";
-import { fiscalCalendar } from "../../utils/retailCalendar";
+import { retailCalendar } from "../../utils/retailCalendar";
 
 dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
@@ -139,12 +139,12 @@ export const DefaultPreset = (minDate, maxDate) => {
   return {
     "Yesterday": DefaultPresetRanges.yesterday(maxDate),
     "Last_week": DefaultPresetRanges.lastWeek(maxDate),
-    "Current_month": fiscalCalendar.presetCurrentMonth(maxDate),
+    "Current_month": retailCalendar.presetCurrentMonth(maxDate),
     "Last_30_Days": DefaultPresetRanges.last_30_days(maxDate),
     "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
     "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
-    "SEASON_BEGIN": fiscalCalendar.presetCurrentQuater(maxDate),
-    "cur_year": fiscalCalendar.presetCurrentYear(maxDate),
+    "SEASON_BEGIN": retailCalendar.presetCurrentQuater(maxDate),
+    "cur_year": retailCalendar.presetCurrentYear(maxDate),
     "LAST_365_DAYS": DefaultPresetRanges.last_365_days(maxDate),
     "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
   };

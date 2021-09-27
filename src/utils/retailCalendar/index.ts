@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 const format = "DD-MM-YYYY";
-class FiscalCalendar {
+class RetailCalendar {
   DAYS_IN_YEAR = 364;
   DAYS_IN_QUARTAL = (4 + 4 + 5) * 7;
   PATTERN = [4, 4, 5];
@@ -45,7 +45,6 @@ class FiscalCalendar {
   }
 
   getStartOfMonth(date: Dayjs) {
-    debugger;
     if (isNaN(date.month())) return date;
     const month = this.getMonth(date);
     const quater = Math.ceil(month / 3);
@@ -58,7 +57,6 @@ class FiscalCalendar {
   }
 
   getStartOfQuater(date: Dayjs) {
-    debugger;
     if (isNaN(date.month())) return date;
     const month = this.getMonth(date);
     const quater = Math.ceil(month / 3);
@@ -166,4 +164,4 @@ class FiscalCalendar {
   }
 }
 
-export const fiscalCalendar = new FiscalCalendar(dayjs("2021-01-31"));
+export const retailCalendar = new RetailCalendar(dayjs("2021-01-31"));
