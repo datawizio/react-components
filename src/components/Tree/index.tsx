@@ -36,6 +36,8 @@ const Tree: React.FC<TreeProps> = props => {
     isAllDisabled,
     defaultExpandedKeys,
     expandedKeys,
+    selectedKeys,
+    onSelect,
     ...restProps
   } = props;
 
@@ -68,6 +70,8 @@ const Tree: React.FC<TreeProps> = props => {
         treeData={treeData}
         defaultExpandedKeys={cDefaultExpandedKeys}
         expandedKeys={cExpandedKeys}
+        selectedKeys={selectedKeys}
+        onSelect={onSelect}
       />
     </>
   );
