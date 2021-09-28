@@ -426,7 +426,7 @@ export default class TransferList extends React.PureComponent<
       disableAll: isLeftDirection && (include === null || include.length > 0),
       disabledKeys: isLeftDirection ? exclude : [],
       enabledKeys: isLeftDirection && include !== null ? include : [],
-      selectedKeys: checkedKeys,
+      checkedKeys: checkedKeys,
       totalItemsCount: this.getTotalCount(filteredItems),
       loadTreeData: this.loadTreeData,
       onPageChange: this.handlePageChange

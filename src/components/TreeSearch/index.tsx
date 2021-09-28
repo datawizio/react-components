@@ -161,7 +161,9 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       value: boolean,
       nextCheckedKeysSet: Set<string>
     ) => {
-      const parent = flatData.find(item => item.key === node.parentKey);
+      const parent = flatData.find(
+        item => item.key === node.parentKey || item.key === node.pId
+      );
       if (!parent || !parent.key || parent.key === "-1") return;
 
       const checked: boolean = parent.children.every(child =>
@@ -174,12 +176,31 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       recUp(parent, value, nextCheckedKeysSet);
     },
-    [treeData]
+    [flatData]
   );
 
   const handleTreeCheck = useCallback(
     (keys, e) => {
       let nextKeys;
+      let checked;
+
+      const { node, event } = e;
+      if (node.disabled) return;
+
+      if (event === "select") {
+
+        if (node.key === "-1" && node.checked) {
+          setInternalCheckedKeys([]);
+          onCheck && onCheck([], e);
+          return;
+        }
+
+        const keyIdx = internalCheckedKeys.findIndex(item => item === node.key);
+        checked = keyIdx === -1;
+
+      } else {
+        checked = e.checked;
+      }
 
       if (Array.isArray(keys)) {
         nextKeys = [...keys];
@@ -189,11 +210,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       const nextCheckedKeysSet = new Set<string>(nextKeys);
 
-      const { node, checked } = e;
-
-      if (node.disabled) return;
-
-      if (searchValue) {
+      if (searchValue || event === "select") {
         checked
           ? nextCheckedKeysSet.add(node.key)
           : nextCheckedKeysSet.delete(node.key);
@@ -202,7 +219,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           recDown(node.children, checked, nextCheckedKeysSet);
         }
 
-        if (node.parentKey) {
+        if (node.parentKey || node.pId) {
           recUp(node, checked, nextCheckedKeysSet);
         }
 
@@ -216,8 +233,12 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       onCheck && onCheck(nextKeys, e);
     },
-    [recDown, recUp, searchValue]
+    [internalCheckedKeys, onCheck, recDown, recUp, searchValue]
   );
+
+  const handleTreeSelect = useCallback((selectedKeys, e) => {
+    handleTreeCheck(internalCheckedKeys, e);
+  }, [handleTreeCheck, internalCheckedKeys]);
 
   useEffect(() => {
     const options = flattenOptions(treeData);
@@ -251,10 +272,12 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           treeData={mergedTreeData}
           checkedKeys={internalCheckedKeys}
           expandedKeys={expandedKeys}
+          selectedKeys={[]}
           checkStrictly={!!searchValue}
           isAllDisabled={allDisabled}
           onExpand={handleTreeExpand}
           onCheck={handleTreeCheck}
+          onSelect={handleTreeSelect}
         />
       ) : (
         <Empty description={translate(emptySearchResultText)} />

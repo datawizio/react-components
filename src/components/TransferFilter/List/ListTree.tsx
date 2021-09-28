@@ -12,7 +12,7 @@ export interface ListTreeProps {
   disabledKeys: string[];
   disableAll: boolean;
   enabledKeys: string[];
-  selectedKeys: string[];
+  checkedKeys: string[];
   expandedKeys: string[];
   loadData: (node: EventDataNode) => Promise<void>;
   onItemSelect: (item: ICheckedItem) => void;
@@ -24,7 +24,7 @@ export const ListTree: React.FC<ListTreeProps> = ({
   disabledKeys,
   disableAll,
   enabledKeys,
-  selectedKeys,
+  checkedKeys,
   expandedKeys,
   loadData,
   onItemSelect,
@@ -38,7 +38,7 @@ export const ListTree: React.FC<ListTreeProps> = ({
     disableAll,
     disabledKeys,
     enabledKeys,
-    selectedKeys,
+    checkedKeys,
     onItemsSelect,
     null,
     {
@@ -55,6 +55,10 @@ export const ListTree: React.FC<ListTreeProps> = ({
     onItemSelect({ key: node.key, title: node.sourceTitle });
   };
 
+  const handleSelect = (_, { node }) => {
+    handleCheck(_, { node });
+  };
+
   useEffect(() => {
     setInternalExpandedKeys(expandedKeys);
   }, [expandedKeys]);
@@ -65,13 +69,15 @@ export const ListTree: React.FC<ListTreeProps> = ({
       checkable
       checkStrictly
       expandedKeys={internalExpandedKeys}
-      checkedKeys={selectedKeys}
+      checkedKeys={checkedKeys}
+      selectedKeys={[]}
       treeData={treeData}
       loadData={loadData}
       loadedKeys={[]}
       onExpand={handleExpand}
       //@ts-ignore
       onCheck={handleCheck}
+      onSelect={handleSelect}
     />
   );
 };
