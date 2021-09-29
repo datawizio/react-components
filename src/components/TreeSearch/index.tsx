@@ -185,19 +185,16 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       let checked;
 
       const { node, event } = e;
+
       if (node.disabled) return;
 
       if (event === "select") {
-
         if (node.key === "-1" && node.checked) {
           setInternalCheckedKeys([]);
           onCheck && onCheck([], e);
           return;
         }
-
-        const keyIdx = internalCheckedKeys.findIndex(item => item === node.key);
-        checked = keyIdx === -1;
-
+        checked = !node.checked;
       } else {
         checked = e.checked;
       }
