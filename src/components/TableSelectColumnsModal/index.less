@@ -15,18 +15,31 @@
     }
 
     .ant-modal-body {
-      overflow: auto;
+      overflow: hidden;
       height: 500px;
       position: relative;
+    }
+
+    .ant-tree-list {
+      height: 400px;
+      overflow: auto;
+      margin-top: 18px;
+      margin-left: -20px;
     }
 
     &-selected {
       position: absolute;
       top: 65px;
-      right: 25px;
+      right: 24px;
       display: flex;
-      background: inherit;
-      padding-top: 5px;
+      background: #fff;
+      justify-content: flex-end;
+      width: 100%;
+
+      &-warning {
+        color: red;
+      }
     }
+
   }
 }

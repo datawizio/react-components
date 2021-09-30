@@ -38,6 +38,11 @@ export interface TreeSearchProps extends TreeProps {
   };
 
   /**
+   * Максимальное количество выбранных нод
+   */
+  maxCheckedKeys?: number;
+
+  /**
    * Строка поиска
    */
   searchValue?: string;
@@ -79,6 +84,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     treeData,
     searchCondition,
     checkedKeys,
+    maxCheckedKeys,
     onCheck,
     ...restProps
   } = props;
@@ -230,7 +236,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       onCheck && onCheck(nextKeys, e);
     },
-    [internalCheckedKeys, onCheck, recDown, recUp, searchValue]
+    [onCheck, recDown, recUp, searchValue]
   );
 
   const handleTreeSelect = useCallback((selectedKeys, e) => {
