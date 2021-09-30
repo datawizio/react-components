@@ -54,6 +54,12 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     [props.filterSelectedColumns, checkedKeys]
   );
 
+  const modalClassNames = useMemo(() => {
+    return clsx("select-columns__modal", {
+      "select-columns__modal-with-counter": showSelectedCount
+    });
+  }, [showSelectedCount]);
+
   const selectedInfoClassNames = useMemo(() => {
     return clsx("select-columns__modal-selected", {
       "select-columns__modal-selected-warning":
@@ -126,7 +132,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
       <Modal
         visible={isOpened}
         title={translate(locale.headerModal)}
-        className="select-columns__modal"
+        className={modalClassNames}
         destroyOnClose={true}
         onCancel={handleCancel}
         footer={
