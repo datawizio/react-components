@@ -1,16 +1,13 @@
 import * as React from "react";
-import { useState, useCallback, useContext, useEffect } from "react";
-
+import { useState, useCallback, useContext, useEffect, useMemo } from "react";
+import clsx from "clsx";
 import Modal from "../Modal";
 import Button from "../Button";
 import { SettingOutlined } from "@ant-design/icons";
 import TreeSearch from "../TreeSearch";
-
 import { TableContext } from "../Table/context";
 import ConfigContext from "../ConfigProvider/context";
-
 import { TableSelectColumnsModalProps } from ".";
-
 import "./index.less";
 
 export interface TableSelectColumnsModalModalProps
@@ -31,7 +28,14 @@ const getColKeysRec = columns => {
 };
 
 export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModalProps> = props => {
-  const { showSelectedCount, locale, withSearch, treeData, onSubmit } = props;
+  const {
+    showSelectedCount,
+    locale,
+    withSearch,
+    treeData,
+    onSubmit,
+    maxCheckedKeys
+  } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
 
@@ -42,13 +46,20 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const visibleColumnsKeys = React.useMemo(
+  const visibleColumnsKeys = useMemo(
     () =>
       props.filterSelectedColumns
         ? props.filterSelectedColumns(checkedKeys)
         : checkedKeys,
     [props.filterSelectedColumns, checkedKeys]
   );
+
+  const selectedInfoClassNames = useMemo(() => {
+    return clsx("select-columns__modal-selected", {
+      "select-columns__modal-selected-warning":
+        visibleColumnsKeys.length > maxCheckedKeys
+    });
+  }, [maxCheckedKeys, visibleColumnsKeys.length]);
 
   const handleApply = useCallback(() => {
     onSubmit && onSubmit(visibleColumnsKeys);
@@ -67,7 +78,15 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     setCheckedKeys(checkedKeys);
     setIsInitialPreset(true);
     setSearchValue("");
-  }, [checkedKeys, dispatch, tableState.forceFetch, onSubmit]);
+  }, [
+    onSubmit,
+    visibleColumnsKeys,
+    props,
+    tableState.dataSource,
+    tableState.forceFetch,
+    dispatch,
+    checkedKeys
+  ]);
 
   const handleCancel = useCallback(() => {
     setIsOpened(false);
@@ -92,7 +111,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     setInitialCheckedKeys(checkedKeysList);
     setIsInitialPreset(false);
     // }
-  }, [tableState.visibleColumnsKeys, baseTableState.columns, getColKeysRec]);
+  }, [tableState.visibleColumnsKeys, baseTableState.columns]);
 
   return (
     <div className="select-columns table-toolbar--right">
@@ -113,7 +132,10 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
         footer={
           <Button
             type="primary"
-            disabled={!visibleColumnsKeys.length}
+            disabled={
+              !visibleColumnsKeys.length ||
+              visibleColumnsKeys.length > maxCheckedKeys
+            }
             onClick={handleApply}
           >
             {translate(locale.apply)}
@@ -130,12 +152,16 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
           onExpand={setExpandedKeys}
           expandedKeys={expandedKeys}
           checkAllTitle={translate(locale.checkAll)}
+          maxCheckedKeys={maxCheckedKeys}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
         {showSelectedCount && (
-          <div className="select-columns__modal-selected">
-            {translate("SELECTED")}: {visibleColumnsKeys.length}
+          <div className={selectedInfoClassNames}>
+            <div className="select-columns__modal-selected-inner">
+              {translate("SELECTED")}: {visibleColumnsKeys.length} /{" "}
+              {maxCheckedKeys}
+            </div>
           </div>
         )}
       </Modal>
@@ -150,5 +176,6 @@ TableSelectColumnsModalModal.defaultProps = {
     openButton: "COLUMNS",
     headerModal: "SELECT_COLUMNS"
   },
-  withSearch: true
+  withSearch: true,
+  maxCheckedKeys: 100
 };

@@ -1,10 +1,7 @@
 import * as React from "react";
 import { useMemo, useContext } from "react";
-
 import { TableSelectColumnsModalModal } from "./Modal";
-
 import { TableContext } from "../Table/context";
-
 import "./index.less";
 
 export interface TableSelectColumnsModalProps {
@@ -17,6 +14,7 @@ export interface TableSelectColumnsModalProps {
   showSelectedCount?: boolean;
   onSubmit?: (selected?: string[]) => void;
   withSearch?: boolean;
+  maxCheckedKeys?: number;
   fetchAfterApply?: (selected: string[], row: any) => boolean;
   filterSelectedColumns?: (selected: string[]) => string[];
 }
