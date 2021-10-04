@@ -162,7 +162,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "@k3rn31p4nic/google-translate-api": "^1.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "clsx": "^1.1.0",
     "country-flag-icons": "^1.2.1",
