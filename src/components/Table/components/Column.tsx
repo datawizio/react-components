@@ -2,11 +2,12 @@ import * as React from "react";
 import { TableContext } from "../context";
 
 import clsx from "clsx";
-import { useDrag, useDrop } from "react-dnd";
+import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useState, useCallback, useMemo, useContext } from "react";
 
 import { IColumn } from "../types";
 import { PropsWithChildren } from "react";
+import { isSafari } from "../../../utils/navigatorInfo";
 
 export interface ColumnProps
   extends PropsWithChildren<any>,
@@ -25,14 +26,33 @@ const Column: React.FC<ColumnProps> = props => {
     onWidthChange,
     ...restProps
   } = props;
+  const isSafariBrowser = isSafari();
   const [lastWidth, setLastWidth] = useState<number>(0);
   const columnRef = React.useRef(null);
 
   const { dispatch } = useContext(TableContext);
 
   const [, dragRef] = useDrag({
-    item: { type: "column", key: model.key, level }
+    item: { type: "column", key: model.key, level },
+    canDrag: !model.fixed
   });
+
+  const autoScrollInSafari = (step = 15) => {
+    if (isSafariBrowser) {
+      return (_: void, m: DropTargetMonitor) => {
+        const scrollDOM = document.querySelector(
+          ".ant-table-content>.dw-table__wrapper"
+        );
+        if (scrollDOM) {
+          const cursor = m.getClientOffset();
+          const rect = scrollDOM.getBoundingClientRect();
+
+          if (cursor.x - rect.left < 60) scrollDOM.scrollLeft -= step;
+          if (rect.right - cursor.x < 60) scrollDOM.scrollLeft += step;
+        }
+      };
+    }
+  };
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: "column",
@@ -43,22 +63,25 @@ const Column: React.FC<ColumnProps> = props => {
       });
     },
     canDrop: droppedItem => {
-      return droppedItem.level === level && droppedItem.key !== model.key;
+      return (
+        droppedItem.level === level &&
+        droppedItem.key !== model.key &&
+        !model.fixed
+      );
     },
     collect: monitor => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
-    })
+    }),
+    hover: autoScrollInSafari()
   });
 
   const dndRef = useCallback(
     ref => {
-      if (!model.fixed) {
-        dragRef(ref);
-        dropRef(ref);
-      }
+      dragRef(ref);
+      dropRef(ref);
     },
-    [model.fixed, dragRef, dropRef]
+    [dragRef, dropRef]
   );
 
   React.useEffect(() => {
