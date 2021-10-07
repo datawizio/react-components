@@ -1,8 +1,9 @@
 import React from "react";
 
-import { Dayjs } from "dayjs";
-import dayjsGenerateConfig from "rc-picker/lib/generate/dayjs";
-import generatePicker from "antd/lib/date-picker/generatePicker";
+import dayjs, { Dayjs } from "dayjs";
+
+import dayjsGenerateConfig from "rc-picker/es/generate/dayjs";
+import generatePicker from "./antd/AntGeneratePicker";
 
 import { retailCalendar } from "../../utils/retailCalendar";
 import "./index.less";
@@ -18,23 +19,30 @@ interface IDatePicker extends ReturnType<typeof generatePicker> {
 }
 
 const retailCalendarConfig = Object.assign({}, dayjsGenerateConfig);
-
-retailCalendarConfig.getEndDate = date => {
-  // console.log(date, calendar.getEndDate(date));
-  return retailCalendar.getEndDate(date);
+dayjsGenerateConfig.isAfter = (date1, date2) => {
+  // console.log(date1, date2, date1.isAfter(date2));
+  return date1.isAfter(date2);
 };
+//@ts-ignore
+dayjsGenerateConfig.getStartOfMonth = date =>
+  dayjsGenerateConfig.setDate(date, 1);
 
-// dayjsGenerateConfig.getWeekDay = date => {
-//   const clone = date.locale("en");
-//   //@ts-ignore
-//   return clone.weekday() + clone.localeData().firstDayOfWeek() - 1;
-// };
+retailCalendarConfig.getEndDate = date => retailCalendar.getEndDate(date);
 
-retailCalendarConfig.getMonth = date => {
-  // console.log(date.format("DD-MM-YYYY"), calendar.getMonth(date));
-  return retailCalendar.getMonth(date);
-  // return date.date() >= 30 ? date.month() + 1 : date.month();
-};
+retailCalendarConfig.getYear = date => retailCalendar.getYear(date);
+
+retailCalendarConfig.getMonth = date =>
+  (retailCalendar.getMonth(date) + 1) % 12;
+//@ts-ignore
+retailCalendarConfig.getStartOfMonth = date =>
+  retailCalendar.getStartOfMonth(date);
+
+//@ts-ignore
+retailCalendarConfig.getMonthWeeksCount = date =>
+  retailCalendar.getMonthWeeksCount(date);
+//@ts-ignore
+retailCalendarConfig.getNextMonth = (date, offset) =>
+  retailCalendar.getNextMonth(date, offset);
 
 const DatePicker: IDatePicker = generatePicker<Dayjs>(dayjsGenerateConfig);
 

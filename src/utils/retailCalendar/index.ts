@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 const format = "DD-MM-YYYY";
+
 class RetailCalendar {
   DAYS_IN_YEAR = 364;
   DAYS_IN_QUARTAL = (4 + 4 + 5) * 7;
@@ -24,6 +25,7 @@ class RetailCalendar {
   }
 
   getMonth(date: Dayjs) {
+    // return date.month();
     const yearNumber = this.getYear(date);
 
     const year = this.calendar[yearNumber];
@@ -44,16 +46,55 @@ class RetailCalendar {
     return (quartal - 1) * 3 + month;
   }
 
+  getMonthWeeksCount(date: Dayjs) {
+    const month = this.getMonth(date);
+
+    let weeks = this.PATTERN[month % 3];
+
+    if (month === 11) {
+      const yearNumber = this.getYear(date);
+      const year = this.calendar[yearNumber];
+
+      if (year.weeks === 53) weeks++;
+    }
+
+    return weeks;
+  }
+
+  getNextMonth(date: Dayjs, offset: number) {
+    // return date.month();
+    let yearNumber = this.getYear(date);
+
+    let month = this.getMonth(date) + offset;
+
+    if (month > 11) {
+      month = month % 12;
+      yearNumber++;
+    } else if (month < 0) {
+      month = 12 + month;
+      yearNumber--;
+    }
+    return this.getStartOfMonthByNumber(yearNumber, month);
+  }
+
   getStartOfMonth(date: Dayjs) {
     if (isNaN(date.month())) return date;
     const month = this.getMonth(date);
+    const year = this.getYear(date);
+    return this.getStartOfMonthByNumber(year, month);
+  }
+
+  getStartOfMonthByNumber(year: number, month: number) {
+    const obj = this.getYearObject(year);
+    // console.log(obj, year);
     const quater = Math.ceil(month / 3);
     const res = month - (quater - 1) * 3;
     let dayInYear = (quater - 1) * this.DAYS_IN_QUARTAL;
     for (let i = 0; i < res; i++) {
       dayInYear += this.PATTERN[i] * 7;
     }
-    return this.startDate.add(dayInYear, "day");
+    const startDate = dayjs(obj.from);
+    return startDate.add(dayInYear, "day");
   }
 
   getStartOfQuater(date: Dayjs) {
@@ -68,6 +109,11 @@ class RetailCalendar {
     if (isNaN(date.month())) return date;
     const yearNumber = this.getYear(date);
     return dayjs(this.calendar[yearNumber].from);
+  }
+
+  getYearObject(year: number) {
+    if (!this.calendar[year]) this._generateCalendar(year);
+    return this.calendar[year];
   }
 
   getYear(date: Dayjs) {
@@ -133,7 +179,7 @@ class RetailCalendar {
           weeks: 52
         };
         clone = clone.add(-(this.DAYS_IN_YEAR - 1), "day");
-        if (clone.month() === 1 && clone.date() >= 5) {
+        if (clone.get("month") === 1 && clone.date() >= 5) {
           clone = clone.add(-7, "day");
           this.calendar[current].weeks = 53;
         }
