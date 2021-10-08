@@ -91,19 +91,20 @@ const Select: FCSelect = props => {
         loadPage(searchValue, page + 1);
       }
     },
-    [loading, page, loadPage]
+    [loading, page, searchValue, isLast, loadPage]
   );
 
   const handleDropdownVisibleChange = useCallback(
     (open: boolean) => {
       if (open && asyncData) {
         loadPage(searchValue, 0);
+        setIsLast(false);
       } else if (!open) {
         setSearchValue("");
         setOptions([]);
       }
     },
-    [asyncData, loadPage]
+    [asyncData, searchValue, loadPage]
   );
 
   const handleSearch = useCallback(
