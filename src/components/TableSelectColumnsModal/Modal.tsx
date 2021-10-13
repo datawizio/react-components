@@ -58,7 +58,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const modalClassNames = useMemo(() => {
     return clsx("select-columns__modal", {
       "select-columns__modal-with-counter": showSelectedCount,
-      "safari": isSafari()
+      "select-columns__modal-safari": isSafari()
     });
   }, [showSelectedCount]);
 
