@@ -9,6 +9,7 @@ import { TableContext } from "../Table/context";
 import ConfigContext from "../ConfigProvider/context";
 import { TableSelectColumnsModalProps } from ".";
 import "./index.less";
+import { isSafari } from "../../utils/navigatorInfo";
 
 export interface TableSelectColumnsModalModalProps
   extends TableSelectColumnsModalProps {
@@ -56,7 +57,8 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
 
   const modalClassNames = useMemo(() => {
     return clsx("select-columns__modal", {
-      "select-columns__modal-with-counter": showSelectedCount
+      "select-columns__modal-with-counter": showSelectedCount,
+      "safari": isSafari()
     });
   }, [showSelectedCount]);
 
