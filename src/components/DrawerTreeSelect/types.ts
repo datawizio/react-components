@@ -76,19 +76,20 @@ export interface DrawerTreeSelectProps<VT>
   /**
    * Event when user click Submit
    */
-  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+  onChange?: (values: SelectValue, selected?: AntTreeNode, extra?: any) => void;
   onChangeReturnObject?: (obj: {
     value: SelectValue;
     level: string | number;
     selected?: AntTreeNode;
+    drawerVisible?: boolean;
   }) => void;
 
   onLevelChange?: (level: string) => void;
 
-  onDrawerCloseCallback?: () => void;
-  onDrawerCancelCallback?: () => void;
-  onDrawerOpenCallback?: () => void;
-  onDrawerSubmitCallback?: () => void;
+  onDrawerCloseCallback?: (payload?: any) => void;
+  onDrawerCancelCallback?: (payload?: any) => void;
+  onDrawerOpenCallback?: (payload?: any) => void;
+  onDrawerSubmitCallback?: (payload?: any) => void;
 }
 
 export interface FCDrawerTreeSelect<VT>

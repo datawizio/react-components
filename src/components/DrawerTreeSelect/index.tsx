@@ -132,7 +132,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       internalLoading,
       internalLevels,
       selectAllState,
-      internalTreeDataCount,
       internalTreeExpandedKeys,
       showSelectAll
     },
@@ -201,14 +200,25 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       inputRef.current = el;
     }
   };
+
   const callOnChange = useCallback(
     (value: any, selected?: any) => {
       if (onChangeReturnObject) {
-        onChangeReturnObject({ value, level: levelSelected.current, selected });
+        if (!value.length && !drawerVisibleRef.current) {
+          resetPrevRefs();
+          markersSelected.current = [];
+        }
+        onChangeReturnObject({
+          value,
+          level: levelSelected.current,
+          selected,
+          drawerVisible: drawerVisibleRef.current
+        });
         return;
       }
       onChange && onChange(value, selected);
     },
+    //eslint-disable-next-line
     [onChangeReturnObject, onChange]
   );
 
@@ -454,12 +464,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     resetPrevRefs();
 
     drawerVisibleRef.current = false;
-    markersSelected.current = [];
 
     onDrawerCloseCallback && onDrawerCloseCallback();
 
     //eslint-disable-next-line
-  }, []);
+  }, [onDrawerCloseCallback]);
 
   const isSelectedAll = useMemo(() => {
     return selectAllState === "checked" && emptyIsAllRef.current;
@@ -491,7 +500,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         }
       });
 
-      onDrawerCancelCallback && onDrawerCancelCallback();
+      onDrawerCancelCallback &&
+        onDrawerCancelCallback({
+          markers: markersSelected.current,
+          treeData: treeData
+        });
 
       closeDrawer();
 
@@ -499,6 +512,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         showAllRef.current = false;
       }, 200);
     }, 100);
+    //eslint-disable-next-line
   }, [multiple, value, dispatch, onDrawerCancelCallback, closeDrawer]);
 
   const handlerDrawerSubmit = useCallback(() => {
@@ -626,13 +640,16 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   };
 
   const handleTreeLoadData = async node => {
-    const index = stateTreeData.findIndex(item => item.pId === node.id);
+    const tree = treeData || stateTreeData;
+
+    const index = tree.findIndex(item => item.pId === node.id);
     if (index !== -1) return;
+
     const data = await loadChildren(node.id, additionalFilters);
 
     dispatch({
       type: "stateTreeData",
-      payload: stateTreeData.concat(data)
+      payload: tree.concat(data)
     });
 
     triggerInputChangeValue(inputRef.current, searchValue.current);
@@ -690,7 +707,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       type: "setState",
       payload: {
         stateTreeData: treeData,
-        internalTreeDataCount: treeDataCount
+        internalTreeDataCount: treeData ? treeData.length : 0
       }
     });
     //eslint-disable-next-line
@@ -863,7 +880,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         "drawer-tree-select": true,
         "drawer-tree-selected-all": isSelectedAll
       })}
-      treeData={stateTreeData}
+      treeData={treeData || stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
       searchValue={searchValue.current ? searchValue.current : ""}

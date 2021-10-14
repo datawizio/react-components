@@ -139,10 +139,10 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
     checkedValue: string,
     selectedItems: Array<string>
   ) => void;
-  onDrawerCloseCallback?: () => void;
-  onDrawerCancelCallback?: () => void;
-  onDrawerOpenCallback?: () => void;
-  onDrawerSubmitCallback?: () => void;
+  onDrawerCloseCallback?: (payload?: any) => void;
+  onDrawerCancelCallback?: (payload?: any) => void;
+  onDrawerOpenCallback?: (payload?: any) => void;
+  onDrawerSubmitCallback?: (payload?: any) => void;
 }
 
 export interface FieldImageProps extends FormFieldProps<string> {}
