@@ -174,10 +174,8 @@
     "react-dnd-html5-backend": "^11.1.3",
     "react-i18next": "^11.7.3",
     "react-loading-skeleton": "^2.1.1",
-    "react-window": "^1.8.6",
     "use-debounce": "^3.4.2",
-    "utility-types": "^3.10.0",
-    "virtuallist-antd": "^0.6.3-beta.2"
+    "utility-types": "^3.10.0"
   },
   "jest-junit": {
     "suiteNameTemplate": "{filepath}",
