@@ -29,7 +29,7 @@ const getColKeysRec = columns => {
 };
 
 export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModalProps> = props => {
-  const {
+  let {
     showSelectedCount,
     locale,
     withSearch,
@@ -39,6 +39,28 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
+
+  const columnsCount = useMemo(() => {
+    let count = 0;
+    function dig(items) {
+      items.forEach(item => {
+        if (
+          item.children &&
+          Array.isArray(item.children) &&
+          item.children.length > 0
+        ) {
+          dig(item.children);
+        } else {
+          count++;
+        }
+      });
+    }
+    dig(treeData);
+
+    return count;
+  }, [treeData]);
+
+  if (columnsCount < maxCheckedKeys) maxCheckedKeys = columnsCount;
 
   const [isOpened, setIsOpened] = useState(false);
   const [isInitialPreset, setIsInitialPreset] = useState(true);

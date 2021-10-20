@@ -94,7 +94,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
   const { translate } = useContext(ConfigContext);
   const timeout = useRef<NodeJS.Timeout>();
 
-  const [internalCheckedKeys, setInternalCheckedKeys] = useState<ReactText[]>(
+  const [internalCheckedKeys, setInternalCheckedKeys] = useState<any>(
     //@ts-ignore
     checkedKeys
   );
@@ -110,17 +110,14 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     return searchCondition ? searchCondition : defaultSearchCondition;
   }, [searchCondition]);
 
-  const setDisabledStatus = useCallback(
-    (treeData: any, status: boolean) => {
-      treeData.forEach(node => {
-        if (node.children?.length) {
-          node.disabled = status;
-          setDisabledStatus(node.children, status);
-        }
-      });
-    },
-    []
-  );
+  const setDisabledStatus = useCallback((treeData: any, status: boolean) => {
+    treeData.forEach(node => {
+      if (node.children?.length) {
+        node.disabled = status;
+        setDisabledStatus(node.children, status);
+      }
+    });
+  }, []);
 
   const mergedTreeData = useMemo(() => {
     searchValue
@@ -178,31 +175,6 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     []
   );
 
-  const recUp = useCallback(
-    (
-      node: AntTreeNodePropsExtended,
-      value: boolean,
-      nextCheckedKeysSet: Set<string>
-    ) => {
-      const parent = flatData.find(
-        item => item.key === node.parentKey || item.key === node.pId
-      );
-
-      if (!parent || !parent.key || parent.key === "-1") return;
-
-      const checked: boolean = parent.children.every(child =>
-        nextCheckedKeysSet.has(child.key)
-      );
-
-      checked
-        ? nextCheckedKeysSet.add(parent.key)
-        : nextCheckedKeysSet.delete(parent.key);
-
-      recUp(parent, value, nextCheckedKeysSet);
-    },
-    [flatData]
-  );
-
   const handleTreeCheck = useCallback(
     (keys, e) => {
       let nextKeys;
@@ -230,7 +202,6 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       }
 
       const nextCheckedKeysSet = new Set<string>(nextKeys);
-
       if (searchValue || event === "select") {
         checked
           ? nextCheckedKeysSet.add(node.key)
@@ -240,21 +211,16 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           recDown(node.children, checked, nextCheckedKeysSet);
         }
 
-        if (node.parentKey || node.pId) {
-          recUp(node, checked, nextCheckedKeysSet);
-        }
-
         nextKeys = Array.from(nextCheckedKeysSet);
       }
 
       const allIdx = nextKeys.findIndex(key => key === "-1");
       if (allIdx !== -1) nextKeys.splice(allIdx, 1);
-
       setInternalCheckedKeys(nextKeys);
 
       onCheck && onCheck(nextKeys, e);
     },
-    [onCheck, recDown, recUp, searchValue]
+    [onCheck, recDown, searchValue]
   );
 
   const handleTreeSelect = useCallback(
