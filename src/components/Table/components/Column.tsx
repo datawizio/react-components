@@ -38,20 +38,19 @@ const Column: React.FC<ColumnProps> = props => {
   });
 
   const autoScrollInSafari = (step = 15) => {
-    if (isSafariBrowser) {
-      return (_: void, m: DropTargetMonitor) => {
-        const scrollDOM = document.querySelector(
-          ".ant-table-content>.dw-table__wrapper"
-        );
-        if (scrollDOM) {
-          const cursor = m.getClientOffset();
-          const rect = scrollDOM.getBoundingClientRect();
+    return (_: void, m: DropTargetMonitor) => {
+      const tableDOMWrapper = columnRef.current.closest(
+        ".ant-table-content>.dw-table__wrapper"
+      );
 
-          if (cursor.x - rect.left < 60) scrollDOM.scrollLeft -= step;
-          if (rect.right - cursor.x < 60) scrollDOM.scrollLeft += step;
-        }
-      };
-    }
+      if (tableDOMWrapper) {
+        const cursor = m.getClientOffset();
+        const rect = tableDOMWrapper.getBoundingClientRect();
+
+        if (cursor.x - rect.left < 60) tableDOMWrapper.scrollLeft -= step;
+        if (rect.right - cursor.x < 60) tableDOMWrapper.scrollLeft += step;
+      }
+    };
   };
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
@@ -73,11 +72,12 @@ const Column: React.FC<ColumnProps> = props => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
     }),
-    hover: autoScrollInSafari()
+    hover: isSafariBrowser && autoScrollInSafari()
   });
 
   const dndRef = useCallback(
     ref => {
+      columnRef.current = ref;
       dragRef(ref);
       dropRef(ref);
     },
@@ -101,15 +101,9 @@ const Column: React.FC<ColumnProps> = props => {
     }
   }, [model.originalKey, model.key, onWidthChange]);
 
-  const onMouseDownHandler = useCallback(
-    event => {
-      if (onWidthChange) {
-        columnRef.current = event.target;
-      }
-      setLastWidth(event.target.offsetWidth);
-    },
-    [onWidthChange]
-  );
+  const onMouseDownHandler = useCallback(event => {
+    setLastWidth(event.target.offsetWidth);
+  }, []);
 
   const onClickHandler = useCallback(
     event => {
