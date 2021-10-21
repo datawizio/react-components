@@ -175,6 +175,31 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     []
   );
 
+  const recUp = useCallback(
+    (
+      node: AntTreeNodePropsExtended,
+      value: boolean,
+      nextCheckedKeysSet: Set<string>
+    ) => {
+      const parent = flatData.find(
+        item => item.key === node.parentKey || item.key === node.pId
+      );
+
+      if (!parent || !parent.key || parent.key === "-1") return;
+
+      const checked: boolean = parent.children.every(child =>
+        nextCheckedKeysSet.has(child.key)
+      );
+
+      checked
+        ? nextCheckedKeysSet.add(parent.key)
+        : nextCheckedKeysSet.delete(parent.key);
+
+      recUp(parent, value, nextCheckedKeysSet);
+    },
+    [flatData]
+  );
+
   const handleTreeCheck = useCallback(
     (keys, e) => {
       let nextKeys;
@@ -211,6 +236,10 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
           recDown(node.children, checked, nextCheckedKeysSet);
         }
 
+        if (node.parentKey || node.pId) {
+          recUp(node, checked, nextCheckedKeysSet);
+        }
+
         nextKeys = Array.from(nextCheckedKeysSet);
       }
 
@@ -220,7 +249,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
 
       onCheck && onCheck(nextKeys, e);
     },
-    [onCheck, recDown, searchValue]
+    [onCheck, recUp, recDown, searchValue]
   );
 
   const handleTreeSelect = useCallback(
