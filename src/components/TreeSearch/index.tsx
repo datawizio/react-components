@@ -123,6 +123,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     searchValue
       ? setDisabledStatus(treeData, true)
       : setDisabledStatus(treeData, false);
+
     return filterOptions(searchValue, treeData, {
       optionFilterProp: "title",
       filterOption: internalSearchCondition
