@@ -8,13 +8,14 @@ import TreeSearch from "../TreeSearch";
 import { TableContext } from "../Table/context";
 import ConfigContext from "../ConfigProvider/context";
 import { TableSelectColumnsModalProps } from ".";
-import "./index.less";
 import { isSafari } from "../../utils/navigatorInfo";
+import "./index.less";
 
 export interface TableSelectColumnsModalModalProps
   extends TableSelectColumnsModalProps {
   treeData: any;
   context?: any;
+  additionalVisibleColumns?: string[];
 }
 
 const getColKeysRec = columns => {
@@ -35,7 +36,9 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     withSearch,
     treeData,
     onSubmit,
-    maxCheckedKeys
+    maxCheckedKeys,
+    filterSelectedColumns,
+    additionalVisibleColumns
   } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
@@ -69,13 +72,22 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const visibleColumnsKeys = useMemo(
-    () =>
-      props.filterSelectedColumns
-        ? props.filterSelectedColumns(checkedKeys)
-        : checkedKeys,
-    [props.filterSelectedColumns, checkedKeys]
-  );
+  const visibleColumnsKeys = useMemo(() => {
+    const metricColumns = filterSelectedColumns
+      ? filterSelectedColumns(checkedKeys)
+      : checkedKeys;
+    return additionalVisibleColumns
+      ? metricColumns.concat(additionalVisibleColumns)
+      : metricColumns;
+  }, [filterSelectedColumns, checkedKeys, additionalVisibleColumns]);
+
+  const visibleColumnsKeysLength = useMemo(() => {
+    const additionalColumnsLength =
+      additionalVisibleColumns && additionalVisibleColumns.length;
+    return additionalColumnsLength
+      ? visibleColumnsKeys.length - additionalColumnsLength
+      : visibleColumnsKeys.length;
+  }, [visibleColumnsKeys, additionalVisibleColumns]);
 
   const modalClassNames = useMemo(() => {
     return clsx("select-columns__modal", {
@@ -87,9 +99,9 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const selectedInfoClassNames = useMemo(() => {
     return clsx("select-columns__modal-selected", {
       "select-columns__modal-selected-warning":
-        visibleColumnsKeys.length > maxCheckedKeys
+        visibleColumnsKeysLength > maxCheckedKeys
     });
-  }, [maxCheckedKeys, visibleColumnsKeys.length]);
+  }, [maxCheckedKeys, visibleColumnsKeysLength]);
 
   const handleApply = useCallback(() => {
     onSubmit && onSubmit(visibleColumnsKeys);
@@ -163,8 +175,8 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
           <Button
             type="primary"
             disabled={
-              !visibleColumnsKeys.length ||
-              visibleColumnsKeys.length > maxCheckedKeys
+              !visibleColumnsKeysLength ||
+              visibleColumnsKeysLength > maxCheckedKeys
             }
             onClick={handleApply}
           >
@@ -189,7 +201,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
         {showSelectedCount && (
           <div className={selectedInfoClassNames}>
             <div className="select-columns__modal-selected-inner">
-              {translate("SELECTED")}: {visibleColumnsKeys.length} /{" "}
+              {translate("SELECTED")}: {visibleColumnsKeysLength} /{" "}
               {maxCheckedKeys}
             </div>
           </div>
