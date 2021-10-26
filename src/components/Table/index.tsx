@@ -44,10 +44,14 @@ import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
 import { isSafari } from "../../utils/navigatorInfo";
 import Row from "./components/Row";
+import { VList } from "./components/VList";
+import { HeaderWrapper } from "./components/HeaderWrapper";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
     errorRender,
+    vid,
+    virtual,
     style,
     width,
     height,
@@ -194,14 +198,36 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     [state.loadingRows]
   );
 
-  const customComponents = useMemo<TableProps["components"]>(
-    () => ({
+  const customComponents = useMemo<TableProps["components"]>(() => {
+    if (virtual) {
+      return {
+        header: {
+          wrapper: HeaderWrapper,
+          cell: props => {
+            return Boolean(props.model) ? (
+              <Column
+                {...props}
+                isHeader
+                onWidthChange={onColumnWidthChange ?? (() => {})}
+              />
+            ) : (
+              <th {...props} />
+            );
+          }
+        },
+        ...VList({
+          height: height, // 此值和scrollY值相同. 必传. (required).  same value for scrolly
+          vid: vid
+        })
+      };
+    }
+    return {
       ...components,
       table: props => <TableWrapper {...props} style={{ height, width }} />,
       header: {
         cell: props => {
           return Boolean(props.model) ? (
-            <Column {...props} onWidthChange={onColumnWidthChange} />
+            <Column isHeader {...props} onWidthChange={onColumnWidthChange} />
           ) : (
             <th {...props} />
           );
@@ -211,9 +237,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         cell: props => <Cell {...props} />,
         row: props => <Row {...props} isTotalRow={isTotalRow} />
       }
-    }),
-    [height, width, components]
-  );
+    };
+  }, [height, width, components, virtual]);
 
   const className = useMemo(
     () =>
@@ -279,6 +304,14 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
               <AntdTable
                 {...restProps}
                 {...state}
+                scroll={
+                  virtual
+                    ? {
+                        y: height, // 滚动的高度, 可以是受控属性。 (number | string) be controlled.
+                        x: 500
+                      }
+                    : undefined
+                }
                 expandIcon={expandIconRender}
                 className={className}
                 onExpand={handleExpandRow}
