@@ -10,7 +10,6 @@ import React, {
 } from "react";
 import { throttle, isNumber } from "lodash-es";
 
-import "./style.css";
 import { VWrapper } from "./Wrapper";
 import Cell from "../Cell";
 import { TableContext } from "../../context";
