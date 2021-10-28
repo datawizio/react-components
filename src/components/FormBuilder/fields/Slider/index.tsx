@@ -4,7 +4,7 @@ import { FieldSliderProps } from "../../types";
 import "./styles.less";
 
 export const FieldSlider: React.FC<FieldSliderProps> = React.memo(
-  ({ name, label, min, max, step, onChange }) => {
+  ({ name, label, min, max, step, rules, onChange }) => {
     const handleChange = value => {
       onChange({
         name,
@@ -14,7 +14,12 @@ export const FieldSlider: React.FC<FieldSliderProps> = React.memo(
 
     return (
       <div className="dw-slider">
-        <Form.Item name={name} label={label} className="dw-slider-input">
+        <Form.Item
+          rules={rules}
+          name={name}
+          label={label}
+          className="dw-slider-input"
+        >
           <InputNumber
             min={min}
             max={max}
