@@ -5,7 +5,7 @@ exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with custom props a
   className="drawer-tree-select"
   dropdownClassName="drawer-tree-select-dropdown-fake"
   dropdownRender={[Function]}
-  listHeight={564}
+  listHeight={520}
   loadData={null}
   maxTagCount={10}
   maxTagPlaceholder={[Function]}
@@ -30,7 +30,7 @@ exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with defaul props 1
   className="drawer-tree-select"
   dropdownClassName="drawer-tree-select-dropdown-fake"
   dropdownRender={[Function]}
-  listHeight={564}
+  listHeight={520}
   loadData={null}
   maxTagCount={10}
   maxTagPlaceholder={[Function]}
