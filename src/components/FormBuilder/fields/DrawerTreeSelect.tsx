@@ -1,9 +1,6 @@
 import React from "react";
-
 import { Form } from "antd";
-
 import DrawerTreeSelect from "../../DrawerTreeSelect";
-
 import { FieldDrawerTreeSelectProps } from "../types";
 
 export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({

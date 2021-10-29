@@ -118,6 +118,8 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   treeDataCount?: number;
   loading?: boolean;
   showLevels?: boolean;
+  showMarkers?: boolean;
+  markersTree?: any;
   showSelectAll?: boolean;
   showCheckAll?: boolean;
   isFlatList?: boolean;
@@ -131,8 +133,8 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   treeDefaultExpandAll?: boolean;
   loadData?: (filters: any) => Promise<any>;
   loadChildren?: (id: string) => Promise<any>;
-  markersRender?: ({ props }: any) => React.ReactElement;
-  selectedMarkers?: string[];
+  loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
+  selectedMarkers?: string[] | number[];
 
   dependentItems?: Array<any>;
   onCheckedDependentValue?: (
