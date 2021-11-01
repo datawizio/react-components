@@ -491,7 +491,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [onDrawerCloseCallback]);
 
   const isSelectedAll = useMemo(() => {
-    return selectAllState === "checked" && emptyIsAllRef.current;
+    return (
+      selectAllState === "checked" &&
+      emptyIsAllRef.current &&
+      !markersSelected.current
+    );
   }, [selectAllState]);
 
   //  -------- HANDLERS --------
