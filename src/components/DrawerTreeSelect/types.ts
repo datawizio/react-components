@@ -5,7 +5,7 @@ import { TreeSelectProps as AntTreeSelectProps } from "./antd/AntTreeSelect";
 import { AntTreeNode } from "antd/lib/tree";
 
 export interface IDrawerTreeSelectFilters {
-  shop_markers?: string[];
+  shop_markers?: string[] | number[];
   search?: string;
   level?: string | number;
   value?: SelectValue;
@@ -36,11 +36,18 @@ export interface DrawerTreeSelectProps<VT>
   drawerWidth?: number;
 
   /**
-   * Показать выбор левелов
+   * Показать выбор уровней
    */
   showLevels?: boolean;
 
+  /**
+   * Показать выбор маркеров
+   */
+  showMarkers?: boolean;
+
   levels?: LevelsType;
+
+  markersTree?: any;
 
   level?: string | number;
 
@@ -66,13 +73,13 @@ export interface DrawerTreeSelectProps<VT>
 
   emptyIsAll?: boolean;
 
-  selectedMarkers?: string[];
-
-  markersRender?: ((props: MarkersRenderProps) => React.ReactElement) | null;
+  selectedMarkers?: string[] | number[];
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
 
   loadChildren?: (nodeId: string, filters?: any) => Promise<any>;
+
+  loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
   /**
    * Event when user click Submit
    */
@@ -80,11 +87,13 @@ export interface DrawerTreeSelectProps<VT>
   onChangeReturnObject?: (obj: {
     value: SelectValue;
     level: string | number;
+    markers: string[] | number[];
     selected?: AntTreeNode;
     drawerVisible?: boolean;
   }) => void;
 
   onLevelChange?: (level: string) => void;
+  onMarkerChange?: (markers: any) => void;
 
   onDrawerCloseCallback?: (payload?: any) => void;
   onDrawerCancelCallback?: (payload?: any) => void;

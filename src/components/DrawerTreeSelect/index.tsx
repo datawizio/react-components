@@ -21,6 +21,7 @@ import { DataNode } from "rc-tree-select/es/interface";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
 import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
+import { Markers } from "./Markers";
 import "./index.less";
 
 /**********************************************************************************************************************/
@@ -78,11 +79,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   additionalFilters,
   asyncData,
   showLevels,
+  showMarkers,
+  markersTree,
   levels,
   level,
   drawerTitle,
   drawerWidth,
-  markersRender,
   selectedMarkers,
   headerHeight,
   treeDefaultExpandedKeys,
@@ -96,12 +98,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   onCheckedDependentValue,
   onChangeReturnObject,
   onLevelChange,
+  onMarkerChange,
   onDrawerCloseCallback,
   onDrawerCancelCallback,
   onDrawerOpenCallback,
   onDrawerSubmitCallback,
   loadData,
   loadChildren,
+  loadMarkersChildren,
   showCheckedStrategy,
   multiple,
   remoteSearch,
@@ -154,8 +158,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const mainLevelItems = useRef<Set<string>>();
   const allLeafItems = useRef<string[]>([]);
 
-  const markersSelected = useRef<string[]>(selectedMarkers || []);
-  const markersChanged = useRef<boolean>(false);
+  const markersSelected = useRef<string[] | number[]>(selectedMarkers || []);
+  const markersChanged = useRef<boolean>(!!selectedMarkers?.length);
 
   const searchValue = useRef<string>();
   const levelSelected = useRef<string | number | null>(
@@ -165,7 +169,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const prevTreeData = useRef<DataNode[]>();
   const prevLevel = useRef<string | number>();
-  const prevMarkersSelected = useRef<string[]>();
+  const prevMarkersSelected = useRef<string[] | number[]>();
   const prevEmptyIsAllRef = useRef<boolean>();
 
   const drawerVisibleRef = useRef<boolean>(false);
@@ -204,18 +208,30 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const callOnChange = useCallback(
     (value: any, selected?: any) => {
       if (onChangeReturnObject) {
-        if (!value.length && !drawerVisibleRef.current) {
+        // if "Clear All" button is pressed -
+        // reset markers & tree data
+        if (
+          !value.length &&
+          !drawerVisibleRef.current &&
+          markersSelected.current?.length
+        ) {
           resetPrevRefs();
           markersSelected.current = [];
+          markersChanged.current = false;
+          internalLoadData();
         }
+
         onChangeReturnObject({
           value,
           level: levelSelected.current,
+          markers: markersSelected.current,
           selected,
           drawerVisible: drawerVisibleRef.current
         });
+
         return;
       }
+
       onChange && onChange(value, selected);
     },
     //eslint-disable-next-line
@@ -249,7 +265,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       filters.level = levelSelected.current;
     }
 
-    if (markersRender) {
+    if (showMarkers) {
       filters.shop_markers = markersSelected.current;
     }
 
@@ -277,12 +293,15 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       });
 
       const { data, levels, expanded, count } = await loadData(filters);
+
       if (levels && levels.length === 1) {
         levelSelected.current = levels[0].value;
       }
+
       if (showCheckedStrategy === "SHOW_CHILD") {
         allLeafItems.current = getAllLeafItems(data);
       }
+
       mainLevelItems.current = getMainLevelItems(data, levelSelected.current);
 
       const newState: any = {
@@ -312,6 +331,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           // clear internal value if all markers removed
           if (!markersSelected.current?.length) {
             newState.internalValue = [];
+            markersChanged.current = false;
           }
         }
 
@@ -347,7 +367,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       );
     },
     //eslint-disable-next-line
-    [loadData, showLevels, markersRender, remoteSearch, internalValue, value]
+    [loadData, showLevels, remoteSearch, internalValue, value]
   );
 
   const checkSelectAllStatus = (
@@ -521,16 +541,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       internalLoadData();
     }
 
-    let payload = {} as any;
-    if (markersSelected?.current?.length) {
-      payload.stateTreeData = prevTreeData.current;
-    }
-
     closeDrawer();
 
     dispatch({
-      type: "drawerSubmit",
-      payload
+      type: "drawerSubmit"
     });
 
     triggerOnChange(internalValue);
@@ -625,6 +639,17 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     },
     [dispatch]
   );
+
+  const handleMarkersChange = (markers: string[] | number[]) => {
+    markersSelected.current = markers;
+    onMarkerChange && onMarkerChange(markers);
+    dispatch({
+      type: "setState",
+      payload: { internalValue: [] }
+    });
+    markersChanged.current = true;
+    internalLoadData(false, []);
+  };
 
   const handleLevelChange = (level: string) => {
     levelSelected.current = level;
@@ -759,19 +784,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     return <Tag>{`+${props.length}...`}</Tag>;
   };
 
-  const markers = useMemo(() => {
-    if (!markersRender) return null;
-    return markersRender({
-      onChange: (selected: string[]) => {
-        markersSelected.current = selected;
-        markersChanged.current = true;
-        internalLoadData().then(() => {
-          markersChanged.current = false;
-        });
-      }
-    });
-  }, [markersRender, internalLoadData]);
-
   const dropdownRender = useCallback(
     menu => {
       return (
@@ -796,7 +808,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             </>
           }
         >
-          {markers}
+          {showMarkers ? (
+            <Markers
+              treeData={markersTree}
+              value={markersSelected.current}
+              onChange={handleMarkersChange}
+              loadChildren={loadMarkersChildren}
+            />
+          ) : null}
           {isLevelShowed ? (
             <Levels
               onChange={handleLevelChange}
@@ -809,9 +828,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             value={searchValue.current}
             onChange={handlerSearchInputChange}
             loading={internalLoading}
+            className={clsx({
+              "search-mode": searchValue.current
+            })}
           />
-          <div className="drawer-tree-select-dropdown-toolbar">
-            {showSelectAll && !searchValue.current && (
+          {showSelectAll && !searchValue.current && (
+            <div className="drawer-tree-select-dropdown-toolbar">
               <Checkbox
                 onChange={handleSelectAllChange}
                 checked={selectAllState === "checked"}
@@ -819,8 +841,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               >
                 {selectAllText}
               </Checkbox>
-            )}
-          </div>
+            </div>
+          )}
           {fakeVisible ? menu : ""}
           <div className="drawer-select-loader-container">
             {internalLoading && (
@@ -838,7 +860,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
                 {translate("SELECTED")}
               </div>
               <div className="drawer-tree-select-selected-count">
-                {selectAllState === "checked" && !selectedMarkers?.length
+                {selectAllState === "checked" && !markersChanged.current
                   ? selectAllText
                   : internalValue
                   ? internalValue.length
@@ -867,7 +889,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     window.innerHeight -
     (headerHeight ? headerHeight : 0) -
     204 -
-    (markersRender === null ? 0 : 44) -
+    (showMarkers === null ? 0 : 44) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
 
@@ -912,10 +934,10 @@ DrawerTreeSelect.defaultProps = {
   maxTagCount: 10,
   treeDataCount: 0,
   showLevels: false,
+  showMarkers: false,
   isFlatList: false,
   drawerTitle: "",
   drawerWidth: 400,
-  markersRender: null,
   remoteSearch: false,
   showSelectAll: false,
   emptyIsAll: false,
