@@ -45,6 +45,8 @@ export interface DrawerTreeSelectProps<VT>
    */
   showMarkers?: boolean;
 
+  markersRender?: ((props: MarkersRenderProps) => React.ReactElement) | null;
+
   levels?: LevelsType;
 
   markersTree?: any;
