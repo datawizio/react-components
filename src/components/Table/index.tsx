@@ -251,7 +251,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--responsive-columns": responsiveColumns,
           "dw-table--auto-col-width": autoColWidth,
           "dw-table--compress-columns": compressColumns,
-          "dw-table--safari": isSafari()
+          "dw-table--safari": isSafari(),
+          "dw-table--virtual": virtual
         },
         props.className
       ),
