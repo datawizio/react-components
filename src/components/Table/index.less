@@ -297,6 +297,17 @@
       }
     }
   }
+  &--virtual {
+    .ant-table-header {
+      colgroup {
+        display: none;
+      }
+      .ant-table-thead > tr > th.ant-table-cell.ant-table-cell-scrollbar {
+        width: 8px;
+        padding: 0;
+      }
+    }
+  }
 }
 
 .set-columns-positions(@n, @size, @i: 2) when (@i =< @n) {
