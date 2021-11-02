@@ -80,6 +80,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   asyncData,
   showLevels,
   showMarkers,
+  markersRender,
   markersTree,
   levels,
   level,
@@ -265,7 +266,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       filters.level = levelSelected.current;
     }
 
-    if (showMarkers) {
+    if (showMarkers || markersRender) {
       filters.shop_markers = markersSelected.current;
     }
 
@@ -367,7 +368,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       );
     },
     //eslint-disable-next-line
-    [loadData, showLevels, remoteSearch, internalValue, value]
+    [loadData, showLevels, markersRender, remoteSearch, internalValue, value]
   );
 
   const checkSelectAllStatus = (
@@ -812,6 +813,17 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             </>
           }
         >
+          {markersRender
+            ? markersRender({
+                onChange: (selected: string[]) => {
+                  markersSelected.current = selected;
+                  markersChanged.current = true;
+                  internalLoadData().then(() => {
+                    markersChanged.current = false;
+                  });
+                }
+              })
+            : null}
           {showMarkers ? (
             <Markers
               treeData={markersTree}
@@ -893,7 +905,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     window.innerHeight -
     (headerHeight ? headerHeight : 0) -
     204 -
-    (showMarkers === null ? 0 : 44) -
+    (showMarkers || markersRender ? 44 : 0) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
 
@@ -939,6 +951,7 @@ DrawerTreeSelect.defaultProps = {
   treeDataCount: 0,
   showLevels: false,
   showMarkers: false,
+  markersRender: null,
   isFlatList: false,
   drawerTitle: "",
   drawerWidth: 400,

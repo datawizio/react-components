@@ -118,6 +118,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   treeDataCount?: number;
   loading?: boolean;
   showLevels?: boolean;
+  markersRender?: ({ props }: any) => React.ReactElement;
   showMarkers?: boolean;
   markersTree?: any;
   showSelectAll?: boolean;
