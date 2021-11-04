@@ -16,6 +16,7 @@ export interface TableSelectColumnsModalModalProps
   treeData: any;
   context?: any;
   additionalVisibleColumns?: string[];
+  titleRender?: any;
 }
 
 const getColKeysRec = columns => {
@@ -38,7 +39,8 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     onSubmit,
     maxCheckedKeys,
     filterSelectedColumns,
-    additionalVisibleColumns
+    additionalVisibleColumns,
+    titleRender
   } = props;
   const { translate } = useContext(ConfigContext);
   const { tableState, dispatch, baseTableState } = useContext(TableContext);
@@ -197,6 +199,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
           maxCheckedKeys={maxCheckedKeys}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
+          titleRender={titleRender}
         />
         {showSelectedCount && (
           <div className={selectedInfoClassNames}>
