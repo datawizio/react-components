@@ -42,7 +42,7 @@ export function translateColumns(columns: Array<IColumn>) {
     nextColumn.title = i18n.t(column.title as string);
 
     if (column.children && column.children.length) {
-      translateColumns(column.children);
+      nextColumn.children = translateColumns(column.children);
     }
 
     if (column.filters) {
