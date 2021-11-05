@@ -759,7 +759,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   // -------- RENDERS ---------
 
-  const tagRender = props => {
+  const tagRender = ({ label, closable, onClose }) => {
+    const maxLength = 20;
+
     if (internalLoading) {
       return (
         <span className="ant-select-selection-placeholder">{loadingText}</span>
@@ -774,11 +776,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     return (
       <span className="ant-select-selection-item">
         <Tag
-          closable={props.closable}
-          onClose={props.onClose}
+          closable={closable}
+          onClose={onClose}
           className="ant-select-selection-item-content"
         >
-          {props.label}
+          {label?.length > maxLength ? `${label.slice(0, maxLength)}...` : label}
         </Tag>
       </span>
     );
