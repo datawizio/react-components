@@ -479,8 +479,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   // -------- RENDERS ---------
 
   const tagRender = useCallback(
-    props => {
-      const isLongTag = props.label?.length > 50;
+    ({ label, closable, onClose }) => {
+      const maxLength = 20;
+      const isLongTag = label?.length > maxLength;
+
       if (!optionsState || optionsState.length === 0) {
         return (
           <span className="ant-select-selection-placeholder">
@@ -488,15 +490,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           </span>
         );
       }
+
       return (
         <span className="ant-select-selection-item">
           <Tag
-            closable={props.closable}
-            onClose={props.onClose}
+            closable={closable}
+            onClose={onClose}
             className="ant-select-selection-item-content"
-            title={props.label}
+            title={label}
           >
-            {isLongTag ? `${props.label.slice(0, 50)}...` : props.label}
+            {isLongTag ? `${label.slice(0, maxLength)}...` : label}
           </Tag>
         </span>
       );
