@@ -76,6 +76,7 @@ export interface FieldSelectProps extends FormFieldProps<string> {
   mode?: "multiple" | "tags";
   showSearch?: boolean;
   allowClear?: boolean;
+  getPopupContainer?: () => HTMLElement | null;
 }
 
 export interface FieldSliderProps extends FormFieldProps<string | number> {
