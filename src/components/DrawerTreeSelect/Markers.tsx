@@ -37,6 +37,7 @@ export const Markers: React.FC<MarkersProps> = React.memo(
         loadData={loadData}
         onChange={handleChange}
         filterTreeNode={handleSearch}
+        className="select-markers-field"
       />
     );
   }
