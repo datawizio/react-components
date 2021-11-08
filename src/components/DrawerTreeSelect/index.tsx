@@ -780,7 +780,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           onClose={onClose}
           className="ant-select-selection-item-content"
         >
-          {label?.length > maxLength ? `${label.slice(0, maxLength)}...` : label}
+          {label?.length > maxLength
+            ? `${label.slice(0, maxLength)}...`
+            : label}
         </Tag>
       </span>
     );
@@ -903,11 +905,18 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     ]
   );
 
+  const getMarkersFieldHeight = () => {
+    return (
+      document.getElementsByClassName("select-markers-field")[0]
+        ?.clientHeight + 12 || 44
+    );
+  };
+
   const listHeight =
     window.innerHeight -
     (headerHeight ? headerHeight : 0) -
     204 -
-    (showMarkers || markersRender ? 44 : 0) -
+    (showMarkers || markersRender ? getMarkersFieldHeight() : 0) -
     (isLevelShowed ? 44 : 0) -
     (showSelectAll ? 34 : 0);
 
