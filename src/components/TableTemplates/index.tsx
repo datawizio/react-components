@@ -77,7 +77,10 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   );
 
   const [templates, setTemplates] = useState([]);
-  const [value, setValue] = useState<string>(null);
+  const [
+    selectedTemplate,
+    setSelectedTemplate
+  ] = useState<TableTemplate | null>(null);
 
   const setTemplateToState = useCallback(
     template => {
@@ -100,14 +103,15 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         payload: { ...template.state, sortParams }
       });
     },
-    [dispatch]
+    [dispatch, fetchAfterApply, props.sortFirstColumn, tableState.forceFetch]
   );
 
   const handleSelect = useCallback(
-    value => {
-      const template = templates.find(template => template.title === value);
+    id => {
+      if (!id) return;
+      const template = templates.find(template => template.id === id);
       onSelect && onSelect(template);
-      setValue(template.title);
+      setSelectedTemplate(template);
       setTemplateToState(template);
     },
     [templates, setTemplateToState, onSelect]
@@ -118,7 +122,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       setTemplates(templates =>
         templates.map(item => ({
           ...item,
-          favorite: item.title === template.title && !item.favorite
+          favorite: item.id === template.id && !item.favorite
         }))
       );
       onSelectFavorite && onSelectFavorite(template);
@@ -126,22 +130,13 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     [onSelectFavorite]
   );
 
-  const handleDelete = useCallback(
-    template => {
-      setTemplates(templates =>
-        templates.filter(item => item.id !== template.id)
-      );
-      value === template.title && setValue(null);
-      onDelete && onDelete(template);
-    },
-    [onDelete, value]
-  );
-
   const handleClear = useCallback(
     e => {
-      e.stopPropagation();
-      e.preventDefault();
-      setValue(null);
+      e?.stopPropagation();
+      e?.preventDefault();
+
+      setSelectedTemplate(null);
+
       if (fetchAfterApply) {
         const state = {
           forceFetch: tableState.forceFetch + 1,
@@ -157,12 +152,32 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
       dispatch({ type: "filter", payload: {} });
     },
-    [tableState.forceFetch]
+    [
+      dispatch,
+      fetchAfterApply,
+      tableProps.visibleColumnsKeys,
+      tableState.forceFetch
+    ]
+  );
+
+  const handleDelete = useCallback(
+    template => {
+      setTemplates(templates =>
+        templates.filter(item => item.id !== template.id)
+      );
+
+      if (selectedTemplate?.id === template.id) {
+        handleClear(null);
+      }
+
+      onDelete && onDelete(template);
+    },
+    [handleClear, onDelete, selectedTemplate]
   );
 
   const handleCreate = useCallback(
     async title => {
-      let template = {
+      let template: TableTemplate = {
         title,
         favorite: false,
         state: pickState(tableState, baseTableState)
@@ -172,7 +187,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         const createResponse = await onCreate(template);
         if (createResponse) template = createResponse;
       }
-      setValue(title);
+
+      setSelectedTemplate(template);
       setTemplates(templates => templates.concat(template));
     },
     [tableState, baseTableState, onCreate]
@@ -183,7 +199,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       const favorite = templates.find(template => template.favorite);
 
       if (favorite && favorite.state) {
-        setValue(favorite.title);
+        setSelectedTemplate(favorite);
         setTemplateToState(favorite);
       }
 
@@ -202,28 +218,28 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   const className = useMemo(() => {
     return clsx("table-templates", "table-toolbar--right", {
-      "table-templates--selected": Boolean(value)
+      "table-templates--selected": Boolean(selectedTemplate)
     });
-  }, [value]);
+  }, [selectedTemplate]);
 
   return (
     <div
       className={className}
       title={translate(
-        value ? "CHANGE_TEMPLATE_BTN_TITLE" : "TEMPLATES_BTN_TITLE"
+        selectedTemplate ? "CHANGE_TEMPLATE_BTN_TITLE" : "TEMPLATES_BTN_TITLE"
       )}
     >
       <Select
         listHeight={150}
         onChange={handleSelect}
         className="table-templates__selector"
-        value={(<SelectValue value={value} />) as any}
+        value={(<SelectValue value={selectedTemplate?.title} />) as any}
         dropdownRender={originNode => (
           <Dropdown onCreate={handleCreate}>{originNode}</Dropdown>
         )}
       >
         {templates.map((template, idx) => (
-          <Select.Option key={idx} value={template.title}>
+          <Select.Option key={idx} value={template.id}>
             <Template
               onDelete={handleDelete}
               onSelectFavorite={handleSelectFavorite}
@@ -232,7 +248,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           </Select.Option>
         ))}
       </Select>
-      {value && (
+      {selectedTemplate && (
         <span className="table-templates__value-unselect" onClick={handleClear}>
           &times;
         </span>
