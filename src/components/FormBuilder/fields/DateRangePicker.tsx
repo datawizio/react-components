@@ -14,6 +14,7 @@ export interface DateRangePickerParams {
 
 export interface FieldDateRangePickerProps
   extends FormFieldProps<DateRangePickerParams> {
+  allowClear?: boolean;
   format?: string;
   storeFormat?: string;
   maxDate?: string;
