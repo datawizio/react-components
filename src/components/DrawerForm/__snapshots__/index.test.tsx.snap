@@ -20,6 +20,7 @@ exports[`DrawerForm component Render DrawerForm correctly 1`] = `
       </Button>
     </React.Fragment>
   }
+  className="drawer-form"
   onClose={[Function]}
   title="title"
   visible={true}
