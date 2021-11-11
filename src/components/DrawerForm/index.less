@@ -5,3 +5,32 @@
     margin-bottom: @margin-sm;
   }
 }
+
+.drawer-form {
+  .ant-drawer-body {
+    overflow: hidden;
+    padding-bottom: @padding-lg - 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .ant-form {
+      height: 100%;
+    }
+
+    .drawer-tree-select-selected {
+      padding-top: 5px;
+      display: flex;
+      color: @drawer-selected-text-color;
+      background: inherit;
+
+      .drawer-tree-select-selected-title {
+        flex: 1;
+      }
+    }
+  }
+
+  .drawer-form-validation-error div {
+    color: red;
+  }
+}

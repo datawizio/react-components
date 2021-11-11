@@ -1,10 +1,9 @@
 import React, { useMemo, useContext, useEffect, useCallback } from "react";
-
+import clsx from "clsx";
 import { Form } from "antd";
 import Drawer from "../Drawer";
 import Button from "../Button";
 import Loader from "../Loader";
-
 import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerFormProps {
@@ -23,6 +22,9 @@ export interface DrawerFormProps {
   onClose?: () => void;
   onSubmit?: () => void;
   validateTrigger?: string | string[];
+  showSelectedItemsCounter?: boolean;
+  maxItemsCount?: number;
+  selectedItemsCount?: number;
 }
 
 const noop = () => {};
@@ -40,6 +42,9 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   formStore,
   loading,
   width,
+  showSelectedItemsCounter,
+  maxItemsCount,
+  selectedItemsCount,
   convertState,
   onClose,
   onSubmit,
@@ -86,13 +91,44 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
         <Button onClick={handleFormClose} title={translate("CANCEL_BTN_TITLE")}>
           {translate("CANCEL")}
         </Button>
-        <Button onClick={handleFormSubmit} type="primary">
+        <Button
+          onClick={handleFormSubmit}
+          type="primary"
+          disabled={
+            showSelectedItemsCounter && selectedItemsCount > maxItemsCount
+          }
+        >
           {translate("SUBMIT")}
         </Button>
       </>
     );
     //eslint-disable-next-line
-  }, [handleFormSubmit, actions, translate]);
+  }, [
+    handleFormSubmit,
+    actions,
+    translate,
+    showSelectedItemsCounter,
+    selectedItemsCount,
+    maxItemsCount
+  ]);
+
+  const selectedItemsCounter = useMemo(() => {
+    return showSelectedItemsCounter ? (
+      <div
+        className={clsx("drawer-tree-select-selected", {
+          "drawer-form-validation-error": selectedItemsCount > maxItemsCount
+        })}
+      >
+        <div className="drawer-tree-select-selected-title">
+          {translate("SELECTED")}
+        </div>
+        <div className="drawer-tree-select-selected-count">
+          {selectedItemsCount} / {maxItemsCount}
+        </div>
+      </div>
+    ) : null;
+  }, [maxItemsCount, selectedItemsCount, showSelectedItemsCounter, translate]);
+
   return (
     <Drawer
       title={title}
@@ -101,7 +137,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
-      className={className}
+      className={clsx("drawer-form", className)}
     >
       <Form
         layout={layout ?? "vertical"}
@@ -114,12 +150,15 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       >
         <Loader loading={loading}>{children}</Loader>
       </Form>
+      {selectedItemsCounter}
     </Drawer>
   );
 };
 
 DrawerForm.defaultProps = {
-  width: 500
+  width: 500,
+  maxItemsCount: 50,
+  selectedItemsCount: 0
 };
 
 export default DrawerForm;
