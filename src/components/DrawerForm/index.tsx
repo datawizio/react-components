@@ -1,10 +1,9 @@
 import React, { useMemo, useContext, useEffect, useCallback } from "react";
-
+import clsx from "clsx";
 import { Form } from "antd";
 import Drawer from "../Drawer";
 import Button from "../Button";
 import Loader from "../Loader";
-
 import ConfigContext from "../ConfigProvider/context";
 
 export interface DrawerFormProps {
@@ -19,6 +18,8 @@ export interface DrawerFormProps {
   loading?: boolean;
   style?: object;
   width?: number;
+  submitDisabled?: boolean;
+  footer?: React.ReactNode;
   convertState?: (state: any) => any;
   onClose?: () => void;
   onSubmit?: () => void;
@@ -40,6 +41,8 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   formStore,
   loading,
   width,
+  submitDisabled,
+  footer,
   convertState,
   onClose,
   onSubmit,
@@ -86,13 +89,18 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
         <Button onClick={handleFormClose} title={translate("CANCEL_BTN_TITLE")}>
           {translate("CANCEL")}
         </Button>
-        <Button onClick={handleFormSubmit} type="primary">
+        <Button
+          onClick={handleFormSubmit}
+          type="primary"
+          disabled={submitDisabled}
+        >
           {translate("SUBMIT")}
         </Button>
       </>
     );
     //eslint-disable-next-line
-  }, [handleFormSubmit, actions, translate]);
+  }, [handleFormSubmit, actions, submitDisabled, translate]);
+
   return (
     <Drawer
       title={title}
@@ -101,7 +109,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       onClose={handleFormClose}
       visible={visible}
       actions={internalActions}
-      className={className}
+      className={clsx("drawer-form", className)}
     >
       <Form
         layout={layout ?? "vertical"}
@@ -114,6 +122,7 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
       >
         <Loader loading={loading}>{children}</Loader>
       </Form>
+      {footer}
     </Drawer>
   );
 };
