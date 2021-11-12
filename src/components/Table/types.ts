@@ -124,6 +124,7 @@ export interface TableState extends Partial<TableProps> {
   columnsWidth?: {
     [columnKey: string]: number;
   };
+  first?: boolean;
 }
 
 export interface ISheetState {

@@ -1,18 +1,14 @@
 import clsx from "clsx";
 import * as React from "react";
-import { TableTemplate } from "./types";
 import { useState, useCallback, useContext, useEffect, useMemo } from "react";
-
+import { SaveOutlined } from "@ant-design/icons";
 import Select from "../Select";
 import { TableState } from "../Table/types";
-
+import { TableTemplate } from "./types";
 import Dropdown from "./components/Dropdown";
 import Template from "./components/Template";
-import { SaveOutlined } from "@ant-design/icons";
 import ConfigContext from "../ConfigProvider/context";
-
 import { TableContext } from "../Table/context";
-
 import "./index.less";
 
 function pickState(
@@ -139,6 +135,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
       if (fetchAfterApply) {
         const state = {
+          first: true,
           forceFetch: tableState.forceFetch + 1,
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
           columns: []
@@ -256,5 +253,9 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     </div>
   );
 };
+
+TableTemplates.defaultProps = {
+  fetchAfterApply: true
+}
 
 export default TableTemplates;
