@@ -67,8 +67,10 @@ export async function exportTableToXLSX(
 ): Promise<BlobPart> {
   const { columns, columnsMap, dataSource, dTypesConfig } = tableState;
 
+  const formattedSheetName =
+    sheetName || filename.replace(".replace(/[^ws]/gi, '')", " ");
   const wb = new ExcelJS.Workbook(); // make a workbook
-  const ws = wb.addWorksheet(sheetName || filename); // make a worksheet
+  const ws = wb.addWorksheet(formattedSheetName); // make a worksheet
 
   (function addAdditionalSheet(sheet) {
     if (!sheet?.name || !sheet?.state) return;
