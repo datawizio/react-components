@@ -5,7 +5,23 @@ const basicDTypesConfig = {
     sorter: (a, b) => a - b,
     toString: value => value && value.toLocaleString(),
     filter: (value, filterBy) => value === filterBy,
-    search: (value, searchBy) => value.toString().includes(searchBy),
+    search: (value, searchBy) => {
+      if (searchBy.includes(";")) {
+        return basicDTypesConfig["number"].multiSearch(value, searchBy);
+      }
+      return value.toString().includes(searchBy);
+    },
+    multiSearch: (value, searchBy) => {
+      const searchByArr = searchBy
+        .trim()
+        .split(";")
+        .filter(i => i);
+      return searchByArr.some(
+        str =>
+          str.trim() &&
+          value.toString().trim().includes(str.trim().toLowerCase())
+      );
+    },
     render: value =>
       value && value.toLocaleString(undefined, { maximumFractionDigits: 4 })
   } as DTypeConfig<number>,
@@ -20,8 +36,23 @@ const basicDTypesConfig = {
     toString: value => value,
     sorter: (a, b) => a.localeCompare(b),
     filter: (value, filterBy) => value === filterBy,
-    search: (value, searchBy) =>
-      value.toLowerCase().includes(searchBy.toLowerCase())
+    search: (value, searchBy) => {
+      if (searchBy.includes(";")) {
+        return basicDTypesConfig["string"].multiSearch(value, searchBy);
+      }
+      return value.toLowerCase().includes(searchBy.toLowerCase());
+    },
+    multiSearch: (value, searchBy) => {
+      const searchByArr = searchBy
+        .trim()
+        .split(";")
+        .filter(i => i);
+      return searchByArr.some(
+        str =>
+          str.trim() &&
+          value.trim().toLowerCase().includes(str.trim().toLowerCase())
+      );
+    }
   } as DTypeConfig<string>
 };
 
