@@ -211,9 +211,13 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       if (node.disabled) return;
 
       if (event === "select") {
+        // If ALL checkbox is unchecked
         if (node.key === "-1" && node.checked) {
-          setInternalCheckedKeys([]);
-          onCheck && onCheck([], e);
+          const disabledKeys = node.children
+            .map(item => (item.disabled ? item.key : null))
+            .filter(Boolean);
+          setInternalCheckedKeys(disabledKeys);
+          onCheck && onCheck(disabledKeys, e);
           return;
         }
         checked = !node.checked;
