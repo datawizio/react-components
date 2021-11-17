@@ -1,4 +1,4 @@
-import { TableState, Action, TableProps } from "./../types";
+import { TableState, Action, TableProps } from "../types";
 import { Dispatch, useEffect, useCallback, useRef } from "react";
 import { getVisibleColumns } from "../utils/utils";
 
@@ -19,6 +19,9 @@ function useAsyncProviders(
           data.visibleColumnsKeys = data.showAllColumns
             ? []
             : getVisibleColumns(data.columns);
+          if (!data.sortParams) {
+            data.sortParams = props.sortParams;
+          }
         }
         dispatch({
           type: "update",
