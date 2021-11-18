@@ -19,7 +19,7 @@ function useAsyncProviders(
           data.visibleColumnsKeys = data.showAllColumns
             ? []
             : getVisibleColumns(data.columns);
-          if (!data.sortParams) {
+          if (!data.sortParams && props.sortParams) {
             data.sortParams = props.sortParams;
           }
         }
