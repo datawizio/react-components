@@ -61,6 +61,10 @@ function reducer(state, action) {
         stateScrollTop = 0;
       }
 
+      if (totalLen === state.totalLen) {
+        return state;
+      }
+
       return {
         ...state,
         totalLen,
@@ -214,7 +218,10 @@ function VTable(props: any, otherParams): JSX.Element {
   // 数据变更
   useEffect(() => {
     if (isNumber(children[1]?.props?.data?.length)) {
-      setTotalLen(children[1]?.props?.data?.length);
+      dispatch({
+        type: "changeTotalLen",
+        totalLen: children[1]?.props?.data?.length
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children[1].props.data]);
