@@ -133,6 +133,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;
+  treeNodeFilterProp?: string;
   loadData?: (filters: any) => Promise<any>;
   loadChildren?: (id: string) => Promise<any>;
   loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
