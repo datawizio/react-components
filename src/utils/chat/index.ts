@@ -36,7 +36,8 @@ export function initChat({
   window.$crisp = [
     ["set", "user:email", user.email],
     ["set", "user:nickname", user.full_name],
-    ["set", "user:avatar", user.photo]
+    ["set", "user:avatar", user.photo],
+    ["safe", true]
   ];
   if (client) {
     window.$crisp.push(["set", "session:data", [[["Client", client]]]]);
