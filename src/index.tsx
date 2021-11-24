@@ -144,3 +144,9 @@ export { FieldEnableSelect } from "./components/FormBuilder/fields/EnableSelect"
 
 export { FieldDateRangePicker } from "./components/FormBuilder/fields/DateRangePicker";
 export { FieldDrawerTreeSelect } from "./components/FormBuilder/fields/DrawerTreeSelect";
+
+export { OopsIcon } from "./components/Icons/OopsIcon";
+
+export { RefreshIcon } from "./components/Icons/RefreshIcon";
+
+export { ForbiddenIcon } from "./components/Icons/ForbiddenIcon";
