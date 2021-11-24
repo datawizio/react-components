@@ -1,8 +1,11 @@
+import { Result } from "antd";
 import React from "react";
 import { openChat } from "../../utils/chat";
 
 import Button from "../Button";
 import ConfigContext from "../ConfigProvider/context";
+import { OopsIcon } from "../Icons/OopsIcon";
+import { RefreshIcon } from "../Icons/RefreshIcon";
 
 type ErrorBoundaryState = {
   hasError: boolean;
@@ -35,7 +38,6 @@ export default class ErrorBoundary extends React.Component<
   }
 
   async componentDidCatch(error: any, errorInfo: any) {
-    console.log(error);
     if (error.toString().includes("ChunkLoadError")) {
       this.setState({ chunkError: true });
       return;
@@ -61,22 +63,28 @@ export default class ErrorBoundary extends React.Component<
   render() {
     if (this.state.chunkError) {
       return (
-        <>
-          <h1>{this.context.translate("NEED_REFRESH")}</h1>
-          <Button onClick={this.handlerRefreshClick}>
-            {this.context.translate("REFRESH")}
-          </Button>
-        </>
+        <Result
+          icon={<RefreshIcon />}
+          title={this.context.translate("NEED_REFRESH")}
+          extra={
+            <Button type="primary" onClick={this.handlerRefreshClick}>
+              {this.context.translate("REFRESH")}
+            </Button>
+          }
+        />
       );
     }
     if (this.state.hasError) {
       return (
-        <>
-          <h1>{this.context.translate("SOMETHING_GONE_BAD")}</h1>
-          <Button onClick={this.handlerButtonClick}>
-            {this.context.translate("REPORT_FEEDBACK")}
-          </Button>
-        </>
+        <Result
+          icon={<OopsIcon />}
+          title={this.context.translate("SOMETHING_GONE_BAD")}
+          extra={
+            <Button type="primary" onClick={this.handlerButtonClick}>
+              {this.context.translate("REPORT_FEEDBACK")}
+            </Button>
+          }
+        />
       );
     }
 

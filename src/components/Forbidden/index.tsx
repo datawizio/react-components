@@ -4,6 +4,7 @@ import { Result } from "antd";
 import Button from "../Button";
 
 import ConfigContext from "../ConfigProvider/context";
+import { ForbiddenIcon } from "../Icons/ForbiddenIcon";
 
 export interface ForbiddenProps {
   backUrl: string;
@@ -21,7 +22,8 @@ const Forbidden = ({ backUrl }) => {
   return (
     <div className="result-container">
       <Result
-        status="403"
+        // status="403"
+        icon={<ForbiddenIcon />}
         subTitle={translate("SERVICE_FORBIDDEN")}
         extra={
           <Button type="primary" onClick={handleButtonClick}>
