@@ -10,6 +10,7 @@ import Template from "./components/Template";
 import ConfigContext from "../ConfigProvider/context";
 import { TableContext } from "../Table/context";
 import "./index.less";
+import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
 
 function pickState(
   state: TableState,
@@ -192,6 +193,11 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   );
 
   useEffect(() => {
+    setSelectedTemplate(null);
+    // eslint-disable-next-line
+  }, [useDeepEqualMemo(tableState.visibleColumnsKeys)]);
+
+  useEffect(() => {
     function _setTemplates(templates) {
       const favorite = templates.find(template => template.favorite);
 
@@ -240,6 +246,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
             <Template
               onDelete={handleDelete}
               onSelectFavorite={handleSelectFavorite}
+              isActive={Boolean(selectedTemplate?.id === template.id)}
               {...template}
             />
           </Select.Option>
@@ -256,6 +263,6 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
 TableTemplates.defaultProps = {
   fetchAfterApply: true
-}
+};
 
 export default TableTemplates;
