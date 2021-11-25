@@ -15,7 +15,7 @@ const Dropdown: React.FC<DropdownProps> = ({ onCreate, children }) => {
   const handleCreateClick = useCallback(
     e => {
       e.stopPropagation();
-      if (inputValue) {
+      if (inputValue.trim()) {
         onCreate(inputValue);
         setInputValue("");
       }
