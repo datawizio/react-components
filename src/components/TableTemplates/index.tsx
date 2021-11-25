@@ -246,7 +246,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
             <Template
               onDelete={handleDelete}
               onSelectFavorite={handleSelectFavorite}
-              selectedTemplate={selectedTemplate}
+              isActive={Boolean(selectedTemplate?.id === template.id)}
               {...template}
             />
           </Select.Option>

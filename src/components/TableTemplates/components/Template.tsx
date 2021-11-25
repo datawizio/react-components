@@ -5,7 +5,7 @@ import { StarOutlined, StarFilled, DeleteOutlined } from "@ant-design/icons";
 import clsx from "clsx";
 
 export interface TemplateProps extends TableTemplate {
-  selectedTemplate: TableTemplate;
+  isActive: boolean;
   onDelete: (template: TableTemplate) => void;
   onSelectFavorite: (template: TableTemplate) => void;
 }
@@ -13,7 +13,7 @@ export interface TemplateProps extends TableTemplate {
 const Template: React.FC<TemplateProps> = ({
   onDelete,
   onSelectFavorite,
-  selectedTemplate,
+  isActive,
   ...template
 }) => {
   const handleFavoriteClick = useCallback(
@@ -33,9 +33,7 @@ const Template: React.FC<TemplateProps> = ({
   );
 
   const className = clsx("table-templates__template-title", {
-    "table-templates__template-title--selected": Boolean(
-      selectedTemplate?.id === template?.id
-    )
+    "table-templates__template-title--selected": isActive
   });
   return (
     <div className="table-templates__template">
