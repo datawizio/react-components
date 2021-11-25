@@ -7,7 +7,7 @@ import { FieldCheckboxProps } from "../types";
 import { CheckboxChangeEvent } from "antd/es/checkbox/Checkbox";
 
 export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
-  ({ label, rules, name, placeholder, onChange }) => {
+  ({ label, rules, name, placeholder, disabled, onChange }) => {
     const handleFieldChange = useCallback(
       ({ target: { checked } }: CheckboxChangeEvent) => {
         onChange &&
@@ -26,7 +26,9 @@ export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
         rules={rules}
         valuePropName="checked"
       >
-        <Checkbox onChange={handleFieldChange}>{placeholder}</Checkbox>
+        <Checkbox disabled={disabled} onChange={handleFieldChange}>
+          {placeholder}
+        </Checkbox>
       </Form.Item>
     );
   }
