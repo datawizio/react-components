@@ -27,6 +27,7 @@ export interface FieldDateRangePickerProps
     date_from: DateType;
     date_to: DateType;
   };
+  getPopupContainer?: () => HTMLElement | null;
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
