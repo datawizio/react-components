@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import clsx from "clsx";
-
 import DatePicker from "../DatePicker";
-
 import { TimeRangePickerProps } from "antd/es/time-picker";
 import dayjs from "dayjs";
 import ConfigContext from "../ConfigProvider/context";
@@ -12,6 +10,7 @@ export interface TimePickerProps
   fullWidth?: boolean;
   value?: { from: string; to: string };
   onChange?: (value: { from: string; to: string }) => void;
+  getPopupContainer?: () => HTMLElement | null;
 }
 
 const TimeRangePicker = React.forwardRef<any, TimePickerProps>(
