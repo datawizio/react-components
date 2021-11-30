@@ -11,6 +11,7 @@ export interface IHelpMenu {
   onHelperClick: () => void;
   onVisibleChange: (visible: boolean) => void;
   tourMenu?: React.ReactElement;
+  visible?: boolean;
 }
 
 const HelpMenu: React.FC<IHelpMenu> = ({
@@ -18,7 +19,8 @@ const HelpMenu: React.FC<IHelpMenu> = ({
   onHelperClick,
   onVisibleChange,
   onServiceUpdateClick,
-  tourMenu
+  tourMenu,
+  visible
 }) => {
   const { translate } = useContext(ConfigContext);
 
@@ -51,6 +53,8 @@ const HelpMenu: React.FC<IHelpMenu> = ({
     tourMenu
   ]);
 
+  const visibleProps = typeof visible === "boolean" ? { visible } : {};
+
   return (
     <>
       {(onTutorialClick ||
@@ -58,6 +62,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
         onHelperClick ||
         tourMenu) && (
         <Dropdown
+          {...visibleProps}
           onVisibleChange={onVisibleChange}
           overlay={menu}
           trigger={["click"]}
