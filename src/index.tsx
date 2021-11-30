@@ -118,8 +118,6 @@ export { default as TableXlsxExporter } from "./components/TableXlsxExporter";
 
 export { default as TableTransposeButton } from "./components/TableTransposeButton";
 
-export { default as SupportModal } from "./components/Help/components/SupportModal";
-
 export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";
 
 export { FieldText } from "./components/FormBuilder/fields/Text";
@@ -146,3 +144,9 @@ export { FieldEnableSelect } from "./components/FormBuilder/fields/EnableSelect"
 
 export { FieldDateRangePicker } from "./components/FormBuilder/fields/DateRangePicker";
 export { FieldDrawerTreeSelect } from "./components/FormBuilder/fields/DrawerTreeSelect";
+
+export { OopsIcon } from "./components/Icons/OopsIcon";
+
+export { RefreshIcon } from "./components/Icons/RefreshIcon";
+
+export { ForbiddenIcon } from "./components/Icons/ForbiddenIcon";

@@ -1,11 +1,10 @@
 import * as React from "react";
 import omit from "rc-util/lib/omit";
 import classNames from "clsx";
-
+import i18n from "i18next";
 import Checkbox from "../../Checkbox";
 import defaultRenderList, { OmitProps } from "./ListBody";
 import SearchInput from "../../LiteSearchInput";
-
 import {
   TransferFilterItem,
   TransferDirection,
@@ -19,6 +18,9 @@ import {
 import { PaginationType } from "antd/es/transfer/interface";
 import { EventDataNode } from "rc-tree/es/interface";
 import { searchByArticle, isLocalDataSource } from "../helper";
+import Select from "../../Select";
+
+/**********************************************************************************************************************/
 
 const defaultRender = () => null;
 
@@ -74,7 +76,10 @@ interface TransferListState {
   dataSource: TransferFilterItem[];
   loading: boolean;
   expandedKeys: string[];
+  levels: number[] | null;
 }
+
+/**********************************************************************************************************************/
 
 export default class TransferList extends React.PureComponent<
   TransferListProps,
@@ -96,6 +101,7 @@ export default class TransferList extends React.PureComponent<
 
   constructor(props: TransferListProps) {
     super(props);
+
     this.state = {
       filters: {},
       filterValue: "",
@@ -104,8 +110,10 @@ export default class TransferList extends React.PureComponent<
       count: 0,
       dataSource: [],
       loading: false,
-      expandedKeys: []
+      expandedKeys: [],
+      levels: []
     };
+
     this.bodyRef = React.createRef();
   }
 
@@ -149,14 +157,15 @@ export default class TransferList extends React.PureComponent<
       this.loadPage();
       return;
     }
+
     if (Array.isArray(this.props.value.include)) {
       if (this.props.value.include.length === 0) {
         this.loadPage();
         return;
       }
-
       this.loadDataByIds();
     }
+
     if (this.props.$filters) {
       this.unwatchFilters = this.props.$filters.watch(filters => {
         this.handleFiltersChange(filters);
@@ -166,7 +175,8 @@ export default class TransferList extends React.PureComponent<
 
   addItems = items => {
     const { direction, local } = this.props;
-    const { dataSource, page } = this.state;
+    const { dataSource, page, ...rest } = this.state;
+
     if (
       !isLocalDataSource(this.props.value.include, direction, local) &&
       this.props.value.include !== null
@@ -175,17 +185,19 @@ export default class TransferList extends React.PureComponent<
     }
 
     const data = dataSource.concat(items);
+
     this.setState({
       dataSource: data,
       page: page ? page : 1,
       count: data.length,
-      totalPages: Math.ceil(data.length / 100)
+      totalPages: Math.ceil(data.length / 100),
+      ...rest
     });
   };
 
   removeItems = (items: string[]) => {
     const { direction, local } = this.props;
-    const { dataSource, page } = this.state;
+    const { dataSource, page, ...rest } = this.state;
     if (
       !isLocalDataSource(this.props.value.include, direction, local) &&
       this.props.value.include !== null
@@ -198,7 +210,8 @@ export default class TransferList extends React.PureComponent<
       dataSource: data,
       page: page ? page : 1,
       count: data.length,
-      totalPages: Math.ceil(data.length / 100)
+      totalPages: Math.ceil(data.length / 100),
+      ...rest
     });
   };
 
@@ -300,13 +313,17 @@ export default class TransferList extends React.PureComponent<
 
   loadTreeData = async (treeNode: EventDataNode) => {
     const { loadData, value, type } = this.props;
+
     if (treeNode.children && treeNode.children.length > 0) return;
+
     const { data } = await loadData({
       type,
       expanded: treeNode.key as string,
       ...value
     });
+
     const { dataSource } = this.state;
+
     const state: any = {
       dataSource: dataSource.concat(data)
     };
@@ -316,14 +333,14 @@ export default class TransferList extends React.PureComponent<
 
   async loadPage(paginationPage = 1) {
     const { loadData, value, type, direction } = this.props;
+
     let { totalPages, filterValue, filters } = this.state;
+
     let page = paginationPage ?? 1;
 
     if (direction === "right" && value.include === null) return;
 
-    if (page !== 1 && page > totalPages) {
-      return;
-    }
+    if (page !== 1 && page > totalPages) return;
 
     this.setState({
       loading: true,
@@ -337,22 +354,24 @@ export default class TransferList extends React.PureComponent<
       exclude: value.exclude,
       ...value,
       ...filters,
-      full: direction === "right" ? true : false
+      full: direction === "right"
     };
 
-    const { data, totalPages: pages, count, expanded } = await loadData(
+    const { data, totalPages: pages, count, expanded, levels } = await loadData(
       filtersReq
     );
 
     const state: any = {
       page,
       count,
+      levels,
       totalPages: pages,
       dataSource: data,
       loading: false
     };
 
     if (expanded) state.expandedKeys = expanded;
+
     this.setState(state);
   }
 
@@ -370,6 +389,20 @@ export default class TransferList extends React.PureComponent<
     const { include, exclude } = this.props.value;
     const isLeftDirection = this.props.direction === "left";
 
+    // LEVELS
+    const levels =
+      this.state.levels?.length && isLeftDirection ? (
+        <div className={`${prefixCls}-body-levels-wrapper`}>
+          <Select
+            value={this.state.filters.level || 1}
+            options={this.generateLevelOptions(this.state.levels)}
+            onChange={this.handleLevelChange.bind(this)}
+            className="drawer-tree-select-levels"
+          />
+        </div>
+      ) : null;
+
+    // SEARCH
     const search = showSearch ? (
       <div className={`${prefixCls}-body-search-wrapper`}>
         <SearchInput
@@ -382,6 +415,7 @@ export default class TransferList extends React.PureComponent<
       </div>
     ) : null;
 
+    // BODY CONTENT
     const bodyContent = defaultRenderList({
       ref: this.bodyRef,
       ...omit(this.props, OmitProps),
@@ -392,14 +426,14 @@ export default class TransferList extends React.PureComponent<
       disableAll: isLeftDirection && (include === null || include.length > 0),
       disabledKeys: isLeftDirection ? exclude : [],
       enabledKeys: isLeftDirection && include !== null ? include : [],
-      selectedKeys: checkedKeys,
+      checkedKeys: checkedKeys,
       totalItemsCount: this.getTotalCount(filteredItems),
       loadTreeData: this.loadTreeData,
       onPageChange: this.handlePageChange
     });
 
+    // BODY NODE
     let bodyNode: React.ReactNode;
-
     bodyNode =
       filteredItems.length || loading ? (
         bodyContent
@@ -409,6 +443,7 @@ export default class TransferList extends React.PureComponent<
         </div>
       );
 
+    // CLASSES
     const className = classNames(
       `${prefixCls}-body`,
       showSearch && `${prefixCls}-body-with-search`,
@@ -417,12 +452,36 @@ export default class TransferList extends React.PureComponent<
         `${prefixCls}-body-with-pagination`
     );
 
+    // RETURN
     return (
       <div className={className}>
+        {levels}
         {search}
         {bodyNode}
       </div>
     );
+  }
+
+  generateLevelOptions(levels = []) {
+    const text = i18n.t("LEVEL_NUMBER");
+    return levels.map((level: string) => ({
+      value: level,
+      label: text.replace("%s", level)
+    }));
+  }
+
+  handleLevelChange(value = 1) {
+    this.setState((prevState: any) => {
+      return {
+        ...prevState,
+        filters: {
+          ...prevState.filters,
+          level: value
+        }
+      };
+    }, () => {
+      this.loadPage(1);
+    });
   }
 
   getFilteredItems(dataSource: TransferFilterItem[]): TransferFilterItem[] {
@@ -479,6 +538,7 @@ export default class TransferList extends React.PureComponent<
       this.setState({ page });
       return;
     }
+
     this.loadPage(page);
   };
 
@@ -496,10 +556,12 @@ export default class TransferList extends React.PureComponent<
 
     if (isLocalDataSource(value.include, direction, local))
       return filteredItems.length;
+
     if (direction === "left") return count;
 
     if (value.include === null) return 0;
     if (value.include.length === 0) return count;
+
     return value.include.length;
   }
 
@@ -538,6 +600,7 @@ export default class TransferList extends React.PureComponent<
     const filteredItems = this.getFilteredItems(dataSource);
     const totalCount =
       type === "list" ? this.getTotalCount(filteredItems) : null;
+
     // ================================= List Body =================================
 
     const listBody = this.getListBody(

@@ -9,6 +9,7 @@ React.useLayoutEffect = React.useEffect;
 Enzyme.configure({ adapter: new Adapter() });
 
 global.document = dom.window.document;
+global.$crisp = [];
 
 global.console.error = message => {
   throw new Error(message);

@@ -48,6 +48,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             },
             "columnsSorter": undefined,
+            "columnsSwapped": false,
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
@@ -96,6 +97,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             ],
+            "error": undefined,
             "expandedRowKeys": Array [],
             "filterParams": Object {},
             "forceColumns": undefined,
@@ -264,6 +266,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             },
             "columnsSorter": undefined,
+            "columnsSwapped": false,
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
@@ -312,6 +315,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             ],
+            "error": undefined,
             "expandedRowKeys": Array [],
             "filterParams": Object {},
             "forceColumns": undefined,
@@ -407,10 +411,12 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             }
           }
+          columnsSwapped={false}
           components={
             Object {
               "body": Object {
                 "cell": [Function],
+                "row": [Function],
               },
               "header": Object {
                 "cell": [Function],

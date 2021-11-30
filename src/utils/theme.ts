@@ -4,9 +4,11 @@ declare global {
   }
 }
 
-export type ITheme = "dark" | "light";
+export type ITheme = "dark" | "light" | "system";
 
 window.theme = "light";
+
+const httpSet = new Set(["http:", "https:"]);
 
 const removeAllOldStyles = () => {
   const allStyles: any = document.getElementsByTagName("link");
@@ -20,16 +22,36 @@ const removeAllOldStyles = () => {
   }
 };
 
-export const changeTheme = (theme: ITheme) => {
+export const changeThemeHandler = (e: any) => {
+  changeTheme(e.matches ? "dark" : "light", true);
+  window.location.reload();
+};
+
+export const changeTheme = (theme: ITheme, fromHandler = false) => {
+  const matchMediaDark =
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+
+  if (theme === "system") {
+    const isSystemDark = matchMediaDark.matches;
+    theme = isSystemDark ? "dark" : "light";
+    matchMediaDark.addEventListener("change", changeThemeHandler);
+  } else {
+    !fromHandler &&
+      matchMediaDark.removeEventListener("change", changeThemeHandler);
+  }
+
   window.theme = theme;
   localStorage.setItem("theme", theme);
+
   const allStyles: any = document.getElementsByTagName("link");
   const newHrefs: string[] = [];
 
   for (let style of allStyles) {
     if (style.getAttribute("rel") !== "stylesheet") continue;
     let href = style.getAttribute("href").split("/");
-    if (theme === "light") {
+    if (httpSet.has(href[0]) && href[2] !== window.location.hostname) {
+      newHrefs.push(href.join("/"));
+    } else if (theme === "light") {
       href = href.filter((i: string) => i !== "dark");
     } else {
       const index = href.indexOf("dist");
@@ -50,19 +72,26 @@ export const changeTheme = (theme: ITheme) => {
 
   setTimeout(() => {
     removeAllOldStyles();
-  }, 500)
+  }, 500);
 };
 
 export const catchAppendStylesheet = () => {
   var f = Element.prototype.appendChild;
+
   //@ts-ignore
   Element.prototype.appendChild = function () {
     const element = arguments[0];
+
     if (
       element.nodeName.toLowerCase() === "link" &&
       !element.getAttribute("force")
     ) {
       let href = element.getAttribute("href").split("/");
+      if (httpSet.has(href[0]) && href[2] !== window.location.hostname) {
+        f.apply(this, arguments);
+        return;
+      }
+
       if (window.theme === "light") {
         href = href.filter((i: string) => i !== "dark");
       } else {

@@ -28,6 +28,7 @@ export type TransferFilterLoadDataParams = {
   lastLevel?: boolean;
   exclude: Array<string>;
   include: Array<string> | null;
+  level?: number;
 };
 
 export type TransferFilterLoadDataResponse = {
@@ -35,6 +36,7 @@ export type TransferFilterLoadDataResponse = {
   totalPages: number;
   count: number;
   expanded?: string[] | null;
+  levels?: number[] | null;
 };
 
 export type TransferDirection = "left" | "right";
@@ -74,12 +76,12 @@ export interface TransferFilterProps {
   className?: string;
   disabled?: boolean;
   targetKeys?: string[];
-  selectedKeys?: string[];
+  checkedKeys?: string[];
   operationDisabled?: boolean;
   onChange?: (value: TransferFilterValue) => void;
   onSelectChange?: (
-    sourceSelectedKeys: string[],
-    targetSelectedKeys: string[]
+    sourceCheckedKeys: string[],
+    targetCheckedKeys: string[]
   ) => void;
   style?: React.CSSProperties;
 

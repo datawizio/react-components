@@ -56,10 +56,6 @@ describe("BarTable component", () => {
     component = setUp(mockProps);
   });
 
-  it("BarTable renders correctly", () => {
-    expect(component).toMatchSnapshot();
-  });
-
   it("BarTable title exists", () => {
     expect(component.find(".bar-table-title").length).toBeTruthy();
   });

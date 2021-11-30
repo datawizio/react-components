@@ -1,3 +1,4 @@
+/*
 const translate = require("@k3rn31p4nic/google-translate-api");
 const defaultLang = require("../src/components/locale/default");
 const fs = require("fs");
@@ -96,3 +97,4 @@ translateAllTexts().then(() => {
   const res = goInto(defaultLang);
   writeResult(res);
 });
+*/

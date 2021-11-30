@@ -19,6 +19,21 @@
     display: flow-root;
     position: relative;
 
+    @media (max-width: @screen-xs) {
+      display: flex;
+      flex-direction: column;
+      .lite-search {
+        width: 100% !important;
+      }
+      .custom-table-toolbar {
+        display: flex;
+        flex-direction: row-reverse;
+        @media (max-width: @screen-xxs) {
+          justify-content: center;
+        }
+      }
+    }
+
     .table-toolbar--left {
       float: left;
       margin-right: 3px;
@@ -29,7 +44,20 @@
       margin-right: 3px;
     }
   }
-
+  .ant-table-small .ant-table-tbody > tr.fake-first-row {
+    height: 0;
+    & > th {
+      padding: 0;
+      border: 0;
+    }
+  }
+  .virtuallist {
+    .ant-table-tbody {
+      .ant-table-row {
+        height: 50px;
+      }
+    }
+  }
   .dw-table__column,
   th {
     // width: 300px;
@@ -88,7 +116,9 @@
       display: flex;
     }
   }
-
+  tr.dw-row-total > td {
+    background-color: @table-header-bg;
+  }
   &__cell {
     display: flex;
     align-items: center;
@@ -118,6 +148,10 @@
     width: 100%;
     display: flex;
     align-items: center;
+
+    @media (max-width: @screen-xs) {
+      word-break: normal !important;
+    }
   }
 
   &--responsive-columns {
@@ -129,6 +163,9 @@
   table {
     table-layout: fixed;
     width: max-content;
+    @media (max-width: @screen-xs) {
+      table-layout: auto !important;
+    }
   }
   &--safari {
     table {
@@ -240,7 +277,7 @@
       tr:first-child {
         th,
         .dw-table__column {
-          width: unset;
+          width: unset !important;
         }
       }
     }
@@ -257,6 +294,27 @@
         span:first-of-type {
           width: 100%;
         }
+      }
+    }
+  }
+  &--virtual {
+    .ant-table-header {
+      colgroup {
+        display: none;
+      }
+      .ant-table-thead > tr > th.ant-table-cell.ant-table-cell-scrollbar {
+        width: 8px;
+        padding: 0;
+      }
+    }
+  }
+  &--virtual&--empty {
+    .ant-table-body {
+      overflow: hidden !important;
+    }
+    table {
+      td {
+        left: 0;
       }
     }
   }
@@ -307,6 +365,24 @@
 
       .ant-table-cell-fix-right {
         right: unset !important;
+      }
+    }
+  }
+}
+
+@media (max-width: @screen-xs) {
+  .dw-table {
+    .lite-search {
+      width: 100% !important;
+    }
+
+    .ant-table-pagination {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      & > .ant-pagination-total-text {
+        text-align: right;
+        margin-bottom: 5px;
+        width: 100%;
       }
     }
   }

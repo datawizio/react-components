@@ -1,10 +1,38 @@
-import React from "react";
-import { Dayjs } from "dayjs";
-
+import React, { useMemo } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import { Form } from "antd";
 import DatePicker from "../../DatePicker";
+import { FieldDatePickerProps, FormFieldProps } from "../types";
+interface FieldProps extends FormFieldProps<any> {
+  format: string;
+  storeFormat?: string;
+  value: any;
+}
 
-import { FieldDatePickerProps } from "../types";
+const Field: React.FC<FieldProps> = ({
+  format,
+  storeFormat,
+  value,
+  onChange,
+  ...restProps
+}) => {
+  const formatedValue = useMemo<Dayjs>(() => {
+    if (!value) return null;
+    if (typeof value === "string") return dayjs(value);
+    return value;
+  }, [value]);
+
+  return (
+    //@ts-ignore
+    <DatePicker
+      {...restProps}
+      //@ts-ignore
+      onChange={onChange}
+      format={format}
+      value={formatedValue}
+    />
+  );
+};
 
 export const FieldDatePicker: React.FC<FieldDatePickerProps> = React.memo(
   ({
@@ -24,7 +52,7 @@ export const FieldDatePicker: React.FC<FieldDatePickerProps> = React.memo(
 
     return (
       <Form.Item name={name} label={label} rules={rules}>
-        <DatePicker
+        <Field
           {...restProps}
           inputReadOnly={inputReadOnly}
           placeholder={placeholder}

@@ -5,7 +5,7 @@ import { TreeSelectProps as AntTreeSelectProps } from "./antd/AntTreeSelect";
 import { AntTreeNode } from "antd/lib/tree";
 
 export interface IDrawerTreeSelectFilters {
-  shop_markers?: string[];
+  shop_markers?: string[] | number[];
   search?: string;
   level?: string | number;
   value?: SelectValue;
@@ -36,11 +36,20 @@ export interface DrawerTreeSelectProps<VT>
   drawerWidth?: number;
 
   /**
-   * Показать выбор левелов
+   * Показать выбор уровней
    */
   showLevels?: boolean;
 
+  /**
+   * Показать выбор маркеров
+   */
+  showMarkers?: boolean;
+
+  markersRender?: ((props: MarkersRenderProps) => React.ReactElement) | null;
+
   levels?: LevelsType;
+
+  markersTree?: any;
 
   level?: string | number;
 
@@ -55,33 +64,43 @@ export interface DrawerTreeSelectProps<VT>
 
   selectAllText?: string;
 
+  onCheckedDependentValue?: (
+    fieldName: string,
+    selectedItems: Array<string>
+  ) => void;
+
+  dependentItems?: Array<any>;
+
   treeDataCount?: number;
 
   emptyIsAll?: boolean;
 
-  selectedMarkers?: string[];
-
-  markersRender?: ((props: MarkersRenderProps) => React.ReactElement) | null;
+  selectedMarkers?: string[] | number[];
 
   loadData?: (filters: IDrawerTreeSelectFilters) => Promise<any>;
 
   loadChildren?: (nodeId: string, filters?: any) => Promise<any>;
+
+  loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
   /**
    * Event when user click Submit
    */
-  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+  onChange?: (values: SelectValue, selected?: AntTreeNode, extra?: any) => void;
   onChangeReturnObject?: (obj: {
     value: SelectValue;
     level: string | number;
+    markers: string[] | number[];
     selected?: AntTreeNode;
+    drawerVisible?: boolean;
   }) => void;
 
   onLevelChange?: (level: string) => void;
+  onMarkerChange?: (markers: any) => void;
 
-  onDrawerCloseCallback?: () => void;
-  onDrawerCancelCallback?: () => void;
-  onDrawerOpenCallback?: () => void;
-  onDrawerSubmitCallback?: () => void;
+  onDrawerCloseCallback?: (payload?: any) => void;
+  onDrawerCancelCallback?: (payload?: any) => void;
+  onDrawerOpenCallback?: (payload?: any) => void;
+  onDrawerSubmitCallback?: (payload?: any) => void;
 }
 
 export interface FCDrawerTreeSelect<VT>

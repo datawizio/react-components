@@ -43,9 +43,15 @@ import { TableProps, FCTable, TableRef } from "./types";
 import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
 import { isSafari } from "../../utils/navigatorInfo";
+import Row from "./components/Row";
+import { VList } from "./components/VList";
+import { HeaderWrapper } from "./components/HeaderWrapper";
 
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
+    errorRender,
+    vid,
+    virtual,
     style,
     width,
     height,
@@ -64,6 +70,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     rowChildrenProvider,
     nestedTableProvider,
     onColumnWidthChange,
+    expandRowCallback,
+    sortColumnCallback,
+    isTotalRow,
     ...restProps
   } = props;
 
@@ -89,12 +98,15 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   usePropsToState(dispatch, props);
 
   const handleChangeTable = useCallback<TableProps["onChange"]>(
-    (pagination, filters, sorter) => {
+    (pagination, filters, sorter, { currentDataSource, action }) => {
       dispatch({ type: "filter", payload: filters });
       dispatch({ type: "sort", payload: [].concat(sorter) });
       dispatch({ type: "paginate", payload: pagination as any });
+      if (action === "sort" && sortColumnCallback) {
+        sortColumnCallback(sorter);
+      }
     },
-    []
+    [sortColumnCallback]
   );
 
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
@@ -130,8 +142,18 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           type: isExpanded ? "expandRow" : "collapseRow",
           payload: row
         });
+
+      if (isExpanded) {
+        expandRowCallback && expandRowCallback(row);
+      }
     },
-    [rowChildrenProvider, nestedTableProvider, isNested, state]
+    [
+      rowChildrenProvider,
+      nestedTableProvider,
+      isNested,
+      state,
+      expandRowCallback
+    ]
   );
 
   const totalRenderer = useCallback(
@@ -176,25 +198,47 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     [state.loadingRows]
   );
 
-  const customComponents = useMemo<TableProps["components"]>(
-    () => ({
+  const customComponents = useMemo<TableProps["components"]>(() => {
+    if (virtual) {
+      return {
+        header: {
+          wrapper: HeaderWrapper,
+          cell: props => {
+            return Boolean(props.model) ? (
+              <Column
+                {...props}
+                isHeader
+                onWidthChange={onColumnWidthChange ?? (() => {})}
+              />
+            ) : (
+              <th {...props} />
+            );
+          }
+        },
+        ...VList({
+          height: height, // 此值和scrollY值相同. 必传. (required).  same value for scrolly
+          vid: vid
+        })
+      };
+    }
+    return {
       ...components,
       table: props => <TableWrapper {...props} style={{ height, width }} />,
       header: {
         cell: props => {
           return Boolean(props.model) ? (
-            <Column {...props} onWidthChange={onColumnWidthChange} />
+            <Column isHeader {...props} onWidthChange={onColumnWidthChange} />
           ) : (
             <th {...props} />
           );
         }
       },
       body: {
-        cell: props => <Cell {...props} />
+        cell: props => <Cell {...props} />,
+        row: props => <Row {...props} isTotalRow={isTotalRow} />
       }
-    }),
-    [height, width, components]
-  );
+    };
+  }, [height, width, components, virtual]);
 
   const className = useMemo(
     () =>
@@ -207,7 +251,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--responsive-columns": responsiveColumns,
           "dw-table--auto-col-width": autoColWidth,
           "dw-table--compress-columns": compressColumns,
-          "dw-table--safari": isSafari()
+          "dw-table--safari": isSafari(),
+          "dw-table--virtual": virtual
         },
         props.className
       ),
@@ -241,7 +286,6 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "resetPagination", payload: pageSize });
     }
   }));
-
   return (
     <div className="dw-table-container">
       <DndProvider backend={HTML5Backend}>
@@ -255,24 +299,36 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         >
           <Loader loading={Boolean(baseState.loading)}>
             {children}
-            <AntdTable
-              {...restProps}
-              {...state}
-              expandIcon={expandIconRender}
-              className={className}
-              onExpand={handleExpandRow}
-              onChange={handleChangeTable}
-              components={customComponents}
-              pagination={
-                props.pagination === false
-                  ? false
-                  : {
-                      ...state.pagination,
-                      ...props.pagination,
-                      showTotal: totalRenderer
-                    }
-              }
-            />
+            {state.error && errorRender ? (
+              errorRender(state.error)
+            ) : (
+              <AntdTable
+                {...restProps}
+                {...state}
+                scroll={
+                  virtual
+                    ? {
+                        y: height, // 滚动的高度, 可以是受控属性。 (number | string) be controlled.
+                        x: 500
+                      }
+                    : undefined
+                }
+                expandIcon={expandIconRender}
+                className={className}
+                onExpand={handleExpandRow}
+                onChange={handleChangeTable}
+                components={customComponents}
+                pagination={
+                  props.pagination === false
+                    ? false
+                    : {
+                        ...state.pagination,
+                        ...props.pagination,
+                        showTotal: totalRenderer
+                      }
+                }
+              />
+            )}
           </Loader>
         </TableContext.Provider>
       </DndProvider>

@@ -13,11 +13,15 @@ import {
 
 import "./index.less";
 
+interface IConfig extends Highcharts.Options {
+  error?: { message: string | React.ReactElement };
+}
+
 export interface HighChartProps {
   /**
    * highcharts config: https://api.highcharts.com/highcharts/.
    */
-  config: Highcharts.Options;
+  config: IConfig;
 
   /**
    * Автоматически подстраивает размер графика под размер контейнера даже если у контейнера {width: auto, height: auto}
@@ -109,10 +113,19 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
     }
   }));
 
+  const style = useMemo(() => {
+    return { height };
+  }, [height]);
+
   return (
     <>
-      {loading && <Skeleton height={height} width={"100%"} />}
-      {!loading && <div ref={containerRef} />}
+      {loading ? (
+        <Skeleton height={height} width={"100%"} />
+      ) : config && config.error ? (
+        <div style={style}>{config.error.message}</div>
+      ) : (
+        <div ref={containerRef} />
+      )}
     </>
   );
 });

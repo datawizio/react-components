@@ -12,7 +12,7 @@
     & > .ant-btn-group {
       margin-left: @margin-xs;
     }
-    & > button {
+    & > .ant-btn {
       margin-left: @margin-xs;
       padding: 4px 10px;
 
@@ -57,6 +57,39 @@
       .drawer-tree-select-dropdown-toolbar {
         min-height: 20px !important;
       }
+    }
+  }
+}
+
+@media (max-width: @screen-xs) {
+  .ant-drawer-actions {
+    display: flex;
+    flex-direction: column;
+    .ant-btn {
+      margin: 10px 0 0 0 !important;
+      &:first-child {
+        margin: 0 !important;
+      }
+    }
+    .ant-btn-group.ant-dropdown-button {
+      margin: 10px 0 0 0 !important;
+      button {
+        margin: 0 !important;
+      }
+      .ant-btn {
+        flex: 1;
+        &.ant-dropdown-trigger {
+          flex: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: @screen-xxs) {
+  .ant-drawer-header {
+    & > .ant-drawer-title {
+      margin-right: 10px;
     }
   }
 }

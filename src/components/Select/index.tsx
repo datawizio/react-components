@@ -14,6 +14,8 @@ const Select: FCSelect = props => {
     withPagination,
     useCustomTagRender,
     optionRender,
+    optionFilterProp,
+    optionLabelProp,
     ...restProps
   } = props;
 
@@ -30,7 +32,12 @@ const Select: FCSelect = props => {
         return optionRender(item);
       }
       return (
-        <Select.Option key={item.value} value={item.value}>
+        <Select.Option
+          key={item.value}
+          value={item.value}
+          label={item.text}
+          disabled={!!item.disabled}
+        >
           {item.text}
         </Select.Option>
       );
@@ -84,19 +91,20 @@ const Select: FCSelect = props => {
         loadPage(searchValue, page + 1);
       }
     },
-    [loading, page, loadPage]
+    [loading, page, searchValue, isLast, loadPage]
   );
 
   const handleDropdownVisibleChange = useCallback(
     (open: boolean) => {
       if (open && asyncData) {
         loadPage(searchValue, 0);
+        setIsLast(false);
       } else if (!open) {
         setSearchValue("");
         setOptions([]);
       }
     },
-    [asyncData, loadPage]
+    [asyncData, searchValue, loadPage]
   );
 
   const handleSearch = useCallback(
@@ -142,8 +150,8 @@ const Select: FCSelect = props => {
     <AntSelect
       {...restProps}
       {...searchProps}
-      optionFilterProp="label"
-      optionLabelProp="label"
+      optionFilterProp={optionFilterProp || "label"}
+      optionLabelProp={optionLabelProp || "label"}
       notFoundContent={loading ? loadingContent : notFoundContent}
       loading={loading}
       tagRender={useCustomTagRender ? tagRender : null}

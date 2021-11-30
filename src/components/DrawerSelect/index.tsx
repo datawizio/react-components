@@ -14,7 +14,7 @@ import { SelectValue } from "antd/lib/tree-select";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
-import { Skeleton, Tag } from "antd";
+import { Skeleton, Tag, message } from "antd";
 
 import { AntTreeNode } from "antd/lib/tree";
 
@@ -71,6 +71,12 @@ export interface DrawerSelectProps<VT>
   valueProp?: string;
 
   /**
+   * max selected count
+   */
+
+  maxSelectedCount?: number;
+
+  /**
    * Подгрузка ассинхронных данных с пагинацией
    */
   withPagination?: boolean;
@@ -79,6 +85,8 @@ export interface DrawerSelectProps<VT>
    * Event when user clicks Submit
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+
+  onLoadData?: (data: any, value: any) => { value?: any };
 }
 
 function extractProperty(array: Array<object>, propertyName: string) {
@@ -137,6 +145,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     onChange,
     options,
     optionRender,
+    optionFilterProp,
+    optionLabelProp,
     labelProp,
     loadData,
     loading,
@@ -144,6 +154,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     mode,
     multiple,
     withPagination,
+    maxSelectedCount,
+    onLoadData,
     ...restProps
   } = props;
 
@@ -236,6 +248,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       const { data, totalPages: pages } = await loadData(filters, page, search);
 
+      if (onLoadData) {
+        const { value: loadValue } = onLoadData(data, value);
+        if (loadValue) {
+          triggerOnChange(loadValue);
+        }
+      }
+
       const options = convertOptions(
         data,
         valueProp,
@@ -271,7 +290,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     },
 
     //eslint-disable-next-line
-    [loadData, dispatch, optionsState, valueProp, labelProp, totalPages]
+    [
+      loadData,
+      dispatch,
+      optionsState,
+      valueProp,
+      labelProp,
+      totalPages,
+      onLoadData
+    ]
   );
 
   //  -------- HANDLERS --------
@@ -302,7 +329,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       payload
     });
 
-    handleSearch("");
+    if (searchValue) handleSearch("");
 
     //eslint-disable-next-line
   }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
@@ -324,8 +351,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     });
 
     triggerOnChange(internalValue);
-
-    handleSearch("");
+    if (searchValue) handleSearch("");
 
     //eslint-disable-next-line
   }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
@@ -385,16 +411,28 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         newValue = value[1] ? [value[1]] : [value[0]];
       }
 
+      if (maxSelectedCount && value.length > maxSelectedCount) {
+        const messageKey = "select-over-then-" + maxSelectedCount;
+        message.error({
+          content: translate("COUNT_MUST_BE_SMALLER_THEN", {
+            maxCount: maxSelectedCount
+          }),
+          key: messageKey
+        });
+
+        return;
+      }
+
       dispatch({
         type: "setInternalValue",
-        payload: newValue
+        payload: newValue && newValue[0] ? newValue : value
       });
 
       if (!drawerVisible) {
         triggerOnChange(value);
       }
     },
-    [dispatch, drawerVisible, triggerOnChange, multiple]
+    [dispatch, drawerVisible, triggerOnChange, multiple, maxSelectedCount]
   );
 
   const handlePopupScroll = useCallback(
@@ -441,8 +479,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   // -------- RENDERS ---------
 
   const tagRender = useCallback(
-    props => {
-      const isLongTag = props.label.length > 50;
+    ({ label, closable, onClose }) => {
+      const maxLength = 20;
+      const isLongTag = label?.length > maxLength;
+
       if (!optionsState || optionsState.length === 0) {
         return (
           <span className="ant-select-selection-placeholder">
@@ -450,15 +490,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           </span>
         );
       }
+
       return (
         <span className="ant-select-selection-item">
           <Tag
-            closable={props.closable}
-            onClose={props.onClose}
+            closable={closable}
+            onClose={onClose}
             className="ant-select-selection-item-content"
-            title={props.label}
+            title={label}
           >
-            {isLongTag ? `${props.label.slice(0, 50)}...` : props.label}
+            {isLongTag ? `${label.slice(0, maxLength)}...` : label}
           </Tag>
         </span>
       );
@@ -536,8 +577,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     dropdownClassName: "drawer-select-dropdown-fake",
     showSearch: true,
     onSearch: handleSearch,
-    optionFilterProp: "label",
-    optionLabelProp: "label",
+    optionFilterProp: optionFilterProp || "label",
+    optionLabelProp: optionLabelProp || "label",
     listHeight: window.innerHeight - 198 - (multiple ? 27 : 0),
     notFoundContent: internalLoading ? loadingText : noDataText,
     onBeforeBlur: handleSelectBeforeBlur,

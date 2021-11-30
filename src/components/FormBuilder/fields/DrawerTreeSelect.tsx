@@ -1,9 +1,6 @@
 import React from "react";
-
 import { Form } from "antd";
-
 import DrawerTreeSelect from "../../DrawerTreeSelect";
-
 import { FieldDrawerTreeSelectProps } from "../types";
 
 export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
@@ -16,6 +13,7 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
   rules,
   onChange,
   level,
+  treeNodeFilterProp,
   ...restProps
 }) => {
   const handleFieldChange = (obj: any) => {
@@ -26,6 +24,7 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
         ...obj
       });
   };
+
   return (
     <Form.Item
       name={name}
@@ -37,7 +36,7 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
         placeholder={placeholder}
         drawerTitle={drawerTitle ? drawerTitle : placeholder}
         level={level ?? 1}
-        treeNodeFilterProp="title"
+        treeNodeFilterProp={treeNodeFilterProp}
         treeCheckable={true}
         showSearch
         onChangeReturnObject={onChange ? handleFieldChange : undefined}
@@ -47,4 +46,8 @@ export const FieldDrawerTreeSelect: React.FC<FieldDrawerTreeSelectProps> = ({
       />
     </Form.Item>
   );
+};
+
+FieldDrawerTreeSelect.defaultProps = {
+  treeNodeFilterProp: "title"
 };

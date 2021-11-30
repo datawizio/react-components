@@ -1,6 +1,6 @@
 {
   "name": "@datawizio/react-components",
-  "version": "1.1.99",
+  "version": "1.2.124",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -55,9 +55,9 @@
     "antd": "4.12.3",
     "exceljs": "^4.0.1",
     "highcharts": "^9.1.0",
+    "i18next": "^19.8.4",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "i18next": "^19.8.4"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@ant-design/icons": "^4.0.6",
@@ -162,7 +162,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "@k3rn31p4nic/google-translate-api": "^1.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "clsx": "^1.1.0",
     "country-flag-icons": "^1.2.1",

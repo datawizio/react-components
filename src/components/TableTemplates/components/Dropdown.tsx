@@ -1,8 +1,9 @@
 import * as React from "react";
-import Input from "../../Input";
+import { useCallback, useState, useContext, useMemo } from "react";
 import { SaveOutlined } from "@ant-design/icons";
+import clsx from "clsx";
+import Input from "../../Input";
 import ConfigContext from "../../ConfigProvider/context";
-import { useCallback, useState, useContext } from "react";
 
 interface DropdownProps {
   onCreate: (title: string) => void;
@@ -11,17 +12,27 @@ interface DropdownProps {
 const Dropdown: React.FC<DropdownProps> = ({ onCreate, children }) => {
   const { translate } = useContext(ConfigContext);
   const [inputValue, setInputValue] = useState<string>();
+  const [isInputValueValid, setIsInputValueValid] = useState<boolean>(true);
+
+  const handleChangeInput = useCallback(e => {
+    setIsInputValueValid(Boolean(e.target.value?.trim()));
+    setInputValue(e.target.value);
+  }, []);
 
   const handleCreateClick = useCallback(
     e => {
       e.stopPropagation();
-      if (inputValue) {
+      setIsInputValueValid(Boolean(inputValue?.trim()));
+      if (inputValue?.trim()) {
         onCreate(inputValue);
         setInputValue("");
       }
     },
-    [onCreate, inputValue]
+    [inputValue, onCreate]
   );
+  const className = useMemo(() => clsx({ "error-field": !isInputValueValid }), [
+    isInputValueValid
+  ]);
 
   return (
     <div className="table-templates__dropdown">
@@ -30,8 +41,9 @@ const Dropdown: React.FC<DropdownProps> = ({ onCreate, children }) => {
         <Input
           size="small"
           value={inputValue}
+          className={className}
           placeholder={translate("INPUT_TITLE")}
-          onChange={e => setInputValue(e.target.value)}
+          onChange={handleChangeInput}
         />
         <SaveOutlined
           onClick={handleCreateClick}
