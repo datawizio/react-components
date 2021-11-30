@@ -127,7 +127,6 @@ export function reducer(state: TableState, action: Action): TableState {
       let cancelled = false;
       let oldColumns = [];
       let visibleColumnsKeys = state.visibleColumnsKeys;
-      let loading = false;
 
       if (!Array.isArray(action.payload)) {
         cols = action.payload.columns;
@@ -135,7 +134,6 @@ export function reducer(state: TableState, action: Action): TableState {
         oldColumns = state.visibleColumnsKeys;
         visibleColumnsKeys =
           action.payload.visibleColumnsKeys ?? state.visibleColumnsKeys;
-        loading = Boolean(action.payload.loading);
       }
 
       const nextColumnsMap = genColumnsMap(cols);
@@ -195,7 +193,6 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         cancelled,
-        loading,
         oldColumns,
         columns: nextColumns,
         columnsMap: nextColumnsMap,
