@@ -15,11 +15,11 @@ describe("Type config test", () => {
       expect(number.search(54321, "45")).toBeFalsy();
     });
     it("number render function works corect", () => {
-      expect(number.render(12345)).toBe("12,345");
+      expect(number.render(12345)).toBe("12 345");
       expect(number.render()).toBe(undefined);
     });
     it("number toString function works corect", () => {
-      expect(number.toString(12345)).toBe("12,345");
+      expect(number.toString(12345)).toBe("12 345");
       expect(number.toString()).toBe(undefined);
     });
   });

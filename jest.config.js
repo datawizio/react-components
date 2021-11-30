@@ -1,5 +1,12 @@
 const esModules = ["rc-select"].join("|");
 
+const transformIgnorePatterns = [
+  "/dist/",
+  // Ignore modules without es dir.
+  // Update: @babel/runtime should also be transformed
+  "node_modules/(?!.*@(babel|ant-design))[^/]+?/(?!(es|node_modules)/)"
+];
+
 module.exports = {
   roots: ["./src"],
   verbose: true,
@@ -18,11 +25,13 @@ module.exports = {
   },
   testMatch: ["**/*.test.(ts|tsx)"],
   moduleNameMapper: {
+    "^lodash-es$": "lodash",
     // Mocks out all these file formats when tests are run
     "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
       "identity-obj-proxy",
     "\\.(css|less|scss|sass)$": "identity-obj-proxy"
   },
+  transformIgnorePatterns,
   snapshotSerializers: ["enzyme-to-json/serializer"],
   globals: {
     window: {
