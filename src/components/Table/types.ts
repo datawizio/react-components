@@ -126,6 +126,8 @@ export interface TableState extends Partial<TableProps> {
   };
   first?: boolean;
   templateSelected?: boolean;
+  cancelled?: boolean;
+  oldColumns?: Array<IColumn["key"]>;
 }
 
 export interface ISheetState {
@@ -157,7 +159,7 @@ export type Action =
   | { type: "filter"; payload: Record<string, (string | number | boolean)[]> }
   | {
       type: "updateColumns";
-      payload: TableProps["columns"];
+      payload: TableProps["columns"] | Partial<TableProps & TableState>;
     }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | { type: "addLoadingRow"; payload: string }

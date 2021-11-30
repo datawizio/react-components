@@ -31,6 +31,7 @@ export type DateRangePickerProps = {
   style?: any;
   onChange?: (a: any, b: any) => void;
   onClear?: () => void;
+  getPopupContainer?: () => HTMLElement | null;
 } & typeof DatePicker.RangePicker;
 
 export type IDateRangePicker = {
