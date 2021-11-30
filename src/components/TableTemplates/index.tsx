@@ -108,10 +108,11 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       if (!id) return;
       const template = templates.find(template => template.id === id);
       onSelect && onSelect(template);
+      dispatch({ type: "update", payload: { templateSelected: true } });
       setSelectedTemplate(template);
       setTemplateToState(template);
     },
-    [templates, setTemplateToState, onSelect]
+    [templates, onSelect, dispatch, setTemplateToState]
   );
 
   const handleSelectFavorite = useCallback(
@@ -193,9 +194,9 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   );
 
   useEffect(() => {
-    setSelectedTemplate(null);
+    if (!tableState.templateSelected) setSelectedTemplate(null);
     // eslint-disable-next-line
-  }, [useDeepEqualMemo(tableState.visibleColumnsKeys)]);
+  }, [useDeepEqualMemo(tableState.templateSelected)]);
 
   useEffect(() => {
     function _setTemplates(templates) {

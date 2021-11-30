@@ -125,6 +125,7 @@ export interface TableState extends Partial<TableProps> {
     [columnKey: string]: number;
   };
   first?: boolean;
+  templateSelected?: boolean;
   cancelled?: boolean;
   oldColumns?: Array<IColumn["key"]>;
 }
