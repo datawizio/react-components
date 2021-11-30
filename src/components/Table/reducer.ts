@@ -1,4 +1,11 @@
-import { TableState, Action, SortParams, TableProps, IRow } from "./types";
+import {
+  TableState,
+  Action,
+  SortParams,
+  TableProps,
+  IRow,
+  IColumn
+} from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
 import { swapColumns, filterByColumns } from "./utils/utils";
 
@@ -116,7 +123,22 @@ export function reducer(state: TableState, action: Action): TableState {
         }
       };
     case "updateColumns": {
-      const nextColumnsMap = genColumnsMap(action.payload);
+      let cols = action.payload as IColumn[];
+      let cancelled = false;
+      let oldColumns = [];
+      let visibleColumnsKeys = state.visibleColumnsKeys;
+      let loading = false;
+
+      if (!Array.isArray(action.payload)) {
+        cols = action.payload.columns;
+        cancelled = Boolean(action.payload.cancelled);
+        oldColumns = state.visibleColumnsKeys;
+        visibleColumnsKeys =
+          action.payload.visibleColumnsKeys ?? state.visibleColumnsKeys;
+        loading = Boolean(action.payload.loading);
+      }
+
+      const nextColumnsMap = genColumnsMap(cols);
       const nextSortParams = filterByColumns(nextColumnsMap, state.sortParams);
       const nextFilterParams = filterByColumns(
         nextColumnsMap,
@@ -124,9 +146,9 @@ export function reducer(state: TableState, action: Action): TableState {
       );
 
       const nextVisibleColumnsKeys =
-        state.visibleColumnsKeys &&
-        state.visibleColumnsKeys.length &&
-        state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
+        visibleColumnsKeys &&
+        visibleColumnsKeys.length &&
+        visibleColumnsKeys.filter(key => nextColumnsMap[key]);
       const nextColumns = (function rec(newColumns, oldColumns) {
         if (state.forceColumns) {
           return newColumns;
@@ -168,11 +190,13 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         return newColumns;
-      })(action.payload, state.columns);
+      })(cols, state.columns);
 
       return {
         ...state,
-
+        cancelled,
+        loading,
+        oldColumns,
         columns: nextColumns,
         columnsMap: nextColumnsMap,
 
@@ -354,7 +378,12 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "recoveryState": {
       const { columnsPositions, pagination, ...restPayload } = action.payload;
-      let nextState = { ...state, ...restPayload, stateIsRecovered: true };
+      let nextState = {
+        ...state,
+        ...restPayload,
+        stateIsRecovered: true,
+        loading: false
+      };
 
       if (nextState.pagination && pagination && pagination.pageSize) {
         nextState.pagination.pageSize = pagination.pageSize;
@@ -423,7 +452,7 @@ export function reducer(state: TableState, action: Action): TableState {
           { ...nextState, columns: state.columns },
           {
             type: "updateColumns",
-            payload: nextState.columns
+            payload: nextState
           }
         );
 

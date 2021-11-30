@@ -54,7 +54,7 @@ function useAsyncProviders(
       firstUpdate.current && templatesProvider
         ? await recoveryState()
         : await fetchData(state.first || firstUpdate.current);
-      dispatch({ type: "loading", payload: false });
+      // dispatch({ type: "loading", payload: false });
     })();
     // eslint-disable-next-line
   }, [
