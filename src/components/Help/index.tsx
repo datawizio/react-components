@@ -8,6 +8,7 @@ export interface IHelp {
   onHelperClick?: () => void;
   onVisibleChange?: (visible: boolean) => void;
   tourMenu?: React.ReactElement;
+  visible?: boolean;
 }
 
 const Help: React.FC<IHelp> = ({
@@ -15,7 +16,8 @@ const Help: React.FC<IHelp> = ({
   onServiceUpdateClick,
   onHelperClick,
   onVisibleChange,
-  tourMenu
+  tourMenu,
+  visible
 }) => {
   return (
     <>
@@ -25,6 +27,7 @@ const Help: React.FC<IHelp> = ({
         onServiceUpdateClick={onServiceUpdateClick}
         onVisibleChange={onVisibleChange}
         tourMenu={tourMenu}
+        visible={visible}
       />
       <div className="divider"></div>
     </>
