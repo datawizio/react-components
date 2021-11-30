@@ -125,6 +125,7 @@ export interface TableState extends Partial<TableProps> {
     [columnKey: string]: number;
   };
   first?: boolean;
+  templateSelected?: boolean;
 }
 
 export interface ISheetState {

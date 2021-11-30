@@ -108,7 +108,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const handleApply = useCallback(() => {
     onSubmit && onSubmit(visibleColumnsKeys);
 
-    const payload: any = { visibleColumnsKeys };
+    const payload: any = { visibleColumnsKeys, templateSelected: false };
     if (
       (typeof props.fetchAfterApply === "boolean" && props.fetchAfterApply) ||
       (typeof props.fetchAfterApply === "function" &&
