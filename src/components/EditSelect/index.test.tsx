@@ -1,5 +1,6 @@
 import "jsdom-global/register";
 import React from "react";
+import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
 
 import EditSelect from "./index";
@@ -32,7 +33,9 @@ describe("EditSelect component", () => {
       }
     };
     const saveButton = component.find("Input").first();
-    saveButton.simulate("change", mockEvent);
-    expect(component).toMatchSnapshot();
+    act(() => {
+      saveButton.simulate("change", mockEvent);
+      expect(component).toMatchSnapshot();
+    });
   });
 });

@@ -78,6 +78,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     selectedTemplate,
     setSelectedTemplate
   ] = useState<TableTemplate | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const setTemplateToState = useCallback(
     template => {
@@ -188,9 +189,10 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       }
 
       setSelectedTemplate(template);
+      dispatch({ type: "update", payload: { templateSelected: true } });
       setTemplates(templates => templates.concat(template));
     },
-    [tableState, baseTableState, onCreate]
+    [tableState, baseTableState, onCreate, dispatch]
   );
 
   useEffect(() => {
@@ -238,8 +240,13 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         onChange={handleSelect}
         className="table-templates__selector"
         value={(<SelectValue value={selectedTemplate?.title} />) as any}
+        onDropdownVisibleChange={state => {
+          setIsDropdownOpen(state);
+        }}
         dropdownRender={originNode => (
-          <Dropdown onCreate={handleCreate}>{originNode}</Dropdown>
+          <Dropdown onCreate={handleCreate} isOpen={isDropdownOpen}>
+            {originNode}
+          </Dropdown>
         )}
       >
         {templates.map((template, idx) => (
