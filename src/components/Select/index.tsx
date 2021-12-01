@@ -155,7 +155,9 @@ const Select: FCSelect = props => {
       notFoundContent={loading ? loadingContent : notFoundContent}
       loading={loading}
       tagRender={useCustomTagRender ? tagRender : null}
-      onDropdownVisibleChange={asyncData ? handleDropdownVisibleChange : null}
+      onDropdownVisibleChange={
+        asyncData ? handleDropdownVisibleChange : props.onDropdownVisibleChange
+      }
     >
       {asyncData ? options : props.children}
     </AntSelect>
