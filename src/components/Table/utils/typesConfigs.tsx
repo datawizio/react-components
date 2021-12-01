@@ -3,7 +3,7 @@ import { DTypeConfig } from "../types";
 const basicDTypesConfig = {
   "number": {
     sorter: (a, b) => a - b,
-    toString: value => value && value.toLocaleString(),
+    toString: value => value && value.toLocaleString("en-US"),
     filter: (value, filterBy) => value === filterBy,
     search: (value, searchBy) => {
       if (searchBy.includes(";")) {
@@ -23,7 +23,7 @@ const basicDTypesConfig = {
       );
     },
     render: value =>
-      value && value.toLocaleString(undefined, { maximumFractionDigits: 4 })
+      value && value.toLocaleString("en-US", { maximumFractionDigits: 4 })
   } as DTypeConfig<number>,
 
   "boolean": {

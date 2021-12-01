@@ -49,13 +49,13 @@ describe("Help component", () => {
   it("Help rendered correctly", () => {
     const menu = component.find("HelpMenu").first();
     menu.simulate("click");
-    const support = component
+    const helper = component
       .findWhere(n => {
-        return n.text() === "SUPPORT";
+        return n.text() === "BES_HELPER";
       })
       .first();
-    support.simulate("click");
+    helper.simulate("click");
     waitForComponentToPaint(component);
-    expect(component.prop("onSupportLinkClick")).toBeCalledTimes(1);
+    expect(component.prop("onHelperClick")).toBeCalledTimes(1);
   });
 });

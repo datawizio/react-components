@@ -83,19 +83,4 @@ describe("TreeSearch component", () => {
         .hasClass("ant-tree-checkbox-checked")
     ).toBeTruthy();
   });
-
-  it("should check item", () => {
-    const wrapper = setUp({
-      ...mockProps,
-      checkable: true,
-      searchValue: "label"
-    });
-    wrapper.find(".ant-tree-checkbox").at(1).simulate("click");
-    expect(
-      wrapper
-        .find(".ant-tree-checkbox")
-        .at(1)
-        .hasClass("ant-tree-checkbox-checked")
-    ).toBeTruthy();
-  });
 });

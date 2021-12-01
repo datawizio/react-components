@@ -250,6 +250,7 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
               </LiteSearchInput>
             </div>
             <ListBody
+              checkedKeys={Array []}
               dataSource={Array []}
               direction="left"
               disableAll={false}
@@ -281,7 +282,6 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
               onPageChange={[Function]}
               prefixCls="ant-transfer-list"
               searchText="SEARCH"
-              selectedKeys={Array []}
               selectedText="SELECTED"
               showSearch={true}
               titleText=""

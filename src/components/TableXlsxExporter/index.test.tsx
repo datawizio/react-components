@@ -5,11 +5,7 @@ import { act } from "react-dom/test-utils";
 import { render, fireEvent } from "@testing-library/react";
 import TableXlsxExporter from "./index";
 import Table from "../Table";
-import {
-  getStaticColumn,
-  getStaticDataSource,
-  sortable
-} from "../Table/__mocks__";
+import { sortable } from "../Table/__mocks__";
 import { exportTableToXLSX } from "./exporters";
 
 const mockTableProps = {
@@ -49,7 +45,6 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: jest.fn()
   }))
 });
-
 const setUp = (props?) => mount(<TableXlsxExporter {...props} />);
 
 describe("TableXlsxExporter component", () => {
@@ -76,13 +71,33 @@ describe("TableXlsxExporter component", () => {
   });
 
   it("should export corectly", async () => {
+    /**
+     * @jest-environment jsdom
+     */
+    console.log("1");
+
     const mockProps = {
       height: "auto",
       width: "auto",
-
+      dTypeConfig: {},
       sortable,
-      columns: getStaticColumn(),
-      dataSource: getStaticDataSource()
+      dataProvider: jest.fn(() => {
+        return {
+          columns: [
+            {
+              title: "Name",
+              key: "name",
+              dataIndex: "name"
+            }
+          ],
+          dataSource: [
+            {
+              key: "1",
+              name: "John"
+            }
+          ]
+        };
+      })
     };
 
     const wrapper = render(

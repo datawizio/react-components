@@ -3,6 +3,7 @@
 exports[`TimeRangePicker component TimeRangePicker rendered correctly 1`] = `
 <RangePicker
   className="ant-picker-w100"
+  dropdownClassName="time-range-picker"
   onChange={[Function]}
   picker="time"
   placeholder={
@@ -13,8 +14,8 @@ exports[`TimeRangePicker component TimeRangePicker rendered correctly 1`] = `
   }
   value={
     Array [
-      "2021-07-15T20:00:00.000Z",
-      "2021-07-15T20:00:00.000Z",
+      "2021-12-01T20:00:00.000Z",
+      "2021-12-01T20:00:00.000Z",
     ]
   }
 />
@@ -23,6 +24,7 @@ exports[`TimeRangePicker component TimeRangePicker rendered correctly 1`] = `
 exports[`TimeRangePicker component TimeRangePicker rendered correctly with empty props 1`] = `
 <RangePicker
   className=""
+  dropdownClassName="time-range-picker"
   onChange={[Function]}
   picker="time"
   placeholder={
@@ -37,6 +39,7 @@ exports[`TimeRangePicker component TimeRangePicker rendered correctly with empty
 exports[`TimeRangePicker component TimeRangePicker trigger onChange with empty 1`] = `
 <RangePicker
   className="ant-picker-w100"
+  dropdownClassName="time-range-picker"
   onChange={[Function]}
   picker="time"
   placeholder={
@@ -47,8 +50,8 @@ exports[`TimeRangePicker component TimeRangePicker trigger onChange with empty 1
   }
   value={
     Array [
-      "2021-07-15T20:00:00.000Z",
-      "2021-07-15T20:00:00.000Z",
+      "2021-12-01T20:00:00.000Z",
+      "2021-12-01T20:00:00.000Z",
     ]
   }
 />
@@ -57,6 +60,7 @@ exports[`TimeRangePicker component TimeRangePicker trigger onChange with empty 1
 exports[`TimeRangePicker component TimeRangePicker trigger onChange with mock 1`] = `
 <RangePicker
   className="ant-picker-w100"
+  dropdownClassName="time-range-picker"
   onChange={[Function]}
   picker="time"
   placeholder={
@@ -67,8 +71,8 @@ exports[`TimeRangePicker component TimeRangePicker trigger onChange with mock 1`
   }
   value={
     Array [
-      "2021-07-15T20:00:00.000Z",
-      "2021-07-15T20:00:00.000Z",
+      "2021-12-01T20:00:00.000Z",
+      "2021-12-01T20:00:00.000Z",
     ]
   }
 />

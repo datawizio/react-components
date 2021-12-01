@@ -25,7 +25,7 @@ const listBodyProps = {
       level: 2
     }
   ],
-  selectedKeys: [],
+  checkedKeys: ["a"],
   loading: false,
   type: "tree",
   value: { exclude: [], include: [] },

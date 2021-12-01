@@ -213,39 +213,48 @@ exports[`PeriodSelect should render correctly 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_180_DAYS",
+                            "children": "LAST_90_DAYS",
                             "key": "10",
-                            "value": "last_180_days",
+                            "value": "last_90_days",
                           },
                           "groupOption": false,
                           "key": "10",
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_365_DAYS",
+                            "children": "LAST_180_DAYS",
                             "key": "11",
-                            "value": "last_365_days",
+                            "value": "last_180_days",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "LAST_365_DAYS",
                             "key": "12",
-                            "value": "all_time",
+                            "value": "last_365_days",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "ALL_TIME",
                             "key": "13",
-                            "value": "date",
+                            "value": "all_time",
                           },
                           "groupOption": false,
                           "key": "13",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "14",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "14",
                         },
                       ]
                     }
@@ -316,23 +325,28 @@ exports[`PeriodSelect should render correctly 1`] = `
                           "value": "last_30_days",
                         },
                         Object {
-                          "children": "LAST_180_DAYS",
+                          "children": "LAST_90_DAYS",
                           "key": "10",
+                          "value": "last_90_days",
+                        },
+                        Object {
+                          "children": "LAST_180_DAYS",
+                          "key": "11",
                           "value": "last_180_days",
                         },
                         Object {
                           "children": "LAST_365_DAYS",
-                          "key": "11",
+                          "key": "12",
                           "value": "last_365_days",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "12",
+                          "key": "13",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "13",
+                          "key": "14",
                           "value": "date",
                         },
                       ]
@@ -527,39 +541,48 @@ exports[`PeriodSelect should render correctly 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_180_DAYS",
+                                "children": "LAST_90_DAYS",
                                 "key": "10",
-                                "value": "last_180_days",
+                                "value": "last_90_days",
                               },
                               "groupOption": false,
                               "key": "10",
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_365_DAYS",
+                                "children": "LAST_180_DAYS",
                                 "key": "11",
-                                "value": "last_365_days",
+                                "value": "last_180_days",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "LAST_365_DAYS",
                                 "key": "12",
-                                "value": "all_time",
+                                "value": "last_365_days",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "ALL_TIME",
                                 "key": "13",
-                                "value": "date",
+                                "value": "all_time",
                               },
                               "groupOption": false,
                               "key": "13",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "14",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "14",
                             },
                           ]
                         }
@@ -630,23 +653,28 @@ exports[`PeriodSelect should render correctly 1`] = `
                               "value": "last_30_days",
                             },
                             Object {
-                              "children": "LAST_180_DAYS",
+                              "children": "LAST_90_DAYS",
                               "key": "10",
+                              "value": "last_90_days",
+                            },
+                            Object {
+                              "children": "LAST_180_DAYS",
+                              "key": "11",
                               "value": "last_180_days",
                             },
                             Object {
                               "children": "LAST_365_DAYS",
-                              "key": "11",
+                              "key": "12",
                               "value": "last_365_days",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "12",
+                              "key": "13",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "13",
+                              "key": "14",
                               "value": "date",
                             },
                           ]
@@ -1999,39 +2027,48 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_180_DAYS",
+                            "children": "LAST_90_DAYS",
                             "key": "10",
-                            "value": "last_180_days",
+                            "value": "last_90_days",
                           },
                           "groupOption": false,
                           "key": "10",
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_365_DAYS",
+                            "children": "LAST_180_DAYS",
                             "key": "11",
-                            "value": "last_365_days",
+                            "value": "last_180_days",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "LAST_365_DAYS",
                             "key": "12",
-                            "value": "all_time",
+                            "value": "last_365_days",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "ALL_TIME",
                             "key": "13",
-                            "value": "date",
+                            "value": "all_time",
                           },
                           "groupOption": false,
                           "key": "13",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "14",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "14",
                         },
                       ]
                     }
@@ -2102,23 +2139,28 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                           "value": "last_30_days",
                         },
                         Object {
-                          "children": "LAST_180_DAYS",
+                          "children": "LAST_90_DAYS",
                           "key": "10",
+                          "value": "last_90_days",
+                        },
+                        Object {
+                          "children": "LAST_180_DAYS",
+                          "key": "11",
                           "value": "last_180_days",
                         },
                         Object {
                           "children": "LAST_365_DAYS",
-                          "key": "11",
+                          "key": "12",
                           "value": "last_365_days",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "12",
+                          "key": "13",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "13",
+                          "key": "14",
                           "value": "date",
                         },
                       ]
@@ -2313,39 +2355,48 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_180_DAYS",
+                                "children": "LAST_90_DAYS",
                                 "key": "10",
-                                "value": "last_180_days",
+                                "value": "last_90_days",
                               },
                               "groupOption": false,
                               "key": "10",
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_365_DAYS",
+                                "children": "LAST_180_DAYS",
                                 "key": "11",
-                                "value": "last_365_days",
+                                "value": "last_180_days",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "LAST_365_DAYS",
                                 "key": "12",
-                                "value": "all_time",
+                                "value": "last_365_days",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "ALL_TIME",
                                 "key": "13",
-                                "value": "date",
+                                "value": "all_time",
                               },
                               "groupOption": false,
                               "key": "13",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "14",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "14",
                             },
                           ]
                         }
@@ -2416,23 +2467,28 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                               "value": "last_30_days",
                             },
                             Object {
-                              "children": "LAST_180_DAYS",
+                              "children": "LAST_90_DAYS",
                               "key": "10",
+                              "value": "last_90_days",
+                            },
+                            Object {
+                              "children": "LAST_180_DAYS",
+                              "key": "11",
                               "value": "last_180_days",
                             },
                             Object {
                               "children": "LAST_365_DAYS",
-                              "key": "11",
+                              "key": "12",
                               "value": "last_365_days",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "12",
+                              "key": "13",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "13",
+                              "key": "14",
                               "value": "date",
                             },
                           ]
@@ -3835,39 +3891,48 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_180_DAYS",
+                            "children": "LAST_90_DAYS",
                             "key": "10",
-                            "value": "last_180_days",
+                            "value": "last_90_days",
                           },
                           "groupOption": false,
                           "key": "10",
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_365_DAYS",
+                            "children": "LAST_180_DAYS",
                             "key": "11",
-                            "value": "last_365_days",
+                            "value": "last_180_days",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "LAST_365_DAYS",
                             "key": "12",
-                            "value": "all_time",
+                            "value": "last_365_days",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "ALL_TIME",
                             "key": "13",
-                            "value": "date",
+                            "value": "all_time",
                           },
                           "groupOption": false,
                           "key": "13",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "14",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "14",
                         },
                       ]
                     }
@@ -3938,23 +4003,28 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                           "value": "last_30_days",
                         },
                         Object {
-                          "children": "LAST_180_DAYS",
+                          "children": "LAST_90_DAYS",
                           "key": "10",
+                          "value": "last_90_days",
+                        },
+                        Object {
+                          "children": "LAST_180_DAYS",
+                          "key": "11",
                           "value": "last_180_days",
                         },
                         Object {
                           "children": "LAST_365_DAYS",
-                          "key": "11",
+                          "key": "12",
                           "value": "last_365_days",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "12",
+                          "key": "13",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "13",
+                          "key": "14",
                           "value": "date",
                         },
                       ]
@@ -4149,39 +4219,48 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_180_DAYS",
+                                "children": "LAST_90_DAYS",
                                 "key": "10",
-                                "value": "last_180_days",
+                                "value": "last_90_days",
                               },
                               "groupOption": false,
                               "key": "10",
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_365_DAYS",
+                                "children": "LAST_180_DAYS",
                                 "key": "11",
-                                "value": "last_365_days",
+                                "value": "last_180_days",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "LAST_365_DAYS",
                                 "key": "12",
-                                "value": "all_time",
+                                "value": "last_365_days",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "ALL_TIME",
                                 "key": "13",
-                                "value": "date",
+                                "value": "all_time",
                               },
                               "groupOption": false,
                               "key": "13",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "14",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "14",
                             },
                           ]
                         }
@@ -4252,23 +4331,28 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                               "value": "last_30_days",
                             },
                             Object {
-                              "children": "LAST_180_DAYS",
+                              "children": "LAST_90_DAYS",
                               "key": "10",
+                              "value": "last_90_days",
+                            },
+                            Object {
+                              "children": "LAST_180_DAYS",
+                              "key": "11",
                               "value": "last_180_days",
                             },
                             Object {
                               "children": "LAST_365_DAYS",
-                              "key": "11",
+                              "key": "12",
                               "value": "last_365_days",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "12",
+                              "key": "13",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "13",
+                              "key": "14",
                               "value": "date",
                             },
                           ]
@@ -7191,39 +7275,48 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_180_DAYS",
+                            "children": "LAST_90_DAYS",
                             "key": "10",
-                            "value": "last_180_days",
+                            "value": "last_90_days",
                           },
                           "groupOption": false,
                           "key": "10",
                         },
                         Object {
                           "data": Object {
-                            "children": "LAST_365_DAYS",
+                            "children": "LAST_180_DAYS",
                             "key": "11",
-                            "value": "last_365_days",
+                            "value": "last_180_days",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "LAST_365_DAYS",
                             "key": "12",
-                            "value": "all_time",
+                            "value": "last_365_days",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "ALL_TIME",
                             "key": "13",
-                            "value": "date",
+                            "value": "all_time",
                           },
                           "groupOption": false,
                           "key": "13",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "14",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "14",
                         },
                       ]
                     }
@@ -7294,23 +7387,28 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                           "value": "last_30_days",
                         },
                         Object {
-                          "children": "LAST_180_DAYS",
+                          "children": "LAST_90_DAYS",
                           "key": "10",
+                          "value": "last_90_days",
+                        },
+                        Object {
+                          "children": "LAST_180_DAYS",
+                          "key": "11",
                           "value": "last_180_days",
                         },
                         Object {
                           "children": "LAST_365_DAYS",
-                          "key": "11",
+                          "key": "12",
                           "value": "last_365_days",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "12",
+                          "key": "13",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "13",
+                          "key": "14",
                           "value": "date",
                         },
                       ]
@@ -7505,39 +7603,48 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_180_DAYS",
+                                "children": "LAST_90_DAYS",
                                 "key": "10",
-                                "value": "last_180_days",
+                                "value": "last_90_days",
                               },
                               "groupOption": false,
                               "key": "10",
                             },
                             Object {
                               "data": Object {
-                                "children": "LAST_365_DAYS",
+                                "children": "LAST_180_DAYS",
                                 "key": "11",
-                                "value": "last_365_days",
+                                "value": "last_180_days",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "LAST_365_DAYS",
                                 "key": "12",
-                                "value": "all_time",
+                                "value": "last_365_days",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "ALL_TIME",
                                 "key": "13",
-                                "value": "date",
+                                "value": "all_time",
                               },
                               "groupOption": false,
                               "key": "13",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "14",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "14",
                             },
                           ]
                         }
@@ -7608,23 +7715,28 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                               "value": "last_30_days",
                             },
                             Object {
-                              "children": "LAST_180_DAYS",
+                              "children": "LAST_90_DAYS",
                               "key": "10",
+                              "value": "last_90_days",
+                            },
+                            Object {
+                              "children": "LAST_180_DAYS",
+                              "key": "11",
                               "value": "last_180_days",
                             },
                             Object {
                               "children": "LAST_365_DAYS",
-                              "key": "11",
+                              "key": "12",
                               "value": "last_365_days",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "12",
+                              "key": "13",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "13",
+                              "key": "14",
                               "value": "date",
                             },
                           ]

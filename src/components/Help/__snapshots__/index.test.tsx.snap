@@ -12,7 +12,6 @@ exports[`Help component Help rendered correctly 1`] = `
   <HelpMenu
     onHelperClick={[MockFunction]}
     onServiceUpdateClick={[MockFunction]}
-    onSupportClick={[Function]}
     onTutorialClick={[MockFunction]}
   >
     <Dropdown
@@ -27,11 +26,6 @@ exports[`Help component Help rendered correctly 1`] = `
             onClick={[MockFunction]}
           >
             READ_TUTORIAL
-          </MenuItem>
-          <MenuItem
-            onClick={[Function]}
-          >
-            SUPPORT
           </MenuItem>
           <MenuItem
             onClick={[MockFunction]}
@@ -211,7 +205,8 @@ exports[`Help component Help rendered correctly 1`] = `
           stretch="minWidth"
         >
           <Button
-            className="ant-dropdown-trigger help-icon"
+            className="ant-dropdown-trigger help-icon teaching-btn"
+            icon={<ForwardRef(QuestionCircleOutlined) />}
             key="trigger"
             onClick={[Function]}
             onMouseDown={[Function]}
@@ -219,34 +214,13 @@ exports[`Help component Help rendered correctly 1`] = `
             type="link"
           >
             <button
-              className="ant-btn ant-btn-link ant-dropdown-trigger help-icon"
+              className="ant-btn ant-btn-link ant-dropdown-trigger help-icon teaching-btn"
               onClick={[Function]}
               onMouseDown={[Function]}
               onTouchStart={[Function]}
               type="button"
             >
-              <LoadingIcon
-                existIcon={false}
-                loading={false}
-                prefixCls="ant-btn"
-              >
-                <CSSMotion
-                  motionName="ant-btn-loading-icon-motion"
-                  onAppearActive={[Function]}
-                  onAppearStart={[Function]}
-                  onEnterActive={[Function]}
-                  onEnterStart={[Function]}
-                  onLeaveActive={[Function]}
-                  onLeaveStart={[Function]}
-                  removeOnLeave={true}
-                  visible={false}
-                >
-                  <DomWrapper />
-                </CSSMotion>
-              </LoadingIcon>
-              <ForwardRef(QuestionCircleOutlined)
-                key=".0"
-              >
+              <ForwardRef(QuestionCircleOutlined)>
                 <AntdIcon
                   icon={
                     Object {
@@ -333,78 +307,17 @@ exports[`Help component Help rendered correctly 1`] = `
                   </span>
                 </AntdIcon>
               </ForwardRef(QuestionCircleOutlined)>
+              <span
+                key=".0"
+              >
+                TEACHING
+              </span>
             </button>
           </Button>
         </Trigger>
       </ForwardRef(Dropdown)>
     </Dropdown>
   </HelpMenu>
-  <SupportModal
-    onSubmit={[MockFunction]}
-    setVisible={[Function]}
-    uploadFileURL="url"
-    visible={false}
-  >
-    <Modal
-      centered={true}
-      className="support-modal"
-      confirmLoading={false}
-      destroyOnClose={true}
-      footer={
-        <Button
-          border={true}
-          disabled={true}
-          onClick={[Function]}
-          type="primary"
-        >
-          SEND
-        </Button>
-      }
-      maskTransitionName="fade"
-      okType="primary"
-      onCancel={[Function]}
-      title="SUPPORT"
-      transitionName="zoom"
-      visible={false}
-      width={520}
-    >
-      <Dialog
-        className="support-modal"
-        closeIcon={
-          <span
-            className="ant-modal-close-x"
-          >
-            <ForwardRef(CloseOutlined)
-              className="ant-modal-close-icon"
-            />
-          </span>
-        }
-        confirmLoading={false}
-        destroyOnClose={true}
-        focusTriggerAfterClose={true}
-        footer={
-          <Button
-            border={true}
-            disabled={true}
-            onClick={[Function]}
-            type="primary"
-          >
-            SEND
-          </Button>
-        }
-        maskTransitionName="fade"
-        okType="primary"
-        onCancel={[Function]}
-        onClose={[Function]}
-        prefixCls="ant-modal"
-        title="SUPPORT"
-        transitionName="zoom"
-        visible={false}
-        width={520}
-        wrapClassName="ant-modal-centered"
-      />
-    </Modal>
-  </SupportModal>
   <div
     className="divider"
   />
