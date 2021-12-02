@@ -108,6 +108,7 @@ exports[`Table component rendered Table corectly 1`] = `
             "loading": undefined,
             "loadingRows": Object {},
             "pagination": Object {
+              "current": 1,
               "pageSize": 20,
               "pageSizeOptions": Array [
                 "20",
@@ -116,6 +117,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "100",
               ],
               "showSizeChanger": true,
+              "total": 3,
             },
             "parentsMap": Object {},
             "searchValue": undefined,
@@ -329,6 +331,7 @@ exports[`Table component rendered Table corectly 1`] = `
             "loading": false,
             "loadingRows": Object {},
             "pagination": Object {
+              "current": 1,
               "pageSize": 20,
               "pageSizeOptions": Array [
                 "20",
@@ -337,6 +340,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "100",
               ],
               "showSizeChanger": true,
+              "total": 3,
             },
             "parentsMap": Object {},
             "searchValue": undefined,
@@ -505,6 +509,7 @@ exports[`Table component rendered Table corectly 1`] = `
           }
           pagination={
             Object {
+              "current": 1,
               "pageSize": 20,
               "pageSizeOptions": Array [
                 "20",
@@ -514,6 +519,7 @@ exports[`Table component rendered Table corectly 1`] = `
               ],
               "showSizeChanger": true,
               "showTotal": [Function],
+              "total": 3,
             }
           }
           parentsMap={Object {}}
