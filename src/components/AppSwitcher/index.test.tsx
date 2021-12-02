@@ -12,6 +12,7 @@ const setUp = (props?) => mount(<AppSwitcher {...props} />);
 
 describe("AppSwitcher component", () => {
   let component;
+
   beforeEach(() => {
     component = setUp(mockProps);
   });
