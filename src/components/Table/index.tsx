@@ -85,12 +85,19 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   const dataSourceState = useDataSource(baseState, props);
 
-  const state = {
+  const state: any = {
     ...baseState,
     ...dataSourceState,
     ...columnsState,
     loading: false
   };
+
+  if (!async) {
+    if (state.pagination.total !== state.dataSource.length) {
+      state.pagination.total = state.dataSource.length;
+      dispatch({ type: "paginate", payload: state.pagination });
+    }
+  }
 
   if (dataSourceState.expandedRowKeys) delete dataSourceState.expandedRowKeys;
 
