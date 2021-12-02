@@ -50,7 +50,6 @@ import { HeaderWrapper } from "./components/HeaderWrapper";
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
     errorRender,
-    async,
     vid,
     virtual,
     style,
@@ -77,6 +76,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     ...restProps
   } = props;
 
+  const isAsync = props.async;
+
   const { translate } = useContext(ConfigContext);
 
   const [baseState, dispatch] = useReducer(reducer, props, initializer);
@@ -92,7 +93,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     loading: false
   };
 
-  if (!async) {
+  if (!isAsync) {
     if (state.pagination.total !== state.dataSource.length) {
       state.pagination.total = state.dataSource.length;
       dispatch({ type: "paginate", payload: state.pagination });

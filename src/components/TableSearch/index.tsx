@@ -15,11 +15,13 @@ const TableSearch: React.FC<TableSearchProps> = ({ placeholder, onSearch }) => {
   const {
     dispatch,
     tableState: { searchValue },
-    tableProps: { async }
+    tableProps
   } = useContext(TableContext);
 
+  const isAsync = tableProps.async;
+
   const onSearchHandler = value => {
-    if (async) {
+    if (isAsync) {
       onSearch && onSearch(value);
       dispatch({ type: "search", payload: value });
     } else {
