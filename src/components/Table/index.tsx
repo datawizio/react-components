@@ -50,6 +50,7 @@ import { HeaderWrapper } from "./components/HeaderWrapper";
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
     errorRender,
+    async,
     vid,
     virtual,
     style,
@@ -286,6 +287,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "resetPagination", payload: pageSize });
     }
   }));
+
   return (
     <div className="dw-table-container">
       <DndProvider backend={HTML5Backend}>
