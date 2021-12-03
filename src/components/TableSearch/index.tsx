@@ -14,12 +14,26 @@ export interface TableSearchProps {
 const TableSearch: React.FC<TableSearchProps> = ({ placeholder, onSearch }) => {
   const {
     dispatch,
-    tableState: { searchValue }
+    tableState: { searchValue },
+    tableProps
   } = useContext(TableContext);
-  const onSearchHandler = (value) => {
-    onSearch && onSearch(value);
-    dispatch({ type: "search", payload: value });
-  }
+
+  const isAsync = tableProps.async;
+
+  const onSearchHandler = value => {
+    if (isAsync) {
+      onSearch && onSearch(value);
+      dispatch({ type: "search", payload: value });
+    } else {
+      dispatch({ type: "loading", payload: true });
+      setTimeout(() => {
+        onSearch && onSearch(value);
+        dispatch({ type: "search", payload: value });
+        dispatch({ type: "loading", payload: false });
+      });
+    }
+  };
+
   return (
     <div className="table-search table-toolbar--left">
       <LiteSearchInput
