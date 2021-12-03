@@ -413,7 +413,6 @@ export function reducer(state: TableState, action: Action): TableState {
       if (data) {
         const nextDataSource = state.dataSource.concat();
         const path = getRecordPath(key, parentsMap);
-
         let expandedRecord = findExpandedRecord(
           path,
           nextDataSource,
