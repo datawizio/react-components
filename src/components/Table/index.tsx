@@ -76,6 +76,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     ...restProps
   } = props;
 
+  const isAsync = props.async;
+
   const { translate } = useContext(ConfigContext);
 
   const [baseState, dispatch] = useReducer(reducer, props, initializer);
@@ -84,12 +86,19 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   const dataSourceState = useDataSource(baseState, props);
 
-  const state = {
+  const state: any = {
     ...baseState,
     ...dataSourceState,
     ...columnsState,
     loading: false
   };
+
+  if (!isAsync) {
+    if (state.pagination.total !== state.dataSource.length) {
+      state.pagination.total = state.dataSource.length;
+      dispatch({ type: "paginate", payload: state.pagination });
+    }
+  }
 
   if (dataSourceState.expandedRowKeys) delete dataSourceState.expandedRowKeys;
 
@@ -286,6 +295,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       dispatch({ type: "resetPagination", payload: pageSize });
     }
   }));
+
   return (
     <div className="dw-table-container">
       <DndProvider backend={HTML5Backend}>
