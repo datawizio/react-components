@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import * as React from "react";
 import { useState, useCallback, useContext, useEffect, useMemo } from "react";
-import { SaveOutlined } from "@ant-design/icons";
+import { TagsOutlined } from "@ant-design/icons";
 import Select from "../Select";
 import { TableState } from "../Table/types";
 import { TableTemplate } from "./types";
@@ -39,7 +39,7 @@ function SelectValue({ value }) {
 
   return (
     <div className="table-templates__value">
-      <SaveOutlined className="table-templates__icon" />
+      <TagsOutlined className="table-templates__icon" />
       <span className="table-templates__value-title">
         {value || translate("TEMPLATES")}
       </span>

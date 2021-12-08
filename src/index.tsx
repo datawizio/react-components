@@ -120,6 +120,8 @@ export { default as TableTransposeButton } from "./components/TableTransposeButt
 
 export { default as TableSelectColumnsModal } from "./components/TableSelectColumnsModal";
 
+export { default as TableMenu } from "./components/TableMenu";
+
 export { FieldText } from "./components/FormBuilder/fields/Text";
 
 export { FieldPhone } from "./components/FormBuilder/fields/Phone";

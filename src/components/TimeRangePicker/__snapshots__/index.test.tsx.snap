@@ -14,8 +14,8 @@ exports[`TimeRangePicker component TimeRangePicker rendered correctly 1`] = `
   }
   value={
     Array [
-      "2021-12-03T20:00:00.000Z",
-      "2021-12-03T20:00:00.000Z",
+      "2021-12-08T18:00:00.000Z",
+      "2021-12-08T18:00:00.000Z",
     ]
   }
 />
@@ -50,8 +50,8 @@ exports[`TimeRangePicker component TimeRangePicker trigger onChange with empty 1
   }
   value={
     Array [
-      "2021-12-03T20:00:00.000Z",
-      "2021-12-03T20:00:00.000Z",
+      "2021-12-08T18:00:00.000Z",
+      "2021-12-08T18:00:00.000Z",
     ]
   }
 />
@@ -71,8 +71,8 @@ exports[`TimeRangePicker component TimeRangePicker trigger onChange with mock 1`
   }
   value={
     Array [
-      "2021-12-03T20:00:00.000Z",
-      "2021-12-03T20:00:00.000Z",
+      "2021-12-08T18:00:00.000Z",
+      "2021-12-08T18:00:00.000Z",
     ]
   }
 />

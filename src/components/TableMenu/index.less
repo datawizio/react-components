@@ -1,0 +1,21 @@
+@import "../Button/index";
+@import "~antd/es/message/style/index";
+@import "../../styles/variables";
+
+.table-menu {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  &__button.ant-btn {
+    border-radius: 50%;
+  }
+  &__icon {
+    color: @primary-color;
+    &__send {
+      color: @primary-color;
+      transform: rotateZ(-40deg);
+    }
+  }
+  &__divider {
+    margin: 4px 10px;
+  }
+}

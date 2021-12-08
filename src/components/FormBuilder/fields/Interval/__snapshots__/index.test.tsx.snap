@@ -8,8 +8,8 @@ exports[`FormBuilder FieldInterval component FormBuilder FieldInterval  with emp
   rules={
     Array [
       Object {
-        "from": "2020-01-04T00:00:00.000Z",
-        "to": "2020-01-04T00:00:00.000Z",
+        "from": "2020-01-03T22:00:00.000Z",
+        "to": "2020-01-03T22:00:00.000Z",
       },
       Object {
         "validator": [Function],
@@ -19,8 +19,8 @@ exports[`FormBuilder FieldInterval component FormBuilder FieldInterval  with emp
 >
   <Interval
     format="{YYYY} MM-DDTHH:mm:ss SSS [Z] A"
-    maxDate={"2020-03-06T00:00:00.000Z"}
-    minDate={"2020-03-04T00:00:00.000Z"}
+    maxDate={"2020-03-05T22:00:00.000Z"}
+    minDate={"2020-03-03T22:00:00.000Z"}
     onChange={[Function]}
   />
 </FormItem>
@@ -41,8 +41,8 @@ exports[`FormBuilder FieldInterval component FormBuilder FieldInterval rendered 
 >
   <Interval
     format="{YYYY} MM-DDTHH:mm:ss SSS [Z] A"
-    maxDate={"2020-03-06T00:00:00.000Z"}
-    minDate={"2020-03-04T00:00:00.000Z"}
+    maxDate={"2020-03-05T22:00:00.000Z"}
+    minDate={"2020-03-03T22:00:00.000Z"}
     onChange={[Function]}
   />
 </FormItem>
@@ -56,8 +56,8 @@ exports[`FormBuilder FieldInterval component FormBuilder FieldInterval rendered 
   rules={
     Array [
       Object {
-        "from": "2020-01-04T00:00:00.000Z",
-        "to": "2020-01-04T00:00:00.000Z",
+        "from": "2020-01-03T22:00:00.000Z",
+        "to": "2020-01-03T22:00:00.000Z",
       },
       Object {
         "validator": [Function],
@@ -67,8 +67,8 @@ exports[`FormBuilder FieldInterval component FormBuilder FieldInterval rendered 
 >
   <Interval
     format="{YYYY} MM-DDTHH:mm:ss SSS [Z] A"
-    maxDate={"2020-03-06T00:00:00.000Z"}
-    minDate={"2020-03-04T00:00:00.000Z"}
+    maxDate={"2020-03-05T22:00:00.000Z"}
+    minDate={"2020-03-03T22:00:00.000Z"}
     onChange={[Function]}
   />
 </FormItem>

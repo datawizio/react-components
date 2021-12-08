@@ -3,7 +3,7 @@ import { useState, useCallback, useContext, useEffect, useMemo } from "react";
 import clsx from "clsx";
 import Modal from "../Modal";
 import Button from "../Button";
-import { SettingOutlined } from "@ant-design/icons";
+import { ProfileOutlined } from "@ant-design/icons";
 import TreeSearch from "../TreeSearch";
 import { TableContext } from "../Table/context";
 import ConfigContext from "../ConfigProvider/context";
@@ -164,7 +164,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
         onClick={() => setIsOpened(true)}
         title={translate("COLUMNS_BTN_TITLE")}
       >
-        <SettingOutlined className="select-columns__icon" />
+        <ProfileOutlined className="select-columns__icon" />
         {translate(locale.openButton)}
       </Button>
       <Modal
