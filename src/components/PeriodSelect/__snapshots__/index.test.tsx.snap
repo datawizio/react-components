@@ -4726,54 +4726,54 @@ exports[`PeriodSelect should select period with custom data 1`] = `
         </Select>
       </ForwardRef(InternalSelect)>
       <DateRangePicker
-        dateFrom={"2021-10-21T21:00:00.000Z"}
-        dateTo={"2021-11-21T22:00:00.000Z"}
+        dateFrom={"2021-10-22T00:00:00.000Z"}
+        dateTo={"2021-11-22T00:00:00.000Z"}
         defaultPickerValue={
           Array [
-            "2021-06-28T21:00:00.000Z",
-            "2021-06-28T21:00:00.000Z",
+            "2021-06-29T00:00:00.000Z",
+            "2021-06-29T00:00:00.000Z",
           ]
         }
         defaultValue={
           Array [
-            "2021-06-02T21:00:00.000Z",
-            "2021-06-08T21:00:00.000Z",
+            "2021-06-03T00:00:00.000Z",
+            "2021-06-09T00:00:00.000Z",
           ]
         }
         format="DD-MM-YYYY"
         inputReadOnly={true}
         maxDate={false}
-        minDate={"2019-12-31T22:00:00.000Z"}
+        minDate={"2020-01-01T00:00:00.000Z"}
         onChange={[Function]}
         onClear={[Function]}
       >
         <RangePicker
           className=""
-          dateFrom={"2021-10-21T21:00:00.000Z"}
-          dateTo={"2021-11-21T22:00:00.000Z"}
+          dateFrom={"2021-10-22T00:00:00.000Z"}
+          dateTo={"2021-11-22T00:00:00.000Z"}
           defaultPickerValue={
             Array [
-              "2021-06-28T21:00:00.000Z",
-              "2021-06-28T21:00:00.000Z",
+              "2021-06-29T00:00:00.000Z",
+              "2021-06-29T00:00:00.000Z",
             ]
           }
           defaultValue={
             Array [
-              "2021-06-02T21:00:00.000Z",
-              "2021-06-08T21:00:00.000Z",
+              "2021-06-03T00:00:00.000Z",
+              "2021-06-09T00:00:00.000Z",
             ]
           }
           disabledDate={[Function]}
           format="DD-MM-YYYY"
           inputReadOnly={true}
           maxDate={false}
-          minDate={"2019-12-31T22:00:00.000Z"}
+          minDate={"2020-01-01T00:00:00.000Z"}
           onChange={[Function]}
           onClear={[Function]}
           value={
             Array [
-              "2021-10-21T21:00:00.000Z",
-              "2021-11-21T22:00:00.000Z",
+              "2021-10-22T00:00:00.000Z",
+              "2021-11-22T00:00:00.000Z",
             ]
           }
         >
@@ -4791,18 +4791,18 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                   "rangeItem": [Function],
                 }
               }
-              dateFrom={"2021-10-21T21:00:00.000Z"}
-              dateTo={"2021-11-21T22:00:00.000Z"}
+              dateFrom={"2021-10-22T00:00:00.000Z"}
+              dateTo={"2021-11-22T00:00:00.000Z"}
               defaultPickerValue={
                 Array [
-                  "2021-06-28T21:00:00.000Z",
-                  "2021-06-28T21:00:00.000Z",
+                  "2021-06-29T00:00:00.000Z",
+                  "2021-06-29T00:00:00.000Z",
                 ]
               }
               defaultValue={
                 Array [
-                  "2021-06-02T21:00:00.000Z",
-                  "2021-06-08T21:00:00.000Z",
+                  "2021-06-03T00:00:00.000Z",
+                  "2021-06-09T00:00:00.000Z",
                 ]
               }
               disabledDate={[Function]}
@@ -4895,7 +4895,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                 }
               }
               maxDate={false}
-              minDate={"2019-12-31T22:00:00.000Z"}
+              minDate={"2020-01-01T00:00:00.000Z"}
               nextIcon={
                 <span
                   className="ant-picker-next-icon"
@@ -4937,8 +4937,8 @@ exports[`PeriodSelect should select period with custom data 1`] = `
               transitionName="slide-up"
               value={
                 Array [
-                  "2021-10-21T21:00:00.000Z",
-                  "2021-11-21T22:00:00.000Z",
+                  "2021-10-22T00:00:00.000Z",
+                  "2021-11-22T00:00:00.000Z",
                 ]
               }
             >
@@ -4952,18 +4952,18 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                     "rangeItem": [Function],
                   }
                 }
-                dateFrom={"2021-10-21T21:00:00.000Z"}
-                dateTo={"2021-11-21T22:00:00.000Z"}
+                dateFrom={"2021-10-22T00:00:00.000Z"}
+                dateTo={"2021-11-22T00:00:00.000Z"}
                 defaultPickerValue={
                   Array [
-                    "2021-06-28T21:00:00.000Z",
-                    "2021-06-28T21:00:00.000Z",
+                    "2021-06-29T00:00:00.000Z",
+                    "2021-06-29T00:00:00.000Z",
                   ]
                 }
                 defaultValue={
                   Array [
-                    "2021-06-02T21:00:00.000Z",
-                    "2021-06-08T21:00:00.000Z",
+                    "2021-06-03T00:00:00.000Z",
+                    "2021-06-09T00:00:00.000Z",
                   ]
                 }
                 disabledDate={[Function]}
@@ -5056,7 +5056,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                   }
                 }
                 maxDate={false}
-                minDate={"2019-12-31T22:00:00.000Z"}
+                minDate={"2020-01-01T00:00:00.000Z"}
                 nextIcon={
                   <span
                     className="ant-picker-next-icon"
@@ -5106,8 +5106,8 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                 transitionName="slide-up"
                 value={
                   Array [
-                    "2021-10-21T21:00:00.000Z",
-                    "2021-11-21T22:00:00.000Z",
+                    "2021-10-22T00:00:00.000Z",
+                    "2021-11-22T00:00:00.000Z",
                   ]
                 }
               >
@@ -5166,9 +5166,9 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       "rangeItem": [Function],
                                     }
                                   }
-                                  dateFrom={"2021-10-21T21:00:00.000Z"}
+                                  dateFrom={"2021-10-22T00:00:00.000Z"}
                                   dateRender={null}
-                                  dateTo={"2021-11-21T22:00:00.000Z"}
+                                  dateTo={"2021-11-22T00:00:00.000Z"}
                                   defaultValue={null}
                                   disabledDate={[Function]}
                                   disabledTime={[Function]}
@@ -5261,7 +5261,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                     }
                                   }
                                   maxDate={false}
-                                  minDate={"2019-12-31T22:00:00.000Z"}
+                                  minDate={"2020-01-01T00:00:00.000Z"}
                                   mode="date"
                                   nextIcon={
                                     <span
@@ -5280,7 +5280,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-06-28T21:00:00.000Z"}
+                                  pickerValue={"2021-06-29T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -5340,9 +5340,9 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       "rangeItem": [Function],
                                     }
                                   }
-                                  dateFrom={"2021-10-21T21:00:00.000Z"}
+                                  dateFrom={"2021-10-22T00:00:00.000Z"}
                                   dateRender={null}
-                                  dateTo={"2021-11-21T22:00:00.000Z"}
+                                  dateTo={"2021-11-22T00:00:00.000Z"}
                                   defaultValue={null}
                                   disabledDate={[Function]}
                                   disabledTime={[Function]}
@@ -5435,7 +5435,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                     }
                                   }
                                   maxDate={false}
-                                  minDate={"2019-12-31T22:00:00.000Z"}
+                                  minDate={"2020-01-01T00:00:00.000Z"}
                                   mode="date"
                                   nextIcon={
                                     <span
@@ -5454,7 +5454,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-07-28T21:00:00.000Z"}
+                                  pickerValue={"2021-07-29T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -5633,9 +5633,9 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         "rangeItem": [Function],
                                       }
                                     }
-                                    dateFrom={"2021-10-21T21:00:00.000Z"}
+                                    dateFrom={"2021-10-22T00:00:00.000Z"}
                                     dateRender={null}
-                                    dateTo={"2021-11-21T22:00:00.000Z"}
+                                    dateTo={"2021-11-22T00:00:00.000Z"}
                                     defaultValue={null}
                                     disabledDate={[Function]}
                                     disabledTime={[Function]}
@@ -5728,7 +5728,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       }
                                     }
                                     maxDate={false}
-                                    minDate={"2019-12-31T22:00:00.000Z"}
+                                    minDate={"2020-01-01T00:00:00.000Z"}
                                     mode="date"
                                     nextIcon={
                                       <span
@@ -5747,7 +5747,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-06-28T21:00:00.000Z"}
+                                    pickerValue={"2021-06-29T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
@@ -5807,9 +5807,9 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         "rangeItem": [Function],
                                       }
                                     }
-                                    dateFrom={"2021-10-21T21:00:00.000Z"}
+                                    dateFrom={"2021-10-22T00:00:00.000Z"}
                                     dateRender={null}
-                                    dateTo={"2021-11-21T22:00:00.000Z"}
+                                    dateTo={"2021-11-22T00:00:00.000Z"}
                                     defaultValue={null}
                                     disabledDate={[Function]}
                                     disabledTime={[Function]}
@@ -5902,7 +5902,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       }
                                     }
                                     maxDate={false}
-                                    minDate={"2019-12-31T22:00:00.000Z"}
+                                    minDate={"2020-01-01T00:00:00.000Z"}
                                     mode="date"
                                     nextIcon={
                                       <span
@@ -5921,7 +5921,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-07-28T21:00:00.000Z"}
+                                    pickerValue={"2021-07-29T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
@@ -8886,54 +8886,54 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
         </Select>
       </ForwardRef(InternalSelect)>
       <DateRangePicker
-        dateFrom={"2021-10-21T21:00:00.000Z"}
-        dateTo={"2021-11-21T22:00:00.000Z"}
+        dateFrom={"2021-10-22T00:00:00.000Z"}
+        dateTo={"2021-11-22T00:00:00.000Z"}
         defaultPickerValue={
           Array [
-            "2021-06-28T21:00:00.000Z",
-            "2021-06-28T21:00:00.000Z",
+            "2021-06-29T00:00:00.000Z",
+            "2021-06-29T00:00:00.000Z",
           ]
         }
         defaultValue={
           Array [
-            "2021-05-06T21:00:00.000Z",
-            "2021-06-01T21:00:00.000Z",
+            "2021-05-07T00:00:00.000Z",
+            "2021-06-02T00:00:00.000Z",
           ]
         }
         format="DD-MM-YYYY"
         inputReadOnly={true}
         maxDate={false}
-        minDate={"2019-12-31T22:00:00.000Z"}
+        minDate={"2020-01-01T00:00:00.000Z"}
         onChange={[Function]}
         onClear={[Function]}
       >
         <RangePicker
           className=""
-          dateFrom={"2021-10-21T21:00:00.000Z"}
-          dateTo={"2021-11-21T22:00:00.000Z"}
+          dateFrom={"2021-10-22T00:00:00.000Z"}
+          dateTo={"2021-11-22T00:00:00.000Z"}
           defaultPickerValue={
             Array [
-              "2021-06-28T21:00:00.000Z",
-              "2021-06-28T21:00:00.000Z",
+              "2021-06-29T00:00:00.000Z",
+              "2021-06-29T00:00:00.000Z",
             ]
           }
           defaultValue={
             Array [
-              "2021-05-06T21:00:00.000Z",
-              "2021-06-01T21:00:00.000Z",
+              "2021-05-07T00:00:00.000Z",
+              "2021-06-02T00:00:00.000Z",
             ]
           }
           disabledDate={[Function]}
           format="DD-MM-YYYY"
           inputReadOnly={true}
           maxDate={false}
-          minDate={"2019-12-31T22:00:00.000Z"}
+          minDate={"2020-01-01T00:00:00.000Z"}
           onChange={[Function]}
           onClear={[Function]}
           value={
             Array [
-              "2021-10-21T21:00:00.000Z",
-              "2021-11-21T22:00:00.000Z",
+              "2021-10-22T00:00:00.000Z",
+              "2021-11-22T00:00:00.000Z",
             ]
           }
         >
@@ -8951,18 +8951,18 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                   "rangeItem": [Function],
                 }
               }
-              dateFrom={"2021-10-21T21:00:00.000Z"}
-              dateTo={"2021-11-21T22:00:00.000Z"}
+              dateFrom={"2021-10-22T00:00:00.000Z"}
+              dateTo={"2021-11-22T00:00:00.000Z"}
               defaultPickerValue={
                 Array [
-                  "2021-06-28T21:00:00.000Z",
-                  "2021-06-28T21:00:00.000Z",
+                  "2021-06-29T00:00:00.000Z",
+                  "2021-06-29T00:00:00.000Z",
                 ]
               }
               defaultValue={
                 Array [
-                  "2021-05-06T21:00:00.000Z",
-                  "2021-06-01T21:00:00.000Z",
+                  "2021-05-07T00:00:00.000Z",
+                  "2021-06-02T00:00:00.000Z",
                 ]
               }
               disabledDate={[Function]}
@@ -9055,7 +9055,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                 }
               }
               maxDate={false}
-              minDate={"2019-12-31T22:00:00.000Z"}
+              minDate={"2020-01-01T00:00:00.000Z"}
               nextIcon={
                 <span
                   className="ant-picker-next-icon"
@@ -9097,8 +9097,8 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
               transitionName="slide-up"
               value={
                 Array [
-                  "2021-10-21T21:00:00.000Z",
-                  "2021-11-21T22:00:00.000Z",
+                  "2021-10-22T00:00:00.000Z",
+                  "2021-11-22T00:00:00.000Z",
                 ]
               }
             >
@@ -9112,18 +9112,18 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                     "rangeItem": [Function],
                   }
                 }
-                dateFrom={"2021-10-21T21:00:00.000Z"}
-                dateTo={"2021-11-21T22:00:00.000Z"}
+                dateFrom={"2021-10-22T00:00:00.000Z"}
+                dateTo={"2021-11-22T00:00:00.000Z"}
                 defaultPickerValue={
                   Array [
-                    "2021-06-28T21:00:00.000Z",
-                    "2021-06-28T21:00:00.000Z",
+                    "2021-06-29T00:00:00.000Z",
+                    "2021-06-29T00:00:00.000Z",
                   ]
                 }
                 defaultValue={
                   Array [
-                    "2021-05-06T21:00:00.000Z",
-                    "2021-06-01T21:00:00.000Z",
+                    "2021-05-07T00:00:00.000Z",
+                    "2021-06-02T00:00:00.000Z",
                   ]
                 }
                 disabledDate={[Function]}
@@ -9216,7 +9216,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                   }
                 }
                 maxDate={false}
-                minDate={"2019-12-31T22:00:00.000Z"}
+                minDate={"2020-01-01T00:00:00.000Z"}
                 nextIcon={
                   <span
                     className="ant-picker-next-icon"
@@ -9266,8 +9266,8 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                 transitionName="slide-up"
                 value={
                   Array [
-                    "2021-10-21T21:00:00.000Z",
-                    "2021-11-21T22:00:00.000Z",
+                    "2021-10-22T00:00:00.000Z",
+                    "2021-11-22T00:00:00.000Z",
                   ]
                 }
               >
@@ -9326,9 +9326,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       "rangeItem": [Function],
                                     }
                                   }
-                                  dateFrom={"2021-10-21T21:00:00.000Z"}
+                                  dateFrom={"2021-10-22T00:00:00.000Z"}
                                   dateRender={null}
-                                  dateTo={"2021-11-21T22:00:00.000Z"}
+                                  dateTo={"2021-11-22T00:00:00.000Z"}
                                   defaultValue={null}
                                   disabledDate={[Function]}
                                   disabledTime={[Function]}
@@ -9421,7 +9421,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                     }
                                   }
                                   maxDate={false}
-                                  minDate={"2019-12-31T22:00:00.000Z"}
+                                  minDate={"2020-01-01T00:00:00.000Z"}
                                   mode="date"
                                   nextIcon={
                                     <span
@@ -9440,7 +9440,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-06-28T21:00:00.000Z"}
+                                  pickerValue={"2021-06-29T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -9500,9 +9500,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       "rangeItem": [Function],
                                     }
                                   }
-                                  dateFrom={"2021-10-21T21:00:00.000Z"}
+                                  dateFrom={"2021-10-22T00:00:00.000Z"}
                                   dateRender={null}
-                                  dateTo={"2021-11-21T22:00:00.000Z"}
+                                  dateTo={"2021-11-22T00:00:00.000Z"}
                                   defaultValue={null}
                                   disabledDate={[Function]}
                                   disabledTime={[Function]}
@@ -9595,7 +9595,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                     }
                                   }
                                   maxDate={false}
-                                  minDate={"2019-12-31T22:00:00.000Z"}
+                                  minDate={"2020-01-01T00:00:00.000Z"}
                                   mode="date"
                                   nextIcon={
                                     <span
@@ -9614,7 +9614,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-07-28T21:00:00.000Z"}
+                                  pickerValue={"2021-07-29T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -9793,9 +9793,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         "rangeItem": [Function],
                                       }
                                     }
-                                    dateFrom={"2021-10-21T21:00:00.000Z"}
+                                    dateFrom={"2021-10-22T00:00:00.000Z"}
                                     dateRender={null}
-                                    dateTo={"2021-11-21T22:00:00.000Z"}
+                                    dateTo={"2021-11-22T00:00:00.000Z"}
                                     defaultValue={null}
                                     disabledDate={[Function]}
                                     disabledTime={[Function]}
@@ -9888,7 +9888,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       }
                                     }
                                     maxDate={false}
-                                    minDate={"2019-12-31T22:00:00.000Z"}
+                                    minDate={"2020-01-01T00:00:00.000Z"}
                                     mode="date"
                                     nextIcon={
                                       <span
@@ -9907,7 +9907,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-06-28T21:00:00.000Z"}
+                                    pickerValue={"2021-06-29T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
@@ -9967,9 +9967,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         "rangeItem": [Function],
                                       }
                                     }
-                                    dateFrom={"2021-10-21T21:00:00.000Z"}
+                                    dateFrom={"2021-10-22T00:00:00.000Z"}
                                     dateRender={null}
-                                    dateTo={"2021-11-21T22:00:00.000Z"}
+                                    dateTo={"2021-11-22T00:00:00.000Z"}
                                     defaultValue={null}
                                     disabledDate={[Function]}
                                     disabledTime={[Function]}
@@ -10062,7 +10062,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       }
                                     }
                                     maxDate={false}
-                                    minDate={"2019-12-31T22:00:00.000Z"}
+                                    minDate={"2020-01-01T00:00:00.000Z"}
                                     mode="date"
                                     nextIcon={
                                       <span
@@ -10081,7 +10081,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-07-28T21:00:00.000Z"}
+                                    pickerValue={"2021-07-29T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",

@@ -6,17 +6,17 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
   onChange={[MockFunction]}
   value={
     Object {
-      "from": "2020-03-03T22:00:00.000Z",
-      "to": "2020-03-05T22:00:00.000Z",
+      "from": "2020-03-04T00:00:00.000Z",
+      "to": "2020-03-06T00:00:00.000Z",
     }
   }
 >
   <IntervalItem
     label="FROM"
-    maxDate={"2020-03-05T22:00:00.000Z"}
+    maxDate={"2020-03-06T00:00:00.000Z"}
     onChange={[Function]}
     picker="month"
-    value={"2020-03-03T22:00:00.000Z"}
+    value={"2020-03-04T00:00:00.000Z"}
   >
     <div
       className="field-interval-label"
@@ -29,7 +29,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
       onChange={[Function]}
       picker="month"
       placeholder="UNLIMITED"
-      value={"2020-03-03T22:00:00.000Z"}
+      value={"2020-03-04T00:00:00.000Z"}
     >
       <LocaleReceiver
         componentName="DatePicker"
@@ -159,7 +159,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
             />
           }
           transitionName="slide-up"
-          value={"2020-03-03T22:00:00.000Z"}
+          value={"2020-03-04T00:00:00.000Z"}
         >
           <InnerPicker
             allowClear={true}
@@ -293,7 +293,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
               />
             }
             transitionName="slide-up"
-            value={"2020-03-03T22:00:00.000Z"}
+            value={"2020-03-04T00:00:00.000Z"}
           >
             <PickerTrigger
               popupElement={
@@ -436,7 +436,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
                     }
                     tabIndex={-1}
                     transitionName="slide-up"
-                    value={"2020-03-03T22:00:00.000Z"}
+                    value={"2020-03-04T00:00:00.000Z"}
                   />
                 </div>
               }
@@ -662,7 +662,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
                       }
                       tabIndex={-1}
                       transitionName="slide-up"
-                      value={"2020-03-03T22:00:00.000Z"}
+                      value={"2020-03-04T00:00:00.000Z"}
                     />
                   </div>
                 }
@@ -859,10 +859,10 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
   </IntervalItem>
   <IntervalItem
     label="TO"
-    minDate={"2020-03-03T22:00:00.000Z"}
+    minDate={"2020-03-04T00:00:00.000Z"}
     onChange={[Function]}
     picker="month"
-    value={"2020-03-05T22:00:00.000Z"}
+    value={"2020-03-06T00:00:00.000Z"}
   >
     <div
       className="field-interval-label"
@@ -875,7 +875,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
       onChange={[Function]}
       picker="month"
       placeholder="UNLIMITED"
-      value={"2020-03-05T22:00:00.000Z"}
+      value={"2020-03-06T00:00:00.000Z"}
     >
       <LocaleReceiver
         componentName="DatePicker"
@@ -1005,7 +1005,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
             />
           }
           transitionName="slide-up"
-          value={"2020-03-05T22:00:00.000Z"}
+          value={"2020-03-06T00:00:00.000Z"}
         >
           <InnerPicker
             allowClear={true}
@@ -1139,7 +1139,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
               />
             }
             transitionName="slide-up"
-            value={"2020-03-05T22:00:00.000Z"}
+            value={"2020-03-06T00:00:00.000Z"}
           >
             <PickerTrigger
               popupElement={
@@ -1282,7 +1282,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
                     }
                     tabIndex={-1}
                     transitionName="slide-up"
-                    value={"2020-03-05T22:00:00.000Z"}
+                    value={"2020-03-06T00:00:00.000Z"}
                   />
                 </div>
               }
@@ -1508,7 +1508,7 @@ exports[`FormBuilder Interval component FormBuilder Interval  with empty value 1
                       }
                       tabIndex={-1}
                       transitionName="slide-up"
-                      value={"2020-03-05T22:00:00.000Z"}
+                      value={"2020-03-06T00:00:00.000Z"}
                     />
                   </div>
                 }
