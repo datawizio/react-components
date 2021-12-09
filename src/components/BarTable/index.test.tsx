@@ -11,7 +11,7 @@ jest.mock("rc-tree-select/es/utils/valueUtil", () => ({
   filterOptions: val => val
 }));
 
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
@@ -21,17 +21,13 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+    dispatchEvent: jest.fn()
+  }))
 });
 
 const mockProps = {
-  dataProvider: () => {
-    return {
-      columns: mock_data.columns,
-      dataSource: mock_data.dataSource
-    };
-  },
+  columns: mock_data.columns,
+  dataSource: mock_data.dataSource,
   titleKey: "MANAGERS_ACTIVITY",
   height: 244,
   tooltip: jest.fn().mockImplementation((cellVal, row, column) => {
@@ -41,7 +37,7 @@ const mockProps = {
         <p>OPEN</p>
         <p>7</p>
       </div>
-    )
+    );
   })
 };
 
