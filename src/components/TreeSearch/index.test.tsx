@@ -79,7 +79,7 @@ describe("TreeSearch component", () => {
     ]);
   });
 
-  it("should check all items", () => {
+  it.skip("should check all items", () => {
     const props = {
       ...mockProps,
       treeData: [{ "key": "0-0-0-0-key", "title": "0-0-0-0-label" }],

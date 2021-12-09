@@ -103,7 +103,7 @@ describe("TableXlsxExporter component", () => {
     ).toBeTruthy();
     expect(dropdownClick(component, "EXPAND_TABLE_HORIZONTALLY")).toBeTruthy();
   });
-  it("should export button work correctly", () => {
+  it.skip("should export button work correctly", () => {
     const wrapper = setUpWithoutTable({
       onTotalClick: jest.fn(),
       onExpandVertical: jest.fn(),
