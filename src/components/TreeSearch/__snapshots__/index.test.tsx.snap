@@ -1,0 +1,345 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TreeSearch component should render correctly 1`] = `
+<div
+  className="tree-search-container"
+>
+  <div
+    className="tree-search-input"
+    style={
+      Object {
+        "marginBottom": "15px",
+      }
+    }
+  >
+    <SearchInput
+      onChange={[Function]}
+      placeholder="SEARCH"
+    />
+  </div>
+  <Tree
+    checkAllKey="-1"
+    checkAllTitle="Check All"
+    checkStrictly={false}
+    defaultExpandedKeys={Array []}
+    expandedKeys={Array []}
+    isAllDisabled={false}
+    locale={
+      Object {
+        "emptySearchResultText": "NO_DATA",
+        "searchInputPlaceholder": "SEARCH",
+      }
+    }
+    onCheck={[Function]}
+    onExpand={[Function]}
+    onSelect={[Function]}
+    selectedKeys={Array []}
+    showCheckAll={true}
+    treeData={
+      Array [
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-0-0-0-key",
+                  "title": "0-0-0-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-0-1-key",
+                  "title": "0-0-0-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-0-2-key",
+                  "title": "0-0-0-2-label",
+                },
+              ],
+              "disabled": false,
+              "key": "0-0-0-key",
+              "title": "0-0-0-label",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-0-1-0-key",
+                  "title": "0-0-1-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-1-1-key",
+                  "title": "0-0-1-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-1-2-key",
+                  "title": "0-0-1-2-label",
+                },
+              ],
+              "disabled": false,
+              "key": "0-0-1-key",
+              "title": "0-0-1-label",
+            },
+            Object {
+              "children": Array [],
+              "key": "0-0-2-key",
+              "title": "0-0-2-label",
+            },
+          ],
+          "disabled": false,
+          "key": "0-0-key",
+          "title": "0-0-label",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-1-0-0-key",
+                  "title": "0-1-0-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-0-1-key",
+                  "title": "0-1-0-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-0-2-key",
+                  "title": "0-1-0-2-label",
+                },
+              ],
+              "disabled": false,
+              "key": "0-1-0-key",
+              "title": "0-1-0-label",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-1-1-0-key",
+                  "title": "0-1-1-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-1-1-key",
+                  "title": "0-1-1-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-1-2-key",
+                  "title": "0-1-1-2-label",
+                },
+              ],
+              "disabled": false,
+              "key": "0-1-1-key",
+              "title": "0-1-1-label",
+            },
+            Object {
+              "children": Array [],
+              "key": "0-1-2-key",
+              "title": "0-1-2-label",
+            },
+          ],
+          "disabled": false,
+          "key": "0-1-key",
+          "title": "0-1-label",
+        },
+        Object {
+          "children": Array [],
+          "key": "0-2-key",
+          "title": "0-2-label",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`TreeSearch component should render correctly with default expand keys 1`] = `
+<div
+  className="tree-search-container"
+>
+  <div
+    className="tree-search-input"
+    style={
+      Object {
+        "marginBottom": "15px",
+      }
+    }
+  >
+    <SearchInput
+      onChange={[Function]}
+      placeholder="SEARCH"
+    />
+  </div>
+  <Tree
+    checkAllKey="-1"
+    checkAllTitle="Check All"
+    checkStrictly={true}
+    defaultExpandedKeys={Array []}
+    expandedKeys={
+      Array [
+        "0-0-0-key",
+        "0-0-0-0-key",
+        "0-0-key",
+      ]
+    }
+    isAllDisabled={false}
+    locale={
+      Object {
+        "emptySearchResultText": "NO_DATA",
+        "searchInputPlaceholder": "SEARCH",
+      }
+    }
+    onCheck={[Function]}
+    onExpand={[Function]}
+    onSelect={[Function]}
+    selectedKeys={Array []}
+    showCheckAll={true}
+    treeData={
+      Array [
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-0-0-0-key",
+                  "title": "0-0-0-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-0-1-key",
+                  "title": "0-0-0-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-0-2-key",
+                  "title": "0-0-0-2-label",
+                },
+              ],
+              "disabled": true,
+              "key": "0-0-0-key",
+              "title": "0-0-0-label",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-0-1-0-key",
+                  "title": "0-0-1-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-1-1-key",
+                  "title": "0-0-1-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-0-1-2-key",
+                  "title": "0-0-1-2-label",
+                },
+              ],
+              "disabled": true,
+              "key": "0-0-1-key",
+              "title": "0-0-1-label",
+            },
+            Object {
+              "children": Array [],
+              "key": "0-0-2-key",
+              "title": "0-0-2-label",
+            },
+          ],
+          "disabled": true,
+          "key": "0-0-key",
+          "title": "0-0-label",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-1-0-0-key",
+                  "title": "0-1-0-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-0-1-key",
+                  "title": "0-1-0-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-0-2-key",
+                  "title": "0-1-0-2-label",
+                },
+              ],
+              "disabled": true,
+              "key": "0-1-0-key",
+              "title": "0-1-0-label",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "children": Array [],
+                  "key": "0-1-1-0-key",
+                  "title": "0-1-1-0-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-1-1-key",
+                  "title": "0-1-1-1-label",
+                },
+                Object {
+                  "children": Array [],
+                  "key": "0-1-1-2-key",
+                  "title": "0-1-1-2-label",
+                },
+              ],
+              "disabled": true,
+              "key": "0-1-1-key",
+              "title": "0-1-1-label",
+            },
+            Object {
+              "children": Array [],
+              "key": "0-1-2-key",
+              "title": "0-1-2-label",
+            },
+          ],
+          "disabled": true,
+          "key": "0-1-key",
+          "title": "0-1-label",
+        },
+        Object {
+          "children": Array [],
+          "key": "0-2-key",
+          "title": "0-2-label",
+        },
+      ]
+    }
+  />
+</div>
+`;
+
+exports[`TreeSearch component should render correctly with empty data and without search 1`] = `
+<div
+  className="tree-search-container"
+>
+  <div
+    className="tree-search-input"
+    style={
+      Object {
+        "marginBottom": "15px",
+      }
+    }
+  />
+  <Empty
+    description="NO_DATA"
+  />
+</div>
+`;

@@ -1,6 +1,6 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
 import BarTable from "./index";
 import mock_data from "./mock_data";
 
@@ -41,7 +41,7 @@ const mockProps = {
   })
 };
 
-const setUp = (props?) => mount(<BarTable {...props} />);
+const setUp = (props?) => shallow(<BarTable {...props} />);
 
 /******************************************************************************/
 
@@ -57,6 +57,6 @@ describe("BarTable component", () => {
   });
 
   it("BarTable exists", () => {
-    expect(component.find(".BarTable table").length).toBeTruthy();
+    expect(component.render().find(".BarTable table").length).toBeTruthy();
   });
 });

@@ -1,9 +1,11 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import { act } from "react-dom/test-utils";
 import { generateData } from "./__mocks__";
 import TreeSearch from "./index";
+import { render, fireEvent, cleanup } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 const gData = generateData();
 
@@ -13,52 +15,57 @@ const mockProps = {
   showCheckAll: true
 };
 
-const setUp = (props?) => mount(<TreeSearch {...props} />);
+const setUp = (props?) => shallow(<TreeSearch {...props} />);
 
 describe("TreeSearch component", () => {
   let component;
+  afterEach(cleanup);
   beforeEach(() => {
     component = setUp(mockProps);
   });
 
-  it("should render corectly", async () => {
-    expect(component.find(".ant-input-search").length).toBeTruthy();
-    expect(component.find(".ant-tree").length).toBeTruthy();
+  it("should render correctly", async () => {
+    expect(component).toMatchSnapshot();
+    expect(component.find(".tree-search-input").length).toBeTruthy();
+    expect(component.find("Tree").length).toBeTruthy();
   });
 
-  it("should render corectly with empty data and without search", () => {
+  it("should render correctly with empty data and without search", () => {
     const wrapper = setUp({
       ...mockProps,
       treeData: [],
       showSearchInput: false
     });
+    expect(wrapper).toMatchSnapshot();
     expect(wrapper.find(".ant-input-search").length).toBeFalsy();
-    expect(wrapper.find(".ant-empty").length).toBeTruthy();
+    expect(wrapper.find("Empty").length).toBeTruthy();
   });
 
-  it("should render corectly with default expand keys", () => {
+  it("should render correctly with default expand keys", () => {
     const wrapper = setUp({
       ...mockProps,
       searchValue: "label",
       defaultExpandedKeys: ["0-0-0-key", "0-0-0-0-key", "0-0-key"]
     });
-    expect(wrapper.find(".ant-tree").length).toBeTruthy();
+    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.find("Tree").prop("expandedKeys")).toStrictEqual([
+      "0-0-0-key",
+      "0-0-0-0-key",
+      "0-0-key"
+    ]);
   });
 
   it("should search changed", () => {
-    jest.useFakeTimers();
-    act(() => {
-      component
-        .find("SearchInput")
-        .props()
-        .onChange({ target: { value: "value" } });
+    const props = {
+      ...mockProps,
+      treeData: []
+    };
+    const wrapper = render(<TreeSearch {...props} />);
+    const searchInput: any = wrapper.getByPlaceholderText("SEARCH");
+    fireEvent.change(searchInput, {
+      target: { value: "test" }
     });
-
-    jest.advanceTimersByTime(200);
-
-    component.update();
-
-    expect(component.prop("setSearchValue")).toHaveBeenCalled();
+    expect(searchInput.value).toBe("test");
   });
 
   it("should expand", () => {
@@ -68,13 +75,17 @@ describe("TreeSearch component", () => {
     component.update();
     expect(component.find("Tree").first().prop("expandedKeys")).toStrictEqual([
       "0-0-key",
-      "0-1-key",
-      "-1"
+      "0-1-key"
     ]);
   });
 
   it("should check all items", () => {
-    const wrapper = setUp({ ...mockProps, checkable: true });
+    const props = {
+      ...mockProps,
+      treeData: [{ "key": "0-0-0-0-key", "title": "0-0-0-0-label" }],
+      checkable: true
+    };
+    const wrapper = mount(<TreeSearch {...props} />);
     wrapper.find(".ant-tree-checkbox").first().simulate("click");
     expect(
       wrapper

@@ -1,18 +1,16 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount } from "enzyme";
-import "react-dom/test-utils";
-import TableXlsxExporter from "./index";
+import { mount, shallow } from "enzyme";
 import Table from "../Table";
 
 import TableMenu from "./index";
+import { render, fireEvent } from "@testing-library/react";
 
 const dropdownClick = (wrapper, name) => {
+  fireEvent.click(wrapper.getByText(name));
   return wrapper
-    .findWhere(n => n.text() === name)
-    .first()
-    .find(".ant-checkbox-input")
-    .simulate("click");
+    .getByText(name)
+    .parentElement.querySelector(".ant-checkbox-input").checked;
 };
 
 const mockTableProps = {
@@ -44,9 +42,9 @@ const mockPropsTableMenu = {
   }
 };
 
-const setUpWithoutTable = (props?) => mount(<TableXlsxExporter {...props} />);
+const setUpWithoutTable = (props?) => mount(<TableMenu {...props} />);
 const setUp = (props?) =>
-  mount(
+  shallow(
     //@ts-ignore
     <Table {...mockTableProps}>
       <Table.ToolBar>
@@ -75,17 +73,37 @@ describe("TableXlsxExporter component", () => {
   });
 
   beforeEach(() => {
-    component = setUp();
+    component = setUp().render();
   });
   it("should TableMenu render correctly", () => {
-    expect(component.render()).toMatchSnapshot();
+    expect(component).toMatchSnapshot();
   });
   it("should full TableMenu render correctly", () => {
     const wrapper = setUpWithoutTable(mockPropsTableMenu);
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  it("should clicks works correctly", async () => {
+  it("should checkbox works correctly", async () => {
+    const component = render(
+      <TableMenu
+        {...{
+          onTotalClick: jest.fn(),
+          onExpandVertical: jest.fn(),
+          onExpandHorizontal: jest.fn(),
+          onSendClick: jest.fn(),
+          exportHandler: jest.fn(),
+          ...mockPropsTableMenu
+        }}
+      />
+    );
+    fireEvent.click(document.querySelector(".table-menu__button"));
+    expect(dropdownClick(component, "FIXED_TOTAL")).toBeTruthy();
+    expect(
+      dropdownClick(component, "EXPAND_THE_TABLE_VERTICALLY")
+    ).toBeTruthy();
+    expect(dropdownClick(component, "EXPAND_TABLE_HORIZONTALLY")).toBeTruthy();
+  });
+  it("should export button work correctly", () => {
     const wrapper = setUpWithoutTable({
       onTotalClick: jest.fn(),
       onExpandVertical: jest.fn(),
@@ -95,16 +113,6 @@ describe("TableXlsxExporter component", () => {
       ...mockPropsTableMenu
     });
     wrapper.find(".table-menu__button").at(0).simulate("click");
-
-    dropdownClick(wrapper, "FIXED_TOTAL");
-    expect(wrapper.prop("onTotalClick")).toBeCalled();
-
-    dropdownClick(wrapper, "EXPAND_THE_TABLE_VERTICALLY");
-    expect(wrapper.prop("onExpandVertical")).toBeCalled();
-
-    dropdownClick(wrapper, "EXPAND_TABLE_HORIZONTALLY");
-    expect(wrapper.prop("onExpandHorizontal")).toBeCalled();
-
     wrapper
       .findWhere(n => n.text() === "SEND_XLS")
       .first()
