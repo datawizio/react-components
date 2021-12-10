@@ -1,40 +1,20 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
+import { shallow } from "enzyme";
 import Help from "./index";
+import { fireEvent, render } from "@testing-library/react";
 
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: jest.fn().mockImplementation(query => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // Deprecated
-    removeListener: jest.fn(), // Deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn()
-  }))
-});
-
-const waitForComponentToPaint = async wrapper => {
-  await act(async () => {
-    await new Promise(resolve => setTimeout(resolve));
-    wrapper.update();
-  });
+const dropdownClick = (wrapper, name) => {
+  fireEvent.click(wrapper.getByText(name));
 };
 
 const mockProps = {
   onTutorialLinkClick: jest.fn(),
-  onSupportLinkClick: jest.fn(),
   onServiceUpdateClick: jest.fn(),
-  onSupportModalSubmit: jest.fn(),
-  onHelperClick: jest.fn(),
-  uploadFileURL: "url"
+  onHelperClick: jest.fn()
 };
 
-const setUp = (props?) => mount(<Help {...props} />);
+const setUp = (props?) => shallow(<Help {...props} />);
 
 describe("Help component", () => {
   let component;
@@ -46,16 +26,17 @@ describe("Help component", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("Help rendered correctly", () => {
-    const menu = component.find("HelpMenu").first();
-    menu.simulate("click");
-    const helper = component
-      .findWhere(n => {
-        return n.text() === "BES_HELPER";
-      })
-      .first();
-    helper.simulate("click");
-    waitForComponentToPaint(component);
-    expect(component.prop("onHelperClick")).toBeCalledTimes(1);
+  it("should clicks on Help Menu work correctly", () => {
+    const wrapper = render(<Help {...mockProps} />);
+    fireEvent.click(document.querySelector(".help-icon"));
+
+    dropdownClick(wrapper, "READ_TUTORIAL");
+    expect(mockProps.onTutorialLinkClick).toBeCalledTimes(1);
+
+    dropdownClick(wrapper, "SERVICE_UPDATE");
+    expect(mockProps.onServiceUpdateClick).toBeCalledTimes(1);
+
+    dropdownClick(wrapper, "BES_HELPER");
+    expect(mockProps.onHelperClick).toBeCalledTimes(1);
   });
 });
