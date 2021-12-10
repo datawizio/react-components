@@ -1,6 +1,6 @@
-import { TableState, ISheet } from "../Table/types";
+import { TableState, ISheet } from "../types";
 import ExcelJS from "exceljs/dist/exceljs.min.js";
-import { defineCellType } from "../Table/utils/utils";
+import { defineCellType } from "./utils";
 
 function getDeepMaxLevel(columns) {
   let maxLevel = 1;
