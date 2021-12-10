@@ -47,6 +47,15 @@ import Row from "./components/Row";
 import { VList } from "./components/VList";
 import { HeaderWrapper } from "./components/HeaderWrapper";
 
+export class CancelRequestError extends Error {
+  data: any;
+  constructor(data: any) {
+    super("Canceled Request"); // (1)
+    this.name = "CancelRequestError"; // (2)
+    this.data = data;
+  }
+}
+
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
     errorRender,
