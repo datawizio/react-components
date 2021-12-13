@@ -29,6 +29,7 @@ function pickState(
     columnsPositions,
     pagination: state.pagination,
     sortParams: state.sortParams,
+    columnsWidth: state.columnsWidth,
     filterParams: state.filterParams,
     visibleColumnsKeys: state.visibleColumnsKeys
   };
@@ -95,6 +96,10 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       }
       if (fetchAfterApply) {
         template.state.forceFetch = tableState.forceFetch + 1;
+      }
+
+      if (!template.state?.hasOwnProperty("columnsWidth")) {
+        template.state.columnsWidth = {};
       }
       dispatch({
         type: "recoveryState",
