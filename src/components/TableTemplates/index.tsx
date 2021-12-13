@@ -146,6 +146,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           first: true,
           forceFetch: tableState.forceFetch + 1,
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
+          columnsWidth: {},
           columns: []
         };
         dispatch({
