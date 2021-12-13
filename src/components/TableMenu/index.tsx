@@ -107,19 +107,22 @@ const TableMenu: React.FC<TableMenuProps> = props => {
   const menu = (
     <Menu onClick={handleMenuClick}>
       {config?.fixed_total && (
-        <Menu.Item key="fixed_total">
+        <Menu.Item key="fixed_total" className="menu-item-checkbox">
           <Checkbox onClick={onTotalClick}>{translate("FIXED_TOTAL")}</Checkbox>
         </Menu.Item>
       )}
       {config?.expand_table_vertically && (
-        <Menu.Item key="expand_table_vertically">
+        <Menu.Item key="expand_table_vertically" className="menu-item-checkbox">
           <Checkbox onClick={onExpandVertical}>
             {translate("EXPAND_THE_TABLE_VERTICALLY")}
           </Checkbox>
         </Menu.Item>
       )}
       {config?.expand_table_horizontally && (
-        <Menu.Item key="expand_table_horizontally">
+        <Menu.Item
+          key="expand_table_horizontally"
+          className="menu-item-checkbox"
+        >
           <Checkbox onClick={onExpandHorizontal}>
             {translate("EXPAND_TABLE_HORIZONTALLY")}
           </Checkbox>
