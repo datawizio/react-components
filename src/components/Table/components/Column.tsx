@@ -39,6 +39,7 @@ const Column: React.FC<ColumnProps> = props => {
     tableState: { columnsWidth }
   } = useContext(TableContext);
 
+  const columnsWidthPreset = columnsWidth[model.key];
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
     canDrag: !model.fixed
@@ -185,6 +186,10 @@ const Column: React.FC<ColumnProps> = props => {
     const defaultSubCellWidth = 20;
     const defaultMaxValue = 10;
 
+    if (columnsWidthPreset) {
+      return { width: columnsWidthPreset };
+    }
+
     if (model.colWidth) {
       return {
         width: model.colWidth
@@ -209,7 +214,8 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     return {};
-  }, [model.children, model.max_value, model.colWidth]);
+  }, [model.children, model.max_value, model.colWidth, columnsWidthPreset]);
+
   return (
     <th
       {...restProps}
