@@ -105,7 +105,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     }
   };
   const menu = (
-    <Menu onClick={handleMenuClick}>
+    <Menu onClick={handleMenuClick} className="table-menu-dropdown">
       {config?.fixed_total && (
         <Menu.Item key="fixed_total" className="menu-item-checkbox">
           <Checkbox onClick={onTotalClick}>{translate("FIXED_TOTAL")}</Checkbox>
@@ -131,18 +131,22 @@ const TableMenu: React.FC<TableMenuProps> = props => {
       {(config?.fixed_total ||
         config?.expand_table_vertically ||
         config?.expand_table_horizontally) && (
-        <Menu.Divider className={"table-menu__divider"} />
+        <Menu.Divider className={"table-menu-dropdown__divider"} />
       )}
       <Menu.Item
         key="export_xlsx"
-        icon={<VerticalAlignBottomOutlined className={"table-menu__icon"} />}
+        icon={
+          <VerticalAlignBottomOutlined
+            className={"table-menu-dropdown__icon"}
+          />
+        }
       >
         {translate("SAVE_XLS")}
       </Menu.Item>
       {config?.show_send_to_email && (
         <Menu.Item
           key="send_xlsx"
-          icon={<SendOutlined className={"table-menu__icon__send"} />}
+          icon={<SendOutlined className={"table-menu-dropdown__icon__send"} />}
         >
           {translate("SEND_XLS")}
         </Menu.Item>
