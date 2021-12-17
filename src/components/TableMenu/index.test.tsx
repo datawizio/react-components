@@ -53,7 +53,7 @@ const setUp = (props?) =>
     </Table>
   );
 
-describe("TableXlsxExporter component", () => {
+describe("TableMenu component", () => {
   let component;
 
   beforeAll(() => {
@@ -83,18 +83,23 @@ describe("TableXlsxExporter component", () => {
     expect(wrapper.render()).toMatchSnapshot();
   });
 
-  it("should checkbox works correctly", async () => {
+  it.skip("should checkbox works correctly", async () => {
     const component = render(
-      <TableMenu
-        {...{
-          onTotalClick: jest.fn(),
-          onExpandVertical: jest.fn(),
-          onExpandHorizontal: jest.fn(),
-          onSendClick: jest.fn(),
-          exportHandler: jest.fn(),
-          ...mockPropsTableMenu
-        }}
-      />
+      //@ts-ignore
+      <Table {...mockTableProps}>
+        <Table.ToolBar>
+          <TableMenu
+            {...{
+              onTotalClick: jest.fn(),
+              onExpandVertical: jest.fn(),
+              onExpandHorizontal: jest.fn(),
+              onSendClick: jest.fn(),
+              exportHandler: jest.fn(),
+              ...mockPropsTableMenu
+            }}
+          />
+        </Table.ToolBar>
+      </Table>
     );
     fireEvent.click(document.querySelector(".table-menu__button"));
     expect(dropdownClick(component, "FIXED_TOTAL")).toBeTruthy();
