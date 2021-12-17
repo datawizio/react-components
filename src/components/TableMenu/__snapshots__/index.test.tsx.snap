@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TableXlsxExporter component should TableMenu render correctly 1`] = `
+exports[`TableMenu component should TableMenu render correctly 1`] = `
 <div
   class="dw-table-container"
 >
@@ -313,7 +313,7 @@ exports[`TableXlsxExporter component should TableMenu render correctly 1`] = `
 </div>
 `;
 
-exports[`TableXlsxExporter component should full TableMenu render correctly 1`] = `
+exports[`TableMenu component should full TableMenu render correctly 1`] = `
 <div
   class="table-menu table-toolbar--right"
 >

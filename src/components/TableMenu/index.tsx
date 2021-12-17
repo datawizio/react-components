@@ -47,14 +47,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
   } = props;
   const { translate } = useContext(ConfigContext);
 
-  const context = useContext(TableContext);
-
-  const tableState = useMemo(() => {
-    if (context) {
-      return context.tableState;
-    }
-    return null;
-  }, [context]);
+  const { tableState, dispatch } = useContext(TableContext);
 
   const handleExport = useCallback(
     async () => {
@@ -91,6 +84,17 @@ const TableMenu: React.FC<TableMenuProps> = props => {
       exportHandlerCallback
     ]
   );
+  const handleTotalClick = useCallback(
+    (e: any) => {
+      e?.stopPropagation();
+      e?.preventDefault();
+      dispatch({
+        type: "update",
+        payload: { fixedTotal: !tableState?.fixedTotal }
+      });
+    },
+    [dispatch, tableState]
+  );
 
   const handleMenuClick = e => {
     switch (e.key) {
@@ -108,7 +112,12 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     <Menu onClick={handleMenuClick} className="table-menu-dropdown">
       {config?.fixed_total && (
         <Menu.Item key="fixed_total" className="menu-item-checkbox">
-          <Checkbox onClick={onTotalClick}>{translate("FIXED_TOTAL")}</Checkbox>
+          <Checkbox
+            checked={Boolean(tableState?.fixedTotal)}
+            onClick={handleTotalClick}
+          >
+            {translate("FIXED_TOTAL")}
+          </Checkbox>
         </Menu.Item>
       )}
       {config?.expand_table_vertically && (

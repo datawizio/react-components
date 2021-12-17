@@ -124,6 +124,7 @@ export interface TableState extends Partial<TableProps> {
   columnsWidth?: {
     [columnKey: string]: number;
   };
+  fixedTotal?: boolean;
   first?: boolean;
   templateSelected?: boolean;
   cancelled?: boolean;

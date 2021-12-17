@@ -30,6 +30,7 @@ function pickState(
     pagination: state.pagination,
     sortParams: state.sortParams,
     columnsWidth: state.columnsWidth,
+    fixedTotal: state.fixedTotal,
     filterParams: state.filterParams,
     visibleColumnsKeys: state.visibleColumnsKeys
   };
@@ -101,6 +102,9 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       if (!template.state?.hasOwnProperty("columnsWidth")) {
         template.state.columnsWidth = {};
       }
+      if (!template.state?.hasOwnProperty("fixedTotal")) {
+        template.state.fixedTotal = false;
+      }
       dispatch({
         type: "recoveryState",
         payload: { ...template.state, sortParams }
@@ -147,7 +151,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           forceFetch: tableState.forceFetch + 1,
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
           columnsWidth: {},
-          columns: []
+          columns: [],
+          fixedTotal: false
         };
         dispatch({
           type: "update",
