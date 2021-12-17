@@ -47,14 +47,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
   } = props;
   const { translate } = useContext(ConfigContext);
 
-  const context = useContext(TableContext);
-
-  const { tableState, dispatch } = useMemo(() => {
-    if (context) {
-      return { tableState: context.tableState, dispatch: context.dispatch };
-    }
-    return { tableState: null, dispatch: null };
-  }, [context]);
+  const { tableState, dispatch } = useContext(TableContext);
 
   const handleExport = useCallback(
     async () => {

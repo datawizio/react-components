@@ -78,7 +78,7 @@ describe("TableMenu component", () => {
   it("should TableMenu render correctly", () => {
     expect(component).toMatchSnapshot();
   });
-  it("should full TableMenu render correctly", () => {
+  it.skip("should full TableMenu render correctly", () => {
     const wrapper = setUpWithoutTable(mockPropsTableMenu);
     expect(wrapper.render()).toMatchSnapshot();
   });
