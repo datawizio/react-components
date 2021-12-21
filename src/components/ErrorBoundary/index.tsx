@@ -7,6 +7,8 @@ import ConfigContext from "../ConfigProvider/context";
 import { OopsIcon } from "../Icons/OopsIcon";
 import { RefreshIcon } from "../Icons/RefreshIcon";
 
+import "./index.less";
+
 type ErrorBoundaryState = {
   hasError: boolean;
   eventId: string;
