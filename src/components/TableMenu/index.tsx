@@ -47,7 +47,14 @@ const TableMenu: React.FC<TableMenuProps> = props => {
   } = props;
   const { translate } = useContext(ConfigContext);
 
-  const { tableState, dispatch } = useContext(TableContext);
+  const context = useContext(TableContext);
+
+  const { tableState, dispatch } = useMemo(() => {
+    if (context) {
+      return { tableState: context.tableState, dispatch: context.dispatch };
+    }
+    return { tableState: null, dispatch: null };
+  }, [context]);
 
   const handleExport = useCallback(
     async () => {
@@ -88,10 +95,11 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     (e: any) => {
       e?.stopPropagation();
       e?.preventDefault();
-      dispatch({
-        type: "update",
-        payload: { fixedTotal: !tableState?.fixedTotal }
-      });
+      dispatch &&
+        dispatch({
+          type: "update",
+          payload: { fixedTotal: !tableState?.fixedTotal }
+        });
     },
     [dispatch, tableState]
   );
