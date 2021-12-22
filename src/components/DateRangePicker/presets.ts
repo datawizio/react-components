@@ -3,7 +3,7 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateRange, DefaultPresetPrevType, DefaultPresetType } from "./types";
 import { genPrevPeriod, reverseDate } from "./utils";
-import { retailCalendar } from "../../utils/retailCalendar";
+import { fiscalCalendar } from "../../utils/fiscalCalendar";
 
 dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
@@ -135,33 +135,48 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
 //   };
 // };
 
-export const DefaultPreset = (minDate, maxDate) => {
+export const DefaultPreset = (type, minDate, maxDate) => {
   return {
     "Yesterday": DefaultPresetRanges.yesterday(maxDate),
     "Last_week": DefaultPresetRanges.lastWeek(maxDate),
-    "Current_month": retailCalendar.presetCurrentMonth(maxDate),
+    "Current_month":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentMonth(maxDate)
+        : DefaultPresetRanges.currentMonth(maxDate),
     "Last_30_Days": DefaultPresetRanges.last_30_days(maxDate),
     "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
     "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
-    "SEASON_BEGIN": retailCalendar.presetCurrentQuater(maxDate),
-    "cur_year": retailCalendar.presetCurrentYear(maxDate),
-    "LAST_365_DAYS": DefaultPresetRanges.last_365_days(maxDate),
+    "SEASON_BEGIN":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentQuater(maxDate)
+        : DefaultPresetRanges.quarterBegin(maxDate),
+    "cur_year":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentYear(maxDate)
+        : DefaultPresetRanges.currentYear(maxDate),
+    "LAST_365_DAYS":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentYear(maxDate)
+        : DefaultPresetRanges.last_365_days(maxDate),
     "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
   };
 };
 
-export const DefaultPresetPrev = (dateFrom, dateTo) => {
+export const DefaultPresetPrev = (type, dateFrom, dateTo) => {
   return {
     "PREVIOUS": DefaultPresetPrevRanges.previous(dateFrom, dateTo),
     "PREV_LAST_WEEK": DefaultPresetPrevRanges.prev_last_week(dateFrom, dateTo),
-    "PREV_LAST_MONTH": DefaultPresetPrevRanges.prev_last_month(
-      dateFrom,
-      dateTo
-    ),
-    "PREV_LAST_QUARTER": DefaultPresetPrevRanges.prev_last_quarter(
-      dateFrom,
-      dateTo
-    ),
-    "PREV_LAST_YEAR": DefaultPresetPrevRanges.prev_last_year(dateFrom, dateTo)
+    "PREV_LAST_MONTH":
+      type === "fiscal"
+        ? null
+        : DefaultPresetPrevRanges.prev_last_month(dateFrom, dateTo),
+    "PREV_LAST_QUARTER":
+      type === "fiscal"
+        ? fiscalCalendar.prevLastQuarter(dateFrom, dateTo)
+        : DefaultPresetPrevRanges.prev_last_quarter(dateFrom, dateTo),
+    "PREV_LAST_YEAR":
+      type === "fiscal"
+        ? fiscalCalendar.prevLastYear(dateFrom, dateTo)
+        : DefaultPresetPrevRanges.prev_last_year(dateFrom, dateTo)
   };
 };

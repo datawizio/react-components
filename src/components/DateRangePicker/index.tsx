@@ -38,8 +38,9 @@ const DateRangePicker: IDateRangePicker = ({
     if (presets && presets.length) {
       let result = {};
 
-      const defaultPreset = DefaultPreset(props.minDate, props.maxDate);
+      const defaultPreset = DefaultPreset(type, props.minDate, props.maxDate);
       const defaultPresetPrev = DefaultPresetPrev(
+        type,
         currDateRange?.date_from || props.dateFrom,
         currDateRange?.date_to || props.dateTo
       );
@@ -54,7 +55,9 @@ const DateRangePicker: IDateRangePicker = ({
     }
 
     if (useDefaultPreset) {
-      const defaultPreset = { ...DefaultPreset(props.minDate, props.maxDate) };
+      const defaultPreset = {
+        ...DefaultPreset(type, props.minDate, props.maxDate)
+      };
       if (defaultPresetExceptions && defaultPresetExceptions.length) {
         defaultPresetExceptions.forEach(item => {
           delete defaultPreset[item];
@@ -138,7 +141,7 @@ const DateRangePicker: IDateRangePicker = ({
 };
 
 DateRangePicker.defaultProps = {
-  type: "general",
+  type: "iso-8601",
   inputReadOnly: true,
   format: "DD-MM-YYYY",
   dateTo: "02-12-2001",

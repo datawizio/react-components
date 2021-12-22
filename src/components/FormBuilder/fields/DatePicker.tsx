@@ -37,7 +37,7 @@ const Field: React.FC<FieldProps> = ({
 };
 
 Field.defaultProps = {
-  type: "general"
+  type: "iso-8601"
 };
 
 export const FieldDatePicker: React.FC<FieldDatePickerProps> = React.memo(

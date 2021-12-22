@@ -1,14 +1,14 @@
 import React from "react";
 
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 
 import dayjsGenerateConfig from "rc-picker/es/generate/dayjs";
+import { fiscalCalendarConfig } from "./config/fiscal";
 import generatePicker from "./antd/AntGeneratePicker";
 
-import { retailCalendar } from "../../utils/retailCalendar";
 import "./index.less";
 
-export type CalendarTypes = "retail" | "general";
+export type CalendarTypes = "fiscal" | "iso-8601";
 export interface DatePickerWrapperProps {
   type?: CalendarTypes;
 }
@@ -18,7 +18,6 @@ interface IDatePicker extends ReturnType<typeof generatePicker> {
   Picker?: DatePickerPickers;
 }
 
-const retailCalendarConfig = Object.assign({}, dayjsGenerateConfig);
 dayjsGenerateConfig.isAfter = (date1, date2) => {
   // console.log(date1, date2, date1.isAfter(date2));
   return date1.isAfter(date2);
@@ -27,28 +26,11 @@ dayjsGenerateConfig.isAfter = (date1, date2) => {
 dayjsGenerateConfig.getStartOfMonth = date =>
   dayjsGenerateConfig.setDate(date, 1);
 
-retailCalendarConfig.getEndDate = date => retailCalendar.getEndDate(date);
-
-retailCalendarConfig.getYear = date => retailCalendar.getYear(date);
-
-retailCalendarConfig.getMonth = date =>
-  (retailCalendar.getMonth(date) + 1) % 12;
-//@ts-ignore
-retailCalendarConfig.getStartOfMonth = date =>
-  retailCalendar.getStartOfMonth(date);
-
-//@ts-ignore
-retailCalendarConfig.getMonthWeeksCount = date =>
-  retailCalendar.getMonthWeeksCount(date);
-//@ts-ignore
-retailCalendarConfig.getNextMonth = (date, offset) =>
-  retailCalendar.getNextMonth(date, offset);
-
 const DatePicker: IDatePicker = generatePicker<Dayjs>(dayjsGenerateConfig);
 
 DatePicker.Picker = {
-  "retail": generatePicker<Dayjs>(retailCalendarConfig),
-  "general": generatePicker<Dayjs>(dayjsGenerateConfig)
+  "fiscal": generatePicker<Dayjs>(fiscalCalendarConfig),
+  "iso-8601": generatePicker<Dayjs>(dayjsGenerateConfig)
 };
 
 export default DatePicker;

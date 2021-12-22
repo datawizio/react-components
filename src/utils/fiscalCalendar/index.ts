@@ -1,15 +1,36 @@
 import dayjs, { Dayjs } from "dayjs";
 const format = "DD-MM-YYYY";
 
-class RetailCalendar {
+class FiscalCalendar {
   DAYS_IN_YEAR = 364;
   DAYS_IN_QUARTAL = (4 + 4 + 5) * 7;
-  PATTERN = [4, 4, 5];
+  pattern: number[] = [4, 4, 5];
   calendar = {};
   startDate: Dayjs;
+  startMonth: number;
+  startWeek: number;
 
-  constructor(startDate: Dayjs) {
+  constructor(startDate: Dayjs, pattern: string) {
     this.startDate = startDate;
+    this.pattern = pattern.split("-").map(i => parseInt(i));
+  }
+
+  setCalendarInfo(startMonth: number, startWeek: number, pattern: string) {
+    this.startMonth = startMonth - 1;
+    this.startWeek = startWeek === 0 ? 7 : startWeek;
+    this.startDate = dayjs()
+      .date(1)
+      .month(this.startMonth)
+      .hour(0)
+      .minute(0)
+      .second(0);
+
+    while (this.startDate.day() !== this.startWeek) {
+      this.startDate = this.startDate.add(-1, "day");
+    }
+    this.pattern = pattern.split("-").map(i => parseInt(i));
+
+    this.calendar = {};
   }
 
   getEndDate(date: Dayjs) {
@@ -19,7 +40,7 @@ class RetailCalendar {
     const res = month - (quater - 1) * 3;
     let dayInYear = (quater - 1) * this.DAYS_IN_QUARTAL;
     for (let i = 0; i < res; i++) {
-      dayInYear += this.PATTERN[i] * 7;
+      dayInYear += this.pattern[i] * 7;
     }
     return this.startDate.add(dayInYear, "day");
   }
@@ -38,7 +59,7 @@ class RetailCalendar {
     let temp = dayInQuartal;
     let month = 0;
 
-    for (let p of this.PATTERN) {
+    for (let p of this.pattern) {
       if (temp - p * 7 <= 0) return (quartal - 1) * 3 + month;
       temp -= p * 7;
       month++;
@@ -49,7 +70,7 @@ class RetailCalendar {
   getMonthWeeksCount(date: Dayjs) {
     const month = this.getMonth(date);
 
-    let weeks = this.PATTERN[month % 3];
+    let weeks = this.pattern[month % 3];
 
     if (month === 11) {
       const yearNumber = this.getYear(date);
@@ -57,7 +78,6 @@ class RetailCalendar {
 
       if (year.weeks === 53) weeks++;
     }
-
     return weeks;
   }
 
@@ -86,22 +106,26 @@ class RetailCalendar {
 
   getStartOfMonthByNumber(year: number, month: number) {
     const obj = this.getYearObject(year);
-    // console.log(obj, year);
     const quater = Math.ceil(month / 3);
     const res = month - (quater - 1) * 3;
     let dayInYear = (quater - 1) * this.DAYS_IN_QUARTAL;
     for (let i = 0; i < res; i++) {
-      dayInYear += this.PATTERN[i] * 7;
+      dayInYear += this.pattern[i] * 7;
     }
     const startDate = dayjs(obj.from);
     return startDate.add(dayInYear, "day");
   }
 
+  getQuater(date: Dayjs) {
+    if (isNaN(date.month())) return 0;
+    const month = this.getMonth(date);
+    return Math.floor(month / 3);
+  }
+
   getStartOfQuater(date: Dayjs) {
     if (isNaN(date.month())) return date;
-    const month = this.getMonth(date);
-    const quater = Math.ceil(month / 3);
-    let dayInYear = (quater - 1) * this.DAYS_IN_QUARTAL;
+    const quater = this.getQuater(date);
+    let dayInYear = quater * this.DAYS_IN_QUARTAL;
     return this.startDate.add(dayInYear, "day");
   }
 
@@ -157,6 +181,79 @@ class RetailCalendar {
     return [min, max];
   }
 
+  is53WeeksYear(year) {
+    if (!this.calendar[year]) this._generateCalendar(year);
+    return this.calendar[year].weeks === 53;
+  }
+
+  isDateInLastWeek(date = null) {
+    const year = this.getYear(date);
+    const max = this.calendar[year].to;
+    const min = max.subtract(7, "day");
+    return min < date && date <= max;
+  }
+
+  prevLastQuarter(dateFrom = null, dateTo = null) {
+    let dateFromDays = 91;
+    let dateToDays = 91;
+    if (dateFrom) {
+      const dateFromDay = dayjs(dateFrom, format);
+      const dateFromYear = dateFrom ? this.getYear(dateFromDay) : 0;
+      if (
+        (this.is53WeeksYear(dateFromYear) &&
+          this.isDateInLastWeek(dateFromDay)) ||
+        (this.is53WeeksYear(dateFromYear - 1) &&
+          this.getQuater(dateFromDay) === 1)
+      ) {
+        dateFromDays = 98;
+      }
+    }
+    if (dateTo) {
+      const dateToDay = dayjs(dateTo, format);
+      const dateToYear = dateTo ? this.getYear(dateToDay) : 0;
+      if (
+        (this.is53WeeksYear(dateToYear) && this.isDateInLastWeek(dateToDay)) ||
+        (this.is53WeeksYear(dateToYear - 1) && this.getQuater(dateToDay) === 1)
+      ) {
+        dateToDays = 98;
+      }
+    }
+    const min = dayjs(dateFrom, format).subtract(dateFromDays, "days");
+    const max = dayjs(dateTo, format).subtract(dateToDays, "days");
+    return [min, max];
+  }
+
+  prevLastYear(dateFrom = null, dateTo = null) {
+    let dateFromDays = 364;
+    let dateToDays = 364;
+
+    if (dateFrom) {
+      const dateFromDay = dayjs(dateFrom, format);
+      const dateFromYear = dateFrom ? this.getYear(dateFromDay) : 0;
+      if (
+        (this.is53WeeksYear(dateFromYear) &&
+          this.isDateInLastWeek(dateFromDay)) ||
+        (this.is53WeeksYear(dateFromYear - 1) &&
+          this.getQuater(dateFromDay) === 1)
+      ) {
+        dateFromDays = 371;
+      }
+    }
+    if (dateTo) {
+      const dateToDay = dayjs(dateTo, format);
+      const dateToYear = dateTo ? this.getYear(dateToDay) : 0;
+      if (
+        (this.is53WeeksYear(dateToYear) && this.isDateInLastWeek(dateToDay)) ||
+        (this.is53WeeksYear(dateToYear - 1) && this.getQuater(dateToDay) === 1)
+      ) {
+        dateToDays = 371;
+      }
+    }
+    const min = dayjs(dateFrom, format).subtract(dateFromDays, "days");
+    const max = dayjs(dateTo, format).subtract(dateToDays, "days");
+    return [min, max];
+  }
+
   _generateCalendar(year: number) {
     let arr = [];
     let clone = this.startDate.clone();
@@ -179,7 +276,7 @@ class RetailCalendar {
           weeks: 52
         };
         clone = clone.add(-(this.DAYS_IN_YEAR - 1), "day");
-        if (clone.get("month") === 1 && clone.date() >= 5) {
+        if (clone.get("month") === this.startMonth && clone.date() >= 5) {
           clone = clone.add(-7, "day");
           this.calendar[current].weeks = 53;
         }
@@ -199,7 +296,7 @@ class RetailCalendar {
           weeks: 52
         };
         clone = clone.add(this.DAYS_IN_YEAR - 1, "day");
-        if (clone.month() === 0 && clone.date() <= 27) {
+        if (clone.month() === this.startMonth - 1 && clone.date() <= 27) {
           clone = clone.add(7, "day");
           this.calendar[current].weeks = 53;
         }
@@ -210,4 +307,4 @@ class RetailCalendar {
   }
 }
 
-export const retailCalendar = new RetailCalendar(dayjs("2021-01-31"));
+export const fiscalCalendar = new FiscalCalendar(dayjs("2021-01-31"), "4-4-5");

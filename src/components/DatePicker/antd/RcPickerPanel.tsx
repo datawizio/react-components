@@ -17,7 +17,7 @@ import DatePanel from "./RcDatePanel";
 import WeekPanel from "rc-picker/lib/panels/WeekPanel";
 import MonthPanel from "rc-picker/lib/panels/MonthPanel";
 import QuarterPanel from "rc-picker/lib/panels/QuarterPanel";
-import YearPanel from "rc-picker/lib/panels/YearPanel";
+import YearPanel from "./RcYearPanel";
 import DecadePanel from "rc-picker/lib/panels/DecadePanel";
 import type { GenerateConfig } from "rc-picker/lib/generate";
 import type {

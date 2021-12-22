@@ -26,7 +26,9 @@ export function getWeekStartDate<DateType>(
   if (
     generateConfig.getMonth(alignStartDate) ===
       generateConfig.getMonth(value) &&
-    generateConfig.getDate(alignStartDate) > 1
+    generateConfig.getDate(alignStartDate) > 1 &&
+    //@ts-ignore
+    generateConfig.type !== "fiscal"
   ) {
     alignStartDate = generateConfig.addDate(alignStartDate, -7);
   }
