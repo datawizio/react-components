@@ -117,6 +117,7 @@ export interface TableState extends Partial<TableProps> {
   stateIsRecovered?: boolean;
   forceFetch: number;
   columnsMap: { [key: string]: IColumn };
+  visibleColumnsKeys: Array<IColumn["key"]>;
   parentsMap: { [key: string]: string };
   loadingRows: { [key: string]: boolean };
   columnsSwapped?: boolean;
@@ -268,6 +269,7 @@ export type GlobalHandlerType = (
 
 export type SearchHandlerType = (
   columnsMap: TableState["columnsMap"],
+  visibleColumnsKeys: TableState["visibleColumnsKeys"],
   dataSource: TableState["dataSource"],
   searchValue: TableState["searchValue"],
   dTypesConfig: TableState["dTypesConfig"]
