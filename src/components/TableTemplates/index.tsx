@@ -118,11 +118,17 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       if (!id) return;
       const template = templates.find(template => template.id === id);
       onSelect && onSelect(template);
-      dispatch({ type: "update", payload: { templateSelected: true } });
+      dispatch({
+        type: "update",
+        payload: {
+          templateSelected: true,
+          columnsForceUpdate: tableState.columnsForceUpdate + 1
+        }
+      });
       setSelectedTemplate(template);
       setTemplateToState(template);
     },
-    [templates, onSelect, dispatch, setTemplateToState]
+    [templates, onSelect, dispatch, setTemplateToState, tableState]
   );
 
   const handleSelectFavorite = useCallback(
@@ -200,7 +206,12 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       }
 
       setSelectedTemplate(template);
-      dispatch({ type: "update", payload: { templateSelected: true } });
+      dispatch({
+        type: "update",
+        payload: {
+          templateSelected: true
+        }
+      });
       setTemplates(templates => templates.concat(template));
     },
     [tableState, baseTableState, onCreate, dispatch]

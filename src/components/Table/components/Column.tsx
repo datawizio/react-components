@@ -36,7 +36,7 @@ const Column: React.FC<ColumnProps> = props => {
 
   const {
     dispatch,
-    tableState: { columnsWidth, templateSelected }
+    tableState: { columnsWidth, columnsForceUpdate }
   } = useContext(TableContext);
 
   const columnsWidthPreset = columnsWidth[model.key];
@@ -215,7 +215,7 @@ const Column: React.FC<ColumnProps> = props => {
 
     return {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model.children, model.max_value, model.colWidth, templateSelected]);
+  }, [model.children, model.max_value, model.colWidth, columnsForceUpdate]);
 
   return (
     <th
