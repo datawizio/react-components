@@ -39,6 +39,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             ],
+            "columnsForceUpdate": 1,
             "columnsMap": Object {
               "undefined": Object {
                 "alias10-20279": "Generic",
@@ -263,6 +264,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "sorter": true,
               },
             ],
+            "columnsForceUpdate": 1,
             "columnsMap": Object {
               "undefined": Object {
                 "alias10-20279": "Generic",
@@ -413,6 +415,7 @@ exports[`Table component rendered Table corectly 1`] = `
             ]
           }
           columnsConfig={Object {}}
+          columnsForceUpdate={1}
           columnsMap={
             Object {
               "undefined": Object {

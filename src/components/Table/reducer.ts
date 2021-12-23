@@ -99,7 +99,8 @@ export function initializer(props: TableProps): TableState {
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
     loadingRows: {},
     columnsSwapped: false,
-    forceFetch: 1
+    forceFetch: 1,
+    columnsForceUpdate: 1
   };
 }
 
