@@ -10,10 +10,11 @@ import "./index.less";
 
 dayjs.extend(customParseFormat);
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const DateRangePicker: IDateRangePicker = ({
   fullWidth,
+  type,
   ranges,
   presets,
   currDateRange,
@@ -37,8 +38,9 @@ const DateRangePicker: IDateRangePicker = ({
     if (presets && presets.length) {
       let result = {};
 
-      const defaultPreset = DefaultPreset(props.minDate, props.maxDate);
+      const defaultPreset = DefaultPreset(type, props.minDate, props.maxDate);
       const defaultPresetPrev = DefaultPresetPrev(
+        type,
         currDateRange?.date_from || props.dateFrom,
         currDateRange?.date_to || props.dateTo
       );
@@ -53,7 +55,9 @@ const DateRangePicker: IDateRangePicker = ({
     }
 
     if (useDefaultPreset) {
-      const defaultPreset = { ...DefaultPreset(props.minDate, props.maxDate) };
+      const defaultPreset = {
+        ...DefaultPreset(type, props.minDate, props.maxDate)
+      };
       if (defaultPresetExceptions && defaultPresetExceptions.length) {
         defaultPresetExceptions.forEach(item => {
           delete defaultPreset[item];
@@ -121,10 +125,12 @@ const DateRangePicker: IDateRangePicker = ({
     if (!(dateFrom && dateTo)) props.onClear && props.onClear();
     else props.onChange && props.onChange(arguments[0], arguments[1]);
   }
+  const RangePicker = DatePicker.Picker[type].RangePicker;
 
   return (
     <RangePicker
       {...props}
+      //@ts-ignore
       ranges={translatedPreset}
       className={fullWidth ? "ant-picker-full-width" : ""}
       onChange={onChange}
@@ -135,6 +141,7 @@ const DateRangePicker: IDateRangePicker = ({
 };
 
 DateRangePicker.defaultProps = {
+  type: "iso-8601",
   inputReadOnly: true,
   format: "DD-MM-YYYY",
   dateTo: "02-12-2001",

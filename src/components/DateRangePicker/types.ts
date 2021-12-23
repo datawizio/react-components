@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs";
-import DatePicker from "../DatePicker";
+import DatePicker, { CalendarTypes } from "../DatePicker";
 
 export type DateType = string | Dayjs | null;
 export type DateRange = [Dayjs, Dayjs];
@@ -8,6 +8,7 @@ export type PresetsRangeType = {
 };
 
 export type DateRangePickerProps = {
+  type?: CalendarTypes;
   dateFrom?: DateType;
   dateTo?: DateType;
 
@@ -54,7 +55,13 @@ export type DefaultPresetType = {
 export type DefaultPresetPrevType = {
   readonly previous?: (dateFrom: DateType, dateTo: DateType) => DateRange;
   readonly prev_last_week?: (dateFrom: DateType, dateTo: DateType) => DateRange;
-  readonly prev_last_month?: (dateFrom: DateType, dateTo: DateType) => DateRange;
-  readonly prev_last_quarter?: (dateFrom: DateType, dateTo: DateType) => DateRange;
+  readonly prev_last_month?: (
+    dateFrom: DateType,
+    dateTo: DateType
+  ) => DateRange;
+  readonly prev_last_quarter?: (
+    dateFrom: DateType,
+    dateTo: DateType
+  ) => DateRange;
   readonly prev_last_year?: (dateFrom: DateType, dateTo: DateType) => DateRange;
-}
+};
