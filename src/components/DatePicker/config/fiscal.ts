@@ -1,5 +1,6 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import dayjsGenerateConfig from "rc-picker/es/generate/dayjs";
+import { GenerateConfig } from "rc-picker/es/generate";
 
 import { fiscalCalendar } from "../../../utils/fiscalCalendar";
 
@@ -15,26 +16,34 @@ const parseLocale = (locale: string) => {
   return mapLocale || locale.split("_")[0];
 };
 
-export const fiscalCalendarConfig = Object.assign({}, dayjsGenerateConfig);
+interface IFiscalCalendarConfig extends GenerateConfig<Dayjs> {
+  getMonths?: (locale: string) => string[];
+  type?: "fiscal";
+  getStartOfMonth?: (date: Dayjs) => Dayjs;
+  getMonthWeeksCount?: (date: Dayjs) => number;
+  getNextMonth?: (date: Dayjs, offset: number) => Dayjs;
+}
+
+export const fiscalCalendarConfig: IFiscalCalendarConfig = Object.assign(
+  {},
+  dayjsGenerateConfig
+);
 fiscalCalendarConfig.locale = Object.assign({}, dayjsGenerateConfig.locale);
 
 fiscalCalendarConfig.getEndDate = date => fiscalCalendar.getEndDate(date);
 
-//@ts-ignore
 fiscalCalendarConfig.type = "fiscal";
 
 fiscalCalendarConfig.getYear = date => fiscalCalendar.getYear(date);
 
 fiscalCalendarConfig.getMonth = date => fiscalCalendar.getMonth(date);
-//@ts-ignore
+
 fiscalCalendarConfig.getStartOfMonth = date =>
   fiscalCalendar.getStartOfMonth(date);
 
-//@ts-ignore
 fiscalCalendarConfig.getMonthWeeksCount = date =>
   fiscalCalendar.getMonthWeeksCount(date);
 
-//@ts-ignore
 fiscalCalendarConfig.getNextMonth = (date, offset) =>
   fiscalCalendar.getNextMonth(date, offset);
 
@@ -50,6 +59,17 @@ fiscalCalendarConfig.locale.format = (locale, date, format) => {
 fiscalCalendarConfig.locale.getShortMonths = locale => {
   //@ts-ignore
   const months = dayjs().locale(parseLocale(locale)).localeData().monthsShort();
+  const res = [];
+  for (let i = 0; i < 12; i++) {
+    res.push(months[(fiscalCalendar.startMonth + i) % 12]);
+  }
+  return res;
+};
+
+//@ts-ignore
+fiscalCalendarConfig.locale.getMonths = locale => {
+  //@ts-ignore
+  const months = dayjs().locale(parseLocale(locale)).localeData().months();
   const res = [];
   for (let i = 0; i < 12; i++) {
     res.push(months[(fiscalCalendar.startMonth + i) % 12]);
