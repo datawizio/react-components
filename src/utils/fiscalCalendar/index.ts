@@ -17,7 +17,7 @@ class FiscalCalendar {
 
   setCalendarInfo(startMonth: number, startWeek: number, pattern: string) {
     this.startMonth = startMonth - 1;
-    this.startWeek = startWeek === 0 ? 7 : startWeek;
+    this.startWeek = startWeek === 7 ? 0 : startWeek;
     this.startDate = dayjs()
       .date(1)
       .month(this.startMonth)
