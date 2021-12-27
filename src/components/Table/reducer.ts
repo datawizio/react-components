@@ -110,6 +110,7 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         expandedRowKeys: [],
+        parentsMap: {},
         dataSource: action.payload
       };
     }
