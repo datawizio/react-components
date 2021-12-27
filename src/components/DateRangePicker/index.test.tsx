@@ -23,7 +23,7 @@ const mockProps = {
 
 const setUp = (props?) => mount(<DateRangePicker {...props} />);
 
-xdescribe(" DateRangePicker component", () => {
+describe(" DateRangePicker component", () => {
   let component;
   beforeEach(() => {
     component = setUp(mockProps);
@@ -35,8 +35,10 @@ xdescribe(" DateRangePicker component", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("DateRangePicker rendered correctly with empty props", () => {
-    const wrapper = setUp();
+  it("DateRangePicker rendered correctly fiscal", () => {
+    const wrapper = setUp({
+      type: "fiscal"
+    });
     expect(wrapper).toMatchSnapshot();
   });
 

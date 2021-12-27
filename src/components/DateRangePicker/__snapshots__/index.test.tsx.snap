@@ -9,6 +9,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
   inputReadOnly={true}
   maxDate="2020-10-22T13:06:36.873Z"
   onChange={[MockFunction]}
+  type="iso-8601"
   useDefaultPreset={false}
 >
   <RangePicker
@@ -58,6 +59,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
             "getMonth": [Function],
             "getNow": [Function],
             "getSecond": [Function],
+            "getStartOfMonth": [Function],
             "getWeekDay": [Function],
             "getYear": [Function],
             "isAfter": [Function],
@@ -205,6 +207,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
               "getMonth": [Function],
               "getNow": [Function],
               "getSecond": [Function],
+              "getStartOfMonth": [Function],
               "getWeekDay": [Function],
               "getYear": [Function],
               "isAfter": [Function],
@@ -408,6 +411,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                 "getMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
@@ -580,6 +584,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                 "getMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
@@ -871,6 +876,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                   "getMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
@@ -1043,6 +1049,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
                                   "getMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
@@ -1479,12 +1486,13 @@ exports[` DateRangePicker component DateRangePicker rendered correctly 1`] = `
 </DateRangePicker>
 `;
 
-exports[` DateRangePicker component DateRangePicker rendered correctly with empty props 1`] = `
+exports[` DateRangePicker component DateRangePicker rendered correctly fiscal 1`] = `
 <DateRangePicker
   dateFrom="02-12-2001"
   dateTo="02-12-2001"
   format="DD-MM-YYYY"
   inputReadOnly={true}
+  type="fiscal"
 >
   <RangePicker
     className=""
@@ -1530,14 +1538,18 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
             "getHour": [Function],
             "getMinute": [Function],
             "getMonth": [Function],
+            "getMonthWeeksCount": [Function],
+            "getNextMonth": [Function],
             "getNow": [Function],
             "getSecond": [Function],
+            "getStartOfMonth": [Function],
             "getWeekDay": [Function],
             "getYear": [Function],
             "isAfter": [Function],
             "isValidate": [Function],
             "locale": Object {
               "format": [Function],
+              "getMonths": [Function],
               "getShortMonths": [Function],
               "getShortWeekDays": [Function],
               "getWeek": [Function],
@@ -1551,6 +1563,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
             "setMonth": [Function],
             "setSecond": [Function],
             "setYear": [Function],
+            "type": "fiscal",
           }
         }
         inputReadOnly={true}
@@ -1676,14 +1689,18 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
               "getHour": [Function],
               "getMinute": [Function],
               "getMonth": [Function],
+              "getMonthWeeksCount": [Function],
+              "getNextMonth": [Function],
               "getNow": [Function],
               "getSecond": [Function],
+              "getStartOfMonth": [Function],
               "getWeekDay": [Function],
               "getYear": [Function],
               "isAfter": [Function],
               "isValidate": [Function],
               "locale": Object {
                 "format": [Function],
+                "getMonths": [Function],
                 "getShortMonths": [Function],
                 "getShortWeekDays": [Function],
                 "getWeek": [Function],
@@ -1697,6 +1714,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
               "setMonth": [Function],
               "setSecond": [Function],
               "setYear": [Function],
+              "type": "fiscal",
             }
           }
           inputReadOnly={true}
@@ -1878,14 +1896,18 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 "getHour": [Function],
                                 "getMinute": [Function],
                                 "getMonth": [Function],
+                                "getMonthWeeksCount": [Function],
+                                "getNextMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
                                 "isValidate": [Function],
                                 "locale": Object {
                                   "format": [Function],
+                                  "getMonths": [Function],
                                   "getShortMonths": [Function],
                                   "getShortWeekDays": [Function],
                                   "getWeek": [Function],
@@ -1899,6 +1921,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 "setMonth": [Function],
                                 "setSecond": [Function],
                                 "setYear": [Function],
+                                "type": "fiscal",
                               }
                             }
                             inputReadOnly={true}
@@ -2049,14 +2072,18 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 "getHour": [Function],
                                 "getMinute": [Function],
                                 "getMonth": [Function],
+                                "getMonthWeeksCount": [Function],
+                                "getNextMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
                                 "isValidate": [Function],
                                 "locale": Object {
                                   "format": [Function],
+                                  "getMonths": [Function],
                                   "getShortMonths": [Function],
                                   "getShortWeekDays": [Function],
                                   "getWeek": [Function],
@@ -2070,6 +2097,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 "setMonth": [Function],
                                 "setSecond": [Function],
                                 "setYear": [Function],
+                                "type": "fiscal",
                               }
                             }
                             inputReadOnly={true}
@@ -2142,7 +2170,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                 },
                               }
                             }
-                            pickerValue={"2002-01-02T00:00:00.000Z"}
+                            pickerValue={"2001-12-23T00:00:00.000Z"}
                             placeholder={
                               Array [
                                 "Start date",
@@ -2339,14 +2367,18 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                   "getHour": [Function],
                                   "getMinute": [Function],
                                   "getMonth": [Function],
+                                  "getMonthWeeksCount": [Function],
+                                  "getNextMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
                                   "isValidate": [Function],
                                   "locale": Object {
                                     "format": [Function],
+                                    "getMonths": [Function],
                                     "getShortMonths": [Function],
                                     "getShortWeekDays": [Function],
                                     "getWeek": [Function],
@@ -2360,6 +2392,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                   "setMonth": [Function],
                                   "setSecond": [Function],
                                   "setYear": [Function],
+                                  "type": "fiscal",
                                 }
                               }
                               inputReadOnly={true}
@@ -2510,14 +2543,18 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                   "getHour": [Function],
                                   "getMinute": [Function],
                                   "getMonth": [Function],
+                                  "getMonthWeeksCount": [Function],
+                                  "getNextMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
                                   "isValidate": [Function],
                                   "locale": Object {
                                     "format": [Function],
+                                    "getMonths": [Function],
                                     "getShortMonths": [Function],
                                     "getShortWeekDays": [Function],
                                     "getWeek": [Function],
@@ -2531,6 +2568,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                   "setMonth": [Function],
                                   "setSecond": [Function],
                                   "setYear": [Function],
+                                  "type": "fiscal",
                                 }
                               }
                               inputReadOnly={true}
@@ -2603,7 +2641,7 @@ exports[` DateRangePicker component DateRangePicker rendered correctly with empt
                                   },
                                 }
                               }
-                              pickerValue={"2002-01-02T00:00:00.000Z"}
+                              pickerValue={"2001-12-23T00:00:00.000Z"}
                               placeholder={
                                 Array [
                                   "Start date",
@@ -2956,6 +2994,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
   inputReadOnly={true}
   maxDate="2020-10-22T13:06:36.873Z"
   onChange={[MockFunction]}
+  type="iso-8601"
   useDefaultPreset={false}
 >
   <RangePicker
@@ -3005,6 +3044,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
             "getMonth": [Function],
             "getNow": [Function],
             "getSecond": [Function],
+            "getStartOfMonth": [Function],
             "getWeekDay": [Function],
             "getYear": [Function],
             "isAfter": [Function],
@@ -3152,6 +3192,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
               "getMonth": [Function],
               "getNow": [Function],
               "getSecond": [Function],
+              "getStartOfMonth": [Function],
               "getWeekDay": [Function],
               "getYear": [Function],
               "isAfter": [Function],
@@ -3355,6 +3396,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                 "getMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
@@ -3527,6 +3569,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                 "getMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
@@ -3818,6 +3861,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                   "getMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
@@ -3990,6 +4034,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with empty 
                                   "getMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
@@ -4453,6 +4498,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
       ],
     }
   }
+  type="iso-8601"
   useDefaultPreset={false}
 >
   <RangePicker
@@ -4502,6 +4548,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
             "getMonth": [Function],
             "getNow": [Function],
             "getSecond": [Function],
+            "getStartOfMonth": [Function],
             "getWeekDay": [Function],
             "getYear": [Function],
             "isAfter": [Function],
@@ -4649,6 +4696,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
               "getMonth": [Function],
               "getNow": [Function],
               "getSecond": [Function],
+              "getStartOfMonth": [Function],
               "getWeekDay": [Function],
               "getYear": [Function],
               "isAfter": [Function],
@@ -4852,6 +4900,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                 "getMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
@@ -5024,6 +5073,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                 "getMonth": [Function],
                                 "getNow": [Function],
                                 "getSecond": [Function],
+                                "getStartOfMonth": [Function],
                                 "getWeekDay": [Function],
                                 "getYear": [Function],
                                 "isAfter": [Function],
@@ -5315,6 +5365,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                   "getMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],
@@ -5487,6 +5538,7 @@ exports[` DateRangePicker component DateRangePicker trigger onChange with mock 1
                                   "getMonth": [Function],
                                   "getNow": [Function],
                                   "getSecond": [Function],
+                                  "getStartOfMonth": [Function],
                                   "getWeekDay": [Function],
                                   "getYear": [Function],
                                   "isAfter": [Function],

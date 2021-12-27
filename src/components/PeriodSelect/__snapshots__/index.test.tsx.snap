@@ -4746,6 +4746,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
         minDate={"2020-01-01T00:00:00.000Z"}
         onChange={[Function]}
         onClear={[Function]}
+        type="iso-8601"
       >
         <RangePicker
           className=""
@@ -4820,6 +4821,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                   "getMonth": [Function],
                   "getNow": [Function],
                   "getSecond": [Function],
+                  "getStartOfMonth": [Function],
                   "getWeekDay": [Function],
                   "getYear": [Function],
                   "isAfter": [Function],
@@ -4981,6 +4983,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                     "getMonth": [Function],
                     "getNow": [Function],
                     "getSecond": [Function],
+                    "getStartOfMonth": [Function],
                     "getWeekDay": [Function],
                     "getYear": [Function],
                     "isAfter": [Function],
@@ -5186,6 +5189,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       "getMonth": [Function],
                                       "getNow": [Function],
                                       "getSecond": [Function],
+                                      "getStartOfMonth": [Function],
                                       "getWeekDay": [Function],
                                       "getYear": [Function],
                                       "isAfter": [Function],
@@ -5360,6 +5364,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       "getMonth": [Function],
                                       "getNow": [Function],
                                       "getSecond": [Function],
+                                      "getStartOfMonth": [Function],
                                       "getWeekDay": [Function],
                                       "getYear": [Function],
                                       "isAfter": [Function],
@@ -5653,6 +5658,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         "getMonth": [Function],
                                         "getNow": [Function],
                                         "getSecond": [Function],
+                                        "getStartOfMonth": [Function],
                                         "getWeekDay": [Function],
                                         "getYear": [Function],
                                         "isAfter": [Function],
@@ -5827,6 +5833,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         "getMonth": [Function],
                                         "getNow": [Function],
                                         "getSecond": [Function],
+                                        "getStartOfMonth": [Function],
                                         "getWeekDay": [Function],
                                         "getYear": [Function],
                                         "isAfter": [Function],
@@ -8906,6 +8913,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
         minDate={"2020-01-01T00:00:00.000Z"}
         onChange={[Function]}
         onClear={[Function]}
+        type="iso-8601"
       >
         <RangePicker
           className=""
@@ -8980,6 +8988,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                   "getMonth": [Function],
                   "getNow": [Function],
                   "getSecond": [Function],
+                  "getStartOfMonth": [Function],
                   "getWeekDay": [Function],
                   "getYear": [Function],
                   "isAfter": [Function],
@@ -9141,6 +9150,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                     "getMonth": [Function],
                     "getNow": [Function],
                     "getSecond": [Function],
+                    "getStartOfMonth": [Function],
                     "getWeekDay": [Function],
                     "getYear": [Function],
                     "isAfter": [Function],
@@ -9346,6 +9356,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       "getMonth": [Function],
                                       "getNow": [Function],
                                       "getSecond": [Function],
+                                      "getStartOfMonth": [Function],
                                       "getWeekDay": [Function],
                                       "getYear": [Function],
                                       "isAfter": [Function],
@@ -9520,6 +9531,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       "getMonth": [Function],
                                       "getNow": [Function],
                                       "getSecond": [Function],
+                                      "getStartOfMonth": [Function],
                                       "getWeekDay": [Function],
                                       "getYear": [Function],
                                       "isAfter": [Function],
@@ -9813,6 +9825,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         "getMonth": [Function],
                                         "getNow": [Function],
                                         "getSecond": [Function],
+                                        "getStartOfMonth": [Function],
                                         "getWeekDay": [Function],
                                         "getYear": [Function],
                                         "isAfter": [Function],
@@ -9987,6 +10000,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         "getMonth": [Function],
                                         "getNow": [Function],
                                         "getSecond": [Function],
+                                        "getStartOfMonth": [Function],
                                         "getWeekDay": [Function],
                                         "getYear": [Function],
                                         "isAfter": [Function],

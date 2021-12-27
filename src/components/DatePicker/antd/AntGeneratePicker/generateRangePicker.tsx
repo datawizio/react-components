@@ -6,7 +6,7 @@ import CloseCircleFilled from "@ant-design/icons/CloseCircleFilled";
 import SwapRightOutlined from "@ant-design/icons/SwapRightOutlined";
 import { RangePicker as RCRangePicker } from "../RcIndex";
 import { GenerateConfig } from "rc-picker/lib/generate/index";
-import enUS from "antd/lib/locale/en_US";
+import enUS from "antd/lib/date-picker/locale/en_US";
 import { ConfigContext, ConfigConsumerProps } from "antd/lib/config-provider";
 import SizeContext from "antd/lib/config-provider/SizeContext";
 import LocaleReceiver from "antd/lib/locale-provider/LocaleReceiver";

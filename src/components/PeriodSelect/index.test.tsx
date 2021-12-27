@@ -34,7 +34,7 @@ const mockProps = {
 
 const setUp = (props?) => mount(<PeriodSelect {...props} />);
 
-xdescribe("PeriodSelect", () => {
+describe("PeriodSelect", () => {
   let component;
   beforeEach(() => {
     component = setUp(mockProps);
