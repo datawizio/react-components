@@ -120,21 +120,6 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
   }
 };
 
-// export const DefaultPreset = (minDate, maxDate) => {
-//   return {
-//     "Yesterday": DefaultPresetRanges.yesterday(maxDate),
-//     "Last_week": DefaultPresetRanges.lastWeek(maxDate),
-//     "Current_month": DefaultPresetRanges.currentMonth(maxDate),
-//     "Last_30_Days": DefaultPresetRanges.last_30_days(maxDate),
-//     "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
-//     "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
-//     "SEASON_BEGIN": DefaultPresetRanges.quarterBegin(maxDate),
-//     "cur_year": DefaultPresetRanges.currentYear(maxDate),
-//     "LAST_365_DAYS": DefaultPresetRanges.last_365_days(maxDate),
-//     "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
-//   };
-// };
-
 export const DefaultPreset = (type, minDate, maxDate) => {
   return {
     "Yesterday": DefaultPresetRanges.yesterday(maxDate),
@@ -163,6 +148,8 @@ export const DefaultPreset = (type, minDate, maxDate) => {
 };
 
 export const DefaultPresetPrev = (type, dateFrom, dateTo) => {
+  if (dateFrom === "Invalid Date") dateFrom = null;
+  if (dateTo === "Invalid Date") dateTo = null;
   return {
     "PREVIOUS": DefaultPresetPrevRanges.previous(dateFrom, dateTo),
     "PREV_LAST_WEEK": DefaultPresetPrevRanges.prev_last_week(dateFrom, dateTo),
