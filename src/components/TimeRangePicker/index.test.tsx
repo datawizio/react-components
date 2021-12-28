@@ -13,7 +13,7 @@ const mockProps = {
 
 const setUp = (props?) => shallow(<TimeRangePicker {...props} />);
 
-xdescribe("TimeRangePicker component", () => {
+describe("TimeRangePicker component", () => {
   let component;
   beforeEach(() => {
     component = render(<TimeRangePicker {...mockProps} />);

@@ -18,7 +18,7 @@ const mockProps = {
 
 const setUp = (props?) => mount(<Interval {...props} />);
 
-xdescribe("FormBuilder Interval component", () => {
+describe("FormBuilder Interval component", () => {
   let component;
   beforeEach(() => {
     component = setUp(mockProps);

@@ -8,7 +8,7 @@ const mockProps = {};
 
 const setUp = (props?) => shallow(<DatePicker {...props} />);
 
-xdescribe(" DatePicker component", () => {
+describe(" DatePicker component", () => {
   let component;
   beforeEach(() => {
     component = setUp(mockProps);

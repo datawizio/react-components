@@ -22,7 +22,7 @@ const mockProps = {
 
 const setUp = (props?) => shallow(<FieldInterval {...props} />);
 
-xdescribe("FormBuilder FieldInterval component", () => {
+describe("FormBuilder FieldInterval component", () => {
   let component;
   beforeEach(() => {
     component = setUp(mockProps);

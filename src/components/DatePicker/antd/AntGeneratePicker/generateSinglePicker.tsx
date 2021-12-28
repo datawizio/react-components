@@ -6,7 +6,7 @@ import CloseCircleFilled from "@ant-design/icons/CloseCircleFilled";
 import RCPicker from "../RcPicker";
 import { PickerMode } from "rc-picker/lib/interface";
 import { GenerateConfig } from "rc-picker/lib/generate/index";
-import enUS from "antd/lib/locale/en_US";
+import enUS from "antd/lib/date-picker/locale/en_US";
 import { getPlaceholder } from "antd/lib/date-picker/util";
 import devWarning from "antd/lib/_util/devWarning";
 import { ConfigContext, ConfigConsumerProps } from "antd/lib/config-provider";

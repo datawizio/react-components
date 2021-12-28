@@ -12,7 +12,7 @@ const mockProps = {
 
 const setUp = (props?) => shallow(<IntervalItem {...props} />);
 
-xdescribe("FormBuilder IntervalItem component", () => {
+describe("FormBuilder IntervalItem component", () => {
   let component;
   beforeEach(() => {
     component = setUp(mockProps);
