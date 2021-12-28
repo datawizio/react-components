@@ -45,8 +45,7 @@ class FiscalCalendar {
     return this.startDate.add(dayInYear, "day");
   }
 
-  getMonth(date: Dayjs) {
-    // return date.month();
+  getMonth(date: Dayjs | null) {
     const yearNumber = this.getYear(date);
 
     const year = this.calendar[yearNumber];
@@ -188,14 +187,16 @@ class FiscalCalendar {
 
   isDateInLastWeek(date = null) {
     const year = this.getYear(date);
-    const max = this.calendar[year].to;
+    const max = dayjs(this.calendar[year].to);
     const min = max.subtract(7, "day");
-    return min < date && date <= max;
+
+    return min.isBefore(date) && (date.isBefore(max) || date.isSame(max));
   }
 
   prevLastQuarter(dateFrom = null, dateTo = null) {
     let dateFromDays = 91;
     let dateToDays = 91;
+
     if (dateFrom) {
       const dateFromDay = dayjs(dateFrom, format);
       const dateFromYear = dateFrom ? this.getYear(dateFromDay) : 0;

@@ -47,6 +47,7 @@ export type DefaultPresetType = {
   readonly last_90_days?: (maxDate?: DateType) => DateRange;
   readonly quarterBegin?: (maxDate?: DateType) => DateRange;
   readonly last_180_days?: (maxDate?: DateType) => DateRange;
+  readonly last_364_days?: (maxDate?: DateType) => DateRange;
   readonly last_365_days?: (maxDate?: DateType) => DateRange;
   readonly currentYear?: (maxDate?: DateType) => DateRange;
   readonly allPeriod?: (minDate?: DateType, maxDate?: DateType) => DateRange;
