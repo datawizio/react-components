@@ -50,6 +50,14 @@ export const DefaultPresetRanges: DefaultPresetType = {
     return [min, max];
   },
 
+  last_364_days: (maxDate = null): DateRange => {
+    const min = maxDate
+      ? dayjs(maxDate, format).subtract(363, "d")
+      : dayjs().subtract(363, "d");
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
+    return [min, max];
+  },
+
   quarterBegin: (maxDate = null): DateRange => {
     const min = maxDate
       ? dayjs(maxDate, format).startOf("quarter")
@@ -141,7 +149,7 @@ export const DefaultPreset = (type, minDate, maxDate) => {
         : DefaultPresetRanges.currentYear(maxDate),
     "LAST_365_DAYS":
       type === "fiscal"
-        ? fiscalCalendar.presetCurrentYear(maxDate)
+        ? DefaultPresetRanges.last_364_days(maxDate)
         : DefaultPresetRanges.last_365_days(maxDate),
     "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
   };
