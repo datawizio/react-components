@@ -25,6 +25,10 @@ class FiscalCalendar {
       .minute(0)
       .second(0);
 
+    if (dayjs().month() < this.startMonth) {
+      this.startDate.year(this.startDate.year() - 1);
+    }
+
     while (this.startDate.day() !== this.startWeek) {
       this.startDate = this.startDate.add(-1, "day");
     }
@@ -52,17 +56,23 @@ class FiscalCalendar {
 
     const dayInYear = date.diff(year.from, "day") + 1;
 
-    const quartal = Math.ceil(dayInYear / this.DAYS_IN_QUARTAL);
+    let quartal = Math.ceil(dayInYear / this.DAYS_IN_QUARTAL);
+    if (quartal > 4) quartal = 4;
     const dayInQuartal = dayInYear - (quartal - 1) * this.DAYS_IN_QUARTAL;
 
     let temp = dayInQuartal;
     let month = 0;
+    const pattern = [...this.pattern];
+    if (year.weeks === 53 && quartal === 4) {
+      pattern[2]++;
+    }
 
-    for (let p of this.pattern) {
+    for (let p of pattern) {
       if (temp - p * 7 <= 0) return (quartal - 1) * 3 + month;
       temp -= p * 7;
       month++;
     }
+
     return (quartal - 1) * 3 + month;
   }
 
@@ -153,7 +163,10 @@ class FiscalCalendar {
     if (!this.calendar[year]) this._generateCalendar(year);
     const from = dayjs(this.calendar[year].from).hour(0).minute(0);
     const to = dayjs(this.calendar[year].to).hour(23).minute(59);
-    return from <= date && date <= to;
+    return (
+      (from.isBefore(date) || from.isSame(date)) &&
+      (date.isBefore(to) || date.isSame(to))
+    );
   }
 
   presetCurrentMonth(maxDate = null) {
@@ -277,7 +290,7 @@ class FiscalCalendar {
           weeks: 52
         };
         clone = clone.add(-(this.DAYS_IN_YEAR - 1), "day");
-        if (clone.get("month") === this.startMonth && clone.date() >= 5) {
+        if (clone.add(-1, "day").get("month") === this.startMonth) {
           clone = clone.add(-7, "day");
           this.calendar[current].weeks = 53;
         }
@@ -297,7 +310,10 @@ class FiscalCalendar {
           weeks: 52
         };
         clone = clone.add(this.DAYS_IN_YEAR - 1, "day");
-        if (clone.month() === this.startMonth - 1 && clone.date() <= 27) {
+        if (
+          clone.month() === this.startMonth - 1 &&
+          clone.add(7, "day").month() === this.startMonth - 1
+        ) {
           clone = clone.add(7, "day");
           this.calendar[current].weeks = 53;
         }

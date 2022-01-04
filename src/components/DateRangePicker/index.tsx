@@ -113,8 +113,8 @@ const DateRangePicker: IDateRangePicker = ({
     date => {
       const formatedDate = formatDate(date.format("DD-MM-YYYY"));
       return (
-        (maxDate && formatedDate >= maxDate) ||
-        (minDate && formatedDate < minDate)
+        (maxDate && formatedDate.isAfter(maxDate)) ||
+        (minDate && formatedDate.isBefore(minDate))
       );
     },
     [maxDate, minDate, formatDate]

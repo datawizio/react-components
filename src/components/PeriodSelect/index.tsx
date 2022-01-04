@@ -29,6 +29,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   const { translate } = useContext(ConfigContext);
 
   const {
+    type,
     clientDate,
     clientStartDate,
     periodLabel,
@@ -143,6 +144,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPeriodPicker && (
           <DateRangePicker
+            type={type}
             dateFrom={!isPickerEmpty && dayjs(period.startDate)}
             dateTo={!isPickerEmpty && dayjs(period.endDate)}
             minDate={dayjs(clientStartDate)}
@@ -172,6 +174,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPrevPeriodPicker && (
           <DateRangePicker
+            type={type}
             dateFrom={!isPrevPickerEmpty && dayjs(prevPeriod.startDate)}
             dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
             minDate={dayjs(clientStartDate)}
@@ -195,7 +198,8 @@ PeriodSelect.defaultProps = {
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
   dateConfig: {},
-  limitMaxDate: false
+  limitMaxDate: false,
+  type: "iso-8601"
 };
 
 export default PeriodSelect;
