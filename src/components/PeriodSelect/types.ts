@@ -1,3 +1,5 @@
+import { CalendarTypes } from "../DatePicker";
+
 export interface DateRangeType {
   startDate: string;
   endDate: string;
@@ -36,6 +38,7 @@ export type PrevPerionEnum =
   | "prev_date";
 
 export interface PeriodSelectProps {
+  type: CalendarTypes;
   format?: string;
   clientDate?: string;
   clientStartDate?: string;

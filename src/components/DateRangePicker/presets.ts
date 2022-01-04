@@ -4,6 +4,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateRange, DefaultPresetPrevType, DefaultPresetType } from "./types";
 import { genPrevPeriod, reverseDate } from "./utils";
 import { fiscalCalendar } from "../../utils/fiscalCalendar";
+import { calendarInfo } from "../../utils/calendar";
 
 dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
@@ -83,9 +84,8 @@ export const DefaultPresetRanges: DefaultPresetType = {
   },
 
   currentYear: (maxDate = null): DateRange => {
-    const min = maxDate
-      ? dayjs(maxDate, format).startOf("y")
-      : dayjs().startOf("y");
+    let min = maxDate ? dayjs(maxDate, format) : dayjs();
+    min = calendarInfo.getStartOfYear(min);
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },

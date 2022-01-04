@@ -3,6 +3,7 @@ import YearHeader from "rc-picker/lib/panels/YearPanel/YearHeader";
 import YearBody, { YEAR_COL_COUNT } from "./YearBody";
 import type { PanelSharedProps, PanelMode } from "rc-picker/lib/interface";
 import { createKeyDownHandler } from "rc-picker/lib/utils/uiUtil";
+import { calendarInfo } from "../../../../utils/calendar";
 
 export type YearPanelProps<DateType> = {
   sourceMode: PanelMode;
@@ -25,7 +26,7 @@ function YearPanel<DateType>(props: YearPanelProps<DateType>) {
 
   let panelPrefixCls = `${prefixCls}-year-panel`;
   //@ts-ignore
-  if (generateConfig.type === "fiscal") {
+  if (generateConfig.type === "fiscal" || calendarInfo.startMonth !== 0) {
     panelPrefixCls += ` ${prefixCls}-year-panel-fiscal`;
   }
 
