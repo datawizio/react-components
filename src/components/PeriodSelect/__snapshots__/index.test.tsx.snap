@@ -48,6 +48,7 @@ exports[`PeriodSelect should render correctly 1`] = `
   }
   periodLabel="SELECT_PERIOD"
   prevPeriodLabel="SELECT_PREV_PERIOD"
+  type="iso-8601"
 >
   <div
     className="period-picker-wrapper"
@@ -1862,6 +1863,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
   }
   periodLabel="SELECT_PERIOD"
   prevPeriodLabel="SELECT_PREV_PERIOD"
+  type="iso-8601"
 >
   <div
     className="period-picker-wrapper"
@@ -3726,6 +3728,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
   }
   periodLabel="SELECT_PERIOD"
   prevPeriodLabel="SELECT_PREV_PERIOD"
+  type="iso-8601"
 >
   <div
     className="period-picker-wrapper"
@@ -7117,6 +7120,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
   }
   periodLabel="SELECT_PERIOD"
   prevPeriodLabel="SELECT_PREV_PERIOD"
+  type="iso-8601"
 >
   <div
     className="period-picker-wrapper"
