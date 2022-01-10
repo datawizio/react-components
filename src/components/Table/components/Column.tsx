@@ -4,6 +4,7 @@ import { TableContext } from "../context";
 import clsx from "clsx";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useState, useCallback, useMemo, useContext } from "react";
+import { useDebouncedCallback } from "use-debounce/lib";
 
 import { IColumn } from "../types";
 import { PropsWithChildren } from "react";
@@ -14,6 +15,7 @@ export interface ColumnProps
     React.HTMLAttributes<any> {
   level: number;
   model: IColumn;
+  virtual?: boolean;
   isHeader?: boolean;
   onWidthChange: (columnKey: string, width: number) => void;
 }
@@ -25,6 +27,7 @@ const Column: React.FC<ColumnProps> = props => {
     multipleSorting,
     level,
     onWidthChange,
+    virtual,
     isHeader,
     ...restProps
   } = props;
@@ -45,21 +48,89 @@ const Column: React.FC<ColumnProps> = props => {
     canDrag: !model.fixed
   });
 
-  const autoScrollInSafari = (step = 15) => {
+  const autoScroll = (step = 50) => {
     return (_: void, m: DropTargetMonitor) => {
+      const SLOW_SCROLL_BREAKPOINT = 60;
+      const FAST_SCROLL_BREAKPOINT = 25;
+
+      const scrollTable = (node: HTMLElement, left: number) => {
+        node.scroll({
+          left,
+          behavior: "smooth"
+        });
+      };
+
+      if (virtual) {
+        const tableHeaderDOMWrapper = columnRef.current.closest(
+          ".dw-table--virtual .ant-table-header"
+        );
+        const tableWrapper = tableHeaderDOMWrapper?.parentElement;
+
+        const tableBodyDOMWrapper = tableWrapper?.querySelector(
+          ".ant-table-body"
+        );
+
+        if (!tableBodyDOMWrapper && !tableHeaderDOMWrapper) return;
+
+        const cursor = m.getClientOffset();
+        const rectHeader = tableHeaderDOMWrapper.getBoundingClientRect();
+
+        if (cursor.x - rectHeader.left < FAST_SCROLL_BREAKPOINT) {
+          scrollTable(
+            tableBodyDOMWrapper,
+            tableBodyDOMWrapper.scrollLeft - step * 3
+          );
+          return;
+        }
+        if (rectHeader.right - cursor.x < FAST_SCROLL_BREAKPOINT) {
+          scrollTable(
+            tableBodyDOMWrapper,
+            tableBodyDOMWrapper.scrollLeft + step * 3
+          );
+          return;
+        }
+
+        if (cursor.x - rectHeader.left < SLOW_SCROLL_BREAKPOINT) {
+          scrollTable(
+            tableBodyDOMWrapper,
+            tableBodyDOMWrapper.scrollLeft - step
+          );
+          return;
+        }
+        if (rectHeader.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
+          scrollTable(
+            tableBodyDOMWrapper,
+            tableBodyDOMWrapper.scrollLeft + step
+          );
+          return;
+        }
+      }
+
       const tableDOMWrapper = columnRef.current.closest(
         ".ant-table-content>.dw-table__wrapper"
       );
 
-      if (tableDOMWrapper) {
+      if (tableDOMWrapper && isSafariBrowser) {
         const cursor = m.getClientOffset();
         const rect = tableDOMWrapper.getBoundingClientRect();
 
-        if (cursor.x - rect.left < 60) tableDOMWrapper.scrollLeft -= step;
-        if (rect.right - cursor.x < 60) tableDOMWrapper.scrollLeft += step;
+        if (cursor.x - rect.left < SLOW_SCROLL_BREAKPOINT) {
+          scrollTable(tableDOMWrapper, tableDOMWrapper.scrollLeft - step);
+        }
+
+        if (rect.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
+          scrollTable(tableDOMWrapper, tableDOMWrapper.scrollLeft + step);
+        }
       }
     };
   };
+
+  const [autoScrollDebounced] = useDebouncedCallback(
+    (_: void, m: DropTargetMonitor) => {
+      autoScroll()(_, m);
+    },
+    150
+  );
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: "column",
@@ -80,7 +151,7 @@ const Column: React.FC<ColumnProps> = props => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
     }),
-    hover: isSafariBrowser && autoScrollInSafari()
+    hover: autoScrollDebounced
   });
 
   const dndRef = useCallback(

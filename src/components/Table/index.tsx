@@ -225,6 +225,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             return Boolean(props.model) ? (
               <Column
                 {...props}
+                virtual={virtual}
                 isHeader
                 onWidthChange={onColumnWidthChange ?? (() => {})}
               />
