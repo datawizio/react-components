@@ -4,9 +4,9 @@ import { fiscalCalendar } from "../fiscalCalendar";
 type CalendarType = "fiscal" | "iso-8601";
 
 class Calendar {
-  type: CalendarType;
-  startMonth: number;
-  startWeek: number;
+  type: CalendarType = "iso-8601";
+  startMonth: number = 1;
+  startWeek: number = 1;
   setCalendarInfo(
     type: CalendarType,
     startMonth: number,
