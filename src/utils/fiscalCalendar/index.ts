@@ -134,8 +134,10 @@ class FiscalCalendar {
   getStartOfQuater(date: Dayjs) {
     if (isNaN(date.month())) return date;
     const quater = this.getQuater(date);
-    let dayInYear = quater * this.DAYS_IN_QUARTAL;
-    return this.startDate.add(dayInYear, "day");
+    const yearNumber = this.getYear(date);
+    const dayInYear = quater * this.DAYS_IN_QUARTAL;
+    const startYear = dayjs(this.calendar[yearNumber].from);
+    return startYear.add(dayInYear, "day");
   }
 
   getStartOfYear(date: Dayjs) {

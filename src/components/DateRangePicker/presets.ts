@@ -60,11 +60,12 @@ export const DefaultPresetRanges: DefaultPresetType = {
   },
 
   quarterBegin: (maxDate = null): DateRange => {
-    const min = maxDate
-      ? dayjs(maxDate, format).startOf("quarter")
-      : dayjs().startOf("quarter");
-    const max = maxDate ? dayjs(maxDate, format) : dayjs();
-    return [min, max];
+    maxDate = maxDate ? dayjs(maxDate, format) : dayjs();
+    let startQuater = calendarInfo.getStartOfYear(maxDate);
+    while (startQuater.add(3, "month").isBefore(maxDate)) {
+      startQuater = startQuater.add(3, "month");
+    }
+    return [startQuater, maxDate];
   },
 
   last_180_days: (maxDate = null): DateRange => {
