@@ -124,10 +124,19 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       ? setDisabledStatus(treeData, true)
       : setDisabledStatus(treeData, false);
 
-    return filterOptions(searchValue, treeData, {
+    const filteredOptions = filterOptions(searchValue, treeData, {
       optionFilterProp: "title",
       filterOption: internalSearchCondition
     });
+
+    filteredOptions.forEach(item => {
+      item.children = filterOptions(searchValue, item.children, {
+        optionFilterProp: "title",
+        filterOption: internalSearchCondition
+      });
+    });
+
+    return filteredOptions;
   }, [internalSearchCondition, searchValue, setDisabledStatus, treeData]);
 
   const handleSearchInputChange = useCallback(
