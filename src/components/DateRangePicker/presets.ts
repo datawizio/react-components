@@ -136,7 +136,7 @@ export const DefaultPreset = (type, minDate, maxDate) => {
       type === "fiscal"
         ? fiscalCalendar.presetCurrentMonth(maxDate)
         : DefaultPresetRanges.currentMonth(maxDate),
-    "Last_30_Days": DefaultPresetRanges.last_30_days(maxDate),
+    "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate),
     "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
     "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
     "SEASON_BEGIN":
