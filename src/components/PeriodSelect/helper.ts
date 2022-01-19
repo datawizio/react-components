@@ -1,11 +1,11 @@
 import dayjs, { Dayjs } from "dayjs";
 import {
+  AVAILABLE_PERIODS_FOR_DATES,
   CUSTOM_PERIOD_KEY,
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PERIOD,
   DEFAULT_PREV_PERIOD,
-  FORMATTED_PATTERN,
-  AVAILABLE_PERIODS_FOR_DATES
+  FORMATTED_PATTERN
 } from "./constants";
 import {
   DateRangeType,
@@ -57,11 +57,20 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
         .subtract(2, "month");
       newPrevPeriod.endDate = dayjs(newPrevPeriod.startDate).endOf("month");
       break;
-    case "season_begin":
+    case "quarter_begin":
       newPrevPeriod.startDate = dayjs(clientDate)
         .startOf("quarter")
         .subtract(1, "quarter");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "quarter");
+      break;
+    case "prev_quarter":
+      newPrevPeriod.startDate = dayjs(clientDate)
+        .startOf("quarter")
+        .subtract(2, "quarter");
+      newPrevPeriod.endDate = dayjs(clientDate)
+        .startOf("quarter")
+        .subtract(1, "quarter")
+        .subtract(1, "day");
       break;
     case "year_begin":
       newPrevPeriod.startDate = dayjs(clientDate)
@@ -84,6 +93,15 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
     case "last_365_days":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(729, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(365, "day");
+      break;
+    case "prev_year":
+      newPrevPeriod.startDate = dayjs(clientDate)
+        .startOf("year")
+        .subtract(2, "year");
+      newPrevPeriod.endDate = dayjs(clientDate)
+        .startOf("year")
+        .subtract(2, "year")
+        .endOf("year");
       break;
 
     default:
@@ -175,13 +193,20 @@ export const getPeriod = ({
       break;
     case "prev_month":
       const prevMonth = dayjs(clientDate).startOf("month").subtract(1, "month");
-
       newPeriod.startDate = prevMonth;
       newPeriod.endDate = dayjs(newPeriod.startDate).endOf("month");
       break;
-    case "season_begin":
+    case "quarter_begin":
       newPeriod.startDate = dayjs(clientDate).startOf("quarter");
       newPeriod.endDate = dayjs(clientDate);
+      break;
+    case "prev_quarter":
+      newPeriod.startDate = dayjs(clientDate)
+        .startOf("quarter")
+        .subtract(1, "quarter");
+      newPeriod.endDate = dayjs(clientDate)
+        .startOf("quarter")
+        .subtract(1, "day");
       break;
     case "year_begin":
       newPeriod.startDate = dayjs(clientDate).startOf("year");
@@ -202,6 +227,14 @@ export const getPeriod = ({
     case "last_365_days":
       newPeriod.startDate = dayjs(clientDate).subtract(364, "day");
       newPeriod.endDate = dayjs(clientDate);
+      break;
+    case "prev_year":
+      newPeriod.startDate = dayjs(clientDate)
+        .startOf("year")
+        .subtract(1, "year");
+      newPeriod.endDate = dayjs(clientDate)
+        .startOf("year")
+        .subtract(1, "day");
       break;
     case "all_time":
       let startDate;
@@ -239,7 +272,7 @@ export const actionCreator = (dispatch, type, payload = {}) => {
   });
 };
 
-type DefaulDateConfigType = {
+type DefaultDateConfigType = {
   initialSelectedPeriod: PeriodEnum;
   isCustomPeriod: boolean;
   initialSelectedPrevPeriod: PrevPerionEnum;
@@ -251,7 +284,7 @@ type DefaulDateConfigType = {
 };
 export const getInitialDateConfig = (
   dateConfig: IDateConfig
-): DefaulDateConfigType => {
+): DefaultDateConfigType => {
   const initialDate = {
     startDate: null,
     endDate: null
@@ -329,7 +362,7 @@ export const getAvailablePeriodsForDates = (
   dateRange: DateRangeType,
   forceEmpty = false
 ) => {
-  const weekLength = 7;
+  const weekLength = 6;
   const daysDiff = dayjs(dateRange.endDate).diff(dateRange.startDate, "day");
   const monthLength = dayjs(dateRange.startDate).daysInMonth();
 

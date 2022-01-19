@@ -87,10 +87,10 @@ describe("PeriodSelect", () => {
     expect(component.find(".ant-select-selection-item").first().text()).toBe(
       "PREV_MONTH"
     );
-    //SEASON_BEGIN
-    select.props().onChange("season_begin");
+    //QUARTER_BEGIN
+    select.props().onChange("quarter_begin");
     expect(component.find(".ant-select-selection-item").first().text()).toBe(
-      "SEASON_BEGIN"
+      "QUARTER_BEGIN"
     );
     //YEAR_BEGIN
     select.props().onChange("year_begin");

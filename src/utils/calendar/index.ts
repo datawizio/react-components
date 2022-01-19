@@ -5,7 +5,7 @@ type CalendarType = "fiscal" | "iso-8601";
 
 class Calendar {
   type: CalendarType = "iso-8601";
-  startMonth: number = 1;
+  startMonth: number = 0;
   startWeek: number = 1;
   setCalendarInfo(
     type: CalendarType,
