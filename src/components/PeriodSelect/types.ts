@@ -20,7 +20,7 @@ export type PeriodEnum =
   | "week_begin"
   | "month_begin"
   | "prev_month"
-  | "season_begin"
+  | "quarter_begin"
   | "year_begin"
   | "last_30_days"
   | "last_90_days"

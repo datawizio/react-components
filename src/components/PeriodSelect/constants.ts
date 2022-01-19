@@ -39,13 +39,20 @@ export const PERIOD_AVAILABLE = {
     "prev_last_year",
     "prev_date"
   ],
-  prev_week: [
+  last_30_days: [
     "previous",
-    "prev_last_month",
     "prev_last_quarter",
     "prev_last_year",
     "prev_date"
   ],
+  last_90_days: [
+    "previous",
+    "prev_last_quarter",
+    "prev_last_year",
+    "prev_date"
+  ],
+  last_180_days: ["previous", "prev_last_year", "prev_date"],
+  last_365_days: ["previous", "prev_last_year", "prev_date"],
   week_begin: [
     "previous",
     "prev_last_week",
@@ -61,28 +68,37 @@ export const PERIOD_AVAILABLE = {
     "prev_last_year",
     "prev_date"
   ],
-  prev_month: ["previous", "prev_last_quarter", "prev_last_year", "prev_date"],
-  season_begin: [
+  quarter_begin: [
     "previous",
     "prev_last_quarter",
     "prev_last_year",
     "prev_date"
   ],
   year_begin: ["prev_last_year", "previous"],
-  last_30_days: [
+  prev_week: [
+    "previous",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "prev_date"
+  ],
+  prev_month: [
     "previous",
     "prev_last_quarter",
     "prev_last_year",
     "prev_date"
   ],
-  last_90_days: [
+  prev_quarter: [
     "previous",
     "prev_last_quarter",
     "prev_last_year",
     "prev_date"
   ],
-  last_180_days: ["previous", "prev_last_year", "prev_date"],
-  last_365_days: ["previous", "prev_last_year", "prev_date"],
+  prev_year: [
+    "previous",
+    "prev_last_year",
+    "prev_date"
+  ],
   all_time: [],
   date: ["previous", "prev_date"]
 };

@@ -12,11 +12,24 @@ dayjs.extend(customParseFormat);
 const format = "DD-MM-YYYY";
 
 export const DefaultPresetRanges: DefaultPresetType = {
+  last_update_date: (maxDate = null): DateRange => {
+    const max = dayjs(maxDate, format);
+    return [max, max];
+  },
+
   yesterday: (maxDate = null): DateRange => {
     const max = maxDate
       ? dayjs(maxDate, format).subtract(1, "d")
       : dayjs().subtract(1, "d");
     return [max, max];
+  },
+
+  week_begin: (maxDate = null): DateRange => {
+    const min = maxDate
+      ? dayjs(maxDate, format).startOf("week")
+      : dayjs().startOf("week");
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
+    return [min, max];
   },
 
   lastWeek: (maxDate = null): DateRange => {
@@ -51,14 +64,6 @@ export const DefaultPresetRanges: DefaultPresetType = {
     return [min, max];
   },
 
-  last_364_days: (maxDate = null): DateRange => {
-    const min = maxDate
-      ? dayjs(maxDate, format).subtract(363, "d")
-      : dayjs().subtract(363, "d");
-    const max = maxDate ? dayjs(maxDate, format) : dayjs();
-    return [min, max];
-  },
-
   quarterBegin: (maxDate = null): DateRange => {
     maxDate = maxDate ? dayjs(maxDate, format) : dayjs();
     let startQuater = calendarInfo.getStartOfYear(maxDate);
@@ -76,10 +81,18 @@ export const DefaultPresetRanges: DefaultPresetType = {
     return [min, max];
   },
 
+  last_364_days: (maxDate = null): DateRange => {
+    const min = maxDate
+      ? dayjs(maxDate, format).subtract(363, "d")
+      : dayjs().subtract(363, "d");
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
+    return [min, max];
+  },
+
   last_365_days: (maxDate = null): DateRange => {
     const min = maxDate
-      ? dayjs(maxDate, format).subtract(1, "year")
-      : dayjs().subtract(1, "year");
+      ? dayjs(maxDate, format).subtract(364, "d")
+      : dayjs().subtract(364, "d")
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
@@ -131,16 +144,21 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
 
 export const DefaultPreset = (type, minDate, maxDate) => {
   return {
-    "Yesterday": DefaultPresetRanges.yesterday(maxDate),
-    "Last_week": DefaultPresetRanges.lastWeek(maxDate),
-    "Current_month":
-      type === "fiscal"
-        ? fiscalCalendar.presetCurrentMonth(maxDate)
-        : DefaultPresetRanges.currentMonth(maxDate),
+    "LAST_UPDATE_DATE": DefaultPresetRanges.last_update_date(maxDate),
+    "LAST_7_DAYS": DefaultPresetRanges.lastWeek(maxDate),
     "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate),
     "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
     "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
-    "SEASON_BEGIN":
+    "LAST_365_DAYS":
+      type === "fiscal"
+        ? DefaultPresetRanges.last_364_days(maxDate)
+        : DefaultPresetRanges.last_365_days(maxDate),
+    "WEEK_BEGIN": DefaultPresetRanges.week_begin(maxDate),
+    "MONTH_BEGIN":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentMonth(maxDate)
+        : DefaultPresetRanges.currentMonth(maxDate),
+    "QUARTER_BEGIN":
       type === "fiscal"
         ? fiscalCalendar.presetCurrentQuater(maxDate)
         : DefaultPresetRanges.quarterBegin(maxDate),
@@ -148,10 +166,6 @@ export const DefaultPreset = (type, minDate, maxDate) => {
       type === "fiscal"
         ? fiscalCalendar.presetCurrentYear(maxDate)
         : DefaultPresetRanges.currentYear(maxDate),
-    "LAST_365_DAYS":
-      type === "fiscal"
-        ? DefaultPresetRanges.last_364_days(maxDate)
-        : DefaultPresetRanges.last_365_days(maxDate),
     "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
   };
 };
