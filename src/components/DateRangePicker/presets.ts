@@ -13,7 +13,7 @@ const format = "DD-MM-YYYY";
 
 export const DefaultPresetRanges: DefaultPresetType = {
   last_update_date: (maxDate = null): DateRange => {
-    const max = dayjs(maxDate, format);
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [max, max];
   },
 
@@ -92,7 +92,7 @@ export const DefaultPresetRanges: DefaultPresetType = {
   last_365_days: (maxDate = null): DateRange => {
     const min = maxDate
       ? dayjs(maxDate, format).subtract(364, "d")
-      : dayjs().subtract(364, "d")
+      : dayjs().subtract(364, "d");
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
