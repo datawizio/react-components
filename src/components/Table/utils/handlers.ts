@@ -22,6 +22,7 @@ const basicSearchHandler: SearchHandlerType = (
       return Object.entries(row).some(([dataIndex, cellVal]) => {
         // exclude hidden columns from search
         if (
+          !dataIndex.includes("name") &&
           visibleColumnsKeys.length &&
           !visibleColumnsKeys.includes(dataIndex)
         )
