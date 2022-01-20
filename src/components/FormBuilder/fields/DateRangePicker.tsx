@@ -18,6 +18,7 @@ export interface FieldDateRangePickerProps
   type?: CalendarTypes;
   format?: string;
   storeFormat?: string;
+  maxDateForPresets?: string;
   maxDate?: string;
   minDate?: string;
   defaultPickerValue?: any;
