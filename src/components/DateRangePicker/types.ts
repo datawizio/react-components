@@ -18,6 +18,7 @@ export type DateRangePickerProps = {
     date_to: DateType;
   };
 
+  maxDateForPresets?: DateType;
   maxDate?: DateType;
   minDate?: DateType;
   format?: string;

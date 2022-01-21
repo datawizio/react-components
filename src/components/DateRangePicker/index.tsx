@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useMemo, useCallback, useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import DatePicker from "../DatePicker";
 import ConfigContext from "../ConfigProvider/context";
 import { DefaultPreset, DefaultPresetPrev } from "./presets";
-import { DateType, IDateRangePicker, DateRangePickerProps } from "./types";
+import { DateRangePickerProps, DateType, IDateRangePicker } from "./types";
 import "./index.less";
 
 dayjs.extend(customParseFormat);
@@ -20,6 +20,7 @@ const DateRangePicker: IDateRangePicker = ({
   currDateRange,
   useDefaultPreset,
   defaultPresetExceptions,
+  maxDateForPresets,
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -38,7 +39,11 @@ const DateRangePicker: IDateRangePicker = ({
     if (presets && presets.length) {
       let result = {};
 
-      const defaultPreset = DefaultPreset(type, props.minDate, props.maxDate);
+      const defaultPreset = DefaultPreset(
+        type,
+        props.minDate,
+        maxDateForPresets ?? props.maxDate
+      );
       const defaultPresetPrev = DefaultPresetPrev(
         type,
         currDateRange?.date_from || props.dateFrom,
@@ -56,7 +61,11 @@ const DateRangePicker: IDateRangePicker = ({
 
     if (useDefaultPreset) {
       const defaultPreset = {
-        ...DefaultPreset(type, props.minDate, props.maxDate)
+        ...DefaultPreset(
+          type,
+          props.minDate,
+          maxDateForPresets ?? props.maxDate
+        )
       };
       if (defaultPresetExceptions && defaultPresetExceptions.length) {
         defaultPresetExceptions.forEach(item => {
@@ -69,6 +78,7 @@ const DateRangePicker: IDateRangePicker = ({
     currDateRange,
     defaultPresetExceptions,
     presets,
+    maxDateForPresets,
     props.dateFrom,
     props.dateTo,
     props.maxDate,
@@ -125,6 +135,7 @@ const DateRangePicker: IDateRangePicker = ({
     if (!(dateFrom && dateTo)) props.onClear && props.onClear();
     else props.onChange && props.onChange(arguments[0], arguments[1]);
   }
+
   const RangePicker = DatePicker.Picker[type].RangePicker;
 
   return (
