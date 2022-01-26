@@ -103,7 +103,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         template.state.columnsWidth = {};
       }
       if (!template.state?.hasOwnProperty("fixedTotal")) {
-        template.state.fixedTotal = false;
+        template.state.fixedTotal = true;
       }
       dispatch({
         type: "recoveryState",
@@ -158,7 +158,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
           columnsWidth: {},
           columns: [],
-          fixedTotal: false
+          fixedTotal: true
         };
         dispatch({
           type: "update",
