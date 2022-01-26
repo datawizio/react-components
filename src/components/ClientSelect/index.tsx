@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Select from "../Select";
 
@@ -6,6 +6,7 @@ import { SelectValue } from "antd/lib/select";
 
 import "./index.less";
 import clsx from "clsx";
+import ConfigContext from "../ConfigProvider/context";
 
 export interface ClientSelectProps {
   clients: [{ id: number; name: string }];
@@ -20,6 +21,8 @@ const ClientSelect: React.FC<ClientSelectProps> = ({
   theme,
   onChange
 }) => {
+  const { translate: t } = useContext(ConfigContext);
+
   const handleChange = (value: SelectValue) => {
     const arr = window.location.pathname.split("/").slice(3);
     onChange && onChange(`/c/${value}/${arr.join("/")}`);
@@ -39,6 +42,7 @@ const ClientSelect: React.FC<ClientSelectProps> = ({
           value={client}
           showSearch
           optionFilterProp="label"
+          notFoundContent={t("NO_DATA")}
           onChange={handleChange}
           className={className}
         >
