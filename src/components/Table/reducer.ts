@@ -93,7 +93,7 @@ export function initializer(props: TableProps): TableState {
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
     columnsWidth: {},
-    fixedTotal: false,
+    fixedTotal: true,
     parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
