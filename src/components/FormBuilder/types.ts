@@ -78,6 +78,7 @@ export interface FieldSelectProps extends FormFieldProps<string> {
   mode?: "multiple" | "tags";
   showSearch?: boolean;
   allowClear?: boolean;
+  notFoundContent?: string;
   getPopupContainer?: () => HTMLElement | null;
 }
 
