@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from "react";
 import { Select as AntSelect, Tag } from "antd";
+import i18n from "i18next";
 import { useDebouncedCallback } from "use-debounce";
 import { FCSelect } from "./types";
 import { getUniqueItemsObj } from "../../utils/data/dataHelpers";
@@ -166,8 +167,8 @@ const Select: FCSelect = props => {
 
 Select.defaultProps = {
   asyncData: false,
-  loadingContent: "Loading...",
-  notFoundContent: "No data",
+  loadingContent: `${i18n.t("NO_DATA")}...`,
+  notFoundContent: i18n.t("NO_DATA"),
   withPagination: false
 };
 

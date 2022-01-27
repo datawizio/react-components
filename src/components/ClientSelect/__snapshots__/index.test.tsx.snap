@@ -20,7 +20,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
   <Select
     asyncData={false}
     className="client-select"
-    loadingContent="Loading..."
+    loadingContent="undefined..."
     notFoundContent="NO_DATA"
     onChange={[Function]}
     optionFilterProp="label"
