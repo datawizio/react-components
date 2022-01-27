@@ -186,8 +186,10 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       const iconPrefix = `${prefixCls}-row-expand-icon`;
       if (state.loadingRows[record.key]) return <LoadingOutlined />;
       let icon = null;
-      let internalExpandable =
-        expandable || (showExpandIcon && showExpandIcon(record));
+      let internalExpandable = expandable;
+      if (showExpandIcon) {
+        internalExpandable = showExpandIcon(record);
+      }
       if (internalExpandable) {
         icon = <RightOutlined />;
         if (expanded) {
