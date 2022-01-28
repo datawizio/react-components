@@ -5,7 +5,8 @@ exports[`Levels Inner level render correctly 1`] = `
   asyncData={false}
   className="drawer-tree-select-levels"
   defaultValue="value"
-  loadingContent="undefined..."
+  loadingContent="LOADING"
+  notFoundContent="NO_DATA"
   onChange={[Function]}
   options={
     Array [
@@ -22,6 +23,7 @@ exports[`Levels Inner level render correctly 1`] = `
     className="drawer-tree-select-levels"
     defaultValue="value"
     loading={false}
+    notFoundContent="NO_DATA"
     onChange={[Function]}
     optionFilterProp="label"
     optionLabelProp="label"
@@ -46,11 +48,7 @@ exports[`Levels Inner level render correctly 1`] = `
       listItemHeight={24}
       loading={false}
       menuItemSelectedIcon={null}
-      notFoundContent={
-        <Context.Consumer>
-          [Function]
-        </Context.Consumer>
-      }
+      notFoundContent="NO_DATA"
       onChange={[Function]}
       optionFilterProp="label"
       optionLabelProp="label"
@@ -78,11 +76,7 @@ exports[`Levels Inner level render correctly 1`] = `
         listItemHeight={24}
         loading={false}
         menuItemSelectedIcon={null}
-        notFoundContent={
-          <Context.Consumer>
-            [Function]
-          </Context.Consumer>
-        }
+        notFoundContent="NO_DATA"
         onChange={[Function]}
         optionFilterProp="label"
         optionLabelProp="label"
@@ -134,11 +128,7 @@ exports[`Levels Inner level render correctly 1`] = `
                 itemHeight={24}
                 menuItemSelectedIcon={null}
                 multiple={false}
-                notFoundContent={
-                  <Context.Consumer>
-                    [Function]
-                  </Context.Consumer>
-                }
+                notFoundContent="NO_DATA"
                 onActiveValue={[Function]}
                 onMouseEnter={[Function]}
                 onSelect={[Function]}
@@ -264,11 +254,7 @@ exports[`Levels Inner level render correctly 1`] = `
                     itemHeight={24}
                     menuItemSelectedIcon={null}
                     multiple={false}
-                    notFoundContent={
-                      <Context.Consumer>
-                        [Function]
-                      </Context.Consumer>
-                    }
+                    notFoundContent="NO_DATA"
                     onActiveValue={[Function]}
                     onMouseEnter={[Function]}
                     onSelect={[Function]}
@@ -355,11 +341,7 @@ exports[`Levels Inner level render correctly 1`] = `
                 loading={false}
                 menuItemSelectedIcon={null}
                 multiple={false}
-                notFoundContent={
-                  <Context.Consumer>
-                    [Function]
-                  </Context.Consumer>
-                }
+                notFoundContent="NO_DATA"
                 onChange={[Function]}
                 onSearch={[Function]}
                 onSearchSubmit={[Function]}
@@ -469,11 +451,7 @@ exports[`Levels Inner level render correctly 1`] = `
                     loading={false}
                     menuItemSelectedIcon={null}
                     multiple={false}
-                    notFoundContent={
-                      <Context.Consumer>
-                        [Function]
-                      </Context.Consumer>
-                    }
+                    notFoundContent="NO_DATA"
                     onChange={[Function]}
                     onInputChange={[Function]}
                     onInputCompositionEnd={[Function]}
@@ -697,7 +675,8 @@ exports[`Levels Levels to match snapshot 1`] = `
     asyncData={false}
     className="drawer-tree-select-levels"
     defaultValue="value"
-    loadingContent="undefined..."
+    loadingContent="LOADING"
+    notFoundContent="NO_DATA"
     onChange={[Function]}
     options={
       Array [
@@ -714,6 +693,7 @@ exports[`Levels Levels to match snapshot 1`] = `
       className="drawer-tree-select-levels"
       defaultValue="value"
       loading={false}
+      notFoundContent="NO_DATA"
       onChange={[Function]}
       optionFilterProp="label"
       optionLabelProp="label"
@@ -738,11 +718,7 @@ exports[`Levels Levels to match snapshot 1`] = `
         listItemHeight={24}
         loading={false}
         menuItemSelectedIcon={null}
-        notFoundContent={
-          <Context.Consumer>
-            [Function]
-          </Context.Consumer>
-        }
+        notFoundContent="NO_DATA"
         onChange={[Function]}
         optionFilterProp="label"
         optionLabelProp="label"
@@ -770,11 +746,7 @@ exports[`Levels Levels to match snapshot 1`] = `
           listItemHeight={24}
           loading={false}
           menuItemSelectedIcon={null}
-          notFoundContent={
-            <Context.Consumer>
-              [Function]
-            </Context.Consumer>
-          }
+          notFoundContent="NO_DATA"
           onChange={[Function]}
           optionFilterProp="label"
           optionLabelProp="label"
@@ -826,11 +798,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                   itemHeight={24}
                   menuItemSelectedIcon={null}
                   multiple={false}
-                  notFoundContent={
-                    <Context.Consumer>
-                      [Function]
-                    </Context.Consumer>
-                  }
+                  notFoundContent="NO_DATA"
                   onActiveValue={[Function]}
                   onMouseEnter={[Function]}
                   onSelect={[Function]}
@@ -956,11 +924,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                       itemHeight={24}
                       menuItemSelectedIcon={null}
                       multiple={false}
-                      notFoundContent={
-                        <Context.Consumer>
-                          [Function]
-                        </Context.Consumer>
-                      }
+                      notFoundContent="NO_DATA"
                       onActiveValue={[Function]}
                       onMouseEnter={[Function]}
                       onSelect={[Function]}
@@ -1047,11 +1011,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                   loading={false}
                   menuItemSelectedIcon={null}
                   multiple={false}
-                  notFoundContent={
-                    <Context.Consumer>
-                      [Function]
-                    </Context.Consumer>
-                  }
+                  notFoundContent="NO_DATA"
                   onChange={[Function]}
                   onSearch={[Function]}
                   onSearchSubmit={[Function]}
@@ -1161,11 +1121,7 @@ exports[`Levels Levels to match snapshot 1`] = `
                       loading={false}
                       menuItemSelectedIcon={null}
                       multiple={false}
-                      notFoundContent={
-                        <Context.Consumer>
-                          [Function]
-                        </Context.Consumer>
-                      }
+                      notFoundContent="NO_DATA"
                       onChange={[Function]}
                       onInputChange={[Function]}
                       onInputCompositionEnd={[Function]}

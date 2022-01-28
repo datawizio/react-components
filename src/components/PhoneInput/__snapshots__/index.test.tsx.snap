@@ -19,7 +19,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
         className="phone-input-select"
         dropdownClassName="phone-input-select-dropdown"
         dropdownMatchSelectWidth={false}
-        loadingContent="undefined..."
+        loadingContent="LOADING"
         notFoundContent="NO_DATA"
         onChange={[Function]}
         optionFilterProp="title"
@@ -11934,7 +11934,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
         className="phone-input-select"
         dropdownClassName="phone-input-select-dropdown"
         dropdownMatchSelectWidth={false}
-        loadingContent="undefined..."
+        loadingContent="LOADING"
         notFoundContent="NO_DATA"
         onChange={[Function]}
         optionFilterProp="title"
