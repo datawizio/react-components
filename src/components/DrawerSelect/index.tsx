@@ -86,6 +86,10 @@ export interface DrawerSelectProps<VT>
    */
   onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
 
+  onCheckSelectedValue?: (values: SelectValue) => void;
+
+  valueToUncheck?: string | number;
+
   onLoadData?: (data: any, value: any) => { value?: any };
 }
 
@@ -143,6 +147,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     value,
     isFlatList,
     onChange,
+    valueToUncheck,
+    onCheckSelectedValue,
     options,
     optionRender,
     optionFilterProp,
@@ -378,14 +384,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   ]);
 
   const handleSelect = useCallback(
-    (_, node) => {
+    (selectedKey, node) => {
+      if (selectedKey && onCheckSelectedValue)
+        onCheckSelectedValue(selectedKey);
       selectedOptions.current.push(node);
       dispatch({
         type: "setSelected",
         payload: node
       });
     },
-    [dispatch]
+    [dispatch, onCheckSelectedValue]
   );
 
   const handleDeselect = useCallback((_, node) => {
@@ -455,6 +463,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       payload: !multiple && !value ? [] : value
     });
   }, [dispatch, value, multiple]);
+
+  useEffect(() => {
+    if (!internalValue || !valueToUncheck) return;
+    const payload = internalValue.filter(v => v !== valueToUncheck);
+    dispatch({
+      type: "setInternalValue",
+      payload
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valueToUncheck]);
 
   useEffect(() => {
     dispatch({

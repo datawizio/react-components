@@ -106,6 +106,8 @@ export interface FieldDrawerSelectProps
   options?: any;
   loading?: boolean;
   maxSelectedCount?: number;
+  onCheckSelectedValue?: (value: any) => void;
+  valueToUncheck?: string | number;
   loadData?: (
     search: string,
     page: number
