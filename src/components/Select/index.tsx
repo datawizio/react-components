@@ -1,9 +1,9 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useContext } from "react";
 import { Select as AntSelect, Tag } from "antd";
-import i18n from "i18next";
 import { useDebouncedCallback } from "use-debounce";
 import { FCSelect } from "./types";
 import { getUniqueItemsObj } from "../../utils/data/dataHelpers";
+import ConfigContext from "../ConfigProvider/context";
 import "./index.less";
 
 const Select: FCSelect = props => {
@@ -19,6 +19,8 @@ const Select: FCSelect = props => {
     optionLabelProp,
     ...restProps
   } = props;
+
+  const { translate: t } = useContext(ConfigContext);
 
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -153,7 +155,7 @@ const Select: FCSelect = props => {
       {...searchProps}
       optionFilterProp={optionFilterProp || "label"}
       optionLabelProp={optionLabelProp || "label"}
-      notFoundContent={loading ? loadingContent : notFoundContent}
+      notFoundContent={loading ? t(loadingContent) : t(notFoundContent)}
       loading={loading}
       tagRender={useCustomTagRender ? tagRender : null}
       onDropdownVisibleChange={
@@ -167,8 +169,8 @@ const Select: FCSelect = props => {
 
 Select.defaultProps = {
   asyncData: false,
-  loadingContent: `${i18n.t("NO_DATA")}...`,
-  notFoundContent: i18n.t("NO_DATA"),
+  loadingContent: "LOADING",
+  notFoundContent: "NO_DATA",
   withPagination: false
 };
 
