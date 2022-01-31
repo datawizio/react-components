@@ -20,6 +20,8 @@ export interface ColumnProps
   onWidthChange: (columnKey: string, width: number) => void;
 }
 
+type AutoScrollDirection = false | "left" | "right";
+
 const Column: React.FC<ColumnProps> = props => {
   const {
     model,
@@ -33,6 +35,10 @@ const Column: React.FC<ColumnProps> = props => {
   } = props;
   const isSafariBrowser = isSafari();
   const [lastWidth, setLastWidth] = useState<number>(0);
+  const [autoScroll, setAutoScroll] = useState<AutoScrollDirection>(false);
+  const [intervalId, setIntervalId] = useState<any>();
+  const [tableHeader, setTableHeader] = useState<HTMLElement>(null);
+
   const startedResize = React.useRef(false);
   const columnRef = React.useRef(null);
   const lastWidthRef = React.useRef(0);
@@ -48,10 +54,33 @@ const Column: React.FC<ColumnProps> = props => {
     canDrag: !model.fixed
   });
 
-  const autoScroll = (step = 50) => {
+  const scrollTable = (node: HTMLElement, direction: AutoScrollDirection) => {
+    const offset =
+      direction === "left"
+        ? tableHeader.scrollLeft - 50
+        : tableHeader.scrollLeft + 50;
+
+    node.scroll({
+      left: offset,
+      behavior: "smooth"
+    });
+  };
+
+  React.useEffect(() => {
+    if (!autoScroll) clearInterval(intervalId);
+    if (!tableHeader || !autoScroll) return;
+
+    const intId = setInterval(() => {
+      console.log("TIME OUT", model.key);
+      scrollTable(tableHeader, autoScroll);
+    }, 250);
+    setIntervalId(intId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoScroll, tableHeader]);
+
+  const autoScrollColumns = (step = 50) => {
     return (_: void, m: DropTargetMonitor) => {
       const SLOW_SCROLL_BREAKPOINT = 60;
-      const FAST_SCROLL_BREAKPOINT = 25;
 
       const scrollTable = (node: HTMLElement, left: number) => {
         node.scroll({
@@ -72,38 +101,38 @@ const Column: React.FC<ColumnProps> = props => {
 
         if (!tableBodyDOMWrapper && !tableHeaderDOMWrapper) return;
 
+        if (!tableHeader) setTableHeader(tableBodyDOMWrapper);
+
         const cursor = m.getClientOffset();
         const rectHeader = tableHeaderDOMWrapper.getBoundingClientRect();
 
-        if (cursor.x - rectHeader.left < FAST_SCROLL_BREAKPOINT) {
-          scrollTable(
-            tableBodyDOMWrapper,
-            tableBodyDOMWrapper.scrollLeft - step * 3
-          );
-          return;
-        }
-        if (rectHeader.right - cursor.x < FAST_SCROLL_BREAKPOINT) {
-          scrollTable(
-            tableBodyDOMWrapper,
-            tableBodyDOMWrapper.scrollLeft + step * 3
-          );
-          return;
-        }
-
         if (cursor.x - rectHeader.left < SLOW_SCROLL_BREAKPOINT) {
-          scrollTable(
-            tableBodyDOMWrapper,
-            tableBodyDOMWrapper.scrollLeft - step
-          );
+          // scrollTable(
+          //   tableBodyDOMWrapper,
+          //   tableBodyDOMWrapper.scrollLeft - step
+          // );
+          // return;
+          console.log("SETSCROLL LEFT1");
+          setAutoScroll("left");
           return;
         }
         if (rectHeader.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
-          scrollTable(
-            tableBodyDOMWrapper,
-            tableBodyDOMWrapper.scrollLeft + step
-          );
+          // scrollTable(
+          //   tableBodyDOMWrapper,
+          //   tableBodyDOMWrapper.scrollLeft + step
+          // );
+          // return;
+          console.log("SETSCROLL Right1");
+
+          setAutoScroll("right");
           return;
         }
+
+        console.log("SETSCROLL FALSE!!!!");
+
+        console.log({ intervalId });
+        setAutoScroll(false);
+        return;
       }
 
       const tableDOMWrapper = columnRef.current.closest(
@@ -125,12 +154,12 @@ const Column: React.FC<ColumnProps> = props => {
     };
   };
 
-  const [autoScrollDebounced] = useDebouncedCallback(
-    (_: void, m: DropTargetMonitor) => {
-      autoScroll()(_, m);
-    },
-    150
-  );
+  // const [autoScrollDebounced] = useDebouncedCallback(
+  //   (_: void, m: DropTargetMonitor) => {
+  //     autoScrollColumns()(_, m);
+  //   },
+  //   150
+  // );
 
   const [{ isOver, canDrop }, dropRef] = useDrop({
     accept: "column",
@@ -151,7 +180,7 @@ const Column: React.FC<ColumnProps> = props => {
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
     }),
-    hover: autoScrollDebounced
+    hover: autoScrollColumns()
   });
 
   const dndRef = useCallback(
@@ -230,6 +259,11 @@ const Column: React.FC<ColumnProps> = props => {
     [onWidthChange]
   );
 
+  const onDragEndHandler = useCallback(() => {
+    console.log("DRAG END");
+    setAutoScroll(false);
+  }, []);
+
   const onClickHandler = useCallback(
     event => {
       const currentWidth = event.target.offsetWidth;
@@ -296,6 +330,7 @@ const Column: React.FC<ColumnProps> = props => {
       onClick={onClickHandler}
       title={String(model.title)}
       onMouseDown={onMouseDownHandler}
+      onDragEnd={onDragEndHandler}
       style={{ ...styles, ...props.style }}
     />
   );
