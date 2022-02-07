@@ -72,6 +72,7 @@ exports[`TableMenu component should TableMenu render correctly 1`] = `
                         <tr>
                           <th
                             class="dw-table__column dw-table__column--resizable ant-table-cell ant-table-column-has-sorters"
+                            style="width:299px"
                             title="Name"
                           >
                             <div

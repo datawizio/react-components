@@ -275,7 +275,9 @@ exports[`Table component rendered Table corectly 1`] = `
             },
             "columnsSorter": undefined,
             "columnsSwapped": false,
-            "columnsWidth": Object {},
+            "columnsWidth": Object {
+              "undefined": 300,
+            },
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
@@ -427,7 +429,11 @@ exports[`Table component rendered Table corectly 1`] = `
             }
           }
           columnsSwapped={false}
-          columnsWidth={Object {}}
+          columnsWidth={
+            Object {
+              "undefined": 300,
+            }
+          }
           components={
             Object {
               "body": Object {
