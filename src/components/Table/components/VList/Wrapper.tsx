@@ -38,6 +38,9 @@ export function VWrapper(props: any): JSX.Element {
         return item;
       })
     ];
+    tempNode[1][0] = React.cloneElement(tempNode[1][0], {
+      record: { ...tempNode[1][0].props.record, firstRow: true }
+    });
   } else {
     tempNode = children;
   }

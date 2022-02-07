@@ -42,7 +42,6 @@ const Column: React.FC<ColumnProps> = props => {
     tableState: { columnsWidth, columnsForceUpdate }
   } = useContext(TableContext);
 
-  const columnsWidthPreset = columnsWidth[model.key];
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
     canDrag: !model.fixed
@@ -189,7 +188,8 @@ const Column: React.FC<ColumnProps> = props => {
     const fn = () => {
       if (
         columnRef?.current &&
-        lastWidthRef.current !== columnRef.current?.offsetWidth
+        lastWidthRef.current !== columnRef.current?.offsetWidth &&
+        columnRef.current?.offsetWidth !== 0
       ) {
         lastWidthRef.current = columnRef.current?.offsetWidth;
 
@@ -253,40 +253,55 @@ const Column: React.FC<ColumnProps> = props => {
     );
   }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
   const styles: object = useMemo((): object => {
-    const defaultWidth = 200;
-    const defaultSubCellWidth = 20;
-    const defaultMaxValue = 10;
+    function getWidth() {
+      const columnsWidthPreset = columnsWidth[model.key];
+      const defaultWidth = 200;
+      const defaultSubCellWidth = 20;
+      const defaultMaxValue = 10;
 
-    if (columnsWidthPreset) {
-      return { width: columnsWidthPreset };
+      if (columnsWidthPreset) {
+        return { width: columnsWidthPreset - 1 };
+      }
+
+      if (model.colWidth) {
+        return {
+          width: model.colWidth - 1
+        };
+      }
+
+      if (model.children && model.children.length) {
+        return {
+          width: model.children.length * defaultWidth - 1
+        };
+      }
+
+      // if BarTable columns
+      if (model.max_value === 0 || model.max_value < defaultMaxValue) {
+        model.max_value = defaultMaxValue;
+      }
+
+      if (model.max_value) {
+        return {
+          width: model.max_value * defaultSubCellWidth - 1
+        };
+      }
+
+      return {};
     }
+    const width = getWidth();
+    lastWidthRef.current = width.width;
+    return {
+      width: width.width + "px"
+    };
 
-    if (model.colWidth) {
-      return {
-        width: model.colWidth
-      };
-    }
-
-    if (model.children && model.children.length) {
-      return {
-        width: model.children.length * defaultWidth + "px"
-      };
-    }
-
-    // if BarTable columns
-    if (model.max_value === 0 || model.max_value < defaultMaxValue) {
-      model.max_value = defaultMaxValue;
-    }
-
-    if (model.max_value) {
-      return {
-        width: model.max_value * defaultSubCellWidth + "px"
-      };
-    }
-
-    return {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model.children, model.max_value, model.colWidth, columnsForceUpdate]);
+  }, [
+    model.children,
+    model.max_value,
+    model.colWidth,
+    columnsForceUpdate,
+    columnsWidth[model.key]
+  ]);
 
   return (
     <th
