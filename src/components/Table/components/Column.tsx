@@ -173,7 +173,12 @@ const Column: React.FC<ColumnProps> = props => {
 
   React.useEffect(() => {
     if (!isHeader) return;
-    const colKey = model.originalKey ? model.originalKey : model.key;
+    const colKey = model.originalKey
+      ? model.originalKey
+      : model.key
+      ? model.key
+      : model.dataIndex;
+
     // if (model.resizable) return ;
     const sortersEl = columnRef.current.getElementsByClassName(
       "ant-table-column-sorters"
@@ -192,7 +197,6 @@ const Column: React.FC<ColumnProps> = props => {
         columnRef.current?.offsetWidth !== 0
       ) {
         lastWidthRef.current = columnRef.current?.offsetWidth;
-
         dispatch({
           type: "columnWidthChange",
           payload: {
