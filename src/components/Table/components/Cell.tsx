@@ -8,7 +8,11 @@ const Cell: React.FC = props => {
   } = React.useContext(TableContext);
 
   const style = React.useMemo(() => {
-    if (children[1].props.row && children[1].props.row.firstRow) {
+    if (
+      children[1] &&
+      children[1].props.row &&
+      children[1].props.row.firstRow
+    ) {
       const columnKey = children[1].props.column
         ? children[1].props.column.key
         : "";
