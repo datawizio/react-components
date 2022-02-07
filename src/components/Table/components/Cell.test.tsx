@@ -4,7 +4,7 @@ import Cell from "./Cell";
 
 const setUp = (props?) => shallow(<Cell {...props} />);
 
-describe("Cell component", () => {
+xdescribe("Cell component", () => {
   let component;
 
   beforeEach(() => {

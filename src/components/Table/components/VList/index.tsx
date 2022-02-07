@@ -173,36 +173,6 @@ function VTable(props: any, otherParams): JSX.Element {
     children[1]?.props?.data?.length ?? 0
   );
 
-  const { firstRow, tableWidth } = useMemo(() => {
-    if (!totalLen) return { firstRow: <></>, tableWidth: 0 };
-    let tableWidth = 0;
-    const firstRowColumns = [];
-
-    function digColumns(columns, defaultWidth) {
-      // let sum = 0;
-      columns.forEach(column => {
-        const colKey = column.originalKey ?? column.key;
-        if (Array.isArray(column.children) && column.children.length > 0) {
-          digColumns(column.children, 200);
-          return;
-        }
-
-        const width = columnsWidth[colKey] ?? defaultWidth;
-        tableWidth += width;
-        firstRowColumns.push(
-          <VTableHeaderCol key={colKey} colKey={colKey} width={width} />
-        );
-      });
-    }
-    digColumns(columns, 300);
-    const firstRow = (
-      <thead>
-        <tr className="fake-first-row">{firstRowColumns}</tr>
-      </thead>
-    );
-    return { firstRow, tableWidth };
-  }, [totalLen, columns, columnsWidth]);
-
   useEffect(() => {
     if (state.totalLen) {
       setTotalLen(state.totalLen);
@@ -377,12 +347,11 @@ function VTable(props: any, otherParams): JSX.Element {
           ref={tableRef}
           style={{
             // ...rest_style,
-            width: tableWidth,
+            // width: tableWidth,
             position: "relative",
             transform: `translateY(-${offsetStart}px)`
           }}
         >
-          {firstRow}
           {children}
         </table>
       </ScrollContext.Provider>
