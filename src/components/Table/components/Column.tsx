@@ -264,18 +264,18 @@ const Column: React.FC<ColumnProps> = props => {
       const defaultMaxValue = 10;
 
       if (columnsWidthPreset) {
-        return { width: columnsWidthPreset - 1 };
+        return { width: columnsWidthPreset };
       }
 
       if (model.colWidth) {
         return {
-          width: model.colWidth - 1
+          width: model.colWidth
         };
       }
 
       if (model.children && model.children.length) {
         return {
-          width: model.children.length * defaultWidth - 1
+          width: model.children.length * defaultWidth
         };
       }
 
@@ -286,7 +286,7 @@ const Column: React.FC<ColumnProps> = props => {
 
       if (model.max_value) {
         return {
-          width: model.max_value * defaultSubCellWidth - 1
+          width: model.max_value * defaultSubCellWidth
         };
       }
 
@@ -294,9 +294,7 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     const width = getWidth();
-    if (isSafari()) {
-      width.width++;
-    }
+
     lastWidthRef.current = width.width;
     return {
       width: width.width + "px"
