@@ -10,6 +10,9 @@
 @import "./rtl";
 
 .dw-table {
+  .ant-table-measure-row {
+    display: none;
+  }
   &__wrapper {
     overflow: auto;
   }
@@ -165,11 +168,6 @@
     width: max-content;
     @media (max-width: @screen-xs) {
       table-layout: auto !important;
-    }
-  }
-  &--safari {
-    table {
-      width: 100% !important;
     }
   }
 
