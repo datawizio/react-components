@@ -292,7 +292,11 @@ const Column: React.FC<ColumnProps> = props => {
 
       return {};
     }
+
     const width = getWidth();
+    if (isSafari()) {
+      width.width++;
+    }
     lastWidthRef.current = width.width;
     return {
       width: width.width + "px"
