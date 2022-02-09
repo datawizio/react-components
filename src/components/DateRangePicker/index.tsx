@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext, useEffect, useMemo } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import DatePicker from "../DatePicker";
@@ -137,6 +137,70 @@ const DateRangePicker: IDateRangePicker = ({
   }
 
   const RangePicker = DatePicker.Picker[type].RangePicker;
+
+  useEffect(function () {
+    // TODO: move to helper
+    // https://stackoverflow.com/questions/3219758/detect-changes-in-the-dom
+    const observeDOM = (function () {
+      const MutationObserver =
+        // @ts-ignore
+        window.MutationObserver || window.WebKitMutationObserver;
+
+      return function (obj, callback) {
+        if (!obj || obj.nodeType !== 1) return;
+
+        if (MutationObserver) {
+          // define a new observer
+          const mutationObserver = new MutationObserver(callback);
+
+          // have the observer observe foo for changes in children
+          mutationObserver.observe(obj, { childList: true, subtree: true });
+          return mutationObserver;
+        }
+
+        // browser support fallback
+        else if (window.addEventListener) {
+          obj.addEventListener("DOMNodeInserted", callback, false);
+          obj.addEventListener("DOMNodeRemoved", callback, false);
+        }
+      };
+    })();
+
+    // --------------------------------------------------------------------
+
+    const addPresetActiveClass = presetTags => {
+      for (let j = 0; j < presetTags.length; j++) {
+        presetTags[j].addEventListener("click", () => {
+          removePresetActiveClass(presetTags);
+          this.classList.add("datepicker-preset-active");
+        });
+      }
+    };
+
+    const removePresetActiveClass = presetTags => {
+      for (let j = 0; j < presetTags.length; j++) {
+        this.classList.remove("datepicker-preset-active");
+      }
+    };
+
+    // --------------------------------------------------------------------
+    observeDOM(document.querySelector("body"), function (records) {
+      for (let i = 0; i < records.length; i++) {
+        if (
+          records[i].target.innerHTML.startsWith(
+            '<div><div class="ant-picker-dropdown ant-picker-dropdown-range'
+          )
+        ) {
+          const presetTags = document.querySelectorAll(
+            ".ant-picker-ranges .ant-picker-preset .ant-tag"
+          );
+          if (presetTags.length) addPresetActiveClass(presetTags);
+        }
+      }
+    });
+  }, []);
+
+  // --------------------------------------------------------------------
 
   return (
     <RangePicker
