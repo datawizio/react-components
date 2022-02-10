@@ -712,7 +712,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       payload: [...internalValue, ...dependentItems]
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [useDeepEqualMemo(dependentItems)]);
+  }, [dependentItems]);
 
   useEffect(() => {
     dispatch({
@@ -907,8 +907,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const getMarkersFieldHeight = () => {
     return (
-      document.getElementsByClassName("select-markers-field")[0]
-        ?.clientHeight + 12 || 44
+      document.getElementsByClassName("select-markers-field")[0]?.clientHeight +
+        12 || 44
     );
   };
 
