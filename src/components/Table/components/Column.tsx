@@ -18,6 +18,7 @@ export interface ColumnProps
   virtual?: boolean;
   isHeader?: boolean;
   onWidthChange: (columnKey: string, width: number) => void;
+  calcColumnWidth?: (width: number) => number;
 }
 
 const Column: React.FC<ColumnProps> = props => {
@@ -29,6 +30,7 @@ const Column: React.FC<ColumnProps> = props => {
     onWidthChange,
     virtual,
     isHeader,
+    calcColumnWidth,
     ...restProps
   } = props;
   const isSafariBrowser = isSafari();
@@ -294,7 +296,9 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     const width = getWidth();
-
+    if (calcColumnWidth) {
+      width.width = calcColumnWidth(width.width);
+    }
     lastWidthRef.current = width.width;
     return {
       width: width.width + "px"

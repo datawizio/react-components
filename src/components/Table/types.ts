@@ -55,6 +55,7 @@ export interface TableProps<RT = any>
   onColumnWidthChange?: (columnKey: string, width: number) => void;
   expandRowCallback?: (row: any) => void;
   sortColumnCallback?: (column: any) => void;
+  calcColumnWidth?: (width: number) => number;
 
   error?: { message: string };
 

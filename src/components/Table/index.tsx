@@ -82,6 +82,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     expandRowCallback,
     sortColumnCallback,
     isTotalRow,
+    calcColumnWidth,
     ...restProps
   } = props;
 
@@ -227,6 +228,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             return Boolean(props.model) ? (
               <Column
                 {...props}
+                calcColumnWidth={calcColumnWidth}
                 virtual={virtual}
                 isHeader
                 onWidthChange={onColumnWidthChange ?? (() => {})}
@@ -248,7 +250,12 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       header: {
         cell: props => {
           return Boolean(props.model) ? (
-            <Column isHeader {...props} onWidthChange={onColumnWidthChange} />
+            <Column
+              calcColumnWidth={calcColumnWidth}
+              isHeader
+              {...props}
+              onWidthChange={onColumnWidthChange}
+            />
           ) : (
             <th {...props} />
           );
