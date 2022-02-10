@@ -175,11 +175,11 @@ const Column: React.FC<ColumnProps> = props => {
 
   React.useEffect(() => {
     if (!isHeader) return;
-    const colKey = model.originalKey
-      ? model.originalKey
+    const colKey = model.dataIndex
+      ? model.dataIndex
       : model.key
       ? model.key
-      : model.dataIndex;
+      : model.originalKey;
 
     // if (model.resizable) return ;
     const sortersEl = columnRef.current.getElementsByClassName(
