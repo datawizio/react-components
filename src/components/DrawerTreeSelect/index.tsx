@@ -1,10 +1,10 @@
 import React, {
-  useState,
-  useRef,
   useCallback,
-  useMemo,
+  useContext,
   useEffect,
-  useContext
+  useMemo,
+  useRef,
+  useState
 } from "react";
 import clsx from "clsx";
 import { Skeleton, Tag } from "antd";
@@ -15,7 +15,7 @@ import { Levels } from "./Levels";
 import AntTreeSelect from "./antd/AntTreeSelect";
 import Checkbox from "../Checkbox";
 import { triggerInputChangeValue } from "../../utils/trigger";
-import { IDrawerTreeSelectFilters, FCDrawerTreeSelect } from "./types";
+import { FCDrawerTreeSelect, IDrawerTreeSelectFilters } from "./types";
 import { SelectValue } from "antd/lib/tree-select";
 import { DataNode } from "rc-tree-select/es/interface";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
@@ -114,6 +114,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   showSelectAll: propsShowSelectAll,
   emptyIsAll,
   placeholder,
+  maxSelected,
   ...restProps
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -378,7 +379,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   ) => {
     if (!values) values = [];
     let checked = true;
-    if (!multiple) return;
+    if (!multiple)
+      return {
+        selectAllState: ""
+      };
 
     if (
       forceSelectAll ||
@@ -874,7 +878,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               />
             )}
           </div>
-          {multiple && (
+          {(multiple || maxSelected) && (
             <div className="drawer-tree-select-selected">
               <div className="drawer-tree-select-selected-title">
                 {translate("SELECTED")}
@@ -886,6 +890,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
                   ? internalValue.length
                   : 0}
               </div>
+              {maxSelected ? <div>/{maxSelected}</div> : null}
             </div>
           )}
         </Drawer>

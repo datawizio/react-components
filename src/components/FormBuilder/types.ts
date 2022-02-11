@@ -135,6 +135,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   level?: string | number;
   value?: string[] | number[];
   allowClear?: boolean;
+  maxSelected?: number;
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;

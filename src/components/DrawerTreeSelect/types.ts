@@ -97,6 +97,8 @@ export interface DrawerTreeSelectProps<VT>
   onLevelChange?: (level: string) => void;
   onMarkerChange?: (markers: any) => void;
 
+  maxSelected?: number;
+
   onDrawerCloseCallback?: (payload?: any) => void;
   onDrawerCancelCallback?: (payload?: any) => void;
   onDrawerOpenCallback?: (payload?: any) => void;
