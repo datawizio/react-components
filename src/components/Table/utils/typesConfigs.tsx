@@ -6,6 +6,7 @@ const basicDTypesConfig = {
     toString: value => value && value.toLocaleString("en-US"),
     filter: (value, filterBy) => value === filterBy,
     search: (value, searchBy) => {
+      if (typeof value === "undefined" || value === null) return false;
       if (searchBy.includes(";")) {
         return basicDTypesConfig["number"].multiSearch(value, searchBy);
       }
@@ -37,6 +38,7 @@ const basicDTypesConfig = {
     sorter: (a, b) => a.localeCompare(b),
     filter: (value, filterBy) => value === filterBy,
     search: (value, searchBy) => {
+      if (typeof value === "undefined" || value === null) return false;
       if (searchBy.includes(";")) {
         return basicDTypesConfig["string"].multiSearch(value, searchBy);
       }
