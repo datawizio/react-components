@@ -90,13 +90,11 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
           >
             <Checkbox
               checked={false}
-              disabled={false}
               indeterminate={false}
               onChange={[Function]}
             >
               <Checkbox
                 checked={false}
-                disabled={false}
                 indeterminate={false}
                 onChange={[Function]}
               >
@@ -107,7 +105,6 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
                     checked={false}
                     className=""
                     defaultChecked={false}
-                    disabled={false}
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
@@ -125,7 +122,6 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
                       <input
                         checked={false}
                         className="ant-checkbox-input"
-                        disabled={false}
                         onBlur={[Function]}
                         onChange={[Function]}
                         onFocus={[Function]}
@@ -975,24 +971,24 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
           >
             <Checkbox
               checked={false}
-              disabled={false}
+              disabled={true}
               indeterminate={false}
               onChange={[Function]}
             >
               <Checkbox
                 checked={false}
-                disabled={false}
+                disabled={true}
                 indeterminate={false}
                 onChange={[Function]}
               >
                 <label
-                  className="ant-checkbox-wrapper"
+                  className="ant-checkbox-wrapper ant-checkbox-wrapper-disabled"
                 >
                   <Checkbox
                     checked={false}
                     className=""
                     defaultChecked={false}
-                    disabled={false}
+                    disabled={true}
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
@@ -1004,13 +1000,13 @@ exports[`TransferFilter component TransferFilter rendered correctly 1`] = `
                     type="checkbox"
                   >
                     <span
-                      className="ant-checkbox"
+                      className="ant-checkbox ant-checkbox-disabled"
                       style={Object {}}
                     >
                       <input
                         checked={false}
                         className="ant-checkbox-input"
-                        disabled={false}
+                        disabled={true}
                         onBlur={[Function]}
                         onChange={[Function]}
                         onFocus={[Function]}

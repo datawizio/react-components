@@ -6,18 +6,18 @@ import Checkbox from "../../Checkbox";
 import defaultRenderList, { OmitProps } from "./ListBody";
 import SearchInput from "../../LiteSearchInput";
 import {
-  TransferFilterItem,
-  TransferDirection,
+  ICheckedItem,
   RenderResult,
   RenderResultObject,
-  TransferFilterLoadDataResponse,
+  TransferDirection,
+  TransferFilterItem,
   TransferFilterLoadDataParams,
-  TransferFilterValue,
-  ICheckedItem
+  TransferFilterLoadDataResponse,
+  TransferFilterValue
 } from "../types";
 import { PaginationType } from "antd/es/transfer/interface";
 import { EventDataNode } from "rc-tree/es/interface";
-import { searchByArticle, isLocalDataSource } from "../helper";
+import { isLocalDataSource, searchByArticle } from "../helper";
 import Select from "../../Select";
 
 /**********************************************************************************************************************/
@@ -215,14 +215,42 @@ export default class TransferList extends React.PureComponent<
     });
   };
 
-  getCheckStatus(filteredItems: TransferFilterItem[]) {
+  isAllDisabled(filteredItems) {
+    if (!filteredItems.length) return true;
     const { include, exclude } = this.props.value;
-    const isLeftDirection = this.props.direction === "left";
+    if (this.props.direction === "left") {
+      if (include === null || this.state.count - exclude.length === 0)
+        return true;
+      if (exclude.length >= 100 && filteredItems.length) {
+        return filteredItems.every(item => exclude.includes(item.key));
+      }
+    }
+  }
 
-    const disableAll =
-      isLeftDirection && (include === null || include.length > 0);
-    const disabledKeys = new Set(isLeftDirection ? exclude : []);
+  getDisabledKeys(filteredItems) {
+    const { include, exclude } = this.props.value;
+    if (this.props.direction === "left") {
+      if (exclude?.length) {
+        return new Set(
+          filteredItems
+            .filter(item => exclude.includes(item.key))
+            .map(item => item.key)
+        );
+      }
+      if (include?.length) {
+        return new Set(
+          filteredItems
+            .filter(item => !include.includes(item.key))
+            .map(item => item.key)
+        );
+      }
+    }
+    return new Set([]);
+  }
 
+  getCheckStatus(filteredItems: TransferFilterItem[]) {
+    const disableAll = this.isAllDisabled(filteredItems);
+    const disabledKeys = this.getDisabledKeys(filteredItems);
     const { checkedKeys } = this.props;
     const checkedSet = new Set(checkedKeys);
     if (checkedKeys.length === 0 || disableAll) {
@@ -244,15 +272,10 @@ export default class TransferList extends React.PureComponent<
     showSelectAll?: boolean,
     disabled?: boolean
   ): false | JSX.Element {
-    const { include, exclude } = this.props.value;
-    const isLeftDirection = this.props.direction === "left";
-
     const checkStatus = this.getCheckStatus(filteredItems);
     const checkedAll = checkStatus === "all";
-
-    const disableAll =
-      isLeftDirection && (include === null || include.length > 0);
-    const disabledKeys = new Set(isLeftDirection ? exclude : []);
+    const disableAll = this.isAllDisabled(filteredItems);
+    const disabledKeys = this.getDisabledKeys(filteredItems);
 
     const checkAllCheckbox = showSelectAll !== false && (
       <Checkbox
@@ -471,17 +494,20 @@ export default class TransferList extends React.PureComponent<
   }
 
   handleLevelChange(value = 1) {
-    this.setState((prevState: any) => {
-      return {
-        ...prevState,
-        filters: {
-          ...prevState.filters,
-          level: value
-        }
-      };
-    }, () => {
-      this.loadPage(1);
-    });
+    this.setState(
+      (prevState: any) => {
+        return {
+          ...prevState,
+          filters: {
+            ...prevState.filters,
+            level: value
+          }
+        };
+      },
+      () => {
+        this.loadPage(1);
+      }
+    );
   }
 
   getFilteredItems(dataSource: TransferFilterItem[]): TransferFilterItem[] {
