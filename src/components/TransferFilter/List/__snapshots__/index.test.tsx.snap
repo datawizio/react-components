@@ -98,25 +98,25 @@ exports[`TransferList should render corectly 1`] = `
         className="ant-transfer-list-header"
       >
         <Checkbox
-          checked={true}
-          disabled={false}
+          checked={false}
+          disabled={true}
           indeterminate={false}
           onChange={[Function]}
         >
           <Checkbox
-            checked={true}
-            disabled={false}
+            checked={false}
+            disabled={true}
             indeterminate={false}
             onChange={[Function]}
           >
             <label
-              className="ant-checkbox-wrapper ant-checkbox-wrapper-checked"
+              className="ant-checkbox-wrapper ant-checkbox-wrapper-disabled"
             >
               <Checkbox
-                checked={true}
+                checked={false}
                 className=""
                 defaultChecked={false}
-                disabled={false}
+                disabled={true}
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
@@ -128,13 +128,13 @@ exports[`TransferList should render corectly 1`] = `
                 type="checkbox"
               >
                 <span
-                  className="ant-checkbox ant-checkbox-checked"
+                  className="ant-checkbox ant-checkbox-disabled"
                   style={Object {}}
                 >
                   <input
-                    checked={true}
+                    checked={false}
                     className="ant-checkbox-input"
-                    disabled={false}
+                    disabled={true}
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
@@ -300,25 +300,25 @@ exports[`TransferList should render corectly with search 1`] = `
         className="ant-transfer-list-header"
       >
         <Checkbox
-          checked={true}
-          disabled={false}
+          checked={false}
+          disabled={true}
           indeterminate={false}
           onChange={[Function]}
         >
           <Checkbox
-            checked={true}
-            disabled={false}
+            checked={false}
+            disabled={true}
             indeterminate={false}
             onChange={[Function]}
           >
             <label
-              className="ant-checkbox-wrapper ant-checkbox-wrapper-checked"
+              className="ant-checkbox-wrapper ant-checkbox-wrapper-disabled"
             >
               <Checkbox
-                checked={true}
+                checked={false}
                 className=""
                 defaultChecked={false}
-                disabled={false}
+                disabled={true}
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
@@ -330,13 +330,13 @@ exports[`TransferList should render corectly with search 1`] = `
                 type="checkbox"
               >
                 <span
-                  className="ant-checkbox ant-checkbox-checked"
+                  className="ant-checkbox ant-checkbox-disabled"
                   style={Object {}}
                 >
                   <input
-                    checked={true}
+                    checked={false}
                     className="ant-checkbox-input"
-                    disabled={false}
+                    disabled={true}
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
