@@ -24,88 +24,121 @@ export const DefaultPresetRanges: DefaultPresetType = {
     return [max, max];
   },
 
-  week_begin: (maxDate = null): DateRange => {
-    const min = maxDate
+  week_begin: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).startOf("week")
       : dayjs().startOf("week");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  lastWeek: (maxDate = null): DateRange => {
-    const min = maxDate
+  lastWeek: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(6, "d")
       : dayjs().subtract(6, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  currentMonth: (maxDate = null): DateRange => {
-    const min = maxDate
+  currentMonth: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).startOf("month")
       : dayjs().startOf("month");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_30_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_30_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(29, "d")
       : dayjs().subtract(29, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_90_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_90_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(89, "d")
       : dayjs().subtract(89, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  quarterBegin: (maxDate = null): DateRange => {
+  quarterBegin: (maxDate = null, minDate = null): DateRange => {
     maxDate = maxDate ? dayjs(maxDate, format) : dayjs();
-    let startQuater = calendarInfo.getStartOfYear(maxDate);
-    while (startQuater.add(3, "month").isBefore(maxDate)) {
-      startQuater = startQuater.add(3, "month");
+    let startQuarter = calendarInfo.getStartOfYear(maxDate);
+    while (startQuarter.add(3, "month").isBefore(maxDate)) {
+      startQuarter = startQuarter.add(3, "month");
     }
-    return [startQuater, maxDate];
+    if (minDate && (dayjs(startQuarter, format) < dayjs(minDate, format))) {
+      startQuarter = dayjs(minDate, format);
+    }
+    return [startQuarter, maxDate];
   },
 
-  last_180_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_180_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(179, "d")
       : dayjs().subtract(179, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_364_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_364_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(363, "d")
       : dayjs().subtract(363, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_365_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_365_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(364, "d")
       : dayjs().subtract(364, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  currentYear: (maxDate = null): DateRange => {
+  currentYear: (maxDate = null, minDate = null): DateRange => {
     let min = maxDate ? dayjs(maxDate, format) : dayjs();
     min = calendarInfo.getStartOfYear(min);
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  allPeriod: (minDate = null, maxDate = null): DateRange => {
-    const min = minDate ? dayjs(minDate, format) : dayjs().subtract(10, "year");
+  allPeriod: (maxDate = null, minDate = null): DateRange => {
+    let min = minDate ? dayjs(minDate, format) : dayjs().subtract(10, "year");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   }
@@ -145,28 +178,28 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
 export const DefaultPreset = (type, minDate, maxDate) => {
   return {
     "LAST_UPDATE_DATE": DefaultPresetRanges.last_update_date(maxDate),
-    "LAST_7_DAYS": DefaultPresetRanges.lastWeek(maxDate),
-    "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate),
-    "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
-    "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
+    "LAST_7_DAYS": DefaultPresetRanges.lastWeek(maxDate, minDate),
+    "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate, minDate),
+    "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate, minDate),
+    "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate, minDate),
     "LAST_365_DAYS":
       type === "fiscal"
-        ? DefaultPresetRanges.last_364_days(maxDate)
-        : DefaultPresetRanges.last_365_days(maxDate),
-    "WEEK_BEGIN": DefaultPresetRanges.week_begin(maxDate),
+        ? DefaultPresetRanges.last_364_days(maxDate, minDate)
+        : DefaultPresetRanges.last_365_days(maxDate, minDate),
+    "WEEK_BEGIN": DefaultPresetRanges.week_begin(maxDate, minDate),
     "MONTH_BEGIN":
       type === "fiscal"
         ? fiscalCalendar.presetCurrentMonth(maxDate)
-        : DefaultPresetRanges.currentMonth(maxDate),
+        : DefaultPresetRanges.currentMonth(maxDate, minDate),
     "QUARTER_BEGIN":
       type === "fiscal"
         ? fiscalCalendar.presetCurrentQuater(maxDate)
-        : DefaultPresetRanges.quarterBegin(maxDate),
+        : DefaultPresetRanges.quarterBegin(maxDate, minDate),
     "cur_year":
       type === "fiscal"
         ? fiscalCalendar.presetCurrentYear(maxDate)
-        : DefaultPresetRanges.currentYear(maxDate),
-    "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
+        : DefaultPresetRanges.currentYear(maxDate, minDate),
+    "All_period": DefaultPresetRanges.allPeriod(maxDate, minDate)
   };
 };
 
