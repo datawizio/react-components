@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TableContext } from "../context";
 
 export const HeaderWrapper = ({ className, children }) => {
-  return (
+  const {
+    tableState: { dataSource }
+  } = useContext(TableContext);
+
+  return dataSource.length === 0 ? null : (
     <table>
       <thead className={className}>{children}</thead>
     </table>
