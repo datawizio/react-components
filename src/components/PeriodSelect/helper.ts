@@ -249,7 +249,6 @@ export const getPeriod = ({
       break;
     case "date":
       const [startCustomDate, endCustomDate] = date;
-
       newPeriod.startDate = startCustomDate;
       newPeriod.endDate = endCustomDate;
       break;
@@ -258,6 +257,9 @@ export const getPeriod = ({
   }
 
   if (newPeriod.startDate && newPeriod.endDate) {
+    if (clientStartDate && (newPeriod.startDate < dayjs(clientStartDate))) {
+      newPeriod.startDate = dayjs(clientStartDate);
+    }
     return {
       startDate: newPeriod.startDate.format(FORMATTED_PATTERN),
       endDate: newPeriod.endDate.format(FORMATTED_PATTERN)
