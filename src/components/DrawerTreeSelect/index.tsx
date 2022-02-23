@@ -183,8 +183,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const selectRef = useRef<any>();
 
-  const internalLoadingTextShown = useRef<boolean>(false);
-
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
@@ -768,8 +766,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     ({ label, closable, onClose }) => {
       const maxLength = 20;
 
-      if (internalLoading && !internalLoadingTextShown.current) {
-        internalLoadingTextShown.current = true;
+      if (internalLoading) {
         const loadingTextClasses = clsx({
           "ant-select-selection-placeholder": true,
           "drawer-tree-select-loading-placeholder": true
