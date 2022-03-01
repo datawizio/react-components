@@ -152,14 +152,16 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       internalValue.include = [...sourceChecked];
 
     onChange(internalValue);
-    targetListRef.current.addItems(Object.values(sourceCheckedObj));
+    targetListRef.current.addItems(
+      sourceChecked.map(id => sourceCheckedObj[id])
+    );
 
     dispatch({
       type: "setState",
       payload: {
         internalValue,
         sourceChecked: [],
-        sourceCheckedObj: [],
+        sourceCheckedObj: {},
         ...parseValue(internalValue)
       }
     });
@@ -174,7 +176,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       type: "setState",
       payload: {
         sourceChecked: [],
-        sourceCheckedObj: [],
+        sourceCheckedObj: {},
         targetChecked: [],
         internalValue,
         ...parseValue(internalValue)
@@ -219,7 +221,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       type: "setState",
       payload: {
         sourceChecked: [],
-        sourceCheckedObj: [],
+        sourceCheckedObj: {},
         targetChecked: [],
         internalValue,
         ...parseValue(internalValue)
