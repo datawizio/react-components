@@ -20,7 +20,6 @@ import { SelectValue } from "antd/lib/tree-select";
 import { DataNode } from "rc-tree-select/es/interface";
 import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
-import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
 import { Markers } from "./Markers";
 import "./index.less";
 
@@ -763,39 +762,51 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   // -------- RENDERS ---------
 
-  const tagRender = ({ label, closable, onClose }) => {
-    const maxLength = 20;
+  const tagRender = useCallback(
+    ({ label, closable, onClose }) => {
+      const maxLength = 20;
 
-    if (internalLoading) {
-      return (
-        <span className="ant-select-selection-placeholder">{loadingText}</span>
-      );
-    }
-    if (isSelectedAll || showAllRef.current) {
-      return (
-        <span className="ant-select-selection-placeholder">{placeholder}</span>
-      );
-    }
+      if (internalLoading) {
+        const loadingTextClasses = clsx({
+          "ant-select-selection-placeholder": true,
+          "drawer-tree-select-loading-placeholder": true
+        });
+        return <span className={loadingTextClasses}>{loadingText}</span>;
+      }
 
-    return (
-      <span className="ant-select-selection-item">
-        <Tag
-          closable={closable}
-          onClose={onClose}
-          className="ant-select-selection-item-content"
-        >
-          {label?.length > maxLength
-            ? `${label.slice(0, maxLength)}...`
-            : label}
-        </Tag>
-      </span>
-    );
-  };
+      if (isSelectedAll || showAllRef.current) {
+        return (
+          <span className="ant-select-selection-placeholder">
+            {placeholder}
+          </span>
+        );
+      }
 
-  const maxTagPlaceholder = props => {
-    if (isSelectedAll && props?.length) return;
-    return <Tag>{`+${props.length}...`}</Tag>;
-  };
+      return internalLoading === false ? (
+        <span className="ant-select-selection-item">
+          <Tag
+            closable={closable}
+            onClose={onClose}
+            className="ant-select-selection-item-content"
+          >
+            {label?.length > maxLength
+              ? `${label.slice(0, maxLength)}...`
+              : label}
+          </Tag>
+        </span>
+      ) : null;
+    },
+    [internalLoading, isSelectedAll, loadingText, placeholder]
+  );
+
+  const maxTagPlaceholder = useCallback(
+    props => {
+      if (internalLoading !== false || (isSelectedAll && props?.length))
+        return null;
+      return <Tag>{`+${props.length}...`}</Tag>;
+    },
+    [internalLoading, isSelectedAll]
+  );
 
   const dropdownRender = useCallback(
     menu => {
