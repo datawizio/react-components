@@ -86,10 +86,11 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const visibleColumnsKeysLength = useMemo(() => {
     const additionalColumnsLength =
       additionalVisibleColumns && additionalVisibleColumns.length;
-    return additionalColumnsLength
+    const count = additionalColumnsLength
       ? visibleColumnsKeys.length - additionalColumnsLength
       : visibleColumnsKeys.length;
-  }, [visibleColumnsKeys, additionalVisibleColumns]);
+    return count > maxCheckedKeys ? maxCheckedKeys : count;
+  }, [additionalVisibleColumns, visibleColumnsKeys.length, maxCheckedKeys]);
 
   const modalClassNames = useMemo(() => {
     return clsx("select-columns__modal", {
