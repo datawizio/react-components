@@ -294,7 +294,10 @@ const Column: React.FC<ColumnProps> = props => {
 
       return {};
     }
-
+    //@ts-ignore
+    if (model.parent_key) {
+      return {};
+    }
     const width = getWidth();
     if (calcColumnWidth) {
       width.width = calcColumnWidth(width.width);

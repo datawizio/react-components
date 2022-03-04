@@ -198,6 +198,7 @@
     .ant-table-bordered .ant-table-cell.ant-table-row-expand-icon-cell {
       border-right: 0;
       width: 20px !important;
+      min-width: 20px;
 
       .dw-table__cell {
         flex-direction: column;
@@ -283,7 +284,7 @@
 
   &--compress-columns {
     th.ant-table-cell {
-      min-width: 50px;
+      min-width: 100px;
 
       .ant-table-column-sorters {
         width: inherit;
@@ -302,6 +303,8 @@
       }
       .ant-table-thead > tr > th.ant-table-cell.ant-table-cell-scrollbar {
         width: 8px;
+        max-width: 8px;
+        min-width: 8px;
         padding: 0;
       }
     }
