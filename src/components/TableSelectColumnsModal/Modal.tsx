@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useCallback, useContext, useEffect, useMemo } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import Modal from "../Modal";
 import Button from "../Button";
@@ -86,11 +86,10 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const visibleColumnsKeysLength = useMemo(() => {
     const additionalColumnsLength =
       additionalVisibleColumns && additionalVisibleColumns.length;
-    const count = additionalColumnsLength
+    return additionalColumnsLength
       ? visibleColumnsKeys.length - additionalColumnsLength
       : visibleColumnsKeys.length;
-    return count > maxCheckedKeys ? maxCheckedKeys : count;
-  }, [additionalVisibleColumns, visibleColumnsKeys.length, maxCheckedKeys]);
+  }, [additionalVisibleColumns, visibleColumnsKeys.length]);
 
   const modalClassNames = useMemo(() => {
     return clsx("select-columns__modal", {
