@@ -217,9 +217,10 @@ export default class TransferList extends React.PureComponent<
 
   isAllDisabled(filteredItems) {
     if (!filteredItems.length) return true;
+    const disabledKeys = this.getDisabledKeys(filteredItems);
     const { include, exclude } = this.props.value;
     if (this.props.direction === "left") {
-      if (include === null || this.state.count - exclude.length === 0)
+      if (include === null || disabledKeys.size === filteredItems.length)
         return true;
       if (exclude.length >= 100 && filteredItems.length) {
         return filteredItems.every(item => exclude.includes(item.key));
