@@ -17,6 +17,7 @@ export interface FieldDateRangePickerProps
   extends FormFieldProps<DateRangePickerParams> {
   type?: CalendarTypes;
   format?: string;
+  inputReadOnly?: boolean;
   storeFormat?: string;
   maxDateForPresets?: string;
   maxDate?: string;
