@@ -97,7 +97,13 @@ const HighChart = forwardRef<HighChartRef, HighChartProps>((props, ref) => {
           if (containerRef.current) {
             containerRef.current.style.visibility = "visible";
           }
-          if (chartRef.current) await chartRef.current.setSize();
+          if (chartRef.current) {
+            await chartRef.current.setSize();
+            if (chartRef.current.series && chartRef.current.series.length > 0) {
+              //@ts-ignore
+              chartRef.current.series[0].update();
+            }
+          }
         },
         resizeTimeout
       );
