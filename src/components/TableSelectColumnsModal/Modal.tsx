@@ -15,7 +15,6 @@ export interface TableSelectColumnsModalModalProps
   extends TableSelectColumnsModalProps {
   treeData: any;
   context?: any;
-  additionalVisibleColumns?: string[];
   titleRender?: any;
 }
 
@@ -40,6 +39,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     maxCheckedKeys,
     filterSelectedColumns,
     additionalVisibleColumns,
+    hiddenColumns,
     titleRender
   } = props;
   const { translate } = useContext(ConfigContext);
@@ -78,17 +78,25 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     const metricColumns = filterSelectedColumns
       ? filterSelectedColumns(checkedKeys)
       : checkedKeys;
-    return additionalVisibleColumns
+
+    let columns = additionalVisibleColumns
       ? metricColumns.concat(additionalVisibleColumns)
       : metricColumns;
-  }, [filterSelectedColumns, checkedKeys, additionalVisibleColumns]);
+
+    if (hiddenColumns && hiddenColumns.length) {
+      columns = columns.filter(col => !hiddenColumns.includes(col));
+    }
+
+    return columns;
+  }, [filterSelectedColumns, checkedKeys, additionalVisibleColumns, hiddenColumns]);
 
   const visibleColumnsKeysLength = useMemo(() => {
-    const additionalColumnsLength =
-      additionalVisibleColumns && additionalVisibleColumns.length;
-    return additionalColumnsLength
-      ? visibleColumnsKeys.length - additionalColumnsLength
-      : visibleColumnsKeys.length;
+    let count = visibleColumnsKeys.length;
+    const additionalColumnsLength = additionalVisibleColumns && additionalVisibleColumns.length;
+    if (additionalColumnsLength) {
+      count = count - additionalColumnsLength;
+    }
+    return count;
   }, [additionalVisibleColumns, visibleColumnsKeys.length]);
 
   const modalClassNames = useMemo(() => {
