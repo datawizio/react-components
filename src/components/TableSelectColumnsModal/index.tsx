@@ -17,6 +17,8 @@ export interface TableSelectColumnsModalProps {
   maxCheckedKeys?: number;
   fetchAfterApply?: (selected: string[], row: any) => boolean;
   filterSelectedColumns?: (selected: string[]) => string[];
+  additionalVisibleColumns?: string[];
+  hiddenColumns?: string[];
 }
 
 const TableSelectColumnsModal: React.FC<TableSelectColumnsModalProps> = props => {
