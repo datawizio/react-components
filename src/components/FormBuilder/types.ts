@@ -106,6 +106,7 @@ export interface FieldDrawerSelectProps
   options?: any;
   loading?: boolean;
   maxSelectedCount?: number;
+  maxTagLength?: number;
   onCheckSelectedValue?: (value: any) => void;
   valueToUncheck?: string | number;
   loadData?: (
@@ -136,6 +137,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   value?: string[] | number[];
   allowClear?: boolean;
   maxSelected?: number;
+  maxTagLength?: number;
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;

@@ -99,6 +99,8 @@ export interface DrawerTreeSelectProps<VT>
 
   maxSelected?: number;
 
+  maxTagLength?: number;
+
   onDrawerCloseCallback?: (payload?: any) => void;
   onDrawerCancelCallback?: (payload?: any) => void;
   onDrawerOpenCallback?: (payload?: any) => void;
