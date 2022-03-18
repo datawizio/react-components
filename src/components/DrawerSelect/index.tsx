@@ -76,6 +76,8 @@ export interface DrawerSelectProps<VT>
 
   maxSelectedCount?: number;
 
+  maxTagLength?: number;
+
   /**
    * Подгрузка ассинхронных данных с пагинацией
    */
@@ -161,6 +163,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     multiple,
     withPagination,
     maxSelectedCount,
+    maxTagLength,
     onLoadData,
     ...restProps
   } = props;
@@ -498,7 +501,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const tagRender = useCallback(
     ({ label, closable, onClose }) => {
-      const maxLength = 20;
+      const maxLength = maxTagLength || 20;
       const isLongTag = label?.length > maxLength;
 
       if (!optionsState || optionsState.length === 0) {

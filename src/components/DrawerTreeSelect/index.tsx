@@ -114,6 +114,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   emptyIsAll,
   placeholder,
   maxSelected,
+  maxTagLength,
   ...restProps
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -764,7 +765,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const tagRender = useCallback(
     ({ label, closable, onClose }) => {
-      const maxLength = 20;
+      const maxLength = maxTagLength || 20;
 
       if (internalLoading) {
         const loadingTextClasses = clsx({
