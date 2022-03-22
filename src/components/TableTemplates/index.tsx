@@ -107,7 +107,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       }
       dispatch({
         type: "recoveryState",
-        payload: { ...template.state, sortParams }
+        payload: { ...template.state, sortParams, fetchAfterApply }
       });
     },
     [dispatch, fetchAfterApply, props.sortFirstColumn, tableState.forceFetch]

@@ -382,7 +382,7 @@ export function reducer(state: TableState, action: Action): TableState {
         ...state,
         ...restPayload,
         stateIsRecovered: true,
-        loading: false
+        loading: restPayload.fetchAfterApply ?? false
       };
 
       if (nextState.pagination && pagination && pagination.pageSize) {

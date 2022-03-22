@@ -9,6 +9,7 @@ export type TableTemplate = {
 
 export type TableTemplateState = {
   columnsPositions: Array<LiteColumn>;
+  fetchAfterApply?: boolean;
 } & Partial<TableState>;
 
 export type LiteColumn = {
