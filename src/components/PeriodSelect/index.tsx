@@ -87,7 +87,6 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     }
     //eslint-disable-next-line
   }, [period, prevPeriod]);
-
   const handlePeriodChange = periodKey => {
     actionCreator(dispatch, "updatePeriod", {
       periodKey
