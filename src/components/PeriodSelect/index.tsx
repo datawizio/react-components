@@ -144,6 +144,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPeriodPicker && (
           <DateRangePicker
+            inputReadOnly={false}
             type={type}
             dateFrom={!isPickerEmpty && dayjs(period.startDate)}
             dateTo={!isPickerEmpty && dayjs(period.endDate)}
@@ -153,7 +154,12 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDateRangeChange}
             onClear={onDateRangeClear}
-            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            defaultPickerValue={
+              [
+                !isPickerEmpty ? dayjs(period.startDate) : dayjs(clientDate),
+                !isPickerEmpty ? dayjs(period.endDate) : dayjs(clientDate)
+              ] as any
+            }
             format={format}
           />
         )}
@@ -174,6 +180,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPrevPeriodPicker && (
           <DateRangePicker
+            inputReadOnly={false}
             type={type}
             dateFrom={!isPrevPickerEmpty && dayjs(prevPeriod.startDate)}
             dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
@@ -183,7 +190,16 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDateRangeChange}
             onClear={onPrevDateRangeClear}
-            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            defaultPickerValue={
+              [
+                !isPrevPickerEmpty
+                  ? dayjs(prevPeriod.startDate)
+                  : dayjs(clientDate),
+                !isPrevPickerEmpty
+                  ? dayjs(prevPeriod.endDate)
+                  : dayjs(clientDate)
+              ] as any
+            }
             format={format}
           />
         )}
