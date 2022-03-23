@@ -499,6 +499,7 @@ export default class TransferList extends React.PureComponent<
       (prevState: any) => {
         return {
           ...prevState,
+          filterValue: "",
           filters: {
             ...prevState.filters,
             level: value
