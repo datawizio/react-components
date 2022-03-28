@@ -250,6 +250,7 @@ export default class TransferList extends React.PureComponent<
   }
 
   getCheckStatus(filteredItems: TransferFilterItem[]) {
+    let items = filteredItems;
     const disableAll = this.isAllDisabled(filteredItems);
     const disabledKeys = this.getDisabledKeys(filteredItems);
     const { checkedKeys } = this.props;
@@ -257,8 +258,14 @@ export default class TransferList extends React.PureComponent<
     if (checkedKeys.length === 0 || disableAll) {
       return "none";
     }
+
+    if (this.props.direction === "right") {
+      const page = this.state.page - 1;
+      items = filteredItems.slice(page * 100, (page + 1) * 100);
+    }
+
     if (
-      filteredItems.every(
+      items.every(
         item => checkedSet.has(item.key) || disabledKeys.has(item.key)
       )
     ) {
@@ -294,6 +301,11 @@ export default class TransferList extends React.PureComponent<
                   ...(article ? { article } : {})
                 }));
           // Only select enabled items
+          if (this.props.direction === "right") {
+            const page = this.state.page - 1;
+            onItemSelectAll(items.slice(page * 100, (page + 1) * 100), true);
+            return;
+          }
           onItemSelectAll(items, true);
         }}
       />
@@ -518,14 +530,6 @@ export default class TransferList extends React.PureComponent<
     if (isLocalDataSource(value.include, direction, local)) {
       return dataSource.filter(item => this.matchFilter(item));
     }
-    // if (direction === "right") {
-    //   const set = new Set(value.exclude);
-    //   const res = dataSource.filter(
-    //     item => !set.has(item.key) && this.matchFilter(item)
-    //   );
-    //   console.log(res);
-    //   return res;
-    // }
 
     return dataSource;
   }

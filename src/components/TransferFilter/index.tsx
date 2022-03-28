@@ -121,15 +121,18 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   };
 
   const onRightItemsSelect = (selectedItems: ICheckedItem[]) => {
-    const targetChecked = [];
+    const newTargetChecked = [...targetChecked];
+    const targetCheckedSet = new Set(targetChecked);
     selectedItems.forEach(item => {
-      targetChecked.push(item.key);
+      if (!targetCheckedSet.has(item.key)) {
+        newTargetChecked.push(item.key);
+      }
     });
 
     dispatch({
       type: "setState",
       payload: {
-        targetChecked
+        targetChecked: newTargetChecked
       }
     });
   };
