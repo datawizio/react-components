@@ -3,11 +3,13 @@ import dayjs, { Dayjs } from "dayjs";
 import { Form } from "antd";
 import DatePicker, { CalendarTypes } from "../../DatePicker";
 import { FieldDatePickerProps, FormFieldProps } from "../types";
+
 interface FieldProps extends FormFieldProps<any> {
   format: string;
   storeFormat?: string;
   value: any;
   type?: CalendarTypes;
+  disabledDate?: boolean;
 }
 
 const Field: React.FC<FieldProps> = ({
