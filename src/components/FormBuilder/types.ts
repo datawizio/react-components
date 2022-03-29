@@ -55,6 +55,7 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
   fullWidth?: boolean;
   inputReadOnly?: boolean;
   type?: CalendarTypes;
+  disabledDate?: (currentDate: Dayjs) => boolean;
 }
 
 export interface FieldTextProps extends FormFieldProps<string> {
