@@ -9,7 +9,7 @@ interface FieldProps extends FormFieldProps<any> {
   storeFormat?: string;
   value: any;
   type?: CalendarTypes;
-  disabledDate?: (currentDate: any) => boolean;
+  disabledDate?: (currentDate: Dayjs) => boolean;
 }
 
 const Field: React.FC<FieldProps> = ({
