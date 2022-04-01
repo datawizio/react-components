@@ -198,6 +198,7 @@ export default class TransferList extends React.PureComponent<
   removeItems = (items: string[]) => {
     const { direction, local } = this.props;
     const { dataSource, page, ...rest } = this.state;
+
     if (
       !isLocalDataSource(this.props.value.include, direction, local) &&
       this.props.value.include !== null
@@ -206,9 +207,12 @@ export default class TransferList extends React.PureComponent<
     }
     const set = new Set(items);
     const data = dataSource.filter(item => !set.has(item.key));
+    const totalPages = Math.ceil(data.length / 100);
+    const newPage = totalPages < page ? totalPages : page;
+    this.bodyRef.current.onPageChange(newPage);
     this.setState({
       dataSource: data,
-      page: page ? page : 1,
+      page: newPage ? newPage : 1,
       count: data.length,
       totalPages: Math.ceil(data.length / 100),
       ...rest
@@ -260,7 +264,7 @@ export default class TransferList extends React.PureComponent<
     }
 
     if (this.props.direction === "right") {
-      const page = this.state.page - 1;
+      const page = this.state.page ? this.state.page - 1 : 0;
       items = filteredItems.slice(page * 100, (page + 1) * 100);
     }
 
@@ -302,11 +306,14 @@ export default class TransferList extends React.PureComponent<
                 }));
           // Only select enabled items
           if (this.props.direction === "right") {
-            const page = this.state.page - 1;
-            onItemSelectAll(items.slice(page * 100, (page + 1) * 100), true);
+            const page = this.state.page ? this.state.page - 1 : 0;
+            onItemSelectAll(
+              items.slice(page * 100, (page + 1) * 100),
+              !checkedAll
+            );
             return;
           }
-          onItemSelectAll(items, true);
+          onItemSelectAll(items, !checkedAll);
         }}
       />
     );

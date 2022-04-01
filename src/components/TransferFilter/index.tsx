@@ -120,14 +120,23 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
     });
   };
 
-  const onRightItemsSelect = (selectedItems: ICheckedItem[]) => {
-    const newTargetChecked = [...targetChecked];
-    const targetCheckedSet = new Set(targetChecked);
-    selectedItems.forEach(item => {
-      if (!targetCheckedSet.has(item.key)) {
-        newTargetChecked.push(item.key);
-      }
-    });
+  const onRightItemsSelect = (
+    selectedItems: ICheckedItem[],
+    checked: boolean
+  ) => {
+    let newTargetChecked = [];
+
+    if (checked) {
+      const targetCheckedSet = new Set(targetChecked);
+      newTargetChecked = [...targetChecked];
+      selectedItems.forEach(item => {
+        if (!targetCheckedSet.has(item.key)) {
+          newTargetChecked.push(item.key);
+        }
+      });
+    } else {
+      newTargetChecked = [];
+    }
 
     dispatch({
       type: "setState",
