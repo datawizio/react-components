@@ -263,9 +263,9 @@ export default class TransferList extends React.PureComponent<
       return "none";
     }
 
-    if (this.props.direction === "right") {
+    if (this.props.direction === "right" && filteredItems.length > 100) {
       const page = this.state.page ? this.state.page - 1 : 0;
-      items = filteredItems.slice(page * 100, (page + 1) * 100);
+      items = items.slice(page * 100, (page + 1) * 100);
     }
 
     if (
@@ -295,7 +295,7 @@ export default class TransferList extends React.PureComponent<
         checked={checkedAll}
         indeterminate={checkStatus === "part"}
         onChange={() => {
-          const items = checkedAll
+          let items = checkedAll
             ? []
             : filteredItems
                 .filter(item => !disabledKeys.has(item.key))
@@ -306,11 +306,11 @@ export default class TransferList extends React.PureComponent<
                 }));
           // Only select enabled items
           if (this.props.direction === "right") {
-            const page = this.state.page ? this.state.page - 1 : 0;
-            onItemSelectAll(
-              items.slice(page * 100, (page + 1) * 100),
-              !checkedAll
-            );
+            if (filteredItems.length > 100) {
+              const page = this.state.page ? this.state.page - 1 : 0;
+              items = items.slice(page * 100, (page + 1) * 100);
+            }
+            onItemSelectAll(items, !checkedAll);
             return;
           }
           onItemSelectAll(items, !checkedAll);
