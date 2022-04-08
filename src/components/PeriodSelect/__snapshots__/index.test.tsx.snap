@@ -4901,8 +4901,8 @@ exports[`PeriodSelect should select period with custom data 1`] = `
         dateTo={"2021-11-22T00:00:00.000Z"}
         defaultPickerValue={
           Array [
-            "2021-06-29T00:00:00.000Z",
-            "2021-06-29T00:00:00.000Z",
+            "2021-10-22T00:00:00.000Z",
+            "2021-11-22T00:00:00.000Z",
           ]
         }
         defaultValue={
@@ -4912,7 +4912,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
           ]
         }
         format="DD-MM-YYYY"
-        inputReadOnly={true}
+        inputReadOnly={false}
         maxDate={false}
         minDate={"2020-01-01T00:00:00.000Z"}
         onChange={[Function]}
@@ -4925,8 +4925,8 @@ exports[`PeriodSelect should select period with custom data 1`] = `
           dateTo={"2021-11-22T00:00:00.000Z"}
           defaultPickerValue={
             Array [
-              "2021-06-29T00:00:00.000Z",
-              "2021-06-29T00:00:00.000Z",
+              "2021-10-22T00:00:00.000Z",
+              "2021-11-22T00:00:00.000Z",
             ]
           }
           defaultValue={
@@ -4937,7 +4937,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
           }
           disabledDate={[Function]}
           format="DD-MM-YYYY"
-          inputReadOnly={true}
+          inputReadOnly={false}
           maxDate={false}
           minDate={"2020-01-01T00:00:00.000Z"}
           onChange={[Function]}
@@ -4967,8 +4967,8 @@ exports[`PeriodSelect should select period with custom data 1`] = `
               dateTo={"2021-11-22T00:00:00.000Z"}
               defaultPickerValue={
                 Array [
-                  "2021-06-29T00:00:00.000Z",
-                  "2021-06-29T00:00:00.000Z",
+                  "2021-10-22T00:00:00.000Z",
+                  "2021-11-22T00:00:00.000Z",
                 ]
               }
               defaultValue={
@@ -5014,7 +5014,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                   "setYear": [Function],
                 }
               }
-              inputReadOnly={true}
+              inputReadOnly={false}
               locale={
                 Object {
                   "backToToday": "Back to today",
@@ -5129,8 +5129,8 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                 dateTo={"2021-11-22T00:00:00.000Z"}
                 defaultPickerValue={
                   Array [
-                    "2021-06-29T00:00:00.000Z",
-                    "2021-06-29T00:00:00.000Z",
+                    "2021-10-22T00:00:00.000Z",
+                    "2021-11-22T00:00:00.000Z",
                   ]
                 }
                 defaultValue={
@@ -5176,7 +5176,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                     "setYear": [Function],
                   }
                 }
-                inputReadOnly={true}
+                inputReadOnly={false}
                 locale={
                   Object {
                     "backToToday": "Back to today",
@@ -5382,7 +5382,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       "setYear": [Function],
                                     }
                                   }
-                                  inputReadOnly={true}
+                                  inputReadOnly={false}
                                   locale={
                                     Object {
                                       "backToToday": "Back to today",
@@ -5455,7 +5455,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-06-29T00:00:00.000Z"}
+                                  pickerValue={"2021-06-03T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -5557,7 +5557,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       "setYear": [Function],
                                     }
                                   }
-                                  inputReadOnly={true}
+                                  inputReadOnly={false}
                                   locale={
                                     Object {
                                       "backToToday": "Back to today",
@@ -5630,7 +5630,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-07-29T00:00:00.000Z"}
+                                  pickerValue={"2021-07-03T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -5851,7 +5851,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         "setYear": [Function],
                                       }
                                     }
-                                    inputReadOnly={true}
+                                    inputReadOnly={false}
                                     locale={
                                       Object {
                                         "backToToday": "Back to today",
@@ -5924,7 +5924,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-06-29T00:00:00.000Z"}
+                                    pickerValue={"2021-06-03T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
@@ -6026,7 +6026,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         "setYear": [Function],
                                       }
                                     }
-                                    inputReadOnly={true}
+                                    inputReadOnly={false}
                                     locale={
                                       Object {
                                         "backToToday": "Back to today",
@@ -6099,7 +6099,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-07-29T00:00:00.000Z"}
+                                    pickerValue={"2021-07-03T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
@@ -9125,8 +9125,8 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
         dateTo={"2021-11-22T00:00:00.000Z"}
         defaultPickerValue={
           Array [
-            "2021-06-29T00:00:00.000Z",
-            "2021-06-29T00:00:00.000Z",
+            "2021-10-22T00:00:00.000Z",
+            "2021-11-22T00:00:00.000Z",
           ]
         }
         defaultValue={
@@ -9136,7 +9136,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
           ]
         }
         format="DD-MM-YYYY"
-        inputReadOnly={true}
+        inputReadOnly={false}
         maxDate={false}
         minDate={"2020-01-01T00:00:00.000Z"}
         onChange={[Function]}
@@ -9149,8 +9149,8 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
           dateTo={"2021-11-22T00:00:00.000Z"}
           defaultPickerValue={
             Array [
-              "2021-06-29T00:00:00.000Z",
-              "2021-06-29T00:00:00.000Z",
+              "2021-10-22T00:00:00.000Z",
+              "2021-11-22T00:00:00.000Z",
             ]
           }
           defaultValue={
@@ -9161,7 +9161,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
           }
           disabledDate={[Function]}
           format="DD-MM-YYYY"
-          inputReadOnly={true}
+          inputReadOnly={false}
           maxDate={false}
           minDate={"2020-01-01T00:00:00.000Z"}
           onChange={[Function]}
@@ -9191,8 +9191,8 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
               dateTo={"2021-11-22T00:00:00.000Z"}
               defaultPickerValue={
                 Array [
-                  "2021-06-29T00:00:00.000Z",
-                  "2021-06-29T00:00:00.000Z",
+                  "2021-10-22T00:00:00.000Z",
+                  "2021-11-22T00:00:00.000Z",
                 ]
               }
               defaultValue={
@@ -9238,7 +9238,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                   "setYear": [Function],
                 }
               }
-              inputReadOnly={true}
+              inputReadOnly={false}
               locale={
                 Object {
                   "backToToday": "Back to today",
@@ -9353,8 +9353,8 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                 dateTo={"2021-11-22T00:00:00.000Z"}
                 defaultPickerValue={
                   Array [
-                    "2021-06-29T00:00:00.000Z",
-                    "2021-06-29T00:00:00.000Z",
+                    "2021-10-22T00:00:00.000Z",
+                    "2021-11-22T00:00:00.000Z",
                   ]
                 }
                 defaultValue={
@@ -9400,7 +9400,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                     "setYear": [Function],
                   }
                 }
-                inputReadOnly={true}
+                inputReadOnly={false}
                 locale={
                   Object {
                     "backToToday": "Back to today",
@@ -9606,7 +9606,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       "setYear": [Function],
                                     }
                                   }
-                                  inputReadOnly={true}
+                                  inputReadOnly={false}
                                   locale={
                                     Object {
                                       "backToToday": "Back to today",
@@ -9679,7 +9679,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-06-29T00:00:00.000Z"}
+                                  pickerValue={"2021-05-07T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -9781,7 +9781,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       "setYear": [Function],
                                     }
                                   }
-                                  inputReadOnly={true}
+                                  inputReadOnly={false}
                                   locale={
                                     Object {
                                       "backToToday": "Back to today",
@@ -9854,7 +9854,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                       },
                                     }
                                   }
-                                  pickerValue={"2021-07-29T00:00:00.000Z"}
+                                  pickerValue={"2021-06-07T00:00:00.000Z"}
                                   placeholder={
                                     Array [
                                       "Start date",
@@ -10075,7 +10075,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         "setYear": [Function],
                                       }
                                     }
-                                    inputReadOnly={true}
+                                    inputReadOnly={false}
                                     locale={
                                       Object {
                                         "backToToday": "Back to today",
@@ -10148,7 +10148,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-06-29T00:00:00.000Z"}
+                                    pickerValue={"2021-05-07T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
@@ -10250,7 +10250,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         "setYear": [Function],
                                       }
                                     }
-                                    inputReadOnly={true}
+                                    inputReadOnly={false}
                                     locale={
                                       Object {
                                         "backToToday": "Back to today",
@@ -10323,7 +10323,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                                         },
                                       }
                                     }
-                                    pickerValue={"2021-07-29T00:00:00.000Z"}
+                                    pickerValue={"2021-06-07T00:00:00.000Z"}
                                     placeholder={
                                       Array [
                                         "Start date",
