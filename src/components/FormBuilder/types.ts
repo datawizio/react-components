@@ -1,3 +1,4 @@
+import React from "react";
 import { Rule } from "antd/lib/form";
 import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
@@ -126,6 +127,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   treeDataCount?: number;
   loading?: boolean;
   showLevels?: boolean;
+  noticeRender?: React.ReactElement | null;
   markersRender?: ({ props }: any) => React.ReactElement;
   showMarkers?: boolean;
   markersTree?: any;
