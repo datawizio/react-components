@@ -1034,6 +1034,16 @@ export default function generateSelector<
       }
     }, [triggerOpen]);
 
+    /* ********************************************************************** */
+
+    let noticeHeight = 0;
+    const noticeNode = document.querySelector(".dw-notice.rc-tree-select-notice");
+    if (noticeNode) {
+      noticeHeight = noticeNode.clientHeight + 6;
+    }
+
+    /* ********************************************************************** */
+
     const popupNode = (
       <OptionList
         ref={listRef}
@@ -1045,7 +1055,7 @@ export default function generateSelector<
         flattenOptions={displayFlattenOptions}
         multiple={isMultiple}
         values={rawValues}
-        height={listHeight}
+        height={listHeight - noticeHeight}
         itemHeight={listItemHeight}
         onSelect={onInternalOptionSelect}
         onToggleOpen={onToggleOpen}
