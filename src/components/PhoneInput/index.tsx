@@ -62,6 +62,8 @@ const PhoneInput: FCPhoneInput = ({
     setInternalValue(val);
     setFormatedValue(formated);
 
+    onChange(val);
+
     if (inputRef.current) inputRef.current.focus();
   };
 
