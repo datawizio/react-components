@@ -79,6 +79,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   asyncData,
   showLevels,
   showMarkers,
+  noticeRender,
   markersRender,
   markersTree,
   levels,
@@ -119,9 +120,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 }) => {
   const { translate } = useContext(ConfigContext);
 
-  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
-    translate
-  ]);
+  const drawerSearchPlaceholder = useMemo(
+    () => translate("SEARCH"),
+    [translate]
+  );
   const noDataText = useMemo(() => translate("NO_DATA"), [translate]);
   const loadingText = useMemo(() => translate("LOADING"), [translate]);
   const submitText = useMemo(() => translate("SUBMIT"), [translate]);
@@ -591,9 +593,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     [inputRef, internalLoadData]
   );
 
-  const handlerSelectBeforeBlur = useCallback(() => !drawerVisible, [
-    drawerVisible
-  ]);
+  const handlerSelectBeforeBlur = useCallback(
+    () => !drawerVisible,
+    [drawerVisible]
+  );
 
   const handleTreeSelect = useCallback(
     (_, node) => {
@@ -833,6 +836,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             </>
           }
         >
+          {noticeRender}
           {markersRender
             ? markersRender({
                 onChange: (selected: string[]) => {

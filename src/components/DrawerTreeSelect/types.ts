@@ -1,7 +1,6 @@
+import React from "react";
 import { SelectValue } from "antd/lib/tree-select";
-
 import { TreeSelectProps as AntTreeSelectProps } from "./antd/AntTreeSelect";
-
 import { AntTreeNode } from "antd/lib/tree";
 
 export interface IDrawerTreeSelectFilters {
@@ -39,6 +38,8 @@ export interface DrawerTreeSelectProps<VT>
    * Показать выбор уровней
    */
   showLevels?: boolean;
+
+  noticeRender?: React.ReactElement | null;
 
   /**
    * Показать выбор маркеров

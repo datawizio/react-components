@@ -120,6 +120,8 @@ export { default as TableSelectColumnsModal } from "./components/TableSelectColu
 
 export { default as TableMenu } from "./components/TableMenu";
 
+export { default as Notice } from "./components/Notice";
+
 export { FieldText } from "./components/FormBuilder/fields/Text";
 
 export { FieldPhone } from "./components/FormBuilder/fields/Phone";
@@ -143,6 +145,7 @@ export { FieldDrawerSelect } from "./components/FormBuilder/fields/DrawerSelect"
 export { FieldEnableSelect } from "./components/FormBuilder/fields/EnableSelect";
 
 export { FieldDateRangePicker } from "./components/FormBuilder/fields/DateRangePicker";
+
 export { FieldDrawerTreeSelect } from "./components/FormBuilder/fields/DrawerTreeSelect";
 
 export { OopsIcon } from "./components/Icons/OopsIcon";
