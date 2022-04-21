@@ -150,16 +150,18 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         config?.expand_table_horizontally) && (
         <Menu.Divider className={"table-menu-dropdown__divider"} />
       )}
-      <Menu.Item
-        key="export_xlsx"
-        icon={
-          <VerticalAlignBottomOutlined
-            className={"table-menu-dropdown__icon"}
-          />
-        }
-      >
-        {translate("SAVE_XLS")}
-      </Menu.Item>
+      {config?.show_export_xls !== false && (
+        <Menu.Item
+          key="export_xlsx"
+          icon={
+            <VerticalAlignBottomOutlined
+              className={"table-menu-dropdown__icon"}
+            />
+          }
+        >
+          {translate("SAVE_XLS")}
+        </Menu.Item>
+      )}
       {config?.show_send_to_email && (
         <Menu.Item
           key="send_xlsx"
