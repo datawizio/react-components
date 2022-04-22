@@ -172,7 +172,13 @@ const TableMenu: React.FC<TableMenuProps> = props => {
       )}
     </Menu>
   );
-  return (
+  const hasMenuItem =
+    config?.show_send_to_email ||
+    config?.show_export_xls !== false ||
+    config?.expand_table_horizontally ||
+    config?.expand_table_vertically ||
+    config?.fixed_total;
+  return hasMenuItem ? (
     <div className="table-menu table-toolbar--right">
       <Dropdown overlay={menu} trigger={["click"]}>
         <Button
@@ -183,7 +189,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         />
       </Dropdown>
     </div>
-  );
+  ) : null;
 };
 
 TableMenu.defaultProps = {
