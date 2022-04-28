@@ -1,5 +1,12 @@
 import * as React from "react";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import clsx from "clsx";
 import Modal from "../Modal";
 import Button from "../Button";
@@ -29,7 +36,9 @@ const getColKeysRec = columns => {
   return keys;
 };
 
-export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModalProps> = props => {
+export const TableSelectColumnsModalModal: React.FC<
+  TableSelectColumnsModalModalProps
+> = props => {
   let {
     showSelectedCount,
     locale,
@@ -47,6 +56,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
 
   const columnsCount = useMemo(() => {
     let count = 0;
+
     function dig(items) {
       items.forEach(item => {
         if (
@@ -60,6 +70,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
         }
       });
     }
+
     dig(treeData);
 
     return count;
@@ -73,6 +84,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   const [initialCheckedKeys, setInitialCheckedKeys] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const containerRef = useRef(null);
 
   const visibleColumnsKeys = useMemo(() => {
     const metricColumns = filterSelectedColumns
@@ -88,11 +100,17 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     }
 
     return columns;
-  }, [filterSelectedColumns, checkedKeys, additionalVisibleColumns, hiddenColumns]);
+  }, [
+    filterSelectedColumns,
+    checkedKeys,
+    additionalVisibleColumns,
+    hiddenColumns
+  ]);
 
   const visibleColumnsKeysLength = useMemo(() => {
     let count = visibleColumnsKeys.length;
-    const additionalColumnsLength = additionalVisibleColumns && additionalVisibleColumns.length;
+    const additionalColumnsLength =
+      additionalVisibleColumns && additionalVisibleColumns.length;
     if (additionalColumnsLength) {
       count = count - additionalColumnsLength;
     }
@@ -113,6 +131,12 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     });
   }, [maxCheckedKeys, visibleColumnsKeysLength]);
 
+  const unhighlightButton = useCallback(() => {
+    setTimeout(() => {
+      containerRef.current?.childNodes[0].blur();
+    }, 1000);
+  }, [containerRef]);
+
   const handleApply = useCallback(() => {
     onSubmit && onSubmit(visibleColumnsKeys);
 
@@ -130,6 +154,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     setCheckedKeys(checkedKeys);
     setIsInitialPreset(true);
     setSearchValue("");
+    unhighlightButton();
   }, [
     onSubmit,
     visibleColumnsKeys,
@@ -137,7 +162,8 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     tableState.dataSource,
     tableState.forceFetch,
     dispatch,
-    checkedKeys
+    checkedKeys,
+    unhighlightButton
   ]);
 
   const handleCancel = useCallback(() => {
@@ -146,7 +172,8 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
     if (initialCheckedKeys.length > 0) {
       setCheckedKeys(initialCheckedKeys);
     }
-  }, [initialCheckedKeys]);
+    unhighlightButton();
+  }, [initialCheckedKeys, unhighlightButton]);
 
   const onCheck = useCallback(checkedKeys => {
     setCheckedKeys(checkedKeys || []);
@@ -166,7 +193,7 @@ export const TableSelectColumnsModalModal: React.FC<TableSelectColumnsModalModal
   }, [tableState.visibleColumnsKeys, baseTableState.columns]);
 
   return (
-    <div className="select-columns table-toolbar--right">
+    <div className="select-columns table-toolbar--right" ref={containerRef}>
       <Button
         border={false}
         onClick={() => setIsOpened(true)}
