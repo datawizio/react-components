@@ -152,5 +152,6 @@ export const defaultLangs = new Set([
   "vi",
   "fr",
   "hr",
-  "ba"
+  "ba",
+  "pl"
 ]);
