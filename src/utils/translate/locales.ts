@@ -122,6 +122,11 @@ export const locales: ILocaleList = {
     getAnt: () => import("antd/es/locale/en_US"),
     getDayJs: () => import("dayjs/locale/en")
   },
+  pl: {
+    name: "pl_PL",
+    getAnt: () => import("antd/es/locale/pl_PL"),
+    getDayJs: () => import("dayjs/locale/pl")
+  },
 };
 
 export const defaultLangs = new Set([
