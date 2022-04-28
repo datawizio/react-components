@@ -189,10 +189,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
-
-    return treeDefaultExpandedKeys;
   }, [
-    treeDefaultExpandedKeys,
     remoteSearch,
     searchValue,
     internalTreeExpandedKeys
@@ -953,6 +950,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       treeData={treeData || stateTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
+      treeDefaultExpandedKeys={treeDefaultExpandedKeys}
       searchValue={searchValue.current ? searchValue.current : ""}
       //@ts-ignore
       dropdownRender={dropdownRender}
