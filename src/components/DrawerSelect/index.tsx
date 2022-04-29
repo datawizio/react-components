@@ -170,9 +170,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const { translate } = useContext(ConfigContext);
 
-  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
-    translate
-  ]);
+  const drawerSearchPlaceholder = useMemo(
+    () => translate("SEARCH"),
+    [translate]
+  );
   const noDataText = useMemo(() => translate("NO_DATA"), [translate]);
   const loadingText = useMemo(() => translate("LOADING"), [translate]);
   const submitText = useMemo(() => translate("SUBMIT"), [translate]);
@@ -382,9 +383,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     triggerInputChangeValue(inputRef.current, inputValue);
   };
 
-  const handleSelectBeforeBlur = useCallback(() => !drawerVisible, [
-    drawerVisible
-  ]);
+  const handleSelectBeforeBlur = useCallback(
+    () => !drawerVisible,
+    [drawerVisible]
+  );
 
   const handleSelect = useCallback(
     (selectedKey, node) => {
@@ -500,7 +502,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   // -------- RENDERS ---------
 
   const tagRender = useCallback(
-    ({ label, closable, onClose }) => {
+    ({ label, value, closable, onClose }) => {
       const maxLength = maxTagLength || 20;
       const isLongTag = label?.length > maxLength;
 
@@ -518,9 +520,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
             closable={closable}
             onClose={onClose}
             className="ant-select-selection-item-content"
-            title={label}
+            title={label || value}
           >
-            {isLongTag ? `${label.slice(0, maxLength)}...` : label}
+            {isLongTag ? `${label.slice(0, maxLength)}...` : label || value}
           </Tag>
         </span>
       );
