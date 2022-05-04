@@ -105,7 +105,7 @@ export default class TransferList extends React.PureComponent<
     this.state = {
       filters: {},
       filterValue: "",
-      page: 0,
+      page: 1,
       totalPages: 1,
       count: 0,
       dataSource: [],
