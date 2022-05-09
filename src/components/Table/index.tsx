@@ -337,7 +337,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
                 scroll={
                   virtual
                     ? {
-                        y: height, // 滚动的高度, 可以是受控属性。 (number | string) be controlled.
+                        y: height,
                         x: 500
                       }
                     : undefined
