@@ -107,6 +107,7 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
     })(initializedColumns, 300);
     return { nextColumns, nextColumnWidth };
   }, [sortParams, filterParams, initializedColumns, columnsWidth]);
+
   return {
     columns: nextColumns,
     columnsWidth: nextColumnWidth

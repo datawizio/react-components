@@ -11,7 +11,7 @@ import {
   DateRangeType,
   IDateConfig,
   PeriodEnum,
-  PrevPerionEnum
+  PrevPeriodEnum
 } from "./types";
 import { IUserPeriodSelect } from "./usePeriodSelect";
 
@@ -277,7 +277,7 @@ export const actionCreator = (dispatch, type, payload = {}) => {
 type DefaultDateConfigType = {
   initialSelectedPeriod: PeriodEnum;
   isCustomPeriod: boolean;
-  initialSelectedPrevPeriod: PrevPerionEnum;
+  initialSelectedPrevPeriod: PrevPeriodEnum;
   isCustomPrevPeriod: boolean;
   initialPeriod: DateRangeType;
   initialPrevPeriod: DateRangeType;

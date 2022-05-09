@@ -12,11 +12,11 @@ import {
   getPeriod,
   getPrevPeriod
 } from "./helper";
-import { DateRangeType, PeriodEnum, PrevPerionEnum } from "./types";
+import { DateRangeType, PeriodEnum, PrevPeriodEnum } from "./types";
 
 export interface IUserPeriodSelect {
   selectedPeriod: PeriodEnum;
-  selectedPrevPeriod: PrevPerionEnum;
+  selectedPrevPeriod: PrevPeriodEnum;
   period: DateRangeType;
   prevPeriod: DateRangeType;
   showPeriodPicker: boolean;

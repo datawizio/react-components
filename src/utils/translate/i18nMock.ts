@@ -9,7 +9,7 @@ export const translationsEng = {
   ACTIVE_SKU_QTY: "Active SKU Qty",
   ACTIVITY_GROUP: "Activity",
   ACTIVITY_TYPE: "Activity type",
-  ADD_VISUALISATION: "Add visualization",
+  ADD_VISUALIZATION: "Add visualization",
   ALLOWED_APPS: "Available applications",
   ALLOWED_EXTENSIONS: "Available Extensions",
   ANALYTICS_BLOCK: "Analytics",

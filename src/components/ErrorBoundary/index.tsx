@@ -83,7 +83,7 @@ export default class ErrorBoundary extends React.Component<
       return (
         <Result
           icon={<OopsIcon />}
-          title={this.context.translate("SOMETHING_GONE_BAD")}
+          title={this.context.translate("SOMETHING_WENT_WRONG")}
           extra={
             <Button type="primary" onClick={this.handlerButtonClick}>
               {this.context.translate("REPORT_FEEDBACK")}

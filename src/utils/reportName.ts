@@ -25,7 +25,7 @@ export const getReportName = (
   });
 
   if (cardIdx !== -1) {
-    return result[cardIdx];
+    return `${result[cardIdx]}-card`;
   }
 
   // AP, DC, BES

@@ -9,7 +9,7 @@ export interface IDateConfig {
   datePicker: DateRangeType;
   prevDatePicker: DateRangeType;
   selectedPeriod: PeriodEnum;
-  selectedPrevPeriod: PrevPerionEnum;
+  selectedPrevPeriod: PrevPeriodEnum;
 }
 
 export type PeriodEnum =
@@ -29,7 +29,7 @@ export type PeriodEnum =
   | "all_time"
   | "date";
 
-export type PrevPerionEnum =
+export type PrevPeriodEnum =
   | "previous"
   | "prev_last_week"
   | "prev_last_month"
