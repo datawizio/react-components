@@ -72,7 +72,10 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         });
 
         const fileData = await exportHandler(tableState, file);
-        fileData && saveAs(new Blob([fileData]), file);
+
+        if (!fileData) return;
+
+        saveAs(new Blob([fileData]), file);
 
         message.success({ content: translate("SUCCESS"), key: messageKey });
 
