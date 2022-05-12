@@ -173,7 +173,9 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         >
           {PREV_PERIOD_OPTIONS.map((option, i) => (
             <Option key={i} disabled={isDisabledOption(option)} value={option}>
-              {translate(option.toUpperCase())}
+              {translate(
+                option === "prev_date" ? "SET_DATE" : option.toUpperCase()
+              )}
             </Option>
           ))}
         </Select>
