@@ -1230,7 +1230,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_DATE",
+                            "children": "SET_DATE",
                             "disabled": false,
                             "key": "5",
                             "value": "prev_date",
@@ -1287,7 +1287,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "PREV_DATE",
+                          "children": "SET_DATE",
                           "disabled": false,
                           "key": "5",
                           "value": "prev_date",
@@ -1444,7 +1444,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_DATE",
+                                "children": "SET_DATE",
                                 "disabled": false,
                                 "key": "5",
                                 "value": "prev_date",
@@ -1501,7 +1501,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "PREV_DATE",
+                              "children": "SET_DATE",
                               "disabled": false,
                               "key": "5",
                               "value": "prev_date",
@@ -3101,7 +3101,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_DATE",
+                            "children": "SET_DATE",
                             "disabled": false,
                             "key": "5",
                             "value": "prev_date",
@@ -3158,7 +3158,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "PREV_DATE",
+                          "children": "SET_DATE",
                           "disabled": false,
                           "key": "5",
                           "value": "prev_date",
@@ -3315,7 +3315,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_DATE",
+                                "children": "SET_DATE",
                                 "disabled": false,
                                 "key": "5",
                                 "value": "prev_date",
@@ -3372,7 +3372,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "PREV_DATE",
+                              "children": "SET_DATE",
                               "disabled": false,
                               "key": "5",
                               "value": "prev_date",
@@ -6567,7 +6567,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_DATE",
+                            "children": "SET_DATE",
                             "disabled": false,
                             "key": "5",
                             "value": "prev_date",
@@ -6624,7 +6624,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "PREV_DATE",
+                          "children": "SET_DATE",
                           "disabled": false,
                           "key": "5",
                           "value": "prev_date",
@@ -6781,7 +6781,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_DATE",
+                                "children": "SET_DATE",
                                 "disabled": false,
                                 "key": "5",
                                 "value": "prev_date",
@@ -6838,7 +6838,7 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "PREV_DATE",
+                              "children": "SET_DATE",
                               "disabled": false,
                               "key": "5",
                               "value": "prev_date",
@@ -8470,7 +8470,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_DATE",
+                            "children": "SET_DATE",
                             "disabled": false,
                             "key": "5",
                             "value": "prev_date",
@@ -8527,7 +8527,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "PREV_DATE",
+                          "children": "SET_DATE",
                           "disabled": false,
                           "key": "5",
                           "value": "prev_date",
@@ -8684,7 +8684,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_DATE",
+                                "children": "SET_DATE",
                                 "disabled": false,
                                 "key": "5",
                                 "value": "prev_date",
@@ -8741,7 +8741,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "PREV_DATE",
+                              "children": "SET_DATE",
                               "disabled": false,
                               "key": "5",
                               "value": "prev_date",
@@ -8805,9 +8805,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                           </span>
                           <span
                             class="ant-select-selection-item"
-                            title="PREV_DATE"
+                            title="SET_DATE"
                           >
-                            PREV_DATE
+                            SET_DATE
                           </span>
                         </div>,
                       }
@@ -8843,7 +8843,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         Object {
                           "disabled": false,
                           "key": "prev_date",
-                          "label": "PREV_DATE",
+                          "label": "SET_DATE",
                           "value": "prev_date",
                         },
                       ]
@@ -8887,9 +8887,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                               </span>
                               <span
                                 class="ant-select-selection-item"
-                                title="PREV_DATE"
+                                title="SET_DATE"
                               >
-                                PREV_DATE
+                                SET_DATE
                               </span>
                             </div>,
                           }
@@ -8950,7 +8950,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             Object {
                               "disabled": false,
                               "key": "prev_date",
-                              "label": "PREV_DATE",
+                              "label": "SET_DATE",
                               "value": "prev_date",
                             },
                           ]
@@ -9006,9 +9006,9 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         </span>
                         <span
                           className="ant-select-selection-item"
-                          title="PREV_DATE"
+                          title="SET_DATE"
                         >
-                          PREV_DATE
+                          SET_DATE
                         </span>
                       </SingleSelector>
                     </div>

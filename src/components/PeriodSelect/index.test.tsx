@@ -164,7 +164,7 @@ describe("PeriodSelect", () => {
     const select = component.find("SingleSelector").last();
     select.props().onChange("prev_date");
     expect(component.find(".ant-select-selection-item").last().text()).toBe(
-      "PREV_DATE"
+      "SET_DATE"
     );
     component.update();
     const dateRange = [
