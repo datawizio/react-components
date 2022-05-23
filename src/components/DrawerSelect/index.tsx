@@ -5,25 +5,18 @@ import React, {
   useEffect,
   useContext
 } from "react";
-
 import clsx from "clsx";
-
 import AntSelect, { SelectProps as AntSelectProps } from "./antd/AntSelect";
 import { SelectValue } from "antd/lib/tree-select";
-
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
 import { Skeleton, Tag, message } from "antd";
-
 import { AntTreeNode } from "antd/lib/tree";
-
 import ConfigContext from "../ConfigProvider/context";
-
 import { triggerInputChangeValue } from "../../utils/trigger";
 import { getUniqueItems } from "../../utils/data/dataHelpers";
 import { useDrawerSelect } from "./useDrawerSelect";
-
 import "./index.less";
 
 export interface DrawerSelectProps<VT>
@@ -33,6 +26,8 @@ export interface DrawerSelectProps<VT>
    * Данные будут загружаться ассинхронно. Будет вызываться функция `loadData`
    */
   asyncData?: boolean;
+
+  hideSearch?: boolean;
 
   /**
    * Title Drawer-а
@@ -62,6 +57,8 @@ export interface DrawerSelectProps<VT>
    * Function for customized options
    * */
   optionRender?: (option: any) => any;
+
+  noticeRender?: React.ReactElement | null;
 
   multiple?: boolean;
 
@@ -141,6 +138,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const {
     additionalFilters,
     asyncData,
+    hideSearch,
     showCheckAll,
     checkAllTitle,
     checkAllKey,
@@ -164,16 +162,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     withPagination,
     maxSelectedCount,
     maxTagLength,
+    noticeRender,
     onLoadData,
     ...restProps
   } = props;
 
   const { translate } = useContext(ConfigContext);
 
-  const drawerSearchPlaceholder = useMemo(
-    () => translate("SEARCH"),
-    [translate]
-  );
+  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
+    translate
+  ]);
   const noDataText = useMemo(() => translate("NO_DATA"), [translate]);
   const loadingText = useMemo(() => translate("LOADING"), [translate]);
   const submitText = useMemo(() => translate("SUBMIT"), [translate]);
@@ -383,10 +381,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     triggerInputChangeValue(inputRef.current, inputValue);
   };
 
-  const handleSelectBeforeBlur = useCallback(
-    () => !drawerVisible,
-    [drawerVisible]
-  );
+  const handleSelectBeforeBlur = useCallback(() => !drawerVisible, [
+    drawerVisible
+  ]);
 
   const handleSelect = useCallback(
     (selectedKey, node) => {
@@ -529,6 +526,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     },
     [optionsState, loadingText]
   );
+
   const dropdownRender = useCallback(
     menu => {
       menuRef.current = menu;
@@ -553,12 +551,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
             </>
           }
         >
-          <SearchInput
-            placeholder={drawerSearchPlaceholder}
-            value={searchValue}
-            onChange={handleSearchInputChange}
-            loading={internalLoading}
-          />
+          {noticeRender}
+          {!hideSearch && (
+            <SearchInput
+              placeholder={drawerSearchPlaceholder}
+              value={searchValue}
+              onChange={handleSearchInputChange}
+              loading={internalLoading}
+            />
+          )}
           {menu}
           <div className="drawer-select-loader-container">
             {internalLoading && (
@@ -597,6 +598,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     dropdownRender: dropdownRender,
     searchValue: searchValue,
     tagRender: tagRender,
+    noticeRender: noticeRender,
     dropdownClassName: "drawer-select-dropdown-fake",
     showSearch: true,
     onSearch: handleSearch,

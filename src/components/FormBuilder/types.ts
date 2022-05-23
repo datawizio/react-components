@@ -104,11 +104,13 @@ export interface FieldDrawerSelectProps
   extends FormFieldProps<string | string[]> {
   additionalFilters?: any;
   allowClear?: boolean;
+  hideSearch?: boolean;
   multiple?: boolean;
   options?: any;
   loading?: boolean;
   maxSelectedCount?: number;
   maxTagLength?: number;
+  noticeRender?: React.ReactElement | null;
   onCheckSelectedValue?: (value: any) => void;
   valueToUncheck?: string | number;
   loadData?: (
