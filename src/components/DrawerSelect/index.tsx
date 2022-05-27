@@ -220,7 +220,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     value => {
       if (!onChange) return;
       if (!multiple) {
-        onChange(value, value ? selected : undefined);
+        if (Array.isArray(value) && !value.length) {
+          onChange(null);
+        } else {
+          onChange(value, value ? selected : undefined);
+        }
         return;
       }
       onChange(value);
@@ -389,21 +393,29 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     (selectedKey, node) => {
       if (selectedKey && onCheckSelectedValue)
         onCheckSelectedValue(selectedKey);
+      if (!multiple) selectedOptions.current = [];
       selectedOptions.current.push(node);
       dispatch({
         type: "setSelected",
         payload: node
       });
     },
-    [dispatch, onCheckSelectedValue]
+    [dispatch, multiple, onCheckSelectedValue]
   );
 
-  const handleDeselect = useCallback((_, node) => {
-    const index = selectedOptions.current.findIndex(
-      option => option.key === node.key
-    );
-    selectedOptions.current.splice(index, 1);
-  }, []);
+  const handleDeselect = useCallback(
+    (_, node) => {
+      if (!multiple) {
+        selectedOptions.current = [];
+        return;
+      }
+      const index = selectedOptions.current.findIndex(
+        option => option.key === node.key
+      );
+      selectedOptions.current.splice(index, 1);
+    },
+    [multiple]
+  );
 
   const handleSearch = useCallback(
     searchValue => {
