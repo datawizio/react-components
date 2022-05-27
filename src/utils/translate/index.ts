@@ -11,7 +11,7 @@ export const translateObjects = <T>(
 ): T => {
   return array.map((item: any) => ({
     ...item,
-    value: item.value ? item.value : item.id,
+    value: item.value !== undefined ? item.value : item.id,
     [propertyName]: i18n.t(item[propertyName])
   }));
 };
@@ -55,6 +55,9 @@ export function translateColumns(columns: Array<IColumn>) {
         nextColumn.filters = column.filters.need_translate
           ? translateObjects(filterData, "text")
           : filterData;
+
+        //@ts-ignore
+        nextColumn.filterMultiple = column.filters.multi_select;
       }
     }
 
