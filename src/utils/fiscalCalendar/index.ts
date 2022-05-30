@@ -26,12 +26,13 @@ class FiscalCalendar {
       .second(0);
 
     if (dayjs().month() < this.startMonth) {
-      this.startDate.year(this.startDate.year() - 1);
+      this.startDate = this.startDate.subtract(1, "year");
     }
 
     while (this.startDate.day() !== this.startWeek) {
-      this.startDate = this.startDate.add(-1, "day");
+      this.startDate = this.startDate.subtract(1, "day");
     }
+
     this.pattern = pattern.split("-").map(i => parseInt(i));
 
     this.calendar = {};
@@ -42,7 +43,7 @@ class FiscalCalendar {
     const month = this.getMonth(date) + 1;
     const quater = Math.ceil(month / 3);
     const res = month - (quater - 1) * 3;
-    let dayInYear = (quater - 1) * this.DAYS_IN_QUARTAL;
+    let dayInYear = ((quater - 1) * this.DAYS_IN_QUARTAL) - 1;
     for (let i = 0; i < res; i++) {
       dayInYear += this.pattern[i] * 7;
     }
