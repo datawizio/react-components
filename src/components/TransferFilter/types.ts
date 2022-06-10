@@ -9,6 +9,7 @@ export interface ICheckedItem {
   key: string;
   title: string;
 }
+
 export type TransferFilterLoadDataByIdsParams = {
   ids: string[];
 };
@@ -16,6 +17,12 @@ export type TransferFilterLoadDataByIdsParams = {
 export type TransferFilterLoadDataByIdsResponse = {
   data: TransferFilterItem[];
 };
+
+export interface TransferFilterMarketingToolType {
+  value: string;
+  label: string;
+  title?: string;
+}
 
 export type TransferFilterLoadDataParams = {
   type: "tree" | "list";
@@ -29,6 +36,7 @@ export type TransferFilterLoadDataParams = {
   exclude: Array<string>;
   include: Array<string> | null;
   level?: number;
+  marketing_tool_type?: string[];
 };
 
 export type TransferFilterLoadDataResponse = {
@@ -37,6 +45,7 @@ export type TransferFilterLoadDataResponse = {
   count: number;
   expanded?: string[] | null;
   levels?: number[] | null;
+  marketingToolTypes?: TransferFilterMarketingToolType[];
 };
 
 export type TransferDirection = "left" | "right";

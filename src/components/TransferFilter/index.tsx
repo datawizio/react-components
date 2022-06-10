@@ -1,13 +1,14 @@
 import React, { useRef, useContext } from "react";
+import clsx from "clsx";
 import List from "./List";
 import Operation from "./Operation";
 import { parseValue, useTransfer } from "./hooks/useTransfer";
+import ConfigContext from "../ConfigProvider/context";
 import {
   ICheckedItem,
   TransferFilterLoadDataParams,
   TransferFilterProps
 } from "./types";
-import ConfigContext from "../ConfigProvider/context";
 import "./index.less";
 
 const prefixCls = "ant-transfer";
@@ -27,7 +28,8 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   value,
   onChange,
   loadData,
-  loadDataByIds
+  loadDataByIds,
+  className
 }) => {
   const { translate } = useContext(ConfigContext);
   const [
@@ -257,8 +259,12 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
     });
   };
 
+  const classNames = clsx("dw-transfer-filter", {
+    [className]: !!className
+  });
+
   return (
-    <div className="dw-transfer-filter">
+    <div className={classNames}>
       <List
         ref={sourceListRef}
         direction="left"

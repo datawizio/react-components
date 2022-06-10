@@ -12,13 +12,14 @@ import {
   TransferDirection,
   TransferFilterItem,
   TransferFilterLoadDataParams,
-  TransferFilterLoadDataResponse,
+  TransferFilterLoadDataResponse, TransferFilterMarketingToolType,
   TransferFilterValue
 } from "../types";
 import { PaginationType } from "antd/es/transfer/interface";
 import { EventDataNode } from "rc-tree/es/interface";
 import { isLocalDataSource, searchByArticle } from "../helper";
 import Select from "../../Select";
+import TreeSelect from "../../TreeSelect";
 
 /**********************************************************************************************************************/
 
@@ -77,6 +78,7 @@ interface TransferListState {
   loading: boolean;
   expandedKeys: string[];
   levels: number[] | null;
+  marketingToolTypes?: TransferFilterMarketingToolType[];
 }
 
 /**********************************************************************************************************************/
@@ -111,7 +113,8 @@ export default class TransferList extends React.PureComponent<
       dataSource: [],
       loading: false,
       expandedKeys: [],
-      levels: []
+      levels: [],
+      marketingToolTypes: []
     };
 
     this.bodyRef = React.createRef();
@@ -400,14 +403,20 @@ export default class TransferList extends React.PureComponent<
       full: direction === "right"
     };
 
-    const { data, totalPages: pages, count, expanded, levels } = await loadData(
-      filtersReq
-    );
+    const {
+      data,
+      totalPages: pages,
+      count,
+      expanded,
+      levels,
+      marketingToolTypes
+    } = await loadData(filtersReq);
 
     const state: any = {
       page,
       count,
       levels,
+      marketingToolTypes,
       totalPages: pages,
       dataSource: data,
       loading: false
@@ -435,12 +444,30 @@ export default class TransferList extends React.PureComponent<
     // LEVELS
     const levels =
       this.state.levels?.length && isLeftDirection ? (
-        <div className={`${prefixCls}-body-levels-wrapper`}>
+        <div className={`${prefixCls}-body-field-wrapper`}>
           <Select
             value={this.state.filters.level || 1}
             options={this.generateLevelOptions(this.state.levels)}
             onChange={this.handleLevelChange.bind(this)}
-            className="drawer-tree-select-levels"
+            className="drawer-tree-select-levels transfer-filter-field"
+          />
+        </div>
+      ) : null;
+
+    // MARKETING TOOLS
+    const marketingTools =
+      this.state.marketingToolTypes?.length && isLeftDirection ? (
+        <div className={`${prefixCls}-body-field-wrapper`}>
+          <TreeSelect
+            value={this.state.filters.marketing_tool_type || []}
+            treeData={this.state.marketingToolTypes}
+            treeCheckable={true}
+            flat={true}
+            showArrow={true}
+            placeholder={i18n.t("SELECT_MARKETING_TOOLS")}
+            onChange={this.handleMarketingToolChange.bind(this)}
+            filterTreeNode={this.handleMarketingToolSearch.bind(this)}
+            className="drawer-tree-select-marketing-tools transfer-filter-field"
           />
         </div>
       ) : null;
@@ -499,6 +526,7 @@ export default class TransferList extends React.PureComponent<
     return (
       <div className={className}>
         {levels}
+        {marketingTools}
         {search}
         {bodyNode}
       </div>
@@ -529,6 +557,28 @@ export default class TransferList extends React.PureComponent<
         this.loadPage(1);
       }
     );
+  }
+
+  handleMarketingToolChange(value) {
+    this.setState(
+      (prevState: any) => {
+        return {
+          ...prevState,
+          filterValue: "",
+          filters: {
+            ...prevState.filters,
+            marketing_tool_type: value
+          }
+        };
+      },
+      () => {
+        this.loadPage(1);
+      }
+    );
+  }
+
+  handleMarketingToolSearch(inputValue: string, treeNode: any) {
+    return treeNode.label.toLowerCase().includes(inputValue.toLowerCase());
   }
 
   getFilteredItems(dataSource: TransferFilterItem[]): TransferFilterItem[] {

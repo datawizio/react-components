@@ -111,6 +111,8 @@ export interface FieldDrawerSelectProps
   maxSelectedCount?: number;
   maxTagLength?: number;
   noticeRender?: React.ReactElement | null;
+  customFields?: React.ReactElement | null;
+  customFieldsHeight?: number;
   onCheckSelectedValue?: (value: any) => void;
   valueToUncheck?: string | number;
   loadData?: (
@@ -118,6 +120,8 @@ export interface FieldDrawerSelectProps
     page: number
   ) => Promise<{ data: [any]; totalPages: number }>;
   onLoadData?: (data: any, value: any) => { value?: any };
+  onDrawerCancelCallback?: () => void;
+  onDrawerSubmitCallback?: () => void;
 }
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;

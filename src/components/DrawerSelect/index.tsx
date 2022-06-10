@@ -6,91 +6,18 @@ import React, {
   useContext
 } from "react";
 import clsx from "clsx";
-import AntSelect, { SelectProps as AntSelectProps } from "./antd/AntSelect";
+import AntSelect from "./antd/AntSelect";
 import { SelectValue } from "antd/lib/tree-select";
 import SearchInput from "../SearchInput";
 import Drawer from "../Drawer";
 import Button from "../Button";
 import { Skeleton, Tag, message } from "antd";
-import { AntTreeNode } from "antd/lib/tree";
 import ConfigContext from "../ConfigProvider/context";
 import { triggerInputChangeValue } from "../../utils/trigger";
 import { getUniqueItems } from "../../utils/data/dataHelpers";
 import { useDrawerSelect } from "./useDrawerSelect";
+import { DrawerSelectProps } from "./types";
 import "./index.less";
-
-export interface DrawerSelectProps<VT>
-  extends Omit<AntSelectProps<VT>, "onChange"> {
-  additionalFilters?: any;
-  /**
-   * Данные будут загружаться ассинхронно. Будет вызываться функция `loadData`
-   */
-  asyncData?: boolean;
-
-  hideSearch?: boolean;
-
-  /**
-   * Title Drawer-а
-   */
-  drawerTitle?: string;
-
-  /**
-   * Drawer width in px
-   */
-  drawerWidth?: number;
-
-  /**
-   * Label prop
-   */
-  labelProp?: string;
-
-  /**
-   * Функция которая будет вызываться для подгрузки данных с параметрами `searchValue`, `page`
-   */
-  loadData?: (
-    filters: any,
-    page: number,
-    search: string
-  ) => Promise<{ data: any; totalPages: number }>;
-
-  /**
-   * Function for customized options
-   * */
-  optionRender?: (option: any) => any;
-
-  noticeRender?: React.ReactElement | null;
-
-  multiple?: boolean;
-
-  /**
-   * Value prop
-   */
-  valueProp?: string;
-
-  /**
-   * max selected count
-   */
-
-  maxSelectedCount?: number;
-
-  maxTagLength?: number;
-
-  /**
-   * Подгрузка ассинхронных данных с пагинацией
-   */
-  withPagination?: boolean;
-
-  /**
-   * Event when user clicks Submit
-   */
-  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
-
-  onCheckSelectedValue?: (values: SelectValue) => void;
-
-  valueToUncheck?: string | number;
-
-  onLoadData?: (data: any, value: any) => { value?: any };
-}
 
 function extractProperty(array: Array<object>, propertyName: string) {
   return array.map(item => item[propertyName]);
@@ -163,7 +90,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     maxSelectedCount,
     maxTagLength,
     noticeRender,
+    customFields,
+    customFieldsHeight = 0,
     onLoadData,
+    onDrawerCancelCallback,
+    onDrawerSubmitCallback,
     ...restProps
   } = props;
 
@@ -343,6 +274,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
     if (searchValue) handleSearch("");
 
+    onDrawerCancelCallback && onDrawerCancelCallback();
+
     //eslint-disable-next-line
   }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
 
@@ -364,6 +297,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
     triggerOnChange(internalValue);
     if (searchValue) handleSearch("");
+
+    onDrawerSubmitCallback && onDrawerSubmitCallback();
 
     //eslint-disable-next-line
   }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
@@ -564,6 +499,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           }
         >
           {noticeRender}
+          {customFields}
           {!hideSearch && (
             <SearchInput
               placeholder={drawerSearchPlaceholder}
@@ -616,7 +552,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     onSearch: handleSearch,
     optionFilterProp: optionFilterProp || "label",
     optionLabelProp: optionLabelProp || "label",
-    listHeight: window.innerHeight - 198 - (multiple ? 27 : 0),
+    listHeight: window.innerHeight - 198 - (multiple ? 27 : 0) - customFieldsHeight,
     notFoundContent: internalLoading ? loadingText : noDataText,
     onBeforeBlur: handleSelectBeforeBlur,
     onFocus: handleDrawerFocus,
@@ -642,7 +578,8 @@ DrawerSelect.defaultProps = {
   labelProp: "title",
   valueProp: "key",
   asyncData: false,
-  multiple: false
+  multiple: false,
+  showCheckAll: true
 };
 
 export default DrawerSelect;
