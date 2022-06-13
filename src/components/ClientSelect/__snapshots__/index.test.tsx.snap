@@ -7,10 +7,12 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
     Array [
       Object {
         "id": 1,
+        "is_active": true,
         "name": "cl1",
       },
       Object {
         "id": 2,
+        "is_active": true,
         "name": "cl2",
       },
     ]
@@ -100,7 +102,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                     Array [
                       Object {
                         "data": Object {
-                          "children": "cl1",
+                          "children": Array [
+                            <Badge
+                              color="purple"
+                              status="default"
+                            />,
+                            "cl1",
+                          ],
                           "key": "1",
                           "label": "cl1",
                           "value": 1,
@@ -110,7 +118,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       },
                       Object {
                         "data": Object {
-                          "children": "cl2",
+                          "children": Array [
+                            <Badge
+                              color="purple"
+                              status="default"
+                            />,
+                            "cl2",
+                          ],
                           "key": "2",
                           "label": "cl2",
                           "value": 2,
@@ -133,13 +147,25 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   options={
                     Array [
                       Object {
-                        "children": "cl1",
+                        "children": Array [
+                          <Badge
+                            color="purple"
+                            status="default"
+                          />,
+                          "cl1",
+                        ],
                         "key": "1",
                         "label": "cl1",
                         "value": 1,
                       },
                       Object {
-                        "children": "cl2",
+                        "children": Array [
+                          <Badge
+                            color="purple"
+                            status="default"
+                          />,
+                          "cl2",
+                        ],
                         "key": "2",
                         "label": "cl2",
                         "value": 2,
@@ -246,7 +272,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                         Array [
                           Object {
                             "data": Object {
-                              "children": "cl1",
+                              "children": Array [
+                                <Badge
+                                  color="purple"
+                                  status="default"
+                                />,
+                                "cl1",
+                              ],
                               "key": "1",
                               "label": "cl1",
                               "value": 1,
@@ -256,7 +288,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                           },
                           Object {
                             "data": Object {
-                              "children": "cl2",
+                              "children": Array [
+                                <Badge
+                                  color="purple"
+                                  status="default"
+                                />,
+                                "cl2",
+                              ],
                               "key": "2",
                               "label": "cl2",
                               "value": 2,
@@ -279,13 +317,25 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       options={
                         Array [
                           Object {
-                            "children": "cl1",
+                            "children": Array [
+                              <Badge
+                                color="purple"
+                                status="default"
+                              />,
+                              "cl1",
+                            ],
                             "key": "1",
                             "label": "cl1",
                             "value": 1,
                           },
                           Object {
-                            "children": "cl2",
+                            "children": Array [
+                              <Badge
+                                color="purple"
+                                status="default"
+                              />,
+                              "cl2",
+                            ],
                             "key": "2",
                             "label": "cl2",
                             "value": 2,
