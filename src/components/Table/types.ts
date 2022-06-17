@@ -207,6 +207,7 @@ export interface IColumn<RT = any>
   originalKey?: string;
   order?: number;
   index?: number;
+  leftOffset?: number;
 }
 
 /**

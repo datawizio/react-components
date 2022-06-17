@@ -1,11 +1,9 @@
 import * as React from "react";
 import { TableContext } from "../context";
-
 import clsx from "clsx";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useState, useCallback, useMemo, useContext } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
-
 import { IColumn } from "../types";
 import { PropsWithChildren } from "react";
 import { isSafari } from "../../../utils/navigatorInfo";
@@ -251,13 +249,22 @@ const Column: React.FC<ColumnProps> = props => {
         "dw-table__column--resizable": model.resizable,
         "dw-table__column--fixed": Boolean(model.fixed),
         "dw-table__column--drop-hover": isOver && canDrop,
-
         "dw-table__column--fixed-left": model.fixed === "left",
+        "dw-table__column--fixed-left-second":
+          model.fixed === "left" && model.order === 1,
         "dw-table__column--fixed-right": model.fixed === "right"
       },
       restProps.className
     );
-  }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
+  }, [
+    model.resizable,
+    model.fixed,
+    model.order,
+    isOver,
+    canDrop,
+    restProps.className
+  ]);
+
   const styles: object = useMemo((): object => {
     function getWidth() {
       const columnsWidthPreset = columnsWidth[model.key];
@@ -294,6 +301,7 @@ const Column: React.FC<ColumnProps> = props => {
 
       return {};
     }
+
     //@ts-ignore
     if (model.parent_key) {
       return {};

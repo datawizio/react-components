@@ -100,11 +100,11 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
           record.children = rec(column.children, 200);
         } else {
           nextColumnWidth[record.dataIndex] =
-            columnsWidth[record.dataIndex] ?? defaultWidth;
+            columnsWidth[record.dataIndex] ?? record.colWidth ?? defaultWidth;
         }
         return record;
       });
-    })(initializedColumns, 300);
+    })(initializedColumns, 200);
     return { nextColumns, nextColumnWidth };
   }, [sortParams, filterParams, initializedColumns, columnsWidth]);
 
