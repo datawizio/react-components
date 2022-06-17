@@ -130,7 +130,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   const handleExpandRow = useCallback<TableProps["onExpand"]>(
     async (isExpanded, row) => {
-      let toogle = true;
+      let toggle = true;
       if ((isNested && isNested(row)) || (!isNested && nestedTableProvider)) {
         if (!row.nested) {
           dispatch({
@@ -138,7 +138,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             payload: row.key
           });
           const result = await nestedTableProvider(row);
-          if (!result) toogle = false;
+          if (!result) toggle = false;
           dispatch({
             type: "setNestedTable",
             payload: [row, result]
@@ -156,7 +156,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         });
       }
 
-      toogle &&
+      toggle &&
         dispatch({
           type: isExpanded ? "expandRow" : "collapseRow",
           payload: row
@@ -312,6 +312,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     },
     resetPagination(pageSize?: number) {
       dispatch({ type: "resetPagination", payload: pageSize });
+    },
+    expandRow(isExpanded, row) {
+      handleExpandRow(isExpanded, row);
     }
   }));
 
