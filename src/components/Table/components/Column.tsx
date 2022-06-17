@@ -258,6 +258,7 @@ const Column: React.FC<ColumnProps> = props => {
       restProps.className
     );
   }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
+
   const styles: object = useMemo((): object => {
     function getWidth() {
       const columnsWidthPreset = columnsWidth[model.key];
