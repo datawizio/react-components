@@ -276,7 +276,7 @@ exports[`Table component rendered Table corectly 1`] = `
             "columnsSorter": undefined,
             "columnsSwapped": false,
             "columnsWidth": Object {
-              "undefined": 300,
+              "undefined": 200,
             },
             "dTypesConfig": Object {
               "boolean": Object {
@@ -431,7 +431,7 @@ exports[`Table component rendered Table corectly 1`] = `
           columnsSwapped={false}
           columnsWidth={
             Object {
-              "undefined": 300,
+              "undefined": 200,
             }
           }
           components={
