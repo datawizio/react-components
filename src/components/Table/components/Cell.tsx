@@ -10,8 +10,8 @@ const Cell: React.FC = props => {
   const style = React.useMemo(() => {
     const output: any = {};
 
-    const firstRow = children[1].props?.row?.firstRow;
-    const column = children[1].props.column;
+    const firstRow = children[1]?.props?.row?.firstRow;
+    const column = children[1]?.props.column;
     const columnKey = column ? column.key : "";
 
     if (firstRow) {
