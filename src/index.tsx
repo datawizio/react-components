@@ -155,3 +155,5 @@ export { RefreshIcon } from "./components/Icons/RefreshIcon";
 export { ForbiddenIcon } from "./components/Icons/ForbiddenIcon";
 
 export { default as Cron } from "./components/Cron/";
+
+export { default as NotificationButton } from "./components/NotificationButton/";
