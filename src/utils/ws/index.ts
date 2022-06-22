@@ -9,12 +9,14 @@ const subsriptions: { [key: string]: Map<string, Function> } = {};
 let connected = false;
 const queue: Array<Object> = [];
 
-export const initWS = (authData: {
-  sessionid?: string;
-  authorization?: string;
-}) => {
-  console.log(authData);
-  ws = new WebSocket(`ws://127.0.0.1:8866/ws`, ["graphql-transport-ws"]);
+export const initWS = (
+  server: string,
+  authData: {
+    sessionid?: string;
+    authorization?: string;
+  }
+) => {
+  ws = new WebSocket(server, ["graphql-transport-ws"]);
 
   ws.onopen = () => {
     connected = true;
