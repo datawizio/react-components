@@ -64,6 +64,7 @@ export interface TransferListProps {
   loadDataByIds?: (params: any) => Promise<any>;
   onItemSelect: (item: ICheckedItem, check: boolean) => void;
   onItemsSelect?: (items: ICheckedItem[], check: boolean) => void;
+  onLevelUpdate?: (level: number) => void;
 }
 
 interface TransferListState {
@@ -515,7 +516,7 @@ export default class TransferList extends React.PureComponent<
 
   handleLevelChange(value = 1) {
     this.setState(
-      (prevState: any) => {
+      (prevState: TransferListState) => {
         return {
           ...prevState,
           filterValue: "",
@@ -529,6 +530,7 @@ export default class TransferList extends React.PureComponent<
         this.loadPage(1);
       }
     );
+    this.props.onLevelUpdate && this.props.onLevelUpdate(value);
   }
 
   getFilteredItems(dataSource: TransferFilterItem[]): TransferFilterItem[] {

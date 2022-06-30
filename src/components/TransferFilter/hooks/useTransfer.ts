@@ -8,6 +8,7 @@ export interface IUseTransfer {
   sourceChecked: Array<string>;
   targetValue: TransferFilterValue;
   targetChecked: Array<string>;
+  filters: { [key: string]: any };
 }
 
 export interface IInitUseTransfer {
@@ -16,6 +17,12 @@ export interface IInitUseTransfer {
 
 function reducer(state: IUseTransfer, action: any) {
   switch (action.type) {
+    case "updateFilters": {
+      return {
+        ...state,
+        filters: action.payload
+      };
+    }
     case "setState": {
       return {
         ...state,
@@ -55,7 +62,8 @@ export const useTransfer = (value: TransferFilterValue) => {
     targetValue,
     sourceCheckedObj: {},
     sourceChecked: [],
-    targetChecked: []
+    targetChecked: [],
+    filters: {}
   });
 
   return [state as IUseTransfer, dispatch as any];

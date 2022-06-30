@@ -37,7 +37,8 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       targetValue,
       sourceChecked,
       sourceCheckedObj,
-      targetChecked
+      targetChecked,
+      filters
     },
     dispatch
   ] = useTransfer(value);
@@ -54,6 +55,9 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
 
   const targetLoadData = async (params: TransferFilterLoadDataParams) => {
     params.lastLevel = true;
+    if (filters.level && filters.level !== 1) {
+      params.level = filters.level;
+    }
     return await loadData(params, "target");
   };
 
@@ -257,6 +261,10 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
     });
   };
 
+  const handleLevelUpdate = (level: number) => {
+    dispatch({ type: "updateFilters", payload: { level } });
+  };
+
   return (
     <div className="dw-transfer-filter">
       <List
@@ -278,6 +286,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
         loadData={sourceLoadData}
         onItemSelect={onLeftItemSelect}
         onItemsSelect={onLeftItemsSelect}
+        onLevelUpdate={handleLevelUpdate}
       />
       <Operation
         className={`${prefixCls}-operation`}
