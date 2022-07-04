@@ -21,3 +21,16 @@ export const searchByArticle = (
     return true;
   }
 };
+
+export const getAllItems = (list: any) => {
+  const filteredItems = list.getFilteredItems(list.state.dataSource);
+  const disabledKeys = list.getDisabledKeys(filteredItems);
+  const items = filteredItems
+    .filter(item => !disabledKeys.has(item.key))
+    .map(({ key, title, article }) => ({
+      key,
+      title,
+      ...(article ? { article } : {})
+    }));
+  return items;
+};

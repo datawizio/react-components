@@ -16,7 +16,7 @@ export interface IApp {
   host: string;
   path: string;
   description: string;
-  clients?: { id: number; name: string }[];
+  clients?: { id: number; name: string; is_active: boolean }[];
 }
 
 export interface AppsListProps {

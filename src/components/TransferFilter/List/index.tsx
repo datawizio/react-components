@@ -515,7 +515,7 @@ export default class TransferList extends React.PureComponent<
 
   handleLevelChange(value = 1) {
     this.setState(
-      (prevState: any) => {
+      (prevState: TransferListState) => {
         return {
           ...prevState,
           filterValue: "",

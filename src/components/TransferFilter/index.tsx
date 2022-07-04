@@ -2,6 +2,7 @@ import React, { useRef, useContext } from "react";
 import List from "./List";
 import Operation from "./Operation";
 import { parseValue, useTransfer } from "./hooks/useTransfer";
+import { getAllItems } from "./helper";
 import {
   ICheckedItem,
   TransferFilterLoadDataParams,
@@ -180,9 +181,26 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   };
 
   const moveAllToRight = () => {
-    internalValue.include = [];
-    internalValue.exclude = [];
+    const items = getAllItems(sourceListRef.current);
+    if (items.length === 0) return;
+
+    const itemsKeys = items.map(item => item.key);
+
+    if (internalValue.include === null) {
+      internalValue.include = [...itemsKeys];
+    } else if (internalValue.include.length === 0) {
+      const set = new Set(itemsKeys);
+      internalValue.exclude = internalValue.exclude.filter(
+        item => !set.has(item)
+      );
+    } else {
+      internalValue.include = internalValue.include.concat(itemsKeys);
+    }
+
+    if (internalValue.include === null) internalValue.include = [...itemsKeys];
+
     onChange(internalValue);
+    targetListRef.current.addItems(items);
 
     dispatch({
       type: "setState",
