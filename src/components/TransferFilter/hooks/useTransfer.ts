@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from "react";
+import { Dispatch, useMemo, useReducer } from "react";
 import { ICheckedItem, TransferFilterValue } from "../types";
 
 export interface IUseTransfer {
@@ -14,7 +14,12 @@ export interface IInitUseTransfer {
   internalValue: TransferFilterValue;
 }
 
-function reducer(state: IUseTransfer, action: any) {
+type UseTransferAction = {
+  type: "setState";
+  payload: Partial<IUseTransfer>;
+};
+
+function reducer(state: IUseTransfer, action: UseTransferAction) {
   switch (action.type) {
     case "setState": {
       return {
@@ -23,7 +28,7 @@ function reducer(state: IUseTransfer, action: any) {
       };
     }
     default:
-      throw new Error();
+      throw new Error("Unknown action type");
   }
 }
 
@@ -45,11 +50,13 @@ export const parseValue = (value: TransferFilterValue) => {
   };
 };
 
-export const useTransfer = (value: TransferFilterValue) => {
+export const useTransfer = (
+  value: TransferFilterValue
+): [IUseTransfer, Dispatch<UseTransferAction>] => {
   const { sourceValue, targetValue } = useMemo(() => parseValue(value), [
     value
   ]);
-  const [state, dispatch] = useReducer<any>(reducer, {
+  const [state, dispatch] = useReducer(reducer, {
     internalValue: value,
     sourceValue,
     targetValue,
@@ -58,5 +65,5 @@ export const useTransfer = (value: TransferFilterValue) => {
     targetChecked: []
   });
 
-  return [state as IUseTransfer, dispatch as any];
+  return [state, dispatch];
 };

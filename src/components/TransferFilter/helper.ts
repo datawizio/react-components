@@ -22,9 +22,10 @@ export const searchByArticle = (
   }
 };
 
-export const getAllItems = (list: any) => {
-  const filteredItems = list.getFilteredItems(list.state.dataSource);
-  const disabledKeys = list.getDisabledKeys(filteredItems);
+export const getAllItems = <TList, TReturn>(list: TList): TReturn => {
+  const filteredItems = list["getFilteredItems"](list["state"]["dataSource"]);
+  const disabledKeys = list["getDisabledKeys"](filteredItems);
+
   const items = filteredItems
     .filter(item => !disabledKeys.has(item.key))
     .map(({ key, title, article }) => ({
