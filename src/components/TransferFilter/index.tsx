@@ -43,8 +43,8 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
     dispatch
   ] = useTransfer(value);
 
-  const targetListRef = useRef<any>();
-  const sourceListRef = useRef<any>();
+  const targetListRef = useRef<List>();
+  const sourceListRef = useRef<List>();
 
   const sourceLoadData = async (params: TransferFilterLoadDataParams) => {
     if (params.exclude) {
@@ -181,26 +181,32 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   };
 
   const moveAllToRight = () => {
-    const items = getAllItems(sourceListRef.current);
-    if (items.length === 0) return;
+    if (type === "tree") {
+      const items = getAllItems<List, ICheckedItem[]>(sourceListRef.current);
+      if (items.length === 0) return;
 
-    const itemsKeys = items.map(item => item.key);
+      const itemsKeys = items.map(item => item.key);
 
-    if (internalValue.include === null) {
-      internalValue.include = [...itemsKeys];
-    } else if (internalValue.include.length === 0) {
-      const set = new Set(itemsKeys);
-      internalValue.exclude = internalValue.exclude.filter(
-        item => !set.has(item)
-      );
+      if (internalValue.include === null) {
+        internalValue.include = [...itemsKeys];
+      } else if (internalValue.include.length === 0) {
+        const set = new Set(itemsKeys);
+        internalValue.exclude = internalValue.exclude.filter(
+          item => !set.has(item)
+        );
+      } else {
+        internalValue.include = internalValue.include.concat(itemsKeys);
+      }
+
+      if (internalValue.include === null)
+        internalValue.include = [...itemsKeys];
+
+      targetListRef.current.addItems(items);
     } else {
-      internalValue.include = internalValue.include.concat(itemsKeys);
+      internalValue.include = [];
+      internalValue.exclude = [];
     }
-
-    if (internalValue.include === null) internalValue.include = [...itemsKeys];
-
     onChange(internalValue);
-    targetListRef.current.addItems(items);
 
     dispatch({
       type: "setState",
