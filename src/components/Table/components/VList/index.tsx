@@ -12,7 +12,6 @@ import { throttle, isNumber } from "lodash-es";
 
 import { VWrapper } from "./Wrapper";
 import Cell from "../Cell";
-import { TableContext } from "../../context";
 
 // ===============reducer ============== //
 const initialState = {
@@ -158,9 +157,6 @@ const VTableHeaderCol: React.FC<{ colKey: string; width: number }> = React.memo(
 function VTable(props: any, otherParams): JSX.Element {
   const { style, children, ...rest } = props;
   const { width, ...rest_style } = style;
-  const {
-    tableState: { columns, columnsWidth }
-  } = useContext(TableContext);
   const { vid, scrollY, reachEnd, onScroll } = otherParams ?? {};
 
   const [state, dispatch] = useReducer(reducer, initialState);
