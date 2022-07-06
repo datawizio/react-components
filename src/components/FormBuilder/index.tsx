@@ -1,6 +1,6 @@
 export { FieldText } from "./fields/Text";
-
 export { FieldPhone } from "./fields/Phone";
+export { FieldSlider } from "./fields/Slider";
 export { FieldImage } from "./fields/Image";
 export { FieldRadio } from "./fields/Radio";
 export { FieldSelect } from "./fields/Select";

@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorPicker component ColorPicker onChange 1`] = `
+<Tooltip
+  arrowPointAtCenter={false}
+  autoAdjustOverflow={true}
+  destroyTooltipOnHide={true}
+  mouseEnterDelay={0.1}
+  mouseLeaveDelay={0.1}
+  overlay={
+    <React.Fragment>
+      <div
+        className="ant-popover-inner-content"
+      >
+        <ColorPicker
+          color="#A771FE"
+          disableAlpha={true}
+          onChange={[Function]}
+          presetColors={
+            Array [
+              "#782FEF",
+              "#231F20",
+              "#E8D5D5",
+              "#DF8600",
+              "#FBE7B5",
+            ]
+          }
+          styles={Object {}}
+          width={200}
+        />
+      </div>
+    </React.Fragment>
+  }
+  overlayClassName="color-picker-popover"
+  overlayStyle={Object {}}
+  placement="top"
+  prefixCls="ant-popover"
+  transitionName="zoom-big"
+  trigger="click"
+/>
+`;
+
+exports[`ColorPicker component ColorPicker popover open render corectly 1`] = `
+<Popover
+  content={
+    <ColorPicker
+      color="#FFF"
+      disableAlpha={true}
+      onChange={[Function]}
+      presetColors={
+        Array [
+          "#D0021B",
+          "#F5A623",
+          "#F8E71C",
+          "#8B572A",
+          "#7ED321",
+          "#417505",
+          "#BD10E0",
+          "#9013FE",
+          "#4A90E2",
+          "#50E3C2",
+          "#B8E986",
+          "#000000",
+          "#4A4A4A",
+          "#9B9B9B",
+          "#FFFFFF",
+        ]
+      }
+      styles={Object {}}
+      width={200}
+    />
+  }
+  destroyTooltipOnHide={true}
+  mouseEnterDelay={0.1}
+  mouseLeaveDelay={0.1}
+  overlayClassName="color-picker-popover"
+  overlayStyle={Object {}}
+  placement="top"
+  transitionName="zoom-big"
+  trigger="click"
+>
+  <div
+    className="color-picker"
+    style={
+      Object {
+        "background": undefined,
+      }
+    }
+  />
+</Popover>
+`;
+
+exports[`ColorPicker component ColorPicker with props rendered correctly 1`] = `
+<Popover
+  content={
+    <ColorPicker
+      color="#A771FE"
+      disableAlpha={true}
+      onChange={[Function]}
+      presetColors={
+        Array [
+          "#782FEF",
+          "#231F20",
+          "#E8D5D5",
+          "#DF8600",
+          "#FBE7B5",
+        ]
+      }
+      styles={Object {}}
+      width={200}
+    />
+  }
+  destroyTooltipOnHide={true}
+  mouseEnterDelay={0.1}
+  mouseLeaveDelay={0.1}
+  overlayClassName="color-picker-popover"
+  overlayStyle={Object {}}
+  placement="top"
+  transitionName="zoom-big"
+  trigger="click"
+/>
+`;
+
+exports[`ColorPicker component ColorPicker without props rendered correctly 1`] = `
+<Popover
+  content={
+    <ColorPicker
+      color="#FFF"
+      disableAlpha={true}
+      onChange={[Function]}
+      presetColors={
+        Array [
+          "#D0021B",
+          "#F5A623",
+          "#F8E71C",
+          "#8B572A",
+          "#7ED321",
+          "#417505",
+          "#BD10E0",
+          "#9013FE",
+          "#4A90E2",
+          "#50E3C2",
+          "#B8E986",
+          "#000000",
+          "#4A4A4A",
+          "#9B9B9B",
+          "#FFFFFF",
+        ]
+      }
+      styles={Object {}}
+      width={200}
+    />
+  }
+  destroyTooltipOnHide={true}
+  mouseEnterDelay={0.1}
+  mouseLeaveDelay={0.1}
+  overlayClassName="color-picker-popover"
+  overlayStyle={Object {}}
+  placement="top"
+  transitionName="zoom-big"
+  trigger="click"
+>
+  <div
+    className="color-picker"
+    style={
+      Object {
+        "background": undefined,
+      }
+    }
+  />
+</Popover>
+`;

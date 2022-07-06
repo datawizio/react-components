@@ -13,7 +13,15 @@ const setUp = (props?) => mount(<Forbidden {...props} />);
 describe("Forbidden component", () => {
   let component;
   beforeEach(() => {
+    jest.spyOn(console, "error");
+    //@ts-ignore
+    console.error.mockImplementation(() => {});
     component = setUp(mockProps);
+  });
+
+  afterEach(() => {
+    //@ts-ignore
+    console.error.mockRestore();
   });
 
   it("Render Forbidden correctly", () => {

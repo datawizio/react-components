@@ -14,6 +14,7 @@ export const FieldSelect: React.FC<FieldSelectProps> = ({
   placeholder,
   options,
   onChange,
+  onDeselect,
   ...restProps
 }) => {
   const handleFieldChange = (value: any, selected: any) => {
@@ -37,6 +38,7 @@ export const FieldSelect: React.FC<FieldSelectProps> = ({
         options={options}
         placeholder={placeholder}
         onChange={handleFieldChange}
+        onDeselect={onDeselect}
         allowClear={allowClear}
       />
     </Form.Item>

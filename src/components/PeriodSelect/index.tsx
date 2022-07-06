@@ -29,6 +29,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   const { translate } = useContext(ConfigContext);
 
   const {
+    type,
     clientDate,
     clientStartDate,
     periodLabel,
@@ -86,7 +87,6 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     }
     //eslint-disable-next-line
   }, [period, prevPeriod]);
-
   const handlePeriodChange = periodKey => {
     actionCreator(dispatch, "updatePeriod", {
       periodKey
@@ -143,6 +143,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPeriodPicker && (
           <DateRangePicker
+            inputReadOnly={false}
+            type={type}
             dateFrom={!isPickerEmpty && dayjs(period.startDate)}
             dateTo={!isPickerEmpty && dayjs(period.endDate)}
             minDate={dayjs(clientStartDate)}
@@ -151,7 +153,12 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDateRangeChange}
             onClear={onDateRangeClear}
-            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            defaultPickerValue={
+              [
+                !isPickerEmpty ? dayjs(period.startDate) : dayjs(clientDate),
+                !isPickerEmpty ? dayjs(period.endDate) : dayjs(clientDate)
+              ] as any
+            }
             format={format}
           />
         )}
@@ -166,12 +173,16 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         >
           {PREV_PERIOD_OPTIONS.map((option, i) => (
             <Option key={i} disabled={isDisabledOption(option)} value={option}>
-              {translate(option.toUpperCase())}
+              {translate(
+                option === "prev_date" ? "SET_DATE" : option.toUpperCase()
+              )}
             </Option>
           ))}
         </Select>
         {showPrevPeriodPicker && (
           <DateRangePicker
+            inputReadOnly={false}
+            type={type}
             dateFrom={!isPrevPickerEmpty && dayjs(prevPeriod.startDate)}
             dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
             minDate={dayjs(clientStartDate)}
@@ -180,7 +191,16 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDateRangeChange}
             onClear={onPrevDateRangeClear}
-            defaultPickerValue={[dayjs(clientDate), dayjs(clientDate)] as any}
+            defaultPickerValue={
+              [
+                !isPrevPickerEmpty
+                  ? dayjs(prevPeriod.startDate)
+                  : dayjs(clientDate),
+                !isPrevPickerEmpty
+                  ? dayjs(prevPeriod.endDate)
+                  : dayjs(clientDate)
+              ] as any
+            }
             format={format}
           />
         )}
@@ -195,7 +215,8 @@ PeriodSelect.defaultProps = {
   periodLabel: "SELECT_PERIOD",
   prevPeriodLabel: "SELECT_PREV_PERIOD",
   dateConfig: {},
-  limitMaxDate: false
+  limitMaxDate: false,
+  type: "iso-8601"
 };
 
 export default PeriodSelect;

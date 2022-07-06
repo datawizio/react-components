@@ -6,11 +6,13 @@ import ClientSelect from "./index";
 const clients = [
   {
     id: 1,
-    name: "cl1"
+    name: "cl1",
+    is_active: true
   },
   {
     id: 2,
-    name: "cl2"
+    name: "cl2",
+    is_active: true
   }
 ];
 const mockProps = {

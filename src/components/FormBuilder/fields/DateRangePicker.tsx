@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import dayjs, { Dayjs } from "dayjs";
 
 import { Form } from "antd";
@@ -6,6 +6,7 @@ import DateRangePicker from "../../DateRangePicker";
 
 import { FormFieldProps } from "../types";
 import { DateType, PresetsRangeType } from "../../DateRangePicker/types";
+import { CalendarTypes } from "../../DatePicker";
 
 export interface DateRangePickerParams {
   from: Dayjs;
@@ -14,8 +15,11 @@ export interface DateRangePickerParams {
 
 export interface FieldDateRangePickerProps
   extends FormFieldProps<DateRangePickerParams> {
+  type?: CalendarTypes;
   format?: string;
+  inputReadOnly?: boolean;
   storeFormat?: string;
+  maxDateForPresets?: string;
   maxDate?: string;
   minDate?: string;
   defaultPickerValue?: any;
@@ -27,6 +31,7 @@ export interface FieldDateRangePickerProps
     date_from: DateType;
     date_to: DateType;
   };
+  getPopupContainer?: () => HTMLElement | null;
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
@@ -46,16 +51,31 @@ const Field: React.FC<FieldProps> = ({
     //@ts-ignore
     onChange && onChange([null, null]);
   }, [onChange]);
+
+  const dateFrom = useMemo(() => {
+    if (Array.isArray(value) && value.length) {
+      value.from = value[0];
+    }
+    return value.from && storeFormat
+      ? dayjs(value.from, storeFormat)
+      : value.from;
+  }, [storeFormat, value]);
+
+  const dateTo = useMemo(() => {
+    if (Array.isArray(value) && value.length) {
+      value.to = value[1];
+    }
+    return value.to && storeFormat ? dayjs(value.to, storeFormat) : value.to;
+  }, [storeFormat, value]);
+
   return (
     //@ts-ignore
     <DateRangePicker
       onChange={onChange}
       onClear={handleClear}
       format={format}
-      dateFrom={
-        value.from && storeFormat ? dayjs(value.from, storeFormat) : value.from
-      }
-      dateTo={value.to && storeFormat ? dayjs(value.to, storeFormat) : value.to}
+      dateFrom={dateFrom}
+      dateTo={dateTo}
       fullWidth
       {...restProps}
     />

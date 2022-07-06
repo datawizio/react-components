@@ -13,6 +13,9 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    &--selected {
+      font-weight: bold;
+    }
   }
 
   &__value {
@@ -90,6 +93,9 @@
   .ant-select-item-empty {
     display: none;
   }
+  div.table-templates__footer > input.ant-input.error-field {
+    border-color: @red-6;
+  }
 }
 
 .ant-select-item-option-active {
@@ -99,6 +105,9 @@
 
   .table-templates__icon--delete {
     display: initial;
+    &:hover {
+      color: @red-6;
+    }
   }
 }
 

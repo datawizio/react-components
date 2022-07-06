@@ -573,14 +573,16 @@ export default function generateSelector<
 
       if (!internalProps.skipTriggerSelect) {
         // Skip trigger `onSelect` or `onDeselect` if configured
-        const selectValue = (mergedLabelInValue
-          ? getLabeledValue(newValue, {
-              options: newValueOption,
-              prevValueMap: mergedValueMap,
-              labelInValue: mergedLabelInValue,
-              optionLabelProp: mergedOptionLabelProp
-            })
-          : newValue) as SingleType<ValueType>;
+        const selectValue = (
+          mergedLabelInValue
+            ? getLabeledValue(newValue, {
+                options: newValueOption,
+                prevValueMap: mergedValueMap,
+                labelInValue: mergedLabelInValue,
+                optionLabelProp: mergedOptionLabelProp
+              })
+            : newValue
+        ) as SingleType<ValueType>;
 
         if (isSelect && onSelect) {
           onSelect(selectValue, outOption);
@@ -618,9 +620,9 @@ export default function generateSelector<
         }
       );
 
-      const outValue: ValueType = (isMultiple
-        ? outValues
-        : outValues[0]) as ValueType;
+      const outValue: ValueType = (
+        isMultiple ? outValues : outValues[0]
+      ) as ValueType;
       // Skip trigger if prev & current value is both empty
       if (onChange && (mergedRawValue.length !== 0 || outValues.length !== 0)) {
         const outOptions = findValueOption(newRawValues, newRawValuesOptions, {
@@ -1020,6 +1022,7 @@ export default function generateSelector<
     const [containerWidth, setContainerWidth] = useState(null);
 
     const [, forceUpdate] = useState({});
+
     // We need force update here since popup dom is render async
     function onPopupMouseEnter() {
       forceUpdate({});
@@ -1034,6 +1037,37 @@ export default function generateSelector<
       }
     }, [triggerOpen]);
 
+    /* ********************************************************************** */
+
+    let noticeHeight = 0;
+    const noticeNode = document.querySelector(
+      ".dw-notice.rc-tree-select-notice"
+    );
+    if (noticeNode) {
+      noticeHeight = noticeNode.clientHeight + 6;
+    }
+
+    const windowInnerHeightRef = useRef(window.innerHeight);
+    const listHeightRef = useRef(listHeight);
+
+    const onResize = () => {
+      listHeightRef.current -= (windowInnerHeightRef.current - window.innerHeight);
+      windowInnerHeightRef.current = window.innerHeight;
+    };
+
+    useEffect(() => {
+      listHeightRef.current = listHeight;
+    }, [listHeight]);
+
+    useEffect(() => {
+      window.addEventListener("resize", onResize);
+      return () => {
+        window.removeEventListener("resize", onResize);
+      };
+    }, []);
+
+    /* ********************************************************************** */
+
     const popupNode = (
       <OptionList
         ref={listRef}
@@ -1045,7 +1079,7 @@ export default function generateSelector<
         flattenOptions={displayFlattenOptions}
         multiple={isMultiple}
         values={rawValues}
-        height={listHeight}
+        height={listHeightRef.current - noticeHeight}
         itemHeight={listItemHeight}
         onSelect={onInternalOptionSelect}
         onToggleOpen={onToggleOpen}
@@ -1213,9 +1247,7 @@ export default function generateSelector<
 
   // Ref of Select
   type RefSelectFuncType = typeof RefSelectFunc;
-  const RefSelect = ((React.forwardRef as unknown) as RefSelectFuncType)(
-    Select
-  );
+  const RefSelect = (React.forwardRef as unknown as RefSelectFuncType)(Select);
 
   return RefSelect;
 }

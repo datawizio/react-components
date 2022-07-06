@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useContext } from "react";
 import { Select as AntSelect, Tag } from "antd";
 import { useDebouncedCallback } from "use-debounce";
 import { FCSelect } from "./types";
 import { getUniqueItemsObj } from "../../utils/data/dataHelpers";
+import ConfigContext from "../ConfigProvider/context";
 import "./index.less";
 
 const Select: FCSelect = props => {
@@ -14,8 +15,12 @@ const Select: FCSelect = props => {
     withPagination,
     useCustomTagRender,
     optionRender,
+    optionFilterProp,
+    optionLabelProp,
     ...restProps
   } = props;
+
+  const { translate: t } = useContext(ConfigContext);
 
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
@@ -30,7 +35,12 @@ const Select: FCSelect = props => {
         return optionRender(item);
       }
       return (
-        <Select.Option key={item.value} value={item.value}>
+        <Select.Option
+          key={item.value}
+          value={item.value}
+          label={item.text}
+          disabled={!!item.disabled}
+        >
           {item.text}
         </Select.Option>
       );
@@ -84,19 +94,20 @@ const Select: FCSelect = props => {
         loadPage(searchValue, page + 1);
       }
     },
-    [loading, page, loadPage]
+    [loading, page, searchValue, isLast, loadPage]
   );
 
   const handleDropdownVisibleChange = useCallback(
     (open: boolean) => {
       if (open && asyncData) {
         loadPage(searchValue, 0);
+        setIsLast(false);
       } else if (!open) {
         setSearchValue("");
         setOptions([]);
       }
     },
-    [asyncData, loadPage]
+    [asyncData, searchValue, loadPage]
   );
 
   const handleSearch = useCallback(
@@ -142,12 +153,14 @@ const Select: FCSelect = props => {
     <AntSelect
       {...restProps}
       {...searchProps}
-      optionFilterProp="label"
-      optionLabelProp="label"
-      notFoundContent={loading ? loadingContent : notFoundContent}
+      optionFilterProp={optionFilterProp || "label"}
+      optionLabelProp={optionLabelProp || "label"}
+      notFoundContent={loading ? t(loadingContent) : t(notFoundContent)}
       loading={loading}
       tagRender={useCustomTagRender ? tagRender : null}
-      onDropdownVisibleChange={asyncData ? handleDropdownVisibleChange : null}
+      onDropdownVisibleChange={
+        asyncData ? handleDropdownVisibleChange : props.onDropdownVisibleChange
+      }
     >
       {asyncData ? options : props.children}
     </AntSelect>
@@ -156,8 +169,8 @@ const Select: FCSelect = props => {
 
 Select.defaultProps = {
   asyncData: false,
-  loadingContent: "Loading...",
-  notFoundContent: "No data",
+  loadingContent: "LOADING",
+  notFoundContent: "NO_DATA",
   withPagination: false
 };
 

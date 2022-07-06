@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 
-import { Card, Col } from "antd";
+import { Badge, Card, Col } from "antd";
 import Select from "../Select";
 import Button from "../Button";
 
@@ -17,7 +17,7 @@ export interface CardAppProps {
   path: string;
   description: string;
   allowed?: boolean;
-  clients?: { client_id: number; name: string }[];
+  clients?: { client_id: number; name: string; is_active: boolean }[];
   onButtonClick?: (
     clientId: number,
     { appId: number, url: string, allowed: boolean }
@@ -86,6 +86,10 @@ export const App: React.FC<CardAppProps> = ({
                   value={client.client_id}
                   label={client.name}
                 >
+                  <Badge
+                    status="default"
+                    color={client.is_active ? "purple" : null}
+                  />
                   {client.name}
                 </Select.Option>
               ))}

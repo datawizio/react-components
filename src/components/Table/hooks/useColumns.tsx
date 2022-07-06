@@ -3,9 +3,14 @@ import CellData from "../components/CellData";
 import { IColumn, TableProps, TableState } from "../types";
 
 function useColumns(state: TableState, props: TableProps): Partial<TableState> {
-  const { columns, visibleColumnsKeys, sortParams, filterParams } = state;
+  const {
+    columns,
+    visibleColumnsKeys,
+    sortParams,
+    filterParams,
+    columnsWidth
+  } = state;
   const { sortable, columnsConfig, isResizableColumns } = props;
-
   const initializedColumns = useMemo(() => {
     function initColumns(columns: Array<IColumn>, level = 1) {
       return columns
@@ -78,8 +83,9 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
     visibleColumnsKeys
   ]);
 
-  const nextColumns = useMemo(() => {
-    return (function rec(columns) {
+  const { nextColumns, nextColumnWidth } = useMemo(() => {
+    const nextColumnWidth = {};
+    const nextColumns = (function rec(columns, defaultWidth) {
       return columns.map((column: IColumn) => {
         const record = {
           ...column,
@@ -89,16 +95,22 @@ function useColumns(state: TableState, props: TableProps): Partial<TableState> {
               ? filterParams[column.dataIndex]
               : null
         };
+
         if (column.children && column.children.length) {
-          record.children = rec(column.children);
+          record.children = rec(column.children, 200);
+        } else {
+          nextColumnWidth[record.dataIndex] =
+            columnsWidth[record.dataIndex] ?? record.colWidth ?? defaultWidth;
         }
         return record;
       });
-    })(initializedColumns);
-  }, [sortParams, filterParams, initializedColumns]);
+    })(initializedColumns, 200);
+    return { nextColumns, nextColumnWidth };
+  }, [sortParams, filterParams, initializedColumns, columnsWidth]);
 
   return {
-    columns: nextColumns
+    columns: nextColumns,
+    columnsWidth: nextColumnWidth
   };
 }
 

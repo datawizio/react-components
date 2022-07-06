@@ -1,19 +1,16 @@
 import clsx from "clsx";
 import * as React from "react";
-import { TableTemplate } from "./types";
 import { useState, useCallback, useContext, useEffect, useMemo } from "react";
-
+import { TagsOutlined } from "@ant-design/icons";
 import Select from "../Select";
 import { TableState } from "../Table/types";
-
+import { TableTemplate } from "./types";
 import Dropdown from "./components/Dropdown";
 import Template from "./components/Template";
-import { SaveOutlined } from "@ant-design/icons";
 import ConfigContext from "../ConfigProvider/context";
-
 import { TableContext } from "../Table/context";
-
 import "./index.less";
+import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
 
 function pickState(
   state: TableState,
@@ -32,6 +29,8 @@ function pickState(
     columnsPositions,
     pagination: state.pagination,
     sortParams: state.sortParams,
+    columnsWidth: state.columnsWidth,
+    fixedTotal: state.fixedTotal,
     filterParams: state.filterParams,
     visibleColumnsKeys: state.visibleColumnsKeys
   };
@@ -42,7 +41,7 @@ function SelectValue({ value }) {
 
   return (
     <div className="table-templates__value">
-      <SaveOutlined className="table-templates__icon" />
+      <TagsOutlined className="table-templates__icon" />
       <span className="table-templates__value-title">
         {value || translate("TEMPLATES")}
       </span>
@@ -57,7 +56,7 @@ export interface TableTemplatesProps {
   sortFirstColumn?: boolean;
   templates?: () => MaybePromise<TableTemplate>;
   onDelete: (template: TableTemplate) => void;
-  onSelect?: () => void;
+  onSelect?: (template?: TableTemplate) => void;
   onSelectFavorite: (template: TableTemplate) => void;
   onCreate: (template: TableTemplate) => void | Promise<TableTemplate>;
 }
@@ -77,7 +76,11 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
   );
 
   const [templates, setTemplates] = useState([]);
-  const [value, setValue] = useState<string>(null);
+  const [
+    selectedTemplate,
+    setSelectedTemplate
+  ] = useState<TableTemplate | null>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   const setTemplateToState = useCallback(
     template => {
@@ -95,22 +98,37 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       if (fetchAfterApply) {
         template.state.forceFetch = tableState.forceFetch + 1;
       }
+
+      if (!template.state?.hasOwnProperty("columnsWidth")) {
+        template.state.columnsWidth = {};
+      }
+      if (!template.state?.hasOwnProperty("fixedTotal")) {
+        template.state.fixedTotal = true;
+      }
       dispatch({
         type: "recoveryState",
-        payload: { ...template.state, sortParams }
+        payload: { ...template.state, sortParams, fetchAfterApply }
       });
     },
-    [dispatch]
+    [dispatch, fetchAfterApply, props.sortFirstColumn, tableState.forceFetch]
   );
 
   const handleSelect = useCallback(
-    value => {
-      onSelect && onSelect();
-      const template = templates.find(template => template.title === value);
-      setValue(template.title);
+    id => {
+      if (!id) return;
+      const template = templates.find(template => template.id === id);
+      onSelect && onSelect(template);
+      dispatch({
+        type: "update",
+        payload: {
+          templateSelected: true,
+          columnsForceUpdate: tableState.columnsForceUpdate + 1
+        }
+      });
+      setSelectedTemplate(template);
       setTemplateToState(template);
     },
-    [templates, setTemplateToState, onSelect]
+    [templates, onSelect, dispatch, setTemplateToState, tableState]
   );
 
   const handleSelectFavorite = useCallback(
@@ -118,7 +136,7 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
       setTemplates(templates =>
         templates.map(item => ({
           ...item,
-          favorite: item.title === template.title && !item.favorite
+          favorite: item.id === template.id && !item.favorite
         }))
       );
       onSelectFavorite && onSelectFavorite(template);
@@ -126,27 +144,21 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
     [onSelectFavorite]
   );
 
-  const handleDelete = useCallback(
-    template => {
-      setTemplates(templates =>
-        templates.filter(item => item.id !== template.id)
-      );
-      value === template.title && setValue(null);
-      onDelete && onDelete(template);
-    },
-    [onDelete, value]
-  );
-
   const handleClear = useCallback(
     e => {
-      e.stopPropagation();
-      e.preventDefault();
-      setValue(null);
+      e?.stopPropagation();
+      e?.preventDefault();
+
+      setSelectedTemplate(null);
+
       if (fetchAfterApply) {
         const state = {
+          first: true,
           forceFetch: tableState.forceFetch + 1,
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
-          columns: []
+          columnsWidth: {},
+          columns: [],
+          fixedTotal: true
         };
         dispatch({
           type: "update",
@@ -157,12 +169,32 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
       dispatch({ type: "filter", payload: {} });
     },
-    [tableState.forceFetch]
+    [
+      dispatch,
+      fetchAfterApply,
+      tableProps.visibleColumnsKeys,
+      tableState.forceFetch
+    ]
+  );
+
+  const handleDelete = useCallback(
+    template => {
+      setTemplates(templates =>
+        templates.filter(item => item.id !== template.id)
+      );
+
+      if (selectedTemplate?.id === template.id) {
+        handleClear(null);
+      }
+
+      onDelete && onDelete(template);
+    },
+    [handleClear, onDelete, selectedTemplate]
   );
 
   const handleCreate = useCallback(
     async title => {
-      let template = {
+      let template: TableTemplate = {
         title,
         favorite: false,
         state: pickState(tableState, baseTableState)
@@ -172,18 +204,30 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         const createResponse = await onCreate(template);
         if (createResponse) template = createResponse;
       }
-      setValue(title);
+
+      setSelectedTemplate(template);
+      dispatch({
+        type: "update",
+        payload: {
+          templateSelected: true
+        }
+      });
       setTemplates(templates => templates.concat(template));
     },
-    [tableState, baseTableState, onCreate]
+    [tableState, baseTableState, onCreate, dispatch]
   );
+
+  useEffect(() => {
+    if (!tableState.templateSelected) setSelectedTemplate(null);
+    // eslint-disable-next-line
+  }, [useDeepEqualMemo(tableState.templateSelected)]);
 
   useEffect(() => {
     function _setTemplates(templates) {
       const favorite = templates.find(template => template.favorite);
 
       if (favorite && favorite.state) {
-        setValue(favorite.title);
+        setSelectedTemplate(favorite);
         setTemplateToState(favorite);
       }
 
@@ -202,43 +246,53 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
 
   const className = useMemo(() => {
     return clsx("table-templates", "table-toolbar--right", {
-      "table-templates--selected": Boolean(value)
+      "table-templates--selected": Boolean(selectedTemplate)
     });
-  }, [value]);
+  }, [selectedTemplate]);
 
   return (
     <div
       className={className}
       title={translate(
-        value ? "CHANGE_TEMPLATE_BTN_TITLE" : "TEMPLATES_BTN_TITLE"
+        selectedTemplate ? "CHANGE_TEMPLATE_BTN_TITLE" : "TEMPLATES_BTN_TITLE"
       )}
     >
       <Select
         listHeight={150}
         onChange={handleSelect}
         className="table-templates__selector"
-        value={(<SelectValue value={value} />) as any}
+        value={(<SelectValue value={selectedTemplate?.title} />) as any}
+        onDropdownVisibleChange={state => {
+          setIsDropdownOpen(state);
+        }}
         dropdownRender={originNode => (
-          <Dropdown onCreate={handleCreate}>{originNode}</Dropdown>
+          <Dropdown onCreate={handleCreate} isOpen={isDropdownOpen}>
+            {originNode}
+          </Dropdown>
         )}
       >
         {templates.map((template, idx) => (
-          <Select.Option key={idx} value={template.title}>
+          <Select.Option key={idx} value={template.id}>
             <Template
               onDelete={handleDelete}
               onSelectFavorite={handleSelectFavorite}
+              isActive={Boolean(selectedTemplate?.id === template.id)}
               {...template}
             />
           </Select.Option>
         ))}
       </Select>
-      {value && (
+      {selectedTemplate && (
         <span className="table-templates__value-unselect" onClick={handleClear}>
           &times;
         </span>
       )}
     </div>
   );
+};
+
+TableTemplates.defaultProps = {
+  fetchAfterApply: true
 };
 
 export default TableTemplates;

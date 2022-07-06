@@ -1,4 +1,11 @@
-import { TableState, Action, SortParams, TableProps, IRow } from "./types";
+import {
+  TableState,
+  Action,
+  SortParams,
+  TableProps,
+  IRow,
+  IColumn
+} from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
 import { swapColumns, filterByColumns } from "./utils/utils";
 
@@ -49,6 +56,7 @@ function getRecordPath(rowKey: any, parentsMap: any) {
 
 export function initializer(props: TableProps): TableState {
   const {
+    error,
     columns,
     loading,
     dataSource,
@@ -64,6 +72,7 @@ export function initializer(props: TableProps): TableState {
   } = props;
 
   return {
+    error,
     columns,
     loading,
     dataSource,
@@ -83,11 +92,15 @@ export function initializer(props: TableProps): TableState {
     filterParams: {},
     expandedRowKeys: [],
     columnsMap: genColumnsMap(columns),
+    columnsWidth: {},
+    fixedTotal: true,
     parentsMap: {},
     visibleColumnsKeys: visibleColumnsKeys || [],
     dTypesConfig: { ...basicDTypesConfig, ...dTypesConfig },
     loadingRows: {},
-    forceFetch: 1
+    columnsSwapped: false,
+    forceFetch: 1,
+    columnsForceUpdate: 1
   };
 }
 
@@ -97,11 +110,36 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         expandedRowKeys: [],
+        parentsMap: {},
         dataSource: action.payload
       };
     }
+    case "columnWidthChange":
+      if (state.columnsWidth[action.payload.key] === action.payload.width) {
+        return state;
+      }
+      return {
+        ...state,
+        columnsWidth: {
+          ...state.columnsWidth,
+          [action.payload.key]: action.payload.width
+        }
+      };
     case "updateColumns": {
-      const nextColumnsMap = genColumnsMap(action.payload);
+      let cols = action.payload as IColumn[];
+      let cancelled = false;
+      let oldColumns = [];
+      let visibleColumnsKeys = state.visibleColumnsKeys;
+
+      if (!Array.isArray(action.payload)) {
+        cols = action.payload.columns;
+        cancelled = Boolean(action.payload.cancelled);
+        oldColumns = state.visibleColumnsKeys;
+        visibleColumnsKeys =
+          action.payload.visibleColumnsKeys ?? state.visibleColumnsKeys;
+      }
+
+      const nextColumnsMap = genColumnsMap(cols);
       const nextSortParams = filterByColumns(nextColumnsMap, state.sortParams);
       const nextFilterParams = filterByColumns(
         nextColumnsMap,
@@ -109,9 +147,9 @@ export function reducer(state: TableState, action: Action): TableState {
       );
 
       const nextVisibleColumnsKeys =
-        state.visibleColumnsKeys &&
-        state.visibleColumnsKeys.length &&
-        state.visibleColumnsKeys.filter(key => nextColumnsMap[key]);
+        visibleColumnsKeys &&
+        visibleColumnsKeys.length &&
+        visibleColumnsKeys.filter(key => nextColumnsMap[key]);
       const nextColumns = (function rec(newColumns, oldColumns) {
         if (state.forceColumns) {
           return newColumns;
@@ -126,7 +164,7 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         if (state.columnsSorter) {
-          state.columnsSorter(newColumns, oldColumnsInfo);
+          state.columnsSorter(newColumns, oldColumnsInfo, state.columnsSwapped);
         } else {
           newColumns.sort((a, b) => {
             const aIndex = oldColumnsInfo[a.dataIndex]
@@ -153,11 +191,12 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         return newColumns;
-      })(action.payload, state.columns);
+      })(cols, state.columns);
 
       return {
         ...state,
-
+        cancelled,
+        oldColumns,
         columns: nextColumns,
         columnsMap: nextColumnsMap,
 
@@ -300,6 +339,7 @@ export function reducer(state: TableState, action: Action): TableState {
 
       return {
         ...state,
+        columnsSwapped: true,
         columns: nextColumns
       };
     }
@@ -310,12 +350,25 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "collapseRow": {
-      return {
+      const newState = {
         ...state,
         expandedRowKeys: state.expandedRowKeys.filter(
           key => key !== action.payload.key
         )
       };
+      if (
+        action.payload.children &&
+        Array.isArray(action.payload.children) &&
+        action.payload.children.length > 300
+      ) {
+        const { parentsMap } = state;
+        const path = getRecordPath(action.payload.key, parentsMap);
+        const nextDataSource = state.dataSource.concat();
+        const expandedRecord = findExpandedRecord(path, state.dataSource);
+        expandedRecord.children = [];
+        newState.dataSource = nextDataSource;
+      }
+      return newState;
     }
     case "loading": {
       return {
@@ -325,7 +378,12 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "recoveryState": {
       const { columnsPositions, pagination, ...restPayload } = action.payload;
-      let nextState = { ...state, ...restPayload, stateIsRecovered: true };
+      let nextState = {
+        ...state,
+        ...restPayload,
+        stateIsRecovered: true,
+        loading: restPayload.fetchAfterApply ?? false
+      };
 
       if (nextState.pagination && pagination && pagination.pageSize) {
         nextState.pagination.pageSize = pagination.pageSize;
@@ -358,7 +416,6 @@ export function reducer(state: TableState, action: Action): TableState {
       if (data) {
         const nextDataSource = state.dataSource.concat();
         const path = getRecordPath(key, parentsMap);
-
         let expandedRecord = findExpandedRecord(
           path,
           nextDataSource,
@@ -389,13 +446,12 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "update": {
       let nextState = { ...state, ...action.payload };
-
       if (action.payload.columns)
         nextState = reducer(
           { ...nextState, columns: state.columns },
           {
             type: "updateColumns",
-            payload: nextState.columns
+            payload: nextState
           }
         );
 

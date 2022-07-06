@@ -9,6 +9,7 @@
 
 .app-switcher-link {
   display: flex;
+
   &.dw-dark {
     .app-switcher-icon {
       color: @icon-color-dark-theme;
@@ -22,33 +23,41 @@
   background-color: @bg-lighter-color;
   margin-top: 15px;
   box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
   padding: 5px;
+
   .ant-col {
     display: flex;
     text-align: center;
     color: @page-title-color;
-    height: 100px;
+    height: auto;
+    min-height: 100px;
     flex-direction: column;
     padding: 5px;
     cursor: pointer;
+
     .logo {
       height: 60px;
       display: flex;
       align-items: center;
+
       & > * {
         text-align: center;
         flex: 1;
+
         img {
           width: 50px;
         }
       }
     }
+
     .title {
-      height: 30px;
+      height: auto;
+      min-height: 30px;
       font-size: 14px;
       padding-top: 5px;
+      line-height: 18px;
     }
 
     &:hover {

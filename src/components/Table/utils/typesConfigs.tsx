@@ -3,11 +3,28 @@ import { DTypeConfig } from "../types";
 const basicDTypesConfig = {
   "number": {
     sorter: (a, b) => a - b,
-    toString: value => value && value.toLocaleString(),
+    toString: value => value && value.toLocaleString("en-US"),
     filter: (value, filterBy) => value === filterBy,
-    search: (value, searchBy) => value.toString().includes(searchBy),
+    search: (value, searchBy) => {
+      if (typeof value === "undefined" || value === null) return false;
+      if (searchBy.includes(";")) {
+        return basicDTypesConfig["number"].multiSearch(value, searchBy);
+      }
+      return value.toString().includes(searchBy);
+    },
+    multiSearch: (value, searchBy) => {
+      const searchByArr = searchBy
+        .trim()
+        .split(";")
+        .filter(i => i);
+      return searchByArr.some(
+        str =>
+          str.trim() &&
+          value.toString().trim().includes(str.trim().toLowerCase())
+      );
+    },
     render: value =>
-      value && value.toLocaleString(undefined, { maximumFractionDigits: 4 })
+      value && value.toLocaleString("en-US", { maximumFractionDigits: 4 })
   } as DTypeConfig<number>,
 
   "boolean": {
@@ -20,8 +37,24 @@ const basicDTypesConfig = {
     toString: value => value,
     sorter: (a, b) => a.localeCompare(b),
     filter: (value, filterBy) => value === filterBy,
-    search: (value, searchBy) =>
-      value.toLowerCase().includes(searchBy.toLowerCase())
+    search: (value, searchBy) => {
+      if (typeof value === "undefined" || value === null) return false;
+      if (searchBy.includes(";")) {
+        return basicDTypesConfig["string"].multiSearch(value, searchBy);
+      }
+      return value.toLowerCase().includes(searchBy.toLowerCase());
+    },
+    multiSearch: (value, searchBy) => {
+      const searchByArr = searchBy
+        .trim()
+        .split(";")
+        .filter(i => i);
+      return searchByArr.some(
+        str =>
+          str.trim() &&
+          value.trim().toLowerCase().includes(str.trim().toLowerCase())
+      );
+    }
   } as DTypeConfig<string>
 };
 

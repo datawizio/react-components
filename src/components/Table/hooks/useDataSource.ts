@@ -9,6 +9,7 @@ function useDataSource(
 
   const {
     columnsMap,
+    visibleColumnsKeys,
     sortParams,
     dataSource,
     searchValue,
@@ -34,6 +35,7 @@ function useDataSource(
     if (searchValue && searchValue.length) {
       const found = searchHandler(
         columnsMap,
+        visibleColumnsKeys,
         nextState.dataSource,
         searchValue,
         dTypesConfig

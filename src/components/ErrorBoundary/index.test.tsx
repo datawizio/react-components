@@ -9,30 +9,41 @@ const mockProps = {
   onReportFeedbackClick: jest.fn()
 };
 
-const CustomComponeent = () => <span>inner</span>;
+const CustomComponent = () => <span>inner</span>;
 
 const setUp = (props?) =>
   mount(
     <ErrorBoundary {...props}>
-      <CustomComponeent />
+      <CustomComponent />
     </ErrorBoundary>
   );
 
 describe("ErrorBoundary component", () => {
   let component;
-  beforeEach(() => {
-    component = setUp(mockProps);
+  beforeAll(() => {
+    window.$crisp = [];
   });
 
-  it("ErrorBoundary works correctly", () => {
-    const inner = component.find("CustomComponeent").first();
-    inner.simulateError("errText");
+  beforeEach(() => {
+    jest.spyOn(console, "error");
+    //@ts-ignore
+    console.error.mockImplementation(() => {});
+    component = setUp(mockProps);
+  });
+  afterEach(() => {
+    //@ts-ignore
+    console.error.mockRestore();
+  });
 
-    expect(component.state("hasError")).toBeTruthy();
+  it("ErrorBoundary render chunkError", () => {
+    const error = new Error("ChunkLoadError");
+    component.find(CustomComponent).simulateError(error);
+    expect(component.state("chunkError")).toBeTruthy();
+    expect(component).toMatchSnapshot();
   });
 
   it("Simulate Button click", () => {
-    const inner = component.find("CustomComponeent").first();
+    const inner = component.find("CustomComponent").first();
     inner.simulateError("errText");
     const button = component.find("Button").first();
     button.simulate("click");

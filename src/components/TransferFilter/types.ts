@@ -76,12 +76,12 @@ export interface TransferFilterProps {
   className?: string;
   disabled?: boolean;
   targetKeys?: string[];
-  selectedKeys?: string[];
+  checkedKeys?: string[];
   operationDisabled?: boolean;
   onChange?: (value: TransferFilterValue) => void;
   onSelectChange?: (
-    sourceSelectedKeys: string[],
-    targetSelectedKeys: string[]
+    sourceCheckedKeys: string[],
+    targetCheckedKeys: string[]
   ) => void;
   style?: React.CSSProperties;
 

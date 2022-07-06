@@ -3,13 +3,13 @@ import {
   SearchHandlerType,
   SorterHandlerType
 } from "../types";
-
-import { IRow } from "./../types";
+import { IRow } from "../types";
 import { defineCellType } from "./utils";
 import { deepFilter } from "../../../utils/deepFilter";
 
 const basicSearchHandler: SearchHandlerType = (
   columnsMap,
+  visibleColumnsKeys,
   dataSource,
   searchValue,
   dTypesConfig
@@ -20,9 +20,15 @@ const basicSearchHandler: SearchHandlerType = (
     dataSource,
     (row: IRow) => {
       return Object.entries(row).some(([dataIndex, cellVal]) => {
+        // exclude hidden columns from search
+        if (
+          !dataIndex.includes("name") &&
+          visibleColumnsKeys.length &&
+          !visibleColumnsKeys.includes(dataIndex)
+        )
+          return false;
         const typeConfig =
           dTypesConfig[defineCellType(cellVal, columnsMap[dataIndex])];
-
         return (
           typeConfig &&
           typeConfig.search &&

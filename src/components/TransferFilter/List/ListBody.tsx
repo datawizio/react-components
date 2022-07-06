@@ -17,7 +17,7 @@ export interface TransferListBodyProps extends PartialTransferListProps {
   filteredItems: TransferFilterItem[];
   ref: any;
   totalItemsCount: number;
-  selectedKeys: string[];
+  checkedKeys: string[];
   loading?: boolean;
   type?: "tree" | "list";
   pagination?: PaginationType;
@@ -60,8 +60,8 @@ class ListBody extends React.Component<
     current: 1
   };
   onItemSelect = (item: TransferFilterItem) => {
-    const { onItemSelect, selectedKeys } = this.props;
-    const checked = selectedKeys.indexOf(item.key) >= 0;
+    const { onItemSelect, checkedKeys } = this.props;
+    const checked = checkedKeys.indexOf(item.key) >= 0;
     onItemSelect(
       {
         key: item.key,
@@ -101,7 +101,7 @@ class ListBody extends React.Component<
       prefixCls,
       filteredItems,
       expandedKeys,
-      selectedKeys,
+      checkedKeys,
       disabled: globalDisabled,
       loading,
       disabledKeys,
@@ -139,7 +139,7 @@ class ListBody extends React.Component<
         <ul className={`${prefixCls}-content`}>
           {type === "tree" ? (
             <ListTree
-              selectedKeys={selectedKeys}
+              checkedKeys={checkedKeys}
               disabledKeys={disabledKeys}
               disableAll={disableAll}
               enabledKeys={enabledKeys}
@@ -157,7 +157,7 @@ class ListBody extends React.Component<
                 ? !enabledSet.has(item.key)
                 : disabledSet.has(item.key);
 
-              const checked = selectedKeys.indexOf(item.key) >= 0;
+              const checked = checkedKeys.indexOf(item.key) >= 0;
 
               return (
                 <ListItem

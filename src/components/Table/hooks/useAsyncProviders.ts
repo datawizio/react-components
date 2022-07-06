@@ -1,4 +1,4 @@
-import { TableState, Action, TableProps } from "./../types";
+import { TableState, Action, TableProps } from "../types";
 import { Dispatch, useEffect, useCallback, useRef } from "react";
 import { getVisibleColumns } from "../utils/utils";
 
@@ -19,9 +19,22 @@ function useAsyncProviders(
           data.visibleColumnsKeys = data.showAllColumns
             ? []
             : getVisibleColumns(data.columns);
+          if (!data.sortParams && props.sortParams) {
+            data.sortParams = props.sortParams;
+          }
         }
-        dispatch({ type: "update", payload: data });
+        dispatch({
+          type: "update",
+          payload: {
+            ...data,
+            first: false
+            // loading: data.cancelled ? true : false
+          }
+        });
       } catch (e) {
+        if (e.name === "CancelRequestError") {
+          throw e;
+        }
         console.warn("Table loading failed: " + e.message);
       }
     }
@@ -42,10 +55,17 @@ function useAsyncProviders(
   useEffect(() => {
     (async () => {
       dispatch({ type: "loading", payload: true });
-      firstUpdate.current && templatesProvider
-        ? await recoveryState()
-        : await fetchData(firstUpdate.current);
-      dispatch({ type: "loading", payload: false });
+      try {
+        firstUpdate.current && templatesProvider
+          ? await recoveryState()
+          : await fetchData(state.first || firstUpdate.current);
+        dispatch({ type: "loading", payload: false });
+      } catch (e) {
+        if (e.name === "CancelRequestError") {
+          return;
+        }
+        dispatch({ type: "loading", payload: false });
+      }
     })();
     // eslint-disable-next-line
   }, [

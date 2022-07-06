@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Form } from "antd";
 import { FieldDrawerSelectProps } from "../types";
 import DrawerSelect from "../../DrawerSelect";
@@ -10,11 +9,13 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
   name,
   initialValue,
   placeholder,
+  maxSelectedCount,
   multiple,
   options,
   loadData,
   onChange,
   loading,
+  allowClear,
   ...restProps
 }) => {
   const handleFieldChange = (value: any, selected: any) => {
@@ -40,9 +41,10 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
         drawerTitle={placeholder}
         loadData={loadData}
         loading={loading}
+        maxSelectedCount={maxSelectedCount}
         placeholder={placeholder}
         onChange={handleFieldChange}
-        allowClear={true}
+        allowClear={allowClear || typeof allowClear === "undefined"}
       />
     </Form.Item>
   );

@@ -2,6 +2,7 @@ import React, { useRef, useContext } from "react";
 import List from "./List";
 import Operation from "./Operation";
 import { parseValue, useTransfer } from "./hooks/useTransfer";
+import { getAllItems } from "./helper";
 import {
   ICheckedItem,
   TransferFilterLoadDataParams,
@@ -42,8 +43,8 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
     dispatch
   ] = useTransfer(value);
 
-  const targetListRef = useRef<any>();
-  const sourceListRef = useRef<any>();
+  const targetListRef = useRef<List>();
+  const sourceListRef = useRef<List>();
 
   const sourceLoadData = async (params: TransferFilterLoadDataParams) => {
     if (params.exclude) {
@@ -120,16 +121,28 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
     });
   };
 
-  const onRightItemsSelect = (selectedItems: ICheckedItem[]) => {
-    const targetChecked = [];
-    selectedItems.forEach(item => {
-      targetChecked.push(item.key);
-    });
+  const onRightItemsSelect = (
+    selectedItems: ICheckedItem[],
+    checked: boolean
+  ) => {
+    let newTargetChecked = [];
+
+    if (checked) {
+      const targetCheckedSet = new Set(targetChecked);
+      newTargetChecked = [...targetChecked];
+      selectedItems.forEach(item => {
+        if (!targetCheckedSet.has(item.key)) {
+          newTargetChecked.push(item.key);
+        }
+      });
+    } else {
+      newTargetChecked = [];
+    }
 
     dispatch({
       type: "setState",
       payload: {
-        targetChecked
+        targetChecked: newTargetChecked
       }
     });
   };
@@ -152,29 +165,54 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       internalValue.include = [...sourceChecked];
 
     onChange(internalValue);
-    targetListRef.current.addItems(Object.values(sourceCheckedObj));
+    targetListRef.current.addItems(
+      sourceChecked.map(id => sourceCheckedObj[id])
+    );
 
     dispatch({
       type: "setState",
       payload: {
         internalValue,
         sourceChecked: [],
-        sourceCheckedObj: [],
+        sourceCheckedObj: {},
         ...parseValue(internalValue)
       }
     });
   };
 
   const moveAllToRight = () => {
-    internalValue.include = [];
-    internalValue.exclude = [];
+    if (type === "tree") {
+      const items = getAllItems<List, ICheckedItem[]>(sourceListRef.current);
+      if (items.length === 0) return;
+
+      const itemsKeys = items.map(item => item.key);
+
+      if (internalValue.include === null) {
+        internalValue.include = [...itemsKeys];
+      } else if (internalValue.include.length === 0) {
+        const set = new Set(itemsKeys);
+        internalValue.exclude = internalValue.exclude.filter(
+          item => !set.has(item)
+        );
+      } else {
+        internalValue.include = internalValue.include.concat(itemsKeys);
+      }
+
+      if (internalValue.include === null)
+        internalValue.include = [...itemsKeys];
+
+      targetListRef.current.addItems(items);
+    } else {
+      internalValue.include = [];
+      internalValue.exclude = [];
+    }
     onChange(internalValue);
 
     dispatch({
       type: "setState",
       payload: {
         sourceChecked: [],
-        sourceCheckedObj: [],
+        sourceCheckedObj: {},
         targetChecked: [],
         internalValue,
         ...parseValue(internalValue)
@@ -219,7 +257,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
       type: "setState",
       payload: {
         sourceChecked: [],
-        sourceCheckedObj: [],
+        sourceCheckedObj: {},
         targetChecked: [],
         internalValue,
         ...parseValue(internalValue)

@@ -1,6 +1,7 @@
 @import "~antd/es/style/themes/dark.less";
 
 @primary-color: #975fe4;
+@primary-medium-color: #975fe4;
 @primary-light-color: #e3d1ff;
 
 @icon-color-dark-theme: hsl(0, 0%, 100%);
@@ -21,11 +22,18 @@
 @table-border-color: fade(@white, 45%);
 @input-bg-color: #000;
 @list-item-border-color: fade(@white, 45%);
+@help-icon-color: white;
+@help-icon-color-hover: #975fe4;
+@notice-bg: @primary-color;
 
 @toggler-icon-color: #fff;
 @table-template-selected-color: fade(@white, 25%);
 @drawer-selected-text-color: @white;
 @ant-menu-item-disabled-color: gray;
+
+@ant-tag-color: rgba(255, 255, 255, 0.65);
+@ant-tag-background-color: rgba(255, 255, 255, 0.08);
+@ant-tag-border-color: #303030;
 
 @skeleton-bg-img: linear-gradient(
   90deg,
@@ -39,3 +47,7 @@
 
 @nielsen-logo: "/static/images/nielsen-logo-dark.png";
 @nielsen-logo2x: "/static/images/nielsen-logo-dark@2x.png";
+
+.crisp-client #crisp-chatbox {
+  z-index: 1000;
+}

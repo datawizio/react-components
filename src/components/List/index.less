@@ -16,6 +16,16 @@
     &:hover {
       background-color: @table-row-hover-bg;
     }
+    @media (max-width: @screen-xs) {
+      padding-right: 2px;
+      .anticon-right {
+        margin-top: 9px;
+      }
+    }
+    @media (max-width: @screen-xxs) {
+      padding-bottom: 10px;
+      padding-top: 5px;
+    }
     .list-item-field-container {
       display: flex;
       flex: 1;
@@ -34,6 +44,15 @@
         align-items: flex-start;
         .value-container {
           padding-top: @padding-xs;
+        }
+      }
+      @media (max-width: @screen-xs) {
+        height: max-content;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        .value-container {
+          align-self: center;
+          margin-left: 5px;
         }
       }
     }

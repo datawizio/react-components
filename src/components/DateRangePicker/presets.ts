@@ -3,6 +3,8 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DateRange, DefaultPresetPrevType, DefaultPresetType } from "./types";
 import { genPrevPeriod, reverseDate } from "./utils";
+import { fiscalCalendar } from "../../utils/fiscalCalendar";
+import { calendarInfo } from "../../utils/calendar";
 
 dayjs.extend(quarterOfYear);
 dayjs.extend(customParseFormat);
@@ -10,6 +12,11 @@ dayjs.extend(customParseFormat);
 const format = "DD-MM-YYYY";
 
 export const DefaultPresetRanges: DefaultPresetType = {
+  last_update_date: (maxDate = null): DateRange => {
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
+    return [max, max];
+  },
+
   yesterday: (maxDate = null): DateRange => {
     const max = maxDate
       ? dayjs(maxDate, format).subtract(1, "d")
@@ -17,70 +24,121 @@ export const DefaultPresetRanges: DefaultPresetType = {
     return [max, max];
   },
 
-  lastWeek: (maxDate = null): DateRange => {
-    const min = maxDate
+  week_begin: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
+      ? dayjs(maxDate, format).startOf("week")
+      : dayjs().startOf("week");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
+    return [min, max];
+  },
+
+  lastWeek: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(6, "d")
       : dayjs().subtract(6, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  currentMonth: (maxDate = null): DateRange => {
-    const min = maxDate
+  currentMonth: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).startOf("month")
       : dayjs().startOf("month");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_30_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_30_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(29, "d")
       : dayjs().subtract(29, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_90_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_90_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(89, "d")
       : dayjs().subtract(89, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  quarterBegin: (maxDate = null): DateRange => {
-    const min = maxDate
-      ? dayjs(maxDate, format).startOf("quarter")
-      : dayjs().startOf("quarter");
-    const max = maxDate ? dayjs(maxDate, format) : dayjs();
-    return [min, max];
+  quarterBegin: (maxDate = null, minDate = null): DateRange => {
+    maxDate = maxDate ? dayjs(maxDate, format) : dayjs();
+    let startQuarter = calendarInfo.getStartOfYear(maxDate);
+    while (startQuarter.add(3, "month").isBefore(maxDate)) {
+      startQuarter = startQuarter.add(3, "month");
+    }
+    if (minDate && (dayjs(startQuarter, format) < dayjs(minDate, format))) {
+      startQuarter = dayjs(minDate, format);
+    }
+    return [startQuarter, maxDate];
   },
 
-  last_180_days: (maxDate = null): DateRange => {
-    const min = maxDate
+  last_180_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
       ? dayjs(maxDate, format).subtract(179, "d")
       : dayjs().subtract(179, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  last_365_days: (maxDate = null): DateRange => {
-    const min = maxDate
-      ? dayjs(maxDate, format).subtract(1, "year")
-      : dayjs().subtract(1, "year");
+  last_364_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
+      ? dayjs(maxDate, format).subtract(363, "d")
+      : dayjs().subtract(363, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  currentYear: (maxDate = null): DateRange => {
-    const min = maxDate ? dayjs(maxDate, format).startOf("y") : dayjs().startOf("y");
+  last_365_days: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate
+      ? dayjs(maxDate, format).subtract(364, "d")
+      : dayjs().subtract(364, "d");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   },
 
-  allPeriod: (minDate = null, maxDate = null): DateRange => {
-    const min = minDate ? dayjs(minDate, format) : dayjs().subtract(10, "year");
+  currentYear: (maxDate = null, minDate = null): DateRange => {
+    let min = maxDate ? dayjs(maxDate, format) : dayjs();
+    min = calendarInfo.getStartOfYear(min);
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
+    const max = maxDate ? dayjs(maxDate, format) : dayjs();
+    return [min, max];
+  },
+
+  allPeriod: (maxDate = null, minDate = null): DateRange => {
+    let min = minDate ? dayjs(minDate, format) : dayjs().subtract(10, "year");
+    if (minDate && (dayjs(min, format) < dayjs(minDate, format))) {
+      min = dayjs(minDate, format);
+    }
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   }
@@ -117,27 +175,51 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
   }
 };
 
-export const DefaultPreset = (minDate, maxDate) => {
+export const DefaultPreset = (type, minDate, maxDate) => {
   return {
-    "Yesterday": DefaultPresetRanges.yesterday(maxDate),
-    "Last_week": DefaultPresetRanges.lastWeek(maxDate),
-    "Current_month": DefaultPresetRanges.currentMonth(maxDate),
-    "Last_30_Days": DefaultPresetRanges.last_30_days(maxDate),
-    "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate),
-    "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate),
-    "SEASON_BEGIN": DefaultPresetRanges.quarterBegin(maxDate),
-    "cur_year": DefaultPresetRanges.currentYear(maxDate),
-    "LAST_365_DAYS": DefaultPresetRanges.last_365_days(maxDate),
-    "All_period": DefaultPresetRanges.allPeriod(minDate, maxDate)
+    "LAST_UPDATE_DATE": DefaultPresetRanges.last_update_date(maxDate),
+    "LAST_7_DAYS": DefaultPresetRanges.lastWeek(maxDate, minDate),
+    "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate, minDate),
+    "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate, minDate),
+    "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate, minDate),
+    "LAST_365_DAYS":
+      type === "fiscal"
+        ? DefaultPresetRanges.last_364_days(maxDate, minDate)
+        : DefaultPresetRanges.last_365_days(maxDate, minDate),
+    "WEEK_BEGIN": DefaultPresetRanges.week_begin(maxDate, minDate),
+    "MONTH_BEGIN":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentMonth(maxDate)
+        : DefaultPresetRanges.currentMonth(maxDate, minDate),
+    "QUARTER_BEGIN":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentQuater(maxDate)
+        : DefaultPresetRanges.quarterBegin(maxDate, minDate),
+    "cur_year":
+      type === "fiscal"
+        ? fiscalCalendar.presetCurrentYear(maxDate)
+        : DefaultPresetRanges.currentYear(maxDate, minDate),
+    "All_period": DefaultPresetRanges.allPeriod(maxDate, minDate)
   };
 };
 
-export const DefaultPresetPrev = (dateFrom, dateTo) => {
+export const DefaultPresetPrev = (type, dateFrom, dateTo) => {
+  if (dateFrom === "Invalid Date") dateFrom = null;
+  if (dateTo === "Invalid Date") dateTo = null;
   return {
     "PREVIOUS": DefaultPresetPrevRanges.previous(dateFrom, dateTo),
     "PREV_LAST_WEEK": DefaultPresetPrevRanges.prev_last_week(dateFrom, dateTo),
-    "PREV_LAST_MONTH": DefaultPresetPrevRanges.prev_last_month(dateFrom, dateTo),
-    "PREV_LAST_QUARTER": DefaultPresetPrevRanges.prev_last_quarter(dateFrom, dateTo),
-    "PREV_LAST_YEAR": DefaultPresetPrevRanges.prev_last_year(dateFrom, dateTo),
+    "PREV_LAST_MONTH":
+      type === "fiscal"
+        ? null
+        : DefaultPresetPrevRanges.prev_last_month(dateFrom, dateTo),
+    "PREV_LAST_QUARTER":
+      type === "fiscal"
+        ? fiscalCalendar.prevLastQuarter(dateFrom, dateTo)
+        : DefaultPresetPrevRanges.prev_last_quarter(dateFrom, dateTo),
+    "PREV_LAST_YEAR":
+      type === "fiscal"
+        ? fiscalCalendar.prevLastYear(dateFrom, dateTo)
+        : DefaultPresetPrevRanges.prev_last_year(dateFrom, dateTo)
   };
 };

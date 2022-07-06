@@ -25,6 +25,8 @@ export interface SelectProps<VT> extends AntSelectProps<VT> {
    */
   loadingContent?: string;
 
+  notFoundContent?: string;
+
   /**
    * Подгрузка ассинхронных данных с пагинацией
    */

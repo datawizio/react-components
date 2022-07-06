@@ -2,7 +2,7 @@ import { BodyCellType, IColumn, TableState } from "../types";
 
 function defineCellType(cell: BodyCellType, column: IColumn): string {
   const dType =
-    column && column.dtype !== "object" ? column.dtype : (cell as any).dtype;
+    column && column.dtype !== "object" ? column.dtype : (cell as any)?.dtype;
   return dType || typeof cell;
 }
 
@@ -26,8 +26,10 @@ function swapColumns(
       const idxTo = columns.findIndex(column => column.key === keyTo);
 
       if (idxTo !== -1) {
-        columns[idxFrom].order = columns[idxTo].order - 1;
-        [columns[idxFrom], columns[idxTo]] = [columns[idxTo], columns[idxFrom]];
+        idxFrom < idxTo
+          ? (columns[idxFrom].order = columns[idxTo].order + 1)
+          : (columns[idxFrom].order = columns[idxTo].order - 1);
+        columns.splice(idxTo, 0, columns.splice(idxFrom, 1)[0]);
       }
 
       return true;

@@ -5,11 +5,11 @@ import server from "../../utils/data/server";
 import { withKnobs, text, boolean, number } from "@storybook/addon-knobs";
 
 import TableSearch from "../TableSearch";
-import TableXlsxExporter from "../TableXlsxExporter";
+import TableMenu from "../TableMenu";
 import TableTemplates from "../TableTemplates";
 import TableTransposeButton from "../TableTransposeButton";
 import TableSelectColumnsModal from "../TableSelectColumnsModal";
-import { exportTableToXLSX } from "../TableXlsxExporter/exporters";
+import { exportTableToXLSX } from "./utils/exporters.ts";
 
 import Table from "./";
 import { TableWithProps } from "./story/helper";
@@ -71,7 +71,7 @@ import { useState, useMemo, useCallback } from "react";
             {toolBar && (
               <Table.ToolBar>
                 <TableSearch />
-                <TableXlsxExporter exportHandler={exportTableToXLSX} />
+                <TableMenu exportHandler={exportTableToXLSX} />
                 <TableTemplates
                   templates={[
                     { title: "test1", favorite: true, state: {} },

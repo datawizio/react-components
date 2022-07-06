@@ -1,6 +1,6 @@
 import "jsdom-global/register";
 import React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
 import BarTable from "./index";
 import mock_data from "./mock_data";
 
@@ -11,7 +11,7 @@ jest.mock("rc-tree-select/es/utils/valueUtil", () => ({
   filterOptions: val => val
 }));
 
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
@@ -21,17 +21,13 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+    dispatchEvent: jest.fn()
+  }))
 });
 
 const mockProps = {
-  dataProvider: () => {
-    return {
-      columns: mock_data.columns,
-      dataSource: mock_data.dataSource
-    };
-  },
+  columns: mock_data.columns,
+  dataSource: mock_data.dataSource,
   titleKey: "MANAGERS_ACTIVITY",
   height: 244,
   tooltip: jest.fn().mockImplementation((cellVal, row, column) => {
@@ -41,11 +37,11 @@ const mockProps = {
         <p>OPEN</p>
         <p>7</p>
       </div>
-    )
+    );
   })
 };
 
-const setUp = (props?) => mount(<BarTable {...props} />);
+const setUp = (props?) => shallow(<BarTable {...props} />);
 
 /******************************************************************************/
 
@@ -56,15 +52,11 @@ describe("BarTable component", () => {
     component = setUp(mockProps);
   });
 
-  it("BarTable renders correctly", () => {
-    expect(component).toMatchSnapshot();
-  });
-
   it("BarTable title exists", () => {
     expect(component.find(".bar-table-title").length).toBeTruthy();
   });
 
   it("BarTable exists", () => {
-    expect(component.find(".BarTable table").length).toBeTruthy();
+    expect(component.render().find(".BarTable table").length).toBeTruthy();
   });
 });

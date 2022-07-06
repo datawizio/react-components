@@ -39,6 +39,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             ],
+            "columnsForceUpdate": 1,
             "columnsMap": Object {
               "undefined": Object {
                 "alias10-20279": "Generic",
@@ -48,6 +49,8 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             },
             "columnsSorter": undefined,
+            "columnsSwapped": false,
+            "columnsWidth": Object {},
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
@@ -56,6 +59,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
               "number": Object {
                 "filter": [Function],
+                "multiSearch": [Function],
                 "render": [Function],
                 "search": [Function],
                 "sorter": [Function],
@@ -63,6 +67,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
               "string": Object {
                 "filter": [Function],
+                "multiSearch": [Function],
                 "search": [Function],
                 "sorter": [Function],
                 "toString": [Function],
@@ -96,13 +101,16 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             ],
+            "error": undefined,
             "expandedRowKeys": Array [],
             "filterParams": Object {},
+            "fixedTotal": true,
             "forceColumns": undefined,
             "forceFetch": 1,
             "loading": undefined,
             "loadingRows": Object {},
             "pagination": Object {
+              "current": 1,
               "pageSize": 20,
               "pageSizeOptions": Array [
                 "20",
@@ -111,6 +119,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "100",
               ],
               "showSizeChanger": true,
+              "total": 3,
             },
             "parentsMap": Object {},
             "searchValue": undefined,
@@ -255,6 +264,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "sorter": true,
               },
             ],
+            "columnsForceUpdate": 1,
             "columnsMap": Object {
               "undefined": Object {
                 "alias10-20279": "Generic",
@@ -264,6 +274,10 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             },
             "columnsSorter": undefined,
+            "columnsSwapped": false,
+            "columnsWidth": Object {
+              "undefined": 200,
+            },
             "dTypesConfig": Object {
               "boolean": Object {
                 "filter": [Function],
@@ -272,6 +286,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
               "number": Object {
                 "filter": [Function],
+                "multiSearch": [Function],
                 "render": [Function],
                 "search": [Function],
                 "sorter": [Function],
@@ -279,6 +294,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
               "string": Object {
                 "filter": [Function],
+                "multiSearch": [Function],
                 "search": [Function],
                 "sorter": [Function],
                 "toString": [Function],
@@ -312,13 +328,16 @@ exports[`Table component rendered Table corectly 1`] = `
                 "key": "2-0",
               },
             ],
+            "error": undefined,
             "expandedRowKeys": Array [],
             "filterParams": Object {},
+            "fixedTotal": true,
             "forceColumns": undefined,
             "forceFetch": 1,
             "loading": false,
             "loadingRows": Object {},
             "pagination": Object {
+              "current": 1,
               "pageSize": 20,
               "pageSizeOptions": Array [
                 "20",
@@ -327,6 +346,7 @@ exports[`Table component rendered Table corectly 1`] = `
                 "100",
               ],
               "showSizeChanger": true,
+              "total": 3,
             },
             "parentsMap": Object {},
             "searchValue": undefined,
@@ -397,6 +417,7 @@ exports[`Table component rendered Table corectly 1`] = `
             ]
           }
           columnsConfig={Object {}}
+          columnsForceUpdate={1}
           columnsMap={
             Object {
               "undefined": Object {
@@ -407,10 +428,17 @@ exports[`Table component rendered Table corectly 1`] = `
               },
             }
           }
+          columnsSwapped={false}
+          columnsWidth={
+            Object {
+              "undefined": 200,
+            }
+          }
           components={
             Object {
               "body": Object {
                 "cell": [Function],
+                "row": [Function],
               },
               "header": Object {
                 "cell": [Function],
@@ -427,6 +455,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
               "number": Object {
                 "filter": [Function],
+                "multiSearch": [Function],
                 "render": [Function],
                 "search": [Function],
                 "sorter": [Function],
@@ -434,6 +463,7 @@ exports[`Table component rendered Table corectly 1`] = `
               },
               "string": Object {
                 "filter": [Function],
+                "multiSearch": [Function],
                 "search": [Function],
                 "sorter": [Function],
                 "toString": [Function],
@@ -474,6 +504,7 @@ exports[`Table component rendered Table corectly 1`] = `
           expandedRowKeys={Array []}
           filterHandler={[Function]}
           filterParams={Object {}}
+          fixedTotal={true}
           forceFetch={1}
           isResizableColumns={true}
           loading={false}
@@ -490,6 +521,7 @@ exports[`Table component rendered Table corectly 1`] = `
           }
           pagination={
             Object {
+              "current": 1,
               "pageSize": 20,
               "pageSizeOptions": Array [
                 "20",
@@ -499,6 +531,7 @@ exports[`Table component rendered Table corectly 1`] = `
               ],
               "showSizeChanger": true,
               "showTotal": [Function],
+              "total": 3,
             }
           }
           parentsMap={Object {}}

@@ -35,8 +35,10 @@ describe(" DateRangePicker component", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("DateRangePicker rendered correctly with empty props", () => {
-    const wrapper = setUp();
+  it("DateRangePicker rendered correctly fiscal", () => {
+    const wrapper = setUp({
+      type: "fiscal"
+    });
     expect(wrapper).toMatchSnapshot();
   });
 

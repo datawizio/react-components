@@ -28,13 +28,19 @@ type _OverwrittenTableProps<RT> = {
   } & TableLocale;
 };
 
+type IColumnsSorter = (
+  columns: IColumn[],
+  oldColumnsInfo: { [k: string]: Partial<IColumn> },
+  columnsSwapped?: boolean
+) => void;
+
 export interface TableProps<RT = any>
   extends Overwrite<AntdTableProps<RT>, _OverwrittenTableProps<RT>> {
   width?: string | number;
   height?: string | number;
-
+  vid?: string;
   searchValue?: string;
-
+  virtual?: boolean;
   async?: boolean;
   autoColWidth?: boolean;
   compressColumns?: boolean;
@@ -47,6 +53,13 @@ export interface TableProps<RT = any>
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
   onColumnWidthChange?: (columnKey: string, width: number) => void;
+  expandRowCallback?: (row: any) => void;
+  sortColumnCallback?: (column: any) => void;
+  calcColumnWidth?: (width: number) => number;
+
+  error?: { message: string };
+
+  errorRender?: (error: { message: string }) => React.ReactElement;
 
   /**
    * Таблица сжимаеться и растягиваеться до высоты которую вы указали в "height"
@@ -77,10 +90,8 @@ export interface TableProps<RT = any>
   columnsConfig?: {
     [columnKey: string]: Partial<IColumn>;
   };
-  columnsSorter?: (
-    columns: IColumn[],
-    oldColumnsInfo: { [k: string]: Partial<IColumn> }
-  ) => void;
+
+  columnsSorter?: IColumnsSorter;
 
   rowPrefix?: RowPrefix;
   rowPrefixDeps?: (row: IRow) => any[];
@@ -97,6 +108,8 @@ export interface TableProps<RT = any>
   nestedTableProvider?: (
     expandedTow: IRow
   ) => Promise<Partial<TableState> | Promise<Partial<TableState>>>;
+
+  isTotalRow?: (rowKey: string) => boolean;
 }
 
 export interface TableState extends Partial<TableProps> {
@@ -105,12 +118,20 @@ export interface TableState extends Partial<TableProps> {
   stateIsRecovered?: boolean;
   forceFetch: number;
   columnsMap: { [key: string]: IColumn };
+  visibleColumnsKeys: Array<IColumn["key"]>;
   parentsMap: { [key: string]: string };
   loadingRows: { [key: string]: boolean };
-  columnsSorter?: (
-    columns: IColumn[],
-    oldColumnsInfo: { [k: string]: Partial<IColumn> }
-  ) => void;
+  columnsSwapped?: boolean;
+  columnsSorter?: IColumnsSorter;
+  columnsWidth?: {
+    [columnKey: string]: number;
+  };
+  fixedTotal?: boolean;
+  first?: boolean;
+  templateSelected?: boolean;
+  columnsForceUpdate?: number;
+  cancelled?: boolean;
+  oldColumns?: Array<IColumn["key"]>;
 }
 
 export interface ISheetState {
@@ -142,7 +163,7 @@ export type Action =
   | { type: "filter"; payload: Record<string, (string | number | boolean)[]> }
   | {
       type: "updateColumns";
-      payload: TableProps["columns"];
+      payload: TableProps["columns"] | Partial<TableProps & TableState>;
     }
   | { type: "setRowChildren"; payload: [IRow, IRow["children"]] }
   | { type: "addLoadingRow"; payload: string }
@@ -156,6 +177,10 @@ export type Action =
   | {
       type: "visibleColumnsKeys";
       payload: TableState["visibleColumnsKeys"];
+    }
+  | {
+      type: "columnWidthChange";
+      payload: { key: string; width: number };
     };
 
 /**
@@ -181,6 +206,7 @@ export interface IColumn<RT = any>
   colWidth?: number;
   originalKey?: string;
   order?: number;
+  index?: number;
 }
 
 /**
@@ -220,6 +246,7 @@ export type DTypeConfig<T = any> = {
     cellRenderProps?: any
   ) => any;
   search?: (cellVal: T, searchBy: string) => boolean;
+  multiSearch?: (cellVal: T, searchBy: string) => boolean;
   filter?: (cellVal: T, filterBy: string | number | T) => boolean;
   tooltip?: (cellVal: T, row: IRow, column: IColumn) => React.ReactNode;
 
@@ -244,6 +271,7 @@ export type GlobalHandlerType = (
 
 export type SearchHandlerType = (
   columnsMap: TableState["columnsMap"],
+  visibleColumnsKeys: TableState["visibleColumnsKeys"],
   dataSource: TableState["dataSource"],
   searchValue: TableState["searchValue"],
   dTypesConfig: TableState["dTypesConfig"]

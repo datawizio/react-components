@@ -7,18 +7,20 @@ import "./index.less";
 
 export interface IHelpMenu {
   onTutorialClick: () => void;
-  onSupportClick: () => void;
   onServiceUpdateClick: () => void;
   onHelperClick: () => void;
+  onVisibleChange: (visible: boolean) => void;
   tourMenu?: React.ReactElement;
+  visible?: boolean;
 }
 
 const HelpMenu: React.FC<IHelpMenu> = ({
   onTutorialClick,
-  onSupportClick,
   onHelperClick,
+  onVisibleChange,
   onServiceUpdateClick,
-  tourMenu
+  tourMenu,
+  visible
 }) => {
   const { translate } = useContext(ConfigContext);
 
@@ -30,16 +32,13 @@ const HelpMenu: React.FC<IHelpMenu> = ({
             {translate("READ_TUTORIAL")}
           </Menu.Item>
         )}
-        <Menu.Item key="2" onClick={onSupportClick}>
-          {translate("SUPPORT")}
-        </Menu.Item>
         {onServiceUpdateClick && (
-          <Menu.Item key="3" onClick={onServiceUpdateClick}>
+          <Menu.Item key="2" onClick={onServiceUpdateClick}>
             {translate("SERVICE_UPDATE")}
           </Menu.Item>
         )}
         {onHelperClick && (
-          <Menu.Item key="4" onClick={onHelperClick}>
+          <Menu.Item key="3" onClick={onHelperClick}>
             {translate("BES_HELPER")}
           </Menu.Item>
         )}
@@ -48,24 +47,37 @@ const HelpMenu: React.FC<IHelpMenu> = ({
     );
   }, [
     onServiceUpdateClick,
-    onSupportClick,
     onTutorialClick,
     onHelperClick,
     translate,
     tourMenu
   ]);
 
+  const visibleProps = typeof visible === "boolean" ? { visible } : {};
+
   return (
     <>
-      <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight">
-        <Button
-          type="link"
-          className="help-icon"
-          onClick={e => e.preventDefault()}
+      {(onTutorialClick ||
+        onServiceUpdateClick ||
+        onHelperClick ||
+        tourMenu) && (
+        <Dropdown
+          {...visibleProps}
+          onVisibleChange={onVisibleChange}
+          overlay={menu}
+          trigger={["click"]}
+          placement="bottomRight"
         >
-          <QuestionCircleOutlined />
-        </Button>
-      </Dropdown>
+          <Button
+            type="link"
+            className="help-icon teaching-btn"
+            onClick={e => e.preventDefault()}
+            icon={<QuestionCircleOutlined />}
+          >
+            {translate("TEACHING")}
+          </Button>
+        </Dropdown>
+      )}
     </>
   );
 };

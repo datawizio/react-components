@@ -1,5 +1,6 @@
 import "jsdom-global/register";
 import React from "react";
+import { fireEvent, render } from "@testing-library/react";
 import { mount } from "enzyme";
 
 import EditSelect from "./index";
@@ -31,8 +32,9 @@ describe("EditSelect component", () => {
         value: "inputValue"
       }
     };
-    const saveButton = component.find("Input").first();
-    saveButton.simulate("change", mockEvent);
-    expect(component).toMatchSnapshot();
+    const wrapper = render(<EditSelect {...mockProps} />);
+    const input: any = wrapper.getByRole("combobox");
+    fireEvent.change(wrapper.getByRole("combobox"), mockEvent);
+    expect(input.value).toBe(mockEvent.target.value);
   });
 });

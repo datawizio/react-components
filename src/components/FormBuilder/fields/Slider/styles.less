@@ -1,0 +1,31 @@
+.dw-slider {
+  width: 100% !important;
+  display: flex;
+
+  &-input {
+    width: 100px !important;
+
+    .ant-form-item-label {
+      overflow: visible;
+
+      label {
+        width: 300px;
+      }
+    }
+    .ant-form-item-explain-error {
+      position: relative;
+      & > div {
+        position: absolute;
+      }
+    }
+  }
+
+  &-interval {
+    width: calc(100% - 100px) !important;
+    margin-right: 0 !important;
+
+    .ant-form-item-label {
+      visibility: hidden;
+    }
+  }
+}

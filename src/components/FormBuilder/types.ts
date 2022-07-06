@@ -1,5 +1,7 @@
+import React from "react";
 import { Rule } from "antd/lib/form";
 import { Dayjs } from "dayjs";
+import { CalendarTypes } from "../DatePicker";
 
 export interface IFormFieldChanged<Type> {
   name: string | string[];
@@ -13,7 +15,9 @@ export interface FormFieldProps<Type> {
   label?: string;
   rules?: Rule[];
   initialValue?: any;
+  disabled?: boolean;
   onChange?: (change: IFormFieldChanged<Type>) => void;
+  onDeselect?: (param: string | number) => void;
 }
 
 export interface FieldIntervalProps extends FormFieldProps<IntervalType> {
@@ -51,15 +55,20 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
   format?: string;
   fullWidth?: boolean;
   inputReadOnly?: boolean;
+  type?: CalendarTypes;
+  disabledDate?: (currentDate: Dayjs) => boolean;
 }
 
-export interface FieldTextProps extends FormFieldProps<string> {}
+export interface FieldTextProps extends FormFieldProps<string> {
+  type?: string;
+}
 
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
 
 export type RadioOptionType = {
   value: any;
   label: string;
+  disabled?: boolean;
 };
 
 export interface FieldRadioProps extends FormFieldProps<string> {
@@ -71,6 +80,14 @@ export interface FieldSelectProps extends FormFieldProps<string> {
   mode?: "multiple" | "tags";
   showSearch?: boolean;
   allowClear?: boolean;
+  notFoundContent?: string;
+  getPopupContainer?: () => HTMLElement | null;
+}
+
+export interface FieldSliderProps extends FormFieldProps<string | number> {
+  min: number;
+  max: number;
+  step?: number;
 }
 
 export type EnableSelectValueType = {
@@ -86,14 +103,21 @@ export interface FieldPhoneProps extends FormFieldProps<string> {}
 export interface FieldDrawerSelectProps
   extends FormFieldProps<string | string[]> {
   additionalFilters?: any;
-
+  allowClear?: boolean;
+  hideSearch?: boolean;
   multiple?: boolean;
   options?: any;
   loading?: boolean;
+  maxSelectedCount?: number;
+  maxTagLength?: number;
+  noticeRender?: React.ReactElement | null;
+  onCheckSelectedValue?: (value: any) => void;
+  valueToUncheck?: string | number;
   loadData?: (
     search: string,
     page: number
   ) => Promise<{ data: [any]; totalPages: number }>;
+  onLoadData?: (data: any, value: any) => { value?: any };
 }
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;
@@ -105,6 +129,10 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   treeDataCount?: number;
   loading?: boolean;
   showLevels?: boolean;
+  noticeRender?: React.ReactElement | null;
+  markersRender?: ({ props }: any) => React.ReactElement;
+  showMarkers?: boolean;
+  markersTree?: any;
   showSelectAll?: boolean;
   showCheckAll?: boolean;
   isFlatList?: boolean;
@@ -112,18 +140,28 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   emptyIsAll?: boolean;
   level?: string | number;
   value?: string[] | number[];
+  allowClear?: boolean;
+  maxSelected?: number;
+  maxTagLength?: number;
 
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;
+  treeDefaultExpandedKeys?: number[] | string[];
+  treeNodeFilterProp?: string;
   loadData?: (filters: any) => Promise<any>;
   loadChildren?: (id: string) => Promise<any>;
-  markersRender?: ({ props }: any) => React.ReactElement;
-  selectedMarkers?: string[];
+  loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
+  selectedMarkers?: string[] | number[];
 
-  onDrawerCloseCallback?: () => void;
-  onDrawerCancelCallback?: () => void;
-  onDrawerOpenCallback?: () => void;
-  onDrawerSubmitCallback?: () => void;
+  dependentItems?: Array<any>;
+  onCheckedDependentValue?: (
+    checkedValue: string,
+    selectedItems: Array<string>
+  ) => void;
+  onDrawerCloseCallback?: (payload?: any) => void;
+  onDrawerCancelCallback?: (payload?: any) => void;
+  onDrawerOpenCallback?: (payload?: any) => void;
+  onDrawerSubmitCallback?: (payload?: any) => void;
 }
 
 export interface FieldImageProps extends FormFieldProps<string> {}

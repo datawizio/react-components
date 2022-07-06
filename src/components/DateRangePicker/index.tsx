@@ -1,24 +1,26 @@
 import * as React from "react";
-import { useMemo, useCallback, useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import DatePicker from "../DatePicker";
 import ConfigContext from "../ConfigProvider/context";
 import { DefaultPreset, DefaultPresetPrev } from "./presets";
-import { DateType, IDateRangePicker, DateRangePickerProps } from "./types";
+import { DateRangePickerProps, DateType, IDateRangePicker } from "./types";
 import "./index.less";
 
 dayjs.extend(customParseFormat);
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
 const DateRangePicker: IDateRangePicker = ({
   fullWidth,
+  type,
   ranges,
   presets,
   currDateRange,
   useDefaultPreset,
   defaultPresetExceptions,
+  maxDateForPresets,
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -37,8 +39,13 @@ const DateRangePicker: IDateRangePicker = ({
     if (presets && presets.length) {
       let result = {};
 
-      const defaultPreset = DefaultPreset(props.minDate, props.maxDate);
+      const defaultPreset = DefaultPreset(
+        type,
+        props.minDate,
+        maxDateForPresets ?? props.maxDate
+      );
       const defaultPresetPrev = DefaultPresetPrev(
+        type,
         currDateRange?.date_from || props.dateFrom,
         currDateRange?.date_to || props.dateTo
       );
@@ -53,7 +60,13 @@ const DateRangePicker: IDateRangePicker = ({
     }
 
     if (useDefaultPreset) {
-      const defaultPreset = { ...DefaultPreset(props.minDate, props.maxDate) };
+      const defaultPreset = {
+        ...DefaultPreset(
+          type,
+          props.minDate,
+          maxDateForPresets ?? props.maxDate
+        )
+      };
       if (defaultPresetExceptions && defaultPresetExceptions.length) {
         defaultPresetExceptions.forEach(item => {
           delete defaultPreset[item];
@@ -65,6 +78,7 @@ const DateRangePicker: IDateRangePicker = ({
     currDateRange,
     defaultPresetExceptions,
     presets,
+    maxDateForPresets,
     props.dateFrom,
     props.dateTo,
     props.maxDate,
@@ -109,8 +123,8 @@ const DateRangePicker: IDateRangePicker = ({
     date => {
       const formatedDate = formatDate(date.format("DD-MM-YYYY"));
       return (
-        (maxDate && formatedDate > maxDate) ||
-        (minDate && formatedDate < minDate)
+        (maxDate && formatedDate.isAfter(maxDate)) ||
+        (minDate && formatedDate.isBefore(minDate))
       );
     },
     [maxDate, minDate, formatDate]
@@ -122,9 +136,12 @@ const DateRangePicker: IDateRangePicker = ({
     else props.onChange && props.onChange(arguments[0], arguments[1]);
   }
 
+  const RangePicker = DatePicker.Picker[type].RangePicker;
+
   return (
     <RangePicker
       {...props}
+      //@ts-ignore
       ranges={translatedPreset}
       className={fullWidth ? "ant-picker-full-width" : ""}
       onChange={onChange}
@@ -135,6 +152,7 @@ const DateRangePicker: IDateRangePicker = ({
 };
 
 DateRangePicker.defaultProps = {
+  type: "iso-8601",
   inputReadOnly: true,
   format: "DD-MM-YYYY",
   dateTo: "02-12-2001",

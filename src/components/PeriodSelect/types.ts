@@ -1,3 +1,5 @@
+import { CalendarTypes } from "../DatePicker";
+
 export interface DateRangeType {
   startDate: string;
   endDate: string;
@@ -7,7 +9,7 @@ export interface IDateConfig {
   datePicker: DateRangeType;
   prevDatePicker: DateRangeType;
   selectedPeriod: PeriodEnum;
-  selectedPrevPeriod: PrevPerionEnum;
+  selectedPrevPeriod: PrevPeriodEnum;
 }
 
 export type PeriodEnum =
@@ -18,15 +20,16 @@ export type PeriodEnum =
   | "week_begin"
   | "month_begin"
   | "prev_month"
-  | "season_begin"
+  | "quarter_begin"
   | "year_begin"
   | "last_30_days"
+  | "last_90_days"
   | "last_180_days"
   | "last_365_days"
   | "all_time"
   | "date";
 
-export type PrevPerionEnum =
+export type PrevPeriodEnum =
   | "previous"
   | "prev_last_week"
   | "prev_last_month"
@@ -35,6 +38,7 @@ export type PrevPerionEnum =
   | "prev_date";
 
 export interface PeriodSelectProps {
+  type: CalendarTypes;
   format?: string;
   clientDate?: string;
   clientStartDate?: string;

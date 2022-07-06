@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import Select from "../Select";
 
@@ -6,9 +6,11 @@ import { SelectValue } from "antd/lib/select";
 
 import "./index.less";
 import clsx from "clsx";
+import ConfigContext from "../ConfigProvider/context";
+import { Badge } from "antd";
 
 export interface ClientSelectProps {
-  clients: [{ id: number; name: string }];
+  clients: [{ id: number; name: string; is_active: boolean }];
   client: number;
   theme?: "dark" | "light";
   onChange?: (url: string) => void;
@@ -20,6 +22,8 @@ const ClientSelect: React.FC<ClientSelectProps> = ({
   theme,
   onChange
 }) => {
+  const { translate: t } = useContext(ConfigContext);
+
   const handleChange = (value: SelectValue) => {
     const arr = window.location.pathname.split("/").slice(3);
     onChange && onChange(`/c/${value}/${arr.join("/")}`);
@@ -39,6 +43,7 @@ const ClientSelect: React.FC<ClientSelectProps> = ({
           value={client}
           showSearch
           optionFilterProp="label"
+          notFoundContent={t("NO_DATA")}
           onChange={handleChange}
           className={className}
         >
@@ -48,6 +53,10 @@ const ClientSelect: React.FC<ClientSelectProps> = ({
               value={client.id}
               label={client.name}
             >
+              <Badge
+                status="default"
+                color={client.is_active ? "purple" : null}
+              />
               {client.name}
             </Select.Option>
           ))}

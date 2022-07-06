@@ -31,6 +31,8 @@ const StatusData: React.FC<StatusDataProps> = ({
       </div>
     );
   }
+
+  return null;
 };
 
 export default StatusData;

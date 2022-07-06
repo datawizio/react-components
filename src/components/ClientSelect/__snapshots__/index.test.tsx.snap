@@ -7,10 +7,12 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
     Array [
       Object {
         "id": 1,
+        "is_active": true,
         "name": "cl1",
       },
       Object {
         "id": 2,
+        "is_active": true,
         "name": "cl2",
       },
     ]
@@ -20,8 +22,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
   <Select
     asyncData={false}
     className="client-select"
-    loadingContent="Loading..."
-    notFoundContent="No data"
+    loadingContent="LOADING"
+    notFoundContent="NO_DATA"
     onChange={[Function]}
     optionFilterProp="label"
     showSearch={true}
@@ -31,9 +33,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
     <ForwardRef(InternalSelect)
       className="client-select"
       loading={false}
-      notFoundContent="No data"
+      notFoundContent="NO_DATA"
       onChange={[Function]}
-      onDropdownVisibleChange={null}
       optionFilterProp="label"
       optionLabelProp="label"
       showSearch={true}
@@ -49,9 +50,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
         listItemHeight={24}
         loading={false}
         menuItemSelectedIcon={null}
-        notFoundContent="No data"
+        notFoundContent="NO_DATA"
         onChange={[Function]}
-        onDropdownVisibleChange={null}
         optionFilterProp="label"
         optionLabelProp="label"
         prefixCls="ant-select"
@@ -70,9 +70,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
           listItemHeight={24}
           loading={false}
           menuItemSelectedIcon={null}
-          notFoundContent="No data"
+          notFoundContent="NO_DATA"
           onChange={[Function]}
-          onDropdownVisibleChange={null}
           optionFilterProp="label"
           optionLabelProp="label"
           prefixCls="ant-select"
@@ -103,7 +102,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                     Array [
                       Object {
                         "data": Object {
-                          "children": "cl1",
+                          "children": Array [
+                            <Badge
+                              color="purple"
+                              status="default"
+                            />,
+                            "cl1",
+                          ],
                           "key": "1",
                           "label": "cl1",
                           "value": 1,
@@ -113,7 +118,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       },
                       Object {
                         "data": Object {
-                          "children": "cl2",
+                          "children": Array [
+                            <Badge
+                              color="purple"
+                              status="default"
+                            />,
+                            "cl2",
+                          ],
                           "key": "2",
                           "label": "cl2",
                           "value": 2,
@@ -128,7 +139,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   itemHeight={24}
                   menuItemSelectedIcon={null}
                   multiple={false}
-                  notFoundContent="No data"
+                  notFoundContent="NO_DATA"
                   onActiveValue={[Function]}
                   onMouseEnter={[Function]}
                   onSelect={[Function]}
@@ -136,13 +147,25 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   options={
                     Array [
                       Object {
-                        "children": "cl1",
+                        "children": Array [
+                          <Badge
+                            color="purple"
+                            status="default"
+                          />,
+                          "cl1",
+                        ],
                         "key": "1",
                         "label": "cl1",
                         "value": 1,
                       },
                       Object {
-                        "children": "cl2",
+                        "children": Array [
+                          <Badge
+                            color="purple"
+                            status="default"
+                          />,
+                          "cl2",
+                        ],
                         "key": "2",
                         "label": "cl2",
                         "value": 2,
@@ -249,7 +272,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                         Array [
                           Object {
                             "data": Object {
-                              "children": "cl1",
+                              "children": Array [
+                                <Badge
+                                  color="purple"
+                                  status="default"
+                                />,
+                                "cl1",
+                              ],
                               "key": "1",
                               "label": "cl1",
                               "value": 1,
@@ -259,7 +288,13 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                           },
                           Object {
                             "data": Object {
-                              "children": "cl2",
+                              "children": Array [
+                                <Badge
+                                  color="purple"
+                                  status="default"
+                                />,
+                                "cl2",
+                              ],
                               "key": "2",
                               "label": "cl2",
                               "value": 2,
@@ -274,7 +309,7 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       itemHeight={24}
                       menuItemSelectedIcon={null}
                       multiple={false}
-                      notFoundContent="No data"
+                      notFoundContent="NO_DATA"
                       onActiveValue={[Function]}
                       onMouseEnter={[Function]}
                       onSelect={[Function]}
@@ -282,13 +317,25 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       options={
                         Array [
                           Object {
-                            "children": "cl1",
+                            "children": Array [
+                              <Badge
+                                color="purple"
+                                status="default"
+                              />,
+                              "cl1",
+                            ],
                             "key": "1",
                             "label": "cl1",
                             "value": 1,
                           },
                           Object {
-                            "children": "cl2",
+                            "children": Array [
+                              <Badge
+                                color="purple"
+                                status="default"
+                              />,
+                              "cl2",
+                            ],
                             "key": "2",
                             "label": "cl2",
                             "value": 2,
@@ -365,9 +412,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                   loading={false}
                   menuItemSelectedIcon={null}
                   multiple={false}
-                  notFoundContent="No data"
+                  notFoundContent="NO_DATA"
                   onChange={[Function]}
-                  onDropdownVisibleChange={null}
                   onSearch={[Function]}
                   onSearchSubmit={[Function]}
                   onSelect={[Function]}
@@ -460,9 +506,8 @@ exports[`ClientSelect component ClientSelect rendered correctly 1`] = `
                       loading={false}
                       menuItemSelectedIcon={null}
                       multiple={false}
-                      notFoundContent="No data"
+                      notFoundContent="NO_DATA"
                       onChange={[Function]}
-                      onDropdownVisibleChange={null}
                       onInputChange={[Function]}
                       onInputCompositionEnd={[Function]}
                       onInputCompositionStart={[Function]}
