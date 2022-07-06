@@ -28,6 +28,22 @@ export const initWS = (
     queue.forEach(message => sendMessage(message));
   };
 
+  ws.onclose = function (e) {
+    console.log(
+      "Socket is closed. Reconnect will be attempted in 1 second.",
+      e.reason
+    );
+    setTimeout(function () {
+      initWS(server, authData);
+    }, 1000);
+  };
+
+  ws.onerror = function (err) {
+    //@ts-ignore
+    console.error("Socket encountered error: ", err.message, "Closing socket");
+    ws.close();
+  };
+
   ws.onmessage = event => {
     const data = JSON.parse(event.data);
     handleSubscriptions(data);
