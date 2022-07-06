@@ -46,8 +46,8 @@ jobs:
       # - name: Update version package.json
       #   run: npm version ${GITHUB_REF##*/}
 
-      - name: Remove tag
-        run: git tag --delete v${GITHUB_REF##*/}
+      # - name: Remove tag
+      #   run: git tag --delete v${GITHUB_REF##*/}
 
       - run: npm publish
         env:
