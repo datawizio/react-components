@@ -76,14 +76,14 @@ const Column: React.FC<ColumnProps> = props => {
         const cursor = m.getClientOffset();
         const rectHeader = tableHeaderDOMWrapper.getBoundingClientRect();
 
-        if (cursor.x - rectHeader.left < FAST_SCROLL_BREAKPOINT) {
+        if (cursor?.x - rectHeader.left < FAST_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft - step * 3
           );
           return;
         }
-        if (rectHeader.right - cursor.x < FAST_SCROLL_BREAKPOINT) {
+        if (rectHeader.right - cursor?.x < FAST_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft + step * 3
@@ -91,14 +91,14 @@ const Column: React.FC<ColumnProps> = props => {
           return;
         }
 
-        if (cursor.x - rectHeader.left < SLOW_SCROLL_BREAKPOINT) {
+        if (cursor?.x - rectHeader.left < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft - step
           );
           return;
         }
-        if (rectHeader.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
+        if (rectHeader.right - cursor?.x < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft + step
@@ -115,11 +115,11 @@ const Column: React.FC<ColumnProps> = props => {
         const cursor = m.getClientOffset();
         const rect = tableDOMWrapper.getBoundingClientRect();
 
-        if (cursor.x - rect.left < SLOW_SCROLL_BREAKPOINT) {
+        if (cursor?.x - rect.left < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(tableDOMWrapper, tableDOMWrapper.scrollLeft - step);
         }
 
-        if (rect.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
+        if (rect.right - cursor?.x < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(tableDOMWrapper, tableDOMWrapper.scrollLeft + step);
         }
       }
