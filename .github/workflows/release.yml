@@ -43,20 +43,20 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Update version package.json
-        run: npm version ${GITHUB_REF##*/}
+      # - name: Update version package.json
+      #   run: npm version ${GITHUB_REF##*/}
 
-      - name: Remove tag
-        run: git tag --delete v${GITHUB_REF##*/}
+      # - name: Remove tag
+      #   run: git tag --delete v${GITHUB_REF##*/}
 
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Generate Auto Changelog
-        uses: ahmadawais/action-auto-changelog@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Generate Auto Changelog
+      #   uses: ahmadawais/action-auto-changelog@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy Storybook
         run: npm run deploy-storybook -- --ci
