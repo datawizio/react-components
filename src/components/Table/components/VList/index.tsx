@@ -337,7 +337,7 @@ function VTable(props: any, otherParams): JSX.Element {
       <ScrollContext.Provider
         value={{
           dispatch,
-          rowHeight: vidMap?.get(vid)?.rowItemHeight,
+          rowHeight: state.rowHeight,
           start,
           offsetStart,
           renderLen,
