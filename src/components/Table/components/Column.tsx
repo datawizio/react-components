@@ -266,14 +266,14 @@ const Column: React.FC<ColumnProps> = props => {
       const defaultSubCellWidth = 20;
       const defaultMaxValue = 10;
 
+      if (columnsWidthPreset) {
+        return { width: columnsWidthPreset };
+      }
+
       if (model.colWidth) {
         return {
           width: model.colWidth
         };
-      }
-
-      if (columnsWidthPreset) {
-        return { width: columnsWidthPreset };
       }
 
       if (model.children && model.children.length) {
