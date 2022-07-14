@@ -46,7 +46,7 @@ const Column: React.FC<ColumnProps> = props => {
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
-    canDrag: !model.fixed
+    canDrag: !model.fixed && model.draggable !== false
   });
 
   const autoScroll = (step = 50) => {
