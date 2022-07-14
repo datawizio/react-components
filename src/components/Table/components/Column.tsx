@@ -145,7 +145,8 @@ const Column: React.FC<ColumnProps> = props => {
       return (
         droppedItem.level === level &&
         droppedItem.key !== model.key &&
-        !model.fixed
+        !model.fixed &&
+        model.draggable !== false
       );
     },
     collect: monitor => ({
@@ -295,6 +296,7 @@ const Column: React.FC<ColumnProps> = props => {
 
       return {};
     }
+
     //@ts-ignore
     if (model.parent_key) {
       return {};
