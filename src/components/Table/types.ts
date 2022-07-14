@@ -201,6 +201,7 @@ export interface IColumn<RT = any>
   dtype?: string;
   dataIndex: string;
   resizable?: boolean;
+  draggable?: boolean;
   default_visible?: boolean;
   max_value?: number;
   colWidth?: number;
