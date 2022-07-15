@@ -158,7 +158,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
           columnsWidth: {},
           columns: [],
-          fixedTotal: true
+          fixedTotal: true,
+          columnsSwapped: false
         };
         dispatch({
           type: "update",
