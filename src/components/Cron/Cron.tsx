@@ -129,7 +129,7 @@ export default function Cron(props: CronProps) {
           humanizeValue
         );
 
-        setValue(cron);
+        setValue(cron, period || defaultPeriodRef.current);
         internalValueRef.current = cron;
 
         onError && onError(undefined);
@@ -163,14 +163,19 @@ export default function Cron(props: CronProps) {
       let newValue = "";
 
       const newPeriod =
-        period !== "reboot" && period ? period : defaultPeriodRef.current;
+        clearButtonAction !== "to-default" && period !== "reboot" && period
+          ? period
+          : defaultPeriodRef.current;
 
       if (newPeriod !== period) {
         setPeriod(newPeriod);
       }
 
       // When clearButtonAction is 'fill-with-every'
-      if (clearButtonAction === "fill-with-every") {
+      if (
+        clearButtonAction === "fill-with-every" ||
+        clearButtonAction === "to-default"
+      ) {
         const cron = getCronStringFromValues(
           newPeriod,
           undefined,
@@ -183,7 +188,7 @@ export default function Cron(props: CronProps) {
         newValue = cron;
       }
 
-      setValue(newValue);
+      setValue(newValue, newPeriod);
       internalValueRef.current = newValue;
 
       setValueCleared(true);
