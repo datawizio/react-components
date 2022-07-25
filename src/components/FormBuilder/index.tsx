@@ -13,4 +13,7 @@ export { FieldEnableSelect } from "./fields/EnableSelect";
 export { FieldDateRangePicker } from "./fields/DateRangePicker";
 export { FieldDrawerTreeSelect } from "./fields/DrawerTreeSelect";
 
+//VALIDATORS
+export { TextValidator } from "./validators";
+
 export type { IFormFieldChanged } from "./types";
