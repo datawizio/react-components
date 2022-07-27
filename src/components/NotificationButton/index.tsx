@@ -6,15 +6,18 @@ import { Badge } from "antd";
 
 import { useContext, useState } from "react";
 import ConfigContext from "../ConfigProvider/context";
+import Badger from "../FaviconBadger";
 
-import "./index.less";
 import { sendMessage, subscribe, unsubscribe } from "../../utils/ws";
+import "./index.less";
 
 export interface NotificationButtonProps {
   useWS?: boolean;
   count: number;
   onClick: () => void;
 }
+
+const faviconBadge = new Badger({ size: 0.35, radius: 50 });
 
 const NotificationButton: React.FC<NotificationButtonProps> = ({
   count,
@@ -40,6 +43,10 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
       unsubscribe("unread-notifications", "notification-btn");
     };
   }, [useWS]);
+
+  React.useEffect(() => {
+    faviconBadge.value = state;
+  }, [state]);
 
   return (
     <Badge count={state} className="notification-btn">
