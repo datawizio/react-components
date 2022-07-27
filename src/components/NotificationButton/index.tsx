@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 
 import Button from "../Button";
 import { BellOutlined } from "@ant-design/icons";
@@ -27,7 +27,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   const { translate } = useContext(ConfigContext);
   const [state, setState] = useState<number>(count);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!useWS) return;
     subscribe("unread-notifications", "notification-btn", data => {
       setState(data["payload"]["data"]["unreadNotificationsCount"]["count"]);
@@ -44,7 +44,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
     };
   }, [useWS]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     faviconBadge.value = state;
   }, [state]);
 
