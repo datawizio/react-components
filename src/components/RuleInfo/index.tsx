@@ -87,7 +87,7 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
 
   return (
     <div className="rule-info">
-      <div className="rule-info-title">{t("RULE")}</div>
+      <div className="rule-info-title">{t("CONDITION")}</div>
       <div>{parseLogic(logic)}</div>
       <div className="rule-info-title">{t("DIMENSION")}</div>
       <div>{parseDimension(widget_params.dimension, formatDateRange)}</div>
