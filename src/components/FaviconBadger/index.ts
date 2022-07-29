@@ -57,6 +57,7 @@ class Badger {
   }
 
   private drawShape() {
+    if (!this.offset) return;
     const r = this.radius;
     const xa = this.offset.x;
     const ya = this.offset.y;
