@@ -16,7 +16,6 @@ export interface NotificationButtonProps {
   count: number;
   onClick: () => void;
 }
-
 const faviconBadge = new Badger({ size: 0.35, radius: 50 });
 
 const NotificationButton: React.FC<NotificationButtonProps> = ({
