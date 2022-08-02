@@ -1,8 +1,6 @@
 import React from "react";
-
 import { BackTop as AntBackTop } from "antd";
 import { UpOutlined } from "@ant-design/icons";
-
 import "./index.less";
 
 const BackTop = (props) => {
