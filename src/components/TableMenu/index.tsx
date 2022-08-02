@@ -11,7 +11,6 @@ import ConfigContext from "../ConfigProvider/context";
 import { TableContext } from "../Table/context";
 import { TableState } from "../Table/types";
 import { saveAs } from "file-saver";
-
 import "./index.less";
 
 export interface TableMenuProps extends ButtonProps {
@@ -101,7 +100,13 @@ const TableMenu: React.FC<TableMenuProps> = props => {
       dispatch &&
         dispatch({
           type: "update",
-          payload: { fixedTotal: !tableState?.fixedTotal }
+          payload: {
+            fixedTotal: !tableState?.fixedTotal,
+            pagination: {
+              ...tableState.pagination,
+              current: 1
+            }
+          }
         });
     },
     [dispatch, tableState]
