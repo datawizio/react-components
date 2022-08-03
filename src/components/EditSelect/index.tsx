@@ -36,10 +36,15 @@ const EditSelect: React.FC<EditSelectProps> = ({
   onDelete
 }) => {
   const { translate } = useContext(ConfigContext);
+
+  const TITLE_MAX_LENGTH = 200;
+  const VISIBLE_TITLE_MAX_LENGTH = 52;
+
   const [editingOption, setEditingOption] = useState<IOption>({
     key: "new",
     title: ""
   });
+
   const inputRef = useRef<any>();
 
   const resetEditingOption = useCallback(() => {
@@ -94,6 +99,7 @@ const EditSelect: React.FC<EditSelectProps> = ({
               onChange={handleTitleChange}
               onPressEnter={handleSaveClick}
               placeholder={inputPlaceholder}
+              maxLength={TITLE_MAX_LENGTH}
               //@ts-ignore
               ref={inputRef}
             />
@@ -132,7 +138,9 @@ const EditSelect: React.FC<EditSelectProps> = ({
       {options.map(option => (
         <Select.Option key={option.key} value={option.key} label={option.title}>
           <span className="ant-select-item-option-content-title">
-            {option.title}
+            {option.title.length > VISIBLE_TITLE_MAX_LENGTH
+              ? `${option.title.slice(0, VISIBLE_TITLE_MAX_LENGTH)}...`
+              : option.title}
           </span>
           <EditOutlined
             onClick={handleEditItem.bind(null, option.key, option.title)}
