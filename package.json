@@ -163,6 +163,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "@testing-library/jest-dom": "^5.11.4",
+    "canvas": "^2.8.0",
     "clsx": "^1.1.0",
     "country-flag-icons": "^1.2.1",
     "file-saver": "^2.0.2",
