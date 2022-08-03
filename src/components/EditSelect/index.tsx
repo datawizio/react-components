@@ -1,13 +1,11 @@
 import React, { useCallback, useState, useRef, useContext } from "react";
-
 import Select from "../Select";
 import { Divider } from "antd";
 import Input from "../Input";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-
-import "./index.less";
 import Button from "../Button";
 import ConfigContext from "../ConfigProvider/context";
+import "./index.less";
 
 export interface IOption {
   key: string;
@@ -35,11 +33,16 @@ const EditSelect: React.FC<EditSelectProps> = ({
   onSave,
   onDelete
 }) => {
-  const { translate } = useContext(ConfigContext);
+  const { translate: t } = useContext(ConfigContext);
+
+  const TITLE_MAX_LENGTH = 200;
+  const VISIBLE_TITLE_MAX_LENGTH = 52;
+
   const [editingOption, setEditingOption] = useState<IOption>({
     key: "new",
     title: ""
   });
+
   const inputRef = useRef<any>();
 
   const resetEditingOption = useCallback(() => {
@@ -94,13 +97,14 @@ const EditSelect: React.FC<EditSelectProps> = ({
               onChange={handleTitleChange}
               onPressEnter={handleSaveClick}
               placeholder={inputPlaceholder}
+              maxLength={TITLE_MAX_LENGTH}
               //@ts-ignore
               ref={inputRef}
             />
             <Button type="primary" onClick={handleSaveClick}>
               {editingOption.key === "new"
-                ? translate("ADD")
-                : translate("SAVE")}
+                ? t("ADD")
+                : t("SAVE")}
             </Button>
           </div>
         </div>
@@ -108,7 +112,7 @@ const EditSelect: React.FC<EditSelectProps> = ({
     },
     [
       inputPlaceholder,
-      translate,
+      t,
       handleTitleChange,
       handleSaveClick,
       editingOption.key,
@@ -125,14 +129,21 @@ const EditSelect: React.FC<EditSelectProps> = ({
       loading={loading}
       onChange={onChange}
       value={value ? value : undefined}
-      notFoundContent={translate("NO_DATA")}
+      notFoundContent={t("NO_DATA")}
       // onBlur={resetEditingOption}
       // onSelect={handlerRoleTypeChange}
     >
       {options.map(option => (
-        <Select.Option key={option.key} value={option.key} label={option.title}>
+        <Select.Option
+          key={option.key}
+          value={option.key}
+          label={option.title}
+          title={option.title}
+        >
           <span className="ant-select-item-option-content-title">
-            {option.title}
+            {option.title.length > VISIBLE_TITLE_MAX_LENGTH
+              ? `${option.title.slice(0, VISIBLE_TITLE_MAX_LENGTH)}...`
+              : option.title}
           </span>
           <EditOutlined
             onClick={handleEditItem.bind(null, option.key, option.title)}
