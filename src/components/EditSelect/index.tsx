@@ -36,7 +36,7 @@ const EditSelect: React.FC<EditSelectProps> = ({
   const { translate: t } = useContext(ConfigContext);
 
   const TITLE_MAX_LENGTH = 200;
-  const VISIBLE_TITLE_MAX_LENGTH = 52;
+  const VISIBLE_TITLE_MAX_LENGTH = 40;
 
   const [editingOption, setEditingOption] = useState<IOption>({
     key: "new",
