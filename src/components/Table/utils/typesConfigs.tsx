@@ -24,7 +24,7 @@ const basicDTypesConfig = {
       );
     },
     render: value =>
-      value && value.toLocaleString("en-US", { maximumFractionDigits: 4 })
+      value && value.toLocaleString(undefined, { maximumFractionDigits: 4 })
   } as DTypeConfig<number>,
 
   "boolean": {
