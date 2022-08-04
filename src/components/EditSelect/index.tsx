@@ -72,10 +72,17 @@ const EditSelect: React.FC<EditSelectProps> = ({
     []
   );
 
-  const handleSaveClick = useCallback(async () => {
-    onSave && (await onSave(editingOption));
-    resetEditingOption();
-  }, [onSave, editingOption, resetEditingOption]);
+  const handleSaveClick = useCallback(
+    async e => {
+      if (!editingOption.title.trim()) {
+        e.preventDefault();
+        return;
+      }
+      onSave && (await onSave(editingOption));
+      resetEditingOption();
+    },
+    [onSave, editingOption, resetEditingOption]
+  );
 
   const handleTitleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,10 +108,12 @@ const EditSelect: React.FC<EditSelectProps> = ({
               //@ts-ignore
               ref={inputRef}
             />
-            <Button type="primary" onClick={handleSaveClick}>
-              {editingOption.key === "new"
-                ? t("ADD")
-                : t("SAVE")}
+            <Button
+              type="primary"
+              onClick={handleSaveClick}
+              disabled={!editingOption.title.trim()}
+            >
+              {editingOption.key === "new" ? t("ADD") : t("SAVE")}
             </Button>
           </div>
         </div>
