@@ -327,6 +327,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                         />
                         <Button
                           border={true}
+                          disabled={true}
                           onClick={[Function]}
                           type="primary"
                         >
