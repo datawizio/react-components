@@ -446,6 +446,19 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "update": {
       let nextState = { ...state, ...action.payload };
+
+      // reset filterParams if column is hidden
+      const filterParamsList = Object.entries(nextState.filterParams);
+      if (filterParamsList.length) {
+        let nextFilterParams = {};
+        filterParamsList.forEach(([key, value]) => {
+          if (nextState.visibleColumnsKeys.includes(key)) {
+            nextFilterParams[key] = value;
+          }
+        });
+        nextState.filterParams = nextFilterParams;
+      }
+
       if (action.payload.columns)
         nextState = reducer(
           { ...nextState, columns: state.columns },
