@@ -449,10 +449,13 @@ export function reducer(state: TableState, action: Action): TableState {
 
       // reset filterParams if column is hidden
       const filterParamsList = Object.entries(nextState.filterParams);
-      if (filterParamsList.length) {
+      if (
+        filterParamsList.length &&
+        action.payload.visibleColumnsKeys?.length
+      ) {
         let nextFilterParams = {};
         filterParamsList.forEach(([key, value]) => {
-          if (nextState.visibleColumnsKeys.includes(key)) {
+          if (action.payload.visibleColumnsKeys.includes(key)) {
             nextFilterParams[key] = value;
           }
         });

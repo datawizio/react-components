@@ -36,7 +36,6 @@ const EditSelect: React.FC<EditSelectProps> = ({
   const { translate: t } = useContext(ConfigContext);
 
   const TITLE_MAX_LENGTH = 200;
-  const VISIBLE_TITLE_MAX_LENGTH = 40;
 
   const [editingOption, setEditingOption] = useState<IOption>({
     key: "new",
@@ -150,9 +149,7 @@ const EditSelect: React.FC<EditSelectProps> = ({
           title={option.title}
         >
           <span className="ant-select-item-option-content-title">
-            {option.title.length > VISIBLE_TITLE_MAX_LENGTH
-              ? `${option.title.slice(0, VISIBLE_TITLE_MAX_LENGTH)}...`
-              : option.title}
+            {option.title}
           </span>
           <EditOutlined
             onClick={handleEditItem.bind(null, option.key, option.title)}
