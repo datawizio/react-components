@@ -1,4 +1,4 @@
-interface BadgerOptions {
+export interface BadgerOptions {
   position?: "n" | "e" | "s" | "w" | "ne" | "nw" | "se" | "sw";
   radius?: number;
   backgroundColor?: string;
@@ -8,6 +8,15 @@ interface BadgerOptions {
   withCount?: boolean;
 }
 
+const defaultOptions: BadgerOptions = {
+  backgroundColor: "#f00",
+  color: "#fff",
+  size: 0.6,
+  position: "ne",
+  radius: 8,
+  onChange() {},
+  withCount: false
+};
 class Badger {
   position: "n" | "e" | "s" | "w" | "ne" | "nw" | "se" | "sw";
   radius: number;
@@ -45,7 +54,8 @@ class Badger {
       options
     );
     this.canvas = document.createElement("canvas");
-    this.src = this.src || (this.faviconEL && this.faviconEL.getAttribute("href"));
+    this.src =
+      this.src || (this.faviconEL && this.faviconEL.getAttribute("href"));
     this.ctx = this.canvas.getContext("2d");
   }
 
@@ -78,6 +88,7 @@ class Badger {
   }
 
   private drawVal() {
+    if (!this.offset) return;
     const margin = (this.badgeSize * 0.18) / 2;
     this.ctx.beginPath();
     this.ctx.textBaseline = "middle";
@@ -149,6 +160,10 @@ class Badger {
 
   set value(val) {
     this._value = val;
+    this.update();
+  }
+  updateOptions(options: BadgerOptions) {
+    Object.assign(this, defaultOptions, options);
     this.update();
   }
 }
