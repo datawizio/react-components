@@ -29,7 +29,10 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   useEffect(() => {
     if (!useWS) return;
     subscribe("unread-notifications", "notification-btn", data => {
-      setState(data["payload"]["data"]["unreadNotificationsCount"]["count"]);
+      const count =
+        data["payload"]["data"]["unreadNotificationsCount"]["count"];
+      setState(count);
+      faviconBadge.value = count;
     });
     sendMessage({
       "id": "unread-notifications",
@@ -39,13 +42,10 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
       }
     });
     return () => {
+      sendMessage({ id: "unread-notifications", complete: true });
       unsubscribe("unread-notifications", "notification-btn");
     };
   }, [useWS]);
-
-  useEffect(() => {
-    faviconBadge.value = state;
-  }, [state]);
 
   return (
     <Badge count={state} className="notification-btn">
