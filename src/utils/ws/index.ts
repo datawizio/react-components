@@ -33,6 +33,7 @@ export const initWS = (
       "Socket is closed. Reconnect will be attempted in 1 second.",
       e.reason
     );
+    connected = false;
     setTimeout(function () {
       initWS(server, authData);
     }, 1000);
