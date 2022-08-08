@@ -3,6 +3,7 @@ import { IRow, IColumn } from "../types";
 import { TableContext } from "../context";
 import { useMemo, useContext } from "react";
 import { defineCellType } from "../utils/utils";
+import { formatNumericValue, isNumeric } from "../../../utils/helpers";
 
 export interface CellDataProps<T = any> {
   value: T;
@@ -26,9 +27,11 @@ const CellData: React.FC<CellDataProps> = React.memo(props => {
   }, [dTypesConfig, value, column]);
 
   const cellDataRender = useMemo(() => {
+    let outputValue = value;
+    if (isNumeric(value)) outputValue = formatNumericValue(parseFloat(value));
     return typeConfig && typeConfig.render
       ? typeConfig.render(value, row, column, xIndex, cellRenderProps)
-      : value;
+      : outputValue;
   }, [typeConfig, value, xIndex, cellRenderProps, column, row]);
 
   const deps = rowPrefixDeps ? rowPrefixDeps(row) : [];

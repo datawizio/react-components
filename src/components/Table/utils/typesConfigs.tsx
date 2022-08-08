@@ -1,9 +1,10 @@
 import { DTypeConfig } from "../types";
+import { formatNumericValue } from "../../../utils/helpers";
 
 const basicDTypesConfig = {
   "number": {
     sorter: (a, b) => a - b,
-    toString: value => value && value.toLocaleString("en-US"),
+    toString: value => value && formatNumericValue(value),
     filter: (value, filterBy) => value === filterBy,
     search: (value, searchBy) => {
       if (typeof value === "undefined" || value === null) return false;
@@ -24,7 +25,7 @@ const basicDTypesConfig = {
       );
     },
     render: value =>
-      value && value.toLocaleString(undefined, { maximumFractionDigits: 4 })
+      value && formatNumericValue(value)
   } as DTypeConfig<number>,
 
   "boolean": {
