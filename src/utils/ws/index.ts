@@ -6,8 +6,7 @@ type WSMessage = {
 
 const subsriptions: { [key: string]: Map<string, Function> } = {};
 
-let connected = false;
-const queue: Array<Object> = [];
+const queue: Set<Object> = new Set();
 
 export const initWS = (
   server: string,
@@ -19,21 +18,22 @@ export const initWS = (
   ws = new WebSocket(server, ["graphql-transport-ws"]);
 
   ws.onopen = () => {
-    connected = true;
     sendMessage({
       "type": "connection_init",
       "payload": authData
     });
 
-    queue.forEach(message => sendMessage(message));
+    queue.forEach(message => {
+      sendMessage(message);
+      queue.delete(message);
+    });
   };
 
   ws.onclose = function (e) {
-    console.log(
+    console.warn(
       "Socket is closed. Reconnect will be attempted in 1 second.",
       e.reason
     );
-    connected = false;
     setTimeout(function () {
       initWS(server, authData);
     }, 1000);
@@ -52,8 +52,8 @@ export const initWS = (
 };
 
 export const sendMessage = (message: Object) => {
-  if (!connected) {
-    queue.push(message);
+  if (ws.readyState === WebSocket.CLOSED) {
+    queue.add(message);
     return;
   }
 
