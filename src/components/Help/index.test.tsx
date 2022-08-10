@@ -10,7 +10,6 @@ const dropdownClick = (wrapper, name) => {
 
 const mockProps = {
   onTutorialLinkClick: jest.fn(),
-  onServiceUpdateClick: jest.fn(),
   onHelperClick: jest.fn()
 };
 
@@ -32,9 +31,6 @@ describe("Help component", () => {
 
     dropdownClick(wrapper, "READ_TUTORIAL");
     expect(mockProps.onTutorialLinkClick).toBeCalledTimes(1);
-
-    dropdownClick(wrapper, "SERVICE_UPDATE");
-    expect(mockProps.onServiceUpdateClick).toBeCalledTimes(1);
 
     dropdownClick(wrapper, "BES_HELPER");
     expect(mockProps.onHelperClick).toBeCalledTimes(1);

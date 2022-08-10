@@ -4,7 +4,6 @@ exports[`Help component Help rendered correctly 1`] = `
 <Fragment>
   <HelpMenu
     onHelperClick={[MockFunction]}
-    onServiceUpdateClick={[MockFunction]}
     onTutorialClick={[MockFunction]}
   />
   <div
