@@ -4,7 +4,6 @@ import "./index.less";
 
 export interface IHelp {
   onTutorialLinkClick?: () => void;
-  onServiceUpdateClick?: () => void;
   onHelperClick?: () => void;
   onVisibleChange?: (visible: boolean) => void;
   tourMenu?: React.ReactElement;
@@ -13,7 +12,6 @@ export interface IHelp {
 
 const Help: React.FC<IHelp> = ({
   onTutorialLinkClick,
-  onServiceUpdateClick,
   onHelperClick,
   onVisibleChange,
   tourMenu,
@@ -24,7 +22,6 @@ const Help: React.FC<IHelp> = ({
       <HelpMenu
         onTutorialClick={onTutorialLinkClick}
         onHelperClick={onHelperClick}
-        onServiceUpdateClick={onServiceUpdateClick}
         onVisibleChange={onVisibleChange}
         tourMenu={tourMenu}
         visible={visible}
