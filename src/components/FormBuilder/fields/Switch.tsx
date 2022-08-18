@@ -1,10 +1,23 @@
 import React, { useCallback, useContext } from "react";
-import { Form, Switch } from "antd";
-import { FieldCheckboxProps } from "../types";
+import { Form } from "antd";
+import { FieldSwitchProps } from "../types";
 import ConfigContext from "../../ConfigProvider/context";
+import Switch from "../../Switch";
 
-export const FieldSwitch: React.FC<FieldCheckboxProps> = React.memo(
-  ({ label, rules, name, onChange }) => {
+export const FieldSwitch: React.FC<FieldSwitchProps> = React.memo(
+  ({
+    label,
+    placeholder,
+    rules,
+    name,
+    onChange,
+    disabled,
+    title,
+    checkedChildren,
+    unCheckedChildren,
+    loading,
+    size
+  }) => {
     const { direction } = useContext(ConfigContext);
 
     const handleFieldChange = useCallback(
@@ -26,7 +39,14 @@ export const FieldSwitch: React.FC<FieldCheckboxProps> = React.memo(
         valuePropName="checked"
       >
         <Switch
+          placeholder={placeholder}
           onChange={handleFieldChange}
+          disabled={disabled}
+          title={title}
+          checkedChildren={checkedChildren}
+          unCheckedChildren={unCheckedChildren}
+          loading={loading}
+          size={size}
           className={direction === "rtl" ? "ant-switch-rtl" : ""}
         />
       </Form.Item>
