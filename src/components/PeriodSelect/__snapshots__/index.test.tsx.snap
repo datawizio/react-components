@@ -1191,7 +1191,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                         Object {
                           "data": Object {
                             "children": "PREV_LAST_WEEK",
-                            "disabled": true,
+                            "disabled": false,
                             "key": "1",
                             "value": "prev_last_week",
                           },
@@ -1230,13 +1230,23 @@ exports[`PeriodSelect should render correctly 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "SAME_WEEKDAY_PREV_YEAR",
                             "disabled": false,
                             "key": "5",
-                            "value": "prev_date",
+                            "value": "same_weekday_prev_year",
                           },
                           "groupOption": false,
                           "key": "5",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "disabled": false,
+                            "key": "6",
+                            "value": "prev_date",
+                          },
+                          "groupOption": false,
+                          "key": "6",
                         },
                       ]
                     }
@@ -1264,7 +1274,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                         },
                         Object {
                           "children": "PREV_LAST_WEEK",
-                          "disabled": true,
+                          "disabled": false,
                           "key": "1",
                           "value": "prev_last_week",
                         },
@@ -1287,9 +1297,15 @@ exports[`PeriodSelect should render correctly 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "SET_DATE",
+                          "children": "SAME_WEEKDAY_PREV_YEAR",
                           "disabled": false,
                           "key": "5",
+                          "value": "same_weekday_prev_year",
+                        },
+                        Object {
+                          "children": "SET_DATE",
+                          "disabled": false,
+                          "key": "6",
                           "value": "prev_date",
                         },
                       ]
@@ -1405,7 +1421,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                             Object {
                               "data": Object {
                                 "children": "PREV_LAST_WEEK",
-                                "disabled": true,
+                                "disabled": false,
                                 "key": "1",
                                 "value": "prev_last_week",
                               },
@@ -1444,13 +1460,23 @@ exports[`PeriodSelect should render correctly 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "SAME_WEEKDAY_PREV_YEAR",
                                 "disabled": false,
                                 "key": "5",
-                                "value": "prev_date",
+                                "value": "same_weekday_prev_year",
                               },
                               "groupOption": false,
                               "key": "5",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "disabled": false,
+                                "key": "6",
+                                "value": "prev_date",
+                              },
+                              "groupOption": false,
+                              "key": "6",
                             },
                           ]
                         }
@@ -1478,7 +1504,7 @@ exports[`PeriodSelect should render correctly 1`] = `
                             },
                             Object {
                               "children": "PREV_LAST_WEEK",
-                              "disabled": true,
+                              "disabled": false,
                               "key": "1",
                               "value": "prev_last_week",
                             },
@@ -1501,9 +1527,15 @@ exports[`PeriodSelect should render correctly 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "SET_DATE",
+                              "children": "SAME_WEEKDAY_PREV_YEAR",
                               "disabled": false,
                               "key": "5",
+                              "value": "same_weekday_prev_year",
+                            },
+                            Object {
+                              "children": "SET_DATE",
+                              "disabled": false,
+                              "key": "6",
                               "value": "prev_date",
                             },
                           ]
@@ -3062,7 +3094,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                         Object {
                           "data": Object {
                             "children": "PREV_LAST_WEEK",
-                            "disabled": true,
+                            "disabled": false,
                             "key": "1",
                             "value": "prev_last_week",
                           },
@@ -3101,13 +3133,23 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "SAME_WEEKDAY_PREV_YEAR",
                             "disabled": false,
                             "key": "5",
-                            "value": "prev_date",
+                            "value": "same_weekday_prev_year",
                           },
                           "groupOption": false,
                           "key": "5",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "disabled": false,
+                            "key": "6",
+                            "value": "prev_date",
+                          },
+                          "groupOption": false,
+                          "key": "6",
                         },
                       ]
                     }
@@ -3135,7 +3177,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                         },
                         Object {
                           "children": "PREV_LAST_WEEK",
-                          "disabled": true,
+                          "disabled": false,
                           "key": "1",
                           "value": "prev_last_week",
                         },
@@ -3158,9 +3200,15 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "SET_DATE",
+                          "children": "SAME_WEEKDAY_PREV_YEAR",
                           "disabled": false,
                           "key": "5",
+                          "value": "same_weekday_prev_year",
+                        },
+                        Object {
+                          "children": "SET_DATE",
+                          "disabled": false,
+                          "key": "6",
                           "value": "prev_date",
                         },
                       ]
@@ -3276,7 +3324,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                             Object {
                               "data": Object {
                                 "children": "PREV_LAST_WEEK",
-                                "disabled": true,
+                                "disabled": false,
                                 "key": "1",
                                 "value": "prev_last_week",
                               },
@@ -3315,13 +3363,23 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "SAME_WEEKDAY_PREV_YEAR",
                                 "disabled": false,
                                 "key": "5",
-                                "value": "prev_date",
+                                "value": "same_weekday_prev_year",
                               },
                               "groupOption": false,
                               "key": "5",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "disabled": false,
+                                "key": "6",
+                                "value": "prev_date",
+                              },
+                              "groupOption": false,
+                              "key": "6",
                             },
                           ]
                         }
@@ -3349,7 +3407,7 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                             },
                             Object {
                               "children": "PREV_LAST_WEEK",
-                              "disabled": true,
+                              "disabled": false,
                               "key": "1",
                               "value": "prev_last_week",
                             },
@@ -3372,9 +3430,15 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "SET_DATE",
+                              "children": "SAME_WEEKDAY_PREV_YEAR",
                               "disabled": false,
                               "key": "5",
+                              "value": "same_weekday_prev_year",
+                            },
+                            Object {
+                              "children": "SET_DATE",
+                              "disabled": false,
+                              "key": "6",
                               "value": "prev_date",
                             },
                           ]
@@ -6567,13 +6631,23 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "SAME_WEEKDAY_PREV_YEAR",
                             "disabled": false,
                             "key": "5",
-                            "value": "prev_date",
+                            "value": "same_weekday_prev_year",
                           },
                           "groupOption": false,
                           "key": "5",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "disabled": false,
+                            "key": "6",
+                            "value": "prev_date",
+                          },
+                          "groupOption": false,
+                          "key": "6",
                         },
                       ]
                     }
@@ -6624,9 +6698,15 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "SET_DATE",
+                          "children": "SAME_WEEKDAY_PREV_YEAR",
                           "disabled": false,
                           "key": "5",
+                          "value": "same_weekday_prev_year",
+                        },
+                        Object {
+                          "children": "SET_DATE",
+                          "disabled": false,
+                          "key": "6",
                           "value": "prev_date",
                         },
                       ]
@@ -6781,13 +6861,23 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "SAME_WEEKDAY_PREV_YEAR",
                                 "disabled": false,
                                 "key": "5",
-                                "value": "prev_date",
+                                "value": "same_weekday_prev_year",
                               },
                               "groupOption": false,
                               "key": "5",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "disabled": false,
+                                "key": "6",
+                                "value": "prev_date",
+                              },
+                              "groupOption": false,
+                              "key": "6",
                             },
                           ]
                         }
@@ -6838,9 +6928,15 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "SET_DATE",
+                              "children": "SAME_WEEKDAY_PREV_YEAR",
                               "disabled": false,
                               "key": "5",
+                              "value": "same_weekday_prev_year",
+                            },
+                            Object {
+                              "children": "SET_DATE",
+                              "disabled": false,
+                              "key": "6",
                               "value": "prev_date",
                             },
                           ]
@@ -8431,7 +8527,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         Object {
                           "data": Object {
                             "children": "PREV_LAST_WEEK",
-                            "disabled": true,
+                            "disabled": false,
                             "key": "1",
                             "value": "prev_last_week",
                           },
@@ -8470,13 +8566,23 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "SAME_WEEKDAY_PREV_YEAR",
                             "disabled": false,
                             "key": "5",
-                            "value": "prev_date",
+                            "value": "same_weekday_prev_year",
                           },
                           "groupOption": false,
                           "key": "5",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "disabled": false,
+                            "key": "6",
+                            "value": "prev_date",
+                          },
+                          "groupOption": false,
+                          "key": "6",
                         },
                       ]
                     }
@@ -8504,7 +8610,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         },
                         Object {
                           "children": "PREV_LAST_WEEK",
-                          "disabled": true,
+                          "disabled": false,
                           "key": "1",
                           "value": "prev_last_week",
                         },
@@ -8527,9 +8633,15 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                           "value": "prev_last_year",
                         },
                         Object {
-                          "children": "SET_DATE",
+                          "children": "SAME_WEEKDAY_PREV_YEAR",
                           "disabled": false,
                           "key": "5",
+                          "value": "same_weekday_prev_year",
+                        },
+                        Object {
+                          "children": "SET_DATE",
+                          "disabled": false,
+                          "key": "6",
                           "value": "prev_date",
                         },
                       ]
@@ -8645,7 +8757,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             Object {
                               "data": Object {
                                 "children": "PREV_LAST_WEEK",
-                                "disabled": true,
+                                "disabled": false,
                                 "key": "1",
                                 "value": "prev_last_week",
                               },
@@ -8684,13 +8796,23 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "SAME_WEEKDAY_PREV_YEAR",
                                 "disabled": false,
                                 "key": "5",
-                                "value": "prev_date",
+                                "value": "same_weekday_prev_year",
                               },
                               "groupOption": false,
                               "key": "5",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "disabled": false,
+                                "key": "6",
+                                "value": "prev_date",
+                              },
+                              "groupOption": false,
+                              "key": "6",
                             },
                           ]
                         }
@@ -8718,7 +8840,7 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             },
                             Object {
                               "children": "PREV_LAST_WEEK",
-                              "disabled": true,
+                              "disabled": false,
                               "key": "1",
                               "value": "prev_last_week",
                             },
@@ -8741,9 +8863,15 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                               "value": "prev_last_year",
                             },
                             Object {
-                              "children": "SET_DATE",
+                              "children": "SAME_WEEKDAY_PREV_YEAR",
                               "disabled": false,
                               "key": "5",
+                              "value": "same_weekday_prev_year",
+                            },
+                            Object {
+                              "children": "SET_DATE",
+                              "disabled": false,
+                              "key": "6",
                               "value": "prev_date",
                             },
                           ]

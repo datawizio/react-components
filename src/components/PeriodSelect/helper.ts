@@ -131,6 +131,10 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "quarter");
       newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "quarter");
       break;
+    case "same_weekday_prev_year":
+      newPrevPeriod.startDate = dayjs(period.startDate).subtract(52, "week");
+      newPrevPeriod.endDate = dayjs(period.endDate).subtract(52, "week");
+      break;
     case "prev_last_year":
       const diff = dayjs(period.endDate).diff(period.startDate, "day");
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "year");
@@ -232,9 +236,7 @@ export const getPeriod = ({
       newPeriod.startDate = dayjs(clientDate)
         .startOf("year")
         .subtract(1, "year");
-      newPeriod.endDate = dayjs(clientDate)
-        .startOf("year")
-        .subtract(1, "day");
+      newPeriod.endDate = dayjs(clientDate).startOf("year").subtract(1, "day");
       break;
     case "all_time":
       let startDate;
@@ -257,7 +259,7 @@ export const getPeriod = ({
   }
 
   if (newPeriod.startDate && newPeriod.endDate) {
-    if (clientStartDate && (newPeriod.startDate < dayjs(clientStartDate))) {
+    if (clientStartDate && newPeriod.startDate < dayjs(clientStartDate)) {
       newPeriod.startDate = dayjs(clientStartDate);
     }
     return {
@@ -364,7 +366,7 @@ export const getAvailablePeriodsForDates = (
   dateRange: DateRangeType,
   forceEmpty = false
 ) => {
-  const weekLength = 6;
+  const weekLength = 7;
   const daysDiff = dayjs(dateRange.endDate).diff(dateRange.startDate, "day");
   const monthLength = dayjs(dateRange.startDate).daysInMonth();
 
