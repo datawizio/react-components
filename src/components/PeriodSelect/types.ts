@@ -12,6 +12,20 @@ export interface IDateConfig {
   selectedPrevPeriod: PrevPeriodEnum;
 }
 
+export type PeriodAvailable = {
+  [key in PeriodEnum]: Array<PrevPeriodEnum>;
+};
+
+export type PeriodAvailableForDates = {
+  [key in periodsForDatesEnum]: Array<PrevPeriodEnum>;
+};
+
+export type PeriodOption = keyof PeriodAvailable;
+
+export type Period = {
+  [key in PeriodEnum]: Array<PrevPeriodEnum>;
+};
+
 export type PeriodEnum =
   | "last_update_date"
   | "penultimate_update_date"
@@ -21,11 +35,13 @@ export type PeriodEnum =
   | "month_begin"
   | "prev_month"
   | "quarter_begin"
+  | "prev_quarter"
   | "year_begin"
   | "last_30_days"
   | "last_90_days"
   | "last_180_days"
   | "last_365_days"
+  | "prev_year"
   | "all_time"
   | "date";
 
@@ -35,7 +51,15 @@ export type PrevPeriodEnum =
   | "prev_last_month"
   | "prev_last_quarter"
   | "prev_last_year"
+  | "same_weekday_prev_year"
   | "prev_date";
+
+export type periodsForDatesEnum =
+  | "week"
+  | "month"
+  | "quarter"
+  | "year"
+  | "date";
 
 export interface PeriodSelectProps {
   type: CalendarTypes;

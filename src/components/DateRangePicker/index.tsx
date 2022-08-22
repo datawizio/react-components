@@ -74,6 +74,7 @@ const DateRangePicker: IDateRangePicker = ({
       }
       return defaultPreset;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currDateRange,
     defaultPresetExceptions,
