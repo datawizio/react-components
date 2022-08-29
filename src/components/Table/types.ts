@@ -31,7 +31,8 @@ type _OverwrittenTableProps<RT> = {
 type IColumnsSorter = (
   columns: IColumn[],
   oldColumnsInfo: { [k: string]: Partial<IColumn> },
-  columnsSwapped?: boolean
+  columnsSwapped?: boolean,
+  templateSelected?: boolean
 ) => void;
 
 export interface TableProps<RT = any>

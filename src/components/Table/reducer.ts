@@ -150,6 +150,7 @@ export function reducer(state: TableState, action: Action): TableState {
         visibleColumnsKeys &&
         visibleColumnsKeys.length &&
         visibleColumnsKeys.filter(key => nextColumnsMap[key]);
+
       const nextColumns = (function rec(newColumns, oldColumns) {
         if (state.forceColumns) {
           return newColumns;
@@ -164,7 +165,13 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         if (state.columnsSorter) {
-          state.columnsSorter(newColumns, oldColumnsInfo, state.columnsSwapped);
+          const isFavorite = !!state.templates.find(t => t.favorite);
+          state.columnsSorter(
+            newColumns,
+            oldColumnsInfo,
+            state.columnsSwapped,
+            state.templateSelected || isFavorite
+          );
         } else {
           newColumns.sort((a, b) => {
             const aIndex = oldColumnsInfo[a.dataIndex]
