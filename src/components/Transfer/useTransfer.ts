@@ -13,6 +13,18 @@ function reducer(state: IUseTransfer, action: any) {
         ...action.payload
       };
     }
+    case "resetSourceChecked": {
+      return {
+        ...state,
+        sourceChecked: []
+      };
+    }
+    case "resetTargetChecked": {
+      return {
+        ...state,
+        targetChecked: []
+      };
+    }
     default:
       throw new Error();
   }
