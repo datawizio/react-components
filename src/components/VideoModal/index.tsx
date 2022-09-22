@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { PlayerReference } from "video-react";
 import { ModalProps } from "../Modal";
 import Player from "../Player";
@@ -16,6 +16,16 @@ const VideoModal: FC<VideoModalProps> = ({ thumbnail, source, modalProps }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const player = useRef<PlayerReference>();
+
+  useEffect(() => {
+    if (player.current) {
+      player.current.subscribeToStateChange(playerState => {
+        if (playerState.ended) {
+          setModalVisible(false);
+        }
+      });
+    }
+  });
 
   const handleThumbnailClick = () => {
     setModalVisible(true);
