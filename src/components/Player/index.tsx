@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from "react";
+import React, { forwardRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
   Player as VideoReact,
