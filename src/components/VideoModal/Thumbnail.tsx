@@ -1,9 +1,5 @@
 import React, { FC } from "react";
-
-interface ThumbnailProps {
-  url: string;
-  onClick?: () => void;
-}
+import { ThumbnailProps } from "./types";
 
 export const Thumbnail: FC<ThumbnailProps> = ({ url, onClick }) => {
   return (
