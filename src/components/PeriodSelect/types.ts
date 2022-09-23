@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
 
 export interface DateRangeType {
@@ -21,6 +22,21 @@ export type PeriodAvailableForDates = {
 };
 
 export type PeriodOption = keyof PeriodAvailable;
+
+export type CalculateDate = (clientDate: string) => Dayjs;
+
+export type AvailablePresets<T> = { include?: T[]; exclude?: T[] };
+
+export type PrevPeriodConfigOption = {
+  getStartDate?: CalculateDate;
+  getEndDate?: CalculateDate;
+  type?: CalendarTypes;
+  period?: AvailablePresets<PeriodEnum>;
+  dates?: AvailablePresets<periodsForDatesEnum>;
+};
+export type PrevPeriodConfig = {
+  [key in PrevPeriodEnum]: PrevPeriodConfigOption;
+};
 
 export type Period = {
   [key in PeriodEnum]: Array<PrevPeriodEnum>;

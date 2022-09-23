@@ -1,11 +1,14 @@
 import dayjs, { Dayjs } from "dayjs";
+import { CalendarTypes } from "../DatePicker";
 import {
   AVAILABLE_PERIODS_FOR_DATES,
   CUSTOM_PERIOD_KEY,
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PERIOD,
   DEFAULT_PREV_PERIOD,
-  FORMATTED_PATTERN
+  FORMATTED_PATTERN,
+  PERIOD_AVAILABLE,
+  PREV_PERIOD_CONFIG
 } from "./constants";
 import {
   DateRangeType,
@@ -389,4 +392,22 @@ export const getAvailablePeriodsForDates = (
   }
 
   return forceEmpty ? [] : AVAILABLE_PERIODS_FOR_DATES["date"];
+};
+
+export const getAvailablePrevPeriod = (
+  currentPeriod: PeriodEnum,
+  calendarType: CalendarTypes
+) => {
+  const prevPeriods = Object.keys(PREV_PERIOD_CONFIG) as PrevPeriodEnum[];
+  return prevPeriods.reduce((acc, prevPeriod) => {
+    acc[currentPeriod] = prevPeriods.filter(p => {
+      const { period, type } = PREV_PERIOD_CONFIG[p];
+      return (
+        !period.include?.includes(currentPeriod) ||
+        period.exclude?.includes(currentPeriod) ||
+        type === calendarType
+      );
+    });
+    return acc;
+  }, {});
 };

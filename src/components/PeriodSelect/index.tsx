@@ -60,6 +60,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     showPeriodPicker: isCustomPeriod,
     showPrevPeriodPicker: isCustomPrevPeriod,
     period: initialPeriod,
+    calendarType: type,
     prevPeriod: initialPrevPeriod,
     selectedPeriod: initialSelectedPeriod,
     selectedPrevPeriod: initialSelectedPrevPeriod

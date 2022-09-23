@@ -2,6 +2,7 @@ import {
   PeriodAvailable,
   PeriodAvailableForDates,
   PeriodOption,
+  PrevPeriodConfig,
   PrevPeriodEnum
 } from "./types";
 
@@ -12,6 +13,67 @@ export const DEFAULT_PREV_PERIOD = "previous";
 
 export const CUSTOM_PERIOD_KEY = "date";
 export const CUSTOM_PREV_PERIOD_KEY = "prev_date";
+
+export const PREV_PERIOD_CONFIG: PrevPeriodConfig = {
+  previous: {},
+  prev_date: { period: { exclude: ["year_begin"] } },
+  prev_last_month: {
+    period: {
+      include: [
+        "last_update_date",
+        "penultimate_update_date",
+        "last_7_days",
+        "week_begin",
+        "month_begin",
+        "prev_week"
+      ]
+    },
+    dates: {
+      include: ["week", "month"]
+    },
+    type: "iso-8601"
+  },
+  prev_last_quarter: {
+    period: {
+      exclude: [
+        "last_180_days",
+        "last_365_days",
+        "year_begin",
+        "prev_year",
+        "date"
+      ]
+    },
+    dates: {
+      exclude: ["year", "date"]
+    }
+  },
+  prev_last_week: {
+    period: {
+      include: [
+        "last_update_date",
+        "penultimate_update_date",
+        "last_7_days",
+        "week_begin"
+      ]
+    },
+    dates: {
+      include: ["week"]
+    }
+  },
+  prev_last_year: {
+    period: {
+      exclude: ["date"]
+    },
+    dates: {
+      exclude: ["date"]
+    }
+  },
+  same_weekday_prev_year: {
+    period: {
+      exclude: ["date"]
+    }
+  }
+};
 
 export const PREV_PERIOD_OPTIONS: Array<PrevPeriodEnum> = [
   "previous",

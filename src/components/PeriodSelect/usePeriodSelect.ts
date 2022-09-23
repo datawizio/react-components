@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { CalendarTypes } from "../DatePicker";
 
 import {
   PERIOD_AVAILABLE,
@@ -8,6 +9,7 @@ import {
 } from "./constants";
 import {
   getAvailablePeriodsForDates,
+  getAvailablePrevPeriod,
   getDateArrayFromRange,
   getPeriod,
   getPrevPeriod
@@ -23,6 +25,7 @@ export interface IUserPeriodSelect {
   showPrevPeriodPicker: boolean;
   isPickerEmpty: boolean;
   isPrevPickerEmpty: boolean;
+  calendarType: CalendarTypes;
   availablePrevPeriods: any;
   clientDate: string;
   clientStartDate: string;
@@ -32,9 +35,16 @@ function reducer(state: IUserPeriodSelect, action: any) {
   switch (action.type) {
     case "updatePeriod": {
       const { periodKey } = action.payload;
-      const { clientDate, clientStartDate, period: oldPeriod } = state;
+      const {
+        clientDate,
+        clientStartDate,
+        period: oldPeriod,
+        calendarType
+      } = state;
 
       const availablePrevPeriods = PERIOD_AVAILABLE[periodKey];
+      console.log(getAvailablePrevPeriod(periodKey, calendarType));
+
       const isCustomDate = periodKey === CUSTOM_PERIOD_KEY;
 
       const period = getPeriod({
