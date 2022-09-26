@@ -16,63 +16,14 @@ export const CUSTOM_PREV_PERIOD_KEY = "prev_date";
 
 export const PREV_PERIOD_CONFIG: PrevPeriodConfig = {
   previous: {},
-  prev_date: { period: { exclude: ["year_begin"] } },
+  prev_date: {},
   prev_last_month: {
-    period: {
-      include: [
-        "last_update_date",
-        "penultimate_update_date",
-        "last_7_days",
-        "week_begin",
-        "month_begin",
-        "prev_week"
-      ]
-    },
-    dates: {
-      include: ["week", "month"]
-    },
     type: "iso-8601"
   },
-  prev_last_quarter: {
-    period: {
-      exclude: [
-        "last_180_days",
-        "last_365_days",
-        "year_begin",
-        "prev_year",
-        "date"
-      ]
-    },
-    dates: {
-      exclude: ["year", "date"]
-    }
-  },
-  prev_last_week: {
-    period: {
-      include: [
-        "last_update_date",
-        "penultimate_update_date",
-        "last_7_days",
-        "week_begin"
-      ]
-    },
-    dates: {
-      include: ["week"]
-    }
-  },
-  prev_last_year: {
-    period: {
-      exclude: ["date"]
-    },
-    dates: {
-      exclude: ["date"]
-    }
-  },
-  same_weekday_prev_year: {
-    period: {
-      exclude: ["date"]
-    }
-  }
+  prev_last_quarter: {},
+  prev_last_week: {},
+  prev_last_year: {},
+  same_weekday_prev_year: {}
 };
 
 export const PREV_PERIOD_OPTIONS: Array<PrevPeriodEnum> = [
@@ -83,6 +34,30 @@ export const PREV_PERIOD_OPTIONS: Array<PrevPeriodEnum> = [
   "prev_last_year",
   "same_weekday_prev_year",
   "prev_date"
+];
+
+export const PERIOD_OPTIONS: Array<PeriodOption> = [
+  "last_update_date",
+  "penultimate_update_date",
+  "last_7_days",
+  "last_30_days",
+  "last_90_days",
+  "last_180_days",
+  "last_365_days",
+  "week_begin",
+  "month_begin",
+  "quarter_begin",
+  "year_begin",
+  "current_week",
+  "current_month",
+  "current_quarter",
+  "current_year",
+  "prev_week",
+  "prev_month",
+  "prev_quarter",
+  "prev_year",
+  "all_time",
+  "date"
 ];
 
 export const PERIOD_AVAILABLE: PeriodAvailable = {
@@ -164,6 +139,31 @@ export const PERIOD_AVAILABLE: PeriodAvailable = {
     "prev_date"
   ],
   year_begin: ["prev_last_year", "same_weekday_prev_year", "previous"],
+  current_week: [
+    "previous",
+    "prev_last_week",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "same_weekday_prev_year",
+    "prev_date"
+  ],
+  current_month: [
+    "previous",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "same_weekday_prev_year",
+    "prev_date"
+  ],
+  current_quarter: [
+    "previous",
+    "prev_last_quarter",
+    "prev_last_year",
+    "same_weekday_prev_year",
+    "prev_date"
+  ],
+  current_year: ["prev_last_year", "same_weekday_prev_year", "previous"],
   prev_week: [
     "previous",
     "prev_last_month",
@@ -225,7 +225,3 @@ export const AVAILABLE_PERIODS_FOR_DATES: PeriodAvailableForDates = {
   year: ["previous", "prev_last_year", "same_weekday_prev_year", "prev_date"],
   date: ["previous", "prev_date", "same_weekday_prev_year"]
 };
-
-export const PERIOD_OPTIONS: Array<PeriodOption> = Object.keys(
-  PERIOD_AVAILABLE
-) as Array<PeriodOption>;

@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import { CalendarTypes } from "../DatePicker";
 
 import {
-  PERIOD_AVAILABLE,
   CUSTOM_PERIOD_KEY,
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PREV_PERIOD
@@ -42,8 +41,10 @@ function reducer(state: IUserPeriodSelect, action: any) {
         calendarType
       } = state;
 
-      const availablePrevPeriods = PERIOD_AVAILABLE[periodKey];
-      console.log(getAvailablePrevPeriod(periodKey, calendarType));
+      const availablePrevPeriods = getAvailablePrevPeriod(
+        periodKey,
+        calendarType
+      );
 
       const isCustomDate = periodKey === CUSTOM_PERIOD_KEY;
 

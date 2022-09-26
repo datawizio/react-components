@@ -23,13 +23,9 @@ export type PeriodAvailableForDates = {
 
 export type PeriodOption = keyof PeriodAvailable;
 
-export type CalculateDate = (clientDate: string) => Dayjs;
-
 export type AvailablePresets<T> = { include?: T[]; exclude?: T[] };
 
 export type PrevPeriodConfigOption = {
-  getStartDate?: CalculateDate;
-  getEndDate?: CalculateDate;
   type?: CalendarTypes;
   period?: AvailablePresets<PeriodEnum>;
   dates?: AvailablePresets<periodsForDatesEnum>;
@@ -53,6 +49,10 @@ export type PeriodEnum =
   | "quarter_begin"
   | "prev_quarter"
   | "year_begin"
+  | "current_week"
+  | "current_month"
+  | "current_quarter"
+  | "current_year"
   | "last_30_days"
   | "last_90_days"
   | "last_180_days"
@@ -88,3 +88,10 @@ export interface PeriodSelectProps {
   dateConfig?: IDateConfig;
   onChange?: (dateConfig: IDateConfig) => void;
 }
+
+export type GetPeriod = (config: {
+  periodKey?: PeriodEnum;
+  date?: Dayjs[] | null;
+  clientDate?: string;
+  clientStartDate?: string;
+}) => DateRangeType;
