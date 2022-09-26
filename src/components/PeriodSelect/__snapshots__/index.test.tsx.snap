@@ -223,57 +223,93 @@ exports[`PeriodSelect should render correctly 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_WEEK",
+                            "children": "CURRENT_WEEK",
                             "key": "11",
-                            "value": "prev_week",
+                            "value": "current_week",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_MONTH",
+                            "children": "CURRENT_MONTH",
                             "key": "12",
-                            "value": "prev_month",
+                            "value": "current_month",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_QUARTER",
+                            "children": "CURRENT_QUARTER",
                             "key": "13",
-                            "value": "prev_quarter",
+                            "value": "current_quarter",
                           },
                           "groupOption": false,
                           "key": "13",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_YEAR",
+                            "children": "CURRENT_YEAR",
                             "key": "14",
-                            "value": "prev_year",
+                            "value": "current_year",
                           },
                           "groupOption": false,
                           "key": "14",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "PREV_WEEK",
                             "key": "15",
-                            "value": "all_time",
+                            "value": "prev_week",
                           },
                           "groupOption": false,
                           "key": "15",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "PREV_MONTH",
                             "key": "16",
-                            "value": "date",
+                            "value": "prev_month",
                           },
                           "groupOption": false,
                           "key": "16",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_QUARTER",
+                            "key": "17",
+                            "value": "prev_quarter",
+                          },
+                          "groupOption": false,
+                          "key": "17",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_YEAR",
+                            "key": "18",
+                            "value": "prev_year",
+                          },
+                          "groupOption": false,
+                          "key": "18",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "ALL_TIME",
+                            "key": "19",
+                            "value": "all_time",
+                          },
+                          "groupOption": false,
+                          "key": "19",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "20",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "20",
                         },
                       ]
                     }
@@ -349,33 +385,53 @@ exports[`PeriodSelect should render correctly 1`] = `
                           "value": "year_begin",
                         },
                         Object {
-                          "children": "PREV_WEEK",
+                          "children": "CURRENT_WEEK",
                           "key": "11",
+                          "value": "current_week",
+                        },
+                        Object {
+                          "children": "CURRENT_MONTH",
+                          "key": "12",
+                          "value": "current_month",
+                        },
+                        Object {
+                          "children": "CURRENT_QUARTER",
+                          "key": "13",
+                          "value": "current_quarter",
+                        },
+                        Object {
+                          "children": "CURRENT_YEAR",
+                          "key": "14",
+                          "value": "current_year",
+                        },
+                        Object {
+                          "children": "PREV_WEEK",
+                          "key": "15",
                           "value": "prev_week",
                         },
                         Object {
                           "children": "PREV_MONTH",
-                          "key": "12",
+                          "key": "16",
                           "value": "prev_month",
                         },
                         Object {
                           "children": "PREV_QUARTER",
-                          "key": "13",
+                          "key": "17",
                           "value": "prev_quarter",
                         },
                         Object {
                           "children": "PREV_YEAR",
-                          "key": "14",
+                          "key": "18",
                           "value": "prev_year",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "15",
+                          "key": "19",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "16",
+                          "key": "20",
                           "value": "date",
                         },
                       ]
@@ -579,57 +635,93 @@ exports[`PeriodSelect should render correctly 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_WEEK",
+                                "children": "CURRENT_WEEK",
                                 "key": "11",
-                                "value": "prev_week",
+                                "value": "current_week",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_MONTH",
+                                "children": "CURRENT_MONTH",
                                 "key": "12",
-                                "value": "prev_month",
+                                "value": "current_month",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_QUARTER",
+                                "children": "CURRENT_QUARTER",
                                 "key": "13",
-                                "value": "prev_quarter",
+                                "value": "current_quarter",
                               },
                               "groupOption": false,
                               "key": "13",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_YEAR",
+                                "children": "CURRENT_YEAR",
                                 "key": "14",
-                                "value": "prev_year",
+                                "value": "current_year",
                               },
                               "groupOption": false,
                               "key": "14",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "PREV_WEEK",
                                 "key": "15",
-                                "value": "all_time",
+                                "value": "prev_week",
                               },
                               "groupOption": false,
                               "key": "15",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "PREV_MONTH",
                                 "key": "16",
-                                "value": "date",
+                                "value": "prev_month",
                               },
                               "groupOption": false,
                               "key": "16",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_QUARTER",
+                                "key": "17",
+                                "value": "prev_quarter",
+                              },
+                              "groupOption": false,
+                              "key": "17",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_YEAR",
+                                "key": "18",
+                                "value": "prev_year",
+                              },
+                              "groupOption": false,
+                              "key": "18",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "ALL_TIME",
+                                "key": "19",
+                                "value": "all_time",
+                              },
+                              "groupOption": false,
+                              "key": "19",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "20",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "20",
                             },
                           ]
                         }
@@ -705,33 +797,53 @@ exports[`PeriodSelect should render correctly 1`] = `
                               "value": "year_begin",
                             },
                             Object {
-                              "children": "PREV_WEEK",
+                              "children": "CURRENT_WEEK",
                               "key": "11",
+                              "value": "current_week",
+                            },
+                            Object {
+                              "children": "CURRENT_MONTH",
+                              "key": "12",
+                              "value": "current_month",
+                            },
+                            Object {
+                              "children": "CURRENT_QUARTER",
+                              "key": "13",
+                              "value": "current_quarter",
+                            },
+                            Object {
+                              "children": "CURRENT_YEAR",
+                              "key": "14",
+                              "value": "current_year",
+                            },
+                            Object {
+                              "children": "PREV_WEEK",
+                              "key": "15",
                               "value": "prev_week",
                             },
                             Object {
                               "children": "PREV_MONTH",
-                              "key": "12",
+                              "key": "16",
                               "value": "prev_month",
                             },
                             Object {
                               "children": "PREV_QUARTER",
-                              "key": "13",
+                              "key": "17",
                               "value": "prev_quarter",
                             },
                             Object {
                               "children": "PREV_YEAR",
-                              "key": "14",
+                              "key": "18",
                               "value": "prev_year",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "15",
+                              "key": "19",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "16",
+                              "key": "20",
                               "value": "date",
                             },
                           ]
@@ -2126,57 +2238,93 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_WEEK",
+                            "children": "CURRENT_WEEK",
                             "key": "11",
-                            "value": "prev_week",
+                            "value": "current_week",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_MONTH",
+                            "children": "CURRENT_MONTH",
                             "key": "12",
-                            "value": "prev_month",
+                            "value": "current_month",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_QUARTER",
+                            "children": "CURRENT_QUARTER",
                             "key": "13",
-                            "value": "prev_quarter",
+                            "value": "current_quarter",
                           },
                           "groupOption": false,
                           "key": "13",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_YEAR",
+                            "children": "CURRENT_YEAR",
                             "key": "14",
-                            "value": "prev_year",
+                            "value": "current_year",
                           },
                           "groupOption": false,
                           "key": "14",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "PREV_WEEK",
                             "key": "15",
-                            "value": "all_time",
+                            "value": "prev_week",
                           },
                           "groupOption": false,
                           "key": "15",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "PREV_MONTH",
                             "key": "16",
-                            "value": "date",
+                            "value": "prev_month",
                           },
                           "groupOption": false,
                           "key": "16",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_QUARTER",
+                            "key": "17",
+                            "value": "prev_quarter",
+                          },
+                          "groupOption": false,
+                          "key": "17",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_YEAR",
+                            "key": "18",
+                            "value": "prev_year",
+                          },
+                          "groupOption": false,
+                          "key": "18",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "ALL_TIME",
+                            "key": "19",
+                            "value": "all_time",
+                          },
+                          "groupOption": false,
+                          "key": "19",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "20",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "20",
                         },
                       ]
                     }
@@ -2252,33 +2400,53 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                           "value": "year_begin",
                         },
                         Object {
-                          "children": "PREV_WEEK",
+                          "children": "CURRENT_WEEK",
                           "key": "11",
+                          "value": "current_week",
+                        },
+                        Object {
+                          "children": "CURRENT_MONTH",
+                          "key": "12",
+                          "value": "current_month",
+                        },
+                        Object {
+                          "children": "CURRENT_QUARTER",
+                          "key": "13",
+                          "value": "current_quarter",
+                        },
+                        Object {
+                          "children": "CURRENT_YEAR",
+                          "key": "14",
+                          "value": "current_year",
+                        },
+                        Object {
+                          "children": "PREV_WEEK",
+                          "key": "15",
                           "value": "prev_week",
                         },
                         Object {
                           "children": "PREV_MONTH",
-                          "key": "12",
+                          "key": "16",
                           "value": "prev_month",
                         },
                         Object {
                           "children": "PREV_QUARTER",
-                          "key": "13",
+                          "key": "17",
                           "value": "prev_quarter",
                         },
                         Object {
                           "children": "PREV_YEAR",
-                          "key": "14",
+                          "key": "18",
                           "value": "prev_year",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "15",
+                          "key": "19",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "16",
+                          "key": "20",
                           "value": "date",
                         },
                       ]
@@ -2482,57 +2650,93 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_WEEK",
+                                "children": "CURRENT_WEEK",
                                 "key": "11",
-                                "value": "prev_week",
+                                "value": "current_week",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_MONTH",
+                                "children": "CURRENT_MONTH",
                                 "key": "12",
-                                "value": "prev_month",
+                                "value": "current_month",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_QUARTER",
+                                "children": "CURRENT_QUARTER",
                                 "key": "13",
-                                "value": "prev_quarter",
+                                "value": "current_quarter",
                               },
                               "groupOption": false,
                               "key": "13",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_YEAR",
+                                "children": "CURRENT_YEAR",
                                 "key": "14",
-                                "value": "prev_year",
+                                "value": "current_year",
                               },
                               "groupOption": false,
                               "key": "14",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "PREV_WEEK",
                                 "key": "15",
-                                "value": "all_time",
+                                "value": "prev_week",
                               },
                               "groupOption": false,
                               "key": "15",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "PREV_MONTH",
                                 "key": "16",
-                                "value": "date",
+                                "value": "prev_month",
                               },
                               "groupOption": false,
                               "key": "16",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_QUARTER",
+                                "key": "17",
+                                "value": "prev_quarter",
+                              },
+                              "groupOption": false,
+                              "key": "17",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_YEAR",
+                                "key": "18",
+                                "value": "prev_year",
+                              },
+                              "groupOption": false,
+                              "key": "18",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "ALL_TIME",
+                                "key": "19",
+                                "value": "all_time",
+                              },
+                              "groupOption": false,
+                              "key": "19",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "20",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "20",
                             },
                           ]
                         }
@@ -2608,33 +2812,53 @@ exports[`PeriodSelect should render correctly with default props 1`] = `
                               "value": "year_begin",
                             },
                             Object {
-                              "children": "PREV_WEEK",
+                              "children": "CURRENT_WEEK",
                               "key": "11",
+                              "value": "current_week",
+                            },
+                            Object {
+                              "children": "CURRENT_MONTH",
+                              "key": "12",
+                              "value": "current_month",
+                            },
+                            Object {
+                              "children": "CURRENT_QUARTER",
+                              "key": "13",
+                              "value": "current_quarter",
+                            },
+                            Object {
+                              "children": "CURRENT_YEAR",
+                              "key": "14",
+                              "value": "current_year",
+                            },
+                            Object {
+                              "children": "PREV_WEEK",
+                              "key": "15",
                               "value": "prev_week",
                             },
                             Object {
                               "children": "PREV_MONTH",
-                              "key": "12",
+                              "key": "16",
                               "value": "prev_month",
                             },
                             Object {
                               "children": "PREV_QUARTER",
-                              "key": "13",
+                              "key": "17",
                               "value": "prev_quarter",
                             },
                             Object {
                               "children": "PREV_YEAR",
-                              "key": "14",
+                              "key": "18",
                               "value": "prev_year",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "15",
+                              "key": "19",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "16",
+                              "key": "20",
                               "value": "date",
                             },
                           ]
@@ -4079,57 +4303,93 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_WEEK",
+                            "children": "CURRENT_WEEK",
                             "key": "11",
-                            "value": "prev_week",
+                            "value": "current_week",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_MONTH",
+                            "children": "CURRENT_MONTH",
                             "key": "12",
-                            "value": "prev_month",
+                            "value": "current_month",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_QUARTER",
+                            "children": "CURRENT_QUARTER",
                             "key": "13",
-                            "value": "prev_quarter",
+                            "value": "current_quarter",
                           },
                           "groupOption": false,
                           "key": "13",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_YEAR",
+                            "children": "CURRENT_YEAR",
                             "key": "14",
-                            "value": "prev_year",
+                            "value": "current_year",
                           },
                           "groupOption": false,
                           "key": "14",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "PREV_WEEK",
                             "key": "15",
-                            "value": "all_time",
+                            "value": "prev_week",
                           },
                           "groupOption": false,
                           "key": "15",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "PREV_MONTH",
                             "key": "16",
-                            "value": "date",
+                            "value": "prev_month",
                           },
                           "groupOption": false,
                           "key": "16",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_QUARTER",
+                            "key": "17",
+                            "value": "prev_quarter",
+                          },
+                          "groupOption": false,
+                          "key": "17",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_YEAR",
+                            "key": "18",
+                            "value": "prev_year",
+                          },
+                          "groupOption": false,
+                          "key": "18",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "ALL_TIME",
+                            "key": "19",
+                            "value": "all_time",
+                          },
+                          "groupOption": false,
+                          "key": "19",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "20",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "20",
                         },
                       ]
                     }
@@ -4205,33 +4465,53 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                           "value": "year_begin",
                         },
                         Object {
-                          "children": "PREV_WEEK",
+                          "children": "CURRENT_WEEK",
                           "key": "11",
+                          "value": "current_week",
+                        },
+                        Object {
+                          "children": "CURRENT_MONTH",
+                          "key": "12",
+                          "value": "current_month",
+                        },
+                        Object {
+                          "children": "CURRENT_QUARTER",
+                          "key": "13",
+                          "value": "current_quarter",
+                        },
+                        Object {
+                          "children": "CURRENT_YEAR",
+                          "key": "14",
+                          "value": "current_year",
+                        },
+                        Object {
+                          "children": "PREV_WEEK",
+                          "key": "15",
                           "value": "prev_week",
                         },
                         Object {
                           "children": "PREV_MONTH",
-                          "key": "12",
+                          "key": "16",
                           "value": "prev_month",
                         },
                         Object {
                           "children": "PREV_QUARTER",
-                          "key": "13",
+                          "key": "17",
                           "value": "prev_quarter",
                         },
                         Object {
                           "children": "PREV_YEAR",
-                          "key": "14",
+                          "key": "18",
                           "value": "prev_year",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "15",
+                          "key": "19",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "16",
+                          "key": "20",
                           "value": "date",
                         },
                       ]
@@ -4435,57 +4715,93 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_WEEK",
+                                "children": "CURRENT_WEEK",
                                 "key": "11",
-                                "value": "prev_week",
+                                "value": "current_week",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_MONTH",
+                                "children": "CURRENT_MONTH",
                                 "key": "12",
-                                "value": "prev_month",
+                                "value": "current_month",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_QUARTER",
+                                "children": "CURRENT_QUARTER",
                                 "key": "13",
-                                "value": "prev_quarter",
+                                "value": "current_quarter",
                               },
                               "groupOption": false,
                               "key": "13",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_YEAR",
+                                "children": "CURRENT_YEAR",
                                 "key": "14",
-                                "value": "prev_year",
+                                "value": "current_year",
                               },
                               "groupOption": false,
                               "key": "14",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "PREV_WEEK",
                                 "key": "15",
-                                "value": "all_time",
+                                "value": "prev_week",
                               },
                               "groupOption": false,
                               "key": "15",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "PREV_MONTH",
                                 "key": "16",
-                                "value": "date",
+                                "value": "prev_month",
                               },
                               "groupOption": false,
                               "key": "16",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_QUARTER",
+                                "key": "17",
+                                "value": "prev_quarter",
+                              },
+                              "groupOption": false,
+                              "key": "17",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_YEAR",
+                                "key": "18",
+                                "value": "prev_year",
+                              },
+                              "groupOption": false,
+                              "key": "18",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "ALL_TIME",
+                                "key": "19",
+                                "value": "all_time",
+                              },
+                              "groupOption": false,
+                              "key": "19",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "20",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "20",
                             },
                           ]
                         }
@@ -4561,33 +4877,53 @@ exports[`PeriodSelect should select period with custom data 1`] = `
                               "value": "year_begin",
                             },
                             Object {
-                              "children": "PREV_WEEK",
+                              "children": "CURRENT_WEEK",
                               "key": "11",
+                              "value": "current_week",
+                            },
+                            Object {
+                              "children": "CURRENT_MONTH",
+                              "key": "12",
+                              "value": "current_month",
+                            },
+                            Object {
+                              "children": "CURRENT_QUARTER",
+                              "key": "13",
+                              "value": "current_quarter",
+                            },
+                            Object {
+                              "children": "CURRENT_YEAR",
+                              "key": "14",
+                              "value": "current_year",
+                            },
+                            Object {
+                              "children": "PREV_WEEK",
+                              "key": "15",
                               "value": "prev_week",
                             },
                             Object {
                               "children": "PREV_MONTH",
-                              "key": "12",
+                              "key": "16",
                               "value": "prev_month",
                             },
                             Object {
                               "children": "PREV_QUARTER",
-                              "key": "13",
+                              "key": "17",
                               "value": "prev_quarter",
                             },
                             Object {
                               "children": "PREV_YEAR",
-                              "key": "14",
+                              "key": "18",
                               "value": "prev_year",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "15",
+                              "key": "19",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "16",
+                              "key": "20",
                               "value": "date",
                             },
                           ]
@@ -7559,57 +7895,93 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_WEEK",
+                            "children": "CURRENT_WEEK",
                             "key": "11",
-                            "value": "prev_week",
+                            "value": "current_week",
                           },
                           "groupOption": false,
                           "key": "11",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_MONTH",
+                            "children": "CURRENT_MONTH",
                             "key": "12",
-                            "value": "prev_month",
+                            "value": "current_month",
                           },
                           "groupOption": false,
                           "key": "12",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_QUARTER",
+                            "children": "CURRENT_QUARTER",
                             "key": "13",
-                            "value": "prev_quarter",
+                            "value": "current_quarter",
                           },
                           "groupOption": false,
                           "key": "13",
                         },
                         Object {
                           "data": Object {
-                            "children": "PREV_YEAR",
+                            "children": "CURRENT_YEAR",
                             "key": "14",
-                            "value": "prev_year",
+                            "value": "current_year",
                           },
                           "groupOption": false,
                           "key": "14",
                         },
                         Object {
                           "data": Object {
-                            "children": "ALL_TIME",
+                            "children": "PREV_WEEK",
                             "key": "15",
-                            "value": "all_time",
+                            "value": "prev_week",
                           },
                           "groupOption": false,
                           "key": "15",
                         },
                         Object {
                           "data": Object {
-                            "children": "SET_DATE",
+                            "children": "PREV_MONTH",
                             "key": "16",
-                            "value": "date",
+                            "value": "prev_month",
                           },
                           "groupOption": false,
                           "key": "16",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_QUARTER",
+                            "key": "17",
+                            "value": "prev_quarter",
+                          },
+                          "groupOption": false,
+                          "key": "17",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "PREV_YEAR",
+                            "key": "18",
+                            "value": "prev_year",
+                          },
+                          "groupOption": false,
+                          "key": "18",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "ALL_TIME",
+                            "key": "19",
+                            "value": "all_time",
+                          },
+                          "groupOption": false,
+                          "key": "19",
+                        },
+                        Object {
+                          "data": Object {
+                            "children": "SET_DATE",
+                            "key": "20",
+                            "value": "date",
+                          },
+                          "groupOption": false,
+                          "key": "20",
                         },
                       ]
                     }
@@ -7685,33 +8057,53 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                           "value": "year_begin",
                         },
                         Object {
-                          "children": "PREV_WEEK",
+                          "children": "CURRENT_WEEK",
                           "key": "11",
+                          "value": "current_week",
+                        },
+                        Object {
+                          "children": "CURRENT_MONTH",
+                          "key": "12",
+                          "value": "current_month",
+                        },
+                        Object {
+                          "children": "CURRENT_QUARTER",
+                          "key": "13",
+                          "value": "current_quarter",
+                        },
+                        Object {
+                          "children": "CURRENT_YEAR",
+                          "key": "14",
+                          "value": "current_year",
+                        },
+                        Object {
+                          "children": "PREV_WEEK",
+                          "key": "15",
                           "value": "prev_week",
                         },
                         Object {
                           "children": "PREV_MONTH",
-                          "key": "12",
+                          "key": "16",
                           "value": "prev_month",
                         },
                         Object {
                           "children": "PREV_QUARTER",
-                          "key": "13",
+                          "key": "17",
                           "value": "prev_quarter",
                         },
                         Object {
                           "children": "PREV_YEAR",
-                          "key": "14",
+                          "key": "18",
                           "value": "prev_year",
                         },
                         Object {
                           "children": "ALL_TIME",
-                          "key": "15",
+                          "key": "19",
                           "value": "all_time",
                         },
                         Object {
                           "children": "SET_DATE",
-                          "key": "16",
+                          "key": "20",
                           "value": "date",
                         },
                       ]
@@ -7915,57 +8307,93 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_WEEK",
+                                "children": "CURRENT_WEEK",
                                 "key": "11",
-                                "value": "prev_week",
+                                "value": "current_week",
                               },
                               "groupOption": false,
                               "key": "11",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_MONTH",
+                                "children": "CURRENT_MONTH",
                                 "key": "12",
-                                "value": "prev_month",
+                                "value": "current_month",
                               },
                               "groupOption": false,
                               "key": "12",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_QUARTER",
+                                "children": "CURRENT_QUARTER",
                                 "key": "13",
-                                "value": "prev_quarter",
+                                "value": "current_quarter",
                               },
                               "groupOption": false,
                               "key": "13",
                             },
                             Object {
                               "data": Object {
-                                "children": "PREV_YEAR",
+                                "children": "CURRENT_YEAR",
                                 "key": "14",
-                                "value": "prev_year",
+                                "value": "current_year",
                               },
                               "groupOption": false,
                               "key": "14",
                             },
                             Object {
                               "data": Object {
-                                "children": "ALL_TIME",
+                                "children": "PREV_WEEK",
                                 "key": "15",
-                                "value": "all_time",
+                                "value": "prev_week",
                               },
                               "groupOption": false,
                               "key": "15",
                             },
                             Object {
                               "data": Object {
-                                "children": "SET_DATE",
+                                "children": "PREV_MONTH",
                                 "key": "16",
-                                "value": "date",
+                                "value": "prev_month",
                               },
                               "groupOption": false,
                               "key": "16",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_QUARTER",
+                                "key": "17",
+                                "value": "prev_quarter",
+                              },
+                              "groupOption": false,
+                              "key": "17",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "PREV_YEAR",
+                                "key": "18",
+                                "value": "prev_year",
+                              },
+                              "groupOption": false,
+                              "key": "18",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "ALL_TIME",
+                                "key": "19",
+                                "value": "all_time",
+                              },
+                              "groupOption": false,
+                              "key": "19",
+                            },
+                            Object {
+                              "data": Object {
+                                "children": "SET_DATE",
+                                "key": "20",
+                                "value": "date",
+                              },
+                              "groupOption": false,
+                              "key": "20",
                             },
                           ]
                         }
@@ -8041,33 +8469,53 @@ exports[`PeriodSelect should select prev period with custom data 1`] = `
                               "value": "year_begin",
                             },
                             Object {
-                              "children": "PREV_WEEK",
+                              "children": "CURRENT_WEEK",
                               "key": "11",
+                              "value": "current_week",
+                            },
+                            Object {
+                              "children": "CURRENT_MONTH",
+                              "key": "12",
+                              "value": "current_month",
+                            },
+                            Object {
+                              "children": "CURRENT_QUARTER",
+                              "key": "13",
+                              "value": "current_quarter",
+                            },
+                            Object {
+                              "children": "CURRENT_YEAR",
+                              "key": "14",
+                              "value": "current_year",
+                            },
+                            Object {
+                              "children": "PREV_WEEK",
+                              "key": "15",
                               "value": "prev_week",
                             },
                             Object {
                               "children": "PREV_MONTH",
-                              "key": "12",
+                              "key": "16",
                               "value": "prev_month",
                             },
                             Object {
                               "children": "PREV_QUARTER",
-                              "key": "13",
+                              "key": "17",
                               "value": "prev_quarter",
                             },
                             Object {
                               "children": "PREV_YEAR",
-                              "key": "14",
+                              "key": "18",
                               "value": "prev_year",
                             },
                             Object {
                               "children": "ALL_TIME",
-                              "key": "15",
+                              "key": "19",
                               "value": "all_time",
                             },
                             Object {
                               "children": "SET_DATE",
-                              "key": "16",
+                              "key": "20",
                               "value": "date",
                             },
                           ]

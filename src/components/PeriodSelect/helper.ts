@@ -1,14 +1,18 @@
 import dayjs, { Dayjs } from "dayjs";
+import { CalendarTypes } from "../DatePicker";
 import {
   AVAILABLE_PERIODS_FOR_DATES,
   CUSTOM_PERIOD_KEY,
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PERIOD,
   DEFAULT_PREV_PERIOD,
-  FORMATTED_PATTERN
+  FORMATTED_PATTERN,
+  PERIOD_AVAILABLE,
+  PREV_PERIOD_CONFIG
 } from "./constants";
 import {
   DateRangeType,
+  GetPeriod,
   IDateConfig,
   PeriodEnum,
   PrevPeriodEnum
@@ -156,7 +160,7 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
   }
 };
 
-export const getPeriod = ({
+export const getPeriod: GetPeriod = ({
   periodKey,
   date = null,
   clientDate,
@@ -203,6 +207,22 @@ export const getPeriod = ({
     case "quarter_begin":
       newPeriod.startDate = dayjs(clientDate).startOf("quarter");
       newPeriod.endDate = dayjs(clientDate);
+      break;
+    case "current_week":
+      newPeriod.startDate = dayjs(clientDate).startOf("week");
+      newPeriod.endDate = dayjs(clientDate).endOf("week");
+      break;
+    case "current_month":
+      newPeriod.startDate = dayjs(clientDate).startOf("month");
+      newPeriod.endDate = dayjs(clientDate).endOf("month");
+      break;
+    case "current_quarter":
+      newPeriod.startDate = dayjs(clientDate).startOf("quarter");
+      newPeriod.endDate = dayjs(clientDate).endOf("quarter");
+      break;
+    case "current_year":
+      newPeriod.startDate = dayjs(clientDate).startOf("year");
+      newPeriod.endDate = dayjs(clientDate).endOf("year");
       break;
     case "prev_quarter":
       newPeriod.startDate = dayjs(clientDate)
@@ -389,4 +409,16 @@ export const getAvailablePeriodsForDates = (
   }
 
   return forceEmpty ? [] : AVAILABLE_PERIODS_FOR_DATES["date"];
+};
+
+export const getAvailablePrevPeriod = (
+  currentPeriod: PeriodEnum,
+  calendarType: CalendarTypes
+) => {
+  const prevPeriods = PERIOD_AVAILABLE[currentPeriod];
+  return prevPeriods.filter(p => {
+    const { type } = PREV_PERIOD_CONFIG[p];
+    if (type) return type === calendarType;
+    return true;
+  });
 };
