@@ -49,6 +49,7 @@ export type PeriodEnum =
   | "quarter_begin"
   | "prev_quarter"
   | "year_begin"
+  | "current_day"
   | "current_week"
   | "current_month"
   | "current_quarter"

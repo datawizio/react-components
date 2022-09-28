@@ -208,21 +208,25 @@ export const getPeriod: GetPeriod = ({
       newPeriod.startDate = dayjs(clientDate).startOf("quarter");
       newPeriod.endDate = dayjs(clientDate);
       break;
+    case "current_day":
+      newPeriod.startDate = dayjs();
+      newPeriod.endDate = dayjs();
+      break;
     case "current_week":
-      newPeriod.startDate = dayjs(clientDate).startOf("week");
-      newPeriod.endDate = dayjs(clientDate).endOf("week");
+      newPeriod.startDate = dayjs().startOf("week");
+      newPeriod.endDate = dayjs().endOf("week");
       break;
     case "current_month":
-      newPeriod.startDate = dayjs(clientDate).startOf("month");
-      newPeriod.endDate = dayjs(clientDate).endOf("month");
+      newPeriod.startDate = dayjs().startOf("month");
+      newPeriod.endDate = dayjs().endOf("month");
       break;
     case "current_quarter":
-      newPeriod.startDate = dayjs(clientDate).startOf("quarter");
-      newPeriod.endDate = dayjs(clientDate).endOf("quarter");
+      newPeriod.startDate = dayjs().startOf("quarter");
+      newPeriod.endDate = dayjs().endOf("quarter");
       break;
     case "current_year":
-      newPeriod.startDate = dayjs(clientDate).startOf("year");
-      newPeriod.endDate = dayjs(clientDate).endOf("year");
+      newPeriod.startDate = dayjs().startOf("year");
+      newPeriod.endDate = dayjs().endOf("year");
       break;
     case "prev_quarter":
       newPeriod.startDate = dayjs(clientDate)

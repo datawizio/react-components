@@ -48,6 +48,7 @@ export const PERIOD_OPTIONS: Array<PeriodOption> = [
   "month_begin",
   "quarter_begin",
   "year_begin",
+  "current_day",
   "current_week",
   "current_month",
   "current_quarter",
@@ -139,6 +140,14 @@ export const PERIOD_AVAILABLE: PeriodAvailable = {
     "prev_date"
   ],
   year_begin: ["prev_last_year", "same_weekday_prev_year", "previous"],
+  current_day: [
+    "previous",
+    "prev_last_month",
+    "prev_last_quarter",
+    "prev_last_year",
+    "same_weekday_prev_year",
+    "prev_date"
+  ],
   current_week: [
     "previous",
     "prev_last_week",
