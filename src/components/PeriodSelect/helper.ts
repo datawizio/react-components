@@ -82,6 +82,28 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
         .subtract(1, "year");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "year");
       break;
+    case "current_day":
+      newPrevPeriod.startDate = dayjs().subtract(1, "day");
+      newPrevPeriod.endDate = dayjs().subtract(1, "day");
+      break;
+    case "current_week":
+      newPrevPeriod.startDate = dayjs().startOf("week").subtract(1, "week");
+      newPrevPeriod.endDate = dayjs().endOf("week").subtract(1, "week");
+      break;
+    case "current_month":
+      newPrevPeriod.startDate = dayjs().startOf("month").subtract(1, "month");
+      newPrevPeriod.endDate = dayjs().endOf("month").subtract(1, "month");
+      break;
+    case "current_quarter":
+      newPrevPeriod.startDate = dayjs()
+        .startOf("quarter")
+        .subtract(1, "quarter");
+      newPrevPeriod.endDate = dayjs().endOf("quarter").subtract(1, "quarter");
+      break;
+    case "current_year":
+      newPrevPeriod.startDate = dayjs().startOf("year").subtract(1, "year");
+      newPrevPeriod.endDate = dayjs().endOf("year").subtract(1, "year");
+      break;
     case "last_30_days":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(59, "day");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(30, "day");
