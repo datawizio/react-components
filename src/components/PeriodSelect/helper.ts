@@ -1,14 +1,18 @@
 import dayjs, { Dayjs } from "dayjs";
+import { CalendarTypes } from "../DatePicker";
 import {
   AVAILABLE_PERIODS_FOR_DATES,
   CUSTOM_PERIOD_KEY,
   CUSTOM_PREV_PERIOD_KEY,
   DEFAULT_PERIOD,
   DEFAULT_PREV_PERIOD,
-  FORMATTED_PATTERN
+  FORMATTED_PATTERN,
+  PERIOD_AVAILABLE,
+  PREV_PERIOD_CONFIG
 } from "./constants";
 import {
   DateRangeType,
+  GetPeriod,
   IDateConfig,
   PeriodEnum,
   PrevPeriodEnum
@@ -77,6 +81,28 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
         .startOf("year")
         .subtract(1, "year");
       newPrevPeriod.endDate = dayjs(clientDate).subtract(1, "year");
+      break;
+    case "current_day":
+      newPrevPeriod.startDate = dayjs().subtract(1, "day");
+      newPrevPeriod.endDate = dayjs().subtract(1, "day");
+      break;
+    case "current_week":
+      newPrevPeriod.startDate = dayjs().startOf("week").subtract(1, "week");
+      newPrevPeriod.endDate = dayjs().endOf("week").subtract(1, "week");
+      break;
+    case "current_month":
+      newPrevPeriod.startDate = dayjs().startOf("month").subtract(1, "month");
+      newPrevPeriod.endDate = dayjs().endOf("month").subtract(1, "month");
+      break;
+    case "current_quarter":
+      newPrevPeriod.startDate = dayjs()
+        .startOf("quarter")
+        .subtract(1, "quarter");
+      newPrevPeriod.endDate = dayjs().endOf("quarter").subtract(1, "quarter");
+      break;
+    case "current_year":
+      newPrevPeriod.startDate = dayjs().startOf("year").subtract(1, "year");
+      newPrevPeriod.endDate = dayjs().endOf("year").subtract(1, "year");
       break;
     case "last_30_days":
       newPrevPeriod.startDate = dayjs(clientDate).subtract(59, "day");
@@ -156,7 +182,7 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
   }
 };
 
-export const getPeriod = ({
+export const getPeriod: GetPeriod = ({
   periodKey,
   date = null,
   clientDate,
@@ -203,6 +229,26 @@ export const getPeriod = ({
     case "quarter_begin":
       newPeriod.startDate = dayjs(clientDate).startOf("quarter");
       newPeriod.endDate = dayjs(clientDate);
+      break;
+    case "current_day":
+      newPeriod.startDate = dayjs();
+      newPeriod.endDate = dayjs();
+      break;
+    case "current_week":
+      newPeriod.startDate = dayjs().startOf("week");
+      newPeriod.endDate = dayjs().endOf("week");
+      break;
+    case "current_month":
+      newPeriod.startDate = dayjs().startOf("month");
+      newPeriod.endDate = dayjs().endOf("month");
+      break;
+    case "current_quarter":
+      newPeriod.startDate = dayjs().startOf("quarter");
+      newPeriod.endDate = dayjs().endOf("quarter");
+      break;
+    case "current_year":
+      newPeriod.startDate = dayjs().startOf("year");
+      newPeriod.endDate = dayjs().endOf("year");
       break;
     case "prev_quarter":
       newPeriod.startDate = dayjs(clientDate)
@@ -389,4 +435,16 @@ export const getAvailablePeriodsForDates = (
   }
 
   return forceEmpty ? [] : AVAILABLE_PERIODS_FOR_DATES["date"];
+};
+
+export const getAvailablePrevPeriod = (
+  currentPeriod: PeriodEnum,
+  calendarType: CalendarTypes
+) => {
+  const prevPeriods = PERIOD_AVAILABLE[currentPeriod];
+  return prevPeriods.filter(p => {
+    const { type } = PREV_PERIOD_CONFIG[p];
+    if (type) return type === calendarType;
+    return true;
+  });
 };

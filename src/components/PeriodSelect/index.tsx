@@ -6,7 +6,6 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import ConfigContext from "../ConfigProvider/context";
 import {
   DEFAULT_PERIOD,
-  PERIOD_AVAILABLE,
   PERIOD_OPTIONS,
   PREV_PERIOD_OPTIONS
 } from "./constants";
@@ -14,6 +13,7 @@ import {
   actionCreator,
   checkIsEmptyPeriod,
   formatDateConfig,
+  getAvailablePrevPeriod,
   getInitialDateConfig
 } from "./helper";
 import { PeriodSelectProps } from "./types";
@@ -52,7 +52,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   } = getInitialDateConfig(dateConfig);
 
   const [state, dispatch] = usePeriodSelect({
-    availablePrevPeriods: PERIOD_AVAILABLE[initialSelectedPeriod],
+    availablePrevPeriods: getAvailablePrevPeriod(initialSelectedPeriod, type),
     clientDate,
     clientStartDate,
     isPickerEmpty: false,
@@ -60,6 +60,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     showPeriodPicker: isCustomPeriod,
     showPrevPeriodPicker: isCustomPrevPeriod,
     period: initialPeriod,
+    calendarType: type,
     prevPeriod: initialPrevPeriod,
     selectedPeriod: initialSelectedPeriod,
     selectedPrevPeriod: initialSelectedPrevPeriod
