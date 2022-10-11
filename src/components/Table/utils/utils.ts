@@ -24,22 +24,21 @@ function swapColumns(
   columns.some((column, idxFrom) => {
     if (keyFrom === column.key) {
       const idxTo = columns.findIndex(column => column.key === keyTo);
-
       if (idxTo !== -1) {
-        idxFrom < idxTo
-          ? (columns[idxFrom].order = columns[idxTo].order + 1)
-          : (columns[idxFrom].order = columns[idxTo].order - 1);
         columns.splice(idxTo, 0, columns.splice(idxFrom, 1)[0]);
       }
-
       return true;
     }
 
     return (
-      column.children &&
-      column.children.length &&
-      swapColumns(column.children, keyFrom, keyTo)
+      column.children?.length && swapColumns(column.children, keyFrom, keyTo)
     );
+  });
+}
+
+function reindexColumns(columns: Array<IColumn> = []) {
+  columns.forEach((column, idx) => {
+    column.order = idx;
   });
 }
 
@@ -68,4 +67,10 @@ function getVisibleColumns(columns: Array<IColumn>) {
   return result;
 }
 
-export { defineCellType, getVisibleColumns, swapColumns, filterByColumns };
+export {
+  defineCellType,
+  getVisibleColumns,
+  swapColumns,
+  filterByColumns,
+  reindexColumns
+};

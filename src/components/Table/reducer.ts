@@ -7,7 +7,7 @@ import {
   IColumn
 } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
-import { swapColumns, filterByColumns } from "./utils/utils";
+import { swapColumns, filterByColumns, reindexColumns } from "./utils/utils";
 
 function genColumnsMap(columns) {
   const columnsMap = {};
@@ -147,8 +147,7 @@ export function reducer(state: TableState, action: Action): TableState {
       );
 
       const nextVisibleColumnsKeys =
-        visibleColumnsKeys &&
-        visibleColumnsKeys.length &&
+        visibleColumnsKeys?.length &&
         visibleColumnsKeys.filter(key => nextColumnsMap[key]);
 
       const nextColumns = (function rec(newColumns, oldColumns) {
@@ -186,13 +185,10 @@ export function reducer(state: TableState, action: Action): TableState {
 
         newColumns.forEach(column => {
           const oldColumn = oldColumnsInfo[column.dataIndex];
-          if (column.children && column.children.length) {
-            oldColumn &&
-              oldColumn.children &&
-              oldColumn.children.length &&
-              rec(column.children, oldColumn.children);
+          if (column.children?.length && oldColumn?.children?.length) {
+            rec(column.children, oldColumn.children);
           }
-          if (oldColumn && oldColumn.order) {
+          if (oldColumn?.order) {
             column.order = oldColumn.order;
           }
         });
@@ -343,6 +339,7 @@ export function reducer(state: TableState, action: Action): TableState {
       const nextColumns = state.columns.concat();
 
       swapColumns(nextColumns, keyFrom, keyTo);
+      reindexColumns(nextColumns);
 
       return {
         ...state,
