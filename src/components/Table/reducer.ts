@@ -164,7 +164,7 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         if (state.columnsSorter) {
-          const isFavorite = !!state.templates.find(t => t.favorite);
+          const isFavorite = !!state.templates?.find(t => t.favorite);
           state.columnsSorter(
             newColumns,
             oldColumnsInfo,
