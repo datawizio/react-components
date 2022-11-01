@@ -195,7 +195,7 @@ export const DefaultPreset = (
     "LAST_UPDATE_DATE": DefaultPresetRanges.last_update_date(maxDate),
     "LAST_7_DAYS": DefaultPresetRanges.lastWeek(maxDate, minDate),
     "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate, minDate),
-    "Last_90_Days": DefaultPresetRanges.last_90_days(maxDate, minDate),
+    "LAST_90_DAYS": DefaultPresetRanges.last_90_days(maxDate, minDate),
     "LAST_180_DAYS": DefaultPresetRanges.last_180_days(maxDate, minDate),
     "LAST_365_DAYS":
       type === "fiscal"
@@ -210,11 +210,11 @@ export const DefaultPreset = (
       type === "fiscal"
         ? fiscalCalendar.presetCurrentQuater(maxDate)
         : DefaultPresetRanges.quarterBegin(maxDate, minDate),
-    "cur_year":
+    "YEAR_BEGIN":
       type === "fiscal"
         ? fiscalCalendar.presetCurrentYear(maxDate)
         : DefaultPresetRanges.currentYear(maxDate, minDate),
-    "All_period": DefaultPresetRanges.allPeriod(maxDate, minDate)
+    "ALL_TIME": DefaultPresetRanges.allPeriod(maxDate, minDate)
   };
 };
 
