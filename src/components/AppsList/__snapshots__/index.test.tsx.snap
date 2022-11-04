@@ -5,13 +5,15 @@ exports[`AppsList component Render AppsList correctly 1`] = `
   apps={
     Array [
       Object {
-        "app_id": "1",
+        "app_id": 1,
         "clients": Array [
           Object {
             "client_id": 1,
+            "is_active": true,
             "name": "name",
           },
         ],
+        "dark_logo": "logoPath",
         "description": "description",
         "host": "app.com",
         "logo": "logoPath",
@@ -37,15 +39,17 @@ exports[`AppsList component Render AppsList correctly 1`] = `
       }
     >
       <App
-        app_id="1"
+        app_id={1}
         clients={
           Array [
             Object {
               "client_id": 1,
+              "is_active": true,
               "name": "name",
             },
           ]
         }
+        dark_logo="logoPath"
         description="description"
         host="app.com"
         key="1"
@@ -152,7 +156,28 @@ exports[`AppsList component Render AppsList correctly 1`] = `
 
 exports[`AppsList component Render AppsList loader 1`] = `
 <AppsList
+  apps={
+    Array [
+      Object {
+        "app_id": 1,
+        "clients": Array [
+          Object {
+            "client_id": 1,
+            "is_active": true,
+            "name": "name",
+          },
+        ],
+        "dark_logo": "logoPath",
+        "description": "description",
+        "host": "app.com",
+        "logo": "logoPath",
+        "name": "app",
+        "path": "/",
+      },
+    ]
+  }
   loading={true}
+  onSelect={[MockFunction]}
 >
   <Row
     className="row-apps"

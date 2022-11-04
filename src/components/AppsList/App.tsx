@@ -5,26 +5,9 @@ import Select from "../Select";
 import Button from "../Button";
 
 import ConfigContext from "../ConfigProvider/context";
+import { CardAppProps } from "./types";
 
 import "./index.less";
-
-export interface CardAppProps {
-  app_id: number;
-  name: string;
-  logo: string;
-  dark_logo: string;
-  host: string;
-  path: string;
-  description: string;
-  allowed?: boolean;
-  clients?: { client_id: number; name: string; is_active: boolean }[];
-  onButtonClick?: (
-    clientId: number,
-    { appId: number, url: string, allowed: boolean }
-  ) => void;
-  buttonText?: string;
-  showButton?: boolean;
-}
 
 export const App: React.FC<CardAppProps> = ({
   app_id,
@@ -44,7 +27,7 @@ export const App: React.FC<CardAppProps> = ({
 
   const showClientSelect = path ? path.match(":client_id") !== null : false;
 
-  const handleChangeClient = (value: any) => {
+  const handleChangeClient = (value: number) => {
     setClient(value);
   };
 

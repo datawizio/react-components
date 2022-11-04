@@ -1,35 +1,19 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 
 import ConfigContext from "../ConfigProvider/context";
 
 import { Row } from "antd";
 import { App } from "./App";
 import { AppsLoader } from "./AppsLoader";
+import { AppsListProps, onAppClick } from "./types";
 
 import "./index.less";
 
-export interface IApp {
-  app_id: string;
-  name: string;
-  logo: string;
-  dark_logo: string;
-  host: string;
-  path: string;
-  description: string;
-  clients?: { id: number; name: string; is_active: boolean }[];
-}
-
-export interface AppsListProps {
-  apps: IApp[];
-  loading?: boolean;
-  onSelect?: (clientId: number, params: any) => void;
-}
-
-const AppsList = ({ apps, loading, onSelect }) => {
+const AppsList: FC<AppsListProps> = ({ apps, loading, onSelect }) => {
   const { translate } = useContext(ConfigContext);
 
-  const handleButtonClick = React.useCallback(
-    (clientId: number, params: any) => {
+  const handleButtonClick = React.useCallback<onAppClick>(
+    (clientId, params) => {
       onSelect(clientId, params);
     },
     [onSelect]
