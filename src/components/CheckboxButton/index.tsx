@@ -4,13 +4,13 @@ import clsx from "clsx";
 import ConfigContext from "../ConfigProvider/context";
 import { ButtonProps as AntButtonProps } from "antd/lib/button";
 
-interface CheckboxButtonProps extends AntButtonProps {
+export interface CheckboxButtonProps extends Omit<AntButtonProps, "onChange"> {
   className?: string;
   checked?: boolean;
   text?: string;
   border?: boolean;
   highlight?: boolean;
-  onChange?: (value: any) => void;
+  onChange?: (value: boolean) => void;
 }
 
 const CheckboxButton: React.FC<CheckboxButtonProps> = ({
@@ -23,7 +23,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
-  const btnRef = useRef(null);
+  const btnRef = useRef<HTMLElement>(null);
 
   const buttonClasses = clsx(className, {
     "dw-btn": true,
@@ -35,7 +35,7 @@ const CheckboxButton: React.FC<CheckboxButtonProps> = ({
 
   const handleButtonClick = useCallback(() => {
     onChange && onChange(!checked);
-    // @ts-ignore
+
     btnRef?.current?.blur();
   }, [checked, onChange]);
 

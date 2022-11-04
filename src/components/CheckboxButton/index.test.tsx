@@ -2,9 +2,9 @@ import "jsdom-global/register";
 import React from "react";
 import { mount } from "enzyme";
 
-import CheckboxButton from "./index";
+import CheckboxButton, { CheckboxButtonProps } from "./index";
 
-const mockProps = {
+const mockProps: CheckboxButtonProps = {
   checked: false,
   text: "text",
   border: false,
