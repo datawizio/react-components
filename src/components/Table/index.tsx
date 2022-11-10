@@ -296,6 +296,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   );
 
   useImperativeHandle(ref, () => ({
+    async load(payload: boolean = true) {
+      dispatch({ type: "loading", payload });
+    },
     async reload() {
       dispatch({ type: "loading", payload: true });
       await fetchData();
