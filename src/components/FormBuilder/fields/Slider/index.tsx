@@ -5,7 +5,7 @@ import "./styles.less";
 
 export const FieldSlider: React.FC<FieldSliderProps> = React.memo(
   ({ name, label, min, max, step, rules, onChange }) => {
-    const handleChange = value => {
+    const handleChange = (value: number | string) => {
       onChange({
         name,
         value
