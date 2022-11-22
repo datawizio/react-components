@@ -4,9 +4,11 @@ import { PlayerReference } from "video-react";
 import { VideoModalProps } from "./types";
 import Player from "../Player";
 import { Thumbnail } from "./Thumbnail";
+import Button from "../Button";
 
 const VideoModal: FC<VideoModalProps> = ({
   thumbnail,
+  buttonProps,
   source,
   modalProps,
   onVideoStateChange
@@ -42,6 +44,11 @@ const VideoModal: FC<VideoModalProps> = ({
     <div className="modal-player">
       {thumbnail && (
         <Thumbnail url={thumbnail} onClick={handleThumbnailClick} />
+      )}
+      {buttonProps && (
+        <Button {...buttonProps} onClick={handleThumbnailClick}>
+          {buttonProps.text}
+        </Button>
       )}
       <Modal
         {...modalProps}
