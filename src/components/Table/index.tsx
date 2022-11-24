@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import * as React from "react";
-import { Table as AntdTable } from "antd";
+import { Skeleton, Table as AntdTable } from "antd";
 import { reducer, initializer } from "./reducer";
 
 import useColumns from "./hooks/useColumns";
@@ -46,6 +46,8 @@ import { isSafari } from "../../utils/navigatorInfo";
 import Row from "./components/Row";
 import { VList } from "./components/VList";
 import { HeaderWrapper } from "./components/HeaderWrapper";
+import { useVT } from "./components/VirtualList";
+import { SkeletonTable } from "./components/SkeletonTable";
 
 export class CancelRequestError extends Error {
   data: any;
@@ -61,6 +63,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     errorRender,
     vid,
     virtual,
+    virtualDebug,
     style,
     width,
     height,
@@ -219,6 +222,17 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     [state.loadingRows]
   );
 
+  const [vt] = useVT(
+    () => ({
+      id: vid,
+      scroll: {
+        y: height
+      },
+      debug: virtualDebug
+    }),
+    [height, vid]
+  );
+
   const customComponents = useMemo<TableProps["components"]>(() => {
     if (virtual) {
       return {
@@ -238,10 +252,11 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             );
           }
         },
-        ...VList({
-          height: height, // 此值和scrollY值相同. 必传. (required).  same value for scrolly
-          vid: vid
-        })
+        ...vt
+        // ...VList({
+        //   height: height, // 此值和scrollY值相同. 必传. (required).  same value for scrolly
+        //   vid: vid
+        // })
       };
     }
     return {
@@ -266,7 +281,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         row: props => <Row {...props} isTotalRow={isTotalRow} />
       }
     };
-  }, [height, width, components, virtual]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [virtual, components, vt, height, width, isTotalRow]);
 
   const className = useMemo(
     () =>
@@ -284,6 +300,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         },
         props.className
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       baseState.loading,
       state.dataSource.length,
@@ -332,7 +349,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             baseTableState: baseState
           }}
         >
-          <Loader loading={Boolean(baseState.loading)}>
+          <SkeletonTable loading={Boolean(baseState.loading)}>
             {children}
             {state.error && errorRender ? (
               errorRender(state.error)
@@ -364,7 +381,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
                 }
               />
             )}
-          </Loader>
+          </SkeletonTable>
         </TableContext.Provider>
       </DndProvider>
     </div>

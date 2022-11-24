@@ -21,6 +21,10 @@ export interface ColumnProps
   calcColumnWidth?: (width: number) => number;
 }
 
+const DEFAULT_COLUMN_WIDTH = 200;
+const DEFAULT_SUB_CELL_WIDTH = 20;
+const DEFAULT_MAX_VALUE = 10;
+
 const Column: React.FC<ColumnProps> = props => {
   const {
     model,
@@ -38,6 +42,7 @@ const Column: React.FC<ColumnProps> = props => {
   const startedResize = React.useRef(false);
   const columnRef = React.useRef(null);
   const lastWidthRef = React.useRef(0);
+  const rafRef = React.useRef<number>(null);
 
   const {
     dispatch,
@@ -193,13 +198,13 @@ const Column: React.FC<ColumnProps> = props => {
       }, 1000);
       //
     }
+
     const fn = () => {
       if (
         columnRef?.current &&
         lastWidthRef.current !== columnRef.current?.offsetWidth &&
         columnRef.current?.offsetWidth !== 0
       ) {
-        lastWidthRef.current = columnRef.current?.offsetWidth;
         dispatch({
           type: "columnWidthChange",
           payload: {
@@ -208,11 +213,14 @@ const Column: React.FC<ColumnProps> = props => {
           }
         });
       }
+      if (virtual) {
+        rafRef.current = requestAnimationFrame(fn);
+      }
     };
     fn();
-    const interval = setInterval(fn, 1000);
+
     return () => {
-      clearInterval(interval);
+      cancelAnimationFrame(rafRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHeader]);
@@ -260,12 +268,9 @@ const Column: React.FC<ColumnProps> = props => {
     );
   }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
 
-  const styles: object = useMemo((): object => {
+  const styles = useMemo(() => {
     function getWidth() {
       const columnsWidthPreset = columnsWidth[model.key];
-      const defaultWidth = 200;
-      const defaultSubCellWidth = 20;
-      const defaultMaxValue = 10;
 
       if (columnsWidthPreset) {
         return { width: columnsWidthPreset };
@@ -279,18 +284,18 @@ const Column: React.FC<ColumnProps> = props => {
 
       if (model.children && model.children.length) {
         return {
-          width: model.children.length * defaultWidth
+          width: model.children.length * DEFAULT_COLUMN_WIDTH
         };
       }
 
       // if BarTable columns
-      if (model.max_value === 0 || model.max_value < defaultMaxValue) {
-        model.max_value = defaultMaxValue;
+      if (model.max_value === 0 || model.max_value < DEFAULT_MAX_VALUE) {
+        model.max_value = DEFAULT_MAX_VALUE;
       }
 
       if (model.max_value) {
         return {
-          width: model.max_value * defaultSubCellWidth
+          width: model.max_value * DEFAULT_SUB_CELL_WIDTH
         };
       }
 
@@ -302,11 +307,15 @@ const Column: React.FC<ColumnProps> = props => {
       return {};
     }
     const width = getWidth();
-    if (calcColumnWidth) {
+    if (calcColumnWidth && typeof width.width === "number") {
       width.width = calcColumnWidth(width.width);
     }
-    lastWidthRef.current = width.width;
+    if (model.colMinWidth) {
+      width["minWidth"] = model.colMinWidth + "px";
+    }
+    if (typeof width.width === "number") lastWidthRef.current = width.width;
     return {
+      ...width,
       width: width.width + "px"
     };
 
@@ -316,6 +325,7 @@ const Column: React.FC<ColumnProps> = props => {
     model.max_value,
     model.colWidth,
     columnsForceUpdate,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     columnsWidth[model.key]
   ]);
 

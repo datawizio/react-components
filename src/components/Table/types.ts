@@ -42,6 +42,7 @@ export interface TableProps<RT = any>
   vid?: string;
   searchValue?: string;
   virtual?: boolean;
+  virtualDebug?: boolean;
   async?: boolean;
   autoColWidth?: boolean;
   compressColumns?: boolean;
@@ -206,6 +207,7 @@ export interface IColumn<RT = any>
   default_visible?: boolean;
   max_value?: number;
   colWidth?: number;
+  colMinWidth?: number;
   originalKey?: string;
   order?: number;
   index?: number;
