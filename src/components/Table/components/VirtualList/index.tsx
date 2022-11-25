@@ -1,18 +1,18 @@
 import { TableComponents, _set_components, VtOpts, init } from "./vt";
 
-const _brower = 1;
+const _browser = 1;
 const _node = 2;
 
 (function () {
   const env =
-    typeof window === "object" && window instanceof Window ? _brower : _node;
-  if (env & _brower) {
+    typeof window === "object" && window instanceof Window ? _browser : _node;
+  if (env & _browser) {
     if (
       !Object.hasOwnProperty.call(window, "requestAnimationFrame") &&
       !window.requestAnimationFrame
     )
       throw new Error(
-        "Please using the modern browers or appropriate polyfill!"
+        "Please using the modern browsers or appropriate polyfill!"
       );
   }
 })();
