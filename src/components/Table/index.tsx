@@ -253,7 +253,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         },
         ...vt
         // ...VList({
-        //   height: height, // 此值和scrollY值相同. 必传. (required).  same value for scrolly
+        //   height: height, // (required).  same value for scrollY
         //   vid: vid
         // })
       };
