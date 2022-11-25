@@ -1,14 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-/*
-The MIT License (MIT)
-
-Copyright (c) 2019 https://github.com/wubostc/
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import {
   useRef,
   useState,
@@ -187,6 +178,7 @@ function default_context(): VT_CONTEXT {
 function helper_diagnosis(ctx: VT_CONTEXT): void {
   if (Object.prototype.hasOwnProperty.call(ctx, "CLICK~__DIAGNOSIS__")) return;
   Object.defineProperty(ctx, "CLICK~__DIAGNOSIS__", {
+    // eslint-disable-next-line getter-return
     get() {
       console.debug("OoOoOoO DIAGNOSIS OoOoOoO");
       let expect_height = 0;
@@ -702,11 +694,12 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
     }
     return temp;
   }, [ctx.row_count, ctx.row_height]);
-  const minHeight = useMemo(() => {
-    if (typeof ctx.scroll.y === "number") {
-      return ctx.scroll.y - 10;
-    }
-  }, [ctx.scroll.y]);
+  //min height for table
+  // const minHeight = useMemo(() => {
+  //   if (typeof ctx.scroll.y === "number") {
+  //     return ctx.scroll.y - 10;
+  //   }
+  // }, [ctx.scroll.y]);
 
   const wrap_style = useMemo<React.CSSProperties>(
     () => ({

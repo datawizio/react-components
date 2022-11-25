@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import * as React from "react";
-import { Skeleton, Table as AntdTable } from "antd";
+import { Table as AntdTable } from "antd";
 import { reducer, initializer } from "./reducer";
 
 import useColumns from "./hooks/useColumns";
@@ -18,7 +18,6 @@ import {
 import { TableContext } from "./context";
 import ConfigContext from "../ConfigProvider/context";
 
-import Loader from "../Loader";
 import Cell from "./components/Cell";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
@@ -44,7 +43,6 @@ import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
 import { isSafari } from "../../utils/navigatorInfo";
 import Row from "./components/Row";
-import { VList } from "./components/VList";
 import { HeaderWrapper } from "./components/HeaderWrapper";
 import { useVT } from "./components/VirtualList";
 import { SkeletonTable } from "./components/SkeletonTable";
@@ -219,6 +217,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         </button>
       );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [state.loadingRows]
   );
 
@@ -349,7 +348,10 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
             baseTableState: baseState
           }}
         >
-          <SkeletonTable loading={Boolean(baseState.loading)}>
+          <SkeletonTable
+            loading={Boolean(baseState.loading)}
+            first={Boolean(baseState.first)}
+          >
             {children}
             {state.error && errorRender ? (
               errorRender(state.error)

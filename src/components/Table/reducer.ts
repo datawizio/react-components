@@ -100,7 +100,8 @@ export function initializer(props: TableProps): TableState {
     loadingRows: {},
     columnsSwapped: false,
     forceFetch: 1,
-    columnsForceUpdate: 1
+    columnsForceUpdate: 1,
+    first: true
   };
 }
 
