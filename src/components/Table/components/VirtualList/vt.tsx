@@ -694,18 +694,19 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
     }
     return temp;
   }, [ctx.row_count, ctx.row_height]);
+
   //min height for table
-  // const minHeight = useMemo(() => {
-  //   if (typeof ctx.scroll.y === "number") {
-  //     return ctx.scroll.y - 10;
-  //   }
-  // }, [ctx.scroll.y]);
+  const minHeight = useMemo(() => {
+    if (typeof ctx.scroll.y === "number") {
+      return ctx.scroll.y - 10;
+    }
+  }, [ctx.scroll.y]);
 
   const wrap_style = useMemo<React.CSSProperties>(
     () => ({
       width,
       height: tableHeight,
-      // minHeight,
+      minHeight,
       position: "relative",
       transform: "matrix(1, 0, 0, 1, 0, 0)"
     }),
