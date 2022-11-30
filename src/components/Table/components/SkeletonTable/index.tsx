@@ -23,7 +23,7 @@ export const SkeletonTable: React.FC<SkeletonTableProps> = memo(
 
     return (
       <div className={className}>
-        {first ? (
+        {loading && first ? (
           <Space direction="vertical">
             <Row gutter={8}>
               {tableColumns.map((_, index) => (
