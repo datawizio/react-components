@@ -304,7 +304,8 @@ export function reducer(state: TableState, action: Action): TableState {
       }
       return {
         ...state,
-        ...newState
+        ...newState,
+        first: false
       };
     }
     case "addLoadingRow": {

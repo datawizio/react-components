@@ -221,12 +221,16 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     [state.loadingRows]
   );
 
+  const scrollY = React.useRef(0);
+
   const [vt] = useVT(
     () => ({
       id: vid,
       scroll: {
         y: height
       },
+      initTop: scrollY.current,
+      onScroll: ({ top }) => (scrollY.current = top),
       debug: virtualDebug
     }),
     [height, vid]
