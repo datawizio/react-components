@@ -223,17 +223,20 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
 
   const scrollY = React.useRef(0);
 
-  const [vt] = useVT(
+  const [vt, _, vtRef] = useVT(
     () => ({
       id: vid,
       scroll: {
         y: height
       },
       initTop: scrollY.current,
-      onScroll: ({ top }) => (scrollY.current = top),
+      onScroll: ({ top }) => {
+        scrollY.current = top;
+        vtRef.current.scrollTo(scrollY.current);
+      },
       debug: virtualDebug
     }),
-    [height, vid]
+    [height, vid, scrollY]
   );
 
   const customComponents = useMemo<TableProps["components"]>(() => {
