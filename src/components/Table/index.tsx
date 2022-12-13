@@ -289,7 +289,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       clsx(
         "dw-table",
         {
-          "dw-table--skeleton": baseState.firstRenderLoader,
+          "dw-table--skeleton":
+            baseState.firstRenderLoader && props.dataProvider,
           "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length,
           "dw-table--nestedable": props.expandable?.expandedRowRender,
@@ -352,7 +353,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         >
           <SkeletonTable
             loading={Boolean(baseState.loading)}
-            skeleton={Boolean(baseState.firstRenderLoader)}
+            skeleton={Boolean(baseState.firstRenderLoader && props.dataProvider)}
           >
             {children}
             {state.error && errorRender ? (
