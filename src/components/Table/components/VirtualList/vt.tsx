@@ -719,7 +719,7 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
   return (
     <div className="virtuallist" ref={wrap_inst} style={wrap_style}>
       <context.Provider value={{ ...ctx }}>
-        <Table {...rest} style={{ ...rest_style, minWidth: "max-content" }} />
+        <Table {...rest} style={{ ...rest_style, minWidth: "unset" }} />
       </context.Provider>
     </div>
   );
