@@ -14,6 +14,10 @@
     .skeleton-container {
       &--loading {
         pointer-events: none;
+        & .ant-spin-nested-loading {
+          visibility: hidden;
+          height: 0px;
+        }
       }
     }
     .ant-space {
@@ -235,6 +239,11 @@
     .ant-table-container {
       border-top: 0;
     }
+  }
+
+  &--skeleton {
+    visibility: hidden;
+    height: 0px;
   }
 
   &--loading {

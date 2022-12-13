@@ -221,22 +221,16 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     [state.loadingRows]
   );
 
-  const scrollY = React.useRef(0);
-
-  const [vt, _, vtRef] = useVT(
+  const [vt] = useVT(
     () => ({
       id: vid,
       scroll: {
         y: height
       },
-      initTop: scrollY.current,
-      onScroll: ({ top }) => {
-        scrollY.current = top;
-        vtRef.current.scrollTo(scrollY.current);
-      },
+      overscanRowCount: 1,
       debug: virtualDebug
     }),
-    [height, vid, scrollY]
+    [height, vid]
   );
 
   const customComponents = useMemo<TableProps["components"]>(() => {
@@ -295,6 +289,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       clsx(
         "dw-table",
         {
+          "dw-table--skeleton": baseState.firstRenderLoader,
           "dw-table--loading": baseState.loading,
           "dw-table--empty": !state.dataSource.length,
           "dw-table--nestedable": props.expandable?.expandedRowRender,
@@ -357,7 +352,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         >
           <SkeletonTable
             loading={Boolean(baseState.loading)}
-            first={Boolean(baseState.first)}
+            skeleton={Boolean(baseState.firstRenderLoader)}
           >
             {children}
             {state.error && errorRender ? (

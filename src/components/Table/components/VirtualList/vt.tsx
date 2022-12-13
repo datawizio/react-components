@@ -565,6 +565,7 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
 
         HND_RAF.current = 0;
         evq.length = 0;
+        ctx.final_top = etop; // save scroll position by expand row
         if (ctx.onScroll) {
           ctx.onScroll({
             top: etop,
@@ -704,13 +705,13 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
 
   const wrap_style = useMemo<React.CSSProperties>(
     () => ({
-      width,
+      width: "100%",
       height: tableHeight,
       minHeight,
       position: "relative",
       transform: "matrix(1, 0, 0, 1, 0, 0)"
     }),
-    [width, tableHeight]
+    [tableHeight]
   );
 
   const Table = ctx.components.table!;
@@ -718,7 +719,7 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
   return (
     <div className="virtuallist" ref={wrap_inst} style={wrap_style}>
       <context.Provider value={{ ...ctx }}>
-        <Table {...rest} style={rest_style} />
+        <Table {...rest} style={{ ...rest_style, minWidth: "max-content" }} />
       </context.Provider>
     </div>
   );
@@ -869,6 +870,10 @@ const VTRow: React.FC<VRowProps> = props => {
   const index: number = row_props.record[row_idx];
   const last_index = useRef(index);
 
+  const expanded_cls = useMemo(() => `.${row_props.prefixCls}-expanded-row`, [
+    row_props.prefixCls
+  ]);
+
   useEffect(() => {
     if (ctx.vt_state === e_VT_STATE.RUNNING) {
       // apply_h(ctx, index, inst.current.offsetHeight, "dom");
@@ -886,20 +891,20 @@ const VTRow: React.FC<VRowProps> = props => {
   }, []);
 
   useEffect(() => {
-    // const rowElm = inst.current;
+    const rowElm = inst.current;
 
     // for nested(expanded) elements don't calculate height and add on cache as its already accommodated on parent row
     // if (!rowElm.matches(".ant-table-row-level-0")) return;
 
-    // let h = rowElm!.offsetHeight;
-    // let sibling = rowElm!.nextSibling as HTMLTableRowElement;
+    let h = rowElm!.offsetHeight;
+    let sibling = rowElm!.nextSibling as HTMLTableRowElement;
     // // https://github.com/react-component/table/blob/master/src/Body/BodyRow.tsx#L212
     // // include heights of all expanded rows, in parent rows
-    // while (sibling && sibling.matches(expanded_cls)) {
-    //   h += sibling.offsetHeight;
-    //   sibling = sibling.nextSibling as HTMLTableRowElement;
-    // }
-    const h = Math.ceil(inst.current.getBoundingClientRect().height);
+    while (sibling && sibling.matches(expanded_cls)) {
+      h += sibling.offsetHeight;
+      sibling = sibling.nextSibling as HTMLTableRowElement;
+    }
+    // const h = Math.ceil(inst.current.getBoundingClientRect().height);
     const curr_h = ctx.row_height[index];
     const last_h = ctx.row_height[last_index.current];
 

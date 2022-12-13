@@ -130,6 +130,7 @@ export interface TableState extends Partial<TableProps> {
   };
   fixedTotal?: boolean;
   first?: boolean;
+  firstRenderLoader?: boolean;
   templateSelected?: boolean;
   columnsForceUpdate?: number;
   cancelled?: boolean;
