@@ -5,25 +5,25 @@ import Loader from "../../../Loader";
 
 interface SkeletonTableProps {
   loading: boolean;
-  first: boolean;
+  skeleton: boolean;
 }
 
 export const SkeletonTable: React.FC<SkeletonTableProps> = memo(
-  ({ loading, first, children }) => {
+  ({ loading, skeleton, children }) => {
     const tableColumns = Array.from(Array(8).keys());
     const tableRows = Array.from(Array(10).keys());
 
     const className = useMemo(
       () =>
         clsx("skeleton-container", {
-          "skeleton-container--loading": loading
+          "skeleton-container--loading": skeleton
         }),
-      [loading]
+      [skeleton]
     );
 
     return (
       <div className={className}>
-        {loading && first ? (
+        {skeleton && (
           <Space direction="vertical">
             <Row gutter={8}>
               {tableColumns.map((_, index) => (
@@ -42,9 +42,8 @@ export const SkeletonTable: React.FC<SkeletonTableProps> = memo(
               </Row>
             ))}
           </Space>
-        ) : (
-          <Loader loading={Boolean(loading)}>{children}</Loader>
         )}
+        <Loader loading={Boolean(loading) && !skeleton}>{children}</Loader>
       </div>
     );
   }

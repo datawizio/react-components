@@ -101,7 +101,7 @@ export function initializer(props: TableProps): TableState {
     columnsSwapped: false,
     forceFetch: 1,
     columnsForceUpdate: 1,
-    first: true
+    firstRenderLoader: true
   };
 }
 
@@ -305,7 +305,7 @@ export function reducer(state: TableState, action: Action): TableState {
       return {
         ...state,
         ...newState,
-        first: false
+        firstRenderLoader: false
       };
     }
     case "addLoadingRow": {
