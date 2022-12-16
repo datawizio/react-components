@@ -74,6 +74,8 @@ export interface DrawerTreeSelectProps<VT>
 
   treeDataCount?: number;
 
+  strictlyModeCheckbox?: boolean;
+
   emptyIsAll?: boolean;
 
   selectedMarkers?: string[] | number[];
