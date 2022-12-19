@@ -203,7 +203,7 @@ const RefTreeSelect = React.forwardRef<RefSelectProps, TreeSelectProps>(
       treeCheckable || treeCheckStrictly;
     const mergedMultiple = multiple || mergedCheckable;
     const treeConduction = treeCheckable && !treeCheckStrictly;
-    const mergedLabelInValue = treeCheckStrictly || labelInValue;
+    const mergedLabelInValue = labelInValue;
 
     // ========================== Ref ==========================
     const selectRef = React.useRef<RefSelectProps>(null);
