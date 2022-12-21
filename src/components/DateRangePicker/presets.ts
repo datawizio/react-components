@@ -208,7 +208,7 @@ export const DefaultPreset = (
         : DefaultPresetRanges.currentMonth(maxDate, minDate),
     "QUARTER_BEGIN":
       type === "fiscal"
-        ? fiscalCalendar.presetCurrentQuater(maxDate)
+        ? fiscalCalendar.presetCurrentQuarter(maxDate)
         : DefaultPresetRanges.quarterBegin(maxDate, minDate),
     "YEAR_BEGIN":
       type === "fiscal"

@@ -40,14 +40,16 @@ class FiscalCalendar {
 
   getEndDate(date: Dayjs) {
     if (isNaN(date.month())) return date;
-    const month = this.getMonth(date) + 1;
-    const quater = Math.ceil(month / 3);
-    const res = month - (quater - 1) * 3;
-    let dayInYear = ((quater - 1) * this.DAYS_IN_QUARTAL) - 1;
+    const month = this.getMonth(dayjs(date).add(7, "day")) + 1;
+    const year = this.getYear(date);
+    const quarter = Math.ceil(month / 3);
+    const res = month - (quarter - 1) * 3;
+    let dayInYear = ((quarter - 1) * this.DAYS_IN_QUARTAL) - 1;
     for (let i = 0; i < res; i++) {
       dayInYear += this.pattern[i] * 7;
     }
-    return this.startDate.add(dayInYear, "day");
+    const startDate = dayjs(this.calendar[year].from);
+    return startDate.add(dayInYear, "day");
   }
 
   getMonth(date: Dayjs | null) {
@@ -57,24 +59,24 @@ class FiscalCalendar {
 
     const dayInYear = date.diff(year.from, "day") + 1;
 
-    let quartal = Math.ceil(dayInYear / this.DAYS_IN_QUARTAL);
-    if (quartal > 4) quartal = 4;
-    const dayInQuartal = dayInYear - (quartal - 1) * this.DAYS_IN_QUARTAL;
+    let quarter = Math.ceil(dayInYear / this.DAYS_IN_QUARTAL);
+    if (quarter > 4) quarter = 4;
+    const dayInQuarter = dayInYear - (quarter - 1) * this.DAYS_IN_QUARTAL;
 
-    let temp = dayInQuartal;
+    let temp = dayInQuarter;
     let month = 0;
     const pattern = [...this.pattern];
-    if (year.weeks === 53 && quartal === 4) {
+    if (year.weeks === 53 && quarter === 4) {
       pattern[2]++;
     }
 
     for (let p of pattern) {
-      if (temp - p * 7 <= 0) return (quartal - 1) * 3 + month;
+      if (temp - p * 7 <= 0) return (quarter - 1) * 3 + month;
       temp -= p * 7;
       month++;
     }
 
-    return (quartal - 1) * 3 + month;
+    return (quarter - 1) * 3 + month;
   }
 
   getMonthWeeksCount(date: Dayjs) {
@@ -92,11 +94,8 @@ class FiscalCalendar {
   }
 
   getNextMonth(date: Dayjs, offset: number) {
-    // return date.month();
     let yearNumber = this.getYear(date);
-
     let month = this.getMonth(date) + offset;
-
     if (month > 11) {
       month = month % 12;
       yearNumber++;
@@ -116,9 +115,9 @@ class FiscalCalendar {
 
   getStartOfMonthByNumber(year: number, month: number) {
     const obj = this.getYearObject(year);
-    const quater = Math.ceil(month / 3);
-    const res = month - (quater - 1) * 3;
-    let dayInYear = (quater - 1) * this.DAYS_IN_QUARTAL;
+    const quarter = Math.ceil(month / 3);
+    const res = month - (quarter - 1) * 3;
+    let dayInYear = (quarter - 1) * this.DAYS_IN_QUARTAL;
     for (let i = 0; i < res; i++) {
       dayInYear += this.pattern[i] * 7;
     }
@@ -126,17 +125,17 @@ class FiscalCalendar {
     return startDate.add(dayInYear, "day");
   }
 
-  getQuater(date: Dayjs) {
+  getQuarter(date: Dayjs) {
     if (isNaN(date.month())) return 0;
     const month = this.getMonth(date);
     return Math.floor(month / 3);
   }
 
-  getStartOfQuater(date: Dayjs) {
+  getStartOfQuarter(date: Dayjs) {
     if (isNaN(date.month())) return date;
-    const quater = this.getQuater(date);
+    const quarter = this.getQuarter(date);
     const yearNumber = this.getYear(date);
-    const dayInYear = quater * this.DAYS_IN_QUARTAL;
+    const dayInYear = quarter * this.DAYS_IN_QUARTAL;
     const startYear = dayjs(this.calendar[yearNumber].from);
     return startYear.add(dayInYear, "day");
   }
@@ -180,10 +179,10 @@ class FiscalCalendar {
     return [min, max];
   }
 
-  presetCurrentQuater(maxDate = null) {
+  presetCurrentQuarter(maxDate = null) {
     const min = maxDate
-      ? this.getStartOfQuater(dayjs(maxDate, format))
-      : this.getStartOfQuater(dayjs());
+      ? this.getStartOfQuarter(dayjs(maxDate, format))
+      : this.getStartOfQuarter(dayjs());
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [min, max];
   }
@@ -220,7 +219,7 @@ class FiscalCalendar {
         (this.is53WeeksYear(dateFromYear) &&
           this.isDateInLastWeek(dateFromDay)) ||
         (this.is53WeeksYear(dateFromYear - 1) &&
-          this.getQuater(dateFromDay) === 1)
+          this.getQuarter(dateFromDay) === 1)
       ) {
         dateFromDays = 98;
       }
@@ -230,7 +229,7 @@ class FiscalCalendar {
       const dateToYear = dateTo ? this.getYear(dateToDay) : 0;
       if (
         (this.is53WeeksYear(dateToYear) && this.isDateInLastWeek(dateToDay)) ||
-        (this.is53WeeksYear(dateToYear - 1) && this.getQuater(dateToDay) === 1)
+        (this.is53WeeksYear(dateToYear - 1) && this.getQuarter(dateToDay) === 1)
       ) {
         dateToDays = 98;
       }
@@ -251,7 +250,7 @@ class FiscalCalendar {
         (this.is53WeeksYear(dateFromYear) &&
           this.isDateInLastWeek(dateFromDay)) ||
         (this.is53WeeksYear(dateFromYear - 1) &&
-          this.getQuater(dateFromDay) === 1)
+          this.getQuarter(dateFromDay) === 1)
       ) {
         dateFromDays = 371;
       }
@@ -261,7 +260,7 @@ class FiscalCalendar {
       const dateToYear = dateTo ? this.getYear(dateToDay) : 0;
       if (
         (this.is53WeeksYear(dateToYear) && this.isDateInLastWeek(dateToDay)) ||
-        (this.is53WeeksYear(dateToYear - 1) && this.getQuater(dateToDay) === 1)
+        (this.is53WeeksYear(dateToYear - 1) && this.getQuarter(dateToDay) === 1)
       ) {
         dateToDays = 371;
       }
