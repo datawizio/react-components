@@ -1,8 +1,8 @@
 import dayjs, { Dayjs } from "dayjs";
 import dayjsGenerateConfig from "rc-picker/es/generate/dayjs";
 import { GenerateConfig } from "rc-picker/es/generate";
-
 import { fiscalCalendar } from "../../../utils/fiscalCalendar";
+import { calendarInfo } from "../../../utils/calendar";
 
 type IlocaleMapObject = Record<string, string>;
 const localeMap: IlocaleMapObject = {
@@ -49,8 +49,8 @@ fiscalCalendarConfig.getNextMonth = (date, offset) =>
 
 fiscalCalendarConfig.locale.format = (locale, date, format) => {
   if (format === "YYYY") {
-    const y = fiscalCalendar.getYear(date),
-      y2 = y + 1;
+    const y = calendarInfo.startMonth > date.month() ? date.year() - 1 : date.year();
+    const y2 = y + 1;
     return `${y}/${y2}`;
   }
   return date.locale(parseLocale(locale)).format(format);
