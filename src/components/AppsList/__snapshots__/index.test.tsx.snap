@@ -95,18 +95,21 @@ exports[`AppsList component Render AppsList correctly 1`] = `
                     <Button
                       block={true}
                       border={true}
+                      disabled={false}
                       onClick={[Function]}
                       type="primary"
                     >
                       <Button
                         block={true}
                         className="dw-btn"
+                        disabled={false}
                         onClick={[Function]}
                         type="primary"
                       >
                         <Wave>
                           <button
                             className="ant-btn ant-btn-primary ant-btn-block dw-btn"
+                            disabled={false}
                             onClick={[Function]}
                             type="button"
                           >
