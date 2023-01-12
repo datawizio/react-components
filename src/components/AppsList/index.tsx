@@ -53,7 +53,7 @@ const AppsList: React.FC<AppsListProps> = ({
           <App
             key={app.app_id}
             {...app}
-            disabledApps={disabledApps}
+            disabled={disabledApps && disabledApps.includes(Number(app.app_id))}
             onButtonClick={handleButtonClick}
           />
         ))

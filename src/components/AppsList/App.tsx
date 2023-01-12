@@ -28,7 +28,7 @@ export interface CardAppProps {
   ) => void;
   buttonText?: string;
   showButton?: boolean;
-  disabledApps?: number[];
+  disabled?: boolean;
 }
 
 export const App: React.FC<CardAppProps> = ({
@@ -42,7 +42,7 @@ export const App: React.FC<CardAppProps> = ({
   path,
   allowed,
   showButton = true,
-  disabledApps,
+  disabled = false,
   onButtonClick
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -108,7 +108,7 @@ export const App: React.FC<CardAppProps> = ({
             <Button
               type={"primary"}
               block
-              disabled={disabledApps && disabledApps.includes(Number(app_id))}
+              disabled={disabled}
               onClick={handleButtonClick}
             >
               {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
