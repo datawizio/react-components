@@ -9,7 +9,7 @@ import ConfigContext from "../ConfigProvider/context";
 import "./index.less";
 
 export interface CardAppProps {
-  app_id: number;
+  app_id: number | string;
   name: string;
   logo: string;
   dark_logo: string;
@@ -17,13 +17,18 @@ export interface CardAppProps {
   path: string;
   description: string;
   allowed?: boolean;
-  clients?: { client_id: number; name: string; is_active: boolean }[];
+  clients?: {
+    client_id?: number;
+    name: string;
+    is_active: boolean;
+  }[];
   onButtonClick?: (
     clientId: number,
     { appId: number, url: string, allowed: boolean }
   ) => void;
   buttonText?: string;
   showButton?: boolean;
+  disabledApps?: number[];
 }
 
 export const App: React.FC<CardAppProps> = ({
@@ -37,6 +42,7 @@ export const App: React.FC<CardAppProps> = ({
   path,
   allowed,
   showButton = true,
+  disabledApps,
   onButtonClick
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -99,7 +105,12 @@ export const App: React.FC<CardAppProps> = ({
 
         {showButton && (
           <div className="card-app-actions">
-            <Button type={"primary"} block onClick={handleButtonClick}>
+            <Button
+              type={"primary"}
+              block
+              disabled={disabledApps && disabledApps.includes(Number(app_id))}
+              onClick={handleButtonClick}
+            >
               {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
             </Button>
           </div>
