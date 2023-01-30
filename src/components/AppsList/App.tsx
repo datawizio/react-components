@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
-
 import { Badge, Card, Col } from "antd";
 import Select from "../Select";
 import Button from "../Button";
-
 import ConfigContext from "../ConfigProvider/context";
-
 import "./index.less";
+
+export interface IClient {
+  client_id?: number;
+  name: string;
+  is_active: boolean;
+}
 
 export interface CardAppProps {
   app_id: number | string;
@@ -17,14 +20,10 @@ export interface CardAppProps {
   path: string;
   description: string;
   allowed?: boolean;
-  clients?: {
-    client_id?: number;
-    name: string;
-    is_active: boolean;
-  }[];
+  clients?: IClient[];
   onButtonClick?: (
     clientId: number,
-    { appId: number, url: string, allowed: boolean }
+    { appId, url, allowed, name, clients }
   ) => void;
   buttonText?: string;
   showButton?: boolean;
@@ -62,7 +61,13 @@ export const App: React.FC<CardAppProps> = ({
 
   const handleButtonClick = () => {
     const url = `${host ? host : ""}${path ? path : ""}`;
-    onButtonClick(getClient(client), { appId: app_id, url, allowed });
+    onButtonClick(getClient(client), {
+      appId: app_id,
+      url,
+      allowed,
+      name,
+      clients
+    });
   };
 
   return (
