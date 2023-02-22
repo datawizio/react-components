@@ -256,7 +256,7 @@ export function reducer(state: TableState, action: Action): TableState {
       if (Object.keys(sorters).length > 1) {
         sorters = sorters.sort((a, b) => {
           // @ts-ignore
-          return a.column.sorter.multiple - b.column.sorter.multiple;
+          return a.column.sorter?.multiple - b.column.sorter?.multiple;
         });
       }
 
