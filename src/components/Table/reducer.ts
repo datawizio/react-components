@@ -251,7 +251,15 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "sort": {
-      const sorters = action.payload;
+      let sorters = action.payload;
+
+      if (Object.keys(sorters).length > 1) {
+        sorters = sorters.sort((a, b) => {
+          // @ts-ignore
+          return a.column.sorter.multiple - b.column.sorter.multiple;
+        });
+      }
+
       const sortParams = sorters
         .filter(({ column }) => column)
         .reduce(
