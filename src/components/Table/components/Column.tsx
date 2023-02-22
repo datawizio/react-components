@@ -1,11 +1,9 @@
 import * as React from "react";
 import { TableContext } from "../context";
-
 import clsx from "clsx";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useState, useCallback, useMemo, useContext } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
-
 import { IColumn } from "../types";
 import { PropsWithChildren } from "react";
 import { isSafari } from "../../../utils/navigatorInfo";
@@ -29,7 +27,6 @@ const Column: React.FC<ColumnProps> = props => {
   const {
     model,
     onClick,
-    multipleSorting,
     level,
     onWidthChange,
     virtual,
@@ -46,8 +43,19 @@ const Column: React.FC<ColumnProps> = props => {
 
   const {
     dispatch,
-    tableState: { columnsWidth, columnsForceUpdate }
+    tableState: { columnsWidth, columnsForceUpdate, sortParams },
+    tableProps: { multisorting }
   } = useContext(TableContext);
+
+  const sortingPriority: number = useMemo(() => {
+    if (!multisorting) return 0;
+    const params = Object.keys(sortParams);
+    if (params.length > 1) {
+      const idx = params.findIndex((key: string) => key === model.key);
+      if (idx !== -1) return idx + 1;
+    }
+    return 0;
+  }, [model.key, multisorting, sortParams]);
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
@@ -260,13 +268,22 @@ const Column: React.FC<ColumnProps> = props => {
         "dw-table__column--resizable": model.resizable,
         "dw-table__column--fixed": Boolean(model.fixed),
         "dw-table__column--drop-hover": isOver && canDrop,
+        "dw-table__column--with-sorter-idx": multisorting && sortingPriority,
 
         "dw-table__column--fixed-left": model.fixed === "left",
         "dw-table__column--fixed-right": model.fixed === "right"
       },
       restProps.className
     );
-  }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
+  }, [
+    model.resizable,
+    model.fixed,
+    isOver,
+    canDrop,
+    multisorting,
+    sortingPriority,
+    restProps.className
+  ]);
 
   const styles = useMemo(() => {
     function getWidth() {
@@ -337,7 +354,13 @@ const Column: React.FC<ColumnProps> = props => {
       onClick={onClickHandler}
       title={String(model.title)}
       onMouseDown={onMouseDownHandler}
-      style={{ ...styles, ...props.style }}
+      style={
+        {
+          ...styles,
+          ...props.style,
+          "--order": sortingPriority
+        } as React.CSSProperties
+      }
     />
   );
 };

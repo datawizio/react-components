@@ -50,7 +50,7 @@ export interface TableProps<RT = any>
   sortable?: boolean;
   forceColumns?: boolean;
   showSizeChanger?: boolean;
-  multipleSorting?: boolean;
+  multisorting?: boolean;
   isResizableColumns?: boolean;
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
