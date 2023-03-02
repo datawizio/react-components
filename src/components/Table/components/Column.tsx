@@ -43,13 +43,23 @@ const Column: React.FC<ColumnProps> = props => {
 
   const {
     dispatch,
-    tableState: { columnsWidth, columnsForceUpdate, sortParams },
+    tableState: {
+      columnsWidth,
+      columnsForceUpdate,
+      sortParams,
+      sortParamsPriority
+    },
     tableProps: { multisorting }
   } = useContext(TableContext);
 
   const sortingPriority: number = useMemo(() => {
     if (!multisorting) return 0;
-    const params = Object.keys(sortParams);
+    let params = Object.keys(sortParams);
+    if (sortParamsPriority) {
+      params = params.sort((a: string, b: string) => {
+        return sortParamsPriority[a] - sortParamsPriority[b];
+      });
+    }
     if (params.length > 1) {
       const idx = params.findIndex((key: string) => key === model.key);
       if (idx !== -1) return idx + 1;
