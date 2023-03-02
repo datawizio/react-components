@@ -7,7 +7,13 @@ import {
   IColumn
 } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
-import { swapColumns, filterByColumns, reindexColumns } from "./utils/utils";
+import {
+  swapColumns,
+  filterByColumns,
+  reindexColumns,
+  setMultisortingForColumns
+} from "./utils/utils";
+import { isEqual } from "lodash";
 
 function genColumnsMap(columns) {
   const columnsMap = {};
@@ -68,6 +74,7 @@ export function initializer(props: TableProps): TableState {
     showSizeChanger,
     pageSizeOptions,
     visibleColumnsKeys,
+    multisorting,
     columnsSorter
   } = props;
 
@@ -80,6 +87,7 @@ export function initializer(props: TableProps): TableState {
 
     forceColumns,
     columnsSorter,
+    multisorting,
 
     pagination: {
       showSizeChanger,
@@ -490,6 +498,28 @@ export function reducer(state: TableState, action: Action): TableState {
           type: "updateDataSource",
           payload: nextState.dataSource
         });
+
+      if (state.multisorting) {
+        const sortParams = nextState.sortParams;
+        const nextSortParams = {};
+
+        for (let key in sortParams) {
+          if (nextState.visibleColumnsKeys.includes(key)) {
+            nextSortParams[key] = sortParams[key];
+          }
+        }
+
+        if (!isEqual(sortParams, nextSortParams)) {
+          if (Object.keys(nextSortParams).length) {
+            nextState.sortParams = nextSortParams;
+          }
+          nextState.columns = setMultisortingForColumns(
+            nextState.columns,
+            nextSortParams,
+            state.sortParamsPriority
+          );
+        }
+      }
 
       return nextState;
     }

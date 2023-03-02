@@ -1,4 +1,4 @@
-import { TableState } from "../Table/types";
+import { SortParamsPriority, TableState } from "../Table/types";
 
 export type TableTemplate = {
   id?: number;
@@ -9,6 +9,7 @@ export type TableTemplate = {
 
 export type TableTemplateState = {
   columnsPositions: Array<LiteColumn>;
+  sortParamsPriority: SortParamsPriority;
   fetchAfterApply?: boolean;
 } & Partial<TableState>;
 

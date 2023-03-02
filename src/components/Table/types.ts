@@ -78,6 +78,7 @@ export interface TableProps<RT = any>
    */
   responsiveColumns?: boolean;
   sortParams?: SortParams;
+  sortParamsPriority?: SortParamsPriority;
 
   pageSizeOptions?: Array<string>;
   templates?: Array<TableTemplate>;
@@ -301,6 +302,8 @@ export type FilterParams = Record<string, Key[] | null>;
 export type SortParams = {
   [columnKey: string]: SortOrder;
 };
+
+export type SortParamsPriority = { [key: string]: number };
 
 /**
  * Providers types
