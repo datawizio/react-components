@@ -55,7 +55,8 @@ const Column: React.FC<ColumnProps> = props => {
       if (idx !== -1) return idx + 1;
     }
     return 0;
-  }, [model.key, multisorting, sortParams]);
+    // @ts-ignore
+  }, [model.key, model.sorter.multiple, multisorting, sortParams]);
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },

@@ -1,4 +1,10 @@
-import { BodyCellType, IColumn, TableState } from "../types";
+import {
+  BodyCellType,
+  IColumn,
+  SortParams,
+  SortParamsPriority,
+  TableState
+} from "../types";
 
 function defineCellType(cell: BodyCellType, column: IColumn): string {
   const dType =
@@ -67,10 +73,43 @@ function getVisibleColumns(columns: Array<IColumn>) {
   return result;
 }
 
+const setMultisortingForColumns = (
+  columns: IColumn[],
+  sortParams: SortParams,
+  sortParamsPriority?: SortParamsPriority
+): IColumn[] => {
+  if (!columns) return [];
+  let keys = Object.keys(sortParams);
+  if (!keys.length) return columns;
+
+  if (sortParamsPriority) {
+    keys = keys.sort((a: string, b: string) => {
+      return sortParamsPriority[a] - sortParamsPriority[b];
+    });
+  }
+
+  return columns.map((col: IColumn) => {
+    let multiple = 999;
+    if (keys.includes(col.key as string)) {
+      const i = keys.findIndex(k => k === col.key);
+      if (i !== -1) {
+        multiple = i + 1;
+      }
+    }
+    return {
+      ...col,
+      sorter: {
+        multiple
+      }
+    };
+  });
+};
+
 export {
   defineCellType,
   getVisibleColumns,
   swapColumns,
   filterByColumns,
-  reindexColumns
+  reindexColumns,
+  setMultisortingForColumns
 };

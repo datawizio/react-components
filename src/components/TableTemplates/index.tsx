@@ -25,8 +25,18 @@ function pickState(
     }));
   })(baseState.columns);
 
+  const sortParamsPriority = {};
+  if (state.multisorting && Object.keys(state.sortParams).length > 1) {
+    for (let key in state.sortParams) {
+      if (!state.columnsMap[key]) sortParamsPriority[key] = 999;
+      // @ts-ignore
+      sortParamsPriority[key] = state.columnsMap[key].sorter?.multiple;
+    }
+  }
+
   return {
     columnsPositions,
+    sortParamsPriority,
     pagination: state.pagination,
     sortParams: state.sortParams,
     columnsWidth: state.columnsWidth,
