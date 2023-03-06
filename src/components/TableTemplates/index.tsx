@@ -132,7 +132,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         type: "update",
         payload: {
           templateSelected: true,
-          columnsForceUpdate: tableState.columnsForceUpdate + 1
+          columnsForceUpdate: tableState.columnsForceUpdate + 1,
+          sortParamsPriority: template.state.sortParamsPriority
         }
       });
       setSelectedTemplate(template);
