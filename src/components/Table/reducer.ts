@@ -280,7 +280,8 @@ export function reducer(state: TableState, action: Action): TableState {
 
       return {
         ...state,
-        sortParams
+        sortParams,
+        sortParamsPriority: null
       };
     }
     case "filter": {
@@ -500,11 +501,16 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
       if (state.multisorting) {
-        const sortParams = nextState.sortParams;
+        const { sortParams, visibleColumnsKeys } = nextState;
         const nextSortParams = {};
+        const sortParamsPriority =
+          action.payload.sortParamsPriority || nextState.sortParamsPriority;
 
         for (let key in sortParams) {
-          if (nextState.visibleColumnsKeys.includes(key)) {
+          if (
+            visibleColumnsKeys.length &&
+            (visibleColumnsKeys.includes(key) || key === "name")
+          ) {
             nextSortParams[key] = sortParams[key];
           }
         }
@@ -516,7 +522,7 @@ export function reducer(state: TableState, action: Action): TableState {
           nextState.columns = setMultisortingForColumns(
             nextState.columns,
             nextSortParams,
-            state.sortParamsPriority
+            sortParamsPriority
           );
         }
       }
