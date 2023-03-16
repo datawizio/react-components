@@ -507,6 +507,7 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
 
     let etop = e.target.scrollTop;
     let eleft = e.target.scrollLeft;
+
     const flag = e.flag;
 
     log_debug(ctx, `raf top: ${etop}, left: ${eleft}`);
@@ -573,7 +574,8 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
             isEnd: e.end!
           });
         }
-
+        // update scroll position when using scroll native
+        set_scroll(ctx, etop, eleft, flag, end!);
         if (head === prev_head && tail === prev_tail && top === prev_top) {
           return;
         }
@@ -581,7 +583,6 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
         end = e.end!;
         break;
     }
-
     set_offset(ctx, top, head, tail);
     set_scroll(ctx, etop, eleft, flag, end!);
     force[1](++ctx.update_count);
