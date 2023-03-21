@@ -566,7 +566,7 @@ const VTable: React.ForwardRefRenderFunction<RefObject, VTableProps> = (
 
         HND_RAF.current = 0;
         evq.length = 0;
-        ctx.final_top = etop; // save scroll position by expand row
+        //ctx.final_top = etop; // save scroll position by expand row
         if (ctx.onScroll) {
           ctx.onScroll({
             top: etop,
