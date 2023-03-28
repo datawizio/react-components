@@ -1,8 +1,6 @@
 import React from "react";
-
 import { Drawer as AntDrawer } from "antd";
 import { DrawerProps as AntDrawerProps } from "antd/lib/drawer";
-
 import "./index.less";
 
 export interface DrawerProps extends AntDrawerProps {
