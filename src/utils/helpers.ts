@@ -1,5 +1,5 @@
 export const isNumeric = (str: string) => {
-  if (typeof str !== "string") return false;
+  if (typeof str !== "string" || str.startsWith("000")) return false;
   return !isNaN(+str) && !isNaN(parseFloat(str));
 };
 
