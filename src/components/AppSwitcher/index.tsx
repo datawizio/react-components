@@ -82,14 +82,17 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({
   theme,
   onAppClick
 }) => {
+  const { translate } = useContext(ConfigContext);
+
   const overlay = useMemo(() => {
     return menu(apps, client, onAppClick);
   }, [apps, client, onAppClick]);
-  const { translate } = useContext(ConfigContext);
+
   const className = clsx({
     "app-switcher-link": true,
     "dw-dark": theme === "dark"
   });
+
   return (
     <>
       <Dropdown
