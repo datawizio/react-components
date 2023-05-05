@@ -1,16 +1,15 @@
 import React, { useContext, useCallback } from "react";
-
 import { Result } from "antd";
 import Button from "../Button";
-
 import ConfigContext from "../ConfigProvider/context";
 import { ForbiddenIcon } from "../Icons/ForbiddenIcon";
 
 export interface ForbiddenProps {
   backUrl: string;
+  btnText?: string;
 }
 
-const Forbidden = ({ backUrl }) => {
+const Forbidden: React.FC<ForbiddenProps> = ({ backUrl, btnText }) => {
   const { translate } = useContext(ConfigContext);
 
   const handleButtonClick = useCallback(() => {
@@ -27,7 +26,7 @@ const Forbidden = ({ backUrl }) => {
         subTitle={translate("SERVICE_FORBIDDEN")}
         extra={
           <Button type="primary" onClick={handleButtonClick}>
-            {translate("BACK_TO_ACCOUNT")}
+            {btnText ?? translate("BACK_TO_ACCOUNT")}
           </Button>
         }
       />
