@@ -13,10 +13,12 @@
     .skeleton-container {
       &--loading {
         pointer-events: none;
+        max-height: 100%;
+        overflow: hidden;
 
         & .ant-spin-nested-loading {
           visibility: hidden;
-          height: 0px;
+          height: 0;
         }
       }
     }
