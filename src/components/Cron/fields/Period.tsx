@@ -13,7 +13,9 @@ export default function Period(props: PeriodProps) {
     className,
     disabled,
     readOnly,
-    shortcuts
+    shortcuts,
+    withHours,
+    withMinutes
   } = props;
   let options = [
     {
@@ -32,15 +34,21 @@ export default function Period(props: PeriodProps) {
       value: "day",
       label: locale.dayOption || DEFAULT_LOCALE_EN.dayOption
     }
-    // {
-    //   value: 'hour',
-    //   label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption,
-    // },
-    // {
-    //   value: 'minute',
-    //   label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption,
-    // },
   ];
+
+  if (withHours) {
+    options.push({
+      value: "hour",
+      label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption
+    });
+  }
+
+  if (withMinutes) {
+    options.push({
+      value: "minute",
+      label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption
+    });
+  }
 
   if (shortcuts && (shortcuts === true || shortcuts.includes("@reboot"))) {
     options = [

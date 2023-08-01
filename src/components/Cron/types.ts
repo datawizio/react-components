@@ -148,6 +148,9 @@ export interface CronProps {
    * Default './locale.ts'
    */
   locale?: Locale;
+
+  withHours?: boolean;
+  withMinutes?: boolean;
 }
 export interface Locale {
   everyText?: string;
@@ -240,6 +243,8 @@ export interface FieldProps {
   period: PeriodType;
   periodicityOnDoubleClick: boolean;
   mode: Mode;
+  withHours?: boolean;
+  withMinutes?: boolean;
 }
 export interface PeriodProps
   extends Omit<

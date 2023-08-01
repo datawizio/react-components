@@ -17,6 +17,8 @@ import { DEFAULT_LOCALE_EN } from "./locale";
 import { setValuesFromCronString, getCronStringFromValues } from "./converter";
 
 import "./index.less";
+import Hours from "./fields/Hours";
+import Minutes from "./fields/Minutes";
 
 export default function Cron(props: CronProps) {
   const {
@@ -47,7 +49,9 @@ export default function Cron(props: CronProps) {
     ],
     clockFormat,
     periodicityOnDoubleClick = true,
-    mode = "multiple"
+    mode = "multiple",
+    withHours = false,
+    withMinutes = false
   } = props;
   const internalValueRef = useRef<string>(value);
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod);
@@ -278,6 +282,8 @@ export default function Cron(props: CronProps) {
         disabled={disabled}
         readOnly={readOnly}
         shortcuts={shortcuts}
+        withHours={withHours}
+        withMinutes={withMinutes}
       />
 
       {periodForRender === "reboot" ? (
@@ -332,6 +338,46 @@ export default function Cron(props: CronProps) {
               mode={mode}
             />
           )}
+
+          {(periodForRender === "year" ||
+            periodForRender === "month" ||
+            periodForRender === "week" ||
+            periodForRender === "hour") &&
+            withHours && (
+              <Hours
+                value={hours}
+                setValue={setHours}
+                leadingZero={true}
+                locale={locale}
+                className={className}
+                disabled={disabled}
+                readOnly={readOnly}
+                period={periodForRender}
+                periodicityOnDoubleClick={periodicityOnDoubleClick}
+                mode={mode}
+              />
+            )}
+
+          {(periodForRender === "year" ||
+            periodForRender === "month" ||
+            periodForRender === "week" ||
+            periodForRender === "hour" ||
+            periodForRender === "minute") &&
+            withHours &&
+            withMinutes && (
+              <Minutes
+                value={minutes}
+                setValue={setMinutes}
+                leadingZero={true}
+                locale={locale}
+                className={className}
+                disabled={disabled}
+                readOnly={readOnly}
+                period={periodForRender}
+                periodicityOnDoubleClick={periodicityOnDoubleClick}
+                mode={mode}
+              />
+            )}
 
           <div>{clearButtonNode}</div>
         </>
