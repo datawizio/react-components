@@ -6,7 +6,6 @@ import React, {
   useMemo
 } from "react";
 import Button from "antd/lib/button";
-
 import { CronProps, PeriodType } from "./types";
 import Period from "./fields/Period";
 import MonthDays from "./fields/MonthDays";
@@ -15,10 +14,9 @@ import WeekDays from "./fields/WeekDays";
 import { classNames, setError, usePrevious } from "./utils";
 import { DEFAULT_LOCALE_EN } from "./locale";
 import { setValuesFromCronString, getCronStringFromValues } from "./converter";
-
-import "./index.less";
 import Hours from "./fields/Hours";
 import Minutes from "./fields/Minutes";
+import "./index.less";
 
 export default function Cron(props: CronProps) {
   const {
@@ -50,6 +48,7 @@ export default function Cron(props: CronProps) {
     clockFormat,
     periodicityOnDoubleClick = true,
     mode = "multiple",
+    defaultHour,
     withHours = false,
     withMinutes = false
   } = props;
@@ -82,6 +81,7 @@ export default function Cron(props: CronProps) {
         setMonthDays,
         setMonths,
         setWeekDays,
+        // @ts-ignore
         setPeriod
       );
     },
@@ -106,6 +106,7 @@ export default function Cron(props: CronProps) {
           setMonthDays,
           setMonths,
           setWeekDays,
+          // @ts-ignore
           setPeriod
         );
       }
@@ -160,8 +161,8 @@ export default function Cron(props: CronProps) {
       setMonthDays(undefined);
       setMonths(undefined);
       setWeekDays(undefined);
-      setHours(undefined);
-      setMinutes(undefined);
+      setHours(defaultHour ? [defaultHour] : undefined);
+      setMinutes(defaultHour ? [0] : undefined);
 
       // When clearButtonAction is 'empty'
       let newValue = "";
@@ -224,10 +225,8 @@ export default function Cron(props: CronProps) {
     [className, error, displayError, disabled, readOnly]
   );
 
-  const {
-    className: clearButtonClassNameProp,
-    ...otherClearButtonProps
-  } = clearButtonProps;
+  const { className: clearButtonClassNameProp, ...otherClearButtonProps } =
+    clearButtonProps;
   const clearButtonClassName = useMemo(
     () =>
       classNames({
@@ -276,6 +275,7 @@ export default function Cron(props: CronProps) {
     <div className={internalClassName}>
       <Period
         value={periodForRender}
+        // @ts-ignore
         setValue={setPeriod}
         locale={locale}
         className={className}
@@ -342,7 +342,7 @@ export default function Cron(props: CronProps) {
           {(periodForRender === "year" ||
             periodForRender === "month" ||
             periodForRender === "week" ||
-            periodForRender === "hour") &&
+            periodForRender === "day") &&
             withHours && (
               <Hours
                 value={hours}
@@ -361,8 +361,8 @@ export default function Cron(props: CronProps) {
           {(periodForRender === "year" ||
             periodForRender === "month" ||
             periodForRender === "week" ||
-            periodForRender === "hour" ||
-            periodForRender === "minute") &&
+            periodForRender === "day" ||
+            periodForRender === "hour") &&
             withHours &&
             withMinutes && (
               <Minutes

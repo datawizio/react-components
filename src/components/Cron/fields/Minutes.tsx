@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-
+import i18n from "i18next";
 import CustomSelect from '../components/CustomSelect'
 import { MinutesProps } from '../types'
 import { DEFAULT_LOCALE_EN } from '../locale'
@@ -32,7 +32,7 @@ export default function Minutes(props: MinutesProps) {
   )
 
   return (
-    <div className={internalClassName}>
+    <div className={internalClassName} title={i18n.t("MINUTES")}>
       {period === 'hour'
         ? locale.prefixMinutesForHourPeriod !== '' && (
             <span>
