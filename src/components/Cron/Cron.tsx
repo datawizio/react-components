@@ -1,9 +1,9 @@
 import React, {
-  useState,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
-  useMemo
+  useState
 } from "react";
 import Button from "antd/lib/button";
 import { CronProps, PeriodType } from "./types";
@@ -13,7 +13,7 @@ import Months from "./fields/Months";
 import WeekDays from "./fields/WeekDays";
 import { classNames, setError, usePrevious } from "./utils";
 import { DEFAULT_LOCALE_EN } from "./locale";
-import { setValuesFromCronString, getCronStringFromValues } from "./converter";
+import { getCronStringFromValues, setValuesFromCronString } from "./converter";
 import Hours from "./fields/Hours";
 import Minutes from "./fields/Minutes";
 import "./index.less";
@@ -181,16 +181,14 @@ export default function Cron(props: CronProps) {
         clearButtonAction === "fill-with-every" ||
         clearButtonAction === "to-default"
       ) {
-        const cron = getCronStringFromValues(
+        newValue = getCronStringFromValues(
           newPeriod,
           undefined,
           undefined,
           undefined,
-          undefined,
-          undefined
+          defaultHour ? [defaultHour] : undefined,
+          defaultHour ? [0] : undefined
         );
-
-        newValue = cron;
       }
 
       setValue(newValue, newPeriod);
