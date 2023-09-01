@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
-
-import CustomSelect from '../components/CustomSelect'
-import { HoursProps } from '../types'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
-import { UNITS } from '../constants'
+import React, { useMemo } from "react";
+import i18n from "i18next";
+import CustomSelect from "../components/CustomSelect";
+import { HoursProps } from "../types";
+import { DEFAULT_LOCALE_EN } from "../locale";
+import { classNames } from "../utils";
+import { UNITS } from "../constants";
 
 export default function Hours(props: HoursProps) {
   const {
@@ -18,22 +18,22 @@ export default function Hours(props: HoursProps) {
     clockFormat,
     period,
     periodicityOnDoubleClick,
-    mode,
-  } = props
+    mode
+  } = props;
   const internalClassName = useMemo(
     () =>
       classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-hours': true,
+        "react-js-cron-field": true,
+        "react-js-cron-hours": true,
         [`${className}-field`]: !!className,
-        [`${className}-hours`]: !!className,
+        [`${className}-hours`]: !!className
       }),
     [className]
-  )
+  );
 
   return (
-    <div className={internalClassName}>
-      {locale.prefixHours !== '' && (
+    <div className={internalClassName} title={i18n.t("HOURS")}>
+      {locale.prefixHours !== "" && (
         <span>{locale.prefixHours || DEFAULT_LOCALE_EN.prefixHours}</span>
       )}
 
@@ -53,5 +53,5 @@ export default function Hours(props: HoursProps) {
         mode={mode}
       />
     </div>
-  )
+  );
 }

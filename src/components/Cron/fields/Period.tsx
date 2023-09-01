@@ -36,19 +36,19 @@ export default function Period(props: PeriodProps) {
     }
   ];
 
-  if (withHours) {
-    options.push({
-      value: "hour",
-      label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption
-    });
-  }
+  /*if (withHours) {
+      options.push({
+        value: "hour",
+        label: locale.hourOption || DEFAULT_LOCALE_EN.hourOption
+      });
+    }
 
-  if (withMinutes) {
-    options.push({
-      value: "minute",
-      label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption
-    });
-  }
+    if (withMinutes) {
+      options.push({
+        value: "minute",
+        label: locale.minuteOption || DEFAULT_LOCALE_EN.minuteOption
+      });
+    }*/
 
   if (shortcuts && (shortcuts === true || shortcuts.includes("@reboot"))) {
     options = [

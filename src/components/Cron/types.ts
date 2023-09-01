@@ -151,7 +151,10 @@ export interface CronProps {
 
   withHours?: boolean;
   withMinutes?: boolean;
+
+  defaultHour?: number;
 }
+
 export interface Locale {
   everyText?: string;
   emptyMonths?: string;
@@ -185,6 +188,7 @@ export interface Locale {
   altWeekDays?: string[];
   altMonths?: string[];
 }
+
 export type SetValueFunction = (value: string, period: string) => void;
 export type SetValue = SetValueFunction | Dispatch<SetStateAction<string>>;
 export type CronError =
@@ -198,7 +202,9 @@ export type OnError =
   | OnErrorFunction
   | Dispatch<SetStateAction<CronError>>
   | undefined;
+
 export interface ClearButtonProps extends Omit<ButtonProps, "onClick"> {}
+
 export type ClearButtonAction = "empty" | "fill-with-every" | "to-default";
 export type PeriodType =
   | "year"
@@ -246,6 +252,7 @@ export interface FieldProps {
   withHours?: boolean;
   withMinutes?: boolean;
 }
+
 export interface PeriodProps
   extends Omit<
     FieldProps,
@@ -255,25 +262,31 @@ export interface PeriodProps
   setValue: SetValuePeriod;
   shortcuts: Shortcuts;
 }
+
 export interface MonthsProps extends FieldProps {
   humanizeLabels: boolean;
 }
+
 export interface MonthDaysProps extends FieldProps {
   weekDays?: number[];
   leadingZero: LeadingZero;
 }
+
 export interface WeekDaysProps extends FieldProps {
   humanizeLabels: boolean;
   monthDays?: number[];
 }
+
 export interface HoursProps extends FieldProps {
   leadingZero: LeadingZero;
   clockFormat?: ClockFormat;
 }
+
 export interface MinutesProps extends FieldProps {
   leadingZero: LeadingZero;
   clockFormat?: ClockFormat;
 }
+
 export interface CustomSelectProps
   extends Omit<
     SelectProps<any>,
@@ -308,11 +321,13 @@ export interface CustomSelectProps
   periodicityOnDoubleClick: boolean;
   mode: Mode;
 }
+
 export type SetValueNumbersOrUndefined = Dispatch<
   SetStateAction<number[] | undefined>
 >;
 export type SetValuePeriod = Dispatch<SetStateAction<PeriodType>>;
 export type SetInternalError = Dispatch<SetStateAction<boolean>>;
+
 export interface DefaultLocale {
   everyText: string;
   emptyMonths: string;
@@ -346,14 +361,18 @@ export interface DefaultLocale {
   altWeekDays: string[];
   altMonths: string[];
 }
+
 export type CronValues = { [key in CronType]: number[] | string | undefined };
+
 export interface Classes {
   [key: string]: boolean;
 }
+
 export interface ShortcutsValues {
   name: ShortcutsType;
   value: string;
 }
+
 export interface Unit {
   type: CronType;
   min: number;
@@ -361,6 +380,7 @@ export interface Unit {
   total: number;
   alt?: string[];
 }
+
 export interface Clicks {
   time: number;
   value: number;
