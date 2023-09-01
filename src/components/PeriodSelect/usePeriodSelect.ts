@@ -1,6 +1,5 @@
 import { useReducer } from "react";
 import { CalendarTypes } from "../DatePicker";
-
 import {
   CUSTOM_PERIOD_KEY,
   CUSTOM_PREV_PERIOD_KEY,
@@ -145,12 +144,14 @@ function reducer(state: IUserPeriodSelect, action: any) {
       if (!isCustomDate) {
         return state;
       }
+
       const period = getPeriod({
         clientDate,
         clientStartDate,
         periodKey: CUSTOM_PERIOD_KEY,
         date
       });
+
       const prevPeriod = getPrevPeriod({
         period,
         clientDate,
@@ -163,7 +164,9 @@ function reducer(state: IUserPeriodSelect, action: any) {
         period,
         prevPeriod: isCustomPrevDate ? oldPrevPeriod : prevPeriod,
         availablePrevPeriods: getAvailablePeriodsForDates(period),
-        selectedPrevPeriod: DEFAULT_PREV_PERIOD,
+        selectedPrevPeriod: isCustomPrevDate
+          ? CUSTOM_PREV_PERIOD_KEY
+          : DEFAULT_PREV_PERIOD,
         isPickerEmpty: false
       };
     }

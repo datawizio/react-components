@@ -2,7 +2,6 @@ import React, { useEffect, useCallback, useContext } from "react";
 import { Select } from "antd";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
-
 import ConfigContext from "../ConfigProvider/context";
 import {
   DEFAULT_PERIOD,
@@ -88,6 +87,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     }
     //eslint-disable-next-line
   }, [period, prevPeriod]);
+
   const handlePeriodChange = periodKey => {
     actionCreator(dispatch, "updatePeriod", {
       periodKey
