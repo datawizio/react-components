@@ -11,6 +11,7 @@ const VideoModal: FC<VideoModalProps> = ({
   buttonProps,
   source,
   modalProps,
+  onThumbnailClick,
   onVideoStateChange
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,6 +32,7 @@ const VideoModal: FC<VideoModalProps> = ({
   const handleThumbnailClick = () => {
     setModalVisible(true);
     player.current && player.current.play();
+    onThumbnailClick && onThumbnailClick();
   };
   const handleCancel = () => {
     setModalVisible(false);

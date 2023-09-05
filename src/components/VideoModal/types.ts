@@ -22,4 +22,5 @@ export interface VideoModalProps {
   source: Source;
   modalProps?: ModalProps;
   onVideoStateChange?: VideoStateChangeCallback;
+  onThumbnailClick?: () => void;
 }
