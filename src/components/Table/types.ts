@@ -81,6 +81,7 @@ export interface TableProps<RT = any>
   sortParamsPriority?: SortParamsPriority;
 
   pageSizeOptions?: Array<string>;
+  defaultPageSize?: number;
   templates?: Array<TableTemplate>;
   visibleColumnsKeys?: Array<IColumn["key"]>;
 

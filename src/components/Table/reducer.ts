@@ -73,6 +73,7 @@ export function initializer(props: TableProps): TableState {
     dTypesConfig,
     showSizeChanger,
     pageSizeOptions,
+    defaultPageSize,
     visibleColumnsKeys,
     multisorting,
     columnsSorter
@@ -92,7 +93,7 @@ export function initializer(props: TableProps): TableState {
     pagination: {
       showSizeChanger,
       pageSizeOptions,
-      pageSize: +pageSizeOptions[0],
+      pageSize: defaultPageSize || +pageSizeOptions[0],
       ...(pagination || {})
     },
 
