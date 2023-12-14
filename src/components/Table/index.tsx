@@ -2,11 +2,9 @@ import clsx from "clsx";
 import * as React from "react";
 import { Table as AntdTable } from "antd";
 import { reducer, initializer } from "./reducer";
-
 import useColumns from "./hooks/useColumns";
 import useDataSource from "./hooks/useDataSource";
 import usePropsToState from "./hooks/usePropsToState";
-
 import {
   useMemo,
   useReducer,
@@ -14,10 +12,8 @@ import {
   useCallback,
   useImperativeHandle
 } from "react";
-
 import { TableContext } from "./context";
 import ConfigContext from "../ConfigProvider/context";
-
 import Cell from "./components/Cell";
 import Column from "./components/Column";
 import ToolBar from "./components/ToolBar";
@@ -27,28 +23,26 @@ import {
   RightOutlined,
   DownOutlined
 } from "@ant-design/icons";
-
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
 import {
   basicSortHandler,
   basicFilterHandler,
   basicSearchHandler
 } from "./utils/handlers";
-
 import { TableProps, FCTable, TableRef } from "./types";
-
-import "./index.less";
 import useAsyncProviders from "./hooks/useAsyncProviders";
 import { isSafari } from "../../utils/navigatorInfo";
 import Row from "./components/Row";
 import { HeaderWrapper } from "./components/HeaderWrapper";
 import { useVT } from "./components/VirtualList";
 import { SkeletonTable } from "./components/SkeletonTable";
+import usePaginationObserver from "./hooks/usePaginationObserver";
+import "./index.less";
 
 export class CancelRequestError extends Error {
   data: any;
+
   constructor(data: any) {
     super("Canceled Request"); // (1)
     this.name = "CancelRequestError"; // (2)
@@ -59,6 +53,7 @@ export class CancelRequestError extends Error {
 const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   const {
     errorRender,
+    config,
     vid,
     virtual,
     virtualDebug,
@@ -177,10 +172,28 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
   );
 
   const totalRenderer = useCallback(
-    (total, [current, to]) => {
-      return translate(locale.total, { current, to, total });
+    (currentPage = 1, total, [from, to]) => {
+      if (state.fixedTotal && config?.fixed_total) {
+        return translate(locale.total, {
+          current: from - currentPage + 1,
+          to: to - currentPage || 1,
+          total: total - Math.ceil(total / state.pagination.pageSize) || 1
+        });
+      }
+
+      return translate(locale.total, {
+        current: from,
+        to,
+        total
+      });
     },
-    [translate, locale.total]
+    [
+      state.fixedTotal,
+      state.pagination.pageSize,
+      config,
+      translate,
+      locale.total
+    ]
   );
 
   const expandIconRender = useCallback(
@@ -340,6 +353,8 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     }
   }));
 
+  usePaginationObserver(state, props);
+
   return (
     <div className="dw-table-container">
       <DndProvider backend={HTML5Backend}>
@@ -353,7 +368,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         >
           <SkeletonTable
             loading={Boolean(baseState.loading)}
-            skeleton={Boolean(baseState.firstRenderLoader && props.dataProvider)}
+            skeleton={Boolean(
+              baseState.firstRenderLoader && props.dataProvider
+            )}
           >
             {children}
             {state.error && errorRender ? (
@@ -381,7 +398,10 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
                     : {
                         ...state.pagination,
                         ...props.pagination,
-                        showTotal: totalRenderer
+                        showTotal: totalRenderer.bind(
+                          this,
+                          state.pagination.current
+                        )
                       }
                 }
               />

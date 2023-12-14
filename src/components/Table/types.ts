@@ -37,6 +37,9 @@ type IColumnsSorter = (
 
 export interface TableProps<RT = any>
   extends Overwrite<AntdTableProps<RT>, _OverwrittenTableProps<RT>> {
+  config?: {
+    [key: string]: any
+  };
   width?: string | number;
   height?: string | number;
   vid?: string;

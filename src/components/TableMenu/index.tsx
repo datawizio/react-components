@@ -104,7 +104,11 @@ const TableMenu: React.FC<TableMenuProps> = props => {
             fixedTotal: !tableState?.fixedTotal,
             pagination: {
               ...tableState.pagination,
-              current: 1
+              current: 1,
+              pageSize: tableState?.fixedTotal ? 20 : 21,
+              pageSizeOptions: tableState?.fixedTotal
+                ? ["20", "35", "50", "100"]
+                : ["21", "36", "51", "101"]
             }
           }
         });
