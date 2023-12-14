@@ -8,6 +8,10 @@ const subscriptions: { [key: string]: Map<string, Function> } = {};
 
 const queue: Set<Object> = new Set();
 
+const CONNECTION_LIMIT = 5;
+
+let counter = 0;
+
 export const initWS = (
   server: string,
   authData: {
@@ -30,13 +34,18 @@ export const initWS = (
   };
 
   ws.onclose = function (e) {
+    counter = counter + 1;
+
     console.warn(
       "Socket is closed. Reconnect will be attempted in 1 second.",
       e.reason
     );
-    setTimeout(function () {
-      initWS(server, authData);
-    }, 1000);
+
+    if (counter < CONNECTION_LIMIT) {
+      setTimeout(function () {
+        initWS(server, authData);
+      }, 1000);
+    }
   };
 
   ws.onerror = function (err) {
