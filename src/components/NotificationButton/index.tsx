@@ -4,8 +4,7 @@ import Button from "../Button";
 import { BellOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 
-import { useContext, useState } from "react";
-import ConfigContext from "../ConfigProvider/context";
+import { useState } from "react";
 
 import "./index.less";
 import { sendMessage, subscribe, unsubscribe } from "../../utils/ws";
@@ -21,7 +20,6 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   useWS,
   onClick
 }) => {
-  const { translate } = useContext(ConfigContext);
   const [state, setState] = useState<number>(count);
 
   React.useEffect(() => {
@@ -29,6 +27,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
     subscribe("unread-notifications", "notification-btn", data => {
       setState(data["payload"]["data"]["unreadNotificationsCount"]["count"]);
     });
+
     sendMessage({
       "id": "unread-notifications",
       "type": "subscribe",
@@ -36,6 +35,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
         "query": "subscription { unreadNotificationsCount {count} }"
       }
     });
+
     return () => {
       unsubscribe("unread-notifications", "notification-btn");
     };
@@ -43,9 +43,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
 
   return (
     <Badge count={state} className="notification-btn">
-      <Button type="link" onClick={onClick} icon={<BellOutlined />}>
-        {translate("NOTIFICATIONS")}
-      </Button>
+      <Button type="link" onClick={onClick} icon={<BellOutlined />}></Button>
     </Badge>
   );
 };
