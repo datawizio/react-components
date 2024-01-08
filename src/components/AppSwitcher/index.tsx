@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { Dropdown, Row, Col } from "antd";
+import { Dropdown, Col, Typography, Row } from "antd";
 import Icon from "@ant-design/icons";
 
 import "./index.less";
@@ -10,6 +10,7 @@ export interface IApplication {
   app_id: number | string;
   name: string;
   description: string;
+  bento_menu_description: string;
 
   logo?: string;
   host: string;
@@ -24,6 +25,7 @@ export interface IApplication {
 const App: React.FC<IApplication & { client: number }> = ({
   client,
   name,
+  bento_menu_description,
   host,
   icon,
   dark_icon,
@@ -35,25 +37,27 @@ const App: React.FC<IApplication & { client: number }> = ({
   };
 
   return (
-    <Col span={8} onClick={handleClick}>
+    <Col span={24} onClick={handleClick} flex="1">
       <div className="logo">
         <div>
           <img src={window.theme === "dark" ? dark_icon : icon} alt={name} />
         </div>
       </div>
-      <div className="title">{name}</div>
+
+      <div className="text">
+        <Typography.Paragraph>{name}</Typography.Paragraph>
+        <Typography.Paragraph>{bento_menu_description}</Typography.Paragraph>
+      </div>
     </Col>
   );
 };
 
 const menu = (apps: IApplication[], client: number) => (
-  <div className="app-switcher-container">
-    <Row>
-      {apps.map(app => (
-        <App {...app} client={client} key={app.app_id} />
-      ))}
-    </Row>
-  </div>
+  <Row className="app-switcher-container">
+    {apps.map(app => (
+      <App {...app} client={client} key={app.app_id} />
+    ))}
+  </Row>
 );
 
 const AppSwitcherSvg = () => (
@@ -74,11 +78,14 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client, theme }) => {
   const overlay = useMemo(() => {
     return menu(apps, client);
   }, [apps, client]);
+
   const { translate } = useContext(ConfigContext);
+
   const className = clsx({
     "app-switcher-link": true,
     "dw-dark": theme === "dark"
   });
+
   return (
     <>
       <Dropdown
