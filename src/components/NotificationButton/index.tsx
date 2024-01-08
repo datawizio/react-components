@@ -42,7 +42,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   }, [useWS]);
 
   return (
-    <Badge count={state} className="notification-btn">
+    <Badge className="notification-btn" dot={state > 0}>
       <Button type="link" onClick={onClick} icon={<BellOutlined />}></Button>
     </Badge>
   );
