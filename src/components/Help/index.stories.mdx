@@ -1,0 +1,23 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+import Help from "./index";
+
+<Meta title="Components/Help" component={Help} />
+
+# Help
+
+Компонент `Help`
+
+## Overview
+
+<Preview>
+  <Story name="Basic">
+    <Help
+      onTutorialClick={() => {}}
+      onServiceUpdateClick={() => {}}
+      onHelperClick={() => {}}
+      onVisibleChange={() => {}}
+      tourMenu=""
+      visible={false}
+    />
+  </Story>
+</Preview>

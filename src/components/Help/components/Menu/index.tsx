@@ -73,9 +73,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
             className="help-icon teaching-btn"
             onClick={e => e.preventDefault()}
             icon={<QuestionCircleOutlined />}
-          >
-            {translate("TEACHING")}
-          </Button>
+          ></Button>
         </Dropdown>
       )}
     </>
