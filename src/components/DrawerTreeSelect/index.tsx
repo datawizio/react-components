@@ -22,6 +22,9 @@ import { useDrawerTreeSelect } from "./useDrawerTreeSelect";
 import ConfigContext from "../ConfigProvider/context";
 import { Markers } from "./Markers";
 import "./index.less";
+import Switch from "../Switch";
+import i18next from "i18next";
+import { SwitchChangeEventHandler } from "antd/lib/switch";
 
 /**********************************************************************************************************************/
 
@@ -108,6 +111,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   loadChildren,
   loadMarkersChildren,
   showCheckedStrategy,
+  strictlyModeCheckbox,
   multiple,
   remoteSearch,
   loading,
@@ -120,10 +124,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 }) => {
   const { translate } = useContext(ConfigContext);
 
-  const drawerSearchPlaceholder = useMemo(
-    () => translate("SEARCH"),
-    [translate]
-  );
+  const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
+    translate
+  ]);
   const noDataText = useMemo(() => translate("NO_DATA"), [translate]);
   const loadingText = useMemo(() => translate("LOADING"), [translate]);
   const submitText = useMemo(() => translate("SUBMIT"), [translate]);
@@ -186,14 +189,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const selectRef = useRef<any>();
 
+  const [strictlyMode, setStrictlyMode] = useState(false);
+
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
-  }, [
-    remoteSearch,
-    searchValue,
-    internalTreeExpandedKeys
-  ]);
+  }, [remoteSearch, searchValue, internalTreeExpandedKeys]);
 
   const isLevelShowed =
     showLevels && internalLevels && internalLevels.length > 1;
@@ -221,9 +222,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           markersChanged.current = false;
           internalLoadData();
         }
-
         onChangeReturnObject({
-          value,
+          value: value,
           level: levelSelected.current,
           markers: markersSelected.current,
           selected,
@@ -590,10 +590,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     [inputRef, internalLoadData]
   );
 
-  const handlerSelectBeforeBlur = useCallback(
-    () => !drawerVisible,
-    [drawerVisible]
-  );
+  const handlerSelectBeforeBlur = useCallback(() => !drawerVisible, [
+    drawerVisible
+  ]);
 
   const handleTreeSelect = useCallback(
     (_, node) => {
@@ -648,6 +647,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     },
     [dispatch]
   );
+
+  const handleStrictlyModeChange: SwitchChangeEventHandler = checked => {
+    setStrictlyMode(checked);
+  };
 
   const handleMarkersChange = (markers: string[] | number[]) => {
     markersSelected.current = markers;
@@ -834,6 +837,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           }
         >
           {noticeRender}
+
           {markersRender
             ? markersRender({
                 onChange: (selected: string[]) => {
@@ -869,6 +873,13 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               "search-mode": searchValue.current
             })}
           />
+          {strictlyModeCheckbox && (
+            <Switch
+              size="small"
+              placeholder={i18next.t("STRICTLY_MODE")}
+              onChange={handleStrictlyModeChange}
+            />
+          )}
           {showSelectAll && !searchValue.current && (
             <div className="drawer-tree-select-dropdown-toolbar">
               <Checkbox
@@ -936,6 +947,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     204 -
     (showMarkers || markersRender ? getMarkersFieldHeight() : 0) -
     (isLevelShowed ? 44 : 0) -
+    (strictlyModeCheckbox ? 30 : 0) -
     (showSelectAll ? 34 : 0);
 
   return (
@@ -957,6 +969,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       dropdownClassName="drawer-tree-select-dropdown-fake"
       multiple={multiple}
       showSearch={true}
+      treeCheckStrictly={
+        (remoteSearch && Boolean(searchValue.current)) || strictlyMode
+      }
       listHeight={listHeight}
       placeholder={placeholder}
       loading={internalLoading}

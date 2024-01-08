@@ -506,7 +506,7 @@ export default class TransferList extends React.PureComponent<
   }
 
   generateLevelOptions(levels = []) {
-    const text = i18n.t("LEVEL_NUMBER");
+    const text = `${i18n.t("LEVEL_N")} %s`;
     return levels.map((level: string) => ({
       value: level,
       label: text.replace("%s", level)

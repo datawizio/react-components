@@ -7,7 +7,6 @@ const dom = new JSDOM();
 React.useLayoutEffect = React.useEffect;
 // React 16 Enzyme adapter
 Enzyme.configure({ adapter: new Adapter() });
-
 global.document = dom.window.document;
 global.$crisp = [];
 
@@ -27,3 +26,5 @@ global.localStorage = {
 global.cancelAnimationFrame = function () {
   // setTimeout(callback, 0);
 };
+
+dom.window.HTMLCanvasElement.prototype.getContext = jest.fn();

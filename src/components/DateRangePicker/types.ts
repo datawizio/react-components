@@ -49,9 +49,18 @@ export type DefaultPresetType = {
   readonly last_30_days?: (maxDate?: DateType, minDate?: DateType) => DateRange;
   readonly last_90_days?: (maxDate?: DateType, minDate?: DateType) => DateRange;
   readonly quarterBegin?: (maxDate?: DateType, minDate?: DateType) => DateRange;
-  readonly last_180_days?: (maxDate?: DateType, minDate?: DateType) => DateRange;
-  readonly last_364_days?: (maxDate?: DateType, minDate?: DateType) => DateRange;
-  readonly last_365_days?: (maxDate?: DateType, minDate?: DateType) => DateRange;
+  readonly last_180_days?: (
+    maxDate?: DateType,
+    minDate?: DateType
+  ) => DateRange;
+  readonly last_364_days?: (
+    maxDate?: DateType,
+    minDate?: DateType
+  ) => DateRange;
+  readonly last_365_days?: (
+    maxDate?: DateType,
+    minDate?: DateType
+  ) => DateRange;
   readonly currentYear?: (maxDate?: DateType, minDate?: DateType) => DateRange;
   readonly allPeriod?: (maxDate?: DateType, minDate?: DateType) => DateRange;
 };
@@ -60,6 +69,10 @@ export type DefaultPresetPrevType = {
   readonly previous?: (dateFrom: DateType, dateTo: DateType) => DateRange;
   readonly prev_last_week?: (dateFrom: DateType, dateTo: DateType) => DateRange;
   readonly prev_last_month?: (
+    dateFrom: DateType,
+    dateTo: DateType
+  ) => DateRange;
+  readonly same_weekday_prev_year?: (
     dateFrom: DateType,
     dateTo: DateType
   ) => DateRange;

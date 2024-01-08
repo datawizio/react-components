@@ -25,5 +25,6 @@ export function genPrevPeriod(
 }
 
 export function reverseDate(date: string, separator: string = "-"): string {
+  if (typeof date !== "string") return date;
   return date && date.split(separator).reverse().join(separator);
 }

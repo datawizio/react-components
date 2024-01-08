@@ -21,11 +21,7 @@ export const useWSSubscription = ({
     }
 
     return () => {
-      if (message) {
-        sendMessage({ id: message.id, complete: true });
-      }
       unsubscribe(id ?? "", subscriptionId);
     };
-    // {"id": 3, "type": "subscribe", "payload": {"query": "subscription { notificationsChanges {action items {id title shortBody conf createdAt}} }"}}
   }, []);
 };

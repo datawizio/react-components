@@ -43,14 +43,14 @@ const Template: React.FC<TemplateProps> = ({
       {!template.favorite && (
         <StarOutlined
           onClick={handleFavoriteClick}
-          title={translate("DEFAULT_DASHBOARD_GROUP")}
+          title={translate("DEFAULT")}
           className="table-templates__icon table-templates__icon--favorite"
         />
       )}
       {template.favorite && (
         <StarFilled
           onClick={handleFavoriteClick}
-          title={translate("DEFAULT_DASHBOARD_GROUP")}
+          title={translate("DEFAULT")}
           className="table-templates__icon table-templates__icon--favorite-active"
         />
       )}

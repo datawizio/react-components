@@ -1,9 +1,14 @@
 import ApiError from "../../components/ApiError";
 
 export function parseErrorText(errors: any, t: any) {
+  if (typeof errors === "string") {
+    return t("ERROR_500");
+  }
+
   if (errors.message) {
     return t(errors.message);
   }
+
   const msg = Object.keys(errors)
     .map(key => {
       return Array.isArray(errors[key])

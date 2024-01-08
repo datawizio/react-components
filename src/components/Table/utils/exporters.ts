@@ -67,9 +67,9 @@ export async function exportTableToXLSX(
 ): Promise<BlobPart> {
   const { columns, columnsMap, dataSource, dTypesConfig } = tableState;
 
-  const formattedSheetName =
-    sheetName ||
-    filename.replace(/[`~!@#$%^&*()|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "");
+  const formattedSheetName = (sheetName || filename)
+    .replace(/[`~!@#$%^&*()|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+    .replace(".xlsx", "");
   const wb = new ExcelJS.Workbook(); // make a workbook
   const ws = wb.addWorksheet(formattedSheetName); // make a worksheet
 

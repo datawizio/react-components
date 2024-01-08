@@ -7,7 +7,13 @@ import {
   IColumn
 } from "./types";
 import { basicDTypesConfig } from "./utils/typesConfigs";
-import { swapColumns, filterByColumns } from "./utils/utils";
+import {
+  swapColumns,
+  filterByColumns,
+  reindexColumns,
+  setMultisortingForColumns
+} from "./utils/utils";
+import { isEqual } from "lodash";
 
 function genColumnsMap(columns) {
   const columnsMap = {};
@@ -67,7 +73,9 @@ export function initializer(props: TableProps): TableState {
     dTypesConfig,
     showSizeChanger,
     pageSizeOptions,
+    defaultPageSize,
     visibleColumnsKeys,
+    multisorting,
     columnsSorter
   } = props;
 
@@ -80,11 +88,12 @@ export function initializer(props: TableProps): TableState {
 
     forceColumns,
     columnsSorter,
+    multisorting,
 
     pagination: {
       showSizeChanger,
       pageSizeOptions,
-      pageSize: +pageSizeOptions[0],
+      pageSize: defaultPageSize || +pageSizeOptions[0],
       ...(pagination || {})
     },
 
@@ -100,7 +109,8 @@ export function initializer(props: TableProps): TableState {
     loadingRows: {},
     columnsSwapped: false,
     forceFetch: 1,
-    columnsForceUpdate: 1
+    columnsForceUpdate: 1,
+    firstRenderLoader: true
   };
 }
 
@@ -147,9 +157,9 @@ export function reducer(state: TableState, action: Action): TableState {
       );
 
       const nextVisibleColumnsKeys =
-        visibleColumnsKeys &&
-        visibleColumnsKeys.length &&
+        visibleColumnsKeys?.length &&
         visibleColumnsKeys.filter(key => nextColumnsMap[key]);
+
       const nextColumns = (function rec(newColumns, oldColumns) {
         if (state.forceColumns) {
           return newColumns;
@@ -164,7 +174,13 @@ export function reducer(state: TableState, action: Action): TableState {
         });
 
         if (state.columnsSorter) {
-          state.columnsSorter(newColumns, oldColumnsInfo, state.columnsSwapped);
+          const isFavorite = !!state.templates?.find(t => t.favorite);
+          state.columnsSorter(
+            newColumns,
+            oldColumnsInfo,
+            state.columnsSwapped,
+            state.templateSelected || isFavorite
+          );
         } else {
           newColumns.sort((a, b) => {
             const aIndex = oldColumnsInfo[a.dataIndex]
@@ -179,13 +195,10 @@ export function reducer(state: TableState, action: Action): TableState {
 
         newColumns.forEach(column => {
           const oldColumn = oldColumnsInfo[column.dataIndex];
-          if (column.children && column.children.length) {
-            oldColumn &&
-              oldColumn.children &&
-              oldColumn.children.length &&
-              rec(column.children, oldColumn.children);
+          if (column.children?.length && oldColumn?.children?.length) {
+            rec(column.children, oldColumn.children);
           }
-          if (oldColumn && oldColumn.order) {
+          if (oldColumn?.order) {
             column.order = oldColumn.order;
           }
         });
@@ -247,7 +260,15 @@ export function reducer(state: TableState, action: Action): TableState {
       };
     }
     case "sort": {
-      const sorters = action.payload;
+      let sorters = action.payload;
+
+      if (Object.keys(sorters).length > 1) {
+        sorters = sorters.sort((a, b) => {
+          // @ts-ignore
+          return a.column.sorter?.multiple - b.column.sorter?.multiple;
+        });
+      }
+
       const sortParams = sorters
         .filter(({ column }) => column)
         .reduce(
@@ -260,7 +281,8 @@ export function reducer(state: TableState, action: Action): TableState {
 
       return {
         ...state,
-        sortParams
+        sortParams,
+        sortParamsPriority: null
       };
     }
     case "filter": {
@@ -300,7 +322,8 @@ export function reducer(state: TableState, action: Action): TableState {
       }
       return {
         ...state,
-        ...newState
+        ...newState,
+        firstRenderLoader: false
       };
     }
     case "addLoadingRow": {
@@ -336,6 +359,7 @@ export function reducer(state: TableState, action: Action): TableState {
       const nextColumns = state.columns.concat();
 
       swapColumns(nextColumns, keyFrom, keyTo);
+      reindexColumns(nextColumns);
 
       return {
         ...state,
@@ -446,6 +470,22 @@ export function reducer(state: TableState, action: Action): TableState {
     }
     case "update": {
       let nextState = { ...state, ...action.payload };
+
+      // reset filterParams if column is hidden
+      const filterParamsList = Object.entries(nextState.filterParams);
+      if (
+        filterParamsList.length &&
+        action.payload.visibleColumnsKeys?.length
+      ) {
+        let nextFilterParams = {};
+        filterParamsList.forEach(([key, value]) => {
+          if (action.payload.visibleColumnsKeys.includes(key)) {
+            nextFilterParams[key] = value;
+          }
+        });
+        nextState.filterParams = nextFilterParams;
+      }
+
       if (action.payload.columns)
         nextState = reducer(
           { ...nextState, columns: state.columns },
@@ -460,6 +500,33 @@ export function reducer(state: TableState, action: Action): TableState {
           type: "updateDataSource",
           payload: nextState.dataSource
         });
+
+      if (state.multisorting) {
+        const { sortParams, visibleColumnsKeys } = nextState;
+        const nextSortParams = {};
+        const sortParamsPriority =
+          action.payload.sortParamsPriority || nextState.sortParamsPriority;
+
+        for (let key in sortParams) {
+          if (
+            visibleColumnsKeys.length &&
+            (visibleColumnsKeys.includes(key) || key === "name")
+          ) {
+            nextSortParams[key] = sortParams[key];
+          }
+        }
+
+        if (!isEqual(sortParams, nextSortParams)) {
+          if (Object.keys(nextSortParams).length) {
+            nextState.sortParams = nextSortParams;
+          }
+          nextState.columns = setMultisortingForColumns(
+            nextState.columns,
+            nextSortParams,
+            sortParamsPriority
+          );
+        }
+      }
 
       return nextState;
     }

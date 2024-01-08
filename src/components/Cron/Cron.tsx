@@ -1,12 +1,11 @@
 import React, {
-  useState,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
-  useMemo
+  useState
 } from "react";
 import Button from "antd/lib/button";
-
 import { CronProps, PeriodType } from "./types";
 import Period from "./fields/Period";
 import MonthDays from "./fields/MonthDays";
@@ -14,8 +13,9 @@ import Months from "./fields/Months";
 import WeekDays from "./fields/WeekDays";
 import { classNames, setError, usePrevious } from "./utils";
 import { DEFAULT_LOCALE_EN } from "./locale";
-import { setValuesFromCronString, getCronStringFromValues } from "./converter";
-
+import { getCronStringFromValues, setValuesFromCronString } from "./converter";
+import Hours from "./fields/Hours";
+import Minutes from "./fields/Minutes";
 import "./index.less";
 
 export default function Cron(props: CronProps) {
@@ -47,7 +47,10 @@ export default function Cron(props: CronProps) {
     ],
     clockFormat,
     periodicityOnDoubleClick = true,
-    mode = "multiple"
+    mode = "multiple",
+    defaultHour,
+    withHours = false,
+    withMinutes = false
   } = props;
   const internalValueRef = useRef<string>(value);
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod);
@@ -78,6 +81,7 @@ export default function Cron(props: CronProps) {
         setMonthDays,
         setMonths,
         setWeekDays,
+        // @ts-ignore
         setPeriod
       );
     },
@@ -102,6 +106,7 @@ export default function Cron(props: CronProps) {
           setMonthDays,
           setMonths,
           setWeekDays,
+          // @ts-ignore
           setPeriod
         );
       }
@@ -129,7 +134,7 @@ export default function Cron(props: CronProps) {
           humanizeValue
         );
 
-        setValue(cron);
+        setValue(cron, period || defaultPeriodRef.current);
         internalValueRef.current = cron;
 
         onError && onError(undefined);
@@ -156,34 +161,37 @@ export default function Cron(props: CronProps) {
       setMonthDays(undefined);
       setMonths(undefined);
       setWeekDays(undefined);
-      setHours(undefined);
-      setMinutes(undefined);
+      setHours(defaultHour ? [defaultHour] : undefined);
+      setMinutes(defaultHour ? [0] : undefined);
 
       // When clearButtonAction is 'empty'
       let newValue = "";
 
       const newPeriod =
-        period !== "reboot" && period ? period : defaultPeriodRef.current;
+        clearButtonAction !== "to-default" && period !== "reboot" && period
+          ? period
+          : defaultPeriodRef.current;
 
       if (newPeriod !== period) {
         setPeriod(newPeriod);
       }
 
       // When clearButtonAction is 'fill-with-every'
-      if (clearButtonAction === "fill-with-every") {
-        const cron = getCronStringFromValues(
+      if (
+        clearButtonAction === "fill-with-every" ||
+        clearButtonAction === "to-default"
+      ) {
+        newValue = getCronStringFromValues(
           newPeriod,
           undefined,
           undefined,
           undefined,
-          undefined,
-          undefined
+          defaultHour ? [defaultHour] : undefined,
+          defaultHour ? [0] : undefined
         );
-
-        newValue = cron;
       }
 
-      setValue(newValue);
+      setValue(newValue, newPeriod);
       internalValueRef.current = newValue;
 
       setValueCleared(true);
@@ -215,10 +223,8 @@ export default function Cron(props: CronProps) {
     [className, error, displayError, disabled, readOnly]
   );
 
-  const {
-    className: clearButtonClassNameProp,
-    ...otherClearButtonProps
-  } = clearButtonProps;
+  const { className: clearButtonClassNameProp, ...otherClearButtonProps } =
+    clearButtonProps;
   const clearButtonClassName = useMemo(
     () =>
       classNames({
@@ -267,12 +273,15 @@ export default function Cron(props: CronProps) {
     <div className={internalClassName}>
       <Period
         value={periodForRender}
+        // @ts-ignore
         setValue={setPeriod}
         locale={locale}
         className={className}
         disabled={disabled}
         readOnly={readOnly}
         shortcuts={shortcuts}
+        withHours={withHours}
+        withMinutes={withMinutes}
       />
 
       {periodForRender === "reboot" ? (
@@ -327,6 +336,46 @@ export default function Cron(props: CronProps) {
               mode={mode}
             />
           )}
+
+          {(periodForRender === "year" ||
+            periodForRender === "month" ||
+            periodForRender === "week" ||
+            periodForRender === "day") &&
+            withHours && (
+              <Hours
+                value={hours}
+                setValue={setHours}
+                leadingZero={true}
+                locale={locale}
+                className={className}
+                disabled={disabled}
+                readOnly={readOnly}
+                period={periodForRender}
+                periodicityOnDoubleClick={periodicityOnDoubleClick}
+                mode={mode}
+              />
+            )}
+
+          {(periodForRender === "year" ||
+            periodForRender === "month" ||
+            periodForRender === "week" ||
+            periodForRender === "day" ||
+            periodForRender === "hour") &&
+            withHours &&
+            withMinutes && (
+              <Minutes
+                value={minutes}
+                setValue={setMinutes}
+                leadingZero={true}
+                locale={locale}
+                className={className}
+                disabled={disabled}
+                readOnly={readOnly}
+                period={periodForRender}
+                periodicityOnDoubleClick={periodicityOnDoubleClick}
+                mode={mode}
+              />
+            )}
 
           <div>{clearButtonNode}</div>
         </>

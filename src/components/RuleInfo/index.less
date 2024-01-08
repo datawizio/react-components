@@ -6,8 +6,51 @@
   .rule-info-title {
     font-weight: bold;
   }
+  .dw-btn {
+    &.ant-btn-link {
+      &.show-all-modal-button {
+        font-size: 12px;
+        padding: 0;
+        padding-left: 8px;
+        height: max-content;
+      }
+    }
+  }
   .card-header-info-label {
     text-decoration: underline;
     padding-right: 5px;
+  }
+}
+
+.rule-info-modal {
+  & > .ant-modal-content {
+    & > .ant-modal-header {
+      & > .ant-modal-title {
+        text-align: center;
+      }
+    }
+    & > .ant-modal-body {
+      max-height: 75vh;
+      overflow-y: auto;
+      & .lite-search__input {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.rule-info-collapse-list {
+  &.ant-collapse-borderless {
+    background-color: transparent;
+    & > .ant-collapse-item {
+      & > .ant-collapse-content {
+        & > .ant-collapse-content-box {
+          padding: 0;
+          & > .list-search {
+            padding: 8px 16px;
+          }
+        }
+      }
+    }
   }
 }

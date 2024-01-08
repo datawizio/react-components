@@ -7,8 +7,6 @@ export const HeaderWrapper = ({ className, children }) => {
   } = useContext(TableContext);
 
   return dataSource.length === 0 ? null : (
-    <table>
-      <thead className={className}>{children}</thead>
-    </table>
+    <thead className={className}>{children}</thead>
   );
 };

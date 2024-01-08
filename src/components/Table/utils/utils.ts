@@ -1,4 +1,10 @@
-import { BodyCellType, IColumn, TableState } from "../types";
+import {
+  BodyCellType,
+  IColumn,
+  SortParams,
+  SortParamsPriority,
+  TableState
+} from "../types";
 
 function defineCellType(cell: BodyCellType, column: IColumn): string {
   const dType =
@@ -24,22 +30,21 @@ function swapColumns(
   columns.some((column, idxFrom) => {
     if (keyFrom === column.key) {
       const idxTo = columns.findIndex(column => column.key === keyTo);
-
       if (idxTo !== -1) {
-        idxFrom < idxTo
-          ? (columns[idxFrom].order = columns[idxTo].order + 1)
-          : (columns[idxFrom].order = columns[idxTo].order - 1);
         columns.splice(idxTo, 0, columns.splice(idxFrom, 1)[0]);
       }
-
       return true;
     }
 
     return (
-      column.children &&
-      column.children.length &&
-      swapColumns(column.children, keyFrom, keyTo)
+      column.children?.length && swapColumns(column.children, keyFrom, keyTo)
     );
+  });
+}
+
+function reindexColumns(columns: Array<IColumn> = []) {
+  columns.forEach((column, idx) => {
+    column.order = idx;
   });
 }
 
@@ -68,4 +73,43 @@ function getVisibleColumns(columns: Array<IColumn>) {
   return result;
 }
 
-export { defineCellType, getVisibleColumns, swapColumns, filterByColumns };
+const setMultisortingForColumns = (
+  columns: IColumn[],
+  sortParams: SortParams,
+  sortParamsPriority?: SortParamsPriority
+): IColumn[] => {
+  if (!columns) return [];
+  let keys = Object.keys(sortParams);
+  if (!keys.length) return columns;
+
+  if (sortParamsPriority) {
+    keys = keys.sort((a: string, b: string) => {
+      return sortParamsPriority[a] - sortParamsPriority[b];
+    });
+  }
+
+  return columns.map((col: IColumn) => {
+    let multiple = 999;
+    if (keys.includes(col.key as string)) {
+      const i = keys.findIndex(k => k === col.key);
+      if (i !== -1) {
+        multiple = i + 1;
+      }
+    }
+    return {
+      ...col,
+      sorter: {
+        multiple
+      }
+    };
+  });
+};
+
+export {
+  defineCellType,
+  getVisibleColumns,
+  swapColumns,
+  filterByColumns,
+  reindexColumns,
+  setMultisortingForColumns
+};

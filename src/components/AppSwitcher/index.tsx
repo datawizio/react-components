@@ -21,17 +21,13 @@ export interface IApplication {
   showButton?: boolean;
 }
 
-const App: React.FC<IApplication & { client: number }> = ({
-  client,
-  name,
-  host,
-  icon,
-  dark_icon,
-  path
-}) => {
+const App: React.FC<
+  IApplication & { client: number; onAppClick?: (app: string) => void }
+> = ({ client, name, host, icon, dark_icon, path, onAppClick }) => {
   const handleClick = () => {
     const url = `${host}${path ? path : ""}`;
     window.open(url.replace(":client_id", client.toString()), "_blank");
+    onAppClick && onAppClick(name);
   };
 
   return (
@@ -46,11 +42,20 @@ const App: React.FC<IApplication & { client: number }> = ({
   );
 };
 
-const menu = (apps: IApplication[], client: number) => (
+const menu = (
+  apps: IApplication[],
+  client: number,
+  onAppClick?: (app: string) => void
+) => (
   <div className="app-switcher-container">
     <Row>
       {apps.map(app => (
-        <App {...app} client={client} key={app.app_id} />
+        <App
+          {...app}
+          client={client}
+          key={app.app_id}
+          onAppClick={onAppClick}
+        />
       ))}
     </Row>
   </div>
@@ -68,17 +73,26 @@ export interface IAppSwitcher {
   apps: IApplication[];
   client: number;
   theme?: "dark" | "light";
+  onAppClick?: (app: string) => void;
 }
 
-const AppSwitcher: React.FC<IAppSwitcher> = ({ apps, client, theme }) => {
-  const overlay = useMemo(() => {
-    return menu(apps, client);
-  }, [apps, client]);
+const AppSwitcher: React.FC<IAppSwitcher> = ({
+  apps,
+  client,
+  theme,
+  onAppClick
+}) => {
   const { translate } = useContext(ConfigContext);
+
+  const overlay = useMemo(() => {
+    return menu(apps, client, onAppClick);
+  }, [apps, client, onAppClick]);
+
   const className = clsx({
     "app-switcher-link": true,
     "dw-dark": theme === "dark"
   });
+
   return (
     <>
       <Dropdown

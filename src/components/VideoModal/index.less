@@ -1,0 +1,78 @@
+.modal-player {
+  &_thumbnail {
+    width: 100%;
+    height: auto;
+    position: relative;
+    &-image {
+      width: 100%;
+      height: auto;
+      filter: brightness(50%);
+      -webkit-filter: brightness(50%);
+      border-radius: 5px;
+    }
+    &-play-button {
+      width: 75px;
+      height: 75px;
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(8.5px);
+      -webkit-backdrop-filter: blur(8.5px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease-in;
+
+      &:hover {
+        transform: translate(-50%, -50%) scale(1.2);
+        transition: transform 0.3s ease-in;
+      }
+
+      &_icon {
+        box-sizing: border-box;
+        width: 25px;
+        height: 25px;
+        -webkit-clip-path: polygon(
+          100% 49%,
+          100% 49%,
+          46% 77%,
+          46% 26%,
+          46% 25%,
+          46% 77%,
+          0 100%,
+          0 0
+        );
+        clip-path: polygon(
+          100% 49%,
+          100% 49%,
+          46% 77%,
+          46% 26%,
+          46% 25%,
+          46% 77%,
+          0 100%,
+          0 0
+        );
+        background-color: #ccc;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-35%, -50%) rotate(0deg);
+      }
+    }
+  }
+}
+.video-react {
+  .player {
+    &-control-bar {
+      background-color: transparent;
+      & .video-react-play-progress {
+        background-color: #6335e8;
+        color: #6335e8;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import "jsdom-global/register";
-import React from "react";
+import * as React from "react";
 import { usePeriodSelect } from "./usePeriodSelect";
 import { act } from "react-dom/test-utils";
 import { mount } from "enzyme";
