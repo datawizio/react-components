@@ -1,15 +1,18 @@
 import React, { useState, useContext } from "react";
-
 import { Badge, Card, Col } from "antd";
 import Select from "../Select";
 import Button from "../Button";
-
 import ConfigContext from "../ConfigProvider/context";
-
 import "./index.less";
 
+export interface IClient {
+  client_id?: number;
+  name: string;
+  is_active: boolean;
+}
+
 export interface CardAppProps {
-  app_id: number;
+  app_id: number | string;
   name: string;
   logo: string;
   dark_logo: string;
@@ -17,13 +20,14 @@ export interface CardAppProps {
   path: string;
   description: string;
   allowed?: boolean;
-  clients?: { client_id: number; name: string; is_active: boolean }[];
+  clients?: IClient[];
   onButtonClick?: (
     clientId: number,
-    { appId: number, url: string, allowed: boolean }
+    { appId, url, allowed, name, clients }
   ) => void;
   buttonText?: string;
   showButton?: boolean;
+  disabled?: boolean;
 }
 
 export const App: React.FC<CardAppProps> = ({
@@ -37,6 +41,7 @@ export const App: React.FC<CardAppProps> = ({
   path,
   allowed,
   showButton = true,
+  disabled = false,
   onButtonClick
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -56,7 +61,13 @@ export const App: React.FC<CardAppProps> = ({
 
   const handleButtonClick = () => {
     const url = `${host ? host : ""}${path ? path : ""}`;
-    onButtonClick(getClient(client), { appId: app_id, url, allowed });
+    onButtonClick(getClient(client), {
+      appId: app_id,
+      url,
+      allowed,
+      name,
+      clients
+    });
   };
 
   return (
@@ -99,7 +110,12 @@ export const App: React.FC<CardAppProps> = ({
 
         {showButton && (
           <div className="card-app-actions">
-            <Button type={"primary"} block onClick={handleButtonClick}>
+            <Button
+              type={"primary"}
+              block
+              disabled={disabled}
+              onClick={handleButtonClick}
+            >
               {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
             </Button>
           </div>

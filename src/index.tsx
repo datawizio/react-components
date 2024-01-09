@@ -163,3 +163,7 @@ export { default as ExpandButton } from "./components/ExpandButton";
 export { default as ListInfo } from "./components/ListInfo";
 
 export { default as RuleInfo } from "./components/RuleInfo";
+
+export { default as Switch } from "./components/Switch";
+
+export { default as VideoModal } from "./components/VideoModal";

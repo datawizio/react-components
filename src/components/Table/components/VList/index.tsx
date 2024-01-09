@@ -12,7 +12,6 @@ import { throttle, isNumber } from "lodash-es";
 
 import { VWrapper } from "./Wrapper";
 import Cell from "../Cell";
-import { TableContext } from "../../context";
 
 // ===============reducer ============== //
 const initialState = {
@@ -158,9 +157,6 @@ const VTableHeaderCol: React.FC<{ colKey: string; width: number }> = React.memo(
 function VTable(props: any, otherParams): JSX.Element {
   const { style, children, ...rest } = props;
   const { width, ...rest_style } = style;
-  const {
-    tableState: { columns, columnsWidth }
-  } = useContext(TableContext);
   const { vid, scrollY, reachEnd, onScroll } = otherParams ?? {};
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -206,23 +202,29 @@ function VTable(props: any, otherParams): JSX.Element {
   }, [state.rowHeight, totalLen]);
 
   // table的scrollY值
-  let tableScrollY = 0;
-  if (typeof scrollY === "string") {
-    tableScrollY = (wrap_tableRef.current?.parentNode as HTMLElement)
-      ?.offsetHeight;
-  } else {
-    tableScrollY = scrollY;
-  }
+  const [tableScrollY, setTableScrollY] = useState(0);
 
-  if (isNumber(tableHeight) && tableHeight < tableScrollY) {
-    //@ts-ignore
-    tableScrollY = tableHeight;
-  }
+  useEffect(() => {
+    let temp = 0;
 
-  // 处理tableScrollY <= 0的情况
-  if (tableScrollY <= 0) {
-    tableScrollY = 0;
-  }
+    if (typeof scrollY === "string") {
+      temp =
+        (wrap_tableRef.current?.parentNode as HTMLElement)?.offsetHeight ?? 0;
+    } else {
+      temp = scrollY;
+    }
+
+    // if (isNumber(tableHeight) && tableHeight < temp) {
+    //   temp = tableHeight;
+    // }
+
+    // 处理tableScrollY <= 0的情况
+    if (temp <= 0) {
+      temp = 0;
+    }
+
+    setTableScrollY(temp);
+  }, [scrollY, tableHeight]);
 
   // 渲染的条数
   const renderLen = useMemo<number>(() => {
@@ -232,7 +234,8 @@ function VTable(props: any, otherParams): JSX.Element {
         temp = 0;
       } else {
         const tempRenderLen = ((tableScrollY / state.rowHeight) | 0) + 1 + 2;
-        temp = tempRenderLen > totalLen ? totalLen : tempRenderLen;
+        // temp = tempRenderLen > totalLen ? totalLen : tempRenderLen;
+        temp = tempRenderLen;
       }
     }
     return temp;
@@ -347,7 +350,7 @@ function VTable(props: any, otherParams): JSX.Element {
           ref={tableRef}
           style={{
             // ...rest_style,
-            // width: tableWidth,
+            // width,
             position: "relative",
             transform: `translateY(-${offsetStart}px)`
           }}

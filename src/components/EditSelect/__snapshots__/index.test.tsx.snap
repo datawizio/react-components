@@ -115,6 +115,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                           ],
                           "key": "key",
                           "label": "title",
+                          "title": "title",
                           "value": "key",
                         },
                         "groupOption": false,
@@ -150,6 +151,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                         ],
                         "key": "key",
                         "label": "title",
+                        "title": "title",
                         "value": "key",
                       },
                     ]
@@ -266,6 +268,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                                 ],
                                 "key": "key",
                                 "label": "title",
+                                "title": "title",
                                 "value": "key",
                               },
                               "groupOption": false,
@@ -301,6 +304,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                               ],
                               "key": "key",
                               "label": "title",
+                              "title": "title",
                               "value": "key",
                             },
                           ]
@@ -315,6 +319,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                         className="edit-select-dropdown-edit"
                       >
                         <ForwardRef
+                          maxLength={200}
                           onChange={[Function]}
                           onPressEnter={[Function]}
                           placeholder="inputPlaceholder"
@@ -322,6 +327,7 @@ exports[`EditSelect component Render EditSelect correctly 1`] = `
                         />
                         <Button
                           border={true}
+                          disabled={true}
                           onClick={[Function]}
                           type="primary"
                         >

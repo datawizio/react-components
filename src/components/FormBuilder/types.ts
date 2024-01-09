@@ -1,5 +1,6 @@
 import React from "react";
 import { Rule } from "antd/lib/form";
+import { SwitchSize } from "antd/lib/switch";
 import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
 
@@ -64,6 +65,14 @@ export interface FieldTextProps extends FormFieldProps<string> {
 }
 
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
+export interface FieldSwitchProps extends FormFieldProps<boolean> {
+  size?: SwitchSize;
+  checkedChildren?: React.ReactNode;
+  unCheckedChildren?: React.ReactNode;
+  disabled?: boolean;
+  loading?: boolean;
+  title?: string;
+}
 
 export type RadioOptionType = {
   value: any;

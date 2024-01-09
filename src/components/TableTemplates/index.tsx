@@ -25,8 +25,18 @@ function pickState(
     }));
   })(baseState.columns);
 
+  const sortParamsPriority = {};
+  if (state.multisorting && Object.keys(state.sortParams).length > 1) {
+    for (let key in state.sortParams) {
+      if (!state.columnsMap[key]) sortParamsPriority[key] = 999;
+      // @ts-ignore
+      sortParamsPriority[key] = state.columnsMap[key].sorter?.multiple;
+    }
+  }
+
   return {
     columnsPositions,
+    sortParamsPriority,
     pagination: state.pagination,
     sortParams: state.sortParams,
     columnsWidth: state.columnsWidth,
@@ -122,7 +132,8 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
         type: "update",
         payload: {
           templateSelected: true,
-          columnsForceUpdate: tableState.columnsForceUpdate + 1
+          columnsForceUpdate: tableState.columnsForceUpdate + 1,
+          sortParamsPriority: template.state.sortParamsPriority
         }
       });
       setSelectedTemplate(template);
@@ -158,7 +169,9 @@ const TableTemplates: React.FC<TableTemplatesProps> = props => {
           visibleColumnsKeys: tableProps.visibleColumnsKeys,
           columnsWidth: {},
           columns: [],
-          fixedTotal: true
+          fixedTotal: true,
+          templateSelected: false,
+          columnsSwapped: false
         };
         dispatch({
           type: "update",

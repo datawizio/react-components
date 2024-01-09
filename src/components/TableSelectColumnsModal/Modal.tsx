@@ -147,6 +147,7 @@ export const TableSelectColumnsModalModal: React.FC<
         props.fetchAfterApply(visibleColumnsKeys, tableState.dataSource[0]))
     ) {
       payload.forceFetch = tableState.forceFetch + 1;
+      payload.columnsSwapped = false;
     }
 
     dispatch({ type: "update", payload });

@@ -1,8 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
 import dayjsGenerateConfig from "rc-picker/es/generate/dayjs";
 import { GenerateConfig } from "rc-picker/es/generate";
-
 import { fiscalCalendar } from "../../../utils/fiscalCalendar";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(isBetween);
 
 type IlocaleMapObject = Record<string, string>;
 const localeMap: IlocaleMapObject = {
@@ -49,8 +51,16 @@ fiscalCalendarConfig.getNextMonth = (date, offset) =>
 
 fiscalCalendarConfig.locale.format = (locale, date, format) => {
   if (format === "YYYY") {
-    const y = fiscalCalendar.getYear(date),
-      y2 = y + 1;
+    let y = fiscalCalendar.getYear(date);
+
+    fiscalCalendar.calendar &&
+      Object.entries(fiscalCalendar.calendar).forEach(([key, value]: any) => {
+        if (date.isBetween(value.from, value.to, "day")) {
+          y = Number(key);
+        }
+      });
+
+    const y2 = y + 1;
     return `${y}/${y2}`;
   }
   return date.locale(parseLocale(locale)).format(format);

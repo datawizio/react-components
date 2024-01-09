@@ -4,7 +4,11 @@ import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import DatePicker from "../DatePicker";
 import ConfigContext from "../ConfigProvider/context";
-import { DefaultPreset, DefaultPresetPrev } from "./presets";
+import {
+  DefaultPreset,
+  DefaultPresetPrev,
+  DefaultPresetRanges
+} from "./presets";
 import { DateRangePickerProps, DateType, IDateRangePicker } from "./types";
 import "./index.less";
 
@@ -74,6 +78,7 @@ const DateRangePicker: IDateRangePicker = ({
       }
       return defaultPreset;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currDateRange,
     defaultPresetExceptions,
@@ -159,7 +164,7 @@ DateRangePicker.defaultProps = {
   dateFrom: "02-12-2001"
 };
 
-DateRangePicker.presets = require("./presets").DefaultPresetRanges;
+DateRangePicker.presets = DefaultPresetRanges;
 
 export default DateRangePicker;
 

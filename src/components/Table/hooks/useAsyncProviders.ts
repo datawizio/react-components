@@ -27,7 +27,8 @@ function useAsyncProviders(
           type: "update",
           payload: {
             ...data,
-            first: false
+            first: false,
+            firstRenderLoader: false
             // loading: data.cancelled ? true : false
           }
         });

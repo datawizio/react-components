@@ -1,11 +1,9 @@
 import * as React from "react";
 import { TableContext } from "../context";
-
 import clsx from "clsx";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useState, useCallback, useMemo, useContext } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
-
 import { IColumn } from "../types";
 import { PropsWithChildren } from "react";
 import { isSafari } from "../../../utils/navigatorInfo";
@@ -21,11 +19,14 @@ export interface ColumnProps
   calcColumnWidth?: (width: number) => number;
 }
 
+const DEFAULT_COLUMN_WIDTH = 200;
+const DEFAULT_SUB_CELL_WIDTH = 20;
+const DEFAULT_MAX_VALUE = 10;
+
 const Column: React.FC<ColumnProps> = props => {
   const {
     model,
     onClick,
-    multipleSorting,
     level,
     onWidthChange,
     virtual,
@@ -38,15 +39,44 @@ const Column: React.FC<ColumnProps> = props => {
   const startedResize = React.useRef(false);
   const columnRef = React.useRef(null);
   const lastWidthRef = React.useRef(0);
+  const rafRef = React.useRef<number>(null);
 
   const {
     dispatch,
-    tableState: { columnsWidth, columnsForceUpdate }
+    tableState: {
+      columnsWidth,
+      columnsForceUpdate,
+      sortParams,
+      sortParamsPriority
+    },
+    tableProps: { multisorting }
   } = useContext(TableContext);
+
+  const sortingPriority: number = useMemo(() => {
+    if (!multisorting) return 0;
+    let params = Object.keys(sortParams);
+    if (sortParamsPriority) {
+      params = params.sort((a: string, b: string) => {
+        return sortParamsPriority[a] - sortParamsPriority[b];
+      });
+    }
+    if (params.length > 1) {
+      const idx = params.findIndex((key: string) => key === model.key);
+      if (idx !== -1) return idx + 1;
+    }
+    return 0;
+  }, [
+    model.key,
+    // @ts-ignore
+    model.sorter.multiple,
+    multisorting,
+    sortParams,
+    sortParamsPriority
+  ]);
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
-    canDrag: !model.fixed
+    canDrag: !model.fixed && model.draggable !== false
   });
 
   const autoScroll = (step = 50) => {
@@ -76,14 +106,14 @@ const Column: React.FC<ColumnProps> = props => {
         const cursor = m.getClientOffset();
         const rectHeader = tableHeaderDOMWrapper.getBoundingClientRect();
 
-        if (cursor.x - rectHeader.left < FAST_SCROLL_BREAKPOINT) {
+        if (cursor?.x - rectHeader.left < FAST_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft - step * 3
           );
           return;
         }
-        if (rectHeader.right - cursor.x < FAST_SCROLL_BREAKPOINT) {
+        if (rectHeader.right - cursor?.x < FAST_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft + step * 3
@@ -91,14 +121,14 @@ const Column: React.FC<ColumnProps> = props => {
           return;
         }
 
-        if (cursor.x - rectHeader.left < SLOW_SCROLL_BREAKPOINT) {
+        if (cursor?.x - rectHeader.left < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft - step
           );
           return;
         }
-        if (rectHeader.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
+        if (rectHeader.right - cursor?.x < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(
             tableBodyDOMWrapper,
             tableBodyDOMWrapper.scrollLeft + step
@@ -115,11 +145,11 @@ const Column: React.FC<ColumnProps> = props => {
         const cursor = m.getClientOffset();
         const rect = tableDOMWrapper.getBoundingClientRect();
 
-        if (cursor.x - rect.left < SLOW_SCROLL_BREAKPOINT) {
+        if (cursor?.x - rect.left < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(tableDOMWrapper, tableDOMWrapper.scrollLeft - step);
         }
 
-        if (rect.right - cursor.x < SLOW_SCROLL_BREAKPOINT) {
+        if (rect.right - cursor?.x < SLOW_SCROLL_BREAKPOINT) {
           scrollTable(tableDOMWrapper, tableDOMWrapper.scrollLeft + step);
         }
       }
@@ -145,7 +175,8 @@ const Column: React.FC<ColumnProps> = props => {
       return (
         droppedItem.level === level &&
         droppedItem.key !== model.key &&
-        !model.fixed
+        !model.fixed &&
+        model.draggable !== false
       );
     },
     collect: monitor => ({
@@ -192,13 +223,13 @@ const Column: React.FC<ColumnProps> = props => {
       }, 1000);
       //
     }
+
     const fn = () => {
       if (
         columnRef?.current &&
         lastWidthRef.current !== columnRef.current?.offsetWidth &&
         columnRef.current?.offsetWidth !== 0
       ) {
-        lastWidthRef.current = columnRef.current?.offsetWidth;
         dispatch({
           type: "columnWidthChange",
           payload: {
@@ -207,11 +238,14 @@ const Column: React.FC<ColumnProps> = props => {
           }
         });
       }
+      if (virtual) {
+        rafRef.current = requestAnimationFrame(fn);
+      }
     };
     fn();
-    const interval = setInterval(fn, 1000);
+
     return () => {
-      clearInterval(interval);
+      cancelAnimationFrame(rafRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isHeader]);
@@ -251,20 +285,30 @@ const Column: React.FC<ColumnProps> = props => {
         "dw-table__column--resizable": model.resizable,
         "dw-table__column--fixed": Boolean(model.fixed),
         "dw-table__column--drop-hover": isOver && canDrop,
+        "dw-table__column--with-sorter-idx": multisorting && sortingPriority,
 
         "dw-table__column--fixed-left": model.fixed === "left",
         "dw-table__column--fixed-right": model.fixed === "right"
       },
       restProps.className
     );
-  }, [model.fixed, model.resizable, restProps.className, isOver, canDrop]);
+  }, [
+    model.resizable,
+    model.fixed,
+    isOver,
+    canDrop,
+    multisorting,
+    sortingPriority,
+    restProps.className
+  ]);
 
-  const styles: object = useMemo((): object => {
+  const styles = useMemo(() => {
     function getWidth() {
       const columnsWidthPreset = columnsWidth[model.key];
-      const defaultWidth = 200;
-      const defaultSubCellWidth = 20;
-      const defaultMaxValue = 10;
+
+      if (columnsWidthPreset) {
+        return { width: columnsWidthPreset };
+      }
 
       if (model.colWidth) {
         return {
@@ -272,39 +316,40 @@ const Column: React.FC<ColumnProps> = props => {
         };
       }
 
-      if (columnsWidthPreset) {
-        return { width: columnsWidthPreset };
-      }
-
       if (model.children && model.children.length) {
         return {
-          width: model.children.length * defaultWidth
+          width: model.children.length * DEFAULT_COLUMN_WIDTH
         };
       }
 
       // if BarTable columns
-      if (model.max_value === 0 || model.max_value < defaultMaxValue) {
-        model.max_value = defaultMaxValue;
+      if (model.max_value === 0 || model.max_value < DEFAULT_MAX_VALUE) {
+        model.max_value = DEFAULT_MAX_VALUE;
       }
 
       if (model.max_value) {
         return {
-          width: model.max_value * defaultSubCellWidth
+          width: model.max_value * DEFAULT_SUB_CELL_WIDTH
         };
       }
 
       return {};
     }
+
     //@ts-ignore
     if (model.parent_key) {
       return {};
     }
     const width = getWidth();
-    if (calcColumnWidth) {
+    if (calcColumnWidth && typeof width.width === "number") {
       width.width = calcColumnWidth(width.width);
     }
-    lastWidthRef.current = width.width;
+    if (model.colMinWidth) {
+      width["minWidth"] = model.colMinWidth + "px";
+    }
+    if (typeof width.width === "number") lastWidthRef.current = width.width;
     return {
+      ...width,
       width: width.width + "px"
     };
 
@@ -314,6 +359,7 @@ const Column: React.FC<ColumnProps> = props => {
     model.max_value,
     model.colWidth,
     columnsForceUpdate,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     columnsWidth[model.key]
   ]);
 
@@ -325,7 +371,13 @@ const Column: React.FC<ColumnProps> = props => {
       onClick={onClickHandler}
       title={String(model.title)}
       onMouseDown={onMouseDownHandler}
-      style={{ ...styles, ...props.style }}
+      style={
+        {
+          ...styles,
+          ...props.style,
+          "--order": sortingPriority
+        } as React.CSSProperties
+      }
     />
   );
 };

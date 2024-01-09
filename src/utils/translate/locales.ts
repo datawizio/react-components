@@ -22,6 +22,11 @@ export const locales: ILocaleList = {
     getAnt: () => import("antd/es/locale/en_US"),
     getDayJs: () => import("dayjs/locale/en")
   },
+  "en-gb": {
+    name: "en_GB",
+    getAnt: () => import("antd/es/locale/en_GB"),
+    getDayJs: () => import("dayjs/locale/en")
+  },
   "zh-hans": {
     name: "zh_CN",
     getAnt: () => import("antd/es/locale/zh_CN"),
@@ -127,10 +132,21 @@ export const locales: ILocaleList = {
     getAnt: () => import("antd/es/locale/pl_PL"),
     getDayJs: () => import("dayjs/locale/pl")
   },
+  th: {
+    name: "en_US",
+    getAnt: () => import("antd/es/locale/en_US"),
+    getDayJs: () => import("dayjs/locale/en")
+  },
+  eo: {
+    name: "en_US",
+    getAnt: () => import("antd/es/locale/en_US"),
+    getDayJs: () => import("dayjs/locale/en")
+  }
 };
 
 export const defaultLangs = new Set([
   "en",
+  "en-gb",
   "ru",
   "uk",
   "zh-hans",
@@ -153,5 +169,7 @@ export const defaultLangs = new Set([
   "fr",
   "hr",
   "ba",
-  "pl"
+  "pl",
+  "th",
+  "eo"
 ]);

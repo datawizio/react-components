@@ -4,10 +4,13 @@ type WSMessage = {
   id: string;
 };
 
-const subsriptions: { [key: string]: Map<string, Function> } = {};
+const subscriptions: { [key: string]: Map<string, Function> } = {};
 
-let connected = false;
-const queue: Array<Object> = [];
+const queue: Set<Object> = new Set();
+
+const CONNECTION_LIMIT = 5;
+
+let counter = 0;
 
 export const initWS = (
   server: string,
@@ -19,13 +22,36 @@ export const initWS = (
   ws = new WebSocket(server, ["graphql-transport-ws"]);
 
   ws.onopen = () => {
-    connected = true;
     sendMessage({
       "type": "connection_init",
       "payload": authData
     });
 
-    queue.forEach(message => sendMessage(message));
+    queue.forEach(message => {
+      sendMessage(message);
+      queue.delete(message);
+    });
+  };
+
+  ws.onclose = function (e) {
+    counter = counter + 1;
+
+    console.warn(
+      "Socket is closed. Reconnect will be attempted in 1 second.",
+      e.reason
+    );
+
+    if (counter < CONNECTION_LIMIT) {
+      setTimeout(function () {
+        initWS(server, authData);
+      }, 1000);
+    }
+  };
+
+  ws.onerror = function (err) {
+    //@ts-ignore
+    console.error("Socket encountered error: ", err.message, "Closing socket");
+    ws.close();
   };
 
   ws.onmessage = event => {
@@ -35,12 +61,11 @@ export const initWS = (
 };
 
 export const sendMessage = (message: Object) => {
-  if (!connected) {
-    queue.push(message);
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(message));
     return;
   }
-
-  ws.send(JSON.stringify(message));
+  queue.add(message);
 };
 
 export const subscribe = (
@@ -48,23 +73,23 @@ export const subscribe = (
   subscriptionId: string,
   callback: (message: WSMessage) => any
 ) => {
-  if (!subsriptions[id]) {
-    subsriptions[id] = new Map();
+  if (!subscriptions[id]) {
+    subscriptions[id] = new Map();
   }
 
-  subsriptions[id].set(subscriptionId, callback);
+  subscriptions[id].set(subscriptionId, callback);
 };
 
 export const unsubscribe = (id: string, subscriptionId: string) => {
-  if (subsriptions[id] && subsriptions[id].has(subscriptionId)) {
-    subsriptions[id].delete(subscriptionId);
+  if (subscriptions[id] && subscriptions[id].has(subscriptionId)) {
+    subscriptions[id].delete(subscriptionId);
   }
 };
 
 const handleSubscriptions = (message: WSMessage) => {
   const id = message.id;
-  if (!subsriptions[id]) return;
-  subsriptions[id].forEach(callback => {
+  if (!subscriptions[id]) return;
+  subscriptions[id].forEach(callback => {
     callback.call(null, message);
   });
 };

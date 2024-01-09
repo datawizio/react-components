@@ -1,14 +1,9 @@
-import React, { useRef, useContext } from "react";
-
+import React, { useRef, useContext, useEffect } from "react";
 import List from "./List";
 import Operation from "./Operation";
-
 import { useTransfer } from "./useTransfer";
-
 import { LoadDataParams, LoadDataResponse } from "./types";
-
 import ConfigContext from "../ConfigProvider/context";
-
 import "./index.less";
 
 export interface TransferProps {
@@ -28,17 +23,17 @@ export interface TransferProps {
     targetSelectedKeys: string[]
   ) => void;
   style?: React.CSSProperties;
-
   sourceTitle?: string;
   sourceLoadData?: (params: LoadDataParams) => Promise<LoadDataResponse>;
   sourceFilters?: any;
   sourceActions?: React.ReactElement;
+  resetSourceChecked?: number;
+  resetTargetChecked?: number;
   targetTitle?: string;
   targetLoadData?: (params: LoadDataParams) => Promise<LoadDataResponse>;
   targetFilters?: any;
   targetActions?: React.ReactElement;
   tooltips?: { throwAll: string; throwChosen: string };
-
   onMoveToRight?: (keys: string[]) => Promise<void>;
   onMoveAllToRight?: () => Promise<void>;
   onMoveToLeft?: (keys: string[]) => Promise<void>;
@@ -53,18 +48,20 @@ const Transfer: React.FC<TransferProps> = ({
   sourceLoadData,
   sourceFilters,
   sourceActions,
+  resetSourceChecked,
+  resetTargetChecked,
   targetTitle,
   targetLoadData,
   targetFilters,
   targetActions,
   tooltips,
-
   onMoveToRight,
   onMoveAllToRight,
   onMoveToLeft,
   onMoveAllToLeft
 }) => {
   const { translate } = useContext(ConfigContext);
+
   const [{ sourceChecked, targetChecked }, dispatch] = useTransfer({
     sourceChecked: [],
     targetChecked: []
@@ -88,6 +85,7 @@ const Transfer: React.FC<TransferProps> = ({
       }
     });
   };
+
   const onLeftItemSelectAll = (selectedKeys: string[]) => {
     dispatch({
       type: "setState",
@@ -96,6 +94,7 @@ const Transfer: React.FC<TransferProps> = ({
       }
     });
   };
+
   const handleLeftScroll = () => {};
 
   const moveToRight = () => {
@@ -136,6 +135,7 @@ const Transfer: React.FC<TransferProps> = ({
 
     onMoveToLeft(targetChecked);
   };
+
   const moveAllToLeft = () => {
     targetListRef.current.setExceptedKeys(["all"]);
     sourceListRef.current.setState({ dataSource: [], loading: true });
@@ -164,6 +164,7 @@ const Transfer: React.FC<TransferProps> = ({
       }
     });
   };
+
   const onRightItemSelectAll = (selectedKeys: string[]) => {
     dispatch({
       type: "setState",
@@ -172,7 +173,16 @@ const Transfer: React.FC<TransferProps> = ({
       }
     });
   };
+
   const handleRightScroll = () => {};
+
+  useEffect(() => {
+    resetSourceChecked && dispatch({ type: "resetSourceChecked" });
+  }, [dispatch, resetSourceChecked]);
+
+  useEffect(() => {
+    resetTargetChecked && dispatch({ type: "resetTargetChecked" });
+  }, [dispatch, resetTargetChecked]);
 
   return (
     <div className="dw-transfer">

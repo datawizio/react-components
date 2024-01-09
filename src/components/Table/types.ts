@@ -31,7 +31,8 @@ type _OverwrittenTableProps<RT> = {
 type IColumnsSorter = (
   columns: IColumn[],
   oldColumnsInfo: { [k: string]: Partial<IColumn> },
-  columnsSwapped?: boolean
+  columnsSwapped?: boolean,
+  templateSelected?: boolean
 ) => void;
 
 export interface TableProps<RT = any>
@@ -41,6 +42,7 @@ export interface TableProps<RT = any>
   vid?: string;
   searchValue?: string;
   virtual?: boolean;
+  virtualDebug?: boolean;
   async?: boolean;
   autoColWidth?: boolean;
   compressColumns?: boolean;
@@ -48,7 +50,7 @@ export interface TableProps<RT = any>
   sortable?: boolean;
   forceColumns?: boolean;
   showSizeChanger?: boolean;
-  multipleSorting?: boolean;
+  multisorting?: boolean;
   isResizableColumns?: boolean;
   isNested?: (row: any) => boolean;
   showExpandIcon?: (row: any) => boolean;
@@ -76,8 +78,10 @@ export interface TableProps<RT = any>
    */
   responsiveColumns?: boolean;
   sortParams?: SortParams;
+  sortParamsPriority?: SortParamsPriority;
 
   pageSizeOptions?: Array<string>;
+  defaultPageSize?: number;
   templates?: Array<TableTemplate>;
   visibleColumnsKeys?: Array<IColumn["key"]>;
 
@@ -128,6 +132,7 @@ export interface TableState extends Partial<TableProps> {
   };
   fixedTotal?: boolean;
   first?: boolean;
+  firstRenderLoader?: boolean;
   templateSelected?: boolean;
   columnsForceUpdate?: number;
   cancelled?: boolean;
@@ -201,9 +206,11 @@ export interface IColumn<RT = any>
   dtype?: string;
   dataIndex: string;
   resizable?: boolean;
+  draggable?: boolean;
   default_visible?: boolean;
   max_value?: number;
   colWidth?: number;
+  colMinWidth?: number;
   originalKey?: string;
   order?: number;
   index?: number;
@@ -296,6 +303,8 @@ export type FilterParams = Record<string, Key[] | null>;
 export type SortParams = {
   [columnKey: string]: SortOrder;
 };
+
+export type SortParamsPriority = { [key: string]: number };
 
 /**
  * Providers types
