@@ -1,35 +1,17 @@
 @import "../../styles/variables";
-
 @import "./rtl";
 
 button.help-icon {
   color: @help-icon-color;
   margin-right: 16px;
-  border: 1px solid;
-  border-radius: 100px;
-  height: 21px;
-  display: flex;
-  font-size: 12px;
-  align-items: center;
-  & > .anticon-question-circle {
-    margin-top: 2px;
+
+  .anticon-question-circle {
+    font-size: 20px;
   }
+
   &:hover,
   &:focus {
     color: @help-icon-color-hover;
-    border-color: @help-icon-color-hover;
-  }
-  @media (max-width: @screen-xs) {
-    border: none;
-    margin-right: 6px;
-    padding: 5px 10px;
-    font-size: 14px;
-    & > span:last-child {
-      display: none;
-    }
-    &.ant-btn.ant-btn-link.teaching-btn {
-      padding-left: 0;
-    }
   }
 }
 
