@@ -1,20 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 
-import "./index.less";
 import ConfigContext from "../ConfigProvider/context";
 import { Application } from "./Application";
 import { PageHeader } from "../../index";
 import { AppsLoader } from "../AppsList/AppsLoader";
 import { ApplicationsProps, IApp } from "./models";
+import "./index.less";
 
 const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick, loading, onSecondaryButtonClick }) => {
 
   const { translate } = useContext(ConfigContext);
+  const availableSolutionsShown: boolean = useMemo(
+    () => loading || !!apps.available_solutions?.length,
+    [loading, apps]
+  );
+  const administrativeSolutionsShown: boolean = useMemo(
+    () => loading || !!apps.administrative_solutions?.length,
+    [loading, apps]
+  );
+  const otherSolutionsShown: boolean = useMemo(() => {
+    return loading ||
+      !!apps.other_solutions?.some(solution => solution.applications.length) ||
+      !!apps.extensions?.length
+  }, [loading, apps]);
+  const otherSolutionsOnlyExtensionsShown: boolean = useMemo(
+    () => !apps.other_solutions?.length && !!apps.extensions?.length,
+    [apps]
+  );
 
   return (
     <div className="applications-container">
       {
-        (loading || !!apps.available_solutions?.length) &&
+        availableSolutionsShown &&
         <div className="applications-block">
           {<PageHeader title={!loading ? translate("AVAILABLE_SOLUTIONS") : ""} />}
           <div className="apps-list">
@@ -35,7 +52,7 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
         </div>
       }
       {
-        (loading || !!apps.administrative_solutions?.length) &&
+        administrativeSolutionsShown &&
         <div className="applications-block">
           {<PageHeader title={!loading ? translate("ADDITIONAL_SOLUTIONS") : ""} />}
           <div className="apps-list">
@@ -50,11 +67,7 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
         </div>
       }
       {
-        (
-          loading ||
-          !!apps.other_solutions?.some(solution => solution.applications.length) ||
-          !!apps.extensions?.length
-        ) &&
+        otherSolutionsShown &&
         <div className="applications-block">
           {<PageHeader title={!loading ? translate("ALL_SOLUTIONS") : ""} />}
           {
@@ -93,7 +106,7 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
                   )
                 }
                 {
-                  (!apps.other_solutions?.length && !!apps.extensions?.length) &&
+                  otherSolutionsOnlyExtensionsShown &&
                   <div className="other-solution-block">
                     <div className="other-solution-title">{translate("EXTENSIONS")}</div>
                     <div className="apps-list">

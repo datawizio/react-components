@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 
-import "./index.less";
 import { Card, Badge, Progress, Tooltip } from "antd";
 import ConfigContext from "../ConfigProvider/context";
 import Select from "../Select";
 import Button from "../Button";
 import { ApplicationProps, IClient } from "./models";
+import "./index.less";
 
 export const Application: React.FC<ApplicationProps> = ({ app, tagColor, onPrimaryButtonClick, onSecondaryButtonClick }) => {
 

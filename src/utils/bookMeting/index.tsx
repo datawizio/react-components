@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./index.less";
 import { Modal } from "antd";
 import i18n from "i18next";
+import "./index.less";
 
 const openBookMeetingModal = () => {
 
