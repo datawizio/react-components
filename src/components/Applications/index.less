@@ -1,0 +1,171 @@
+@import "~antd/es/card/style/index";
+@import "~antd/es/progress/style/index";
+@import "~antd/es/grid/style/index";
+@import "../Select/index.less";
+@import "../PageHeader/index.less";
+@import "../Button/index.less";
+@import "../../styles/variables";
+
+.applications-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+
+  .applications-block {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    background-color: @background-color-light;
+    border-radius: 2px;
+
+    .apps-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-rows: 1fr;
+      grid-gap: 24px;
+
+      > * {
+        width: auto;
+        max-width: 100%;
+      }
+    }
+
+    .other-solutions-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+
+      > * {
+        flex: 1 1 calc(50% - 12px);
+      }
+
+      .other-solution-block {
+
+        &.extensions-block {
+          margin-top: 24px;
+        }
+
+        .other-solution-title {
+          font-size: 16px;
+          margin-bottom: @padding-md;
+          color: @page-title-color;
+        }
+      }
+    }
+
+    .applications-card {
+      display: flex;
+      position: relative;
+
+      .ant-card-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+
+      &-tag {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 4px 12px;
+        font-size: 12px;
+        border-radius: 0 2px 0 2px;
+      }
+
+      &-tag-grey {
+        background-color: @background-color-base;
+        color: @page-title-color;
+      }
+
+      &-tag-green {
+        background-color: @alert-success-bg-color;
+        color: @success-color;
+      }
+
+      &-logo {
+        height: 50px;
+
+        img {
+          display: block;
+          max-width: 220px;
+          max-height: 50px;
+          width: auto;
+          height: auto;
+        }
+
+        @media (max-width: @screen-xs-max) {
+          height: auto;
+
+          img {
+            height: auto;
+            max-width: 150px;
+          }
+        }
+      }
+
+      &-name {
+        font-size: 20px;
+      }
+
+      &-description {
+        flex: 1;
+        padding: @padding-md 0;
+        color: @page-title-color;
+      }
+
+      &-clients, &-progress {
+        padding-bottom: @padding-md;
+      }
+
+      &-actions {
+
+        &:not(:last-child) {
+          padding-bottom: @padding-md;
+        }
+      }
+    }
+  }
+}
+
+.modal-container {
+  display: flex;
+  gap: 40px;
+  padding: 0 20px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  > * {
+    flex: 1;
+    min-width: 360px;
+  }
+
+  .ant-image {
+    height: 580px;
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-info-container {
+
+    .modal-info-title {
+      font-weight: 700;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .modal-actions {
+      margin-top: 48px;
+      display: flex;
+      column-gap: 32px;
+      justify-content: center;
+
+      &-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 16px;
+      }
+    }
+  }
+}

@@ -167,3 +167,5 @@ export { default as RuleInfo } from "./components/RuleInfo";
 export { default as Switch } from "./components/Switch";
 
 export { default as VideoModal } from "./components/VideoModal";
+
+export { default as Applications } from "./components/Applications";
