@@ -28,7 +28,7 @@ const openBookMeetingModal = () => {
         <span className="book-meeting-modal-title">{i18n.t("BOOK_MEETING_TITLE")}</span>
         <div
           className="meetings-iframe-container"
-          data-src="https://meetings-eu1.hubspot.com/olena-dziuban?embed=true"
+          data-src="https://meetings-eu1.hubspot.com/meetings/olena-dziuban/bes-presentation?embed=true"
         ></div>
       </div>
     ),
