@@ -7,6 +7,8 @@ import { useDebouncedCallback } from "use-debounce/lib";
 import { IColumn } from "../types";
 import { PropsWithChildren } from "react";
 import { isSafari } from "../../../utils/navigatorInfo";
+import { columnIcons } from "../utils/columnIcons";
+import "../index.less";
 
 export interface ColumnProps
   extends PropsWithChildren<any>,
@@ -73,6 +75,7 @@ const Column: React.FC<ColumnProps> = props => {
     sortParams,
     sortParamsPriority
   ]);
+  const columnWithIconShown = useMemo(() => !!model.icon && !!columnIcons[model.icon], [model]);
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
@@ -378,7 +381,19 @@ const Column: React.FC<ColumnProps> = props => {
           "--order": sortingPriority
         } as React.CSSProperties
       }
-    />
+    >
+      {
+        columnWithIconShown ?
+          <div className={clsx(
+            "icon-column-container",
+            (!model.sorter && !model.filtered) && "un-sortable-column"
+          )}>
+            {columnIcons[model.icon]}
+            {restProps.children}
+          </div> :
+          restProps.children
+      }
+    </th>
   );
 };
 
