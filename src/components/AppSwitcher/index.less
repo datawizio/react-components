@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .app-switcher-icon {
-  color: @page-title-color;
+  color: @app-switcher-title-color;
   width: 24px;
   height: 24px;
   fill: currentColor;
@@ -18,8 +18,8 @@
 }
 
 .app-switcher-container.ant-dropdown-menu {
-  width: 450px;
-  border: 1px solid #f5f6f8;
+  width: 350px;
+  border: 1px solid @ant-tag-background-color;
   background-color: @bg-lighter-color;
   margin-top: 15px;
   box-shadow: 0 14px 42px 0 rgba(8, 15, 52, 0.06);
@@ -34,16 +34,22 @@
     width: 310px;
   }
 
+  .other-apps-title {
+    color: @app-switcher-title-color;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
   .ant-col {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: @page-title-color;
+    color: @app-switcher-title-color;
     height: auto;
     min-height: 50px;
-    padding: 10px;
+    padding: 8px 10px;
     cursor: pointer;
-    border: 1px solid #eaecee;
+    border: 1px solid fade(@list-item-border-color, 50%);
     border-radius: 2px;
 
     .logo {
@@ -51,34 +57,40 @@
       display: flex;
       align-items: center;
 
-      & > * {
-        text-align: center;
-        flex: 1;
-
-        img {
-          width: 18px;
-        }
+      img {
+        width: 18px;
       }
     }
 
     .text {
       height: auto;
       min-height: 30px;
-      font-size: 14px;
-      padding-top: 5px;
-      line-height: 18px;
-      color: #717171;
+      font-size: 11px;
+      line-height: normal;
+      color: @app-switcher-description-color;
+      font-weight: 300;
 
       & > .ant-typography:first-child {
         margin-bottom: 6px;
-        color: #393939;
+        color: @app-switcher-title-color;
         font-weight: 600;
+        font-size: 12px;
       }
     }
 
     &:hover {
-      background: #f9f0ff;
-      border-color: #f9f0ff;
+      background: @app-switcher-bg-color;
+      border-color: @app-switcher-bg-color;
+
+      .ant-typography {
+        &:first-child {
+          color: #393939;
+        }
+
+        &:nth-child(2) {
+          color: #717171;
+        }
+      }
     }
   }
 }

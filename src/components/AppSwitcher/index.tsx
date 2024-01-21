@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { Dropdown, Col, Typography, Row } from "antd";
+import { Col, Dropdown, Row, Typography } from "antd";
 import Icon from "@ant-design/icons";
 
 import "./index.less";
@@ -11,6 +11,7 @@ export interface IApplication {
   name: string;
   description: string;
   bento_menu_description: string;
+  is_main: boolean;
 
   logo?: string;
   host: string;
@@ -43,9 +44,7 @@ const App: React.FC<
   return (
     <Col span={24} onClick={handleClick} flex="1">
       <div className="logo">
-        <div>
-          <img src={window.theme === "dark" ? dark_icon : icon} alt={name} />
-        </div>
+        <img src={window.theme === "dark" ? dark_icon : icon} alt={name} />
       </div>
 
       <div className="text">
@@ -60,13 +59,34 @@ const menu = (
   apps: IApplication[],
   client: number,
   onAppClick?: (app: string) => void
-) => (
-  <Row className="app-switcher-container">
-    {apps.map(app => (
-      <App {...app} client={client} key={app.app_id} onAppClick={onAppClick} />
-    ))}
-  </Row>
-);
+) => {
+  const mainApps = apps.filter(item => item.is_main);
+  const otherApps = apps.filter(item => !item.is_main);
+
+  return (
+    <Row className="app-switcher-container">
+      {mainApps.map(app => (
+        <App
+          {...app}
+          client={client}
+          key={app.app_id}
+          onAppClick={onAppClick}
+        />
+      ))}
+
+      <span className="other-apps-title">Перейти до</span>
+
+      {otherApps.map(app => (
+        <App
+          {...app}
+          client={client}
+          key={app.app_id}
+          onAppClick={onAppClick}
+        />
+      ))}
+    </Row>
+  );
+};
 
 const AppSwitcherSvg = () => (
   <svg className="app-switcher-icon" focusable="false" viewBox="0 0 24 24">
