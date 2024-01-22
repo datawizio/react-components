@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "../Button";
 import UserAvatar from "../UserAvatar";
@@ -14,6 +14,8 @@ export interface UserButtonProps {
   menu: React.ReactElement;
   showFullName?: boolean;
   theme?: "dark" | "light";
+  open?: boolean;
+  handleOpenChange?: (value: boolean) => void;
 }
 
 const UserButton: React.FC<UserButtonProps> = ({
@@ -21,14 +23,29 @@ const UserButton: React.FC<UserButtonProps> = ({
   fullName,
   menu,
   theme,
-  showFullName
+  showFullName,
+  open,
+  handleOpenChange
 }) => {
   const className = clsx({
     "user-name": true,
     "dw-dark": theme === "dark"
   });
+  const [visible, setVisible] = useState<boolean>();
+  const handleVisibleChange = (value: boolean) => {
+    setVisible(value);
+    handleOpenChange && handleOpenChange(value);
+  }
+  useEffect(() => setVisible(open), [open]);
+
   return (
-    <Dropdown overlay={menu} className="user-dropdown" trigger={["click"]}>
+    <Dropdown
+      overlay={menu}
+      className="user-dropdown"
+      trigger={["click"]}
+      visible={visible}
+      onVisibleChange={handleVisibleChange}
+    >
       <Button border={false} className={className}>
         <UserAvatar src={photo} name={fullName} />
         {showFullName ? (

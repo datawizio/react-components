@@ -1,5 +1,6 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
 import UserButton from "./index";
+import UserMenu from "../UserMenu";
 
 <Meta title="Components/UserButton" component={UserButton} />
 
@@ -11,7 +12,12 @@ import UserButton from "./index";
 
 <Preview>
   <Story name="Basic">
-    <UserButton fullName="Olloll Trololo" />
+    <UserButton
+      fullName="Olloll Trololo"
+      menu={
+        <UserMenu email="email.com" fullName="Stepan Bandera" />
+      }
+    />
   </Story>
 </Preview>
 

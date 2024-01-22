@@ -5,6 +5,7 @@ exports[`UserButton component UserButton rendered correctly 1`] = `
   className="user-dropdown"
   mouseEnterDelay={0.15}
   mouseLeaveDelay={0.1}
+  onVisibleChange={[Function]}
   overlay={<React.Fragment />}
   trigger={
     Array [

@@ -169,3 +169,5 @@ export { default as Switch } from "./components/Switch";
 export { default as VideoModal } from "./components/VideoModal";
 
 export { default as Applications } from "./components/Applications";
+
+export { default as UserMenu } from "./components/UserMenu";

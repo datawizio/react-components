@@ -1,24 +1,24 @@
 import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
-import UserItem from "./index";
+import UserMenu from "./index";
 
-<Meta title="Components/UserItem" component={UserItem} />
+<Meta title="Components/UserMenu" component={UserMenu} />
 
-# UserItem
-
-Компонент предназначен для вывода инфо о юзере
+# UserMenu
 
 ## Basic
 
 <Preview>
   <Story name="Basic">
-    <UserItem
+    <UserMenu
       email="email.com"
       fullName="Albert Einstein"
       photo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Albert_Einstein_Head.jpg/270px-Albert_Einstein_Head.jpg"
+      expireDateTo={"2030-01-01"}
+      handleLogOutClick={() => {}}
     />
   </Story>
 </Preview>
 
 ## Props
 
-<Props of={UserItem} />
+<Props of={UserMenu} />
