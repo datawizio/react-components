@@ -419,6 +419,22 @@
   }
 }
 
+.icon-column-container {
+  display: flex;
+  padding-left: 8px;
+  align-items: center;
+
+  &.un-sortable-column {
+    padding-left: 0;
+    column-gap: 8px;
+  }
+
+  > div {
+    min-width: 0;
+    flex-grow: 1;
+  }
+}
+
 @media (max-width: 768px) {
   .dw-table {
     table {

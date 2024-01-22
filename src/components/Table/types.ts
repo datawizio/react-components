@@ -2,6 +2,7 @@ import { TableTemplateState, TableTemplate } from "./../TableTemplates/types";
 import { Overwrite } from "utility-types";
 import { ColumnProps } from "antd/lib/table";
 import { TableProps as AntdTableProps } from "antd/lib/table";
+import { ColumnIcons } from "./utils/columnIcons";
 
 import {
   Key,
@@ -208,6 +209,7 @@ export interface IColumn<RT = any>
   resizable?: boolean;
   draggable?: boolean;
   default_visible?: boolean;
+  icon?: ColumnIcons;
   max_value?: number;
   colWidth?: number;
   colMinWidth?: number;
