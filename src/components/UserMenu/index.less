@@ -1,0 +1,88 @@
+@import "../../styles/variables";
+
+.user-menu {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid @border-color-base;
+  border-radius: 2px;
+  box-shadow: 0 14px 42px 0 rgba(8, 15, 52, 0.06);
+  background-color: @body-background;
+  width: 360px;
+  padding: 16px;
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-name {
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    &-email {
+      font-size: 12px;
+    }
+
+    &-date {
+      font-size: 12px;
+      margin-top: 8px;
+    }
+  }
+
+  &-items {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+
+    &-group {
+      display: flex;
+      flex-direction: column;
+      row-gap: 8px;
+
+      &-title {
+        display: block;
+      }
+    }
+  }
+
+  &-item {
+    display: flex !important;
+    align-items: center !important;
+    column-gap: 8px !important;
+    padding: 8px !important;
+    height: auto !important;
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      row-gap: 2px;
+      font-size: 12px;
+      color: @text-color-secondary;
+      font-weight: 300;
+      align-items: flex-start;
+      text-align: left;
+      flex: 1 0 auto;
+      width: 0;
+      white-space: normal;
+
+      &-title {
+        color: @text-color;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  &-button {
+    margin-top: 12px;
+
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
