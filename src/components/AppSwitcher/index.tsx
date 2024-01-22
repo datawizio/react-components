@@ -35,6 +35,8 @@ const App: React.FC<
   path,
   onAppClick
 }) => {
+  const { translate } = useContext(ConfigContext);
+
   const handleClick = () => {
     const url = `${host}${path ? path : ""}`;
     window.open(url.replace(":client_id", client.toString()), "_blank");
@@ -48,7 +50,7 @@ const App: React.FC<
       </div>
 
       <div className="text">
-        <Typography.Paragraph>{name}</Typography.Paragraph>
+        <Typography.Paragraph>{translate(name)}</Typography.Paragraph>
         <Typography.Paragraph>{bento_menu_description}</Typography.Paragraph>
       </div>
     </Col>
@@ -58,6 +60,7 @@ const App: React.FC<
 const menu = (
   apps: IApplication[],
   client: number,
+  navigateTitle: string,
   onAppClick?: (app: string) => void
 ) => {
   const mainApps = apps.filter(item => item.is_main);
@@ -74,7 +77,7 @@ const menu = (
         />
       ))}
 
-      <span className="other-apps-title">Перейти до</span>
+      <span className="other-apps-title">{navigateTitle}</span>
 
       {otherApps.map(app => (
         <App
@@ -112,8 +115,8 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({
   const { translate } = useContext(ConfigContext);
 
   const overlay = useMemo(() => {
-    return menu(apps, client, onAppClick);
-  }, [apps, client, onAppClick]);
+    return menu(apps, client, translate("NAVIGATE_TO"), onAppClick);
+  }, [apps, client, onAppClick, translate]);
 
   const className = clsx({
     "app-switcher-link": true,
