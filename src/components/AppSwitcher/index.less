@@ -65,16 +65,23 @@
     .text {
       height: auto;
       min-height: 30px;
-      font-size: 11px;
-      line-height: normal;
-      color: @app-switcher-description-color;
-      font-weight: 300;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
 
-      & > .ant-typography:first-child {
-        margin-bottom: 6px;
-        color: @app-switcher-title-color;
-        font-weight: 600;
-        font-size: 12px;
+      & > .ant-typography {
+        margin-bottom: 0;
+        font-size: 11px;
+        line-height: normal;
+        color: @app-switcher-description-color;
+        font-weight: 300;
+
+        &:first-child {
+          color: @app-switcher-title-color;
+          font-weight: 600 !important;
+          font-size: 12px;
+        }
       }
     }
 
