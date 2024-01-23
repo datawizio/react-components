@@ -29,6 +29,7 @@ const App: React.FC<
   client,
   name,
   bento_menu_description,
+  is_main,
   host,
   icon,
   dark_icon,
@@ -50,7 +51,9 @@ const App: React.FC<
       </div>
 
       <div className="text">
-        <Typography.Paragraph>{translate(name)}</Typography.Paragraph>
+        <Typography.Paragraph>
+          {is_main ? translate("HOME") : name}
+        </Typography.Paragraph>
         <Typography.Paragraph>{bento_menu_description}</Typography.Paragraph>
       </div>
     </Col>
@@ -63,19 +66,17 @@ const menu = (
   navigateTitle: string,
   onAppClick?: (app: string) => void
 ) => {
-  const mainApps = apps.filter(item => item.is_main);
-  const otherApps = apps.filter(item => !item.is_main);
+  const mainApp = apps.find(item => item.is_main);
+  const otherApps = apps.filter(item => item.app_id !== mainApp.app_id);
 
   return (
     <Row className="app-switcher-container">
-      {mainApps.map(app => (
-        <App
-          {...app}
-          client={client}
-          key={app.app_id}
-          onAppClick={onAppClick}
-        />
-      ))}
+      <App
+        {...mainApp}
+        client={client}
+        key={mainApp.app_id}
+        onAppClick={onAppClick}
+      />
 
       <span className="other-apps-title">{navigateTitle}</span>
 
