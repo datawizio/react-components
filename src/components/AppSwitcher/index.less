@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .app-switcher-icon {
-  color: @page-title-color;
+  color: @app-switcher-title-color;
   width: 24px;
   height: 24px;
   fill: currentColor;
@@ -17,52 +17,87 @@
   }
 }
 
-.app-switcher-container {
-  width: 310px;
-  border: 1px solid @divider-border-color;
+.app-switcher-container.ant-dropdown-menu {
+  width: 350px;
+  border: 1px solid @ant-tag-background-color;
   background-color: @bg-lighter-color;
   margin-top: 15px;
-  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 14px 42px 0 rgba(8, 15, 52, 0.06);
   border-radius: 5px;
-  padding: 5px;
+  padding: 16px;
+
+  row-gap: 7px !important;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: @screen-sm) {
+    width: 310px;
+  }
+
+  .other-apps-title {
+    color: @app-switcher-title-color;
+    font-size: 12px;
+    font-weight: 600;
+  }
 
   .ant-col {
     display: flex;
-    text-align: center;
-    color: @page-title-color;
+    align-items: center;
+    gap: 8px;
+    color: @app-switcher-title-color;
     height: auto;
-    min-height: 100px;
-    flex-direction: column;
-    padding: 5px;
+    min-height: 50px;
+    padding: 8px 10px;
     cursor: pointer;
+    border: 1px solid fade(@list-item-border-color, 50%);
+    border-radius: 2px;
 
     .logo {
-      height: 60px;
+      height: 18px;
       display: flex;
       align-items: center;
 
-      & > * {
-        text-align: center;
-        flex: 1;
+      img {
+        width: 18px;
+      }
+    }
 
-        img {
-          width: 50px;
+    .text {
+      height: auto;
+      min-height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+
+      & > .ant-typography {
+        margin-bottom: 0;
+        font-size: 11px;
+        line-height: normal;
+        color: @app-switcher-description-color;
+        font-weight: 300;
+
+        &:first-child {
+          color: @app-switcher-title-color;
+          font-weight: 600 !important;
+          font-size: 12px;
         }
       }
     }
 
-    .title {
-      height: auto;
-      min-height: 30px;
-      font-size: 14px;
-      padding-top: 5px;
-      line-height: 18px;
-    }
-
     &:hover {
-      background: rgb(142, 116, 198);
-      border-radius: 5px;
+      background: @app-switcher-bg-color;
+      border-color: @app-switcher-bg-color;
+
+      .ant-typography {
+        &:first-child {
+          color: #393939;
+        }
+
+        &:nth-child(2) {
+          color: #717171;
+        }
+      }
     }
   }
 }

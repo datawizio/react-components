@@ -16,17 +16,20 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
     mouseEnterDelay={0.15}
     mouseLeaveDelay={0.1}
     overlay={
-      <div
+      <ForwardRef
         className="app-switcher-container"
       >
-        <ForwardRef>
-          <App
-            app_id="first app"
-            description="Admin Panel"
-            name="AP"
-          />
-        </ForwardRef>
-      </div>
+        <span
+          className="other-apps-title"
+        >
+          NAVIGATE_TO
+        </span>
+        <App
+          app_id="first app"
+          description="Admin Panel"
+          name="AP"
+        />
+      </ForwardRef>
     }
     overlayClassName="AppSwitcher__dropdown"
     placement="bottomCenter"
