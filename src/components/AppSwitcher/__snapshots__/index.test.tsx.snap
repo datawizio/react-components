@@ -7,7 +7,14 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
       Object {
         "app_id": "first app",
         "description": "Admin Panel",
+        "is_main": false,
         "name": "AP",
+      },
+      Object {
+        "app_id": "second app",
+        "description": "Builder",
+        "is_main": true,
+        "name": "BI",
       },
     ]
   }
@@ -19,6 +26,12 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
       <ForwardRef
         className="app-switcher-container"
       >
+        <App
+          app_id="second app"
+          description="Builder"
+          is_main={true}
+          name="BI"
+        />
         <span
           className="other-apps-title"
         >
@@ -27,6 +40,7 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
         <App
           app_id="first app"
           description="Admin Panel"
+          is_main={false}
           name="AP"
         />
       </ForwardRef>
