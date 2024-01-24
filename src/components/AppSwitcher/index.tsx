@@ -71,12 +71,14 @@ const menu = (
 
   return (
     <Row className="app-switcher-container">
-      <App
-        {...mainApp}
-        client={client}
-        key={mainApp.app_id}
-        onAppClick={onAppClick}
-      />
+      {mainApp && (
+        <App
+          {...mainApp}
+          client={client}
+          key={mainApp.app_id}
+          onAppClick={onAppClick}
+        />
+      )}
 
       <span className="other-apps-title">{navigateTitle}</span>
 
