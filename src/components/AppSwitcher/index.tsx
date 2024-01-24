@@ -12,15 +12,10 @@ export interface IApplication {
   description: string;
   bento_menu_description: string;
   is_main: boolean;
-
-  logo?: string;
   host: string;
   path: string | null;
   icon?: string;
   dark_icon?: string;
-  allowed?: boolean;
-  clients?: { id: number; name: string }[];
-  showButton?: boolean;
 }
 
 const App: React.FC<
