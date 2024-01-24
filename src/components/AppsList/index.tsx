@@ -12,6 +12,8 @@ export interface IApp {
   dark_logo: string;
   host: string;
   path: string;
+  bento_menu_description: string;
+  is_main: boolean;
   description: string;
   clients?: {
     id: number;
