@@ -18,24 +18,23 @@
 }
 
 .app-switcher-container.ant-dropdown-menu {
-  width: 350px;
-  border: 1px solid @ant-tag-background-color;
-  background-color: @bg-lighter-color;
-  margin-top: 15px;
+  width: 360px;
+  border: 1px solid @border-color-base;
+  background-color: @body-background;
   box-shadow: 0 14px 42px 0 rgba(8, 15, 52, 0.06);
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 16px;
-
-  row-gap: 7px !important;
+  margin-right: 20px;
+  row-gap: 8px !important;
   display: flex;
   flex-direction: column;
 
   @media screen and (max-width: @screen-sm) {
-    width: 310px;
+    width: 320px;
   }
 
   .other-apps-title {
-    color: @app-switcher-title-color;
+    color: @text-color;
     font-size: 12px;
     font-weight: 600;
   }
@@ -44,21 +43,21 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    color: @app-switcher-title-color;
+    color: @text-color;
     height: auto;
     min-height: 50px;
     padding: 8px 10px;
     cursor: pointer;
-    border: 1px solid fade(@list-item-border-color, 50%);
+    border: 1px solid @border-color-base;
     border-radius: 2px;
 
     .logo {
-      height: 18px;
+      height: 20px;
       display: flex;
       align-items: center;
 
       img {
-        width: 18px;
+        width: 20px;
       }
     }
 
@@ -68,17 +67,17 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
 
       & > .ant-typography {
         margin-bottom: 0;
         font-size: 11px;
         line-height: normal;
-        color: @app-switcher-description-color;
+        color: @text-color-secondary;
         font-weight: 300;
 
         &:first-child {
-          color: @app-switcher-title-color;
+          color: @text-color;
           font-weight: 600 !important;
           font-size: 12px;
         }
@@ -87,23 +86,6 @@
 
     &:hover {
       background: @app-switcher-bg-color;
-      border-color: @app-switcher-bg-color;
-
-      .ant-typography {
-        &:first-child {
-          color: #393939;
-        }
-
-        &:nth-child(2) {
-          color: #717171;
-        }
-      }
     }
-  }
-}
-
-.rtl {
-  .AppSwitcher__dropdown {
-    left: 8px !important;
   }
 }

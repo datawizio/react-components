@@ -15,12 +15,12 @@ export const UserMenuItem: React.FC<UserMenuItemProps> = ({
   onClick
 }) => {
   return (
-    <Button className="user-menu-item" onClick={onClick}>
+    <div className="user-menu-item" onClick={onClick}>
       {photo}
       <div className="user-menu-item-text">
         <span className="user-menu-item-text-title">{title}</span>
         <span>{description}</span>
       </div>
-    </Button>
+    </div>
   )
 }
