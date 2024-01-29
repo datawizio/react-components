@@ -62,7 +62,7 @@ const menu = (
   onAppClick?: (app: string) => void
 ) => {
   const mainApp = apps.find(item => item.is_main);
-  const otherApps = apps.filter(item => item.app_id !== mainApp.app_id);
+  const otherApps = apps.filter(item => item.app_id !== mainApp?.app_id);
 
   return (
     <Row className="app-switcher-container">

@@ -16,6 +16,7 @@ export interface ILinkItem {
   description: string;
   host: string;
   path: string;
+  target: "_blank" | "_self";
   appId?: string;
   permission?: string;
 }
@@ -28,7 +29,9 @@ export const linkGroups: Array<ILinkGroup> = [
         title: "ACCOUNT",
         description: "ACCOUNT_DESCRIPTION",
         host: "https://bes.datawiz.io",
-        path: "/account/profile"
+        path: "/account/profile",
+        appId: "29",
+        target: "_blank"
       }
     ]
   },
@@ -42,7 +45,8 @@ export const linkGroups: Array<ILinkGroup> = [
         host: "https://admin-panel.datawiz.io",
         path: "/c/:client_id/subscriptions",
         permission: "ap-payments-and-subscriptions",
-        appId: "22"
+        appId: "22",
+        target: "_self"
       },
       {
         photo: <RolesIcon />,
@@ -51,7 +55,8 @@ export const linkGroups: Array<ILinkGroup> = [
         host: "https://admin-panel.datawiz.io",
         path: "/c/:client_id/roles",
         permission: "roles",
-        appId: "22"
+        appId: "22",
+        target: "_self"
       },
       {
         photo: <UsersIcon />,
@@ -60,7 +65,8 @@ export const linkGroups: Array<ILinkGroup> = [
         host: "https://admin-panel.datawiz.io",
         path: "/c/:client_id/users",
         permission: "users",
-        appId: "22"
+        appId: "22",
+        target: "_self"
       }
     ]
   },
@@ -74,7 +80,8 @@ export const linkGroups: Array<ILinkGroup> = [
         host: "https://connector.datawiz.io",
         path: "/c/:client_id",
         permission: "profile-allowed-connector",
-        appId: "51"
+        appId: "51",
+        target: "_self"
       }
     ]
   }
