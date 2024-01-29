@@ -82,6 +82,14 @@ export const Application: React.FC<ApplicationProps> = ({ app, tagColor, onPrima
         </div>
       }
       {
+        app.tariff_plan?.show_switch_button &&
+        <div className="applications-card-actions">
+          <Button block onClick={handleSecondaryButtonClick}>
+            {translate("CHANGE_TARIFF")}
+          </Button>
+        </div>
+      }
+      {
         (showClientSelect && app.is_purchased && app.clients?.length > 1) &&
         <div className="applications-card-clients">
           <Select
@@ -113,14 +121,6 @@ export const Application: React.FC<ApplicationProps> = ({ app, tagColor, onPrima
         <div className="applications-card-actions">
           <Button type={"primary"} block onClick={handlePrimaryButtonClick}>
             {translate(app.is_purchased ? "GO_OVER" : "LEARN_MORE")}
-          </Button>
-        </div>
-      }
-      {
-        app.tariff_plan?.show_switch_button &&
-        <div className="applications-card-actions">
-          <Button block onClick={handleSecondaryButtonClick}>
-            {translate("CHANGE_TARIFF")}
           </Button>
         </div>
       }
