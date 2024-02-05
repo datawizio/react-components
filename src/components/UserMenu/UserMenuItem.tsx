@@ -1,5 +1,4 @@
 import React from "react";
-import Button from "../Button";
 
 type UserMenuItemProps = {
   photo: JSX.Element;

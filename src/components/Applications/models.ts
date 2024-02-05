@@ -1,7 +1,6 @@
 export interface IApplications {
   administrative_solutions: Array<IApp>;
   available_solutions: Array<IApp>;
-  extensions: Array<IApp>;
   other_solutions: Array<{
     name: string;
     applications: Array<IApp>;
