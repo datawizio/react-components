@@ -49,7 +49,7 @@ const App: React.FC<
         <Typography.Paragraph>
           {is_main ? translate("HOME") : name}
         </Typography.Paragraph>
-        <Typography.Paragraph>{bento_menu_description}</Typography.Paragraph>
+        <Typography.Paragraph>{translate(bento_menu_description)}</Typography.Paragraph>
       </div>
     </Col>
   );

@@ -46,7 +46,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   return (
     <div className="user-menu">
       <div className="user-menu-info">
-        <UserAvatar src={photo} size={56} name={fullName} />
+        <UserAvatar src={photo} size={64} name={fullName} />
         <span className="user-menu-info-name">{fullName}</span>
         <span className="user-menu-info-email">{email}</span>
         {

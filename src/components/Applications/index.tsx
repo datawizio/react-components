@@ -20,13 +20,8 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
   );
   const otherSolutionsShown: boolean = useMemo(() => {
     return loading ||
-      !!apps.other_solutions?.some(solution => solution.applications.length) ||
-      !!apps.extensions?.length
+      !!apps.other_solutions?.some(solution => solution.applications.length)
   }, [loading, apps]);
-  const otherSolutionsOnlyExtensionsShown: boolean = useMemo(
-    () => !apps.other_solutions?.length && !!apps.extensions?.length,
-    [apps]
-  );
 
   return (
     <div className="applications-container">
@@ -77,7 +72,7 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
               </div> :
               <div className="other-solutions-container">
                 {
-                  apps.other_solutions.map((solution, index: number) =>
+                  apps.other_solutions.map((solution) =>
                     <div key={solution.name}>
                       <div className="other-solution-block">
                         <div className="other-solution-title">{translate(solution.name)}</div>
@@ -89,34 +84,8 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
                           }
                         </div>
                       </div>
-                      {
-                        (!index && !!apps.extensions?.length) &&
-                        <div className="other-solution-block extensions-block">
-                          <div className="other-solution-title">{translate("EXTENSIONS")}</div>
-                          <div className="apps-list">
-                            {
-                              apps.extensions.map((app: IApp) =>
-                                <Application key={app.id} app={app} onPrimaryButtonClick={onPrimaryButtonClick} />
-                              )
-                            }
-                          </div>
-                        </div>
-                      }
                     </div>
                   )
-                }
-                {
-                  otherSolutionsOnlyExtensionsShown &&
-                  <div className="other-solution-block">
-                    <div className="other-solution-title">{translate("EXTENSIONS")}</div>
-                    <div className="apps-list">
-                      {
-                        apps.extensions.map((app: IApp) =>
-                          <Application key={app.id} app={app} onPrimaryButtonClick={onPrimaryButtonClick} />
-                        )
-                      }
-                    </div>
-                  </div>
                 }
               </div>
           }
