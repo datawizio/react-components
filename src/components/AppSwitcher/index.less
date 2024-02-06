@@ -27,6 +27,7 @@
   row-gap: 8px !important;
   display: flex;
   flex-direction: column;
+  border: 1px solid @border-color-base;
 
   @media screen and (max-width: @screen-sm) {
     width: 320px;
@@ -72,8 +73,8 @@
         margin-bottom: 0;
         font-size: 12px;
         line-height: normal;
-        color: @text-color-secondary;
-        font-weight: 300;
+        color: fade(@text-color, 65%);
+        font-weight: 400;
 
         &:first-child {
           color: @text-color;
