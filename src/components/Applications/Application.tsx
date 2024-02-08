@@ -53,7 +53,7 @@ export const Application: React.FC<ApplicationProps> = ({ app, tagColor, onPrima
       {
         (app.tag || app.tariff_plan) &&
         <div className={`applications-card-tag applications-card-tag-${tagColor ?? "grey"}`}>
-          {app.tag ? app.tag : translate(app.tariff_plan.name)}
+          {app.tariff_plan ? translate(app.tariff_plan.name) : app.tag}
         </div>
       }
       {
