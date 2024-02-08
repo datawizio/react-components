@@ -37,7 +37,7 @@ const Applications: React.FC<ApplicationsProps> = ({ apps, onPrimaryButtonClick,
                   <Application
                     key={app.id}
                     app={app}
-                    tagColor={"green"}
+                    tagColor={app.tariff_plan ? "green" : "grey"}
                     onPrimaryButtonClick={onPrimaryButtonClick}
                     onSecondaryButtonClick={onSecondaryButtonClick}
                   />
