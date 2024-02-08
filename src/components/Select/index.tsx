@@ -4,6 +4,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { FCSelect } from "./types";
 import { getUniqueItemsObj } from "../../utils/data/dataHelpers";
 import ConfigContext from "../ConfigProvider/context";
+import "../../InfoTooltip/index.less";
 import "./index.less";
 
 const Select: FCSelect = props => {

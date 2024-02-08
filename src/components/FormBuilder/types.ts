@@ -1,8 +1,9 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import { Rule } from "antd/lib/form";
 import { SwitchSize } from "antd/lib/switch";
 import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
+import {InfoTooltipProps} from "../InfoTooltip";
 
 export interface IFormFieldChanged<Type> {
   name: string | string[];
@@ -13,12 +14,13 @@ export interface IFormFieldChanged<Type> {
 export interface FormFieldProps<Type> {
   name: string | string[];
   placeholder?: string;
-  label?: string;
+  label?: ReactNode | string;
   rules?: Rule[];
   initialValue?: any;
   disabled?: boolean;
   onChange?: (change: IFormFieldChanged<Type>) => void;
   onDeselect?: (param: string | number) => void;
+  infoTooltip?: InfoTooltipProps;
 }
 
 export interface FieldIntervalProps extends FormFieldProps<IntervalType> {

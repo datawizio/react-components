@@ -1,9 +1,8 @@
-import React from "react";
-
+import React, { ReactNode, useMemo } from "react";
 import { Form } from "antd";
 import Select from "../../Select";
-
 import { FieldSelectProps } from "../types";
+import InfoTooltip from "../../InfoTooltip";
 
 export const FieldSelect: React.FC<FieldSelectProps> = ({
   allowClear,
@@ -15,8 +14,21 @@ export const FieldSelect: React.FC<FieldSelectProps> = ({
   options,
   onChange,
   onDeselect,
+  infoTooltip,
   ...restProps
 }) => {
+  const formItemLabel: string | ReactNode = useMemo(() => {
+    if (label && infoTooltip) {
+      return (
+        <div className="label-with-info">
+          {label}
+          <InfoTooltip {...infoTooltip} />
+        </div>
+      );
+    }
+    return label;
+  }, [infoTooltip, label]);
+
   const handleFieldChange = (value: any, selected: any) => {
     onChange &&
       onChange({
@@ -29,7 +41,7 @@ export const FieldSelect: React.FC<FieldSelectProps> = ({
   return (
     <Form.Item
       name={name}
-      label={label}
+      label={formItemLabel}
       rules={rules}
       initialValue={initialValue}
     >
