@@ -120,6 +120,8 @@ export { default as TableSelectColumnsModal } from "./components/TableSelectColu
 
 export { default as TableMenu } from "./components/TableMenu";
 
+export { default as InfoTooltip } from "./components/InfoTooltip";
+
 export { default as Notice } from "./components/Notice";
 
 export { FieldText } from "./components/FormBuilder/fields/Text";

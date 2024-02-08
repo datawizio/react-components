@@ -1,0 +1,137 @@
+@import "../../styles/variables";
+
+button.info-tooltip-button {
+  margin-left: 8px;
+  margin-right: 4px;
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  background: transparent;
+  color: @primary-color;
+  box-shadow: none;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: 50%;
+
+  .anticon-info-circle {
+    width: 16px;
+    height: 16px;
+  }
+
+  .anticon-info-circle:not(:hover) {
+    color: @primary-color;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: @primary-medium-color;
+    border-color: @primary-medium-color;
+  }
+
+  &.info-tooltip-button-highlighted {
+    background: @primary-color;
+    border-color: @primary-color;
+
+    svg {
+      path:last-child {
+        color: @white;
+      }
+    }
+
+    .anticon-info-circle {
+      color: @primary-color;
+    }
+
+    &:hover {
+      background: @primary-color;
+      border-color: @primary-color;
+
+      .anticon-info-circle {
+        color: @primary-color;
+      }
+    }
+  }
+
+}
+
+.theme-dark {
+  button.info-tooltip-button:hover {
+    color: #69459b;
+
+    .anticon-info-circle {
+      color: #69459b;
+    }
+  }
+
+  .info-tooltip-button-highlighted:hover {
+    .anticon-info-circle {
+      color: #975fe4 !important;
+    }
+  }
+}
+
+.card-header {
+  button.info-tooltip-button {
+    margin-left: 8px;
+  }
+}
+
+.info-tooltip {
+  max-width: 400px;
+
+  @media (max-width: 768px) {
+    max-width: 250px;
+  }
+
+  .ant-tooltip-inner {
+    padding: 20px;
+  }
+
+  &-detailed {
+    text-align: right;
+    margin-bottom: 0;
+    color: @primary-color;
+
+    span {
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+
+  &-content {
+    position: relative;
+
+    .anticon.anticon-close {
+      position: absolute;
+      right: -12px;
+      top: -12px;
+      cursor: pointer;
+    }
+
+  }
+
+  &.info-tooltip-theme-light {
+    .ant-tooltip-arrow {
+      .ant-tooltip-arrow-content {
+        background: @white;
+        height: 8px;
+        width: 8px;
+      }
+    }
+
+    .ant-tooltip-inner {
+      background: @white;
+      color: @text-color;
+
+      .anticon.anticon-close {
+        color: @text-color;
+      }
+    }
+  }
+
+}
