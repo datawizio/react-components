@@ -3,7 +3,7 @@ import { Form } from "antd";
 import Input from "../../Input";
 import { FieldTextProps } from "../types";
 import InfoTooltip from "../../InfoTooltip";
-//import "../../InfoTooltip/index.less";
+import "../../InfoTooltip/index.less";
 
 export const FieldText: React.FC<FieldTextProps> = React.memo(
   React.forwardRef(

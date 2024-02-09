@@ -4,7 +4,7 @@ import Checkbox from "../../Checkbox";
 import { FieldCheckboxProps } from "../types";
 import { CheckboxChangeEvent } from "antd/es/checkbox/Checkbox";
 import InfoTooltip from "../../InfoTooltip";
-//import "../../InfoTooltip/index.less";
+import "../../InfoTooltip/index.less";
 
 export const FieldCheckbox: React.FC<FieldCheckboxProps> = React.memo(
   ({ label, rules, name, placeholder, disabled, onChange, infoTooltip }) => {
