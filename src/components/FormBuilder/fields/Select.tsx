@@ -3,7 +3,7 @@ import { Form } from "antd";
 import Select from "../../Select";
 import { FieldSelectProps } from "../types";
 import InfoTooltip from "../../InfoTooltip";
-import "../../InfoTooltip/index.less";
+//import "../../InfoTooltip/index.less";
 
 export const FieldSelect: React.FC<FieldSelectProps> = ({
   allowClear,
