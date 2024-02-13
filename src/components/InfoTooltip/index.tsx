@@ -4,6 +4,7 @@ import { CloseOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import clsx from "clsx";
 import Button from "../Button";
+import { TooltipPlacement } from "antd/es/tooltip";
 import "./index.less";
 
 export interface InfoTooltipProps {
@@ -11,13 +12,17 @@ export interface InfoTooltipProps {
   detailedLink?: string;
   detailedTextKey?: string;
   className?: string;
+  placement?: TooltipPlacement;
+  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement | null;
 }
 
 const InfoTooltip: React.FC<InfoTooltipProps> = ({
   description,
   detailedLink,
   detailedTextKey,
-  className
+  placement,
+  className,
+  getPopupContainer
 }) => {
   const { t } = useTranslation();
 
@@ -61,11 +66,12 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
   return description ? (
     <Tooltip
       title={tooltip}
-      placement="right"
+      placement={placement as TooltipPlacement}
       trigger={["click"]}
       overlayClassName={tooltipClassNames}
       visible={tooltipVisible}
       onVisibleChange={onVisibleChangeCallback}
+      getPopupContainer={getPopupContainer}
     >
       <Button
         className={buttonClassNames}
