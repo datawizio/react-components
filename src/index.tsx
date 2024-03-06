@@ -68,6 +68,8 @@ export { default as PhoneInput } from "./components/PhoneInput";
 
 export { default as SideButton } from "./components/SideButton";
 
+export { default as Pagination } from "./components/Pagination";
+
 export { default as TreeSearch } from "./components/TreeSearch";
 
 export { default as TreeSelect } from "./components/TreeSelect";
