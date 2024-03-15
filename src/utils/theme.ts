@@ -78,7 +78,7 @@ export const changeTheme = (theme: ITheme, fromHandler = false) => {
 export const catchAppendStylesheet = () => {
   var f = Element.prototype.appendChild;
 
-  //@ts-ignore
+  // @ts-ignore
   Element.prototype.appendChild = function () {
     const element = arguments[0];
 
@@ -89,7 +89,7 @@ export const catchAppendStylesheet = () => {
       let href = element.getAttribute("href").split("/");
       if (httpSet.has(href[0]) && href[2] !== window.location.hostname) {
         f.apply(this, arguments);
-        return;
+        return element;
       }
 
       if (window.theme === "light") {
@@ -100,9 +100,12 @@ export const catchAppendStylesheet = () => {
       }
       element.setAttribute("href", href.join("/"));
       f.apply(this, [element]);
-      return;
+      return element;
     }
-    //@ts-ignore
+
+    // @ts-ignore
     f.apply(this, arguments);
+
+    return element;
   };
 };
