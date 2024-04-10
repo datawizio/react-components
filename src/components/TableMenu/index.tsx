@@ -18,6 +18,7 @@ export interface TableMenuProps extends ButtonProps {
   getFilename?: () => string;
   menuItems?: any;
   config?: any;
+  settings?: any;
   duration?: number;
   exportHandler?: (
     tableState: TableState | null,
@@ -32,7 +33,8 @@ export interface TableMenuProps extends ButtonProps {
 
 const TableMenu: React.FC<TableMenuProps> = props => {
   const {
-    config,
+    config = {},
+    settings = {},
     onSendClick,
     exportHandler,
     exportHandlerCallback,
@@ -47,6 +49,17 @@ const TableMenu: React.FC<TableMenuProps> = props => {
   const { translate } = useContext(ConfigContext);
 
   const context = useContext(TableContext);
+
+  const { expand_horizontally } = settings;
+  const {
+    fixed_total,
+    expand_table_vertically,
+    expand_table_horizontally,
+    show_export_xls,
+    show_send_to_email,
+    is_visualization,
+    max_level = 1
+  } = config;
 
   const { tableState, dispatch } = useMemo(() => {
     if (context) {
@@ -93,6 +106,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
       exportHandlerCallback
     ]
   );
+
   const handleTotalClick = useCallback(
     (e: any) => {
       e?.stopPropagation();
@@ -124,9 +138,10 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         break;
     }
   };
+
   const menu = (
     <Menu onClick={handleMenuClick} className="table-menu-dropdown">
-      {config?.fixed_total && (
+      {fixed_total && (
         <Menu.Item key="fixed_total" className="menu-item-checkbox">
           <Checkbox
             checked={Boolean(tableState?.fixedTotal)}
@@ -136,14 +151,14 @@ const TableMenu: React.FC<TableMenuProps> = props => {
           </Checkbox>
         </Menu.Item>
       )}
-      {config?.expand_table_vertically && (
+      {expand_table_vertically && (
         <Menu.Item key="expand_table_vertically" className="menu-item-checkbox">
           <Checkbox onClick={onExpandVertical}>
             {translate("EXPAND_THE_TABLE_VERTICALLY")}
           </Checkbox>
         </Menu.Item>
       )}
-      {config?.expand_table_horizontally && (
+      {expand_table_horizontally && (
         <Menu.Item
           key="expand_table_horizontally"
           className="menu-item-checkbox"
@@ -153,12 +168,12 @@ const TableMenu: React.FC<TableMenuProps> = props => {
           </Checkbox>
         </Menu.Item>
       )}
-      {(config?.fixed_total ||
-        config?.expand_table_vertically ||
-        config?.expand_table_horizontally) && (
+      {(fixed_total ||
+        expand_table_vertically ||
+        expand_table_horizontally) && (
         <Menu.Divider className={"table-menu-dropdown__divider"} />
       )}
-      {config?.show_export_xls !== false && (
+      {show_export_xls !== false && (
         <Menu.Item
           key="export_xlsx"
           icon={
@@ -170,22 +185,44 @@ const TableMenu: React.FC<TableMenuProps> = props => {
           {translate("SAVE_XLS")}
         </Menu.Item>
       )}
-      {config?.show_send_to_email && (
-        <Menu.Item
-          key="send_xlsx"
-          icon={<SendOutlined className={"table-menu-dropdown__icon__send"} />}
-        >
-          {translate("SEND_XLS")}
-        </Menu.Item>
-      )}
+      {show_send_to_email &&
+        (is_visualization && !expand_horizontally && max_level > 1 ? (
+          <Menu.SubMenu
+            key="send_xlsx_submenu"
+            title={
+              <>
+                <SendOutlined className={"table-menu-dropdown__icon__send"} />
+                {translate("SEND_XLS")}
+              </>
+            }
+          >
+            <Menu.Item key="apply_expand_tree" onClick={onSendClick}>
+              {translate("APPLY_EXPAND_TREE")}
+            </Menu.Item>
+            <Menu.Item key="without_expand_tree" onClick={onSendClick}>
+              {translate("WITHOUT_EXPAND_TREE")}
+            </Menu.Item>
+          </Menu.SubMenu>
+        ) : (
+          <Menu.Item
+            key="send_xlsx"
+            icon={
+              <SendOutlined className={"table-menu-dropdown__icon__send"} />
+            }
+          >
+            {translate("SEND_XLS")}
+          </Menu.Item>
+        ))}
     </Menu>
   );
+
   const hasMenuItem =
-    config?.show_send_to_email ||
-    config?.show_export_xls !== false ||
-    config?.expand_table_horizontally ||
-    config?.expand_table_vertically ||
-    config?.fixed_total;
+    show_send_to_email ||
+    show_export_xls !== false ||
+    expand_table_horizontally ||
+    expand_table_vertically ||
+    fixed_total;
+
   return hasMenuItem ? (
     <div className="table-menu table-toolbar--right">
       <Dropdown overlay={menu} trigger={["click"]}>
