@@ -7,7 +7,14 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
       Object {
         "app_id": "first app",
         "description": "Admin Panel",
+        "is_main": false,
         "name": "AP",
+      },
+      Object {
+        "app_id": "second app",
+        "description": "Builder",
+        "is_main": true,
+        "name": "BI",
       },
     ]
   }
@@ -16,17 +23,27 @@ exports[`AppSwitcher component Render AppSwitcher correctly 1`] = `
     mouseEnterDelay={0.15}
     mouseLeaveDelay={0.1}
     overlay={
-      <div
+      <ForwardRef
         className="app-switcher-container"
       >
-        <ForwardRef>
-          <App
-            app_id="first app"
-            description="Admin Panel"
-            name="AP"
-          />
-        </ForwardRef>
-      </div>
+        <App
+          app_id="second app"
+          description="Builder"
+          is_main={true}
+          name="BI"
+        />
+        <span
+          className="other-apps-title"
+        >
+          NAVIGATE_TO
+        </span>
+        <App
+          app_id="first app"
+          description="Admin Panel"
+          is_main={false}
+          name="AP"
+        />
+      </ForwardRef>
     }
     overlayClassName="AppSwitcher__dropdown"
     placement="bottomCenter"

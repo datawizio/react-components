@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from "react";
-import { Dropdown, Row, Col } from "antd";
+import { Col, Dropdown, Row, Typography } from "antd";
 import Icon from "@ant-design/icons";
 
 import "./index.less";
@@ -10,20 +10,29 @@ export interface IApplication {
   app_id: number | string;
   name: string;
   description: string;
-
-  logo?: string;
+  bento_menu_description: string;
+  is_main: boolean;
   host: string;
   path: string | null;
   icon?: string;
   dark_icon?: string;
-  allowed?: boolean;
-  clients?: { id: number; name: string }[];
-  showButton?: boolean;
 }
 
 const App: React.FC<
   IApplication & { client: number; onAppClick?: (app: string) => void }
-> = ({ client, name, host, icon, dark_icon, path, onAppClick }) => {
+> = ({
+  client,
+  name,
+  bento_menu_description,
+  is_main,
+  host,
+  icon,
+  dark_icon,
+  path,
+  onAppClick
+}) => {
+  const { translate } = useContext(ConfigContext);
+
   const handleClick = () => {
     const url = `${host}${path ? path : ""}`;
     window.open(url.replace(":client_id", client.toString()), "_blank");
@@ -31,13 +40,17 @@ const App: React.FC<
   };
 
   return (
-    <Col span={8} onClick={handleClick}>
+    <Col span={24} onClick={handleClick} flex="1">
       <div className="logo">
-        <div>
-          <img src={window.theme === "dark" ? dark_icon : icon} alt={name} />
-        </div>
+        <img src={window.theme === "dark" ? dark_icon : icon} alt={name} />
       </div>
-      <div className="title">{name}</div>
+
+      <div className="text">
+        <Typography.Paragraph>
+          {is_main ? translate("HOME") : name}
+        </Typography.Paragraph>
+        <Typography.Paragraph>{translate(bento_menu_description)}</Typography.Paragraph>
+      </div>
     </Col>
   );
 };
@@ -45,11 +58,26 @@ const App: React.FC<
 const menu = (
   apps: IApplication[],
   client: number,
+  navigateTitle: string,
   onAppClick?: (app: string) => void
-) => (
-  <div className="app-switcher-container">
-    <Row>
-      {apps.map(app => (
+) => {
+  const mainApp = apps.find(item => item.is_main);
+  const otherApps = apps.filter(item => item.app_id !== mainApp?.app_id);
+
+  return (
+    <Row className="app-switcher-container">
+      {mainApp && (
+        <App
+          {...mainApp}
+          client={client}
+          key={mainApp.app_id}
+          onAppClick={onAppClick}
+        />
+      )}
+
+      <span className="other-apps-title">{navigateTitle}</span>
+
+      {otherApps.map(app => (
         <App
           {...app}
           client={client}
@@ -58,8 +86,8 @@ const menu = (
         />
       ))}
     </Row>
-  </div>
-);
+  );
+};
 
 const AppSwitcherSvg = () => (
   <svg className="app-switcher-icon" focusable="false" viewBox="0 0 24 24">
@@ -76,7 +104,7 @@ export interface IAppSwitcher {
   onAppClick?: (app: string) => void;
 }
 
-const AppSwitcher: React.FC<IAppSwitcher> = ({
+const AppSwitcherNEW: React.FC<IAppSwitcher> = ({
   apps,
   client,
   theme,
@@ -85,8 +113,8 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({
   const { translate } = useContext(ConfigContext);
 
   const overlay = useMemo(() => {
-    return menu(apps, client, onAppClick);
-  }, [apps, client, onAppClick]);
+    return menu(apps, client, translate("NAVIGATE_TO"), onAppClick);
+  }, [apps, client, onAppClick, translate]);
 
   const className = clsx({
     "app-switcher-link": true,
@@ -115,4 +143,4 @@ const AppSwitcher: React.FC<IAppSwitcher> = ({
   );
 };
 
-export default AppSwitcher;
+export default AppSwitcherNEW;
