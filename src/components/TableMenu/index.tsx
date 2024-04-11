@@ -25,7 +25,7 @@ export interface TableMenuProps extends ButtonProps {
     filename: string
   ) => Promise<BlobPart> | Promise<void> | null;
   exportHandlerCallback?: (fileData: BlobPart | Blob, filename: string) => any;
-  onSendClick?: () => Promise<void>;
+  onSendClick?: (applyExpandTree?: boolean) => Promise<void>;
   onTotalClick?: (e: any) => void;
   onExpandVertical?: (e: any) => void;
   onExpandHorizontal?: (e: any) => void;
@@ -196,10 +196,10 @@ const TableMenu: React.FC<TableMenuProps> = props => {
               </>
             }
           >
-            <Menu.Item key="apply_expand_tree" onClick={onSendClick}>
+            <Menu.Item key="apply_expand_tree" onClick={() => onSendClick(true)}>
               {translate("APPLY_EXPAND_TREE")}
             </Menu.Item>
-            <Menu.Item key="without_expand_tree" onClick={onSendClick}>
+            <Menu.Item key="without_expand_tree" onClick={() => onSendClick(false)}>
               {translate("WITHOUT_EXPAND_TREE")}
             </Menu.Item>
           </Menu.SubMenu>
