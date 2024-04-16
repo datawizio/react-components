@@ -42,7 +42,8 @@ export default class ErrorBoundary extends React.Component<
   async componentDidCatch(error: any, errorInfo: any) {
     if (
       error.toString().includes("ChunkLoadError") ||
-      error.toString().includes("Loading CSS chunk")
+      error.toString().includes("Loading CSS chunk") ||
+      error.toString().includes("Failed to fetch")
     ) {
       this.setState({ chunkError: true });
       return;
