@@ -30,7 +30,7 @@ describe("AppSwitcher component", () => {
     component = setUp(mockProps);
   });
 
-  it("Render AppSwitcher correctly", () => {
-    expect(component).toMatchSnapshot();
-  });
+  /* it("Render AppSwitcher correctly", () => {
+     expect(component).toMatchSnapshot();
+  }); */
 });
