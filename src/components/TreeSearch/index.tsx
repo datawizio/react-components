@@ -66,6 +66,11 @@ export interface TreeSearchProps extends TreeProps {
    * Функция для передачи компонта поля Input
    */
   renderInput?: (handleSearchInputChange: (e: any) => void) => React.Component;
+
+  /**
+   * Show child elements if parent found
+   */
+  showChildIfParentFound?: boolean;
 }
 
 function defaultSearchCondition(searchValue, node) {
@@ -86,6 +91,7 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
     checkedKeys,
     maxCheckedKeys,
     onCheck,
+    showChildIfParentFound,
     ...restProps
   } = props;
 
@@ -129,15 +135,17 @@ const TreeSearch: React.FC<TreeSearchProps> = props => {
       filterOption: internalSearchCondition
     });
 
-    filteredOptions.forEach(item => {
-      item.children = filterOptions(searchValue, item.children, {
-        optionFilterProp: "title",
-        filterOption: internalSearchCondition
+    if (!showChildIfParentFound) {
+      filteredOptions.forEach(item => {
+        item.children = filterOptions(searchValue, item.children, {
+          optionFilterProp: "title",
+          filterOption: internalSearchCondition
+        });
       });
-    });
+    }
 
     return filteredOptions;
-  }, [internalSearchCondition, searchValue, setDisabledStatus, treeData]);
+  }, [internalSearchCondition, searchValue, setDisabledStatus, treeData, showChildIfParentFound]);
 
   const handleSearchInputChange = useCallback(
     e => {
