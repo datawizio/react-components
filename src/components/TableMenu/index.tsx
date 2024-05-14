@@ -22,7 +22,8 @@ export interface TableMenuProps extends ButtonProps {
   duration?: number;
   exportHandler?: (
     tableState: TableState | null,
-    filename: string
+    filename: string,
+    hideLoadingMessageFn?: () => void
   ) => Promise<BlobPart> | Promise<void> | null;
   exportHandlerCallback?: (fileData: BlobPart | Blob, filename: string) => any;
   onSendClick?: (applyExpandTree?: boolean) => Promise<void>;
@@ -77,13 +78,13 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         }
         const messageKey = "exporting-" + file;
 
-        message.loading({
+        const hideLoadingMessageFn = message.loading({
           content: translate("LOADING"),
           key: messageKey,
           duration: duration
         });
 
-        const fileData = await exportHandler(tableState, file);
+        const fileData = await exportHandler(tableState, file, hideLoadingMessageFn);
 
         if (!fileData) return;
 
