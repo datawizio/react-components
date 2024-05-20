@@ -9,10 +9,11 @@ import "./index.less";
 
 export interface InfoTooltipProps {
   description?: string | React.ReactNode;
-  detailedLink?: string;
+  detailedLink?: string | null;
   detailedTextKey?: string;
   className?: string;
   placement?: TooltipPlacement;
+  trigger?: Array<string>;
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement | null;
 }
 
@@ -21,6 +22,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
   detailedLink,
   detailedTextKey,
   placement,
+  trigger,
   className,
   getPopupContainer
 }) => {
@@ -48,11 +50,13 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
       <div className="info-tooltip-content">
         <CloseOutlined onClick={closeTooltip} />
         {description}
-        <p className="info-tooltip-detailed">
-          <a href={detailedLink} target="_blank" rel="noreferrer">
-            {detailedTextKey ? t(detailedTextKey) : t("DETAILED")}...
-          </a>
-        </p>
+        {detailedLink && (
+          <p className="info-tooltip-detailed">
+            <a href={detailedLink} target="_blank" rel="noreferrer">
+              {detailedTextKey ? t(detailedTextKey) : t("DETAILED")}...
+            </a>
+          </p>
+        )}
       </div>
     ) : (
       <></>
@@ -67,7 +71,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
     <Tooltip
       title={tooltip}
       placement={placement as TooltipPlacement}
-      trigger={["click"]}
+      trigger={trigger || ["click"]}
       overlayClassName={tooltipClassNames}
       visible={tooltipVisible}
       onVisibleChange={onVisibleChangeCallback}
@@ -77,6 +81,10 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
         className={buttonClassNames}
         icon={<InfoCircleOutlined />}
         type="link"
+        onClick={(e: React.MouseEvent) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
       />
     </Tooltip>
   ) : null;
