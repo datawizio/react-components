@@ -24,6 +24,8 @@ export interface DrawerFormProps {
   onClose?: () => void;
   onSubmit?: () => void;
   validateTrigger?: string | string[];
+  onFieldsChange?: (changedFields: any, allFields: any) => void;
+  onValuesChange?: (changedValues: any, allValues: any) => void;
 }
 
 const noop = () => {};
@@ -46,6 +48,8 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
   convertState,
   onClose,
   onSubmit,
+  onFieldsChange,
+  onValuesChange,
   validateTrigger
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -119,6 +123,8 @@ const DrawerForm: React.FC<DrawerFormProps> = ({
         className="entity-form"
         hideRequiredMark={hideRequiredMark}
         validateTrigger={validateTrigger}
+        onFieldsChange={onFieldsChange}
+        onValuesChange={onValuesChange}
       >
         <Loader loading={loading}>{children}</Loader>
       </Form>

@@ -26,6 +26,7 @@ export interface FieldDateRangePickerProps
   ranges?: PresetsRangeType;
   presets?: string[];
   useDefaultPreset?: boolean;
+  allowClear?: boolean;
   defaultPresetExceptions?: string[];
   currDateRange?: {
     date_from: DateType;

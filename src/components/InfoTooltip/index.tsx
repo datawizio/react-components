@@ -41,7 +41,9 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({
     "info-tooltip-theme-dark": window.theme === "dark"
   });
 
-  const closeTooltip = useCallback(() => {
+  const closeTooltip = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setTooltipVisible(false);
   }, []);
 
