@@ -84,7 +84,11 @@ const TableMenu: React.FC<TableMenuProps> = props => {
           duration: duration
         });
 
-        const fileData = await exportHandler(tableState, file, hideLoadingMessageFn);
+        const fileData = await exportHandler(
+          tableState,
+          file,
+          hideLoadingMessageFn
+        );
 
         if (!fileData) return;
 
@@ -127,13 +131,13 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     [dispatch, tableState]
   );
 
-  const handleMenuClick = e => {
+  const handleMenuClick = (e: any) => {
     switch (e.key) {
       case "export_xlsx":
-        handleExport();
+        void handleExport();
         break;
       case "send_xlsx":
-        onSendClick();
+        void onSendClick(expand_horizontally);
         break;
       default:
         break;
@@ -197,10 +201,16 @@ const TableMenu: React.FC<TableMenuProps> = props => {
               </>
             }
           >
-            <Menu.Item key="apply_expand_tree" onClick={() => onSendClick(true)}>
+            <Menu.Item
+              key="apply_expand_tree"
+              onClick={() => onSendClick(true)}
+            >
               {translate("APPLY_EXPAND_TREE")}
             </Menu.Item>
-            <Menu.Item key="without_expand_tree" onClick={() => onSendClick(false)}>
+            <Menu.Item
+              key="without_expand_tree"
+              onClick={() => onSendClick(false)}
+            >
               {translate("WITHOUT_EXPAND_TREE")}
             </Menu.Item>
           </Menu.SubMenu>
