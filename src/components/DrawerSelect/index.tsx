@@ -22,31 +22,17 @@ import "./index.less";
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
   additionalFilters?: any;
-  /**
-   * Данные будут загружаться ассинхронно. Будет вызываться функция `loadData`
-   */
+
   asyncData?: boolean;
 
   hideSearch?: boolean;
 
-  /**
-   * Title Drawer-а
-   */
   drawerTitle?: string;
 
-  /**
-   * Drawer width in px
-   */
   drawerWidth?: number;
 
-  /**
-   * Label prop
-   */
   labelProp?: string;
 
-  /**
-   * Функция которая будет вызываться для подгрузки данных с параметрами `searchValue`, `page`
-   */
   loadData?: (
     filters: any,
     page: number,
@@ -60,24 +46,16 @@ export interface DrawerSelectProps<VT>
 
   noticeRender?: React.ReactElement | null;
 
+  labelPropOptions?: React.ReactElement | null;
+
   multiple?: boolean;
 
-  /**
-   * Value prop
-   */
   valueProp?: string;
-
-  /**
-   * max selected count
-   */
 
   maxSelectedCount?: number;
 
   maxTagLength?: number;
 
-  /**
-   * Подгрузка ассинхронных данных с пагинацией
-   */
   withPagination?: boolean;
 
   /**
@@ -163,6 +141,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     maxSelectedCount,
     maxTagLength,
     noticeRender,
+    labelPropOptions,
     onLoadData,
     ...restProps
   } = props;
@@ -172,6 +151,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const drawerSearchPlaceholder = useMemo(() => translate("SEARCH"), [
     translate
   ]);
+
   const noDataText = useMemo(() => translate("NO_DATA"), [translate]);
   const loadingText = useMemo(() => translate("LOADING"), [translate]);
   const submitText = useMemo(() => translate("SUBMIT"), [translate]);
@@ -314,6 +294,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   );
 
   //  -------- HANDLERS --------
+
   const closeDrawer = useCallback(() => {
     setTimeout(() => {
       const activeElement = document.activeElement as HTMLElement;
@@ -471,6 +452,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   );
 
   // ------- EFFECTS ----------
+
   useEffect(() => {
     dispatch({
       type: "setInternalValue",
@@ -501,6 +483,38 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       payload: { optionsState: internalOptions }
     });
   }, [dispatch, internalOptions]);
+
+  // Convert option labels if labelProp is changed
+  useEffect(() => {
+    if (!labelPropOptions) return;
+
+    let payload = {
+      optionsState: []
+    };
+
+    dispatch({
+      type: "remoteLoadDataStart",
+      payload
+    });
+
+    const options = convertOptions(
+      optionsState,
+      valueProp,
+      labelProp,
+      selectedOptions.current,
+      value
+    );
+
+    payload.optionsState = getUniqueItems(
+      options.selected.concat(options.options)
+    );
+
+    dispatch({
+      type: "remoteLoadDataStop",
+      payload
+    });
+    //eslint-disable-next-line
+  }, [labelProp]);
 
   useEffect(() => {
     !asyncData && loadData && loadPage("", 0, true);
@@ -564,6 +578,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           }
         >
           {noticeRender}
+          {labelPropOptions}
           {!hideSearch && (
             <SearchInput
               placeholder={drawerSearchPlaceholder}
@@ -611,6 +626,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     searchValue: searchValue,
     tagRender: tagRender,
     noticeRender: noticeRender,
+    labelPropOptions: labelPropOptions,
     dropdownClassName: "drawer-select-dropdown-fake",
     showSearch: true,
     onSearch: handleSearch,

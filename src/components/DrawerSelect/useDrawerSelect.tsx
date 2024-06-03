@@ -1,6 +1,5 @@
 import { useReducer } from "react";
-
-import { SelectValue } from "../DrawerSelect/antd/AntSelect";
+import { SelectValue } from "./antd/AntSelect";
 import { AntTreeNode } from "antd/es/tree";
 
 export interface IUseDrawerSelect {
