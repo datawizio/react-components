@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
-
 import Button from "../Button";
 import { BellOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
-
 import { useState } from "react";
 import Badger, { BadgerOptions } from "../FaviconBadger";
-
 import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
 import { sendMessage, subscribe, unsubscribe } from "../../utils/ws";
 import "./index.less";
@@ -16,6 +13,8 @@ export interface NotificationButtonProps {
   faviconBadgerOptions?: BadgerOptions;
   count: number;
   onClick: React.MouseEventHandler<HTMLElement>;
+  tooltip?: string;
+  disabled?: boolean;
 }
 
 const badgeOptions: BadgerOptions = { size: 0.35, radius: 50 };
@@ -26,6 +25,8 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   count,
   faviconBadgerOptions,
   useWS,
+  tooltip,
+  disabled,
   onClick
 }) => {
   const [state, setState] = useState<number>(count);
@@ -63,8 +64,19 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   }, [useDeepEqualMemo(faviconBadgerOptions)]);
 
   return (
-    <Badge className="notification-btn" dot={state > 0}>
-      <Button type="link" onClick={onClick} icon={<BellOutlined />}></Button>
+    <Badge
+      className={`notification-btn ${
+        disabled ? "notification-btn--disabled" : ""
+      }`}
+      dot={state > 0}
+    >
+      <Button
+        type="link"
+        onClick={onClick}
+        icon={<BellOutlined />}
+        disabled={disabled}
+        title={tooltip}
+      ></Button>
     </Badge>
   );
 };
