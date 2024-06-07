@@ -65,6 +65,8 @@ export interface DrawerSelectProps<VT>
 
   onCheckSelectedValue?: (values: SelectValue) => void;
 
+  onDrawerCancel?: () => void;
+
   valueToUncheck?: string | number;
 
   onLoadData?: (data: any, value: any) => { value?: any };
@@ -142,6 +144,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     maxTagLength,
     noticeRender,
     labelPropOptions,
+    onDrawerCancel,
     onLoadData,
     ...restProps
   } = props;
@@ -262,6 +265,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
       state = {
         page: page,
+        searchValue: search,
         totalPages: pages
       };
 
@@ -323,6 +327,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     });
 
     if (searchValue) handleSearch("");
+
+    onDrawerCancel?.();
 
     //eslint-disable-next-line
   }, [dispatch, closeDrawer, value, multiple, searchValue, loadData]);
@@ -488,6 +494,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   useEffect(() => {
     if (!labelPropOptions) return;
 
+    if (searchValue) {
+      dispatch({
+        type: "setState",
+        payload: { searchValue: "", page: 0 }
+      });
+      loadPage("", 0, false);
+      return;
+    }
+
     let payload = {
       optionsState: []
     };
@@ -612,7 +627,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       );
     },
     //eslint-disable-next-line
-    [searchValue, internalLoading, drawerVisible, internalValue]
+    [searchValue, internalLoading, drawerVisible, internalValue, labelPropOptions]
   );
 
   const properties = {
