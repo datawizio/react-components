@@ -1,10 +1,11 @@
 import React from "react";
-
 import { Modal } from "antd";
 import i18n from "i18next";
 import "./index.less";
 
-const openBookMeetingModal = () => {
+const defaultMeetingSrc = "https://meetings-eu1.hubspot.com/meetings/olena-dziuban/bes-presentation?embed=true";
+
+const openBookMeetingModal = (src: string = defaultMeetingSrc) => {
 
   const hubSpotScript: HTMLScriptElement = document.createElement("script");
   hubSpotScript.src = "https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js";
@@ -28,7 +29,7 @@ const openBookMeetingModal = () => {
         <span className="book-meeting-modal-title">{i18n.t("BOOK_MEETING_TITLE")}</span>
         <div
           className="meetings-iframe-container"
-          data-src="https://meetings-eu1.hubspot.com/meetings/olena-dziuban/bes-presentation?embed=true"
+          data-src={src}
         ></div>
       </div>
     ),
