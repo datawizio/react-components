@@ -2,6 +2,7 @@ import { ModalProps } from "antd";
 import { PlayerState } from "video-react";
 import { Source } from "../Player/types";
 import { ButtonProps as AntButtonProps } from "antd/lib/button";
+import { Dispatch, SetStateAction } from "react";
 
 export type VoidCallback = () => void;
 
@@ -13,6 +14,8 @@ export interface ThumbnailProps {
 }
 
 export interface VideoModalProps {
+  open?: boolean;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
   thumbnail?: string;
   buttonProps?: AntButtonProps & {
     text: string;

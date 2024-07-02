@@ -7,6 +7,8 @@ import { Thumbnail } from "./Thumbnail";
 import Button from "../Button";
 
 const VideoModal: FC<VideoModalProps> = ({
+  open,
+  setOpen,
   thumbnail,
   buttonProps,
   source,
@@ -16,6 +18,12 @@ const VideoModal: FC<VideoModalProps> = ({
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
+  useEffect(() => {
+    if (open !== undefined) {
+      setModalVisible(open);
+    }
+  }, [open]);
+
   const player = useRef<PlayerReference>();
 
   useEffect(() => {
@@ -23,6 +31,7 @@ const VideoModal: FC<VideoModalProps> = ({
       player.current.subscribeToStateChange(playerState => {
         if (playerState.ended) {
           setModalVisible(false);
+          setOpen && setOpen(false);
         }
         onVideoStateChange && onVideoStateChange(playerState);
       });
@@ -31,11 +40,13 @@ const VideoModal: FC<VideoModalProps> = ({
 
   const handleThumbnailClick = () => {
     setModalVisible(true);
+    setOpen && setOpen(true);
     player.current && player.current.play();
     onThumbnailClick && onThumbnailClick();
   };
   const handleCancel = () => {
     setModalVisible(false);
+    setOpen && setOpen(false);
   };
 
   const handleClose = () => {
