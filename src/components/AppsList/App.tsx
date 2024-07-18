@@ -116,7 +116,7 @@ export const App: React.FC<CardAppProps> = ({
               disabled={disabled}
               onClick={handleButtonClick}
             >
-              {translate(allowed ? "GO_OVER" : "LEARN_MORE")}
+              {translate(allowed ? "NAVIGATE_TO" : "LEARN_MORE")}
             </Button>
           </div>
         )}

@@ -1,31 +1,12 @@
 import * as React from "react";
-import HelpMenu from "./components/Menu";
+import { IHelpMenu } from "./types";
+import HelpMenu from "./HelpMenu";
 import "./index.less";
 
-export interface IHelp {
-  onTutorialLinkClick?: () => void;
-  onHelperClick?: () => void;
-  onVisibleChange?: (visible: boolean) => void;
-  tourMenu?: React.ReactElement;
-  visible?: boolean;
-}
-
-const Help: React.FC<IHelp> = ({
-  onTutorialLinkClick,
-  onHelperClick,
-  onVisibleChange,
-  tourMenu,
-  visible
-}) => {
+const Help: React.FC<IHelpMenu> = ({ ...params }) => {
   return (
     <>
-      <HelpMenu
-        onTutorialClick={onTutorialLinkClick}
-        onHelperClick={onHelperClick}
-        onVisibleChange={onVisibleChange}
-        tourMenu={tourMenu}
-        visible={visible}
-      />
+      <HelpMenu {...params} />
       <div className="divider"></div>
     </>
   );
