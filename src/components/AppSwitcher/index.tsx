@@ -75,7 +75,9 @@ const menu = (
         />
       )}
 
-      <span className="other-apps-title">{navigateTitle}</span>
+      {otherApps.length > 0 && (
+        <span className="other-apps-title">{navigateTitle}</span>
+      )}
 
       {otherApps.map(app => (
         <App
