@@ -14,7 +14,7 @@ const openBookMeetingModal = (src: string = defaultMeetingSrc) => {
 
   Modal.info({
     closable: true,
-    maskClosable: true,
+    maskClosable: false,
     okButtonProps: {
       hidden: true
     },
