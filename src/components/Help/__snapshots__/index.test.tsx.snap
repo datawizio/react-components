@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Help component Help rendered correctly 1`] = `
+<Fragment>
+  <HelpMenu
+    onHelperClick={[MockFunction]}
+    onTutorialLinkClick={[MockFunction]}
+  />
+  <div
+    className="divider"
+  />
+</Fragment>
+`;
