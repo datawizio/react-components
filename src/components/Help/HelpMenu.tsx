@@ -34,7 +34,7 @@ const HelpMenu: React.FC<IHelpMenu> = ({
             {translate("BES_HELPER")}
           </Menu.Item>
         )}
-        {tourMenu && tourMenu}
+        {tourMenu}
       </Menu>
     );
   }, [
