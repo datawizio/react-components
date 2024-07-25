@@ -5,6 +5,7 @@ import "./index.less";
 
 const defaultMeetingSrc = "https://meetings-eu1.hubspot.com/meetings/olena-dziuban/bes-presentation?embed=true";
 
+// TODO: DELETE THIS FILE
 const openBookMeetingModal = (src: string = defaultMeetingSrc) => {
 
   const hubSpotScript: HTMLScriptElement = document.createElement("script");
