@@ -45,7 +45,11 @@ export interface DrawerSelectProps<VT>
   withPagination?: boolean;
 
   /** Event when user clicks Submit */
-  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
+  onChange?: (obj: {
+    value: SelectValue;
+    markers: string[] | number[];
+    selected?: AntTreeNode;
+  }) => void;
   onCheckSelectedValue?: (values: SelectValue) => void;
   onDrawerCancel?: () => void;
   valueToUncheck?: string | number;
@@ -196,20 +200,32 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     }
   };
 
+  const callOnChange = useCallback(
+    (value: SelectValue, selected?: AntTreeNode) => {
+      onChange &&
+        onChange({
+          value,
+          markers: markersSelected.current,
+          selected
+        });
+    },
+    [onChange, markersSelected]
+  );
+
   const triggerOnChange = useCallback(
     value => {
       if (!onChange) return;
       if (!multiple) {
         if (Array.isArray(value) && !value.length) {
-          onChange(null);
+          callOnChange(null);
         } else {
-          onChange(value, value ? selected : undefined);
+          callOnChange(value, value ? selected : undefined);
         }
         return;
       }
-      onChange(value);
+      callOnChange(value);
     },
-    [selected, multiple, onChange]
+    [onChange, multiple, callOnChange, selected]
   );
 
   const loadPage = useCallback(
@@ -294,7 +310,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       valueProp,
       labelProp,
       totalPages,
-      onLoadData
+      onLoadData,
+      selectedMarkers
     ]
   );
 
@@ -458,17 +475,19 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     [internalLoading, page, loadPage, searchValue, totalPages]
   );
 
-  // TODO
-  const handleMarkersChange = (markers: string[] | number[]) => {
-    markersSelected.current = markers;
-    onMarkerChange && onMarkerChange(markers);
-    dispatch({
-      type: "setState",
-      payload: { internalValue: [] }
-    });
-    markersChanged.current = true;
-    loadPage("", 0, false);
-  };
+  const handleMarkersChange = useCallback(
+    (markers: string[] | number[]) => {
+      markersSelected.current = markers;
+      onMarkerChange && onMarkerChange(markers);
+      dispatch({
+        type: "setState",
+        payload: { internalValue: [] }
+      });
+      markersChanged.current = true;
+      void loadPage("", 0, false);
+    },
+    [dispatch, loadPage, onMarkerChange]
+  );
 
   // ------- EFFECTS ----------
 
@@ -655,7 +674,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       internalLoading,
       drawerVisible,
       internalValue,
-      labelPropOptions
+      labelPropOptions,
+      markersTree
     ]
   );
 
