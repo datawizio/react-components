@@ -8,10 +8,12 @@ interface MarkersProps {
   treeData?: any;
   onChange?: any;
   loadChildren?: (id: string, filters?: any) => Promise<any>;
+  placeholder?: string;
+  style?: React.CSSProperties;
 }
 
 export const Markers: React.FC<MarkersProps> = React.memo(
-  ({ value, treeData, onChange, loadChildren }) => {
+  ({ value, treeData, onChange, loadChildren, placeholder, style }) => {
     const { t } = useTranslation();
 
     const handleChange = value => {
@@ -32,12 +34,13 @@ export const Markers: React.FC<MarkersProps> = React.memo(
         value={value}
         treeData={treeData}
         treeCheckable={true}
-        placeholder={t("SHOP_MARKERS")}
+        placeholder={placeholder ?? t("SHOP_MARKERS")}
         showCheckedStrategy={AntTreeSelect.SHOW_PARENT}
         loadData={loadData}
         onChange={handleChange}
         filterTreeNode={handleSearch}
         className="select-markers-field"
+        style={style}
       />
     );
   }

@@ -18,12 +18,11 @@ export const FieldDrawerSelect: React.FC<FieldDrawerSelectProps> = ({
   allowClear,
   ...restProps
 }) => {
-  const handleFieldChange = (value: any, selected: any) => {
+  const handleFieldChange = (obj: any) => {
     onChange &&
       onChange({
         name,
-        value,
-        selected
+        ...obj
       });
   };
 

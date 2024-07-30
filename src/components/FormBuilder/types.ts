@@ -1,9 +1,9 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 import { Rule } from "antd/lib/form";
 import { SwitchSize } from "antd/lib/switch";
 import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
-import {InfoTooltipProps} from "../InfoTooltip";
+import { InfoTooltipProps } from "../InfoTooltip";
 
 export interface IFormFieldChanged<Type> {
   name: string | string[];
@@ -129,7 +129,15 @@ export interface FieldDrawerSelectProps
     page: number
   ) => Promise<{ data: [any]; totalPages: number }>;
   onLoadData?: (data: any, value: any) => { value?: any };
+  loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
+  markersTree?: any;
+  selectedMarkers?: string[] | number[];
+  markersFieldPlaceholder?: string;
+  showMarkers?: boolean;
+  onMarkerChange?: (markers: any) => void;
+  markersFilterName?: string;
 }
+
 export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   additionalFilters?: any;
   treeData?: any;

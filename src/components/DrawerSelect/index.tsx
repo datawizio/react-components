@@ -17,59 +17,50 @@ import ConfigContext from "../ConfigProvider/context";
 import { triggerInputChangeValue } from "../../utils/trigger";
 import { getUniqueItems } from "../../utils/data/dataHelpers";
 import { useDrawerSelect } from "./useDrawerSelect";
+import { Markers } from "../DrawerTreeSelect/Markers";
 import "./index.less";
 
 export interface DrawerSelectProps<VT>
   extends Omit<AntSelectProps<VT>, "onChange"> {
   additionalFilters?: any;
-
   asyncData?: boolean;
-
   hideSearch?: boolean;
-
   drawerTitle?: string;
-
   drawerWidth?: number;
-
   labelProp?: string;
-
   loadData?: (
     filters: any,
     page: number,
     search: string
   ) => Promise<{ data: any; totalPages: number }>;
 
-  /**
-   * Function for customized options
-   * */
+  /** Function for customized options */
   optionRender?: (option: any) => any;
-
   noticeRender?: React.ReactElement | null;
-
   labelPropOptions?: React.ReactElement | null;
-
   multiple?: boolean;
-
   valueProp?: string;
-
   maxSelectedCount?: number;
-
   maxTagLength?: number;
-
   withPagination?: boolean;
 
-  /**
-   * Event when user clicks Submit
-   */
-  onChange?: (values: SelectValue, selected?: AntTreeNode) => void;
-
+  /** Event when user clicks Submit */
+  onChange?: (obj: {
+    value: SelectValue;
+    markers: string[] | number[];
+    selected?: AntTreeNode;
+  }) => void;
   onCheckSelectedValue?: (values: SelectValue) => void;
-
   onDrawerCancel?: () => void;
-
   valueToUncheck?: string | number;
-
   onLoadData?: (data: any, value: any) => { value?: any };
+  loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
+  markersTree?: any;
+  selectedMarkers?: string[] | number[];
+  markersFieldPlaceholder?: string;
+  showMarkers?: boolean;
+  onMarkerChange?: (markers: any) => void;
+  markersFilterName?: string;
 }
 
 function extractProperty(array: Array<object>, propertyName: string) {
@@ -146,6 +137,13 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     labelPropOptions,
     onDrawerCancel,
     onLoadData,
+    loadMarkersChildren,
+    markersTree,
+    selectedMarkers,
+    markersFieldPlaceholder,
+    showMarkers,
+    onMarkerChange,
+    markersFilterName,
     ...restProps
   } = props;
 
@@ -187,6 +185,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const menuRef = useRef();
   const firstLoadedOptions = useRef<any[]>([]);
 
+  const markersSelected = useRef<string[] | number[]>(selectedMarkers || []);
+  const markersChanged = useRef<boolean>(!!selectedMarkers?.length);
+
   const internalOptions = useMemo(() => {
     return options ? convertOptions(options, valueProp, labelProp).options : [];
   }, [options, valueProp, labelProp]);
@@ -199,20 +200,32 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     }
   };
 
+  const callOnChange = useCallback(
+    (value: SelectValue, selected?: AntTreeNode) => {
+      onChange &&
+        onChange({
+          value,
+          markers: markersSelected.current,
+          selected
+        });
+    },
+    [onChange, markersSelected]
+  );
+
   const triggerOnChange = useCallback(
     value => {
       if (!onChange) return;
       if (!multiple) {
         if (Array.isArray(value) && !value.length) {
-          onChange(null);
+          callOnChange(null);
         } else {
-          onChange(value, value ? selected : undefined);
+          callOnChange(value, value ? selected : undefined);
         }
         return;
       }
-      onChange(value);
+      callOnChange(value);
     },
-    [selected, multiple, onChange]
+    [onChange, multiple, callOnChange, selected]
   );
 
   const loadPage = useCallback(
@@ -235,6 +248,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       const filters = { ...additionalFilters, search };
 
       filters.selected = extractProperty(selectedOptions.current, valueProp);
+
+      if (showMarkers && markersFilterName) {
+        filters[markersFilterName] = markersSelected.current;
+      }
 
       if (first) {
         filters.selected = value;
@@ -293,7 +310,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       valueProp,
       labelProp,
       totalPages,
-      onLoadData
+      onLoadData,
+      selectedMarkers
     ]
   );
 
@@ -457,6 +475,20 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     [internalLoading, page, loadPage, searchValue, totalPages]
   );
 
+  const handleMarkersChange = useCallback(
+    (markers: string[] | number[]) => {
+      markersSelected.current = markers;
+      onMarkerChange && onMarkerChange(markers);
+      dispatch({
+        type: "setState",
+        payload: { internalValue: [] }
+      });
+      markersChanged.current = true;
+      void loadPage("", 0, false);
+    },
+    [dispatch, loadPage, onMarkerChange]
+  );
+
   // ------- EFFECTS ----------
 
   useEffect(() => {
@@ -594,6 +626,16 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         >
           {noticeRender}
           {labelPropOptions}
+          {showMarkers && (
+            <Markers
+              treeData={markersTree}
+              value={markersSelected.current}
+              onChange={handleMarkersChange}
+              loadChildren={loadMarkersChildren}
+              placeholder={markersFieldPlaceholder}
+              style={{ marginBottom: 10 }}
+            />
+          )}
           {!hideSearch && (
             <SearchInput
               placeholder={drawerSearchPlaceholder}
@@ -627,7 +669,14 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       );
     },
     //eslint-disable-next-line
-    [searchValue, internalLoading, drawerVisible, internalValue, labelPropOptions]
+    [
+      searchValue,
+      internalLoading,
+      drawerVisible,
+      internalValue,
+      labelPropOptions,
+      markersTree
+    ]
   );
 
   const properties = {
@@ -647,7 +696,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     onSearch: handleSearch,
     optionFilterProp: optionFilterProp || "label",
     optionLabelProp: optionLabelProp || "label",
-    listHeight: window.innerHeight - 198 - (multiple ? 27 : 0),
+    listHeight:
+      window.innerHeight - 198 - (multiple ? 27 : 0) - (showMarkers ? 60 : 0),
     notFoundContent: internalLoading ? loadingText : noDataText,
     onBeforeBlur: handleSelectBeforeBlur,
     onFocus: handleDrawerFocus,
