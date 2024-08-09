@@ -18,6 +18,7 @@ import { triggerInputChangeValue } from "../../utils/trigger";
 import { getUniqueItems } from "../../utils/data/dataHelpers";
 import { useDrawerSelect } from "./useDrawerSelect";
 import { Markers } from "../DrawerTreeSelect/Markers";
+import Checkbox from "../Checkbox";
 import "./index.less";
 
 export interface DrawerSelectProps<VT>
@@ -61,6 +62,7 @@ export interface DrawerSelectProps<VT>
   showMarkers?: boolean;
   onMarkerChange?: (markers: any) => void;
   markersFilterName?: string;
+  showSelectAll?: boolean;
 }
 
 function extractProperty(array: Array<object>, propertyName: string) {
@@ -110,9 +112,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     additionalFilters,
     asyncData,
     hideSearch,
-    showCheckAll,
-    checkAllTitle,
-    checkAllKey,
+    showSelectAll,
     drawerTitle,
     drawerWidth,
     value,
@@ -157,6 +157,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   const loadingText = useMemo(() => translate("LOADING"), [translate]);
   const submitText = useMemo(() => translate("SUBMIT"), [translate]);
   const cancelText = useMemo(() => translate("CANCEL"), [translate]);
+  const selectAllText = useMemo(() => translate("ALL"), [translate]);
 
   const [
     {
@@ -167,6 +168,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       searchValue,
       internalValue,
       selected,
+      selectAllState,
       optionsState
     },
     dispatch
@@ -176,6 +178,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     totalPages: 1,
     drawerVisible: false,
     searchValue: "",
+    selectAllState: "",
     internalValue: undefined,
     selected: undefined,
     optionsState: []
@@ -199,6 +202,62 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       inputRef.current = el;
     }
   };
+
+  // SELECT ALL LOGIC ----------------------------
+  // this logic supports only flat list of options
+
+  const checkSelectAllStatus = useCallback(
+    (values: string[] | number[], options?: string[] | number[]) => {
+      if (!values) values = [];
+
+      if (!multiple) return "";
+
+      const allChecked = values.length === options.length;
+
+      if (!allChecked && values.length) {
+        return "indeterminate";
+      }
+
+      if (allChecked) {
+        return "checked";
+      }
+
+      return "";
+    },
+    [multiple]
+  );
+
+  const selectAll = useCallback(() => {
+    const state: any = {
+      selectAllState: "checked"
+    };
+    state.internalValue = optionsState.map((option: any) => option.value);
+    return state;
+  }, [optionsState]);
+
+  const handleSelectAllChange = useCallback(
+    e => {
+      const checked = e.target.checked;
+      let state: any;
+
+      if (checked) {
+        state = selectAll();
+      } else {
+        state = {
+          selectAllState: "",
+          internalValue: []
+        };
+      }
+
+      dispatch({
+        type: "setState",
+        payload: state
+      });
+    },
+    [dispatch, selectAll]
+  );
+
+  // ---------------------------------------------
 
   const callOnChange = useCallback(
     (value: SelectValue, selected?: AntTreeNode) => {
@@ -294,6 +353,15 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         state.optionsState = getUniqueItems(
           optionsState.concat(options.options)
         );
+      }
+
+      if (showSelectAll && markersSelected.current.length) {
+        state.selectAllState = first
+          ? checkSelectAllStatus(value, state.optionsState)
+          : "checked";
+        state.internalValue = first
+          ? value
+          : state.optionsState.map(option => option.value);
       }
 
       dispatch({
@@ -458,8 +526,27 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (!drawerVisible) {
         triggerOnChange(value);
       }
+
+      if (showSelectAll && markersSelected.current.length) {
+        dispatch({
+          type: "setState",
+          payload: {
+            selectAllState: checkSelectAllStatus(newValue, optionsState)
+          }
+        });
+      }
     },
-    [dispatch, drawerVisible, triggerOnChange, multiple, maxSelectedCount]
+    [
+      multiple,
+      maxSelectedCount,
+      dispatch,
+      drawerVisible,
+      showSelectAll,
+      translate,
+      triggerOnChange,
+      checkSelectAllStatus,
+      optionsState
+    ]
   );
 
   const handlePopupScroll = useCallback(
@@ -477,13 +564,25 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const handleMarkersChange = useCallback(
     (markers: string[] | number[]) => {
+      if (!markers) {
+        dispatch({
+          type: "setState",
+          payload: {
+            selectAllState: ""
+          }
+        });
+      }
       markersSelected.current = markers;
+
       onMarkerChange && onMarkerChange(markers);
+
       dispatch({
         type: "setState",
         payload: { internalValue: [] }
       });
+
       markersChanged.current = true;
+
       void loadPage("", 0, false);
     },
     [dispatch, loadPage, onMarkerChange]
@@ -607,7 +706,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         <Drawer
           className={clsx({
             "drawer-select-dropdown": true,
-            "drawer-select-dropdown-show-all": showCheckAll
+            "drawer-select-dropdown-show-all": showSelectAll
           })}
           title={drawerTitle ? drawerTitle : restProps.placeholder}
           onClose={handleDrawerCancel}
@@ -644,6 +743,19 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
               loading={internalLoading}
             />
           )}
+          {showSelectAll &&
+          !searchValue.current &&
+          markersSelected.current.length ? (
+            <div className="drawer-tree-select-dropdown-toolbar">
+              <Checkbox
+                onChange={handleSelectAllChange}
+                checked={selectAllState === "checked"}
+                indeterminate={selectAllState === "indeterminate"}
+              >
+                {selectAllText}
+              </Checkbox>
+            </div>
+          ) : null}
           {menu}
           <div className="drawer-select-loader-container">
             {internalLoading && (
@@ -697,7 +809,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     optionFilterProp: optionFilterProp || "label",
     optionLabelProp: optionLabelProp || "label",
     listHeight:
-      window.innerHeight - 198 - (multiple ? 27 : 0) - (showMarkers ? 60 : 0),
+      window.innerHeight -
+      198 -
+      (multiple ? 27 : 0) -
+      (showMarkers ? 60 : 0) -
+      (showSelectAll && markersSelected.current.length ? 28 : 0),
     notFoundContent: internalLoading ? loadingText : noDataText,
     onBeforeBlur: handleSelectBeforeBlur,
     onFocus: handleDrawerFocus,

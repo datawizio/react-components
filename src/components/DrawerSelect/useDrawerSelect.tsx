@@ -10,6 +10,7 @@ export interface IUseDrawerSelect {
   searchValue: string;
   internalValue: SelectValue;
   selected: AntTreeNode;
+  selectAllState: string;
   optionsState: any;
 }
 
