@@ -130,6 +130,7 @@ export interface FieldDrawerSelectProps
   ) => Promise<{ data: [any]; totalPages: number }>;
   onLoadData?: (data: any, value: any) => { value?: any };
   loadMarkersChildren?: (id: string, filters?: any) => Promise<any>;
+  showSelectAll?: boolean;
   markersTree?: any;
   selectedMarkers?: string[] | number[];
   markersFieldPlaceholder?: string;
