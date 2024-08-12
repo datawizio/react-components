@@ -260,11 +260,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
   // ---------------------------------------------
 
   const callOnChange = useCallback(
-    (value: SelectValue, selected?: AntTreeNode) => {
+    (value: any, selected?: AntTreeNode) => {
       onChange &&
         onChange({
           value,
-          markers: markersSelected.current,
+          markers: value?.length ? markersSelected.current : [],
           selected
         });
     },
@@ -437,6 +437,10 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
     triggerOnChange(internalValue);
     if (searchValue) handleSearch("");
+
+    if (!internalValue?.length) {
+      markersSelected.current = [];
+    }
 
     //eslint-disable-next-line
   }, [dispatch, triggerOnChange, closeDrawer, internalValue, searchValue]);
@@ -745,7 +749,8 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           )}
           {showSelectAll &&
           !searchValue.current &&
-          markersSelected.current.length ? (
+          markersSelected.current.length &&
+          internalValue?.length ? (
             <div className="drawer-tree-select-dropdown-toolbar">
               <Checkbox
                 onChange={handleSelectAllChange}
