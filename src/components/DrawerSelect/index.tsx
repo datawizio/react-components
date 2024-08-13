@@ -261,12 +261,11 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const callOnChange = useCallback(
     (value: any, selected?: AntTreeNode) => {
-      onChange &&
-        onChange({
-          value,
-          markers: value?.length ? markersSelected.current : [],
-          selected
-        });
+      onChange?.({
+        value: value?.length ? value : [],
+        markers: value?.length ? markersSelected.current : [],
+        selected
+      });
     },
     [onChange, markersSelected]
   );
@@ -276,9 +275,9 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       if (!onChange) return;
       if (!multiple) {
         if (Array.isArray(value) && !value.length) {
-          callOnChange(null);
+          callOnChange([]);
         } else {
-          callOnChange(value, value ? selected : undefined);
+          callOnChange(value, value.length ? selected : undefined);
         }
         return;
       }
@@ -700,7 +699,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         </span>
       );
     },
-    [optionsState, loadingText]
+    [maxTagLength, optionsState, loadingText]
   );
 
   const dropdownRender = useCallback(
