@@ -46,11 +46,10 @@ export interface DrawerSelectProps<VT>
   withPagination?: boolean;
 
   /** Event when user clicks Submit */
-  onChange?: (obj: {
-    value: SelectValue;
-    markers: string[] | number[];
-    selected?: AntTreeNode;
-  }) => void;
+  onChange?: (
+    value: any,
+    selected?: AntTreeNode
+  ) => void;
   onCheckSelectedValue?: (values: SelectValue) => void;
   onDrawerCancel?: () => void;
   valueToUncheck?: string | number;
@@ -261,13 +260,18 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
 
   const callOnChange = useCallback(
     (value: any, selected?: AntTreeNode) => {
-      onChange?.({
-        value: value?.length ? value : [],
-        markers: value?.length ? markersSelected.current : [],
-        selected
-      });
+      if (!onChange) return;
+      if (showMarkers) {
+        onChange({
+          value: value?.length ? value : [],
+          markers: value?.length ? markersSelected.current : [],
+          selected
+        });
+      } else {
+        onChange(value, selected);
+      }
     },
-    [onChange, markersSelected]
+    [onChange, showMarkers]
   );
 
   const triggerOnChange = useCallback(
@@ -678,6 +682,14 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       const maxLength = maxTagLength || 20;
       const isLongTag = label?.length > maxLength;
 
+      /*if (typeof value === "object" && !value?.value?.length) {
+        return (
+          <span className="ant-select-selection-placeholder">
+            {restProps.placeholder}
+          </span>
+        );
+      }*/
+
       if (!optionsState || optionsState.length === 0) {
         return (
           <span className="ant-select-selection-placeholder">
@@ -699,7 +711,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
         </span>
       );
     },
-    [maxTagLength, optionsState, loadingText]
+    [maxTagLength, optionsState, drawerTitle, loadingText]
   );
 
   const dropdownRender = useCallback(
@@ -824,6 +836,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
     onSelect: handleSelect,
     onDeselect: handleDeselect,
     onPopupScroll: handlePopupScroll,
+    allowClear: internalValue?.length > 0,
     onChange: handleChange
   };
 
