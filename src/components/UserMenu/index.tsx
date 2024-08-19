@@ -62,6 +62,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
           </span>
         )}
       </div>
+
       <div className="user-menu-items">
         {links.map((group, index) => (
           <div key={index} className="user-menu-items-group">
@@ -82,6 +83,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
           </div>
         ))}
       </div>
+
       <div className="user-menu-button">
         <Button icon={<LogOutIcon />} onClick={handleLogOutClick}>
           {translate("LOGOUT")}

@@ -74,32 +74,30 @@ const linkGroups: ILinkGroup[] = [
   }
 ];
 
+const homeLink: ILinkItem = {
+  photo: <BESIcon />,
+  title: "HOME",
+  description: "BENTO_MAIN_DESCRIPTION",
+  host: "https://bes.datawiz.io",
+  path: "/account/",
+  appId: "29",
+  target: "_self"
+};
+
+const profileLink: ILinkItem = {
+  photo: <BESIcon />,
+  title: "ACCOUNT",
+  description: "ACCOUNT_DESCRIPTION",
+  host: "https://bes.datawiz.io",
+  path: "/account/profile",
+  appId: "29",
+  target: "_blank"
+};
+
 export const useLinkGroups = (path?: string): ILinkGroup[] => {
   return useMemo(() => {
     return [
-      {
-        items: [
-          path === "/account/profile"
-            ? {
-                photo: <BESIcon />,
-                title: "HOME",
-                description: "BENTO_MAIN_DESCRIPTION",
-                host: "https://bes.datawiz.io",
-                path: "/account/",
-                appId: "29",
-                target: "_self"
-              }
-            : {
-                photo: <BESIcon />,
-                title: "ACCOUNT",
-                description: "ACCOUNT_DESCRIPTION",
-                host: "https://bes.datawiz.io",
-                path: "/account/profile",
-                appId: "29",
-                target: "_blank"
-              }
-        ]
-      },
+      { items: [path !== profileLink.path ? profileLink : homeLink] },
       ...linkGroups
     ];
   }, [path]);
