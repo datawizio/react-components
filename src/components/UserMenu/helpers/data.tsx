@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { BESIcon } from "../images/BES";
 import { PaymentIcon } from "../images/Payment";
 import { RolesIcon } from "../images/Roles";
@@ -21,20 +21,7 @@ export interface ILinkItem {
   permission?: string;
 }
 
-export const linkGroups: Array<ILinkGroup> = [
-  {
-    items: [
-      {
-        photo: <BESIcon />,
-        title: "ACCOUNT",
-        description: "ACCOUNT_DESCRIPTION",
-        host: "https://bes.datawiz.io",
-        path: "/account/profile",
-        appId: "29",
-        target: "_blank"
-      }
-    ]
-  },
+const linkGroups: ILinkGroup[] = [
   {
     title: "Admin Panel",
     items: [
@@ -85,4 +72,33 @@ export const linkGroups: Array<ILinkGroup> = [
       }
     ]
   }
-]
+];
+
+const homeLink: ILinkItem = {
+  photo: <BESIcon />,
+  title: "HOME",
+  description: "BENTO_MAIN_DESCRIPTION",
+  host: "https://bes.datawiz.io",
+  path: "/account/",
+  appId: "29",
+  target: "_self"
+};
+
+const profileLink: ILinkItem = {
+  photo: <BESIcon />,
+  title: "ACCOUNT",
+  description: "ACCOUNT_DESCRIPTION",
+  host: "https://bes.datawiz.io",
+  path: "/account/profile",
+  appId: "29",
+  target: "_blank"
+};
+
+export const useLinkGroups = (path?: string): ILinkGroup[] => {
+  return useMemo(() => {
+    return [
+      { items: [path !== profileLink.path ? profileLink : homeLink] },
+      ...linkGroups
+    ];
+  }, [path]);
+};
