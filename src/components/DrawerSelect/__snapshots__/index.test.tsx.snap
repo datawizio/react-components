@@ -2,6 +2,7 @@
 
 exports[`DrawerSelect component Rendered corectly 1`] = `
 <antSelect
+  allowClear={false}
   className="drawer-select"
   dropdownClassName="drawer-select-dropdown-fake"
   dropdownRender={[Function]}
