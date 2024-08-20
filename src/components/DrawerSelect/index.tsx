@@ -682,14 +682,6 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
       const maxLength = maxTagLength || 20;
       const isLongTag = label?.length > maxLength;
 
-      /*if (typeof value === "object" && !value?.value?.length) {
-        return (
-          <span className="ant-select-selection-placeholder">
-            {restProps.placeholder}
-          </span>
-        );
-      }*/
-
       if (!optionsState || optionsState.length === 0) {
         return (
           <span className="ant-select-selection-placeholder">
@@ -761,7 +753,7 @@ const DrawerSelect: React.FC<DrawerSelectProps<SelectValue>> = props => {
           {showSelectAll &&
           !searchValue.current &&
           markersSelected.current.length &&
-          internalValue?.length ? (
+          optionsState?.length ? (
             <div className="drawer-tree-select-dropdown-toolbar">
               <Checkbox
                 onChange={handleSelectAllChange}
