@@ -33,12 +33,14 @@ export interface FieldDateRangePickerProps
     date_to: DateType;
   };
   getPopupContainer?: () => HTMLElement | null;
+  useCurrentDayPreset?: boolean;
 }
 
 interface FieldProps extends FormFieldProps<DateRangePickerParams> {
   format: string;
   storeFormat?: string;
   value: DateRangePickerParams;
+  useCurrentDayPreset?: boolean;
 }
 
 const Field: React.FC<FieldProps> = ({
@@ -70,7 +72,7 @@ const Field: React.FC<FieldProps> = ({
   }, [storeFormat, value]);
 
   return (
-    //@ts-ignore
+    // @ts-ignore
     <DateRangePicker
       onChange={onChange}
       onClear={handleClear}

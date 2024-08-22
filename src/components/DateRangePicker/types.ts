@@ -22,6 +22,7 @@ export type DateRangePickerProps = {
   maxDate?: DateType;
   minDate?: DateType;
   format?: string;
+  useCurrentDayPreset?: boolean;
 
   ranges?: PresetsRangeType;
 
@@ -41,6 +42,7 @@ export type IDateRangePicker = {
 } & import("react").FC<DateRangePickerProps>;
 
 export type DefaultPresetType = {
+  readonly current_day?: () => DateRange;
   readonly last_update_date?: (maxDate?: DateType) => DateRange;
   readonly yesterday?: (maxDate?: DateType) => DateRange;
   readonly week_begin?: (maxDate?: DateType, minDate?: DateType) => DateRange;
