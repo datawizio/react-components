@@ -18,6 +18,11 @@ dayjs.extend(customParseFormat);
 const format = "DD-MM-YYYY";
 
 export const DefaultPresetRanges: DefaultPresetType = {
+  current_day: (): DateRange => {
+    const today = dayjs();
+    return [today, today];
+  },
+
   last_update_date: (maxDate = null): DateRange => {
     const max = maxDate ? dayjs(maxDate, format) : dayjs();
     return [max, max];
@@ -189,9 +194,10 @@ export const DefaultPresetPrevRanges: DefaultPresetPrevType = {
 export const DefaultPreset = (
   type: CalendarTypes,
   minDate: DateType,
-  maxDate: DateType
+  maxDate: DateType,
+  useCurrentDayPreset?: boolean
 ) => {
-  return {
+  const defaultConfig = {
     "LAST_UPDATE_DATE": DefaultPresetRanges.last_update_date(maxDate),
     "LAST_7_DAYS": DefaultPresetRanges.lastWeek(maxDate, minDate),
     "LAST_30_DAYS": DefaultPresetRanges.last_30_days(maxDate, minDate),
@@ -215,6 +221,13 @@ export const DefaultPreset = (
         ? fiscalCalendar.presetCurrentYear(maxDate)
         : DefaultPresetRanges.currentYear(maxDate, minDate),
     "ALL_TIME": DefaultPresetRanges.allPeriod(maxDate, minDate)
+  };
+
+  return {
+    ...(useCurrentDayPreset
+      ? { "CURRENT_DAY": DefaultPresetRanges.current_day() }
+      : {}),
+    ...defaultConfig
   };
 };
 

@@ -25,6 +25,7 @@ const DateRangePicker: IDateRangePicker = ({
   useDefaultPreset,
   defaultPresetExceptions,
   maxDateForPresets,
+  useCurrentDayPreset,
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -46,7 +47,8 @@ const DateRangePicker: IDateRangePicker = ({
       const defaultPreset = DefaultPreset(
         type,
         props.minDate,
-        maxDateForPresets ?? props.maxDate
+        maxDateForPresets ?? props.maxDate,
+        useCurrentDayPreset
       );
       const defaultPresetPrev = DefaultPresetPrev(
         type,
@@ -68,7 +70,8 @@ const DateRangePicker: IDateRangePicker = ({
         ...DefaultPreset(
           type,
           props.minDate,
-          maxDateForPresets ?? props.maxDate
+          maxDateForPresets ?? props.maxDate,
+          useCurrentDayPreset
         )
       };
       if (defaultPresetExceptions && defaultPresetExceptions.length) {
