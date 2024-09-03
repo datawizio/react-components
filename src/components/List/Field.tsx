@@ -20,7 +20,7 @@ const ListItemField: React.FC<ListItemFieldProps> = ({
         <List.Item.Meta title={title} description={description} />
         <div className="value-container">{value}</div>
       </div>
-      {customIcon !== null && icon}
+      {customIcon !== null ? customIcon : icon}
     </List.Item>
   );
 };
