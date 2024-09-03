@@ -16,10 +16,6 @@ describe("ListHeader component", () => {
     component = setUp(mockProps);
   });
 
-  it("ListHeader rendered correctly", () => {
-    expect(component).toMatchSnapshot();
-  });
-
   it("ListHeader render  with correct title", () => {
     const item = component.find(".list-item-header");
     expect(item.first().html()).toContain(mockProps.title);

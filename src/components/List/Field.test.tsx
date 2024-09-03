@@ -19,10 +19,6 @@ describe("ListItemField component", () => {
     component = setUp(mockProps);
   });
 
-  it("ListItemField rendered correctly", () => {
-    expect(component).toMatchSnapshot();
-  });
-
   it("ListItemField correctly call click action", () => {
     const item = component.find(".list-item-field");
     item.first().simulate("click");

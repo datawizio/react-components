@@ -1,7 +1,6 @@
 import React from "react";
-
 import { List } from "antd";
-import { ListItemTypeProps } from "./types.d";
+import { ListItemTypeProps } from "./types";
 import ListItemField from "./Field";
 import ListItemHeader from "./Header";
 

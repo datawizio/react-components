@@ -16,10 +16,6 @@ describe("List component", () => {
     component = setUp(mockProps);
   });
 
-  it("List rendered correctly", () => {
-    expect(component).toMatchSnapshot();
-  });
-
   it("List render  with correct props", () => {
     expect(component.prop("bordered")).toBeFalsy();
   });

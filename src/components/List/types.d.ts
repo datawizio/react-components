@@ -1,5 +1,4 @@
 import React from "react";
-
 import { ListProps as AntdListProps } from "antd/lib/list";
 import { ListItemTypeProps as AntdListItemTypeProps } from "antd/lib/list/Item";
 
@@ -9,6 +8,8 @@ export interface ListItemFieldProps {
   title: string;
   description: string;
   value?: string;
+  customIcon?: React.ReactNode | null;
+  id?: string;
   onClick?: () => void;
 }
 
