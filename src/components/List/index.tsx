@@ -1,9 +1,7 @@
 import * as React from "react";
 import AntdList from "antd/lib/list";
 import Item from "./Item";
-
-import { FCList, ListProps } from "./types.d";
-
+import { FCList, ListProps } from "./types";
 import "./index.less";
 
 const List: FCList = props => {
