@@ -298,7 +298,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
           "dw-table--auto-col-width": autoColWidth,
           "dw-table--compress-columns": compressColumns,
           "dw-table--safari": isSafari(),
-          "dw-table--virtual": virtual
+          "dw-table--virtual": virtual,
+          "dw-table--small":
+            (typeof height === "string" ? parseInt(height) : height) < 200
         },
         props.className
       ),
@@ -353,7 +355,9 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
         >
           <SkeletonTable
             loading={Boolean(baseState.loading)}
-            skeleton={Boolean(baseState.firstRenderLoader && props.dataProvider)}
+            skeleton={Boolean(
+              baseState.firstRenderLoader && props.dataProvider
+            )}
           >
             {children}
             {state.error && errorRender ? (
