@@ -115,6 +115,7 @@ export interface TableProps<RT = any>
   ) => Promise<Partial<TableState> | Promise<Partial<TableState>>>;
 
   isTotalRow?: (rowKey: string) => boolean;
+  overscanRowCount?: number;
 }
 
 export interface TableState extends Partial<TableProps> {
