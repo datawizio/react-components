@@ -84,6 +84,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
     sortColumnCallback,
     isTotalRow,
     calcColumnWidth,
+    overscanRowCount,
     ...restProps
   } = props;
 
@@ -227,7 +228,7 @@ const Table = React.forwardRef<TableRef, TableProps>((props, ref) => {
       scroll: {
         y: height
       },
-      overscanRowCount: 1,
+      overscanRowCount: overscanRowCount ?? 1,
       debug: virtualDebug
     }),
     [height, vid]
