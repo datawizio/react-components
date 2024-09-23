@@ -25,6 +25,10 @@ const DEFAULT_COLUMN_WIDTH = 200;
 const DEFAULT_SUB_CELL_WIDTH = 20;
 const DEFAULT_MAX_VALUE = 10;
 
+const getColumnWidth = (column: HTMLElement | undefined) => {
+  return column?.style.width ? parseInt(column?.style.width) : undefined;
+};
+
 const Column: React.FC<ColumnProps> = props => {
   const {
     model,
@@ -75,7 +79,11 @@ const Column: React.FC<ColumnProps> = props => {
     sortParams,
     sortParamsPriority
   ]);
-  const columnWithIconShown = useMemo(() => !!model.icon && !!columnIcons[model.icon], [model]);
+
+  const columnWithIconShown = useMemo(
+    () => !!model.icon && !!columnIcons[model.icon],
+    [model]
+  );
 
   const [, dragRef] = useDrag({
     item: { type: "column", key: model.key, level },
@@ -228,22 +236,23 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     const fn = () => {
+      const columnWidth = getColumnWidth(columnRef.current);
+
       if (
         columnRef?.current &&
-        lastWidthRef.current !== columnRef.current?.offsetWidth &&
-        columnRef.current?.offsetWidth !== 0
+        lastWidthRef.current !== columnWidth &&
+        columnWidth !== 0
       ) {
         dispatch({
           type: "columnWidthChange",
           payload: {
             key: colKey as string,
-            width: columnRef.current?.offsetWidth
+            width: columnWidth
           }
         });
       }
-      if (virtual) {
-        rafRef.current = requestAnimationFrame(fn);
-      }
+
+      rafRef.current = requestAnimationFrame(fn);
     };
     fn();
 
@@ -257,7 +266,7 @@ const Column: React.FC<ColumnProps> = props => {
     if (startedResize?.current) {
       const colKey = model.originalKey ? model.originalKey : model.key;
       //@ts-ignore
-      onWidthChange(colKey, columnRef.current?.offsetWidth);
+      onWidthChange(colKey, getColumnWidth(columnRef.current));
 
       startedResize.current = false;
     }
@@ -268,14 +277,14 @@ const Column: React.FC<ColumnProps> = props => {
       if (onWidthChange) {
         startedResize.current = true;
       }
-      setLastWidth(event.target.offsetWidth);
+      setLastWidth(getColumnWidth(event.target));
     },
     [onWidthChange]
   );
 
   const onClickHandler = useCallback(
     event => {
-      const currentWidth = event.target.offsetWidth;
+      const currentWidth = getColumnWidth(event.target);
       lastWidth === currentWidth && onClick && onClick(event);
     },
     [lastWidth, onClick]
@@ -382,17 +391,19 @@ const Column: React.FC<ColumnProps> = props => {
         } as React.CSSProperties
       }
     >
-      {
-        columnWithIconShown ?
-          <div className={clsx(
+      {columnWithIconShown ? (
+        <div
+          className={clsx(
             "icon-column-container",
-            (!model.sorter && !model.filtered) && "un-sortable-column"
-          )}>
-            {columnIcons[model.icon]}
-            {restProps.children}
-          </div> :
-          restProps.children
-      }
+            !model.sorter && !model.filtered && "un-sortable-column"
+          )}
+        >
+          {columnIcons[model.icon]}
+          {restProps.children}
+        </div>
+      ) : (
+        restProps.children
+      )}
     </th>
   );
 };
