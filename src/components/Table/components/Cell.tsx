@@ -8,7 +8,7 @@ const Cell: React.FC = props => {
   } = React.useContext(TableContext);
 
   const style = React.useMemo(() => {
-    const output: any = {};
+    const output: React.CSSProperties = {};
 
     const column = children[1]?.props.column;
     const columnKey = column ? column.key : "";

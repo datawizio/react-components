@@ -25,8 +25,14 @@ const DEFAULT_COLUMN_WIDTH = 200;
 const DEFAULT_SUB_CELL_WIDTH = 20;
 const DEFAULT_MAX_VALUE = 10;
 
-const getColumnWidth = (column: HTMLElement | undefined) => {
-  return column?.style.width ? parseInt(column?.style.width) : undefined;
+const withMinimum = (value: number, min?: number) => {
+  if (!min) return value;
+  return value < min ? min : value;
+};
+
+const getColumnWidth = (column: HTMLElement | undefined, minWidth: number) => {
+  if (!column?.style.width) return undefined;
+  return withMinimum(parseInt(column.style.width), minWidth);
 };
 
 const Column: React.FC<ColumnProps> = props => {
@@ -236,7 +242,7 @@ const Column: React.FC<ColumnProps> = props => {
     }
 
     const fn = () => {
-      const columnWidth = getColumnWidth(columnRef.current);
+      const columnWidth = getColumnWidth(columnRef.current, model.colMinWidth);
 
       if (
         columnRef?.current &&
@@ -277,17 +283,17 @@ const Column: React.FC<ColumnProps> = props => {
       if (onWidthChange) {
         startedResize.current = true;
       }
-      setLastWidth(getColumnWidth(event.target));
+      setLastWidth(getColumnWidth(event.target, model.colMinWidth));
     },
-    [onWidthChange]
+    [model.colMinWidth, onWidthChange]
   );
 
   const onClickHandler = useCallback(
     event => {
-      const currentWidth = getColumnWidth(event.target);
+      const currentWidth = getColumnWidth(event.target, model.colMinWidth);
       lastWidth === currentWidth && onClick && onClick(event);
     },
-    [lastWidth, onClick]
+    [lastWidth, model.colMinWidth, onClick]
   );
 
   const className = useMemo(() => {
