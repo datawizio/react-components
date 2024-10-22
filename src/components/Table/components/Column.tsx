@@ -25,8 +25,7 @@ const DEFAULT_COLUMN_WIDTH = 200;
 const DEFAULT_SUB_CELL_WIDTH = 20;
 const DEFAULT_MAX_VALUE = 10;
 
-const withMinimum = (value: number, min?: number) => {
-  if (!min) return value;
+const withMinimum = (value: number, min: number) => {
   return value < min ? min : value;
 };
 
