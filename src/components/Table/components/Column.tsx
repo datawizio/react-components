@@ -278,12 +278,15 @@ const Column: React.FC<ColumnProps> = props => {
   const onMouseUpHandler = useCallback(() => {
     if (startedResize?.current) {
       const colKey = model.originalKey ? model.originalKey : model.key;
-      //@ts-ignore
-      onWidthChange(colKey, getColumnWidth(columnRef.current));
+
+      onWidthChange(
+        colKey.toString(),
+        getColumnWidth(columnRef.current, model.colMinWidth)
+      );
 
       startedResize.current = false;
     }
-  }, [model.originalKey, model.key, onWidthChange]);
+  }, [model.originalKey, model.key, model.colMinWidth, onWidthChange]);
 
   const onMouseDownHandler = useCallback(
     event => {
