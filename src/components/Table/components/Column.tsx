@@ -31,8 +31,15 @@ const withMinimum = (value: number, min?: number) => {
 };
 
 const getColumnWidth = (column: HTMLElement | undefined, minWidth: number) => {
-  if (!column?.style.width) return undefined;
-  return withMinimum(parseInt(column.style.width), minWidth);
+  if (column?.style.width) {
+    return withMinimum(parseInt(column.style.width), minWidth);
+  }
+
+  if (column?.offsetWidth) {
+    return withMinimum(column.offsetWidth, minWidth);
+  }
+
+  return undefined;
 };
 
 const Column: React.FC<ColumnProps> = props => {
