@@ -3,6 +3,7 @@
   grid-template-columns: 1fr 4fr;
   padding: 24px 0;
   border-bottom: 1px solid #f0f0f0;
+  align-items: center;
 
   &-name {
     font-weight: 600;
@@ -31,7 +32,7 @@
       padding: 3px 8px;
 
       @tag-colors: #199605 #ecfdec, #393939 #f8f8f8, #4a72ff #f2f5ff,
-        #ffa73f #fff7e2;
+      #ffa73f #fff7e2;
 
       each(@tag-colors, {
         &[data-key="@{index}"] {
@@ -44,6 +45,24 @@
         padding-right: 5px;
         font-weight: 600;
       }
+    }
+  }
+
+  &.rule-products .rule-info-section-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .view-product-list-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 5px;
+      padding: 3px 8px;
+      color: #ffa73f;
+      background-color: #fff7e2;
+      cursor: pointer;
+      font-weight: bold;
     }
   }
 }

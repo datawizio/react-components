@@ -2,9 +2,9 @@ import React from "react";
 import clsx from "clsx";
 import Button from "../Button";
 import { useTranslation } from "react-i18next";
+import { RightOutlined } from "@ant-design/icons";
 import { RuleInfoProps } from "../RuleInfo/types";
 import { parseDimension, parseLogic } from "../RuleInfo/helpers";
-
 import "./index.less";
 
 const RuleInfoTableSection: React.FC<{ name: string; className?: string }> = ({
@@ -23,11 +23,12 @@ const RuleInfoTableSection: React.FC<{ name: string; className?: string }> = ({
 };
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
+  onShowProductsListClick?: () => void;
   onShowAllClick?: () => void;
 };
 
 const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
-  ({ logic, widget_params, formatDateRange, onShowAllClick }) => {
+  ({ logic, widget_params, formatDateRange, onShowAllClick, onShowProductsListClick }) => {
     const { t } = useTranslation();
 
     return (
@@ -60,6 +61,15 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
               </div>
             );
           })}
+        </RuleInfoTableSection>
+
+        <RuleInfoTableSection name="PRODUCTS" className="rule-products">
+          <div
+            className="view-product-list-btn"
+            onClick={onShowProductsListClick}
+          >
+            {t("SHOW_LIST")} <RightOutlined />
+          </div>
         </RuleInfoTableSection>
       </div>
     );
