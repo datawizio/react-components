@@ -1,4 +1,4 @@
-import { Collapse, List } from "antd";
+import { Collapse, Empty, List } from "antd";
 import React, { FC, useCallback, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import LiteSearchInput from "../../LiteSearchInput";
@@ -47,6 +47,14 @@ export const CollapseList: FC = () => {
               size="small"
               dataSource={values}
               renderItem={value => <List.Item>{value}</List.Item>}
+              locale={{
+                emptyText: (
+                  <Empty
+                    description={t("NO_DATA_AVAILABLE")}
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                  />
+                )
+              }}
             />
           </div>
         </>

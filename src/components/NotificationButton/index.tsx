@@ -50,7 +50,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
     });
 
     return () => {
-      sendMessage({ id: "notifications-count", complete: true });
+      sendMessage({ id: "notifications-count", type: "complete" });
       unsubscribe("notifications-count", "notification-btn");
     };
   }, [useWS]);
