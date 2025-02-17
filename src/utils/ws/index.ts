@@ -83,6 +83,7 @@ export const subscribe = (
 export const unsubscribe = (id: string, subscriptionId: string) => {
   if (subscriptions[id] && subscriptions[id].has(subscriptionId)) {
     subscriptions[id].delete(subscriptionId);
+    sendMessage({ id, type: "complete" });
   }
 };
 
