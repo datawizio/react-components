@@ -101,6 +101,7 @@ export function getCountValues<TDimension extends WidgetParams>(
   dimension: TDimension,
   formatDateRange: formatDateRangeType
 ): { [key: string]: number } {
+  if (!dimension.filters) return {};
   const returnObj = {};
   dimension.filters.forEach(
     d => (returnObj[d.name] = getValue(d, formatDateRange).length)
