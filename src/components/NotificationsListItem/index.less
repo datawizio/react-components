@@ -19,14 +19,13 @@
 
   .list-item-unread,
   .list-item-checked {
-    background-color: #fcf6ff;
+    background-color: @notifications-primary-bg;
   }
 
   .ant-list-item {
-    color: @list-text-color;
     display: flex;
     align-items: center;
-    padding: 22px 14px;
+    padding: 18px 14px;
     gap: 14px;
     border: none !important;
     border-radius: 2px;
@@ -36,7 +35,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      color: rgba(0, 0, 0, 0.85);
 
       & > span.ant-typography {
         width: 100%;
@@ -53,7 +51,7 @@
     }
 
     &:not(.list-item-unread):not(.list-item-checked):hover {
-      background-color: #f5f6f8;
+      background-color: @notifications-secondary-bg;
     }
 
     &:hover {
