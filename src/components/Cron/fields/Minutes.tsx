@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useMemo } from "react";
 import i18n from "i18next";
-import CustomSelect from '../components/CustomSelect'
-import { MinutesProps } from '../types'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
-import { UNITS } from '../constants'
+import CustomSelect from "../components/CustomSelect";
+import { MinutesProps } from "../types";
+import { DEFAULT_LOCALE_EN } from "../locale";
+import { classNames } from "../utils";
+import { UNITS } from "../constants";
 
 export default function Minutes(props: MinutesProps) {
   const {
@@ -19,28 +19,29 @@ export default function Minutes(props: MinutesProps) {
     period,
     periodicityOnDoubleClick,
     mode,
-  } = props
+    getPopupContainer
+  } = props;
   const internalClassName = useMemo(
     () =>
       classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-minutes': true,
+        "react-js-cron-field": true,
+        "react-js-cron-minutes": true,
         [`${className}-field`]: !!className,
-        [`${className}-minutes`]: !!className,
+        [`${className}-minutes`]: !!className
       }),
     [className]
-  )
+  );
 
   return (
     <div className={internalClassName} title={i18n.t("MINUTES")}>
-      {period === 'hour'
-        ? locale.prefixMinutesForHourPeriod !== '' && (
+      {period === "hour"
+        ? locale.prefixMinutesForHourPeriod !== "" && (
             <span>
               {locale.prefixMinutesForHourPeriod ||
                 DEFAULT_LOCALE_EN.prefixMinutesForHourPeriod}
             </span>
           )
-        : locale.prefixMinutes !== '' && (
+        : locale.prefixMinutes !== "" && (
             <span>
               {locale.prefixMinutes || DEFAULT_LOCALE_EN.prefixMinutes}
             </span>
@@ -48,7 +49,7 @@ export default function Minutes(props: MinutesProps) {
 
       <CustomSelect
         placeholder={
-          period === 'hour'
+          period === "hour"
             ? locale.emptyMinutesForHourPeriod ||
               DEFAULT_LOCALE_EN.emptyMinutesForHourPeriod
             : locale.emptyMinutes || DEFAULT_LOCALE_EN.emptyMinutes
@@ -65,14 +66,15 @@ export default function Minutes(props: MinutesProps) {
         period={period}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
+        getPopupContainer={getPopupContainer}
       />
 
-      {period === 'hour' && locale.suffixMinutesForHourPeriod !== '' && (
+      {period === "hour" && locale.suffixMinutesForHourPeriod !== "" && (
         <span>
           {locale.suffixMinutesForHourPeriod ||
             DEFAULT_LOCALE_EN.suffixMinutesForHourPeriod}
         </span>
       )}
     </div>
-  )
+  );
 }
