@@ -50,7 +50,8 @@ export default function Cron(props: CronProps) {
     mode = "multiple",
     defaultHour,
     withHours = false,
-    withMinutes = false
+    withMinutes = false,
+    getPopupContainer
   } = props;
   const internalValueRef = useRef<string>(value);
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod);
@@ -223,8 +224,11 @@ export default function Cron(props: CronProps) {
     [className, error, displayError, disabled, readOnly]
   );
 
-  const { className: clearButtonClassNameProp, ...otherClearButtonProps } =
-    clearButtonProps;
+  const {
+    className: clearButtonClassNameProp,
+    ...otherClearButtonProps
+  } = clearButtonProps;
+
   const clearButtonClassName = useMemo(
     () =>
       classNames({
@@ -282,6 +286,7 @@ export default function Cron(props: CronProps) {
         shortcuts={shortcuts}
         withHours={withHours}
         withMinutes={withMinutes}
+        getPopupContainer={getPopupContainer}
       />
 
       {periodForRender === "reboot" ? (
@@ -300,6 +305,7 @@ export default function Cron(props: CronProps) {
               period={periodForRender}
               periodicityOnDoubleClick={periodicityOnDoubleClick}
               mode={mode}
+              getPopupContainer={getPopupContainer}
             />
           )}
 
@@ -316,6 +322,7 @@ export default function Cron(props: CronProps) {
               period={periodForRender}
               periodicityOnDoubleClick={periodicityOnDoubleClick}
               mode={mode}
+              getPopupContainer={getPopupContainer}
             />
           )}
 
@@ -334,6 +341,7 @@ export default function Cron(props: CronProps) {
               period={periodForRender}
               periodicityOnDoubleClick={periodicityOnDoubleClick}
               mode={mode}
+              getPopupContainer={getPopupContainer}
             />
           )}
 
@@ -353,6 +361,7 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={mode}
+                getPopupContainer={getPopupContainer}
               />
             )}
 
@@ -374,6 +383,7 @@ export default function Cron(props: CronProps) {
                 period={periodForRender}
                 periodicityOnDoubleClick={periodicityOnDoubleClick}
                 mode={mode}
+                getPopupContainer={getPopupContainer}
               />
             )}
 

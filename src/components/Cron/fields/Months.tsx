@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { useMemo } from "react";
 
-import { MonthsProps } from '../types'
-import CustomSelect from '../components/CustomSelect'
-import { DEFAULT_LOCALE_EN } from '../locale'
-import { classNames } from '../utils'
-import { UNITS } from '../constants'
+import { MonthsProps } from "../types";
+import CustomSelect from "../components/CustomSelect";
+import { DEFAULT_LOCALE_EN } from "../locale";
+import { classNames } from "../utils";
+import { UNITS } from "../constants";
 
 export default function Months(props: MonthsProps) {
   const {
@@ -18,23 +18,24 @@ export default function Months(props: MonthsProps) {
     period,
     periodicityOnDoubleClick,
     mode,
-  } = props
-  const optionsList = locale.months || DEFAULT_LOCALE_EN.months
+    getPopupContainer
+  } = props;
+  const optionsList = locale.months || DEFAULT_LOCALE_EN.months;
 
   const internalClassName = useMemo(
     () =>
       classNames({
-        'react-js-cron-field': true,
-        'react-js-cron-months': true,
+        "react-js-cron-field": true,
+        "react-js-cron-months": true,
         [`${className}-field`]: !!className,
-        [`${className}-months`]: !!className,
+        [`${className}-months`]: !!className
       }),
     [className]
-  )
+  );
 
   return (
     <div className={internalClassName}>
-      {locale.prefixMonths !== '' && (
+      {locale.prefixMonths !== "" && (
         <span>{locale.prefixMonths || DEFAULT_LOCALE_EN.prefixMonths}</span>
       )}
 
@@ -47,7 +48,7 @@ export default function Months(props: MonthsProps) {
           ...UNITS[3],
           // Allow translation of alternative labels when using "humanizeLabels"
           // Issue #3
-          alt: locale.altMonths || DEFAULT_LOCALE_EN.altMonths,
+          alt: locale.altMonths || DEFAULT_LOCALE_EN.altMonths
         }}
         setValue={setValue}
         locale={locale}
@@ -58,7 +59,8 @@ export default function Months(props: MonthsProps) {
         period={period}
         periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
+        getPopupContainer={getPopupContainer}
       />
     </div>
-  )
+  );
 }

@@ -15,7 +15,8 @@ export default function Period(props: PeriodProps) {
     readOnly,
     shortcuts,
     withHours,
-    withMinutes
+    withMinutes,
+    getPopupContainer
   } = props;
   let options = [
     {
@@ -118,6 +119,7 @@ export default function Period(props: PeriodProps) {
         disabled={disabled}
         showArrow={!readOnly}
         open={readOnly ? false : undefined}
+        getPopupContainer={getPopupContainer}
       />
     </div>
   );
