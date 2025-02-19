@@ -63,6 +63,12 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
           visible={state.modalShow}
           width={"65%"}
           destroyOnClose={true}
+          afterClose={() =>
+            dispatch({
+              type: "reset",
+              payload: { logic, widget_params, formatDateRange, name }
+            })
+          }
           onCancel={handleCancel}
           footer={null}
           centered
