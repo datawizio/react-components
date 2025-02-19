@@ -36,7 +36,8 @@ export function getValue<TDimension = WidgetParamsDimension>(
 
 export const parseDimension = (
   dimension: WidgetParamsDimension,
-  formatDateRange: (from: string, to: string) => string
+  formatDateRange: (from: string, to: string) => string,
+  showExpandButton: boolean = true
 ) => (
   <ListInfo
     key={dimension.name}
@@ -44,7 +45,11 @@ export const parseDimension = (
     items={getValue(dimension, formatDateRange)}
     label={i18next.t(dimension.name.toUpperCase())}
     maxLength={MAX_LENGTH_ITEM_LIST}
-    expandButton={<ShowAllModal dimensionName={dimension.name} />}
+    expandButton={
+      showExpandButton ? (
+        <ShowAllModal dimensionName={dimension.name} />
+      ) : undefined
+    }
     //@ts-ignore
     renderItem={(item: string) => item}
   />

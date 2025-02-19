@@ -51,6 +51,8 @@ const reducer = (
         ) : []
       };
     }
+    case "reset":
+      return initializer(action.payload);
     default:
       throw new Error("Unknown action type");
   }

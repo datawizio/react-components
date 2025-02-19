@@ -52,4 +52,8 @@ export type RuleInfoAction =
   | {
       type: "search";
       payload: { value: string; type: ListType; name: string };
+    }
+  | {
+      type: "reset";
+      payload: RuleInfoProps;
     };
