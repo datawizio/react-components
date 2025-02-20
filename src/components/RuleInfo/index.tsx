@@ -67,7 +67,7 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
           afterClose={() =>
             dispatch({
               type: "reset",
-              payload: { logic, widget_params, formatDateRange, name }
+              payload: { logic, widget_params, formatDateRange, name, dtype }
             })
           }
           onCancel={handleCancel}

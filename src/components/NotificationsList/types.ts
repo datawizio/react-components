@@ -77,6 +77,7 @@ export interface INotification extends IListItem {
     report_name?: string;
     date_from?: string;
     days_count?: number;
+    total_count?: number;
     media_name?: string;
     thumbnail?: string;
   };
