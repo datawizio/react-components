@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, ModalFuncProps } from "antd";
 import React, { useCallback, useContext } from "react";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import ConfigContext from "../components/ConfigProvider/context";
@@ -7,7 +7,12 @@ export const useConfirm = () => {
   const { translate } = useContext(ConfigContext);
 
   return useCallback(
-    (msg: string | React.ReactNode, okFn: any, content?: string) => {
+    (
+      msg: string | React.ReactNode,
+      okFn: any,
+      content?: string,
+      options?: ModalFuncProps
+    ) => {
       Modal.confirm({
         title: typeof msg === "string" ? translate(msg) : msg,
         content,
@@ -17,7 +22,8 @@ export const useConfirm = () => {
         onOk() {
           return okFn();
         },
-        onCancel() {}
+        onCancel() {},
+        ...options
       });
     },
     [translate]
