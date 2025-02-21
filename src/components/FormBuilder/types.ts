@@ -64,6 +64,7 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
 
 export interface FieldTextProps extends FormFieldProps<string> {
   type?: string;
+  autoComplete?: string;
 }
 
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
