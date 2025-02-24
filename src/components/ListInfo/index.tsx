@@ -72,7 +72,7 @@ const ListInfo: React.FC<ListInfoProps> = memo(
             .reduce((prev, curr) => [prev, delim ?? ", ", curr])}
 
           {showExpandButton && cutItemsList && renderExpandButton}
-          {showExpandButton && cutItemsList && !renderExpandButton && "..."}
+          {!showExpandButton && cutItemsList && "..."}
         </span>
       </div>
     );

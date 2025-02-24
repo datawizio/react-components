@@ -78,7 +78,6 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
                   data-key={(i % 4) + 1}
                 >
                   {parseDimension(filter, formatDateRange, false, 2)}
-                  {widget_params.filters.length > 2 && <span>...</span>}
                 </div>
               );
             })}
