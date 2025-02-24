@@ -46,11 +46,8 @@ export const parseDimension = (
     items={getValue(dimension, formatDateRange)}
     label={i18next.t(dimension.name.toUpperCase())}
     maxLength={maxLength ?? MAX_LENGTH_ITEM_LIST}
-    expandButton={
-      showExpandButton ? (
-        <ShowAllModal dimensionName={dimension.name} />
-      ) : undefined
-    }
+    showExpandButton={showExpandButton}
+    expandButton={<ShowAllModal dimensionName={dimension.name} />}
     //@ts-ignore
     renderItem={(item: string) => item}
   />

@@ -8,6 +8,7 @@ interface ListInfoProps {
   linkFn?: (id: string) => string;
   renderItem?: (item: IInfoListItem) => React.ReactElement;
   LinkComponent?: any;
+  showExpandButton?: boolean;
   expandButton?: React.ReactNode;
   maxLength?: number;
 }
@@ -27,6 +28,7 @@ const ListInfo: React.FC<ListInfoProps> = memo(
     linkFn,
     renderItem,
     LinkComponent,
+    showExpandButton,
     expandButton,
     maxLength
   }) => {
@@ -69,12 +71,16 @@ const ListInfo: React.FC<ListInfoProps> = memo(
             })
             .reduce((prev, curr) => [prev, delim ?? ", ", curr])}
 
-          {cutItemsList && renderExpandButton}
-          {cutItemsList && !renderExpandButton && "..."}
+          {showExpandButton && cutItemsList && renderExpandButton}
+          {showExpandButton && cutItemsList && !renderExpandButton && "..."}
         </span>
       </div>
     );
   }
 );
+
+ListInfo.defaultProps = {
+  showExpandButton: true
+};
 
 export default ListInfo;
