@@ -37,19 +37,17 @@ export function getValue<TDimension = WidgetParamsDimension>(
 export const parseDimension = (
   dimension: WidgetParamsDimension,
   formatDateRange: (from: string, to: string) => string,
-  showExpandButton: boolean = true
+  showExpandButton: boolean = true,
+  maxLength?: number
 ) => (
   <ListInfo
     key={dimension.name}
     //@ts-ignore
     items={getValue(dimension, formatDateRange)}
     label={i18next.t(dimension.name.toUpperCase())}
-    maxLength={MAX_LENGTH_ITEM_LIST}
-    expandButton={
-      showExpandButton ? (
-        <ShowAllModal dimensionName={dimension.name} />
-      ) : undefined
-    }
+    maxLength={maxLength ?? MAX_LENGTH_ITEM_LIST}
+    showExpandButton={showExpandButton}
+    expandButton={<ShowAllModal dimensionName={dimension.name} />}
     //@ts-ignore
     renderItem={(item: string) => item}
   />
@@ -106,17 +104,18 @@ export function countValues<
 }
 
 export function getCountValues<TDimension extends WidgetParams>(
-  dimension: TDimension,
+  item: TDimension,
   formatDateRange: formatDateRangeType
 ): { [key: string]: number } {
+  if (!item.filters) return {};
   const returnObj = {};
-  dimension.filters.forEach(
+  item.filters.forEach(
     d => (returnObj[d.name] = getValue(d, formatDateRange).length)
   );
 
-  if (dimension.dimension) {
-    returnObj[dimension.dimension.name] = getValue(
-      dimension.dimension,
+  if (item.dimension) {
+    returnObj[item.dimension.name] = getValue(
+      item.dimension,
       formatDateRange
     ).length;
   }

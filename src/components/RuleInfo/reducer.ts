@@ -41,14 +41,14 @@ const reducer = (
 
       return {
         ...state,
-        dimensions: getDimensions(
+        dimensions: searchedWidgetParams.dimension ? getDimensions(
           searchedWidgetParams.dimension,
           state.formatDateRange
-        ),
-        filters: getDimensions(
+        ) : {},
+        filters: searchedWidgetParams.filters ? getDimensions(
           searchedWidgetParams.filters,
           state.formatDateRange
-        )
+        ) : []
       };
     }
     case "reset":
@@ -60,11 +60,12 @@ const reducer = (
 
 const initializer = (props: RuleInfoProps) => {
   const { widget_params, formatDateRange, logic, name } = props;
+  const {dimension, filters} = widget_params;
   return {
     widgetParams: widget_params,
-    dimensions: getDimensions(widget_params.dimension, formatDateRange),
-    filters: getDimensions(widget_params.filters, formatDateRange),
-    countValues: getCountValues(widget_params, formatDateRange),
+    dimensions: dimension ? getDimensions(dimension, formatDateRange) : {},
+    filters: filters ? getDimensions(filters, formatDateRange) : [],
+    countValues: dimension || filters ? getCountValues(widget_params, formatDateRange) : {},
     logic,
     formatDateRange,
     name,

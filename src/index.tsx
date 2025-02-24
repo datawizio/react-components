@@ -176,6 +176,8 @@ export { default as ExpandButton } from "./components/ExpandButton";
 
 export { default as ListInfo } from "./components/ListInfo";
 
+export { default as CollapseList } from "./components/RuleInfo/components/CollapseList";
+
 export { default as RuleInfo } from "./components/RuleInfo";
 
 export { default as RuleInfoTable } from "./components/RuleInfoTable";

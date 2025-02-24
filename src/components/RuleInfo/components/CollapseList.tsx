@@ -1,12 +1,13 @@
-import { Collapse, Empty, List } from "antd";
 import React, { FC, useCallback, useContext, useMemo } from "react";
+import { Collapse, Empty, List } from "antd";
 import { useTranslation } from "react-i18next";
 import LiteSearchInput from "../../LiteSearchInput";
 import { RuleInfoContext } from "../context";
 import { MAX_LENGTH_ITEM_LIST } from "../helpers";
 import { DimensionsType, ListType } from "../types";
+import "./index.less";
 
-const ROW_HEIGHT = 61;
+const ROW_HEIGHT = 62;
 
 export const CollapseList: FC = () => {
   const { t } = useTranslation();
@@ -64,30 +65,28 @@ export const CollapseList: FC = () => {
   );
 
   const renderExtra = useCallback(
-    (dimension: DimensionsType) => {
-      return countValues[dimension.originalName] <=
-        MAX_LENGTH_ITEM_LIST ? null : (
+    (item: DimensionsType) => {
+      const count = countValues[item.originalName];
+      return count > 1 ? (
         <div>
-          {t("TOTAL")}:&nbsp;{countValues[dimension.originalName]}
+          {t("TOTAL")}:&nbsp;{count}
         </div>
-      );
+      ) : null;
     },
     [countValues, t]
   );
 
-  const renderDimensionItems = useMemo(
-    () =>
-      dimensions ? (
-        <Collapse.Panel
-          key={dimensions.originalName}
-          extra={renderExtra(dimensions)}
-          header={<b>{dimensions.displayName}</b>}
-        >
-          {renderList(dimensions, "dimension")}
-        </Collapse.Panel>
-      ) : null,
-    [dimensions, renderExtra, renderList]
-  );
+  const renderDimensionItems = useMemo(() => {
+    return dimensions?.displayName ? (
+      <Collapse.Panel
+        key={dimensions.originalName}
+        extra={renderExtra(dimensions)}
+        header={<b>{dimensions.displayName}</b>}
+      >
+        {renderList(dimensions, "dimension")}
+      </Collapse.Panel>
+    ) : null;
+  }, [dimensions, renderExtra, renderList]);
 
   const renderFilterItems = useMemo(
     () =>
@@ -116,3 +115,5 @@ export const CollapseList: FC = () => {
     </>
   );
 };
+
+export default CollapseList;

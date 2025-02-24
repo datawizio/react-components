@@ -4,7 +4,6 @@ import Button from "../Button";
 import { useTranslation } from "react-i18next";
 import { RuleInfoProps } from "../RuleInfo/types";
 import { parseDimension, parseLogic } from "../RuleInfo/helpers";
-
 import "./index.less";
 
 const RuleInfoTableSection: React.FC<{ name: string; className?: string }> = ({
@@ -23,11 +22,19 @@ const RuleInfoTableSection: React.FC<{ name: string; className?: string }> = ({
 };
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
-  onShowAllClick?: () => void;
+  onShowProductsTableClick?: () => void;
+  onShowRuleDetailsClick?: () => void;
 };
 
 const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
-  ({ logic, widget_params, formatDateRange, onShowAllClick }) => {
+  ({
+    dtype,
+    logic,
+    widget_params,
+    formatDateRange,
+    onShowRuleDetailsClick,
+    onShowProductsTableClick
+  }) => {
     const { t } = useTranslation();
 
     return (
@@ -36,31 +43,53 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
           {parseLogic(logic)}
         </RuleInfoTableSection>
 
-        <RuleInfoTableSection name="DIMENSION" className="rule-dimension">
-          {t(widget_params.dimension.name)}
+        {dtype === "report_rule" && onShowProductsTableClick && (
+          <RuleInfoTableSection name="PRODUCTS" className="rule-products">
+            <Button
+              type="link"
+              className="view-product-list-btn"
+              onClick={onShowProductsTableClick}
+            >
+              {t("SHOW_RESULTS")}
+            </Button>
+          </RuleInfoTableSection>
+        )}
 
-          <Button
-            type="link"
-            className="show-all-modal-button"
-            onClick={onShowAllClick}
-          >
-            {t("SHOW_RESULTS")}
-          </Button>
-        </RuleInfoTableSection>
+        {!!widget_params.dimension?.name && (
+          <RuleInfoTableSection name="DIMENSION" className="rule-dimension">
+            <span>{t(widget_params.dimension.name)}</span>
+            <Button
+              type="link"
+              className="show-all-modal-button"
+              onClick={onShowRuleDetailsClick}
+            >
+              {t("SHOW_RESULTS")}
+            </Button>
+          </RuleInfoTableSection>
+        )}
 
-        <RuleInfoTableSection name="FILTERS" className="rule-filters">
-          {widget_params.filters.map((filter, i) => {
-            return (
-              <div
-                key={`filter-tag-${i}`}
-                className="filter-tag"
-                data-key={(i % 4) + 1}
-              >
-                {parseDimension(filter, formatDateRange, false)}
-              </div>
-            );
-          })}
-        </RuleInfoTableSection>
+        {widget_params.filters?.length && (
+          <RuleInfoTableSection name="FILTERS" className="rule-filters">
+            {widget_params.filters.map((filter, i) => {
+              return (
+                <div
+                  key={`filter-tag-${i}`}
+                  className="filter-tag"
+                  data-key={(i % 4) + 1}
+                >
+                  {parseDimension(filter, formatDateRange, false, 2)}
+                </div>
+              );
+            })}
+            <Button
+              type="link"
+              className="show-all-modal-button"
+              onClick={onShowRuleDetailsClick}
+            >
+              {t("SHOW_ALL")}
+            </Button>
+          </RuleInfoTableSection>
+        )}
       </div>
     );
   }

@@ -2,19 +2,18 @@ import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../Modal";
 import { CollapseList } from "./components/CollapseList";
-
 import { useRuleInfo } from "./reducer";
 import { RuleInfoContext } from "./context";
 import { RuleInfoProps } from "./types";
 import { parseDimension, parseLogic } from "./helpers";
-
 import "./index.less";
 
 const RuleInfo: React.FC<RuleInfoProps> = memo(
-  ({ logic, widget_params, formatDateRange, name }) => {
+  ({ logic, widget_params, formatDateRange, name, dtype }) => {
     const { t } = useTranslation();
     const [state, dispatch] = useRuleInfo({
       logic,
+      dtype,
       widget_params,
       formatDateRange,
       name
@@ -66,7 +65,7 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
           afterClose={() =>
             dispatch({
               type: "reset",
-              payload: { logic, widget_params, formatDateRange, name }
+              payload: { logic, widget_params, formatDateRange, name, dtype }
             })
           }
           onCancel={handleCancel}

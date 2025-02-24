@@ -5,6 +5,7 @@ export interface RuleInfoProps {
   logic: object | string;
   widget_params: WidgetParams;
   name: string;
+  dtype: string;
 }
 
 export type WidgetParamsDimension = {
@@ -18,9 +19,9 @@ export interface WidgetParams {
   filters?: WidgetParamsDimension[];
 }
 export interface DimensionsType {
-  displayName: string;
-  originalName: string;
-  values: string[];
+  displayName?: string;
+  originalName?: string;
+  values?: string[];
 }
 
 export type formatDateRangeType = (from: string, to: string) => string;
