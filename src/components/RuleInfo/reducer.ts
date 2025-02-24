@@ -60,11 +60,12 @@ const reducer = (
 
 const initializer = (props: RuleInfoProps) => {
   const { widget_params, formatDateRange, logic, name } = props;
+  const {dimension, filters} = widget_params;
   return {
     widgetParams: widget_params,
-    dimensions: widget_params.dimension ? getDimensions(widget_params.dimension, formatDateRange) : {},
-    filters: widget_params.filters ? getDimensions(widget_params.filters, formatDateRange) : [],
-    countValues: widget_params.dimension ? getCountValues(widget_params, formatDateRange) : {},
+    dimensions: dimension ? getDimensions(dimension, formatDateRange) : {},
+    filters: filters ? getDimensions(filters, formatDateRange) : [],
+    countValues: dimension || filters ? getCountValues(widget_params, formatDateRange) : {},
     logic,
     formatDateRange,
     name,

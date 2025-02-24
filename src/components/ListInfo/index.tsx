@@ -41,9 +41,9 @@ const ListInfo: React.FC<ListInfoProps> = memo(
 
     const itemsForShow = showAll ? items : items.slice(0, maxLengthItemList);
 
-    const renderExpandButton = expandButton ?? (
+    const renderExpandButton = expandButton ? (
       <ExpandButton listOpen={showAll} setListOpen={setShowAll} />
-    );
+    ) : null;
 
     return (
       <div>
@@ -70,6 +70,7 @@ const ListInfo: React.FC<ListInfoProps> = memo(
             .reduce((prev, curr) => [prev, delim ?? ", ", curr])}
 
           {cutItemsList && renderExpandButton}
+          {cutItemsList && !renderExpandButton && "..."}
         </span>
       </div>
     );

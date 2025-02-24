@@ -23,7 +23,7 @@ const RuleInfoTableSection: React.FC<{ name: string; className?: string }> = ({
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
   onShowProductsTableClick?: () => void;
-  onShowAllClick?: () => void;
+  onShowRuleDetailsClick?: () => void;
 };
 
 const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
@@ -32,7 +32,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
     logic,
     widget_params,
     formatDateRange,
-    onShowAllClick,
+    onShowRuleDetailsClick,
     onShowProductsTableClick
   }) => {
     const { t } = useTranslation();
@@ -61,7 +61,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
             <Button
               type="link"
               className="show-all-modal-button"
-              onClick={onShowAllClick}
+              onClick={onShowRuleDetailsClick}
             >
               {t("SHOW_RESULTS")}
             </Button>
@@ -70,14 +70,14 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
 
         {widget_params.filters?.length && (
           <RuleInfoTableSection name="FILTERS" className="rule-filters">
-            {widget_params.filters.slice(0, 1).map((filter, i) => {
+            {widget_params.filters.map((filter, i) => {
               return (
                 <div
                   key={`filter-tag-${i}`}
                   className="filter-tag"
                   data-key={(i % 4) + 1}
                 >
-                  {parseDimension(filter, formatDateRange)}
+                  {parseDimension(filter, formatDateRange, false, 2)}
                   {widget_params.filters.length > 2 && <span>...</span>}
                 </div>
               );
@@ -85,7 +85,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
             <Button
               type="link"
               className="show-all-modal-button"
-              onClick={onShowAllClick}
+              onClick={onShowRuleDetailsClick}
             >
               {t("SHOW_ALL")}
             </Button>
