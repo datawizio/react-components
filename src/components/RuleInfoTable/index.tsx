@@ -40,7 +40,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
     return (
       <div className="rule-info-table">
         <RuleInfoTableSection name="CONDITION" className="rule-condition">
-          {parseLogic(logic)}
+          {typeof logic === "string" ? logic : parseLogic(logic)}
         </RuleInfoTableSection>
 
         {dtype === "report_rule" && onShowProductsTableClick && (
