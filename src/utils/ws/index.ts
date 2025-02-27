@@ -44,7 +44,7 @@ export const initWS = (
     if (counter < CONNECTION_LIMIT) {
       setTimeout(function () {
         initWS(server, authData);
-      }, 1000);
+      }, 3000);
     }
   };
 
