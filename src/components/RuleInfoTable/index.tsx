@@ -68,7 +68,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
           </RuleInfoTableSection>
         )}
 
-        {widget_params.filters?.length && (
+        {!!widget_params.filters?.length && (
           <RuleInfoTableSection name="FILTERS" className="rule-filters">
             {widget_params.filters.map((filter, i) => {
               return (

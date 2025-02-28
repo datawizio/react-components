@@ -4,6 +4,7 @@ import { getCountValues, getDimensions } from "./helpers";
 import { IRuleInfoReducer, RuleInfoAction, RuleInfoProps } from "./types";
 
 const reducer = (
+  initialState: IRuleInfoReducer,
   state: IRuleInfoReducer,
   action: RuleInfoAction
 ): IRuleInfoReducer => {
@@ -12,6 +13,7 @@ const reducer = (
       const { show, defaultActiveKey } = action.payload;
       return { ...state, modalShow: show, defaultActiveKey };
     }
+
     case "search": {
       const { value, type, name } = action.payload;
 
@@ -41,18 +43,18 @@ const reducer = (
 
       return {
         ...state,
-        dimensions: searchedWidgetParams.dimension ? getDimensions(
-          searchedWidgetParams.dimension,
-          state.formatDateRange
-        ) : {},
-        filters: searchedWidgetParams.filters ? getDimensions(
-          searchedWidgetParams.filters,
-          state.formatDateRange
-        ) : []
+        dimensions: searchedWidgetParams.dimension
+          ? getDimensions(searchedWidgetParams.dimension, state.formatDateRange)
+          : {},
+        filters: searchedWidgetParams.filters
+          ? getDimensions(searchedWidgetParams.filters, state.formatDateRange)
+          : []
       };
     }
+
     case "reset":
-      return initializer(action.payload);
+      return initialState;
+
     default:
       throw new Error("Unknown action type");
   }
@@ -60,12 +62,15 @@ const reducer = (
 
 const initializer = (props: RuleInfoProps) => {
   const { widget_params, formatDateRange, logic, name } = props;
-  const {dimension, filters} = widget_params;
+  const { dimension, filters } = widget_params;
   return {
     widgetParams: widget_params,
     dimensions: dimension ? getDimensions(dimension, formatDateRange) : {},
     filters: filters ? getDimensions(filters, formatDateRange) : [],
-    countValues: dimension || filters ? getCountValues(widget_params, formatDateRange) : {},
+    countValues:
+      dimension || filters
+        ? getCountValues(widget_params, formatDateRange)
+        : {},
     logic,
     formatDateRange,
     name,
@@ -77,6 +82,11 @@ const initializer = (props: RuleInfoProps) => {
 export const useRuleInfo = (
   props: RuleInfoProps
 ): [IRuleInfoReducer, Dispatch<RuleInfoAction>] => {
-  const [state, dispatch] = useReducer(reducer, props, initializer);
-  return [state, dispatch];
+  const initialState = initializer(props);
+
+  const customReducer = (state: IRuleInfoReducer, action: RuleInfoAction) => {
+    return reducer(initialState, state, action);
+  };
+
+  return useReducer(customReducer, props, initializer);
 };
