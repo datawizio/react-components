@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useMemo } from "react";
+import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
 import { Collapse, Empty, List } from "antd";
 import { useTranslation } from "react-i18next";
 import LiteSearchInput from "../../LiteSearchInput";
@@ -13,6 +13,12 @@ export const CollapseList: FC = () => {
   const { t } = useTranslation();
   const { ruleInfoState, dispatch } = useContext(RuleInfoContext);
   const { filters, dimensions, countValues } = ruleInfoState;
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: "reset" });
+    };
+  }, [dispatch]);
 
   const handleSearch = useCallback(
     (value: string, type: ListType, name: string) => {

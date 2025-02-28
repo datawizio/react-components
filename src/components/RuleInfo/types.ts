@@ -55,5 +55,4 @@ export type RuleInfoAction =
     }
   | {
       type: "reset";
-      payload: RuleInfoProps;
     };
