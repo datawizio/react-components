@@ -3,6 +3,8 @@ import { basicDTypesConfig } from "../Table/utils/typesConfigs";
 import { getCountValues, getDimensions } from "./helpers";
 import { IRuleInfoReducer, RuleInfoAction, RuleInfoProps } from "./types";
 
+const searchMap = new Map<string, string>();
+
 const reducer = (
   initialState: IRuleInfoReducer,
   state: IRuleInfoReducer,
@@ -16,29 +18,26 @@ const reducer = (
 
     case "search": {
       const { value, type, name } = action.payload;
+      searchMap.set(name, value);
 
       const searchedWidgetParams = JSON.parse(
         JSON.stringify(state.widgetParams)
       );
+
       if (Array.isArray(state.widgetParams[type])) {
-        searchedWidgetParams.filters = state.widgetParams.filters.map(el =>
-          el.name === name
-            ? {
-                ...el,
-                values: Array.isArray(el.values)
-                  ? el.values.filter(l =>
-                      basicDTypesConfig.string.search(l, value)
-                    )
-                  : el.values
-              }
-            : el
+        searchedWidgetParams.filters = state.widgetParams.filters.map(el => ({
+          ...el,
+          values:
+            Array.isArray(el.values) && searchMap.get(el.name)
+              ? el.values.filter(v =>
+                  basicDTypesConfig.string.search(v, searchMap.get(el.name))
+                )
+              : el.values
+        }));
+      } else if (Array.isArray(state.widgetParams.dimension.values)) {
+        searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
+          el => basicDTypesConfig.string.search(el, value)
         );
-      } else {
-        if (Array.isArray(state.widgetParams.dimension.values)) {
-          searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
-            el => basicDTypesConfig.string.search(el, value)
-          );
-        }
       }
 
       return {
@@ -53,6 +52,7 @@ const reducer = (
     }
 
     case "reset":
+      searchMap.clear();
       return initialState;
 
     default:
