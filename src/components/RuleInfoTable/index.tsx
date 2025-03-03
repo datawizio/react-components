@@ -68,28 +68,34 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
           </RuleInfoTableSection>
         )}
 
-        {!!widget_params.filters?.length && (
-          <RuleInfoTableSection name="FILTERS" className="rule-filters">
-            {widget_params.filters.map((filter, i) => {
-              return (
-                <div
-                  key={`filter-tag-${i}`}
-                  className="filter-tag"
-                  data-key={(i % 4) + 1}
-                >
-                  {parseDimension(filter, formatDateRange, false, 2)}
-                </div>
-              );
-            })}
-            <Button
-              type="link"
-              className="show-all-modal-button"
-              onClick={onShowRuleDetailsClick}
-            >
-              {t("SHOW_ALL")}
-            </Button>
-          </RuleInfoTableSection>
-        )}
+        <RuleInfoTableSection name="FILTERS" className="rule-filters">
+          {widget_params.filters?.length ? (
+            <>
+              {widget_params.filters.map((filter, i) => {
+                return (
+                  <div
+                    key={`filter-tag-${i}`}
+                    className="filter-tag"
+                    data-key={(i % 4) + 1}
+                  >
+                    {parseDimension(filter, formatDateRange, false, 2)}
+                  </div>
+                );
+              })}
+              <Button
+                type="link"
+                className="show-all-modal-button"
+                onClick={onShowRuleDetailsClick}
+              >
+                {t("SHOW_ALL")}
+              </Button>
+            </>
+          ) : (
+            <div className="filter-tag not-selected-tag">
+              {t("NOT_SELECTED")}
+            </div>
+          )}
+        </RuleInfoTableSection>
       </div>
     );
   }

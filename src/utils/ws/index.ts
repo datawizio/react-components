@@ -91,7 +91,7 @@ const handleSubscriptions = (message: WSMessage) => {
   // The notification ID may have a "salt" at the end, separated by a pipe
   // because we cannot send two subscriptions with the same ID.
   // Here we remove this salt to find the correct subscription handler by primary ID.
-  const id = message.id.split("|")[0];
+  const id = message.id?.split("|")[0];
 
   if (!subscriptions[id]) return;
   subscriptions[id].forEach(callback => {
