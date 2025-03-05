@@ -33,7 +33,6 @@ export function reducer(
       return {
         ...state,
         ...action.payload,
-        checkedAll: false,
         checkedAllOnPage
       };
     }
@@ -91,7 +90,8 @@ export function reducer(
 
     case "paginate": {
       const checkedKeys = new Set(state.checkedKeys);
-      if (state.checkedAll) {
+
+      if (state.checkedAll || checkedKeys.size > 0) {
         checkedKeys.clear();
       }
 
@@ -188,10 +188,10 @@ const getCheckAllOnPage = (
   return dataSource?.length === 0
     ? null
     : checkedOnPage === dataSource?.length
-      ? "all"
-      : checkedOnPage > 0
-        ? "partial"
-        : null;
+    ? "all"
+    : checkedOnPage > 0
+    ? "partial"
+    : null;
 };
 
 export const getCheckedKeys = (state: ListState<IListItem> | null) =>
