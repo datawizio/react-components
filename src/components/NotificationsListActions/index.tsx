@@ -17,10 +17,18 @@ import "./index.less";
 
 interface ListActionsProps extends Omit<NotificationActions, "onOpenLink"> {
   pageType?: NotificationPageType;
+  unreadNotificationsCount?: number;
 }
 
 const ListActions: React.FC<ListActionsProps> = React.memo(
-  ({ pageType, onMarkAsRead, onMarkAsUnread, onRestore, onDelete }) => {
+  ({
+    pageType,
+    unreadNotificationsCount,
+    onMarkAsRead,
+    onMarkAsUnread,
+    onRestore,
+    onDelete
+  }) => {
     const { t } = useTranslation();
     const { state } = useContext(NotificationsListContext);
 
@@ -31,14 +39,24 @@ const ListActions: React.FC<ListActionsProps> = React.memo(
     const isSomeRead = checkedKeysData?.some(item => item.read);
     const isSomeUnread = checkedKeysData?.some(item => !item.read);
 
+    const showReadButton = state.checkedAll
+      ? unreadNotificationsCount > 0
+      : isSomeUnread;
+
+    const showUnreadButton =
+      pageType !== "unread_page" &&
+      (state.checkedAll
+        ? unreadNotificationsCount !== state.total
+        : isSomeRead);
+
     return state?.checkedKeys && state?.checkedKeys.size > 0 ? (
       <div className="notifications-actions">
-        {isSomeUnread && (
+        {showReadButton && (
           <Button onClick={onMarkAsRead} type="link" icon={<EnvelopeIcon />}>
             {t("MARK_AS_READ")}
           </Button>
         )}
-        {isSomeRead && (
+        {showUnreadButton && (
           <Button onClick={onMarkAsUnread} type="link" icon={<MailIcon />}>
             {t("MARK_AS_UNREAD")}
           </Button>
