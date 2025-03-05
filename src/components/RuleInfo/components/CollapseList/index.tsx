@@ -1,10 +1,11 @@
 import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
 import { Collapse, Empty, List } from "antd";
 import { useTranslation } from "react-i18next";
-import LiteSearchInput from "../../LiteSearchInput";
-import { RuleInfoContext } from "../context";
-import { MAX_LENGTH_ITEM_LIST } from "../helpers";
-import { DimensionsType, ListType } from "../types";
+import LiteSearchInput from "../../../LiteSearchInput";
+import { RuleInfoContext } from "../../context";
+import { MAX_LENGTH_ITEM_LIST } from "../../helpers";
+import { DimensionsType, ListType } from "../../types";
+import "./index.less";
 
 const ROW_HEIGHT = 62;
 
