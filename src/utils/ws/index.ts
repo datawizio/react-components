@@ -31,13 +31,16 @@ export const initWS = (
       sendMessage(message);
       queue.delete(message);
     });
+
+    // Send ping message every 30 seconds to keep the connection alive
+    setInterval(() => sendMessage({ type: "ping" }), 30_000);
   };
 
   ws.onclose = function (e) {
     counter = counter + 1;
 
     console.warn(
-      "Socket is closed. Reconnect will be attempted in 1 second.",
+      "Socket is closed. Reconnect will be attempted in 3 seconds.",
       e.reason
     );
 
