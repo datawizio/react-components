@@ -191,7 +191,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         </Menu.Item>
       )}
       {show_send_to_email &&
-        (is_visualization && max_level > 1 ? (
+        (is_visualization ? (
           <Menu.SubMenu
             key="send_xlsx_submenu"
             title={
