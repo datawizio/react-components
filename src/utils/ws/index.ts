@@ -5,26 +5,55 @@ type WSMessage = {
 };
 
 const subscriptions: { [key: string]: Map<string, Function> } = {};
-
+const messages: Record<string, WSMessage> = {};
 const queue: Set<Object> = new Set();
 
-const CONNECTION_LIMIT = 5;
+const CONNECTION_LIMIT = 20;
 
 let counter = 0;
+let isOnline = true;
+let reconnect: () => void;
+let pingIntervalId: ReturnType<typeof setInterval>;
+
+window.addEventListener("online", () => {
+  isOnline = true;
+  reconnect();
+});
+
+window.addEventListener("offline", () => {
+  isOnline = false;
+});
+
+window.addEventListener("visibilitychange", () => reconnect());
 
 export const initWS = (
   server: string,
-  authData: {
-    sessionid?: string;
-    authorization?: string;
-  }
+  getAuthToken: () => string | Promise<string>
 ) => {
   ws = new WebSocket(server, ["graphql-transport-ws"]);
 
-  ws.onopen = () => {
+  reconnect = () => {
+    if (ws.readyState === WebSocket.OPEN) {
+      return;
+    }
+
+    if (
+      isOnline &&
+      document.visibilityState === "visible" &&
+      counter < CONNECTION_LIMIT
+    ) {
+      setTimeout(function () {
+        initWS(server, getAuthToken);
+      }, 3000);
+    }
+  };
+
+  ws.onopen = async () => {
+    const authToken = await getAuthToken();
+
     sendMessage({
       "type": "connection_init",
-      "payload": authData
+      "payload": { "authorization": authToken }
     });
 
     queue.forEach(message => {
@@ -32,28 +61,26 @@ export const initWS = (
       queue.delete(message);
     });
 
+    if (counter > 0) {
+      Object.values(messages).forEach(msg => sendMessage(msg));
+    }
+
     // Send ping message every 30 seconds to keep the connection alive
-    setInterval(() => sendMessage({ type: "ping" }), 30_000);
+    pingIntervalId = setInterval(() => sendMessage({ type: "ping" }), 30_000);
   };
 
   ws.onclose = function (e) {
     counter = counter + 1;
+    clearInterval(pingIntervalId);
 
     console.warn(
       "Socket is closed. Reconnect will be attempted in 3 seconds.",
-      e.reason
+      e.reason && `Reason: ${e.reason}`
     );
-
-    if (counter < CONNECTION_LIMIT) {
-      setTimeout(function () {
-        initWS(server, authData);
-      }, 3000);
-    }
   };
 
   ws.onerror = function (err) {
-    //@ts-ignore
-    console.error("Socket encountered error: ", err.message, "Closing socket");
+    console.error("WebSocket encountered error. Closing connection.", err);
     ws.close();
   };
 
@@ -74,13 +101,15 @@ export const sendMessage = (message: Object) => {
 export const subscribe = (
   id: string,
   subscriptionId: string,
-  callback: (message: WSMessage) => any
+  callback: (message: WSMessage) => any,
+  message?: WSMessage
 ) => {
   if (!subscriptions[id]) {
     subscriptions[id] = new Map();
   }
 
   subscriptions[id].set(subscriptionId, callback);
+  if (message) messages[id] = message;
 };
 
 export const unsubscribe = (id: string, subscriptionId: string) => {

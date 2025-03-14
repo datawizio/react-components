@@ -14,7 +14,7 @@ export const useWSSubscription = ({
 }: useWSSubscriptionProps) => {
   useEffect(() => {
     const subscriptionId = `ws_${Math.random()}`;
-    subscribe(id ?? "", subscriptionId, callback);
+    subscribe(id ?? "", subscriptionId, callback, message);
 
     if (message) {
       sendMessage(message);
