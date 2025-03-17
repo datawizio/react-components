@@ -1,12 +1,14 @@
 export let ws: WebSocket;
 
-type WSMessage = {
-  id: string;
+export type WSMessage = {
+  id?: string;
+  type: "subscribe" | "complete" | "connection_init" | "ping" | "error";
+  payload?: Record<string, string>;
 };
 
 const subscriptions: { [key: string]: Map<string, Function> } = {};
 const messages: Record<string, WSMessage> = {};
-const queue: Set<Object> = new Set();
+const queue: WSMessage[] = [];
 
 const CONNECTION_LIMIT = 20;
 
@@ -14,6 +16,7 @@ let counter = 0;
 let isOnline = true;
 let reconnect: () => void;
 let pingIntervalId: ReturnType<typeof setInterval>;
+let authToken: string | null = null;
 
 window.addEventListener("online", () => {
   isOnline = true;
@@ -33,7 +36,7 @@ export const initWS = (
   ws = new WebSocket(server, ["graphql-transport-ws"]);
 
   reconnect = () => {
-    if (ws.readyState === WebSocket.OPEN) {
+    if (ws.readyState === WebSocket.OPEN && authToken) {
       return;
     }
 
@@ -42,6 +45,7 @@ export const initWS = (
       document.visibilityState === "visible" &&
       counter < CONNECTION_LIMIT
     ) {
+      console.warn("Reconnect will be attempted in 3 seconds.");
       setTimeout(function () {
         initWS(server, getAuthToken);
       }, 3000);
@@ -49,17 +53,17 @@ export const initWS = (
   };
 
   ws.onopen = async () => {
-    const authToken = await getAuthToken();
+    authToken = await getAuthToken();
 
-    sendMessage({
+    queue.unshift({
       "type": "connection_init",
       "payload": { "authorization": authToken }
     });
 
-    queue.forEach(message => {
-      sendMessage(message);
-      queue.delete(message);
-    });
+    while (queue.length > 0) {
+      sendMessage(queue[0]);
+      queue.shift();
+    }
 
     if (counter > 0) {
       Object.values(messages).forEach(msg => sendMessage(msg));
@@ -72,11 +76,8 @@ export const initWS = (
   ws.onclose = function (e) {
     counter = counter + 1;
     clearInterval(pingIntervalId);
-
-    console.warn(
-      "Socket is closed. Reconnect will be attempted in 3 seconds.",
-      e.reason && `Reason: ${e.reason}`
-    );
+    authToken = null;
+    console.warn("WebSocket is closed.", e.reason && `Reason: ${e.reason}`);
   };
 
   ws.onerror = function (err) {
@@ -90,12 +91,19 @@ export const initWS = (
   };
 };
 
-export const sendMessage = (message: Object) => {
-  if (ws.readyState === WebSocket.OPEN) {
+export const sendMessage = (message: WSMessage) => {
+  if (ws.readyState === WebSocket.OPEN && authToken) {
+    const id = message.id?.split("|")[0];
+    const query = message.payload?.query;
+
+    if (id && !query?.startsWith("mutation")) {
+      messages[id] = message;
+    }
+
     ws.send(JSON.stringify(message));
     return;
   }
-  queue.add(message);
+  queue.push(message);
 };
 
 export const subscribe = (

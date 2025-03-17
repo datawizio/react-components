@@ -5,7 +5,7 @@ import { Badge } from "antd";
 import { useState } from "react";
 import Badger, { BadgerOptions } from "../FaviconBadger";
 import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
-import { sendMessage, subscribe, unsubscribe } from "../../utils/ws";
+import { sendMessage, subscribe, unsubscribe, WSMessage } from "../../utils/ws";
 import "./index.less";
 
 export interface NotificationButtonProps {
@@ -35,7 +35,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
     faviconBadge.value = 0;
     if (!useWS) return;
 
-    const msg = {
+    const msg: WSMessage = {
       "id": "notifications-count",
       "type": "subscribe",
       "payload": {
@@ -44,7 +44,7 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
       }
     };
 
-    const handleMessage = (data: object) => {
+    const handleMessage = (data: WSMessage) => {
       const count = data["payload"]["data"]["notificationsCount"]["count"];
       setState(count);
       faviconBadge.value = count;
