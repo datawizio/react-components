@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ws } from "./";
+import { sendMessage, subscribe, unsubscribe } from ".";
 
 interface useWSSubscriptionProps {
   id: string;
@@ -14,14 +14,14 @@ export const useWSSubscription = ({
 }: useWSSubscriptionProps) => {
   useEffect(() => {
     const subscriptionId = `ws_${Math.random()}`;
-    ws.subscribe(id ?? "", subscriptionId, callback, message);
+    subscribe(id ?? "", subscriptionId, callback, message);
 
     if (message) {
-      ws.sendMessage(message);
+      sendMessage(message);
     }
 
     return () => {
-      ws.unsubscribe(id ?? "", subscriptionId);
+      unsubscribe(id ?? "", subscriptionId);
     };
   }, []);
 };

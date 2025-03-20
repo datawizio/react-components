@@ -6,8 +6,9 @@ import "./index.less";
 const SRC = "https://assets.calendly.com/assets/external/widget.js";
 
 const APP_SRC_LIST = {
-  "BES": "https://calendly.com/olena-dziuban-datawiz/product-demo-bi",
-  "SM": "https://calendly.com/olena-dziuban-datawiz/product-demo-bi"
+  "BES":
+    "https://calendly.com/chaikovsky-serhii-datawiz/product-demo-datawiz-bi",
+  "SM": "https://calendly.com/chaikovsky-serhii-datawiz/product-demo-datawiz-bi"
 };
 
 interface BookMeetingModalProps {
