@@ -121,6 +121,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   placeholder,
   maxSelected,
   maxTagLength,
+  treeCheckStrictly,
   ...restProps
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -190,7 +191,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const selectRef = useRef<any>();
 
-  const [strictlyMode, setStrictlyMode] = useState(false);
+  const [strictlyMode, setStrictlyMode] = useState(treeCheckStrictly ?? false);
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
     if (searchValue.current && !remoteSearch) return undefined;
