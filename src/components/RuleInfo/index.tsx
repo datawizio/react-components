@@ -2,19 +2,18 @@ import React, { memo } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../Modal";
 import { CollapseList } from "./components/CollapseList";
-
 import { useRuleInfo } from "./reducer";
 import { RuleInfoContext } from "./context";
 import { RuleInfoProps } from "./types";
 import { parseDimension, parseLogic } from "./helpers";
-
 import "./index.less";
 
 const RuleInfo: React.FC<RuleInfoProps> = memo(
-  ({ logic, widget_params, formatDateRange, name }) => {
+  ({ logic, widget_params, formatDateRange, name, dtype }) => {
     const { t } = useTranslation();
     const [state, dispatch] = useRuleInfo({
       logic,
+      dtype,
       widget_params,
       formatDateRange,
       name
@@ -31,15 +30,31 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
       <RuleInfoContext.Provider value={{ ruleInfoState: state, dispatch }}>
         <div className="rule-info">
           <div className="rule-info-title">{t("CONDITION")}</div>
-          <div>{parseLogic(logic)}</div>
-          <div className="rule-info-title">{t("DIMENSION")}</div>
-          <div>{parseDimension(widget_params.dimension, formatDateRange)}</div>
-          <div className="rule-info-title">{t("FILTERS")}</div>
-          <div>
-            {widget_params.filters.map(filter =>
-              parseDimension(filter, formatDateRange)
-            )}
-          </div>
+          {typeof logic === "string" ? (
+            <div>{logic}</div>
+          ) : (
+            <div>{parseLogic(logic)}</div>
+          )}
+
+          {!!widget_params.dimension && (
+            <>
+              <div className="rule-info-title">{t("DIMENSIONS")}</div>
+              <div>
+                {parseDimension(widget_params.dimension, formatDateRange)}
+              </div>
+            </>
+          )}
+
+          {!!widget_params.filters?.length && (
+            <>
+              <div className="rule-info-title">{t("FILTERS")}</div>
+              <div>
+                {widget_params.filters.map(filter =>
+                  parseDimension(filter, formatDateRange)
+                )}
+              </div>
+            </>
+          )}
         </div>
         <Modal
           title={name}
@@ -47,6 +62,7 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
           visible={state.modalShow}
           width={"65%"}
           destroyOnClose={true}
+          afterClose={() => dispatch({ type: "reset" })}
           onCancel={handleCancel}
           footer={null}
           centered

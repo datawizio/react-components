@@ -2,9 +2,10 @@ import { Dispatch } from "react";
 
 export interface RuleInfoProps {
   formatDateRange: formatDateRangeType;
-  logic: Object;
+  logic: object | string;
   widget_params: WidgetParams;
   name: string;
+  dtype: string;
 }
 
 export type WidgetParamsDimension = {
@@ -14,21 +15,21 @@ export type WidgetParamsDimension = {
 };
 
 export interface WidgetParams {
-  dimension: WidgetParamsDimension;
-  filters: WidgetParamsDimension[];
+  dimension?: WidgetParamsDimension;
+  filters?: WidgetParamsDimension[];
 }
 export interface DimensionsType {
-  displayName: string;
-  originalName: string;
-  values: string[];
+  displayName?: string;
+  originalName?: string;
+  values?: string[];
 }
 
 export type formatDateRangeType = (from: string, to: string) => string;
 
 export interface IRuleInfoReducer {
   widgetParams: WidgetParams;
-  dimensions: DimensionsType;
-  filters: DimensionsType[];
+  dimensions?: DimensionsType;
+  filters?: DimensionsType[];
   countValues: { [key: string]: number };
   logic: Object;
   formatDateRange: formatDateRangeType;
@@ -51,4 +52,7 @@ export type RuleInfoAction =
   | {
       type: "search";
       payload: { value: string; type: ListType; name: string };
+    }
+  | {
+      type: "reset";
     };

@@ -36,14 +36,17 @@ export function getValue<TDimension = WidgetParamsDimension>(
 
 export const parseDimension = (
   dimension: WidgetParamsDimension,
-  formatDateRange: (from: string, to: string) => string
+  formatDateRange: (from: string, to: string) => string,
+  showExpandButton: boolean = true,
+  maxLength?: number
 ) => (
   <ListInfo
     key={dimension.name}
     //@ts-ignore
     items={getValue(dimension, formatDateRange)}
     label={i18next.t(dimension.name.toUpperCase())}
-    maxLength={MAX_LENGTH_ITEM_LIST}
+    maxLength={maxLength ?? MAX_LENGTH_ITEM_LIST}
+    showExpandButton={showExpandButton}
     expandButton={<ShowAllModal dimensionName={dimension.name} />}
     //@ts-ignore
     renderItem={(item: string) => item}
@@ -71,6 +74,8 @@ export function getDimensions<
   TDimension,
   TReturn extends TDimension extends any[] ? DimensionsType[] : DimensionsType
 >(dimension: TDimension, formatDateRange: formatDateRangeType): TReturn {
+  if (!dimension) return null;
+
   if (Array.isArray(dimension)) {
     return dimension.map(filter => ({
       displayName: `${i18next.t("FILTER")}: ${i18next.t(
@@ -80,6 +85,7 @@ export function getDimensions<
       values: getValue(filter, formatDateRange)
     })) as TReturn;
   }
+
   return {
     displayName: `${i18next.t("DIMENSION")}: ${i18next.t(
       dimension["name"].toUpperCase()
@@ -98,17 +104,21 @@ export function countValues<
 }
 
 export function getCountValues<TDimension extends WidgetParams>(
-  dimension: TDimension,
+  item: TDimension,
   formatDateRange: formatDateRangeType
 ): { [key: string]: number } {
+  if (!item.filters) return {};
   const returnObj = {};
-  dimension.filters.forEach(
+  item.filters.forEach(
     d => (returnObj[d.name] = getValue(d, formatDateRange).length)
   );
-  returnObj[dimension.dimension.name] = getValue(
-    dimension.dimension,
-    formatDateRange
-  ).length;
+
+  if (item.dimension) {
+    returnObj[item.dimension.name] = getValue(
+      item.dimension,
+      formatDateRange
+    ).length;
+  }
 
   return returnObj;
 }

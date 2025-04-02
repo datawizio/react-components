@@ -151,8 +151,9 @@ export interface CronProps {
 
   withHours?: boolean;
   withMinutes?: boolean;
-
   defaultHour?: number;
+
+  getPopupContainer?: () => HTMLElement;
 }
 
 export interface Locale {
@@ -251,6 +252,7 @@ export interface FieldProps {
   mode: Mode;
   withHours?: boolean;
   withMinutes?: boolean;
+  getPopupContainer?: () => HTMLElement;
 }
 
 export interface PeriodProps

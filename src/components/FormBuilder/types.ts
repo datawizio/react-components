@@ -64,6 +64,7 @@ export interface FieldDatePickerProps extends FormFieldProps<Dayjs> {
 
 export interface FieldTextProps extends FormFieldProps<string> {
   type?: string;
+  autoComplete?: string;
 }
 
 export interface FieldCheckboxProps extends FormFieldProps<boolean> {}
@@ -164,6 +165,7 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   maxSelected?: number;
   maxTagLength?: number;
 
+  treeCheckStrictly?: boolean;
   showCheckedStrategy?: "SHOW_ALL" | "SHOW_PARENT" | "SHOW_CHILD";
   treeDefaultExpandAll?: boolean;
   treeDefaultExpandedKeys?: number[] | string[];

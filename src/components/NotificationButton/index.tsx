@@ -5,7 +5,7 @@ import { Badge } from "antd";
 import { useState } from "react";
 import Badger, { BadgerOptions } from "../FaviconBadger";
 import { useDeepEqualMemo } from "../../hooks/useDeepEqualMemo";
-import { sendMessage, subscribe, unsubscribe } from "../../utils/ws";
+import { ws, WSMessage } from "../../utils/ws";
 import "./index.less";
 
 export interface NotificationButtonProps {
@@ -34,24 +34,27 @@ const NotificationButton: React.FC<NotificationButtonProps> = ({
   useEffect(() => {
     faviconBadge.value = 0;
     if (!useWS) return;
-    subscribe("unread-notifications", "notification-btn", data => {
-      const count =
-        data["payload"]["data"]["unreadNotificationsCount"]["count"];
-      setState(count);
-      faviconBadge.value = count;
-    });
 
-    sendMessage({
-      "id": "unread-notifications",
+    const msg: WSMessage = {
+      "id": "notifications-count",
       "type": "subscribe",
       "payload": {
-        "query": "subscription { unreadNotificationsCount {count} }"
+        "query":
+          "subscription { notificationsCount(pageType: unread_page) {count} }"
       }
-    });
+    };
+
+    const handleMessage = (data: WSMessage) => {
+      const count = data["payload"]["data"]["notificationsCount"]["count"];
+      setState(count);
+      faviconBadge.value = count;
+    };
+
+    ws.subscribe("notifications-count", "notification-btn", handleMessage, msg);
+    ws.sendMessage(msg);
 
     return () => {
-      sendMessage({ id: "unread-notifications", complete: true });
-      unsubscribe("unread-notifications", "notification-btn");
+      ws.unsubscribe("notifications-count", "notification-btn");
     };
   }, [useWS]);
 
