@@ -19,6 +19,7 @@ export interface TableMenuProps extends ButtonProps {
   menuItems?: any;
   config?: any;
   settings?: any;
+  params?: any;
   duration?: number;
   exportHandler?: (
     tableState: TableState | null,
@@ -51,7 +52,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
 
   const context = useContext(TableContext);
 
-  const { expand_horizontally } = settings;
+  const { expand_horizontally, expand_tree } = settings;
   const {
     fixed_total,
     expand_table_vertically,
@@ -59,6 +60,8 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     show_export_xls,
     show_send_to_email,
     is_visualization,
+    dimension_count,
+    has_tree,
     max_level = 1
   } = config;
 
@@ -144,6 +147,38 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     }
   };
 
+  const {
+    send_xlsx_submenu,
+    without_expand_tree,
+    send_xlsx_expand_submenu,
+    expand_tree_horizontally,
+    expand_tree_grouped
+  } = useMemo(() => {
+    const res = {
+      send_xlsx_submenu: is_visualization,
+      without_expand_tree: true,
+      send_xlsx_expand_submenu: false,
+      expand_tree_horizontally:
+        (max_level > 1 || has_tree || expand_tree) && !expand_horizontally,
+      expand_tree_grouped:
+        !expand_horizontally &&
+        !(dimension_count === 1 && !has_tree && expand_tree) &&
+        ((dimension_count === 1 && (has_tree || expand_tree)) ||
+          dimension_count > 1)
+    };
+    if (res.expand_tree_horizontally || res.expand_tree_grouped) {
+      res.send_xlsx_expand_submenu = true;
+    }
+    return res;
+  }, [
+    dimension_count,
+    expand_horizontally,
+    expand_tree,
+    has_tree,
+    is_visualization,
+    max_level
+  ]);
+
   const menu = (
     <Menu onClick={handleMenuClick} className="table-menu-dropdown">
       {fixed_total && (
@@ -191,7 +226,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
         </Menu.Item>
       )}
       {show_send_to_email &&
-        (is_visualization ? (
+        (send_xlsx_submenu ? (
           <Menu.SubMenu
             key="send_xlsx_submenu"
             title={
@@ -201,28 +236,37 @@ const TableMenu: React.FC<TableMenuProps> = props => {
               </>
             }
           >
-            <Menu.Item key="without_expand_tree" onClick={() => onSendClick()}>
-              {translate("WITHOUT_EXPAND_TREE")}
-            </Menu.Item>
-            <Menu.SubMenu
-              key="send_xlsx_expand_submenu"
-              title={translate("APPLY_EXPAND_TREE")}
-            >
-              {!expand_horizontally && (
-                <Menu.Item
-                  key="expand_tree_horizontally"
-                  onClick={() => onSendClick("horizontally")}
-                >
-                  {translate("EXPAND_TREE_HORIZONTALLY")}
-                </Menu.Item>
-              )}
+            {without_expand_tree && (
               <Menu.Item
-                key="expand_tree_grouped"
-                onClick={() => onSendClick("grouped")}
+                key="without_expand_tree"
+                onClick={() => onSendClick()}
               >
-                {translate("EXPAND_TREE_GROUPED")}
+                {translate("WITHOUT_EXPAND_TREE")}
               </Menu.Item>
-            </Menu.SubMenu>
+            )}
+            {send_xlsx_expand_submenu && (
+              <Menu.SubMenu
+                key="send_xlsx_expand_submenu"
+                title={translate("APPLY_EXPAND_TREE")}
+              >
+                {expand_tree_horizontally && (
+                  <Menu.Item
+                    key="expand_tree_horizontally"
+                    onClick={() => onSendClick("horizontally")}
+                  >
+                    {translate("EXPAND_TREE_HORIZONTALLY")}
+                  </Menu.Item>
+                )}
+                {expand_tree_grouped && (
+                  <Menu.Item
+                    key="expand_tree_grouped"
+                    onClick={() => onSendClick("grouped")}
+                  >
+                    {translate("EXPAND_TREE_GROUPED")}
+                  </Menu.Item>
+                )}
+              </Menu.SubMenu>
+            )}
           </Menu.SubMenu>
         ) : (
           <Menu.Item
