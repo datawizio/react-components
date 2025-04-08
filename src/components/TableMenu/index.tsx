@@ -158,12 +158,16 @@ const TableMenu: React.FC<TableMenuProps> = props => {
       send_xlsx_submenu: is_visualization,
       without_expand_tree: true,
       send_xlsx_expand_submenu: false,
-      expand_tree_horizontally:
-        (max_level > 1 || has_tree || expand_tree) && !expand_horizontally,
       expand_tree_grouped:
         !expand_horizontally &&
-        !(dimension_count === 1 && !has_tree && expand_tree) &&
-        ((dimension_count === 1 && (has_tree || expand_tree)) ||
+        ((has_tree && expand_tree) ||
+          (!has_tree && dimension_count > 1 && expand_tree) ||
+          dimension_count > 1),
+      expand_tree_horizontally:
+        !expand_horizontally &&
+        ((dimension_count === 1 && has_tree) ||
+          (has_tree && expand_tree) ||
+          (!has_tree && dimension_count > 1 && expand_tree) ||
           dimension_count > 1)
     };
     if (res.expand_tree_horizontally || res.expand_tree_grouped) {
@@ -175,8 +179,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     expand_horizontally,
     expand_tree,
     has_tree,
-    is_visualization,
-    max_level
+    is_visualization
   ]);
 
   const menu = (
