@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Modal } from "antd";
 import { useTranslation } from "react-i18next";
+
 import "./index.less";
 
 const SRC = "https://assets.calendly.com/assets/external/widget.js";
 
 const APP_SRC_LIST = {
-  "BES":
-    "https://calendly.com/chaikovsky-serhii-datawiz/product-demo-datawiz-bi",
-  "SM": "https://calendly.com/chaikovsky-serhii-datawiz/product-demo-datawiz-bi"
+  "BES": "chaikovsky-serhii-datawiz/product-demo-datawiz-bi",
+  "PH": "olena-dziuban-datawiz/product-demo-bi"
 };
 
 interface BookMeetingModalProps {
@@ -60,7 +60,7 @@ const BookMeetingModal: React.FC<BookMeetingModalProps> = ({
         <span className="book-meeting-modal-title">{t(titleKey)}</span>
         <div
           className="calendly-inline-widget"
-          data-url={`${APP_SRC_LIST[app]}?text_color=000&primary_color=582eb2`}
+          data-url={`https://calendly.com/${APP_SRC_LIST[app]}?text_color=000&primary_color=582eb2`}
         ></div>
       </div>
     </Modal>
