@@ -814,6 +814,9 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     [internalLoading, isSelectedAll]
   );
 
+  const limitExceeded =
+    multiple && maxSelected && internalValue.length > maxSelected;
+
   const dropdownRender = useCallback(
     menu => {
       return (
@@ -832,7 +835,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           actions={
             <>
               <Button onClick={handlerDrawerCancel}>{cancelText}</Button>
-              <Button onClick={handlerDrawerSubmit} type="primary">
+              <Button
+                onClick={handlerDrawerSubmit}
+                type="primary"
+                disabled={limitExceeded}
+              >
                 {submitText}
               </Button>
             </>
@@ -905,7 +912,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
             )}
           </div>
           {(multiple || maxSelected) && (
-            <div className="drawer-tree-select-selected">
+            <div
+              className="drawer-tree-select-selected"
+              data-error={limitExceeded}
+            >
               <div className="drawer-tree-select-selected-title">
                 {translate("SELECTED")}
               </div>
