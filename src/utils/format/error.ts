@@ -13,7 +13,7 @@ export function parseErrorText(errors: any, t: any) {
   }
 
   if (errors.message) {
-    return t(errors.message);
+    return t(errors.message, errors.message_params);
   }
 
   const msg = Object.keys(errors)
@@ -36,7 +36,11 @@ export function showApiErrors(errors: any, t: any) {
   ApiError.showError(msg);
 }
 
-export function showApiNotifications(errors: ApiNotificationError[], t: any, duration?: number) {
+export function showApiNotifications(
+  errors: ApiNotificationError[],
+  t: any,
+  duration?: number
+) {
   if (!errors?.length) return;
   errors.forEach((error: ApiNotificationError) => {
     const { error_title, error_values, error_field, error_type } = error;
