@@ -1,16 +1,15 @@
 import React, { memo } from "react";
-import { useTranslation } from "react-i18next";
 import Modal from "../Modal";
 import { CollapseList } from "./components/CollapseList";
 import { useRuleInfo } from "./reducer";
 import { RuleInfoContext } from "./context";
 import { RuleInfoProps } from "./types";
 import { parseDimension, parseLogic } from "./helpers";
+import { RuleInfoTableSection } from "../RuleInfoTable/RuleInfoTableSection";
 import "./index.less";
 
 const RuleInfo: React.FC<RuleInfoProps> = memo(
-  ({ logic, widget_params, formatDateRange, name, dtype }) => {
-    const { t } = useTranslation();
+  ({ logic, widget_params, formatDateRange, name, dtype, filtersList }) => {
     const [state, dispatch] = useRuleInfo({
       logic,
       dtype,
@@ -29,32 +28,29 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
     return (
       <RuleInfoContext.Provider value={{ ruleInfoState: state, dispatch }}>
         <div className="rule-info">
-          <div className="rule-info-title">{t("CONDITION")}</div>
-          {typeof logic === "string" ? (
-            <div>{logic}</div>
-          ) : (
-            <div>{parseLogic(logic)}</div>
-          )}
+          <RuleInfoTableSection name="CONDITION" className="rule-condition">
+            {typeof logic === "string" ? (
+              <div>{logic}</div>
+            ) : (
+              <div>{parseLogic(logic)}</div>
+            )}
+          </RuleInfoTableSection>
 
           {!!widget_params.dimension && (
-            <>
-              <div className="rule-info-title">{t("DIMENSIONS")}</div>
-              <div>
-                {parseDimension(widget_params.dimension, formatDateRange)}
-              </div>
-            </>
+            <RuleInfoTableSection name="DIMENSION" className="rule-dimension">
+              {parseDimension(widget_params.dimension, formatDateRange)}
+            </RuleInfoTableSection>
           )}
 
-          {!!widget_params.filters?.length && (
-            <>
-              <div className="rule-info-title">{t("FILTERS")}</div>
-              <div>
-                {widget_params.filters.map(filter =>
-                  parseDimension(filter, formatDateRange)
-                )}
-              </div>
-            </>
-          )}
+          {filtersList
+            ? filtersList
+            : !!widget_params.filters?.length && (
+                <RuleInfoTableSection name="FILTERS" className="rule-filters">
+                  {widget_params.filters.map(filter =>
+                    parseDimension(filter, formatDateRange)
+                  )}
+                </RuleInfoTableSection>
+              )}
         </div>
         <Modal
           title={name}

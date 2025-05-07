@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch, ReactNode } from "react";
 
 export interface RuleInfoProps {
   formatDateRange: formatDateRangeType;
@@ -6,6 +6,7 @@ export interface RuleInfoProps {
   widget_params: WidgetParams;
   name: string;
   dtype: string;
+  filtersList?: ReactNode;
 }
 
 export type WidgetParamsDimension = {
