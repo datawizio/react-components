@@ -42,15 +42,15 @@ const RuleInfo: React.FC<RuleInfoProps> = memo(
             </RuleInfoTableSection>
           )}
 
-          {filtersList
-            ? filtersList
-            : !!widget_params.filters?.length && (
-                <RuleInfoTableSection name="FILTERS" className="rule-filters">
-                  {widget_params.filters.map(filter =>
+          {!!widget_params.filters?.length && (
+            <RuleInfoTableSection name="FILTERS" className="rule-filters">
+              {filtersList
+                ? filtersList
+                : widget_params.filters.map(filter =>
                     parseDimension(filter, formatDateRange)
                   )}
-                </RuleInfoTableSection>
-              )}
+            </RuleInfoTableSection>
+          )}
         </div>
         <Modal
           title={name}
