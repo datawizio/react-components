@@ -1,9 +1,11 @@
 import React from "react";
 import Button from "../Button";
+import ColoredTags from "../ColoredTags";
 import { useTranslation } from "react-i18next";
 import { RuleInfoProps } from "../RuleInfo/types";
 import { parseDimension, parseLogic } from "../RuleInfo/helpers";
-import { RuleInfoTableSection } from "./RuleInfoTableSection";
+import { RuleInfoTableSection } from "./components/RuleInfoTableSection";
+
 import "./index.less";
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
@@ -54,31 +56,19 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
         )}
 
         <RuleInfoTableSection name="FILTERS" className="rule-filters">
-          {widget_params.filters?.length ? (
-            <>
-              {widget_params.filters.map((filter, i) => {
-                return (
-                  <div
-                    key={`filter-tag-${i}`}
-                    className="filter-tag"
-                    data-key={(i % 4) + 1}
-                  >
-                    {parseDimension(filter, formatDateRange, false, 2)}
-                  </div>
-                );
-              })}
-              <Button
-                type="link"
-                className="show-all-modal-button"
-                onClick={onShowRuleDetailsClick}
-              >
-                {t("SHOW_ALL")}
-              </Button>
-            </>
-          ) : (
-            <div className="filter-tag not-selected-tag">
-              {t("NOT_SELECTED")}
-            </div>
+          <ColoredTags>
+            {widget_params.filters.map(filter =>
+              parseDimension(filter, formatDateRange, false, 2)
+            )}
+          </ColoredTags>
+          {!!widget_params.filters?.length && (
+            <Button
+              type="link"
+              className="show-all-modal-button"
+              onClick={onShowRuleDetailsClick}
+            >
+              {t("SHOW_ALL")}
+            </Button>
           )}
         </RuleInfoTableSection>
       </div>

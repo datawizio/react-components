@@ -26,32 +26,9 @@
     flex-wrap: wrap;
     gap: 8px;
 
-    .filter-tag {
-      display: flex;
-      align-items: center;
-      border-radius: 5px;
-      padding: 3px 8px;
-
-      @tag-colors: #199605 #ecfdec, #393939 #f8f8f8, #4a72ff #f2f5ff,
-        #ffa73f #fff7e2;
-
-      each(@tag-colors, {
-        &[data-key="@{index}"] {
-          color: extract(@value, 1);
-          background-color: extract(@value, 2);
-        }
-      });
-
-      &.not-selected-tag {
-        font-style: italic;
-        color: #393939;
-        background-color: #ededed;
-      }
-
-      .card-header-info-label {
-        padding-right: 5px;
-        font-weight: 600;
-      }
+    .colored-tag .card-header-info-label {
+      padding-right: 5px;
+      font-weight: 600;
     }
   }
 
