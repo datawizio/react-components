@@ -1,0 +1,21 @@
+.colored-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 0 8px;
+
+  .colored-tag {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &.not-selected-tag {
+      font-style: italic;
+      color: #393939;
+      background-color: #ededed;
+    }
+  }
+}

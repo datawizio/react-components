@@ -189,3 +189,5 @@ export { default as VideoModal } from "./components/VideoModal";
 export { default as BookMeetingModal } from "./components/BookMeetingModal";
 
 export { default as UserMenu } from "./components/UserMenu";
+
+export { default as ColoredTags } from "./components/ColoredTags";

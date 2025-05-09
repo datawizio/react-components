@@ -1,0 +1,41 @@
+import React from "react";
+import clsx from "clsx";
+import { useTranslation } from "react-i18next";
+
+import "./index.less";
+
+const styles = [
+  { color: "#199605", backgroundColor: "#ecfdec" },
+  { color: "#393939", backgroundColor: "#f8f8f8" },
+  { color: "#4a72ff", backgroundColor: "#f2f5ff" },
+  { color: "#ffa73f", backgroundColor: "#fff7e2" }
+];
+
+const ColoredTags: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  className,
+  ...props
+}) => {
+  const { t } = useTranslation();
+  const childrenArray = React.Children.toArray(children);
+
+  return (
+    <div className={clsx("colored-tags", className)} {...props}>
+      {!childrenArray.length ? (
+        <div className="colored-tag not-selected-tag">{t("NOT_SELECTED")}</div>
+      ) : (
+        childrenArray.map((tagBody, i) => (
+          <div
+            key={`colored-tag-${i}`}
+            className="colored-tag"
+            style={styles[i % styles.length]}
+          >
+            {tagBody}
+          </div>
+        ))
+      )}
+    </div>
+  );
+};
+
+export default ColoredTags;
