@@ -2,7 +2,9 @@ import React from "react";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
-export const RuleInfoTableSection: React.FC<{
+import "./index.less";
+
+export const RuleInfoSection: React.FC<{
   name: string;
   className?: string;
 }> = ({ name, children, className }) => {

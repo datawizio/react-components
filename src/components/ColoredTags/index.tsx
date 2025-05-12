@@ -4,16 +4,21 @@ import { useTranslation } from "react-i18next";
 
 import "./index.less";
 
-const styles = [
+const tagColors = [
   { color: "#199605", backgroundColor: "#ecfdec" },
   { color: "#393939", backgroundColor: "#f8f8f8" },
   { color: "#4a72ff", backgroundColor: "#f2f5ff" },
   { color: "#ffa73f", backgroundColor: "#fff7e2" }
 ];
 
-const ColoredTags: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+type ColoredTagsProps = React.HTMLAttributes<HTMLDivElement> & {
+  startIndex?: number;
+};
+
+const ColoredTags: React.FC<ColoredTagsProps> = ({
   children,
   className,
+  startIndex = 0,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -28,7 +33,7 @@ const ColoredTags: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
           <div
             key={`colored-tag-${i}`}
             className="colored-tag"
-            style={styles[i % styles.length]}
+            style={tagColors[(i + startIndex) % tagColors.length]}
           >
             {tagBody}
           </div>

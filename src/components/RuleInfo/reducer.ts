@@ -27,15 +27,15 @@ const reducer = (
       if (Array.isArray(state.widgetParams[type])) {
         searchedWidgetParams.filters = state.widgetParams.filters.map(el => ({
           ...el,
-          values:
-            Array.isArray(el.values) && searchMap.get(el.name)
-              ? el.values.filter(v =>
+          value:
+            Array.isArray(el.value) && searchMap.get(el.name)
+              ? el.value.filter(v =>
                   basicDTypesConfig.string.search(v, searchMap.get(el.name))
                 )
-              : el.values
+              : el.value
         }));
-      } else if (Array.isArray(state.widgetParams.dimension.values)) {
-        searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
+      } else if (Array.isArray(state.widgetParams.dimension.value)) {
+        searchedWidgetParams.dimension.value = state.widgetParams.dimension.value.filter(
           el => basicDTypesConfig.string.search(el, value)
         );
       }
