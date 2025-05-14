@@ -1,9 +1,11 @@
 import React from "react";
 import Button from "../Button";
+import ColoredTags from "../ColoredTags";
 import { useTranslation } from "react-i18next";
 import { RuleInfoProps } from "../RuleInfo/types";
 import { parseDimension, parseLogic } from "../RuleInfo/helpers";
-import { RuleInfoTableSection } from "./RuleInfoTableSection";
+import { RuleInfoSection } from "../RuleInfo/components/RuleInfoSection";
+
 import "./index.less";
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
@@ -24,12 +26,12 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
 
     return (
       <div className="rule-info-table">
-        <RuleInfoTableSection name="CONDITION" className="rule-condition">
+        <RuleInfoSection name="CONDITION" className="rule-condition">
           {typeof logic === "string" ? t(logic) : parseLogic(logic)}
-        </RuleInfoTableSection>
+        </RuleInfoSection>
 
         {dtype === "report_rule" && onShowProductsTableClick && (
-          <RuleInfoTableSection name="PRODUCTS" className="rule-products">
+          <RuleInfoSection name="PRODUCTS" className="rule-products">
             <Button
               type="link"
               className="view-product-list-btn"
@@ -37,11 +39,11 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
             >
               {t("SHOW_RESULTS")}
             </Button>
-          </RuleInfoTableSection>
+          </RuleInfoSection>
         )}
 
         {!!widget_params.dimension?.name && (
-          <RuleInfoTableSection name="DIMENSION" className="rule-dimension">
+          <RuleInfoSection name="DIMENSION" className="rule-dimension">
             <span>{t(widget_params.dimension.name)}</span>
             <Button
               type="link"
@@ -50,37 +52,25 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
             >
               {t("SHOW_RESULTS")}
             </Button>
-          </RuleInfoTableSection>
+          </RuleInfoSection>
         )}
 
-        <RuleInfoTableSection name="FILTERS" className="rule-filters">
-          {widget_params.filters?.length ? (
-            <>
-              {widget_params.filters.map((filter, i) => {
-                return (
-                  <div
-                    key={`filter-tag-${i}`}
-                    className="filter-tag"
-                    data-key={(i % 4) + 1}
-                  >
-                    {parseDimension(filter, formatDateRange, false, 2)}
-                  </div>
-                );
-              })}
-              <Button
-                type="link"
-                className="show-all-modal-button"
-                onClick={onShowRuleDetailsClick}
-              >
-                {t("SHOW_ALL")}
-              </Button>
-            </>
-          ) : (
-            <div className="filter-tag not-selected-tag">
-              {t("NOT_SELECTED")}
-            </div>
+        <RuleInfoSection name="FILTERS" className="rule-filters">
+          <ColoredTags>
+            {widget_params.filters.map(filter =>
+              parseDimension(filter, formatDateRange, false, 2)
+            )}
+          </ColoredTags>
+          {!!widget_params.filters?.length && (
+            <Button
+              type="link"
+              className="show-all-modal-button"
+              onClick={onShowRuleDetailsClick}
+            >
+              {t("SHOW_ALL")}
+            </Button>
           )}
-        </RuleInfoTableSection>
+        </RuleInfoSection>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode } from "react";
+import { Dispatch } from "react";
 
 export interface RuleInfoProps {
   formatDateRange: formatDateRangeType;
@@ -6,13 +6,13 @@ export interface RuleInfoProps {
   widget_params: WidgetParams;
   name: string;
   dtype: string;
-  filtersList?: ReactNode;
+  ignoredFilters?: string[];
 }
 
 export type WidgetParamsDimension = {
   name: string;
   type?: "exclude" | "include";
-  values?: string[] | string | { from: string; to: string };
+  values?: string[] | string | boolean | object;
 };
 
 export interface WidgetParams {
@@ -37,12 +37,14 @@ export interface IRuleInfoReducer {
   name: string;
   modalShow: boolean;
   defaultActiveKey: string[];
+  ignoredFilters: string[];
 }
 
 export interface IRuleInfoContext {
   ruleInfoState: IRuleInfoReducer;
   dispatch: Dispatch<RuleInfoAction>;
 }
+
 export type ListType = keyof WidgetParams;
 
 export type RuleInfoAction =
