@@ -35,6 +35,10 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
     });
   };
 
+  const showAllModalButton = !!state.filters.find(f => f.values.length > 2) && (
+    <ShowAllModal />
+  );
+
   return (
     <RuleInfoContext.Provider value={{ ruleInfoState: state, dispatch }}>
       <div className="rule-info">
@@ -57,8 +61,7 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
 
         {!!widget_params.filters?.length && (
           <RuleInfoSection name="FILTERS" className="rule-filters">
-            {/* TODO */}
-            <ColoredTags suffix={<ShowAllModal />}>
+            <ColoredTags suffix={showAllModalButton}>
               {widget_params.filters
                 .filter(f => !ignoredFilters.includes(f.name))
                 .map(f => parseDimension(f, formatDateRange, false, 2))}
