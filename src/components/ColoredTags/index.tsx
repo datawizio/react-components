@@ -13,12 +13,14 @@ const tagColors = [
 
 type ColoredTagsProps = React.HTMLAttributes<HTMLDivElement> & {
   startIndex?: number;
+  suffix?: React.ReactNode;
 };
 
 const ColoredTags: React.FC<ColoredTagsProps> = ({
   children,
   className,
   startIndex = 0,
+  suffix,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -39,6 +41,7 @@ const ColoredTags: React.FC<ColoredTagsProps> = ({
           </div>
         ))
       )}
+      <div className="colored-tags-suffix">{suffix}</div>
     </div>
   );
 };

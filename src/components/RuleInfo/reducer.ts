@@ -27,15 +27,15 @@ const reducer = (
       if (Array.isArray(state.widgetParams[type])) {
         searchedWidgetParams.filters = state.widgetParams.filters.map(el => ({
           ...el,
-          value:
-            Array.isArray(el.value) && searchMap.get(el.name)
-              ? el.value.filter(v =>
+          values:
+            Array.isArray(el.values) && searchMap.get(el.name)
+              ? el.values.filter(v =>
                   basicDTypesConfig.string.search(v, searchMap.get(el.name))
                 )
-              : el.value
+              : el.values
         }));
-      } else if (Array.isArray(state.widgetParams.dimension.value)) {
-        searchedWidgetParams.dimension.value = state.widgetParams.dimension.value.filter(
+      } else if (Array.isArray(state.widgetParams.dimension.values)) {
+        searchedWidgetParams.dimension.value = state.widgetParams.dimension.values.filter(
           el => basicDTypesConfig.string.search(el, value)
         );
       }
@@ -46,7 +46,11 @@ const reducer = (
           ? getDimensions(searchedWidgetParams.dimension, state.formatDateRange)
           : {},
         filters: searchedWidgetParams.filters
-          ? getDimensions(searchedWidgetParams.filters, state.formatDateRange)
+          ? getDimensions(
+              searchedWidgetParams.filters,
+              state.formatDateRange,
+              state.ignoredFilters
+            )
           : []
       };
     }
@@ -61,12 +65,14 @@ const reducer = (
 };
 
 const initializer = (props: RuleInfoProps) => {
-  const { widget_params, formatDateRange, logic, name } = props;
+  const { widget_params, formatDateRange, logic, name, ignoredFilters } = props;
   const { dimension, filters } = widget_params;
   return {
     widgetParams: widget_params,
     dimensions: dimension ? getDimensions(dimension, formatDateRange) : {},
-    filters: filters ? getDimensions(filters, formatDateRange) : [],
+    filters: filters
+      ? getDimensions(filters, formatDateRange, ignoredFilters)
+      : [],
     countValues:
       dimension || filters
         ? getCountValues(widget_params, formatDateRange)
@@ -75,7 +81,8 @@ const initializer = (props: RuleInfoProps) => {
     formatDateRange,
     name,
     modalShow: false,
-    defaultActiveKey: []
+    defaultActiveKey: [],
+    ignoredFilters: ignoredFilters ?? []
   };
 };
 

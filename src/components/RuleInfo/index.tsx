@@ -1,73 +1,87 @@
-import React, { memo } from "react";
+import React from "react";
 import Modal from "../Modal";
+import ColoredTags from "../ColoredTags";
 import { CollapseList } from "./components/CollapseList";
 import { useRuleInfo } from "./reducer";
 import { RuleInfoContext } from "./context";
 import { RuleInfoProps } from "./types";
 import { parseDimension, parseLogic } from "./helpers";
-import { RuleInfoTableSection } from "../RuleInfoTable/RuleInfoTableSection";
+import { RuleInfoSection } from "./components/RuleInfoSection";
+import ShowAllModal from "./components/ShowAllModal";
+
 import "./index.less";
 
-const RuleInfo: React.FC<RuleInfoProps> = memo(
-  ({ logic, widget_params, formatDateRange, name, dtype, filtersList }) => {
-    const [state, dispatch] = useRuleInfo({
-      logic,
-      dtype,
-      widget_params,
-      formatDateRange,
-      name
+const RuleInfo: React.FC<RuleInfoProps> = ({
+  logic,
+  widget_params,
+  formatDateRange,
+  name,
+  dtype,
+  ignoredFilters = []
+}) => {
+  const [state, dispatch] = useRuleInfo({
+    logic,
+    dtype,
+    widget_params,
+    formatDateRange,
+    name,
+    ignoredFilters
+  });
+
+  const handleCancel = () => {
+    dispatch({
+      type: "toggleModalShow",
+      payload: { show: false, defaultActiveKey: [] }
     });
+  };
 
-    const handleCancel = () => {
-      dispatch({
-        type: "toggleModalShow",
-        payload: { show: false, defaultActiveKey: [] }
-      });
-    };
+  return (
+    <RuleInfoContext.Provider value={{ ruleInfoState: state, dispatch }}>
+      <div className="rule-info">
+        <RuleInfoSection name="CONDITION" className="rule-condition">
+          {typeof logic === "string" ? logic : parseLogic(logic)}
+        </RuleInfoSection>
 
-    return (
-      <RuleInfoContext.Provider value={{ ruleInfoState: state, dispatch }}>
-        <div className="rule-info">
-          <RuleInfoTableSection name="CONDITION" className="rule-condition">
-            {typeof logic === "string" ? (
-              <div>{logic}</div>
-            ) : (
-              <div>{parseLogic(logic)}</div>
-            )}
-          </RuleInfoTableSection>
+        {!!widget_params.dimension && (
+          <RuleInfoSection name="DIMENSION" className="rule-dimension">
+            <ColoredTags startIndex={2}>
+              {parseDimension(
+                widget_params.dimension,
+                formatDateRange,
+                false,
+                2
+              )}
+            </ColoredTags>
+          </RuleInfoSection>
+        )}
 
-          {!!widget_params.dimension && (
-            <RuleInfoTableSection name="DIMENSION" className="rule-dimension">
-              {parseDimension(widget_params.dimension, formatDateRange)}
-            </RuleInfoTableSection>
-          )}
+        {!!widget_params.filters?.length && (
+          <RuleInfoSection name="FILTERS" className="rule-filters">
+            {/* TODO */}
+            <ColoredTags suffix={<ShowAllModal />}>
+              {widget_params.filters
+                .filter(f => !ignoredFilters.includes(f.name))
+                .map(f => parseDimension(f, formatDateRange, false, 2))}
+            </ColoredTags>
+          </RuleInfoSection>
+        )}
+      </div>
 
-          {!!widget_params.filters?.length && (
-            <RuleInfoTableSection name="FILTERS" className="rule-filters">
-              {filtersList
-                ? filtersList
-                : widget_params.filters.map(filter =>
-                    parseDimension(filter, formatDateRange)
-                  )}
-            </RuleInfoTableSection>
-          )}
-        </div>
-        <Modal
-          title={name}
-          className="rule-info-modal"
-          visible={state.modalShow}
-          width={"65%"}
-          destroyOnClose={true}
-          afterClose={() => dispatch({ type: "reset" })}
-          onCancel={handleCancel}
-          footer={null}
-          centered
-        >
-          <CollapseList />
-        </Modal>
-      </RuleInfoContext.Provider>
-    );
-  }
-);
+      <Modal
+        title={name}
+        className="rule-info-modal"
+        visible={state.modalShow}
+        width={"65%"}
+        destroyOnClose={true}
+        afterClose={() => dispatch({ type: "reset" })}
+        onCancel={handleCancel}
+        footer={null}
+        centered
+      >
+        <CollapseList />
+      </Modal>
+    </RuleInfoContext.Provider>
+  );
+};
 
-export default RuleInfo;
+export default React.memo(RuleInfo);

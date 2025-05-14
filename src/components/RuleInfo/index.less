@@ -1,27 +1,20 @@
+@import url("./components/RuleInfoSection/index.less");
+
 .rule-info {
-  border-left: 1px solid #f0f0f0;
-  margin-left: 40px;
-  padding: 12px;
-  font-size: 12px;
+  margin-left: 85px;
+  padding: 8px;
+  font-size: 14px;
 
-  .rule-info-title {
-    font-weight: bold;
-  }
-
-  .dw-btn {
-    &.ant-btn-link {
-      &.show-all-modal-button {
-        font-size: 12px;
-        padding: 0;
-        padding-left: 8px;
-        height: max-content;
-      }
-    }
+  .rule-info-section {
+    grid-template-columns: 130px 1fr;
+    border: none !important;
+    padding: 12px 0;
+    align-items: baseline;
   }
 
   .card-header-info-label {
-    text-decoration: underline;
     padding-right: 5px;
+    font-weight: 600;
   }
 }
 

@@ -10,7 +10,11 @@
     padding: 3px 8px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+
+    & > * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     &.not-selected-tag {
       font-style: italic;

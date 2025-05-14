@@ -11,27 +11,58 @@ import {
 
 export const MAX_LENGTH_ITEM_LIST = 7;
 
+export const functions = {
+  "boolean": (value: boolean) => {
+    return [value ? i18next.t("YES") : i18next.t("NO")];
+  },
+  "string": (value: string) => {
+    return [i18next.t(value.toUpperCase())];
+  },
+  "array": (value: Array<string | number>, type: "include" | "exclude") => {
+    if (type === "exclude") {
+      const res = [...value];
+      res[0] = `${i18next.t("ALL_EXCEPT")} ${res[0]}`;
+      return res;
+    }
+
+    return value;
+  },
+  "object": {
+    "new_products": (value: any) => {
+      return [
+        value.include
+          ? i18next.t("SHOW_ONLY_NEW_PRODUCTS")
+          : i18next.t("EXCLUDE_NEW_PRODUCTS_FROM_ANALYSIS")
+      ];
+    },
+    "abc_xyz": (value: object) => {
+      return Object.entries(value)
+        .filter(([key, val]) => key !== "by" && val?.select !== null)
+        .map(([key]) => i18next.t(key.toUpperCase()));
+    }
+  }
+} as const;
+
 export function getValue<TDimension = WidgetParamsDimension>(
   dimension: TDimension,
   formatDateRange: (from: string, to: string) => string
 ) {
-  if (!dimension["values"]) return [i18next.t("ALL")];
-  if (typeof dimension["values"] === "string") {
-    return [i18next.t(dimension["values"].toUpperCase())];
+  const value = dimension["values"];
+
+  if (!value) return [i18next.t("ALL")];
+  if (typeof value === "boolean") return [functions.boolean(value)];
+  if (typeof value === "string") return [functions.string(value)];
+
+  if (Array.isArray(value)) return functions.array(value, dimension["type"]);
+  if (value["from"]) return [formatDateRange(value["from"], value["to"])];
+
+  if (typeof value === "object") {
+    const key = dimension["name"].toLowerCase();
+    const fn = functions.object?.[key];
+    return fn ? fn(value) : [JSON.stringify(value)];
   }
-  if (Array.isArray(dimension["values"])) {
-    if (dimension["type"] === "exclude") {
-      const res = [...dimension["values"]];
-      res[0] = `${i18next.t("ALL_EXCEPT")} ${res[0]}`;
-      return res;
-    }
-    return dimension["values"];
-  }
-  if (dimension["values"]["from"]) {
-    return [
-      formatDateRange(dimension["values"]["from"], dimension["values"]["to"])
-    ];
-  }
+
+  return [value];
 }
 
 export const parseDimension = (
@@ -42,13 +73,13 @@ export const parseDimension = (
 ) => (
   <ListInfo
     key={dimension.name}
-    //@ts-ignore
+    // @ts-ignore
     items={getValue(dimension, formatDateRange)}
     label={i18next.t(dimension.name.toUpperCase())}
     maxLength={maxLength ?? MAX_LENGTH_ITEM_LIST}
     showExpandButton={showExpandButton}
     expandButton={<ShowAllModal dimensionName={dimension.name} />}
-    //@ts-ignore
+    // @ts-ignore
     renderItem={(item: string) => item}
   />
 );
@@ -73,17 +104,23 @@ export function parseLogic<TLogic>(logic: TLogic) {
 export function getDimensions<
   TDimension,
   TReturn extends TDimension extends any[] ? DimensionsType[] : DimensionsType
->(dimension: TDimension, formatDateRange: formatDateRangeType): TReturn {
+>(
+  dimension: TDimension,
+  formatDateRange: formatDateRangeType,
+  ignore: string[] = []
+): TReturn {
   if (!dimension) return null;
 
   if (Array.isArray(dimension)) {
-    return dimension.map(filter => ({
-      displayName: `${i18next.t("FILTER")}: ${i18next.t(
-        filter["name"].toUpperCase()
-      )}`,
-      originalName: filter["name"],
-      values: getValue(filter, formatDateRange)
-    })) as TReturn;
+    return dimension
+      .filter(f => !ignore.includes(f.name))
+      .map(filter => ({
+        displayName: `${i18next.t("FILTER")}: ${i18next.t(
+          filter["name"].toUpperCase()
+        )}`,
+        originalName: filter["name"],
+        values: getValue(filter, formatDateRange)
+      })) as TReturn;
   }
 
   return {
