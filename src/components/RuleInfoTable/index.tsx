@@ -3,13 +3,14 @@ import Button from "../Button";
 import ColoredTags from "../ColoredTags";
 import { useTranslation } from "react-i18next";
 import { RuleInfoProps } from "../RuleInfo/types";
-import { parseDimension, parseLogic } from "../RuleInfo/helpers";
+import { getDimensionNameByKey, parseDimension, parseLogic } from "../RuleInfo/helpers";
 import { RuleInfoSection } from "../RuleInfo/components/RuleInfoSection";
 
 import "./index.less";
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
-  onShowProductsTableClick?: () => void;
+  dimensionKey?: string;
+  onShowDimensionTableClick?: () => void;
   onShowRuleDetailsClick?: () => void;
 };
 
@@ -19,8 +20,9 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
     logic,
     widget_params,
     formatDateRange,
+    dimensionKey = "PRODUCTS",
     onShowRuleDetailsClick,
-    onShowProductsTableClick
+    onShowDimensionTableClick
   }) => {
     const { t } = useTranslation();
 
@@ -30,12 +32,13 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
           {typeof logic === "string" ? t(logic) : parseLogic(logic)}
         </RuleInfoSection>
 
-        {dtype === "report_rule" && onShowProductsTableClick && (
-          <RuleInfoSection name="PRODUCTS" className="rule-products">
+        {dtype === "report_rule" && onShowDimensionTableClick && (
+          <RuleInfoSection name="DIMENSION" className="rule-report-dimension">
+            <span>{t(getDimensionNameByKey(dimensionKey))}</span>
             <Button
               type="link"
-              className="view-product-list-btn"
-              onClick={onShowProductsTableClick}
+              className="view-dimension-table-btn"
+              onClick={onShowDimensionTableClick}
             >
               {t("SHOW_RESULTS")}
             </Button>
