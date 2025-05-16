@@ -6,7 +6,7 @@ import { ButtonProps } from "antd/lib/button";
 
 export interface CronProps {
   /**
-   * Cron value, the component is by design a controled component.
+   * Cron value, the component is by design a controlled component.
    * The first value will be the default value.
    *
    * required
@@ -121,7 +121,7 @@ export interface CronProps {
 
   /**
    * Define if a double click on a dropdown option should automatically
-   * select / unselect a periodicity.
+   * select / unselect periodicity.
    *
    * Default: true
    */
@@ -129,7 +129,7 @@ export interface CronProps {
 
   /**
    * Define if it's possible to select only one or multiple values for each select.
-   * When mode is 'single', periodicityOnDoubleClick prop is ignore and set to false by default.
+   * When the mode is 'single', periodicityOnDoubleClick prop is ignored and set to false by default.
    *
    * Default: 'multiple'
    */
@@ -139,11 +139,11 @@ export interface CronProps {
    * Change the component language.
    * Can also be used to remove prefix and suffix.
    *
-   * When setting 'humanizeLabels' you can change the language of the
+   * When setting `humanizeLabels`, you can change the language of the
    * alternative labels with 'altWeekDays' and 'altMonths'.
    *
    * The order of the 'locale' properties 'weekDays', 'months', 'altMonths'
-   * and 'altWeekDays' is important! The index will be used as value.
+   * and 'altWeekDays' is important! The index will be used as a value.
    *
    * Default './locale.ts'
    */
@@ -154,6 +154,14 @@ export interface CronProps {
   defaultHour?: number;
 
   getPopupContainer?: () => HTMLElement;
+
+  /**
+   * The number of the day of the week on which the week starts.
+   * Must be in the range from 1 to 7, where 1 is Monday and 7 is Sunday.
+   *
+   * Default: 7
+   */
+  startOfWeek?: number;
 }
 
 export interface Locale {
@@ -277,6 +285,7 @@ export interface MonthDaysProps extends FieldProps {
 export interface WeekDaysProps extends FieldProps {
   humanizeLabels: boolean;
   monthDays?: number[];
+  startOfWeek?: number;
 }
 
 export interface HoursProps extends FieldProps {
@@ -322,6 +331,7 @@ export interface CustomSelectProps
   unit: Unit;
   periodicityOnDoubleClick: boolean;
   mode: Mode;
+  sortOptionsList?: SelectProps<unknown>["filterSort"];
 }
 
 export type SetValueNumbersOrUndefined = Dispatch<
