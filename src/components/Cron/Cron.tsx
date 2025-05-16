@@ -51,7 +51,8 @@ export default function Cron(props: CronProps) {
     defaultHour,
     withHours = false,
     withMinutes = false,
-    getPopupContainer
+    getPopupContainer,
+    startOfWeek = 7
   } = props;
   const internalValueRef = useRef<string>(value);
   const defaultPeriodRef = useRef<PeriodType>(defaultPeriod);
@@ -342,6 +343,7 @@ export default function Cron(props: CronProps) {
               periodicityOnDoubleClick={periodicityOnDoubleClick}
               mode={mode}
               getPopupContainer={getPopupContainer}
+              startOfWeek={startOfWeek}
             />
           )}
 

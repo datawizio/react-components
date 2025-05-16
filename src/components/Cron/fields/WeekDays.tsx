@@ -19,7 +19,8 @@ export default function WeekDays(props: WeekDaysProps) {
     period,
     periodicityOnDoubleClick,
     mode,
-    getPopupContainer
+    getPopupContainer,
+    startOfWeek = 7
   } = props;
   const optionsList = locale.weekDays || DEFAULT_LOCALE_EN.weekDays;
   const noMonthDays = period === "week" || !monthDays || monthDays.length === 0;
@@ -99,6 +100,17 @@ export default function WeekDays(props: WeekDaysProps) {
         periodicityOnDoubleClick={periodicityOnDoubleClick}
         mode={mode}
         getPopupContainer={getPopupContainer}
+        sortOptionsList={(a, b) => {
+          // Convert into a zero-based index.
+          const offset = startOfWeek % 7;
+
+          // Adjust the position of each day based on the custom start.
+          // Subtracting the offset "rotates" the week, aligning it to the new start.
+          const adjustedA = (a.value - offset + 7) % 7;
+          const adjustedB = (b.value - offset + 7) % 7;
+
+          return adjustedA - adjustedB;
+        }}
       />
     </div>
   ) : null;

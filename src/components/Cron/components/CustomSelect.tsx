@@ -23,6 +23,7 @@ export default function CustomSelect(props: CustomSelectProps) {
     unit,
     periodicityOnDoubleClick,
     mode,
+    sortOptionsList,
     ...otherProps
   } = props;
 
@@ -35,7 +36,7 @@ export default function CustomSelect(props: CustomSelectProps) {
   const options = useMemo(
     () => {
       if (optionsList) {
-        return optionsList.map((option, index) => {
+        const opts = optionsList.map((option, index) => {
           const number = unit.min === 0 ? index : index + 1;
 
           return {
@@ -43,9 +44,11 @@ export default function CustomSelect(props: CustomSelectProps) {
             label: option
           };
         });
+
+        return sortOptionsList ? opts.sort(sortOptionsList) : opts;
       }
 
-      return [...Array(unit.total)].map((e, index) => {
+      return [...Array(unit.total)].map((_, index) => {
         const number = unit.min === 0 ? index : index + 1;
 
         return {
@@ -278,7 +281,7 @@ export default function CustomSelect(props: CustomSelectProps) {
         period !== "hour"
           ? {
               // Usage: https://github.com/yiminghe/dom-align
-              // Set direction to left to prevent dropdown to overlap window
+              // Set direction to left to prevent dropdown to overlap a window
               points: ["tr", "br"]
             }
           : undefined

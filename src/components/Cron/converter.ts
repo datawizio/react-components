@@ -231,7 +231,7 @@ export function formatValue(
 }
 
 /**
- * Parses a 2-dimentional array of integers as a cron schedule
+ * Parses a 2-dimensional array of integers as a cron schedule
  */
 function parseCronArray(cronArr: number[][], humanizeValue?: boolean) {
   if (cronArr.length === 5) {
@@ -358,7 +358,7 @@ function replaceAlternatives(str: string, min: number, alt?: string[]) {
 }
 
 /**
- * Replace all 7 with 0 as Sunday can be represented by both
+ * Replace all 7 with 0 as both can represent Sunday
  */
 function fixSunday(values: number[], unit: Unit) {
   if (unit.type === "week-days") {
@@ -472,7 +472,7 @@ export function parsePartArray(arr: number[], unit: Unit) {
 }
 
 /**
- * Returns true if range has all the values of the unit
+ * Returns true if a range has all the values of the unit
  */
 function isFull(values: number[], unit: Unit) {
   return values.length === unit.max - unit.min + 1;
