@@ -2,6 +2,7 @@ import { Dispatch, useReducer } from "react";
 import { basicDTypesConfig } from "../Table/utils/typesConfigs";
 import { getCountValues, getDimensions } from "./helpers";
 import { IRuleInfoReducer, RuleInfoAction, RuleInfoProps } from "./types";
+import { ignoredFilters } from "../../utils/filter/constants";
 
 const searchMap = new Map<string, string>();
 
@@ -49,7 +50,7 @@ const reducer = (
           ? getDimensions(
               searchedWidgetParams.filters,
               state.formatDateRange,
-              state.ignoredFilters
+              ignoredFilters
             )
           : []
       };
@@ -65,7 +66,7 @@ const reducer = (
 };
 
 const initializer = (props: RuleInfoProps) => {
-  const { widget_params, formatDateRange, logic, name, ignoredFilters } = props;
+  const { widget_params, formatDateRange, logic, name } = props;
   const { dimension, filters } = widget_params;
   return {
     widgetParams: widget_params,
@@ -81,8 +82,7 @@ const initializer = (props: RuleInfoProps) => {
     formatDateRange,
     name,
     modalShow: false,
-    defaultActiveKey: [],
-    ignoredFilters: ignoredFilters ?? []
+    defaultActiveKey: []
   };
 };
 

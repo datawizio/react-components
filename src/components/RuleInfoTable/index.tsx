@@ -3,8 +3,13 @@ import Button from "../Button";
 import ColoredTags from "../ColoredTags";
 import { useTranslation } from "react-i18next";
 import { RuleInfoProps } from "../RuleInfo/types";
-import { getDimensionNameByKey, parseDimension, parseLogic } from "../RuleInfo/helpers";
+import {
+  getDimensionNameByKey,
+  parseDimension,
+  parseLogic
+} from "../RuleInfo/helpers";
 import { RuleInfoSection } from "../RuleInfo/components/RuleInfoSection";
+import { ignoredFilters } from "../../utils/filter/constants";
 
 import "./index.less";
 
@@ -60,9 +65,9 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
 
         <RuleInfoSection name="FILTERS" className="rule-filters">
           <ColoredTags>
-            {widget_params.filters.map(filter =>
-              parseDimension(filter, formatDateRange, false, 2)
-            )}
+            {widget_params.filters
+              .filter(f => !ignoredFilters.includes(f.name))
+              .map(f => parseDimension(f, formatDateRange, false, 2))}
           </ColoredTags>
           {!!widget_params.filters?.length && (
             <Button

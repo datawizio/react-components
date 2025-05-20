@@ -6,7 +6,6 @@ export interface RuleInfoProps {
   widget_params: WidgetParams;
   name: string;
   dtype: string;
-  ignoredFilters?: string[];
 }
 
 export type WidgetParamsDimension = {
@@ -37,7 +36,6 @@ export interface IRuleInfoReducer {
   name: string;
   modalShow: boolean;
   defaultActiveKey: string[];
-  ignoredFilters: string[];
 }
 
 export interface IRuleInfoContext {

@@ -7,6 +7,7 @@ import { RuleInfoContext } from "./context";
 import { RuleInfoProps } from "./types";
 import { parseDimension, parseLogic } from "./helpers";
 import { RuleInfoSection } from "./components/RuleInfoSection";
+import { ignoredFilters } from "../../utils/filter/constants";
 import ShowAllModal from "./components/ShowAllModal";
 
 import "./index.less";
@@ -16,16 +17,14 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
   widget_params,
   formatDateRange,
   name,
-  dtype,
-  ignoredFilters = []
+  dtype
 }) => {
   const [state, dispatch] = useRuleInfo({
     logic,
     dtype,
     widget_params,
     formatDateRange,
-    name,
-    ignoredFilters
+    name
   });
 
   const handleCancel = () => {
