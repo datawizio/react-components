@@ -31,8 +31,8 @@ const abcXyzMapper = {
     return {
       group: value.select && `(${PRICE_ABC_GROUPS[value.select]})`,
       values: (["a", "b", "c"] as const).map((x, i, arr) => {
-        return `${PRICE_ABC_GROUPS[x]}: ${arr[i]} - ${
-          arr[i + 1] || value.last
+        return `${PRICE_ABC_GROUPS[x]}: ${value[arr[i]]} - ${
+          value[arr[i + 1]] || value.last
         }`;
       })
     };
