@@ -1,3 +1,5 @@
+export const ignoredFilters = ["category_level", "shop_markers", "shop_level"];
+
 export const defaultAbcXyzValues = {
   by: "chain",
   turnover_abc: { a: 80, b: 15, c: 5, select: null },
