@@ -2,6 +2,7 @@ import i18next from "i18next";
 import React from "react";
 import ListInfo from "../ListInfo";
 import ShowAllModal from "./components/ShowAllModal";
+import { filtersMapperFunctions as functions } from "./filters";
 import {
   DimensionsType,
   formatDateRangeType,
@@ -10,38 +11,6 @@ import {
 } from "./types";
 
 export const MAX_LENGTH_ITEM_LIST = 7;
-
-export const functions = {
-  "boolean": (value: boolean) => {
-    return [value ? i18next.t("YES") : i18next.t("NO")];
-  },
-  "string": (value: string) => {
-    return [i18next.t(value.toUpperCase())];
-  },
-  "array": (value: Array<string | number>, type: "include" | "exclude") => {
-    if (type === "exclude") {
-      const res = [...value];
-      res[0] = `${i18next.t("ALL_EXCEPT")} ${res[0]}`;
-      return res;
-    }
-
-    return value;
-  },
-  "object": {
-    "new_products": (value: any) => {
-      return [
-        value.include
-          ? i18next.t("SHOW_ONLY_NEW_PRODUCTS")
-          : i18next.t("EXCLUDE_NEW_PRODUCTS_FROM_ANALYSIS")
-      ];
-    },
-    "abc_xyz": (value: object) => {
-      return Object.entries(value)
-        .filter(([key, val]) => key !== "by" && val?.select !== null)
-        .map(([key]) => i18next.t(key.toUpperCase()));
-    }
-  }
-} as const;
 
 export function getValue<TDimension = WidgetParamsDimension>(
   dimension: TDimension,
