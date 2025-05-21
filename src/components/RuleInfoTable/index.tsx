@@ -31,6 +31,16 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
   }) => {
     const { t } = useTranslation();
 
+    const showAllButton = !!widget_params.filters?.length && (
+      <Button
+        type="link"
+        className="show-all-modal-button"
+        onClick={onShowRuleDetailsClick}
+      >
+        {t("SHOW_ALL")}
+      </Button>
+    );
+
     return (
       <div className="rule-info-table">
         <RuleInfoSection name="CONDITION" className="rule-condition">
@@ -64,20 +74,11 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
         )}
 
         <RuleInfoSection name="FILTERS" className="rule-filters">
-          <ColoredTags>
+          <ColoredTags suffix={showAllButton}>
             {widget_params.filters
               .filter(f => !ignoredFilters.includes(f.name))
               .map(f => parseDimension(f, formatDateRange, false, 2))}
           </ColoredTags>
-          {!!widget_params.filters?.length && (
-            <Button
-              type="link"
-              className="show-all-modal-button"
-              onClick={onShowRuleDetailsClick}
-            >
-              {t("SHOW_ALL")}
-            </Button>
-          )}
         </RuleInfoSection>
       </div>
     );
