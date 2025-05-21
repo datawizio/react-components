@@ -25,7 +25,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
     logic,
     widget_params,
     formatDateRange,
-    dimensionKey = "PRODUCTS",
+    dimensionKey = "product",
     onShowRuleDetailsClick,
     onShowDimensionTableClick
   }) => {

@@ -130,16 +130,9 @@ export function getCountValues<TDimension extends WidgetParams>(
 }
 
 export function getDimensionNameByKey(key: string): string {
-  switch (key) {
-    case "product":
-      return "PRODUCTS";
-    case "category":
-      return "CATEGORIES";
-    case "shop":
-      return "SHOPS";
-    case "shop_group":
-      return "SHOP_GROUPS";
-    default:
-      return key.toUpperCase() + "S";
-  }
+  const specificDimensionNames = {
+    category: "CATEGORIES"
+  };
+
+  return specificDimensionNames[key] ?? key.toUpperCase() + "S";
 }
