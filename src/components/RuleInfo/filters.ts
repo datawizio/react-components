@@ -1,5 +1,8 @@
 import i18next from "i18next";
-import { defaultAbcXyzValues } from "../../utils/filter/constants";
+import {
+  abcXyzMetricsOrder,
+  defaultAbcXyzValues
+} from "../../utils/filter/constants";
 
 const PRICE_ABC_GROUPS = {
   "a": "I",
@@ -52,20 +55,22 @@ export const getAbcXyzString = (key: string, value: any) => {
   if (key === "by") return null;
   const name = i18next.t(key.toUpperCase());
 
-  // @ts-ignore
   const mapFn = abcXyzMapper[key] ?? abcXyzMapper["default"];
   const { group, values } = mapFn(value);
 
-  if (value.select !== null) {
-    return `${name} ${i18next.t("GROUP")} ${group}`;
-  }
-
   const defaultValue = defaultAbcXyzValues[key];
-  if (!abcXyzValuesAreEqual(value, defaultValue)) {
-    return `${name} (${values.join(", ")})`;
+  const hasCustomValues = !abcXyzValuesAreEqual(value, defaultValue);
+  const hasGroup = value.select !== null && group;
+
+  if (!hasGroup && !hasCustomValues) {
+    return null;
   }
 
-  return null;
+  const groupText = hasGroup ? `: ${i18next.t("GROUP")} ${group}` : " ";
+  const valuesText =
+    hasGroup || hasCustomValues ? `(${values.join(", ")})` : "";
+
+  return `${name}${groupText} ${valuesText}`;
 };
 
 export const filtersMapperFunctions = {
@@ -93,9 +98,9 @@ export const filtersMapperFunctions = {
       ];
     },
     "abc_xyz": (value: object) => {
-      return Object.entries(value)
-        .map(([key, value]) => getAbcXyzString(key, value))
-        .filter(item => item !== null) as string[];
+      return abcXyzMetricsOrder
+        .map(key => getAbcXyzString(key, value[key]))
+        .filter(item => item !== null);
     }
   }
 } as const;
