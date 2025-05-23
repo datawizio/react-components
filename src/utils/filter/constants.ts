@@ -13,6 +13,7 @@ export const defaultAbcXyzValues = {
 };
 
 export const abcXyzMetricsOrder = [
+  "by",
   "turnover_abc",
   "products_qty_abc",
   "receipts_qty_abc",
