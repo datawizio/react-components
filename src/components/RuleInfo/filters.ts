@@ -53,9 +53,7 @@ const abcXyzValuesAreEqual = (first: any, second: any) => {
 
 export const getAbcXyzString = (key: string, value: any) => {
   if (key === "by") {
-    return value !== defaultAbcXyzValues.by
-      ? i18next.t(`BY_${value.toUpperCase()}`)
-      : null;
+    return i18next.t(`BY_${value.toUpperCase()}`);
   }
 
   const name = i18next.t(key.toUpperCase());
