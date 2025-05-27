@@ -6,7 +6,7 @@ import "./index.less";
 
 const tagColors = [
   { color: "#199605", backgroundColor: "#ecfdec" },
-  { color: "#393939", backgroundColor: "#f8f8f8" },
+  { color: "#393939", backgroundColor: "#efefef" },
   { color: "#4a72ff", backgroundColor: "#f2f5ff" },
   { color: "#ffa73f", backgroundColor: "#fff7e2" }
 ];
