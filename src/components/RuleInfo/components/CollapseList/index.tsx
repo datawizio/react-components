@@ -111,6 +111,7 @@ export const CollapseList: FC = () => {
   return (
     <>
       <Collapse
+        accordion={true}
         bordered={false}
         defaultActiveKey={ruleInfoState.defaultActiveKey}
         className="rule-info-collapse-list"

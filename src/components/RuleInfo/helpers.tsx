@@ -16,17 +16,22 @@ export function getValue<TDimension = WidgetParamsDimension>(
   dimension: TDimension,
   formatDateRange: (from: string, to: string) => string
 ) {
+  const key = dimension["name"].toLowerCase();
   const value = dimension["values"];
 
   if (!value) return [i18next.t("ALL")];
   if (typeof value === "boolean") return [functions.boolean(value)];
   if (typeof value === "string") return [functions.string(value)];
 
+  if (typeof value === "number") {
+    const fn = functions.number?.[key];
+    return fn ? fn(value) : [value];
+  }
+
   if (Array.isArray(value)) return functions.array(value, dimension["type"]);
   if (value["from"]) return [formatDateRange(value["from"], value["to"])];
 
   if (typeof value === "object") {
-    const key = dimension["name"].toLowerCase();
     const fn = functions.object?.[key];
     return fn ? fn(value) : [JSON.stringify(value)];
   }
