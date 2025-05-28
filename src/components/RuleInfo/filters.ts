@@ -83,6 +83,11 @@ export const filtersMapperFunctions = {
   "string": (value: string) => {
     return [i18next.t(value.toUpperCase())];
   },
+  "number": {
+    "category_level_view": (value: number) => {
+      return [`${i18next.t("LEVEL_N")} ${value}`];
+    }
+  },
   "array": (value: Array<string | number>, type: "include" | "exclude") => {
     if (type === "exclude") {
       const res = [...value];
