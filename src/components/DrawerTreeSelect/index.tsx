@@ -193,9 +193,20 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const [strictlyMode, setStrictlyMode] = useState(treeCheckStrictly ?? false);
 
-  const internalTreeDefaultExpandedKeys = useMemo(() => {
-    if (searchValue.current && !remoteSearch) return undefined;
-    if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
+  const [
+    internalTreeDefaultExpandedKeys,
+    setInternalTreeDefaultExpandedKeys
+  ] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (searchValue.current && !remoteSearch) {
+      setInternalTreeDefaultExpandedKeys(undefined);
+      return;
+    }
+
+    if (internalTreeExpandedKeys.length > 0) {
+      setInternalTreeDefaultExpandedKeys(internalTreeExpandedKeys);
+    }
   }, [remoteSearch, searchValue, internalTreeExpandedKeys]);
 
   const isLevelShowed =
@@ -584,6 +595,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         internalLoadData();
         return;
       }
+
+      setInternalTreeDefaultExpandedKeys(
+        !e.target.value ? internalTreeDefaultExpandedKeys : undefined
+      );
+
       setSearchValue(searchValue.current);
 
       triggerInputChangeValue(inputRef.current, searchValue.current);
