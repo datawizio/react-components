@@ -122,6 +122,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   maxSelected,
   maxTagLength,
   treeCheckStrictly,
+  disableParentsOnSearch,
   ...restProps
 }) => {
   const { translate } = useContext(ConfigContext);
@@ -163,14 +164,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     internalTreeExpandedKeys: []
   });
 
-  const [, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const mainLevelItems = useRef<Set<string>>();
   const allLeafItems = useRef<string[]>([]);
 
   const markersSelected = useRef<string[] | number[]>(selectedMarkers || []);
   const markersChanged = useRef<boolean>(!!selectedMarkers?.length);
 
-  const searchValue = useRef<string>();
+  const searchValueRef = useRef<string>();
   const levelSelected = useRef<string | number | null>(
     showLevels ? level : null
   );
@@ -194,12 +195,34 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const [strictlyMode, setStrictlyMode] = useState(treeCheckStrictly ?? false);
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
-    if (searchValue.current && !remoteSearch) return undefined;
+    if (searchValueRef.current && !remoteSearch) return undefined;
     if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
-  }, [remoteSearch, searchValue, internalTreeExpandedKeys]);
+  }, [remoteSearch, searchValueRef, internalTreeExpandedKeys]);
 
   const isLevelShowed =
     showLevels && internalLevels && internalLevels.length > 1;
+
+  const internalTreeData = useMemo(() => {
+    const td = treeData || stateTreeData;
+
+    if (
+      !disableParentsOnSearch ||
+      !restProps.treeDataSimpleMode ||
+      !searchValue
+    ) {
+      return td;
+    }
+
+    return td.map((item: any) => {
+      return item.pId === null ? { ...item, disabled: true } : item;
+    });
+  }, [
+    treeData,
+    stateTreeData,
+    disableParentsOnSearch,
+    restProps.treeDataSimpleMode,
+    searchValue
+  ]);
 
   // ----- METHODS -------
 
@@ -260,7 +283,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const getAllFilters = (first: boolean, newValue?: string[]) => {
     const filters: IDrawerTreeSelectFilters = {
-      search: searchValue.current,
+      search: searchValueRef.current,
       ...additionalFilters
     };
 
@@ -366,7 +389,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
       triggerInputChangeValue(
         inputRef.current,
-        remoteSearch ? undefined : searchValue.current
+        remoteSearch ? undefined : searchValueRef.current
       );
     },
     //eslint-disable-next-line
@@ -390,7 +413,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       (!ignoreEmpty &&
         (!values || !values.length) &&
         emptyIsAll &&
-        !searchValue.current)
+        !searchValueRef.current)
     ) {
       return selectAll();
     }
@@ -440,7 +463,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   };
 
   const resetPrevRefs = () => {
-    searchValue.current = "";
+    searchValueRef.current = "";
     prevLevel.current = "1";
     prevTreeData.current = [];
     prevMarkersSelected.current = [];
@@ -476,7 +499,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       type: "openDrawer",
       payload: checkSelectAllStatus(val)
     });
-    triggerInputChangeValue(inputRef.current, searchValue.current);
+    triggerInputChangeValue(inputRef.current, searchValueRef.current);
 
     onDrawerOpenCallback && onDrawerOpenCallback();
   };
@@ -488,6 +511,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     }, 50);
 
     resetPrevRefs();
+    setSearchValue("");
 
     drawerVisibleRef.current = false;
 
@@ -546,8 +570,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   }, [multiple, value, dispatch, onDrawerCancelCallback, closeDrawer]);
 
   const handlerDrawerSubmit = useCallback(() => {
-    if (searchValue.current && remoteSearch) {
-      searchValue.current = "";
+    if (searchValueRef.current && remoteSearch) {
+      searchValueRef.current = "";
       internalLoadData();
     }
 
@@ -578,15 +602,15 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const handlerSearchInputChange = useCallback(
     e => {
-      searchValue.current = e.target.value;
+      searchValueRef.current = e.target.value;
 
       if (remoteSearch) {
         internalLoadData();
         return;
       }
-      setSearchValue(searchValue.current);
+      setSearchValue(searchValueRef.current);
 
-      triggerInputChangeValue(inputRef.current, searchValue.current);
+      triggerInputChangeValue(inputRef.current, searchValueRef.current);
     },
     //eslint-disable-next-line
     [inputRef, internalLoadData]
@@ -691,7 +715,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       payload: tree.concat(data)
     });
 
-    triggerInputChangeValue(inputRef.current, searchValue.current);
+    triggerInputChangeValue(inputRef.current, searchValueRef.current);
   };
 
   const handleSelectAllChange = e => {
@@ -875,11 +899,11 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
           ) : null}
           <SearchInput
             placeholder={drawerSearchPlaceholder}
-            value={searchValue.current}
+            value={searchValueRef.current}
             onChange={handlerSearchInputChange}
             loading={internalLoading}
             className={clsx({
-              "search-mode": searchValue.current
+              "search-mode": searchValueRef.current
             })}
           />
           {strictlyModeCheckbox && (
@@ -889,7 +913,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
               onChange={handleStrictlyModeChange}
             />
           )}
-          {showSelectAll && !searchValue.current && (
+          {showSelectAll && !searchValueRef.current && (
             <div className="drawer-tree-select-dropdown-toolbar">
               <Checkbox
                 onChange={handleSelectAllChange}
@@ -936,7 +960,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     [
       drawerVisible,
       fakeVisible,
-      searchValue,
+      searchValueRef,
       internalLoading,
       internalValue,
       internalLevels,
@@ -971,25 +995,25 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         "drawer-tree-select": true,
         "drawer-tree-selected-all": isSelectedAll
       })}
-      treeData={treeData || stateTreeData}
+      treeData={internalTreeData}
       open={drawerVisible}
       treeExpandedKeys={internalTreeDefaultExpandedKeys}
       treeDefaultExpandedKeys={treeDefaultExpandedKeys}
-      searchValue={searchValue.current ? searchValue.current : ""}
+      searchValue={searchValueRef.current ? searchValueRef.current : ""}
       //@ts-ignore
       dropdownRender={dropdownRender}
       dropdownClassName="drawer-tree-select-dropdown-fake"
       multiple={multiple}
       showSearch={true}
       treeCheckStrictly={
-        (remoteSearch && Boolean(searchValue.current)) || strictlyMode
+        (remoteSearch && Boolean(searchValueRef.current)) || strictlyMode
       }
       listHeight={listHeight}
       placeholder={placeholder}
       loading={internalLoading}
       notFoundContent={internalLoading ? loadingText : noDataText}
       showCheckedStrategy={
-        searchValue.current ? "SHOW_CHILD" : showCheckedStrategy
+        searchValueRef.current ? "SHOW_CHILD" : showCheckedStrategy
       }
       loadData={loadChildren ? handleTreeLoadData : null}
       onBeforeBlur={handlerSelectBeforeBlur}
