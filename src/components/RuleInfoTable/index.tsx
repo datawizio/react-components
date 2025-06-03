@@ -63,13 +63,6 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
         {!!widget_params.dimension?.name && (
           <RuleInfoSection name="DIMENSION" className="rule-dimension">
             <span>{t(widget_params.dimension.name)}</span>
-            <Button
-              type="link"
-              className="show-all-modal-button"
-              onClick={onShowRuleDetailsClick}
-            >
-              {t("SHOW_RESULTS")}
-            </Button>
           </RuleInfoSection>
         )}
 
