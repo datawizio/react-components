@@ -34,11 +34,10 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
     });
   };
 
-  const filtersModalButton = !!state.filters.find(f => f.values.length > 2) && (
-    <ShowAllModal />
-  );
+  const filtersOverflow = !!state.filters.find(f => f.values.length > 2);
+  const dimensionsOverflow = state.dimensions?.values?.length > 2;
 
-  const dimensionsModalButton = state.dimensions?.values?.length > 2 && (
+  const showAllModalButton = (filtersOverflow || dimensionsOverflow) && (
     <ShowAllModal />
   );
 
@@ -51,7 +50,7 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
 
         {!!widget_params.dimension && (
           <RuleInfoSection name="DIMENSION" className="rule-dimension">
-            <ColoredTags startIndex={2} suffix={dimensionsModalButton}>
+            <ColoredTags startIndex={2}>
               {parseDimension(
                 widget_params.dimension,
                 formatDateRange,
@@ -64,7 +63,7 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
 
         {!!widget_params.filters?.length && (
           <RuleInfoSection name="FILTERS" className="rule-filters">
-            <ColoredTags suffix={filtersModalButton}>
+            <ColoredTags suffix={showAllModalButton}>
               {widget_params.filters
                 .filter(f => !ignoredFilters.includes(f.name))
                 .map(f => parseDimension(f, formatDateRange, false, 2))}
