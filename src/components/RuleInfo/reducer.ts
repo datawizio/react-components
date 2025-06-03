@@ -36,7 +36,7 @@ const reducer = (
               : el.values
         }));
       } else if (Array.isArray(state.widgetParams.dimension.values)) {
-        searchedWidgetParams.dimension.value = state.widgetParams.dimension.values.filter(
+        searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
           el => basicDTypesConfig.string.search(el, value)
         );
       }
