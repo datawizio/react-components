@@ -19,6 +19,8 @@ export function getValue<TDimension = WidgetParamsDimension>(
   const key = dimension["name"].toLowerCase();
   const value = dimension["values"];
 
+  if (key === "chain") return [i18next.t("CHAIN")];
+
   if (!value) return [i18next.t("ALL")];
   if (typeof value === "boolean") return [functions.boolean(value)];
   if (typeof value === "string") return [functions.string(value)];
@@ -55,6 +57,7 @@ export const parseDimension = (
     expandButton={<ShowAllModal dimensionName={dimension.name} />}
     // @ts-ignore
     renderItem={(item: string) => item}
+    onlyLabel={dimension.name === "chain"}
   />
 );
 
