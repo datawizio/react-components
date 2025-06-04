@@ -11,6 +11,7 @@ interface ListInfoProps {
   showExpandButton?: boolean;
   expandButton?: React.ReactNode;
   maxLength?: number;
+  onlyLabel?: boolean;
 }
 
 export interface IInfoListItem {
@@ -30,7 +31,8 @@ const ListInfo: React.FC<ListInfoProps> = memo(
     LinkComponent,
     showExpandButton,
     expandButton,
-    maxLength
+    maxLength,
+    onlyLabel
   }) => {
     const [showAll, setShowAll] = useState<boolean>(false);
 
@@ -39,7 +41,7 @@ const ListInfo: React.FC<ListInfoProps> = memo(
     const cutItemsList =
       items && items.length !== 0 && items.length > maxLengthItemList;
 
-    if (!items || items.length === 0) return <></>;
+    if ((!items || items.length === 0) && !onlyLabel) return <></>;
 
     const itemsForShow = showAll ? items : items.slice(0, maxLengthItemList);
 
@@ -49,31 +51,36 @@ const ListInfo: React.FC<ListInfoProps> = memo(
 
     return (
       <div>
-        <span className="card-header-info-label">{label}:</span>
-        <span>
-          {itemsForShow
-            .map<React.ReactNode>(item => {
-              if (renderItem) {
-                return renderItem(item);
-              }
-              if (linkFn && LinkComponent) {
-                return (
-                  <LinkComponent
-                    key={item.id}
-                    to={`${linkFn(item.id)}`}
-                    target="_blank"
-                  >
-                    {item.name}
-                  </LinkComponent>
-                );
-              }
-              return item.name;
-            })
-            .reduce((prev, curr) => [prev, delim ?? ", ", curr])}
-
-          {showExpandButton && cutItemsList && renderExpandButton}
-          {!showExpandButton && cutItemsList && ", ..."}
+        <span className="card-header-info-label">
+          {label}
+          {!onlyLabel && <span className="colon">:</span>}
         </span>
+        {!onlyLabel && (
+          <span>
+            {itemsForShow
+              .map<React.ReactNode>(item => {
+                if (renderItem) {
+                  return renderItem(item);
+                }
+                if (linkFn && LinkComponent) {
+                  return (
+                    <LinkComponent
+                      key={item.id}
+                      to={`${linkFn(item.id)}`}
+                      target="_blank"
+                    >
+                      {item.name}
+                    </LinkComponent>
+                  );
+                }
+                return item.name;
+              })
+              .reduce((prev, curr) => [prev, delim ?? ", ", curr])}
+
+            {showExpandButton && cutItemsList && renderExpandButton}
+            {!showExpandButton && cutItemsList && ", ..."}
+          </span>
+        )}
       </div>
     );
   }
