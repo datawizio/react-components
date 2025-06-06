@@ -38,11 +38,11 @@ const reducer = (
       }
 
       const dimensionSearchValue = searchMap.get(
-        state.widgetParams.dimension.name
+        state.widgetParams.dimension?.name
       );
 
       if (
-        Array.isArray(state.widgetParams.dimension.values) &&
+        Array.isArray(state.widgetParams.dimension?.values) &&
         dimensionSearchValue
       ) {
         searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
