@@ -37,9 +37,16 @@ const reducer = (
         }));
       }
 
-      if (Array.isArray(state.widgetParams.dimension.values)) {
+      const dimensionSearchValue = searchMap.get(
+        state.widgetParams.dimension.name
+      );
+
+      if (
+        Array.isArray(state.widgetParams.dimension.values) &&
+        dimensionSearchValue
+      ) {
         searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
-          el => basicDTypesConfig.string.search(el, value)
+          el => basicDTypesConfig.string.search(el, dimensionSearchValue)
         );
       }
 
