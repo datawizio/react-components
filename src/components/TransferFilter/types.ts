@@ -101,6 +101,7 @@ export interface TransferFilterProps {
   tooltips?: { throwAll: string; throwChosen: string };
 
   pagination?: PaginationType;
+  disableRoots?: boolean;
 }
 
 export interface TransferLocale {
