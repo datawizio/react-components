@@ -235,40 +235,31 @@ export default class TransferList extends React.PureComponent<
 
   getDisabledKeys = (filteredItems: TransferFilterItem[]) => {
     const { include, exclude } = this.props.value;
+    const { direction, disableRoots } = this.props;
 
-    if (this.props.direction === "left") {
-      if (exclude?.length) {
-        return new Set(
-          filteredItems
-            .filter(
-              item =>
-                exclude.includes(item.key) ||
-                (this.props.disableRoots && item.pId === null)
-            )
-            .map(item => item.key)
-        );
+    const shouldDisable = (item: TransferFilterItem) => {
+      if (direction === "left") {
+        if (exclude?.length) {
+          return (
+            exclude.includes(item.key) || (disableRoots && item.pId === null)
+          );
+        }
+
+        if (include?.length) {
+          return (
+            !include.includes(item.key) || (disableRoots && item.pId === null)
+          );
+        }
       }
 
-      if (include?.length) {
-        return new Set(
-          filteredItems
-            .filter(
-              item =>
-                !include.includes(item.key) ||
-                (this.props.disableRoots && item.pId === null)
-            )
-            .map(item => item.key)
-        );
-      }
-    }
+      return disableRoots && item.pId === null;
+    };
 
-    if (this.props.disableRoots) {
-      return new Set(
-        filteredItems.filter(item => item.pId === null).map(item => item.key)
-      );
-    }
+    const disabledKeys = filteredItems
+      .filter(shouldDisable)
+      .map(item => item.key);
 
-    return new Set([]);
+    return new Set(disabledKeys);
   };
 
   getCheckStatus(filteredItems: TransferFilterItem[]) {
