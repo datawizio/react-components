@@ -78,7 +78,7 @@ export const getAbcXyzString = (key: string, value: any) => {
 
 export const filtersMapperFunctions = {
   "boolean": (value: boolean) => {
-    return [value ? i18next.t("YES") : i18next.t("NO")];
+    return [value ? i18next.t("SELECTED") : i18next.t("NOT_SELECTED")];
   },
   "string": (value: string) => {
     return [i18next.t(value.toUpperCase())];

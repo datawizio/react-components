@@ -64,6 +64,7 @@ export interface TransferListProps {
   loadDataByIds?: (params: any) => Promise<any>;
   onItemSelect: (item: ICheckedItem, check: boolean) => void;
   onItemsSelect?: (items: ICheckedItem[], check: boolean) => void;
+  disableRoots?: boolean;
 }
 
 interface TransferListState {
@@ -232,26 +233,34 @@ export default class TransferList extends React.PureComponent<
     }
   }
 
-  getDisabledKeys(filteredItems) {
+  getDisabledKeys = (filteredItems: TransferFilterItem[]) => {
     const { include, exclude } = this.props.value;
-    if (this.props.direction === "left") {
-      if (exclude?.length) {
-        return new Set(
-          filteredItems
-            .filter(item => exclude.includes(item.key))
-            .map(item => item.key)
-        );
+    const { direction, disableRoots } = this.props;
+
+    const shouldDisable = (item: TransferFilterItem) => {
+      if (direction === "left") {
+        if (exclude?.length) {
+          return (
+            exclude.includes(item.key) || (disableRoots && item.pId === null)
+          );
+        }
+
+        if (include?.length) {
+          return (
+            !include.includes(item.key) || (disableRoots && item.pId === null)
+          );
+        }
       }
-      if (include?.length) {
-        return new Set(
-          filteredItems
-            .filter(item => !include.includes(item.key))
-            .map(item => item.key)
-        );
-      }
-    }
-    return new Set([]);
-  }
+
+      return disableRoots && item.pId === null;
+    };
+
+    const disabledKeys = filteredItems
+      .filter(shouldDisable)
+      .map(item => item.key);
+
+    return new Set(disabledKeys);
+  };
 
   getCheckStatus(filteredItems: TransferFilterItem[]) {
     let items = filteredItems;
@@ -458,6 +467,10 @@ export default class TransferList extends React.PureComponent<
       </div>
     ) : null;
 
+    const rootsToDisable = this.props.disableRoots
+      ? filteredItems.filter(item => item.pId === null).map(item => item.key)
+      : [];
+
     // BODY CONTENT
     const bodyContent = defaultRenderList({
       ref: this.bodyRef,
@@ -467,7 +480,7 @@ export default class TransferList extends React.PureComponent<
       loading,
       type,
       disableAll: isLeftDirection && (include === null || include.length > 0),
-      disabledKeys: isLeftDirection ? exclude : [],
+      disabledKeys: (isLeftDirection ? exclude : []).concat(rootsToDisable),
       enabledKeys: isLeftDirection && include !== null ? include : [],
       checkedKeys: checkedKeys,
       totalItemsCount: this.getTotalCount(filteredItems),

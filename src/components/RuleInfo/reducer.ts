@@ -18,14 +18,14 @@ const reducer = (
     }
 
     case "search": {
-      const { value, type, name } = action.payload;
+      const { value, name } = action.payload;
       searchMap.set(name, value);
 
       const searchedWidgetParams = JSON.parse(
         JSON.stringify(state.widgetParams)
       );
 
-      if (Array.isArray(state.widgetParams[type])) {
+      if (Array.isArray(state.widgetParams.filters)) {
         searchedWidgetParams.filters = state.widgetParams.filters.map(el => ({
           ...el,
           values:
@@ -35,9 +35,18 @@ const reducer = (
                 )
               : el.values
         }));
-      } else if (Array.isArray(state.widgetParams.dimension.values)) {
-        searchedWidgetParams.dimension.value = state.widgetParams.dimension.values.filter(
-          el => basicDTypesConfig.string.search(el, value)
+      }
+
+      const dimensionSearchValue = searchMap.get(
+        state.widgetParams.dimension?.name
+      );
+
+      if (
+        Array.isArray(state.widgetParams.dimension?.values) &&
+        dimensionSearchValue
+      ) {
+        searchedWidgetParams.dimension.values = state.widgetParams.dimension.values.filter(
+          el => basicDTypesConfig.string.search(el, dimensionSearchValue)
         );
       }
 

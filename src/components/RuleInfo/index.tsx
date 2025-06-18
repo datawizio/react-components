@@ -34,7 +34,10 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
     });
   };
 
-  const showAllModalButton = !!state.filters.find(f => f.values.length > 2) && (
+  const filtersOverflow = !!state.filters.find(f => f.values.length > 2);
+  const dimensionsOverflow = state.dimensions?.values?.length > 2;
+
+  const showAllModalButton = (filtersOverflow || dimensionsOverflow) && (
     <ShowAllModal />
   );
 

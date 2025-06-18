@@ -28,7 +28,8 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
   value,
   onChange,
   loadData,
-  loadDataByIds
+  loadDataByIds,
+  disableRoots
 }) => {
   const { translate } = useContext(ConfigContext);
   const [
@@ -302,6 +303,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
         loadData={sourceLoadData}
         onItemSelect={onLeftItemSelect}
         onItemsSelect={onLeftItemsSelect}
+        disableRoots={disableRoots}
       />
       <Operation
         className={`${prefixCls}-operation`}
@@ -336,6 +338,7 @@ const TransferFilter: React.FC<TransferFilterProps> = ({
         loadDataByIds={loadDataByIds}
         onItemSelect={onRightItemSelect}
         onItemsSelect={onRightItemsSelect}
+        disableRoots={disableRoots}
       />
     </div>
   );
