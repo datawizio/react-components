@@ -46,5 +46,6 @@ exports[`DrawerTreeSelect DrawerTreeSelect to match snapshot with defaul props 1
   showSearch={true}
   tagRender={[Function]}
   treeCheckStrictly={false}
+  treeExpandedKeys={Array []}
 />
 `;
