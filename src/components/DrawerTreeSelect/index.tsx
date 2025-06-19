@@ -172,6 +172,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const markersChanged = useRef<boolean>(!!selectedMarkers?.length);
 
   const searchValueRef = useRef<string>();
+  const prevSearchValueRef = useRef<string>();
   const levelSelected = useRef<string | number | null>(
     showLevels ? level : null
   );
@@ -195,9 +196,14 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const [strictlyMode, setStrictlyMode] = useState(treeCheckStrictly ?? false);
 
   const internalTreeDefaultExpandedKeys = useMemo(() => {
-    if (searchValueRef.current && !remoteSearch) return undefined;
-    if (internalTreeExpandedKeys.length > 0) return internalTreeExpandedKeys;
-  }, [remoteSearch, searchValueRef, internalTreeExpandedKeys]);
+    if (searchValue && !remoteSearch) return undefined;
+    if (prevSearchValueRef.current && !remoteSearch) return [];
+    return internalTreeExpandedKeys;
+  }, [remoteSearch, searchValue, internalTreeExpandedKeys]);
+
+  useEffect(() => {
+    prevSearchValueRef.current = searchValue;
+  });
 
   const isLevelShowed =
     showLevels && internalLevels && internalLevels.length > 1;
@@ -464,6 +470,8 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
   const resetPrevRefs = () => {
     searchValueRef.current = "";
+    setSearchValue("");
+
     prevLevel.current = "1";
     prevTreeData.current = [];
     prevMarkersSelected.current = [];
@@ -511,7 +519,6 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     }, 50);
 
     resetPrevRefs();
-    setSearchValue("");
 
     drawerVisibleRef.current = false;
 
@@ -572,6 +579,7 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handlerDrawerSubmit = useCallback(() => {
     if (searchValueRef.current && remoteSearch) {
       searchValueRef.current = "";
+      setSearchValue("");
       internalLoadData();
     }
 
@@ -603,12 +611,12 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   const handlerSearchInputChange = useCallback(
     e => {
       searchValueRef.current = e.target.value;
+      setSearchValue(searchValueRef.current);
 
       if (remoteSearch) {
         internalLoadData();
         return;
       }
-      setSearchValue(searchValueRef.current);
 
       triggerInputChangeValue(inputRef.current, searchValueRef.current);
     },
