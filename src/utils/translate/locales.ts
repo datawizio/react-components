@@ -161,6 +161,11 @@ export const locales: ILocaleList = {
     name: "id_ID",
     getAnt: () => import("antd/es/locale/id_ID"),
     getDayJs: () => import("dayjs/locale/id")
+  },
+  it: {
+    name: "it_IT",
+    getAnt: () => import("antd/es/locale/it_IT"),
+    getDayJs: () => import("dayjs/locale/it")
   }
 };
 
@@ -195,5 +200,6 @@ export const defaultLangs = new Set([
   "mk",
   "sq",
   "sr",
-  "bahasa"
+  "bahasa",
+  "it"
 ]);
