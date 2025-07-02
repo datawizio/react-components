@@ -65,7 +65,10 @@ function reducer(state: IUserPeriodSelect, action: any) {
         return {
           ...state,
           period,
-          availablePrevPeriods: getAvailablePeriodsForDates(period),
+          availablePrevPeriods: getAvailablePeriodsForDates({
+            ...period,
+            endDate: period.endDate ?? clientDate
+          }),
           isPickerEmpty: false,
           showPeriodPicker: true,
           selectedPeriod: periodKey
@@ -163,7 +166,10 @@ function reducer(state: IUserPeriodSelect, action: any) {
         ...state,
         period,
         prevPeriod: isCustomPrevDate ? oldPrevPeriod : prevPeriod,
-        availablePrevPeriods: getAvailablePeriodsForDates(period),
+        availablePrevPeriods: getAvailablePeriodsForDates({
+          ...period,
+          endDate: period.endDate ?? clientDate
+        }),
         selectedPrevPeriod: isCustomPrevDate
           ? CUSTOM_PREV_PERIOD_KEY
           : DEFAULT_PREV_PERIOD,

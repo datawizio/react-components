@@ -140,7 +140,7 @@ const DateRangePicker: IDateRangePicker = ({
 
   function onChange(value): void {
     const [dateFrom, dateTo] = value ? value : [null, null];
-    if (!(dateFrom && dateTo)) props.onClear && props.onClear();
+    if (!dateFrom && !dateTo) props.onClear && props.onClear();
     else props.onChange && props.onChange(arguments[0], arguments[1]);
   }
 

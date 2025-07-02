@@ -88,6 +88,7 @@ export interface PeriodSelectProps {
   prevPeriodLabel?: string;
   dateConfig?: IDateConfig;
   onChange?: (dateConfig: IDateConfig) => void;
+  allowEmptyEndDate?: boolean;
 }
 
 export type GetPeriod = (config: {

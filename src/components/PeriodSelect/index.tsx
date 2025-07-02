@@ -10,7 +10,7 @@ import {
 } from "./constants";
 import {
   actionCreator,
-  checkIsEmptyPeriod,
+  isEmptyPeriod,
   formatDateConfig,
   getAvailablePrevPeriod,
   getInitialDateConfig
@@ -36,7 +36,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     limitMaxDate,
     dateConfig,
     format,
-    onChange
+    onChange,
+    allowEmptyEndDate
   } = props;
 
   const {
@@ -77,15 +78,18 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     selectedPrevPeriod
   } = state;
 
+  const startDate = period.startDate && dayjs(period.startDate);
+  const endDate = period.endDate && dayjs(period.endDate);
+
   useEffect(() => {
-    if (!checkIsEmptyPeriod(period)) {
+    if (isEmptyPeriod(period)) {
       actionCreator(dispatch, "updatePeriod", {
         periodKey: DEFAULT_PERIOD
       });
     } else {
       onChange(formatDateConfig(state));
     }
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [period, prevPeriod]);
 
   const handlePeriodChange = periodKey => {
@@ -146,21 +150,20 @@ const PeriodSelect = (props: PeriodSelectProps) => {
           <DateRangePicker
             inputReadOnly={false}
             type={type}
-            dateFrom={!isPickerEmpty && dayjs(period.startDate)}
-            dateTo={!isPickerEmpty && dayjs(period.endDate)}
+            dateFrom={!isPickerEmpty && startDate}
+            dateTo={!isPickerEmpty && endDate}
             minDate={dayjs(clientStartDate)}
             maxDate={limitMaxDate && dayjs(clientDate)}
-            //@ts-ignore
+            // @ts-ignore
             defaultValue={!isPickerEmpty && defaultPickerValue}
             onChange={onDateRangeChange}
             onClear={onDateRangeClear}
-            defaultPickerValue={
-              [
-                !isPickerEmpty ? dayjs(period.startDate) : dayjs(clientDate),
-                !isPickerEmpty ? dayjs(period.endDate) : dayjs(clientDate)
-              ] as any
-            }
+            defaultPickerValue={[
+              !isPickerEmpty ? startDate : dayjs(clientDate),
+              !isPickerEmpty ? endDate : dayjs(clientDate)
+            ]}
             format={format}
+            allowEmpty={[false, allowEmptyEndDate]}
           />
         )}
       </div>
@@ -188,20 +191,16 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             dateTo={!isPrevPickerEmpty && dayjs(prevPeriod.endDate)}
             minDate={dayjs(clientStartDate)}
             maxDate={limitMaxDate && dayjs(clientDate)}
-            //@ts-ignore
+            // @ts-ignore
             defaultValue={!isPrevPickerEmpty && defaultPrevPickerValue}
             onChange={onPrevDateRangeChange}
             onClear={onPrevDateRangeClear}
-            defaultPickerValue={
-              [
-                !isPrevPickerEmpty
-                  ? dayjs(prevPeriod.startDate)
-                  : dayjs(clientDate),
-                !isPrevPickerEmpty
-                  ? dayjs(prevPeriod.endDate)
-                  : dayjs(clientDate)
-              ] as any
-            }
+            defaultPickerValue={[
+              !isPrevPickerEmpty
+                ? dayjs(prevPeriod.startDate)
+                : dayjs(clientDate),
+              !isPrevPickerEmpty ? dayjs(prevPeriod.endDate) : dayjs(clientDate)
+            ]}
             format={format}
           />
         )}
