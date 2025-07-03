@@ -1,5 +1,6 @@
 import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
+import { DatePickerPlaceholder } from "../DateRangePicker/types";
 
 export interface DateRangeType {
   startDate: string;
@@ -78,6 +79,12 @@ export type periodsForDatesEnum =
   | "year"
   | "date";
 
+export type ConfigurableDatePickerPlaceholder = (config: {
+  isPickerEmpty: boolean;
+  startDate: Dayjs | null;
+  endDate: Dayjs | null;
+}) => DatePickerPlaceholder | undefined;
+
 export interface PeriodSelectProps {
   type: CalendarTypes;
   format?: string;
@@ -89,6 +96,9 @@ export interface PeriodSelectProps {
   dateConfig?: IDateConfig;
   onChange?: (dateConfig: IDateConfig) => void;
   allowEmptyEndDate?: boolean;
+  datePickerPlaceholder?:
+    | DatePickerPlaceholder
+    | ConfigurableDatePickerPlaceholder;
 }
 
 export type GetPeriod = (config: {

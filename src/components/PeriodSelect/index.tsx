@@ -37,7 +37,8 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     dateConfig,
     format,
     onChange,
-    allowEmptyEndDate
+    allowEmptyEndDate,
+    datePickerPlaceholder
   } = props;
 
   const {
@@ -131,6 +132,11 @@ const PeriodSelect = (props: PeriodSelectProps) => {
 
   const isDisabledPrevSelect = !availablePrevPeriods.length;
 
+  const dateRangePickerPlaceholder =
+    typeof datePickerPlaceholder === "function"
+      ? datePickerPlaceholder({ isPickerEmpty, startDate, endDate })
+      : datePickerPlaceholder;
+
   return (
     <div className="period-picker-wrapper">
       <div className="period-container">
@@ -148,6 +154,7 @@ const PeriodSelect = (props: PeriodSelectProps) => {
         </Select>
         {showPeriodPicker && (
           <DateRangePicker
+            placeholder={dateRangePickerPlaceholder}
             inputReadOnly={false}
             type={type}
             dateFrom={!isPickerEmpty && startDate}
