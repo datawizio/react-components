@@ -139,9 +139,14 @@ const DateRangePicker: IDateRangePicker = ({
   );
 
   function onChange(value): void {
-    const [dateFrom, dateTo] = value ? value : [null, null];
-    if (!(dateFrom && dateTo)) props.onClear && props.onClear();
-    else props.onChange && props.onChange(arguments[0], arguments[1]);
+    const [dateFrom, dateTo] = value || [null, null];
+
+    const emptyCheck = props.allowEmpty?.some(Boolean)
+      ? !dateFrom && !dateTo
+      : !dateFrom || !dateTo;
+
+    if (emptyCheck) props.onClear?.();
+    else props.onChange?.(arguments[0], arguments[1]);
   }
 
   const RangePicker = DatePicker.Picker[type].RangePicker;

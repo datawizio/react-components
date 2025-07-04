@@ -132,7 +132,7 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
 
     default:
       const startPickerDate = date[0];
-      const endPickerDate = date[1];
+      const endPickerDate = date[1] ?? clientDate;
 
       const diff = dayjs(endPickerDate).diff(startPickerDate, "day");
       newPrevPeriod.startDate = dayjs(startPickerDate).subtract(
@@ -144,25 +144,27 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       break;
   }
 
+  const periodEnd = period.endDate ?? clientDate;
+
   switch (prev_period) {
     case "prev_last_week":
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "week");
-      newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "week");
+      newPrevPeriod.endDate = dayjs(periodEnd).subtract(1, "week");
       break;
     case "prev_last_month":
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "month");
-      newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "month");
+      newPrevPeriod.endDate = dayjs(periodEnd).subtract(1, "month");
       break;
     case "prev_last_quarter":
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "quarter");
-      newPrevPeriod.endDate = dayjs(period.endDate).subtract(1, "quarter");
+      newPrevPeriod.endDate = dayjs(periodEnd).subtract(1, "quarter");
       break;
     case "same_weekday_prev_year":
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(52, "week");
-      newPrevPeriod.endDate = dayjs(period.endDate).subtract(52, "week");
+      newPrevPeriod.endDate = dayjs(periodEnd).subtract(52, "week");
       break;
     case "prev_last_year":
-      const diff = dayjs(period.endDate).diff(period.startDate, "day");
+      const diff = dayjs(periodEnd).diff(period.startDate, "day");
       newPrevPeriod.startDate = dayjs(period.startDate).subtract(1, "year");
       newPrevPeriod.endDate = dayjs(newPrevPeriod.startDate).add(+diff, "day");
       break;
@@ -171,9 +173,10 @@ export const getPrevPeriod = ({ date, prev_period, clientDate, period }) => {
       newPrevPeriod.endDate = dayjs(date[1]);
       break;
     default:
-      //if selected previous do nothing
+      // If selected previous do nothing
       break;
   }
+
   if (newPrevPeriod.startDate && newPrevPeriod.endDate) {
     return {
       startDate: newPrevPeriod.startDate.format(FORMATTED_PATTERN),
@@ -304,13 +307,13 @@ export const getPeriod: GetPeriod = ({
       break;
   }
 
-  if (newPeriod.startDate && newPeriod.endDate) {
+  if (newPeriod.startDate || newPeriod.endDate) {
     if (clientStartDate && newPeriod.startDate < dayjs(clientStartDate)) {
       newPeriod.startDate = dayjs(clientStartDate);
     }
     return {
-      startDate: newPeriod.startDate.format(FORMATTED_PATTERN),
-      endDate: newPeriod.endDate.format(FORMATTED_PATTERN)
+      startDate: newPeriod.startDate?.format(FORMATTED_PATTERN) ?? null,
+      endDate: newPeriod.endDate?.format(FORMATTED_PATTERN) ?? null
     };
   }
 };
@@ -400,12 +403,15 @@ export const formatDateConfig = (state: IUserPeriodSelect): IDateConfig => {
   };
 };
 
-export const checkIsEmptyPeriod = (period: DateRangeType): boolean => {
-  return !!period.startDate && !!period.endDate;
+export const isEmptyPeriod = (period: DateRangeType): boolean => {
+  return !period.startDate && !period.endDate;
 };
 
 export const getDateArrayFromRange = (dateRange: DateRangeType) => {
-  return [dayjs(dateRange.startDate), dayjs(dateRange.endDate)];
+  return [
+    dateRange.startDate && dayjs(dateRange.startDate),
+    dateRange.endDate && dayjs(dateRange.endDate)
+  ];
 };
 
 export const getAvailablePeriodsForDates = (

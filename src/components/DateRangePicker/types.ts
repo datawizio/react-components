@@ -7,6 +7,8 @@ export type PresetsRangeType = {
   [key: string]: DateRange;
 };
 
+export type DatePickerPlaceholder = [string, string];
+
 export type DateRangePickerProps = {
   type?: CalendarTypes;
   dateFrom?: DateType;
@@ -35,6 +37,8 @@ export type DateRangePickerProps = {
   onChange?: (a: any, b: any) => void;
   onClear?: () => void;
   getPopupContainer?: () => HTMLElement | null;
+  allowEmpty?: [boolean, boolean];
+  placeholder?: DatePickerPlaceholder;
 } & typeof DatePicker.RangePicker;
 
 export type IDateRangePicker = {
