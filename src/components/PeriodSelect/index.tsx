@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from "react";
+import React, { useEffect, useCallback, useContext, useRef } from "react";
 import { Select } from "antd";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
@@ -82,7 +82,22 @@ const PeriodSelect = (props: PeriodSelectProps) => {
   const startDate = period.startDate && dayjs(period.startDate);
   const endDate = period.endDate && dayjs(period.endDate);
 
+  const startDateRef = useRef(startDate);
+  const endDateRef = useRef(endDate);
+
   useEffect(() => {
+    startDateRef.current = startDate;
+  }, [startDate]);
+
+  useEffect(() => {
+    endDateRef.current = endDate;
+  }, [endDate]);
+
+  useEffect(() => {
+    if (startDate?.isAfter(dayjs(clientDate)) && !endDate) {
+      return;
+    }
+
     if (isEmptyPeriod(period)) {
       actionCreator(dispatch, "updatePeriod", {
         periodKey: DEFAULT_PERIOD
@@ -171,6 +186,17 @@ const PeriodSelect = (props: PeriodSelectProps) => {
             ]}
             format={format}
             allowEmpty={[false, allowEmptyEndDate]}
+            onOpenChange={(open: boolean) => {
+              setTimeout(() => {
+                if (
+                  !open &&
+                  startDateRef.current?.isAfter(dayjs(clientDate)) &&
+                  !endDateRef.current
+                ) {
+                  actionCreator(dispatch, "clearPicker");
+                }
+              }, 0);
+            }}
           />
         )}
       </div>
