@@ -475,7 +475,8 @@ export default class TransferList extends React.PureComponent<
     const bodyContent = defaultRenderList({
       ref: this.bodyRef,
       ...omit(this.props, OmitProps),
-      expandedKeys,
+      // Expand tree roots if they are all disabled
+      expandedKeys: this.props.disableRoots ? rootsToDisable : expandedKeys,
       filteredItems,
       loading,
       type,
