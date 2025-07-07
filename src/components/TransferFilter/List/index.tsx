@@ -422,9 +422,24 @@ export default class TransferList extends React.PureComponent<
       loading: false
     };
 
-    if (expanded) state.expandedKeys = expanded;
+    const expandedKeys = this.getExpandedKeys(
+      expanded,
+      this.getFilteredItems(data)
+    );
+
+    if (expandedKeys) state.expandedKeys = expandedKeys;
 
     this.setState(state);
+  }
+
+  getExpandedKeys(expanded: string[], filteredItems?: TransferFilterItem[]) {
+    if (!this.props.disableRoots) {
+      return expanded;
+    }
+
+    return filteredItems
+      ?.filter(item => item.pId === null)
+      .map(item => item.key);
   }
 
   getListBody(
@@ -476,7 +491,7 @@ export default class TransferList extends React.PureComponent<
       ref: this.bodyRef,
       ...omit(this.props, OmitProps),
       // Expand tree roots if they are all disabled
-      expandedKeys: this.props.disableRoots ? rootsToDisable : expandedKeys,
+      expandedKeys,
       filteredItems,
       loading,
       type,
