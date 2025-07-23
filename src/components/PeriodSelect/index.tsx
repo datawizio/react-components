@@ -5,6 +5,7 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import ConfigContext from "../ConfigProvider/context";
 import {
   DEFAULT_PERIOD,
+  DEFAULT_PREV_PERIOD,
   PERIOD_OPTIONS,
   PREV_PERIOD_OPTIONS
 } from "./constants";
@@ -151,6 +152,21 @@ const PeriodSelect = (props: PeriodSelectProps) => {
     typeof datePickerPlaceholder === "function"
       ? datePickerPlaceholder({ isPickerEmpty, startDate, endDate })
       : datePickerPlaceholder;
+
+  useEffect(() => {
+    const period = props.dateConfig?.selectedPeriod;
+    if (period && period !== DEFAULT_PERIOD) handlePeriodChange(period);
+  }, []); // eslint-disable-line
+
+  useEffect(() => {
+    const prevPeriod = props.dateConfig?.selectedPrevPeriod;
+
+    if (isDisabledOption(prevPeriod)) {
+      handlePrevPeriodChange(DEFAULT_PREV_PERIOD);
+    } else if (prevPeriod && prevPeriod !== DEFAULT_PREV_PERIOD) {
+      handlePrevPeriodChange(prevPeriod);
+    }
+  }, [isDisabledOption]); // eslint-disable-line
 
   return (
     <div className="period-picker-wrapper">
