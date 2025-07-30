@@ -443,16 +443,31 @@ export function reducer(state: TableState, action: Action): TableState {
         let expandedRecord = findExpandedRecord(
           path,
           nextDataSource,
-          //@ts-ignore
+          // @ts-ignore
           data.changeParentData
         );
-        //@ts-ignore
+        // @ts-ignore
         delete data.changeParentData;
 
-        //@ts-ignore
+        // @ts-ignore
         if (data.expanded === false) {
+          let keysToCollapse = [key];
+
+          const collectDescendants = (root: string) => {
+            const children = Object.entries(parentsMap)
+              .filter(([_, parentKey]) => parentKey === root)
+              .map(([childKey]) => childKey);
+
+            keysToCollapse.push(...children);
+            children.forEach(collectDescendants);
+          };
+
+          collectDescendants(key as string);
+
           newState.expandedRowKeys = expandedRowKeys.filter(
-            rowKey => rowKey != key
+            (rowKey: string) => {
+              return rowKey !== key && !keysToCollapse.includes(rowKey);
+            }
           );
         }
         if (!Array.isArray(expandedRecord.children)) {
