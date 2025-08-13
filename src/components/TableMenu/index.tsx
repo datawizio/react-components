@@ -31,6 +31,7 @@ export interface TableMenuProps extends ButtonProps {
   onTotalClick?: (e: any) => void;
   onExpandVertical?: (e: any) => void;
   onExpandHorizontal?: (e: any) => void;
+  nonExpandableMetrics?: Set<string>;
 }
 
 const TableMenu: React.FC<TableMenuProps> = props => {
@@ -46,13 +47,14 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     onTotalClick,
     onExpandHorizontal,
     onExpandVertical,
+    nonExpandableMetrics = new Set(),
     ...restProps
   } = props;
   const { translate } = useContext(ConfigContext);
 
   const context = useContext(TableContext);
 
-  const { expand_horizontally, expand_tree } = settings;
+  const { expand_horizontally, expand_tree, vertical_axis_metrics } = settings;
   const {
     fixed_total,
     expand_table_vertically,
@@ -61,9 +63,12 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     show_send_to_email,
     is_visualization,
     dimension_count,
-    has_tree,
-    max_level = 1
+    has_tree
   } = config;
+
+  const hasExpandableMetrics = vertical_axis_metrics?.some(
+    (metric: { value: string }) => !nonExpandableMetrics.has(metric.value)
+  );
 
   const { tableState, dispatch } = useMemo(() => {
     if (context) {
@@ -165,6 +170,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
           dimension_count > 1),
       expand_tree_horizontally:
         !expand_horizontally &&
+        hasExpandableMetrics &&
         ((dimension_count === 1 && has_tree) ||
           (has_tree && expand_tree) ||
           (!has_tree && dimension_count > 1 && expand_tree) ||
@@ -178,6 +184,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     dimension_count,
     expand_horizontally,
     expand_tree,
+    hasExpandableMetrics,
     has_tree,
     is_visualization
   ]);
