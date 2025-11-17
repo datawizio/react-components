@@ -272,7 +272,7 @@
 
   &--skeleton {
     visibility: hidden;
-    height: 0px;
+    height: 0;
   }
 
   &--loading {
@@ -289,9 +289,11 @@
       height: auto !important;
 
       td {
-        left: 50%;
         border: none !important;
-        position: absolute !important;
+
+        .dw-table__cell {
+          justify-content: center;
+        }
       }
     }
   }
