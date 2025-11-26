@@ -299,8 +299,12 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     fixed_total;
 
   return hasMenuItem ? (
-    <div className="table-menu table-toolbar--right">
-      <Dropdown overlay={menu} trigger={["click"]}>
+    <div className="table-menu table-toolbar--right" id="table-menu">
+      <Dropdown
+        overlay={menu}
+        trigger={["click"]}
+        getPopupContainer={() => document.getElementById("table-menu")}
+      >
         <Button
           className="table-menu__button"
           icon={<DownOutlined className={"table-menu__icon"} />}
