@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import {
   DownOutlined,
   SendOutlined,
@@ -298,12 +299,14 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     expand_table_vertically ||
     fixed_total;
 
+  const tableMenuId = `table-menu-${uuidv4()}`;
+
   return hasMenuItem ? (
-    <div className="table-menu table-toolbar--right" id="table-menu">
+    <div className="table-menu table-toolbar--right" id={tableMenuId}>
       <Dropdown
         overlay={menu}
         trigger={["click"]}
-        getPopupContainer={() => document.getElementById("table-menu")}
+        getPopupContainer={() => document.getElementById(tableMenuId)}
       >
         <Button
           className="table-menu__button"
