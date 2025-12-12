@@ -65,7 +65,12 @@ export function parseLogic<TLogic>(logic: TLogic) {
   if (Array.isArray(logic)) {
     return logic.map(l => {
       if (typeof l !== "object") return l;
-      if (l["var"]) return i18next.t(l["var"].toUpperCase());
+      let value = l["var"];
+      if (value?.startsWith("custom_")) {
+        // @ts-ignore
+        value = window.allDict[value]?.title;
+      }
+      if (value) return i18next.t(value.toUpperCase());
       return parseLogic(l);
     });
   }
