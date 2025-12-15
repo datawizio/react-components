@@ -10,6 +10,14 @@ import {
   WidgetParamsDimension
 } from "./types";
 
+declare global {
+  interface Window {
+    allDict: {
+      [key: string]: any
+    }
+  }
+}
+
 export const MAX_LENGTH_ITEM_LIST = 7;
 
 export function getValue<TDimension = WidgetParamsDimension>(
@@ -66,9 +74,8 @@ export function parseLogic<TLogic>(logic: TLogic) {
     return logic.map(l => {
       if (typeof l !== "object") return l;
       let value = l["var"];
-      if (value?.startsWith("custom_")) {
-        // @ts-ignore
-        value = window.allDict[value]?.title;
+      if (window.allDict && value?.startsWith("custom_")) {
+        value = window.allDict[value]?.title ?? value;
       }
       if (value) return i18next.t(value.toUpperCase());
       return parseLogic(l);
