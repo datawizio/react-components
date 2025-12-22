@@ -10,14 +10,6 @@ import {
   WidgetParamsDimension
 } from "./types";
 
-declare global {
-  interface Window {
-    allDict: {
-      [key: string]: any
-    }
-  }
-}
-
 export const MAX_LENGTH_ITEM_LIST = 7;
 
 export function getValue<TDimension = WidgetParamsDimension>(
@@ -69,22 +61,25 @@ export const parseDimension = (
   />
 );
 
-export function parseLogic<TLogic>(logic: TLogic) {
+export function parseLogic<TLogic>(
+  logic: TLogic,
+  metricsDictionary: Record<string, string> = {}
+) {
   if (Array.isArray(logic)) {
     return logic.map(l => {
       if (typeof l !== "object") return l;
-      let value = l["var"];
-      if (window.allDict && value?.startsWith("custom_")) {
-        value = window.allDict[value]?.title ?? value;
-      }
+      const value = l["var"];
+      const title = l["title"];
+      if (title) return title;
+      if (metricsDictionary[value]) return metricsDictionary[value];
       if (value) return i18next.t(value.toUpperCase());
-      return parseLogic(l);
+      return parseLogic(l, metricsDictionary);
     });
   }
   const op = Object.keys(logic)[0];
   const l = logic[op];
-  if (op === "!") return "!" + parseLogic(l);
-  const res = parseLogic(l);
+  if (op === "!") return "!" + parseLogic(l, metricsDictionary);
+  const res = parseLogic(l, metricsDictionary);
   if (Array.isArray(res) && res.length > 1)
     return `(${res.join(` ${i18next.t(op.toUpperCase())} `)})`;
   return res.join(` ${i18next.t(op.toUpperCase())}`);

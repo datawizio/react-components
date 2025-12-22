@@ -10,7 +10,6 @@ import {
 } from "../RuleInfo/helpers";
 import { RuleInfoSection } from "../RuleInfo/components/RuleInfoSection";
 import { ignoredFilters } from "../../utils/filter/constants";
-
 import "./index.less";
 
 type RuleInfoTableProps = Omit<RuleInfoProps, "name"> & {
@@ -26,6 +25,7 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
     widget_params,
     formatDateRange,
     dimensionKey = "product",
+    metricsDictionary = {},
     onShowRuleDetailsClick,
     onShowDimensionTableClick
   }) => {
@@ -44,7 +44,9 @@ const RuleInfoTable: React.FC<RuleInfoTableProps> = React.memo(
     return (
       <div className="rule-info-table">
         <RuleInfoSection name="CONDITION" className="rule-condition">
-          {typeof logic === "string" ? t(logic) : parseLogic(logic)}
+          {typeof logic === "string"
+            ? t(logic)
+            : parseLogic(logic, metricsDictionary)}
         </RuleInfoSection>
 
         {dtype === "report_rule" && onShowDimensionTableClick && (
