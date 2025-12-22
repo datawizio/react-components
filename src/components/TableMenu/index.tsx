@@ -33,6 +33,7 @@ export interface TableMenuProps extends ButtonProps {
   onExpandVertical?: (e: any) => void;
   onExpandHorizontal?: (e: any) => void;
   nonExpandableMetrics?: Set<string>;
+  attachToTable?: boolean;
 }
 
 const TableMenu: React.FC<TableMenuProps> = props => {
@@ -49,6 +50,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
     onExpandHorizontal,
     onExpandVertical,
     nonExpandableMetrics = new Set(),
+    attachToTable = false,
     ...restProps
   } = props;
   const { translate } = useContext(ConfigContext);
@@ -301,13 +303,16 @@ const TableMenu: React.FC<TableMenuProps> = props => {
 
   const tableMenuId = `table-menu-${uuidv4()}`;
 
+  const additionalDropdownProps = attachToTable
+    ? {
+        getPopupContainer: () =>
+          document.getElementById(tableMenuId) || document.body
+      }
+    : {};
+
   return hasMenuItem ? (
     <div className="table-menu table-toolbar--right" id={tableMenuId}>
-      <Dropdown
-        overlay={menu}
-        trigger={["click"]}
-        getPopupContainer={() => document.getElementById(tableMenuId)}
-      >
+      <Dropdown overlay={menu} trigger={["click"]} {...additionalDropdownProps}>
         <Button
           className="table-menu__button"
           icon={<DownOutlined className={"table-menu__icon"} />}
