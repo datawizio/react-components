@@ -15,6 +15,7 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
   logic,
   widget_params,
   formatDateRange,
+  metricsDictionary = {},
   name,
   dtype,
   disabled,
@@ -51,7 +52,7 @@ const RuleInfo: React.FC<RuleInfoProps> = ({
           disabled={disabled}
           tooltip={tooltip}
         >
-          {typeof logic === "string" ? logic : parseLogic(logic)}
+          {typeof logic === "string" ? logic : parseLogic(logic, metricsDictionary)}
         </RuleInfoSection>
 
         {!!widget_params.dimension && (
