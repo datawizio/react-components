@@ -14,6 +14,8 @@ import { TableState } from "../Table/types";
 import { saveAs } from "file-saver";
 import "./index.less";
 
+export type ExpandOptions = "horizontally" | "grouped" | "flat";
+
 export interface TableMenuProps extends ButtonProps {
   filename?: string;
   getFilename?: () => string;
@@ -28,7 +30,7 @@ export interface TableMenuProps extends ButtonProps {
     hideLoadingMessageFn?: () => void
   ) => Promise<BlobPart> | Promise<void> | null;
   exportHandlerCallback?: (fileData: BlobPart | Blob, filename: string) => any;
-  onSendClick?: (expand?: "horizontally" | "grouped") => Promise<void>;
+  onSendClick?: (expand?: ExpandOptions) => Promise<void>;
   onTotalClick?: (e: any) => void;
   onExpandVertical?: (e: any) => void;
   onExpandHorizontal?: (e: any) => void;
@@ -261,7 +263,7 @@ const TableMenu: React.FC<TableMenuProps> = props => {
             {without_expand_tree && (
               <Menu.Item
                 key="without_expand_tree"
-                onClick={() => onSendClick()}
+                onClick={() => onSendClick("flat")}
               >
                 {translate("WITHOUT_EXPAND_TREE")}
               </Menu.Item>
