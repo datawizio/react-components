@@ -75,11 +75,65 @@ function calcEmptyIsAll(
   return true;
 }
 
+function getExpandedKeysByValue(
+  values: any[],
+  treeData: any[],
+  isSimpleMode: boolean
+): React.Key[] {
+  if (!values?.length || !treeData?.length) return [];
+
+  // Normalize values: unwrap objects (treeCheckStrictly mode) and convert to strings for comparison
+  const selectedIds = new Set(
+    values.map(v =>
+      String(v !== null && typeof v === "object" ? v.value : v)
+    )
+  );
+
+  // Build a flat parentMap: stringId → original pId (preserving its original type for AntD)
+  const parentMap = new Map<string, React.Key | null>();
+
+  if (isSimpleMode) {
+    for (const node of treeData) {
+      const id = node.id ?? node.value;
+      if (id != null) {
+        parentMap.set(String(id), node.pId ?? null);
+      }
+    }
+  } else {
+    // Flatten hierarchical tree into the same parentMap structure
+    const flatten = (nodes: any[], parentId: React.Key | null) => {
+      for (const node of nodes) {
+        const id = node.id ?? node.value ?? node.key;
+        if (id != null) {
+          parentMap.set(String(id), parentId);
+        }
+        if (node.children?.length) {
+          flatten(node.children, id);
+        }
+      }
+    };
+    flatten(treeData, null);
+  }
+
+  // Walk up the parentMap for each selected node and collect all ancestor keys
+  const expandedKeys = new Set<React.Key>();
+  Array.from(selectedIds).forEach(id => {
+    let pId = parentMap.get(id);
+    while (pId != null) {
+      expandedKeys.add(pId);
+      pId = parentMap.get(String(pId));
+    }
+  });
+
+  return Array.from(expandedKeys);
+}
+
 /**********************************************************************************************************************/
 
 const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
   additionalFilters,
   asyncData,
+  expandToSelectedNodes = false,
   showLevels,
   showMarkers,
   noticeRender,
@@ -469,12 +523,29 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
 
     let val = internalValue;
     if (selectRef && selectRef.current) {
-      val = selectRef.current.getFormatedValue().map(v => v.value);
+      val = selectRef.current.getFormatedValue().map((v: any) => v.value);
     }
+
+    let keysFromValue: React.Key[] = [];
+    if (expandToSelectedNodes) {
+      keysFromValue = getExpandedKeysByValue(
+        val,
+        stateTreeData,
+        // @ts-ignore
+        !!restProps.treeDataSimpleMode
+      );
+    }
+
+    const payloadStatus = checkSelectAllStatus(val);
 
     dispatch({
       type: "openDrawer",
-      payload: checkSelectAllStatus(val)
+      payload: {
+        ...payloadStatus,
+        internalTreeExpandedKeys: Array.from(
+          new Set([...internalTreeExpandedKeys, ...keysFromValue])
+        )
+      }
     });
     triggerInputChangeValue(inputRef.current, searchValue.current);
 
@@ -1015,6 +1086,7 @@ DrawerTreeSelect.defaultProps = {
   remoteSearch: false,
   showSelectAll: false,
   emptyIsAll: false,
+  expandToSelectedNodes: false,
   levels: []
 };
 

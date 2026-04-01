@@ -21,6 +21,7 @@ export interface DrawerTreeSelectProps<VT>
   extends Omit<AntTreeSelectProps<VT>, "onChange" | "loadData"> {
   additionalFilters?: any;
   asyncData?: boolean;
+  expandToSelectedNodes?: boolean;
 
   headerHeight?: number;
 
