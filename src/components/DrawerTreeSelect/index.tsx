@@ -438,11 +438,22 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         payload: newState
       });
 
-      if (expanded) {
+      let keysFromValue: React.Key[] = [];
+      if (expandToSelectedNodes && !searchValueRef.current) {
+        keysFromValue = getExpandedKeysByValue(
+          value ? value : internalValue,
+          data,
+          !!restProps.treeDataSimpleMode
+        );
+      }
+
+      if (expanded || keysFromValue.length > 0) {
         dispatch({
           type: "setState",
           payload: {
-            internalTreeExpandedKeys: expanded
+            internalTreeExpandedKeys: Array.from(
+              new Set([...(expanded || []), ...keysFromValue])
+            )
           }
         });
       }
@@ -453,7 +464,16 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
       );
     },
     //eslint-disable-next-line
-    [loadData, showLevels, markersRender, remoteSearch, internalValue, value]
+    [
+      loadData,
+      showLevels,
+      markersRender,
+      remoteSearch,
+      internalValue,
+      value,
+      expandToSelectedNodes,
+      restProps.treeDataSimpleMode
+    ]
   );
 
   const checkSelectAllStatus = (
@@ -558,11 +578,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
     }
 
     let keysFromValue: React.Key[] = [];
-    if (expandToSelectedNodes) {
+    if (expandToSelectedNodes && !searchValueRef.current) {
       keysFromValue = getExpandedKeysByValue(
         val,
         stateTreeData,
-        // @ts-ignore
         !!restProps.treeDataSimpleMode
       );
     }
@@ -578,9 +597,10 @@ const DrawerTreeSelect: FCDrawerTreeSelect<SelectValue> = ({
         )
       }
     });
+
     triggerInputChangeValue(inputRef.current, searchValueRef.current);
 
-    onDrawerOpenCallback && onDrawerOpenCallback();
+    onDrawerOpenCallback?.();
   };
 
   const closeDrawer = useCallback(() => {
