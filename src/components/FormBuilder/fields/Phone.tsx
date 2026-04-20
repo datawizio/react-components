@@ -1,19 +1,18 @@
 import React, { useMemo, useContext } from "react";
+import PhoneInput from "../../PhoneInput";
+import ConfigContext from "../../ConfigProvider/context";
 
 import { Form } from "antd";
-import PhoneInput from "../../PhoneInput";
-
 import { FieldPhoneProps } from "../types";
-import { Rule } from "antd/lib/form";
-import ConfigContext from "../../ConfigProvider/context";
+
+import type { RuleObject } from "antd/es/form";
 
 const phoneValidation = (message: string) => ({
   message,
-  validator(rule: Rule, value: string) {
+  validator(rule: RuleObject, value: string) {
     if (!value || PhoneInput.isValidPhoneNumber(value)) {
       return Promise.resolve();
     }
-    //@ts-ignore
     return Promise.reject(rule.message);
   }
 });
@@ -35,7 +34,7 @@ export const FieldPhone: React.FC<FieldPhoneProps> = ({
   }, [rules, translate]);
 
   const handleChange = (value: string) => {
-    onChange && onChange({ name, value });
+    onChange?.({ name, value });
   };
 
   return (

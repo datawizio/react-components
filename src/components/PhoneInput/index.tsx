@@ -17,9 +17,6 @@ import Select from "../Select";
 import "./index.less";
 
 export interface PhoneInputProps {
-  /**
-   * placeholder
-   */
   placeholder?: string;
   defaultCountry?: string;
   value?: string;
@@ -42,7 +39,9 @@ const PhoneInput: FCPhoneInput = ({
   const { translate } = useContext(ConfigContext);
   const [internalValue, setInternalValue] = useState<string>();
   const [formatedValue, setFormatedValue] = useState<string>();
-  const [selectedCountry, setSelectedCountry] = useState<string>("UA");
+  const [selectedCountry, setSelectedCountry] = useState<string | undefined>(
+    defaultCountry
+  );
 
   const inputRef = useRef<any>();
 
@@ -92,17 +91,27 @@ const PhoneInput: FCPhoneInput = ({
 
   useEffect(() => {
     if (internalValue === value) return;
+
+    if (!value) {
+      setInternalValue(undefined);
+      setFormatedValue(undefined);
+      setSelectedCountry(defaultCountry);
+      return;
+    }
+
     let { value: val, formated, country } = formatNumber(
       value,
       selectedCountry,
       defaultCountry,
       international
     );
+
     if (!formated && val) formated = val;
+
     setInternalValue(val);
     setFormatedValue(formated);
     setSelectedCountry(country);
-    //eslint-disable-next-line
+    // eslint-disable-next-line
   }, [defaultCountry, value]);
 
   return (
@@ -111,6 +120,7 @@ const PhoneInput: FCPhoneInput = ({
         className="phone-input-select"
         dropdownClassName="phone-input-select-dropdown"
         value={selectedCountry}
+        placeholder={<span className="phone-input-flag-placeholder" />}
         dropdownMatchSelectWidth={false}
         optionLabelProp="label"
         optionFilterProp="title"
@@ -134,7 +144,7 @@ const PhoneInput: FCPhoneInput = ({
       </Select>
 
       <Input
-        //@ts-ignore
+        // @ts-ignore
         ref={inputRef}
         className="phone-input-input"
         type="tel"
@@ -144,10 +154,6 @@ const PhoneInput: FCPhoneInput = ({
       />
     </Input.Group>
   );
-};
-
-PhoneInput.defaultProps = {
-  defaultCountry: "UA"
 };
 
 PhoneInput.isValidPhoneNumber = (value: string) => isValidPhoneNumber(value);
