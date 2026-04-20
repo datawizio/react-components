@@ -24,8 +24,13 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
         onChange={[Function]}
         optionFilterProp="title"
         optionLabelProp="label"
+        placeholder={
+          <span
+            className="phone-input-flag-placeholder"
+          />
+        }
         showSearch={true}
-        value="UA"
+        value="uk"
         withPagination={false}
       >
         <ForwardRef(InternalSelect)
@@ -37,9 +42,14 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           onChange={[Function]}
           optionFilterProp="title"
           optionLabelProp="label"
+          placeholder={
+            <span
+              className="phone-input-flag-placeholder"
+            />
+          }
           showSearch={true}
           tagRender={null}
-          value="UA"
+          value="uk"
         >
           <Select
             className="phone-input-select"
@@ -55,12 +65,17 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
             onChange={[Function]}
             optionFilterProp="title"
             optionLabelProp="label"
+            placeholder={
+              <span
+                className="phone-input-flag-placeholder"
+              />
+            }
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
             tagRender={null}
             transitionName="slide-up"
-            value="UA"
+            value="uk"
           >
             <ForwardRef(Select)
               className="phone-input-select"
@@ -76,12 +91,17 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
               onChange={[Function]}
               optionFilterProp="title"
               optionLabelProp="label"
+              placeholder={
+                <span
+                  className="phone-input-flag-placeholder"
+                />
+              }
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
               tagRender={null}
               transitionName="slide-up"
-              value="UA"
+              value="uk"
             >
               <div
                 className="ant-select phone-input-select ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -5739,7 +5759,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       searchValue=""
                       values={
                         Set {
-                          "UA",
+                          "uk",
                         }
                       }
                       virtual={false}
@@ -11469,7 +11489,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           searchValue=""
                           values={
                             Set {
-                              "UA",
+                              "uk",
                             }
                           }
                           virtual={false}
@@ -11517,19 +11537,9 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                             </span>
                             <span
                               class="ant-select-selection-item"
+                              title="uk"
                             >
-                              <svg
-                                viewBox="0 85.333 512 341.333"
-                              >
-                                <path
-                                  d="M0 85.337h512v341.326H0z"
-                                  fill="#FFDA44"
-                                />
-                                <path
-                                  d="M0 85.337h512V256H0z"
-                                  fill="#338AF3"
-                                />
-                              </svg>
+                              uk
                             </span>
                           </div>,
                         }
@@ -11553,6 +11563,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       onToggleOpen={[Function]}
                       optionFilterProp="title"
                       optionLabelProp="label"
+                      placeholder={
+                        <span
+                          className="phone-input-flag-placeholder"
+                        />
+                      }
                       prefixCls="ant-select"
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
@@ -11560,14 +11575,15 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       tagRender={null}
                       tokenWithEnter={false}
                       transitionName="slide-up"
-                      value="UA"
+                      value="uk"
                       values={
                         Array [
                           Object {
                             "disabled": undefined,
-                            "key": "UA",
-                            "label": <UA />,
-                            "value": "UA",
+                            "isCacheable": true,
+                            "key": "uk",
+                            "label": "uk",
+                            "value": "uk",
                           },
                         ]
                       }
@@ -11606,19 +11622,9 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                                 </span>
                                 <span
                                   class="ant-select-selection-item"
+                                  title="uk"
                                 >
-                                  <svg
-                                    viewBox="0 85.333 512 341.333"
-                                  >
-                                    <path
-                                      d="M0 85.337h512v341.326H0z"
-                                      fill="#FFDA44"
-                                    />
-                                    <path
-                                      d="M0 85.337h512V256H0z"
-                                      fill="#338AF3"
-                                    />
-                                  </svg>
+                                  uk
                                 </span>
                               </div>,
                             }
@@ -11664,6 +11670,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           onToggleOpen={[Function]}
                           optionFilterProp="title"
                           optionLabelProp="label"
+                          placeholder={
+                            <span
+                              className="phone-input-flag-placeholder"
+                            />
+                          }
                           prefixCls="ant-select"
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
@@ -11671,14 +11682,15 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           tagRender={null}
                           tokenWithEnter={false}
                           transitionName="slide-up"
-                          value="UA"
+                          value="uk"
                           values={
                             Array [
                               Object {
                                 "disabled": undefined,
-                                "key": "UA",
-                                "label": <UA />,
-                                "value": "UA",
+                                "isCacheable": true,
+                                "key": "uk",
+                                "label": "uk",
+                                "value": "uk",
                               },
                             ]
                           }
@@ -11731,21 +11743,9 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           </span>
                           <span
                             className="ant-select-selection-item"
+                            title="uk"
                           >
-                            <UA>
-                              <svg
-                                viewBox="0 85.333 512 341.333"
-                              >
-                                <path
-                                  d="M0 85.337h512v341.326H0z"
-                                  fill="#FFDA44"
-                                />
-                                <path
-                                  d="M0 85.337h512V256H0z"
-                                  fill="#338AF3"
-                                />
-                              </svg>
-                            </UA>
+                            uk
                           </span>
                         </SingleSelector>
                       </div>
@@ -11939,8 +11939,13 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
         onChange={[Function]}
         optionFilterProp="title"
         optionLabelProp="label"
+        placeholder={
+          <span
+            className="phone-input-flag-placeholder"
+          />
+        }
         showSearch={true}
-        value="UA"
+        value="uk"
         withPagination={false}
       >
         <ForwardRef(InternalSelect)
@@ -11952,9 +11957,14 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           onChange={[Function]}
           optionFilterProp="title"
           optionLabelProp="label"
+          placeholder={
+            <span
+              className="phone-input-flag-placeholder"
+            />
+          }
           showSearch={true}
           tagRender={null}
-          value="UA"
+          value="uk"
         >
           <Select
             className="phone-input-select"
@@ -11970,12 +11980,17 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
             onChange={[Function]}
             optionFilterProp="title"
             optionLabelProp="label"
+            placeholder={
+              <span
+                className="phone-input-flag-placeholder"
+              />
+            }
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
             tagRender={null}
             transitionName="slide-up"
-            value="UA"
+            value="uk"
           >
             <ForwardRef(Select)
               className="phone-input-select"
@@ -11991,12 +12006,17 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
               onChange={[Function]}
               optionFilterProp="title"
               optionLabelProp="label"
+              placeholder={
+                <span
+                  className="phone-input-flag-placeholder"
+                />
+              }
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
               tagRender={null}
               transitionName="slide-up"
-              value="UA"
+              value="uk"
             >
               <div
                 className="ant-select phone-input-select ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -17654,7 +17674,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       searchValue=""
                       values={
                         Set {
-                          "UA",
+                          "uk",
                         }
                       }
                       virtual={false}
@@ -23384,7 +23404,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           searchValue=""
                           values={
                             Set {
-                              "UA",
+                              "uk",
                             }
                           }
                           virtual={false}
@@ -23432,19 +23452,9 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                             </span>
                             <span
                               class="ant-select-selection-item"
+                              title="uk"
                             >
-                              <svg
-                                viewBox="0 85.333 512 341.333"
-                              >
-                                <path
-                                  d="M0 85.337h512v341.326H0z"
-                                  fill="#FFDA44"
-                                />
-                                <path
-                                  d="M0 85.337h512V256H0z"
-                                  fill="#338AF3"
-                                />
-                              </svg>
+                              uk
                             </span>
                           </div>,
                         }
@@ -23468,6 +23478,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       onToggleOpen={[Function]}
                       optionFilterProp="title"
                       optionLabelProp="label"
+                      placeholder={
+                        <span
+                          className="phone-input-flag-placeholder"
+                        />
+                      }
                       prefixCls="ant-select"
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
@@ -23475,14 +23490,15 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       tagRender={null}
                       tokenWithEnter={false}
                       transitionName="slide-up"
-                      value="UA"
+                      value="uk"
                       values={
                         Array [
                           Object {
                             "disabled": undefined,
-                            "key": "UA",
-                            "label": <UA />,
-                            "value": "UA",
+                            "isCacheable": true,
+                            "key": "uk",
+                            "label": "uk",
+                            "value": "uk",
                           },
                         ]
                       }
@@ -23521,19 +23537,9 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                                 </span>
                                 <span
                                   class="ant-select-selection-item"
+                                  title="uk"
                                 >
-                                  <svg
-                                    viewBox="0 85.333 512 341.333"
-                                  >
-                                    <path
-                                      d="M0 85.337h512v341.326H0z"
-                                      fill="#FFDA44"
-                                    />
-                                    <path
-                                      d="M0 85.337h512V256H0z"
-                                      fill="#338AF3"
-                                    />
-                                  </svg>
+                                  uk
                                 </span>
                               </div>,
                             }
@@ -23579,6 +23585,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           onToggleOpen={[Function]}
                           optionFilterProp="title"
                           optionLabelProp="label"
+                          placeholder={
+                            <span
+                              className="phone-input-flag-placeholder"
+                            />
+                          }
                           prefixCls="ant-select"
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
@@ -23586,14 +23597,15 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           tagRender={null}
                           tokenWithEnter={false}
                           transitionName="slide-up"
-                          value="UA"
+                          value="uk"
                           values={
                             Array [
                               Object {
                                 "disabled": undefined,
-                                "key": "UA",
-                                "label": <UA />,
-                                "value": "UA",
+                                "isCacheable": true,
+                                "key": "uk",
+                                "label": "uk",
+                                "value": "uk",
                               },
                             ]
                           }
@@ -23646,21 +23658,9 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           </span>
                           <span
                             className="ant-select-selection-item"
+                            title="uk"
                           >
-                            <UA>
-                              <svg
-                                viewBox="0 85.333 512 341.333"
-                              >
-                                <path
-                                  d="M0 85.337h512v341.326H0z"
-                                  fill="#FFDA44"
-                                />
-                                <path
-                                  d="M0 85.337h512V256H0z"
-                                  fill="#338AF3"
-                                />
-                              </svg>
-                            </UA>
+                            uk
                           </span>
                         </SingleSelector>
                       </div>
