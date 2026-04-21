@@ -2,7 +2,7 @@
 
 exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
 <PhoneInput
-  defaultCountry="uk"
+  defaultCountry="UA"
   onChange={[MockFunction]}
   placeholder="placeholder"
   value="12345678"
@@ -30,7 +30,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           />
         }
         showSearch={true}
-        value="uk"
+        value="UA"
         withPagination={false}
       >
         <ForwardRef(InternalSelect)
@@ -49,7 +49,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           }
           showSearch={true}
           tagRender={null}
-          value="uk"
+          value="UA"
         >
           <Select
             className="phone-input-select"
@@ -75,7 +75,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
             showSearch={true}
             tagRender={null}
             transitionName="slide-up"
-            value="uk"
+            value="UA"
           >
             <ForwardRef(Select)
               className="phone-input-select"
@@ -101,7 +101,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
               showSearch={true}
               tagRender={null}
               transitionName="slide-up"
-              value="uk"
+              value="UA"
             >
               <div
                 className="ant-select phone-input-select ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -5759,7 +5759,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       searchValue=""
                       values={
                         Set {
-                          "uk",
+                          "UA",
                         }
                       }
                       virtual={false}
@@ -11489,7 +11489,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           searchValue=""
                           values={
                             Set {
-                              "uk",
+                              "UA",
                             }
                           }
                           virtual={false}
@@ -11537,9 +11537,19 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                             </span>
                             <span
                               class="ant-select-selection-item"
-                              title="uk"
                             >
-                              uk
+                              <svg
+                                viewBox="0 85.333 512 341.333"
+                              >
+                                <path
+                                  d="M0 85.337h512v341.326H0z"
+                                  fill="#FFDA44"
+                                />
+                                <path
+                                  d="M0 85.337h512V256H0z"
+                                  fill="#338AF3"
+                                />
+                              </svg>
                             </span>
                           </div>,
                         }
@@ -11575,15 +11585,14 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       tagRender={null}
                       tokenWithEnter={false}
                       transitionName="slide-up"
-                      value="uk"
+                      value="UA"
                       values={
                         Array [
                           Object {
                             "disabled": undefined,
-                            "isCacheable": true,
-                            "key": "uk",
-                            "label": "uk",
-                            "value": "uk",
+                            "key": "UA",
+                            "label": <UA />,
+                            "value": "UA",
                           },
                         ]
                       }
@@ -11622,9 +11631,19 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                                 </span>
                                 <span
                                   class="ant-select-selection-item"
-                                  title="uk"
                                 >
-                                  uk
+                                  <svg
+                                    viewBox="0 85.333 512 341.333"
+                                  >
+                                    <path
+                                      d="M0 85.337h512v341.326H0z"
+                                      fill="#FFDA44"
+                                    />
+                                    <path
+                                      d="M0 85.337h512V256H0z"
+                                      fill="#338AF3"
+                                    />
+                                  </svg>
                                 </span>
                               </div>,
                             }
@@ -11682,15 +11701,14 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           tagRender={null}
                           tokenWithEnter={false}
                           transitionName="slide-up"
-                          value="uk"
+                          value="UA"
                           values={
                             Array [
                               Object {
                                 "disabled": undefined,
-                                "isCacheable": true,
-                                "key": "uk",
-                                "label": "uk",
-                                "value": "uk",
+                                "key": "UA",
+                                "label": <UA />,
+                                "value": "UA",
                               },
                             ]
                           }
@@ -11743,9 +11761,21 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           </span>
                           <span
                             className="ant-select-selection-item"
-                            title="uk"
                           >
-                            uk
+                            <UA>
+                              <svg
+                                viewBox="0 85.333 512 341.333"
+                              >
+                                <path
+                                  d="M0 85.337h512v341.326H0z"
+                                  fill="#FFDA44"
+                                />
+                                <path
+                                  d="M0 85.337h512V256H0z"
+                                  fill="#338AF3"
+                                />
+                              </svg>
+                            </UA>
                           </span>
                         </SingleSelector>
                       </div>
@@ -11917,7 +11947,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
 
 exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`] = `
 <PhoneInput
-  defaultCountry="uk"
+  defaultCountry="UA"
   onChange={[MockFunction]}
   placeholder="placeholder"
   value="UA"
@@ -11945,7 +11975,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           />
         }
         showSearch={true}
-        value="uk"
+        value="UA"
         withPagination={false}
       >
         <ForwardRef(InternalSelect)
@@ -11964,7 +11994,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           }
           showSearch={true}
           tagRender={null}
-          value="uk"
+          value="UA"
         >
           <Select
             className="phone-input-select"
@@ -11990,7 +12020,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
             showSearch={true}
             tagRender={null}
             transitionName="slide-up"
-            value="uk"
+            value="UA"
           >
             <ForwardRef(Select)
               className="phone-input-select"
@@ -12016,7 +12046,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
               showSearch={true}
               tagRender={null}
               transitionName="slide-up"
-              value="uk"
+              value="UA"
             >
               <div
                 className="ant-select phone-input-select ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -17674,7 +17704,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       searchValue=""
                       values={
                         Set {
-                          "uk",
+                          "UA",
                         }
                       }
                       virtual={false}
@@ -23404,7 +23434,7 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           searchValue=""
                           values={
                             Set {
-                              "uk",
+                              "UA",
                             }
                           }
                           virtual={false}
@@ -23452,9 +23482,19 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                             </span>
                             <span
                               class="ant-select-selection-item"
-                              title="uk"
                             >
-                              uk
+                              <svg
+                                viewBox="0 85.333 512 341.333"
+                              >
+                                <path
+                                  d="M0 85.337h512v341.326H0z"
+                                  fill="#FFDA44"
+                                />
+                                <path
+                                  d="M0 85.337h512V256H0z"
+                                  fill="#338AF3"
+                                />
+                              </svg>
                             </span>
                           </div>,
                         }
@@ -23490,15 +23530,14 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       tagRender={null}
                       tokenWithEnter={false}
                       transitionName="slide-up"
-                      value="uk"
+                      value="UA"
                       values={
                         Array [
                           Object {
                             "disabled": undefined,
-                            "isCacheable": true,
-                            "key": "uk",
-                            "label": "uk",
-                            "value": "uk",
+                            "key": "UA",
+                            "label": <UA />,
+                            "value": "UA",
                           },
                         ]
                       }
@@ -23537,9 +23576,19 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                                 </span>
                                 <span
                                   class="ant-select-selection-item"
-                                  title="uk"
                                 >
-                                  uk
+                                  <svg
+                                    viewBox="0 85.333 512 341.333"
+                                  >
+                                    <path
+                                      d="M0 85.337h512v341.326H0z"
+                                      fill="#FFDA44"
+                                    />
+                                    <path
+                                      d="M0 85.337h512V256H0z"
+                                      fill="#338AF3"
+                                    />
+                                  </svg>
                                 </span>
                               </div>,
                             }
@@ -23597,15 +23646,14 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           tagRender={null}
                           tokenWithEnter={false}
                           transitionName="slide-up"
-                          value="uk"
+                          value="UA"
                           values={
                             Array [
                               Object {
                                 "disabled": undefined,
-                                "isCacheable": true,
-                                "key": "uk",
-                                "label": "uk",
-                                "value": "uk",
+                                "key": "UA",
+                                "label": <UA />,
+                                "value": "UA",
                               },
                             ]
                           }
@@ -23658,9 +23706,21 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           </span>
                           <span
                             className="ant-select-selection-item"
-                            title="uk"
                           >
-                            uk
+                            <UA>
+                              <svg
+                                viewBox="0 85.333 512 341.333"
+                              >
+                                <path
+                                  d="M0 85.337h512v341.326H0z"
+                                  fill="#FFDA44"
+                                />
+                                <path
+                                  d="M0 85.337h512V256H0z"
+                                  fill="#338AF3"
+                                />
+                              </svg>
+                            </UA>
                           </span>
                         </SingleSelector>
                       </div>

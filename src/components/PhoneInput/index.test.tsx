@@ -7,7 +7,7 @@ import PhoneInput from "./index";
 
 const mockProps = {
   placeholder: "placeholder",
-  defaultCountry: "uk",
+  defaultCountry: "UA",
   value: "12345678",
   onChange: jest.fn()
 };
