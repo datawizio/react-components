@@ -6,22 +6,40 @@
 .ant-input-group.phone-input {
   .ant-select.phone-input-select {
     width: 60px;
+
     .ant-select-selection-item {
       display: flex;
+
       svg {
         width: 100%;
       }
     }
+
+    .ant-select-selection-placeholder {
+      display: flex;
+      align-items: center;
+    }
   }
+
   .ant-input.phone-input-input {
     width: calc(100% - 60px);
   }
+}
+
+.phone-input-flag-placeholder {
+  display: inline-block;
+  width: 20px;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  background-color: @box-placeholder-color;
+  border-radius: 2px;
 }
 
 .phone-input-select-dropdown .ant-select-item-option {
   .ant-select-item-option-content {
     display: flex;
     align-items: center;
+
     svg {
       height: 15px;
       margin-right: 10px;

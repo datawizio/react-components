@@ -2,7 +2,7 @@
 
 exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
 <PhoneInput
-  defaultCountry="uk"
+  defaultCountry="UA"
   onChange={[MockFunction]}
   placeholder="placeholder"
   value="12345678"
@@ -24,6 +24,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
         onChange={[Function]}
         optionFilterProp="title"
         optionLabelProp="label"
+        placeholder={
+          <span
+            className="phone-input-flag-placeholder"
+          />
+        }
         showSearch={true}
         value="UA"
         withPagination={false}
@@ -37,6 +42,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
           onChange={[Function]}
           optionFilterProp="title"
           optionLabelProp="label"
+          placeholder={
+            <span
+              className="phone-input-flag-placeholder"
+            />
+          }
           showSearch={true}
           tagRender={null}
           value="UA"
@@ -55,6 +65,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
             onChange={[Function]}
             optionFilterProp="title"
             optionLabelProp="label"
+            placeholder={
+              <span
+                className="phone-input-flag-placeholder"
+              />
+            }
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
@@ -76,6 +91,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
               onChange={[Function]}
               optionFilterProp="title"
               optionLabelProp="label"
+              placeholder={
+                <span
+                  className="phone-input-flag-placeholder"
+                />
+              }
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
@@ -11553,6 +11573,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                       onToggleOpen={[Function]}
                       optionFilterProp="title"
                       optionLabelProp="label"
+                      placeholder={
+                        <span
+                          className="phone-input-flag-placeholder"
+                        />
+                      }
                       prefixCls="ant-select"
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
@@ -11664,6 +11689,11 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
                           onToggleOpen={[Function]}
                           optionFilterProp="title"
                           optionLabelProp="label"
+                          placeholder={
+                            <span
+                              className="phone-input-flag-placeholder"
+                            />
+                          }
                           prefixCls="ant-select"
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
@@ -11917,7 +11947,7 @@ exports[`PhoneInput component PhoneInput rendered correctly 1`] = `
 
 exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`] = `
 <PhoneInput
-  defaultCountry="uk"
+  defaultCountry="UA"
   onChange={[MockFunction]}
   placeholder="placeholder"
   value="UA"
@@ -11939,6 +11969,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
         onChange={[Function]}
         optionFilterProp="title"
         optionLabelProp="label"
+        placeholder={
+          <span
+            className="phone-input-flag-placeholder"
+          />
+        }
         showSearch={true}
         value="UA"
         withPagination={false}
@@ -11952,6 +11987,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
           onChange={[Function]}
           optionFilterProp="title"
           optionLabelProp="label"
+          placeholder={
+            <span
+              className="phone-input-flag-placeholder"
+            />
+          }
           showSearch={true}
           tagRender={null}
           value="UA"
@@ -11970,6 +12010,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
             onChange={[Function]}
             optionFilterProp="title"
             optionLabelProp="label"
+            placeholder={
+              <span
+                className="phone-input-flag-placeholder"
+              />
+            }
             prefixCls="ant-select"
             removeIcon={<ForwardRef(CloseOutlined) />}
             showSearch={true}
@@ -11991,6 +12036,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
               onChange={[Function]}
               optionFilterProp="title"
               optionLabelProp="label"
+              placeholder={
+                <span
+                  className="phone-input-flag-placeholder"
+                />
+              }
               prefixCls="ant-select"
               removeIcon={<ForwardRef(CloseOutlined) />}
               showSearch={true}
@@ -23468,6 +23518,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                       onToggleOpen={[Function]}
                       optionFilterProp="title"
                       optionLabelProp="label"
+                      placeholder={
+                        <span
+                          className="phone-input-flag-placeholder"
+                        />
+                      }
                       prefixCls="ant-select"
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
@@ -23579,6 +23634,11 @@ exports[`PhoneInput component PhoneInput rendered correctly with empty value 1`]
                           onToggleOpen={[Function]}
                           optionFilterProp="title"
                           optionLabelProp="label"
+                          placeholder={
+                            <span
+                              className="phone-input-flag-placeholder"
+                            />
+                          }
                           prefixCls="ant-select"
                           removeIcon={<ForwardRef(CloseOutlined) />}
                           searchValue=""
