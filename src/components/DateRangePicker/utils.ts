@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { DATE_FORMATS } from "../../utils/dateFormat/constants";
 import { DateType } from "./types";
 
 dayjs.extend(customParseFormat);
@@ -7,7 +8,7 @@ dayjs.extend(customParseFormat);
 export function genPrevPeriod(
   date_from: DateType,
   date_to: DateType,
-  format: string = "DD-MM-YYYY"
+  format: string = DATE_FORMATS.DATE
 ): [DateType, DateType] {
   if (!date_from || !date_to) return [null, null];
 
@@ -15,16 +16,11 @@ export function genPrevPeriod(
 
   const prev_date_to = dayjs(date_to, format)
     .subtract(delta + 1, "d")
-    .format("DD-MM-YYYY");
+    .format(DATE_FORMATS.DATE);
 
-  const prev_date_from = dayjs(prev_date_to, "DD-MM-YYYY")
+  const prev_date_from = dayjs(prev_date_to, DATE_FORMATS.DATE)
     .subtract(delta, "d")
-    .format("DD-MM-YYYY");
+    .format(DATE_FORMATS.DATE);
 
   return [prev_date_from, prev_date_to];
-}
-
-export function reverseDate(date: string, separator: string = "-"): string {
-  if (typeof date !== "string") return date;
-  return date && date.split(separator).reverse().join(separator);
 }

@@ -1,20 +1,21 @@
 import * as React from "react";
-import { useCallback, useContext, useMemo } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import DatePicker from "../DatePicker";
 import ConfigContext from "../ConfigProvider/context";
+import { useCallback, useContext, useMemo } from "react";
+import { DATE_FORMATS } from "../../utils/dateFormat/constants";
 import {
   DefaultPreset,
   DefaultPresetPrev,
   DefaultPresetRanges
 } from "./presets";
-import { DateRangePickerProps, DateType, IDateRangePicker } from "./types";
+
+import type { DateRangePickerProps, DateType, IDateRangePicker } from "./types";
+
 import "./index.less";
 
 dayjs.extend(customParseFormat);
-
-// const { RangePicker } = DatePicker;
 
 const DateRangePicker: IDateRangePicker = ({
   fullWidth,
@@ -29,6 +30,14 @@ const DateRangePicker: IDateRangePicker = ({
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
+
+  const getDate = useCallback(
+    (date: DateType) => {
+      if (!date) return null;
+      return dayjs(date, props.format);
+    },
+    [props.format]
+  );
 
   const getPresets = useCallback(() => {
     if (!ranges && !useDefaultPreset && !presets) return; // presets absent
@@ -46,14 +55,14 @@ const DateRangePicker: IDateRangePicker = ({
 
       const defaultPreset = DefaultPreset(
         type,
-        props.minDate,
-        maxDateForPresets ?? props.maxDate,
+        getDate(props.minDate),
+        getDate(maxDateForPresets ?? props.maxDate),
         useCurrentDayPreset
       );
       const defaultPresetPrev = DefaultPresetPrev(
         type,
-        currDateRange?.date_from || props.dateFrom,
-        currDateRange?.date_to || props.dateTo
+        getDate(currDateRange?.date_from || props.dateFrom),
+        getDate(currDateRange?.date_to || props.dateTo)
       );
 
       presets.forEach(item => {
@@ -69,8 +78,8 @@ const DateRangePicker: IDateRangePicker = ({
       const defaultPreset = {
         ...DefaultPreset(
           type,
-          props.minDate,
-          maxDateForPresets ?? props.maxDate,
+          getDate(props.minDate),
+          getDate(maxDateForPresets ?? props.maxDate),
           useCurrentDayPreset
         )
       };
@@ -85,6 +94,7 @@ const DateRangePicker: IDateRangePicker = ({
   }, [
     currDateRange,
     defaultPresetExceptions,
+    getDate,
     presets,
     maxDateForPresets,
     props.dateFrom,
@@ -111,31 +121,23 @@ const DateRangePicker: IDateRangePicker = ({
     return Object.fromEntries(translatedPresetMap.entries());
   }, [getPresets, translate]);
 
-  const formatDate = useCallback(
-    (date: DateType) => {
-      if (!date) return null;
-      return dayjs(date, props.format) as Dayjs;
-    },
-    [props.format]
-  );
-
   const [dateFrom, dateTo] = useMemo<[Dayjs, Dayjs]>(() => {
-    return [formatDate(props.dateFrom), formatDate(props.dateTo)];
-  }, [props.dateFrom, props.dateTo, formatDate]);
+    return [getDate(props.dateFrom), getDate(props.dateTo)];
+  }, [props.dateFrom, props.dateTo, getDate]);
 
   const [maxDate, minDate] = useMemo<[Dayjs, Dayjs]>(() => {
-    return [formatDate(props.maxDate), formatDate(props.minDate)];
-  }, [props.maxDate, props.minDate, formatDate]);
+    return [getDate(props.maxDate), getDate(props.minDate)];
+  }, [props.maxDate, props.minDate, getDate]);
 
   const isDisabledDate = useCallback(
     date => {
-      const formatedDate = formatDate(date.format("DD-MM-YYYY"));
+      const formatedDate = getDate(date.format(props.format));
       return (
         (maxDate && formatedDate.isAfter(maxDate)) ||
         (minDate && formatedDate.isBefore(minDate))
       );
     },
-    [maxDate, minDate, formatDate]
+    [maxDate, minDate, getDate, props.format]
   );
 
   function onChange(value): void {
@@ -167,7 +169,7 @@ const DateRangePicker: IDateRangePicker = ({
 DateRangePicker.defaultProps = {
   type: "iso-8601",
   inputReadOnly: true,
-  format: "DD-MM-YYYY",
+  format: DATE_FORMATS.DATE,
   dateTo: "02-12-2001",
   dateFrom: "02-12-2001"
 };
