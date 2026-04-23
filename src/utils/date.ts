@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
 import i18n from "i18next";
 import { capitalize } from "./text";
+import { DATE_FORMATS } from "./dateFormat/constants";
 
 export const formatDateTime = (dateOrigin, translate) => {
   let output;
 
-  const dateFormat = "DD.MM.YYYY";
+  const dateFormat = DATE_FORMATS.DATE_WITH_DOTS;
   const timeFormat = "HH:mm";
 
   const today = dayjs().format(dateFormat);
