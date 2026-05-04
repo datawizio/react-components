@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Rule } from "antd/lib/form";
 import { SwitchSize } from "antd/lib/switch";
+import { ImgCropProps } from "antd-img-crop";
 import { Dayjs } from "dayjs";
 import { CalendarTypes } from "../DatePicker";
 import { InfoTooltipProps } from "../InfoTooltip";
@@ -188,12 +189,15 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   onDrawerSubmitCallback?: (payload?: any) => void;
 }
 
-export interface FieldImageProps extends FormFieldProps<string> {}
-
-export interface ImageProps {
-  t?: any;
+export type ImageProps = Omit<
+  ImgCropProps,
+  "modalTitle" | "modalOk" | "modalCancel"
+> & {
   name: string | string[];
   value?: string;
   placeholder?: string;
   onChange: (change: IFormFieldChanged<string>) => void;
-}
+  maxFileSize?: number;
+};
+
+export type FieldImageProps = FormFieldProps<string> & ImageProps;

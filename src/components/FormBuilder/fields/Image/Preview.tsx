@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-
-import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
 import ConfigContext from "../../../ConfigProvider/context";
+
+import { Modal } from "antd";
+import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 export interface PreviewProps {
   value: string;
@@ -19,10 +19,8 @@ export const Preview: React.FC<PreviewProps> = ({ value, onDelete }) => {
       icon: <ExclamationCircleOutlined />,
       okText: translate("YES"),
       cancelText: translate("CANCEL"),
-      onOk() {
-        onDelete();
-      },
-      onCancel() {}
+      onOk: () => onDelete(),
+      onCancel: () => void 0
     });
   };
 
