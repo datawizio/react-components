@@ -34,7 +34,26 @@ export type DateBodyProps<DateType> = {
   locale: Locale;
   rowCount: number;
   onSelect: (value: DateType) => void;
+  format?: string | string[] | ((value: DateType) => string);
 } & DateBodyPassProps<DateType>;
+
+function cellTitleFormat<DateType>(
+  format: DateBodyProps<DateType>["format"]
+): string | ((value: DateType) => string) {
+  if (typeof format === "function") {
+    return format;
+  }
+  if (typeof format === "string") {
+    const space = format.indexOf(" ");
+    return space > 0 ? format.slice(0, space) : format;
+  }
+  if (Array.isArray(format) && typeof format[0] === "string") {
+    const first = format[0];
+    const space = first.indexOf(" ");
+    return space > 0 ? first.slice(0, space) : first;
+  }
+  return "YYYY-MM-DD";
+}
 
 function DateBody<DateType>(props: DateBodyProps<DateType>) {
   const {
@@ -45,7 +64,8 @@ function DateBody<DateType>(props: DateBodyProps<DateType>) {
     rowCount,
     viewDate,
     value,
-    dateRender
+    dateRender,
+    format
   } = props;
 
   const { rangedValue, hoverRangedValue } = React.useContext(RangeContext);
@@ -110,7 +130,7 @@ function DateBody<DateType>(props: DateBodyProps<DateType>) {
       titleCell={date =>
         formatValue(date, {
           locale,
-          format: "YYYY-MM-DD",
+          format: cellTitleFormat(format),
           generateConfig
         })
       }
