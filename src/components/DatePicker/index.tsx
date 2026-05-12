@@ -1,13 +1,9 @@
-import React from "react";
-
-import { Dayjs } from "dayjs";
-
+import dayjs, { Dayjs } from "dayjs";
 import dayjsGenerateConfig from "rc-picker/es/generate/dayjs";
 import { fiscalCalendarConfig } from "./config/fiscal";
 import generatePicker from "./antd/AntGeneratePicker";
-
-import "./index.less";
 import { calendarInfo } from "../../utils/calendar";
+import "./index.less";
 
 export type CalendarTypes = "fiscal" | "iso-8601";
 export interface DatePickerWrapperProps {
@@ -20,7 +16,6 @@ interface IDatePicker extends ReturnType<typeof generatePicker> {
 }
 
 dayjsGenerateConfig.isAfter = (date1, date2) => {
-  // console.log(date1, date2, date1.isAfter(date2));
   return date1.isAfter(date2);
 };
 
@@ -36,9 +31,38 @@ const parseLocale = (locale: string) => {
   return mapLocale || locale.split("_")[0];
 };
 
+const defaultParseDate = dayjsGenerateConfig.locale.parse;
+
+const parseStrictDate = (
+  locale: string,
+  text: string,
+  formats: string[]
+): Dayjs | null => {
+  const localeStr = parseLocale(locale);
+
+  for (let i = 0; i < formats.length; i += 1) {
+    const format = formats[i];
+
+    if (format.includes("wo") || format.includes("Wo")) {
+      return defaultParseDate(locale, text, [format]);
+    }
+
+    const date = dayjs(text, format, localeStr, true);
+
+    if (date.isValid()) {
+      return date.locale(localeStr);
+    }
+  }
+
+  return null;
+};
+
 //@ts-ignore
 dayjsGenerateConfig.getStartOfMonth = date =>
   dayjsGenerateConfig.setDate(date, 1);
+
+dayjsGenerateConfig.locale.parse = parseStrictDate;
+fiscalCalendarConfig.locale.parse = parseStrictDate;
 
 dayjsGenerateConfig.locale.format = (locale, date, format) => {
   if (format === "YYYY" && calendarInfo.startMonth !== 0) {
@@ -58,5 +82,3 @@ DatePicker.Picker = {
 };
 
 export default DatePicker;
-
-// export default DatePickerWrapper;
