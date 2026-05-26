@@ -1,7 +1,7 @@
 export type IDirection = "ltr" | "rtl" | undefined;
 
 export const getLangsRTL = (): string[] => {
-  return ["ar"];
+  return ["ar", "he"];
 };
 
 export const getLangDirection = (locale): IDirection => {
