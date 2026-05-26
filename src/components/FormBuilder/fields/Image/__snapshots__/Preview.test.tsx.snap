@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormBuilder Preview component Preview call  modal 1`] = `
+exports[`FormBuilder Preview component renders correctly 1`] = `
 <div
   className="ant-upload-list ant-upload-list-picture-card"
 >
@@ -19,7 +19,7 @@ exports[`FormBuilder Preview component Preview call  modal 1`] = `
             <img
               alt="Preview"
               className="ant-upload-list-item-image"
-              src="value"
+              src="https://example.com/image.jpg"
             />
           </span>
         </div>
@@ -34,7 +34,7 @@ exports[`FormBuilder Preview component Preview call  modal 1`] = `
 </div>
 `;
 
-exports[`FormBuilder Preview component Preview rendered correctly 1`] = `
+exports[`FormBuilder Preview component renders correctly when disabled 1`] = `
 <div
   className="ant-upload-list ant-upload-list-picture-card"
 >
@@ -43,7 +43,7 @@ exports[`FormBuilder Preview component Preview rendered correctly 1`] = `
   >
     <span>
       <div
-        className="ant-upload-list-item ant-upload-list-item-done ant-upload-list-item-list-type-picture-card"
+        className="ant-upload-list-item ant-upload-list-item-done ant-upload-list-item-list-type-picture-card preview-disabled"
         onClick={[Function]}
       >
         <div
@@ -53,15 +53,10 @@ exports[`FormBuilder Preview component Preview rendered correctly 1`] = `
             <img
               alt="Preview"
               className="ant-upload-list-item-image"
-              src="value"
+              src="https://example.com/image.jpg"
             />
           </span>
         </div>
-        <span
-          className="ant-upload-list-item-actions"
-        >
-          <ForwardRef(DeleteOutlined) />
-        </span>
       </div>
     </span>
   </div>

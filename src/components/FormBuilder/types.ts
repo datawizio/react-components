@@ -1,9 +1,10 @@
 import React, { ReactNode } from "react";
-import { Rule } from "antd/lib/form";
-import { SwitchSize } from "antd/lib/switch";
-import { Dayjs } from "dayjs";
-import { CalendarTypes } from "../DatePicker";
-import { InfoTooltipProps } from "../InfoTooltip";
+import type { Rule } from "antd/lib/form";
+import type { SwitchSize } from "antd/lib/switch";
+import type { ImgCropProps } from "antd-img-crop";
+import type { Dayjs } from "dayjs";
+import type { CalendarTypes } from "../DatePicker";
+import type { InfoTooltipProps } from "../InfoTooltip";
 
 export interface IFormFieldChanged<Type> {
   name: string | string[];
@@ -188,12 +189,21 @@ export interface FieldDrawerTreeSelectProps extends FormFieldProps<string> {
   onDrawerSubmitCallback?: (payload?: any) => void;
 }
 
-export interface FieldImageProps extends FormFieldProps<string> {}
-
-export interface ImageProps {
-  t?: any;
+export type ImageProps = Omit<
+  ImgCropProps,
+  "modalTitle" | "modalOk" | "modalCancel"
+> & {
   name: string | string[];
-  value?: string;
+  value?: string | File | null;
+  disabled?: boolean;
   placeholder?: string;
-  onChange: (change: IFormFieldChanged<string>) => void;
-}
+  onChange: (change: IFormFieldChanged<string | File | null>) => void;
+  /** Maximum allowed file size in megabytes (MB). */
+  maxFileSize?: number;
+  saveAs?: "base64" | "file";
+};
+
+export type FieldImageProps = Omit<
+  FormFieldProps<string | File | null> & ImageProps,
+  "initialValue" | "onDeselect" | "infoTooltip"
+>;
