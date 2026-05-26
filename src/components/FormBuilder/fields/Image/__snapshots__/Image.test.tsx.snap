@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormBuilder Image component Image rendered correctly 1`] = `
+exports[`FormBuilder Image component renders correctly when disabled 1`] = `
 <ForwardRef
   aspect={1}
   fillColor="white"
@@ -18,7 +18,40 @@ exports[`FormBuilder Image component Image rendered correctly 1`] = `
   <Dragger
     action={[Function]}
     beforeUpload={[Function]}
-    className="field-image-upload-container"
+    className="field-image-upload-container crop-shape-round"
+    customRequest={[Function]}
+    disabled={true}
+    listType="picture-card"
+    showUploadList={false}
+  >
+    <Preview
+      disabled={true}
+      onDelete={[Function]}
+      value="value"
+    />
+  </Dragger>
+</ForwardRef>
+`;
+
+exports[`FormBuilder Image component renders correctly with rect shape 1`] = `
+<ForwardRef
+  aspect={1}
+  fillColor="white"
+  grid={false}
+  maxZoom={3}
+  minZoom={1}
+  modalCancel="CANCEL"
+  modalOk="SUBMIT"
+  modalTitle="EDIT_IMAGE"
+  quality={0.4}
+  rotate={false}
+  shape="rect"
+  zoom={true}
+>
+  <Dragger
+    action={[Function]}
+    beforeUpload={[Function]}
+    className="field-image-upload-container crop-shape-rect"
     customRequest={[Function]}
     listType="picture-card"
     showUploadList={false}
@@ -27,6 +60,72 @@ exports[`FormBuilder Image component Image rendered correctly 1`] = `
       onDelete={[Function]}
       value="value"
     />
+  </Dragger>
+</ForwardRef>
+`;
+
+exports[`FormBuilder Image component renders correctly with value 1`] = `
+<ForwardRef
+  aspect={1}
+  fillColor="white"
+  grid={false}
+  maxZoom={3}
+  minZoom={1}
+  modalCancel="CANCEL"
+  modalOk="SUBMIT"
+  modalTitle="EDIT_IMAGE"
+  quality={0.4}
+  rotate={false}
+  shape="round"
+  zoom={true}
+>
+  <Dragger
+    action={[Function]}
+    beforeUpload={[Function]}
+    className="field-image-upload-container crop-shape-round"
+    customRequest={[Function]}
+    listType="picture-card"
+    showUploadList={false}
+  >
+    <Preview
+      onDelete={[Function]}
+      value="value"
+    />
+  </Dragger>
+</ForwardRef>
+`;
+
+exports[`FormBuilder Image component renders correctly without value 1`] = `
+<ForwardRef
+  aspect={1}
+  fillColor="white"
+  grid={false}
+  maxZoom={3}
+  minZoom={1}
+  modalCancel="CANCEL"
+  modalOk="SUBMIT"
+  modalTitle="EDIT_IMAGE"
+  quality={0.4}
+  rotate={false}
+  shape="round"
+  zoom={true}
+>
+  <Dragger
+    action={[Function]}
+    beforeUpload={[Function]}
+    className="field-image-upload-container crop-shape-round"
+    customRequest={[Function]}
+    listType="picture-card"
+    showUploadList={false}
+  >
+    <div>
+      <ForwardRef(PlusOutlined) />
+      <div
+        className="ant-upload-text"
+      >
+        placeholder
+      </div>
+    </div>
   </Dragger>
 </ForwardRef>
 `;

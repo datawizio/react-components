@@ -1,10 +1,10 @@
 import React, { ReactNode } from "react";
-import { Rule } from "antd/lib/form";
-import { SwitchSize } from "antd/lib/switch";
-import { ImgCropProps } from "antd-img-crop";
-import { Dayjs } from "dayjs";
-import { CalendarTypes } from "../DatePicker";
-import { InfoTooltipProps } from "../InfoTooltip";
+import type { Rule } from "antd/lib/form";
+import type { SwitchSize } from "antd/lib/switch";
+import type { ImgCropProps } from "antd-img-crop";
+import type { Dayjs } from "dayjs";
+import type { CalendarTypes } from "../DatePicker";
+import type { InfoTooltipProps } from "../InfoTooltip";
 
 export interface IFormFieldChanged<Type> {
   name: string | string[];
@@ -198,6 +198,7 @@ export type ImageProps = Omit<
   disabled?: boolean;
   placeholder?: string;
   onChange: (change: IFormFieldChanged<string | File | null>) => void;
+  /** Maximum allowed file size in megabytes (MB). */
   maxFileSize?: number;
   saveAs?: "base64" | "file";
 };
