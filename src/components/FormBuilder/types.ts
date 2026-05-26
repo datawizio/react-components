@@ -203,4 +203,7 @@ export type ImageProps = Omit<
   saveAs?: "base64" | "file";
 };
 
-export type FieldImageProps = FormFieldProps<string | File | null> & ImageProps;
+export type FieldImageProps = Omit<
+  FormFieldProps<string | File | null> & ImageProps,
+  "initialValue" | "onDeselect" | "infoTooltip"
+>;

@@ -12,20 +12,6 @@ import type { ImageProps } from "../../types";
 const MAX_IMAGE_SIZE_MB = 2;
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png"]);
 
-function beforeUpload(file: RcFile, maxSize: number) {
-  const isAllowedType = ALLOWED_IMAGE_TYPES.has(file.type);
-  if (!isAllowedType) {
-    void message.error("You can only upload JPG/PNG file!");
-  }
-
-  const isAllowedSize = file.size / 1024 / 1024 <= maxSize;
-  if (!isAllowedSize) {
-    void message.error(`Image must be smaller than ${maxSize}MB!`);
-  }
-
-  return isAllowedType && isAllowedSize;
-}
-
 export const Image: React.FC<ImageProps> = ({
   name,
   value,
@@ -38,6 +24,26 @@ export const Image: React.FC<ImageProps> = ({
   ...props
 }) => {
   const { translate } = useContext(ConfigContext);
+
+  const beforeUpload = (file: RcFile, sizeLimit: number) => {
+    const isAllowedType = ALLOWED_IMAGE_TYPES.has(file.type);
+    const isAllowedSize = file.size / 1024 / 1024 <= sizeLimit;
+
+    if (!isAllowedType) {
+      void message.error(translate("INVALID_FORMAT"));
+    }
+
+    if (!isAllowedSize) {
+      void message.error(
+        translate("FILE_TOO_LARGE", {
+          file_name: file.name,
+          size: sizeLimit
+        })
+      );
+    }
+
+    return isAllowedType && isAllowedSize;
+  };
 
   const upload = (file: RcFile) => {
     if (saveAs === "file") {
