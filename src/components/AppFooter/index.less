@@ -5,26 +5,32 @@
   border-top: 1px solid @divider-border-color;
   padding: 13px;
   text-align: center;
-
-  .retina-image(
-    @nielsen-logo,
-    @nielsen-logo2x,
-    56px,
-    24px
-  );
-
-  background-repeat: no-repeat;
-  background-position: calc(100% - 12px);
-  padding-right: 104px;
   min-width: 240px;
 
-  @media (min-width: 700px) {
-    padding-right: 13px;
+  &--with-logo {
+    padding: 13px 104px 13px 13px;
+
+    .retina-image(
+      @nielsen-logo,
+      @nielsen-logo2x,
+      56px,
+      24px
+    );
+
+    background-repeat: no-repeat;
+    background-position: calc(100% - 12px);
+
+    @media (min-width: 700px) {
+      padding-right: 13px;
+    }
+
+    @media (max-width: 420px) {
+      background-position: calc(100% - 8px);
+    }
   }
 
   @media (max-width: 420px) {
     padding-left: 8px;
-    background-position: calc(100% - 8px);
     font-size: 13px;
     text-align: left;
   }
